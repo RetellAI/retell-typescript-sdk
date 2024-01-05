@@ -1,0 +1,13 @@
+# FilterCriteria
+
+
+## Fields
+
+| Field                                                          | Type                                                           | Required                                                       | Description                                                    | Example                                                        |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `afterEndTimestamp`                                            | *number*                                                       | :heavy_minus_sign:                                             | Inclusive. Filter calls that end on or after this timestamp.   | 1703302428800                                                  |
+| `afterStartTimestamp`                                          | *number*                                                       | :heavy_minus_sign:                                             | Inclusive. Filter calls that start on or after this timestamp. | 1703302407300                                                  |
+| `agentId`                                                      | *string*[]                                                     | :heavy_minus_sign:                                             | Only retrieve calls that are made with specific agent(s).      | ["oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD"]                           |
+| `beforeEndTimestamp`                                           | *number*                                                       | :heavy_minus_sign:                                             | Exclusive. Filter calls that end before this timestamp.        | 1703302428899                                                  |
+| `beforeStartTimestamp`                                         | *number*                                                       | :heavy_minus_sign:                                             | Exclusive. Filter calls that start before this timestamp.      | 1703302407399                                                  |
+| `callType`                                                     | [operations.CallType](../../models/operations/calltype.md)[]   | :heavy_minus_sign:                                             | Only retrieve calls of specific type(s).                       | ["inbound_phone_call","outbound_phone_call"]                   |

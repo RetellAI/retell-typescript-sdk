@@ -1,0 +1,9 @@
+# UpdateAgentRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                | Example                                                                                    |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `agentNoDefaultNoRequired`                                                                 | [components.AgentNoDefaultNoRequired](../../models/components/agentnodefaultnorequired.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |                                                                                            |
+| `agentId`                                                                                  | *string*                                                                                   | :heavy_check_mark:                                                                         | Unique id of the agent to be updated.                                                      | 16b980523634a6dc504898cda492e939                                                           |
