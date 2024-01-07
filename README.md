@@ -15,11 +15,6 @@
 npm add retell-sdk
 ```
 
-### Yarn
-
-```bash
-yarn add retell-sdk
-```
 <!-- End SDK Installation [installation] -->
 
 <!-- Start SDK Example Usage [usage] -->
@@ -45,7 +40,7 @@ async function run() {
         enableEndMessage: false,
         endMessage: "Hope you have a good day, goodbye.",
         prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
-        voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
+        voiceId: "11labs-Ryan",
     });
 
     if (res?.statusCode !== 200) {
@@ -95,6 +90,43 @@ run();
 
 ```
 
+### Create a web call
+
+Initiate a web call.
+
+```typescript
+import { RetellClient } from "retell-sdk";
+// Import websocket if not running in browser
+
+async function run() {
+    const sdk = new RetellClient({
+        apiKey: "YOUR_API_KEY",
+    });
+
+    const liveClient = await sdk.createWebCall({
+        agentId: "YOUR_AGENT_ID",
+        sampleRate: 24000,
+        agentPromptParams: [
+            {
+                name: "username",
+                value: "Adam",
+            },
+        ],
+    });
+
+    liveClient.on("audio", (audio: Uint8Array) => {
+        // Handle audio here
+    });
+    liveClient.on("close", (event) => {
+        // Handle close here
+        console.log(event.code);
+    });
+}
+
+run();
+
+```
+
 ### Create a new phone number
 
 Create a new phone number
@@ -108,7 +140,7 @@ async function run() {
     });
 
     const res = await sdk.createPhoneNumber({
-        agentId: "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+        agentId: "YOUR_AGENT_ID",
         areaCode: 415,
     });
 
@@ -135,7 +167,7 @@ async function run() {
         apiKey: "YOUR_API_KEY",
     });
 
-    const agentId = "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD";
+    const agentId = "YOUR_AGENT_ID";
 
     const res = await sdk.deleteAgent(agentId);
 
@@ -300,7 +332,7 @@ async function run() {
     const filterCriteria = {
         afterEndTimestamp: 1703302428800,
         afterStartTimestamp: 1703302407300,
-        agentId: ["oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD"],
+        agentId: ["YOUR_AGENT_ID"],
         beforeEndTimestamp: 1703302428899,
         beforeStartTimestamp: 1703302407399,
         callType: [CallType.InboundPhoneCall, CallType.OutboundPhoneCall],
@@ -366,7 +398,7 @@ async function run() {
         enableEndMessage: false,
         endMessage: "Hope you have a good day, goodbye.",
         prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
-        voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
+        voiceId: "11labs-Ryan",
     };
     const agentId = "16b980523634a6dc504898cda492e939";
 
@@ -396,7 +428,7 @@ async function run() {
     });
 
     const requestBody = {
-        agentId: "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+        agentId: "YOUR_AGENT_ID",
     };
     const phoneNumber = "+14159095857";
 
@@ -467,7 +499,7 @@ async function run() {
             enableEndMessage: false,
             endMessage: "Hope you have a good day, goodbye.",
             prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
-            voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
+            voiceId: "11labs-Ryan",
         })
         .catch((err) => {
             if (err instanceof errors.CreateAgentResponseBody) {
@@ -595,7 +627,7 @@ async function run() {
         enableEndMessage: false,
         endMessage: "Hope you have a good day, goodbye.",
         prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
-        voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
+        voiceId: "11labs-Ryan",
     });
 
     if (res?.statusCode !== 200) {

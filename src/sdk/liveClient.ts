@@ -21,9 +21,7 @@ export class LiveClient extends EventEmitter {
       agentId +
       "&sample_rate=" +
       sampleRate;
-    for (const param of agentPromptParams) {
-      endpoint += "&agent_prompt_params=" + JSON.stringify(param);
-    }
+    endpoint += "&agent_prompt_params=" + encodeURIComponent(JSON.stringify(agentPromptParams));
     this.ws = new WebSocket(endpoint);
     this.ws.binaryType = "arraybuffer";
   }

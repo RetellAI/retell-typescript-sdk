@@ -25,14 +25,13 @@ export class RetellClient extends ClientSDK {
     }
 
     async createWebCall(
-        apikey: string,
         agentId: string,
         sampleRate = 16000,
         agentPromptParams = [],
         websocketEndpoint: string = "wss://api.re-tell.ai"
       ): Promise<LiveClient> {
         const liveClient = new LiveClient(
-          apikey,
+          this.options$.apiKey as unknown as string,
           agentId,
           sampleRate,
           agentPromptParams,
