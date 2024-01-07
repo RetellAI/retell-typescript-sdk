@@ -1044,7 +1044,7 @@ export class RetellClient extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "patch",
+                method: "PATCH",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -1142,7 +1142,7 @@ export class RetellClient extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "patch",
+                method: "PATCH",
                 path: path$,
                 headers: headers$,
                 body: body$,
