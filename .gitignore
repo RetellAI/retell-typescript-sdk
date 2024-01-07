@@ -1,1 +1,9 @@
-node_modules/
+/models
+/models/errors
+/types
+/lib
+/sdk
+/index.*
+/cjs
+/node_modules
+/.tsbuildinfo

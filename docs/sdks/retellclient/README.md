@@ -30,7 +30,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
 
   const res = await sdk.createAgent({
@@ -44,9 +44,11 @@ async function run() {
     voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
   });
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -54,10 +56,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `request`                                                                              | [operations.CreateAgentRequestBody](../../models/operations/createagentrequestbody.md) | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `config`                                                                               | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                           | :heavy_minus_sign:                                                                     | Available config options for making requests.                                          |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.CreateAgentRequestBody](../../models/operations/createagentrequestbody.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -71,7 +74,7 @@ run();
 | errors.CreateAgentResponseResponseBody    | 401                                       | application/json                          |
 | errors.CreateAgentResponse422ResponseBody | 422                                       | application/json                          |
 | errors.CreateAgentResponse500ResponseBody | 500                                       | application/json                          |
-| errors.SDKError                           | 400-600                                   | */*                                       |
+| errors.SDKError                           | 4xx-5xx                                   | */*                                       |
 
 ## createPhoneCall
 
@@ -84,7 +87,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
 
   const res = await sdk.createPhoneCall({
@@ -100,9 +103,11 @@ async function run() {
     },
   });
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -110,10 +115,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `request`                                                                                      | [operations.CreatePhoneCallRequestBody](../../models/operations/createphonecallrequestbody.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
-| `config`                                                                                       | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                   | :heavy_minus_sign:                                                                             | Available config options for making requests.                                                  |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.CreatePhoneCallRequestBody](../../models/operations/createphonecallrequestbody.md)                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -129,7 +135,7 @@ run();
 | errors.CreatePhoneCallResponse422ResponseBody | 422                                           | application/json                              |
 | errors.CreatePhoneCallResponse429ResponseBody | 429                                           | application/json                              |
 | errors.CreatePhoneCallResponse500ResponseBody | 500                                           | application/json                              |
-| errors.SDKError                               | 400-600                                       | */*                                           |
+| errors.SDKError                               | 4xx-5xx                                       | */*                                           |
 
 ## createPhoneNumber
 
@@ -142,7 +148,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
 
   const res = await sdk.createPhoneNumber({
@@ -150,9 +156,11 @@ async function run() {
     areaCode: 415,
   });
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -160,10 +168,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `request`                                                                                          | [operations.CreatePhoneNumberRequestBody](../../models/operations/createphonenumberrequestbody.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
-| `config`                                                                                           | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                       | :heavy_minus_sign:                                                                                 | Available config options for making requests.                                                      |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.CreatePhoneNumberRequestBody](../../models/operations/createphonenumberrequestbody.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -178,7 +187,7 @@ run();
 | errors.CreatePhoneNumberResponse402ResponseBody | 402                                             | application/json                                |
 | errors.CreatePhoneNumberResponse422ResponseBody | 422                                             | application/json                                |
 | errors.CreatePhoneNumberResponse500ResponseBody | 500                                             | application/json                                |
-| errors.SDKError                                 | 400-600                                         | */*                                             |
+| errors.SDKError                                 | 4xx-5xx                                         | */*                                             |
 
 ## deleteAgent
 
@@ -188,19 +197,21 @@ Delete an existing agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { DeleteAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const agentId: string = "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD";
 
+  const agentId = "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD";
+  
   const res = await sdk.deleteAgent(agentId);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -208,10 +219,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  | Example                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `agentId`                                                    | *string*                                                     | :heavy_check_mark:                                           | Unique id of the agent to be deleted.                        | oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD                             |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |                                                              |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `agentId`                                                                                                                                                                      | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Unique id of the agent to be deleted.                                                                                                                                          | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -225,7 +237,7 @@ run();
 | errors.DeleteAgentResponseResponseBody    | 401                                       | application/json                          |
 | errors.DeleteAgentResponse422ResponseBody | 422                                       | application/json                          |
 | errors.DeleteAgentResponse500ResponseBody | 500                                       | application/json                          |
-| errors.SDKError                           | 400-600                                   | */*                                       |
+| errors.SDKError                           | 4xx-5xx                                   | */*                                       |
 
 ## deletePhoneNumber
 
@@ -235,19 +247,21 @@ Delete a specific phone number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { DeletePhoneNumberRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const phoneNumber: string = "string";
 
+  const phoneNumber = "string";
+  
   const res = await sdk.deletePhoneNumber(phoneNumber);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -255,10 +269,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `phoneNumber`                                                | *string*                                                     | :heavy_check_mark:                                           | Phone number to delete in E.164 format.                      |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `phoneNumber`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Phone number to delete in E.164 format.                                                                                                                                        |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -272,7 +287,7 @@ run();
 | errors.DeletePhoneNumberResponseResponseBody    | 401                                             | application/json                                |
 | errors.DeletePhoneNumberResponse422ResponseBody | 422                                             | application/json                                |
 | errors.DeletePhoneNumberResponse500ResponseBody | 500                                             | application/json                                |
-| errors.SDKError                                 | 400-600                                         | */*                                             |
+| errors.SDKError                                 | 4xx-5xx                                         | */*                                             |
 
 ## getAgent
 
@@ -282,19 +297,21 @@ Retrieve details of a specific agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const agentId: string = "16b980523634a6dc504898cda492e939";
 
+  const agentId = "16b980523634a6dc504898cda492e939";
+  
   const res = await sdk.getAgent(agentId);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -302,10 +319,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  | Example                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `agentId`                                                    | *string*                                                     | :heavy_check_mark:                                           | Unique id of the agent to be retrieved.                      | 16b980523634a6dc504898cda492e939                             |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |                                                              |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `agentId`                                                                                                                                                                      | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Unique id of the agent to be retrieved.                                                                                                                                        | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -319,7 +337,7 @@ run();
 | errors.GetAgentResponseResponseBody    | 401                                    | application/json                       |
 | errors.GetAgentResponse422ResponseBody | 422                                    | application/json                       |
 | errors.GetAgentResponse500ResponseBody | 500                                    | application/json                       |
-| errors.SDKError                        | 400-600                                | */*                                    |
+| errors.SDKError                        | 4xx-5xx                                | */*                                    |
 
 ## getCall
 
@@ -329,19 +347,21 @@ Retrieve details of a specific call
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetCallRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const callId: string = "119c3f8e47135a29e65947eeb34cf12d";
 
+  const callId = "119c3f8e47135a29e65947eeb34cf12d";
+  
   const res = await sdk.getCall(callId);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -349,10 +369,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  | Example                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `callId`                                                     | *string*                                                     | :heavy_check_mark:                                           | The call id to retrieve call history for.                    | 119c3f8e47135a29e65947eeb34cf12d                             |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |                                                              |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `callId`                                                                                                                                                                       | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The call id to retrieve call history for.                                                                                                                                      | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -366,7 +387,7 @@ run();
 | errors.GetCallResponseResponseBody    | 401                                   | application/json                      |
 | errors.GetCallResponse422ResponseBody | 422                                   | application/json                      |
 | errors.GetCallResponse500ResponseBody | 500                                   | application/json                      |
-| errors.SDKError                       | 400-600                               | */*                                   |
+| errors.SDKError                       | 4xx-5xx                               | */*                                   |
 
 ## getPhoneNumber
 
@@ -376,19 +397,21 @@ Retrieve info about a specific number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetPhoneNumberRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const phoneNumber: string = "+14159095857";
 
+  const phoneNumber = "+14159095857";
+  
   const res = await sdk.getPhoneNumber(phoneNumber);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -396,10 +419,11 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  | Example                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `phoneNumber`                                                | *string*                                                     | :heavy_check_mark:                                           | Phone number in E.164 format to retreive more information.   | +14159095857                                                 |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |                                                              |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `phoneNumber`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Phone number in E.164 format to retreive more information.                                                                                                                     | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -413,7 +437,7 @@ run();
 | errors.GetPhoneNumberResponseResponseBody    | 401                                          | application/json                             |
 | errors.GetPhoneNumberResponse422ResponseBody | 422                                          | application/json                             |
 | errors.GetPhoneNumberResponse500ResponseBody | 500                                          | application/json                             |
-| errors.SDKError                              | 400-600                                      | */*                                          |
+| errors.SDKError                              | 4xx-5xx                                      | */*                                          |
 
 ## listAgents
 
@@ -426,14 +450,16 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
 
   const res = await sdk.listAgents();
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -441,9 +467,10 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -455,7 +482,7 @@ run();
 | ------------------------------------- | ------------------------------------- | ------------------------------------- |
 | errors.ListAgentsResponseBody         | 401                                   | application/json                      |
 | errors.ListAgentsResponseResponseBody | 500                                   | application/json                      |
-| errors.SDKError                       | 400-600                               | */*                                   |
+| errors.SDKError                       | 4xx-5xx                               | */*                                   |
 
 ## listCalls
 
@@ -465,33 +492,37 @@ Retrieve call details
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { CallType, FilterCriteria, ListCallsRequest, SortOrder } from "retell-sdk/dist/models/operations";
+import {  } from "retell-sdk/models";
+import { SortOrder } from "retell-sdk/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const filterCriteria: FilterCriteria = {
-  afterEndTimestamp: 1703302428800,
-  afterStartTimestamp: 1703302407300,
-  agentId: [
-    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
-  ],
-  beforeEndTimestamp: 1703302428899,
-  beforeStartTimestamp: 1703302407399,
-  callType: [
-    CallType.InboundPhoneCall,
-    CallType.OutboundPhoneCall,
-  ],
-};
-const limit: number = 666195;
-const sortOrder: SortOrder = SortOrder.Descending;
 
+  const filterCriteria = {
+    afterEndTimestamp: 1703302428800,
+    afterStartTimestamp: 1703302407300,
+    agentId: [
+      "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+    ],
+    beforeEndTimestamp: 1703302428899,
+    beforeStartTimestamp: 1703302407399,
+    callType: [
+      CallType.InboundPhoneCall,
+      CallType.OutboundPhoneCall,
+    ],
+  };
+  const limit = 666195;
+  const sortOrder = SortOrder.Descending;
+  
   const res = await sdk.listCalls(filterCriteria, limit, sortOrder);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -499,12 +530,13 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                                    | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `filterCriteria`                                                                                             | [operations.FilterCriteria](../../models/operations/filtercriteria.md)                                       | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
-| `limit`                                                                                                      | *number*                                                                                                     | :heavy_minus_sign:                                                                                           | Limit the number of calls returned.                                                                          |
-| `sortOrder`                                                                                                  | [operations.SortOrder](../../models/operations/sortorder.md)                                                 | :heavy_minus_sign:                                                                                           | The calls will be sorted by `start_timestamp`, whether to return the calls in ascending or descending order. |
-| `config`                                                                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                                 | :heavy_minus_sign:                                                                                           | Available config options for making requests.                                                                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `filterCriteria`                                                                                                                                                               | [operations.FilterCriteria](../../models/operations/filtercriteria.md)                                                                                                         | :heavy_minus_sign:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `limit`                                                                                                                                                                        | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Limit the number of calls returned.                                                                                                                                            |
+| `sortOrder`                                                                                                                                                                    | [operations.SortOrder](../../models/operations/sortorder.md)                                                                                                                   | :heavy_minus_sign:                                                                                                                                                             | The calls will be sorted by `start_timestamp`, whether to return the calls in ascending or descending order.                                                                   |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -517,7 +549,7 @@ run();
 | errors.ListCallsResponseBody            | 400                                     | application/json                        |
 | errors.ListCallsResponseResponseBody    | 401                                     | application/json                        |
 | errors.ListCallsResponse500ResponseBody | 500                                     | application/json                        |
-| errors.SDKError                         | 400-600                                 | */*                                     |
+| errors.SDKError                         | 4xx-5xx                                 | */*                                     |
 
 ## listPhoneNumbers
 
@@ -530,14 +562,16 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
 
   const res = await sdk.listPhoneNumbers();
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -545,9 +579,10 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
@@ -560,7 +595,7 @@ run();
 | errors.ListPhoneNumbersResponseBody            | 400                                            | application/json                               |
 | errors.ListPhoneNumbersResponseResponseBody    | 401                                            | application/json                               |
 | errors.ListPhoneNumbersResponse500ResponseBody | 500                                            | application/json                               |
-| errors.SDKError                                | 400-600                                        | */*                                            |
+| errors.SDKError                                | 4xx-5xx                                        | */*                                            |
 
 ## updateAgent
 
@@ -570,30 +605,31 @@ Update an existing agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { AgentNoDefaultNoRequired } from "retell-sdk/dist/models/components";
-import { UpdateAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const agentNoDefaultNoRequired: AgentNoDefaultNoRequired = {
-  agentName: "Jarvis",
-  beginMessage: "Hello there, how can I help you.",
-  enableBeginMessage: true,
-  enableEndCall: true,
-  enableEndMessage: false,
-  endMessage: "Hope you have a good day, goodbye.",
-  prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
-  voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
-};
-const agentId: string = "16b980523634a6dc504898cda492e939";
 
+  const agentNoDefaultNoRequired = {
+    agentName: "Jarvis",
+    beginMessage: "Hello there, how can I help you.",
+    enableBeginMessage: true,
+    enableEndCall: true,
+    enableEndMessage: false,
+    endMessage: "Hope you have a good day, goodbye.",
+    prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
+    voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
+  };
+  const agentId = "16b980523634a6dc504898cda492e939";
+  
   const res = await sdk.updateAgent(agentNoDefaultNoRequired, agentId);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -601,11 +637,12 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                | Example                                                                                    |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `agentNoDefaultNoRequired`                                                                 | [components.AgentNoDefaultNoRequired](../../models/components/agentnodefaultnorequired.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |                                                                                            |
-| `agentId`                                                                                  | *string*                                                                                   | :heavy_check_mark:                                                                         | Unique id of the agent to be updated.                                                      | 16b980523634a6dc504898cda492e939                                                           |
-| `config`                                                                                   | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                               | :heavy_minus_sign:                                                                         | Available config options for making requests.                                              |                                                                                            |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `agentNoDefaultNoRequired`                                                                                                                                                     | [components.AgentNoDefaultNoRequired](../../models/components/agentnodefaultnorequired.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `agentId`                                                                                                                                                                      | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Unique id of the agent to be updated.                                                                                                                                          | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -619,7 +656,7 @@ run();
 | errors.UpdateAgentResponseResponseBody    | 401                                       | application/json                          |
 | errors.UpdateAgentResponse422ResponseBody | 422                                       | application/json                          |
 | errors.UpdateAgentResponse500ResponseBody | 500                                       | application/json                          |
-| errors.SDKError                           | 400-600                                   | */*                                       |
+| errors.SDKError                           | 4xx-5xx                                   | */*                                       |
 
 ## updatePhoneAgent
 
@@ -629,22 +666,24 @@ Update an existing phone number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { UpdatePhoneAgentRequest, UpdatePhoneAgentRequestBody } from "retell-sdk/dist/models/operations";
 
 async function run() {
   const sdk = new RetellClient({
-    apiKey: "",
+    apiKey: "YOUR_API_KEY",
   });
-const requestBody: UpdatePhoneAgentRequestBody = {
-  agentId: "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
-};
-const phoneNumber: string = "+14159095857";
 
+  const requestBody = {
+    agentId: "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+  };
+  const phoneNumber = "+14159095857";
+  
   const res = await sdk.updatePhoneAgent(requestBody, phoneNumber);
 
-  if (res.statusCode == 200) {
-    // handle response
+  if (res?.statusCode !== 200) {
+    throw new Error("Unexpected status code: " + res?.statusCode || "-");
   }
+  
+  // handle response
 }
 
 run();
@@ -652,11 +691,12 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      | Example                                                                                          |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `requestBody`                                                                                    | [operations.UpdatePhoneAgentRequestBody](../../models/operations/updatephoneagentrequestbody.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |                                                                                                  |
-| `phoneNumber`                                                                                    | *string*                                                                                         | :heavy_check_mark:                                                                               | Phone number in E.164 format that require agent update.                                          | +14159095857                                                                                     |
-| `config`                                                                                         | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                     | :heavy_minus_sign:                                                                               | Available config options for making requests.                                                    |                                                                                                  |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `requestBody`                                                                                                                                                                  | [operations.UpdatePhoneAgentRequestBody](../../models/operations/updatephoneagentrequestbody.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `phoneNumber`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Phone number in E.164 format that require agent update.                                                                                                                        | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
@@ -670,4 +710,4 @@ run();
 | errors.UpdatePhoneAgentResponseResponseBody    | 401                                            | application/json                               |
 | errors.UpdatePhoneAgentResponse422ResponseBody | 422                                            | application/json                               |
 | errors.UpdatePhoneAgentResponse500ResponseBody | 500                                            | application/json                               |
-| errors.SDKError                                | 400-600                                        | */*                                            |
+| errors.SDKError                                | 4xx-5xx                                        | */*                                            |

@@ -8,7 +8,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
 
     const res = await sdk.createAgent({
@@ -22,9 +22,11 @@ async function run() {
         voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
     });
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -40,7 +42,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
 
     const res = await sdk.createPhoneCall({
@@ -56,9 +58,11 @@ async function run() {
         },
     });
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -74,7 +78,7 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
 
     const res = await sdk.createPhoneNumber({
@@ -82,9 +86,11 @@ async function run() {
         areaCode: 415,
     });
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -97,19 +103,21 @@ Delete an existing agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { DeleteAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const agentId: string = "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD";
+
+    const agentId = "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD";
 
     const res = await sdk.deleteAgent(agentId);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -122,19 +130,21 @@ Delete a specific phone number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { DeletePhoneNumberRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const phoneNumber: string = "string";
+
+    const phoneNumber = "string";
 
     const res = await sdk.deletePhoneNumber(phoneNumber);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -147,19 +157,21 @@ Retrieve details of a specific agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const agentId: string = "16b980523634a6dc504898cda492e939";
+
+    const agentId = "16b980523634a6dc504898cda492e939";
 
     const res = await sdk.getAgent(agentId);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -172,19 +184,21 @@ Retrieve details of a specific call
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetCallRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const callId: string = "119c3f8e47135a29e65947eeb34cf12d";
+
+    const callId = "119c3f8e47135a29e65947eeb34cf12d";
 
     const res = await sdk.getCall(callId);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -197,19 +211,21 @@ Retrieve info about a specific number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { GetPhoneNumberRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const phoneNumber: string = "+14159095857";
+
+    const phoneNumber = "+14159095857";
 
     const res = await sdk.getPhoneNumber(phoneNumber);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -225,14 +241,16 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
 
     const res = await sdk.listAgents();
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -245,18 +263,15 @@ Retrieve call details
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import {
-    CallType,
-    FilterCriteria,
-    ListCallsRequest,
-    SortOrder,
-} from "retell-sdk/dist/models/operations";
+import {} from "retell-sdk/models";
+import { SortOrder } from "retell-sdk/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const filterCriteria: FilterCriteria = {
+
+    const filterCriteria = {
         afterEndTimestamp: 1703302428800,
         afterStartTimestamp: 1703302407300,
         agentId: ["oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD"],
@@ -264,14 +279,16 @@ async function run() {
         beforeStartTimestamp: 1703302407399,
         callType: [CallType.InboundPhoneCall, CallType.OutboundPhoneCall],
     };
-    const limit: number = 666195;
-    const sortOrder: SortOrder = SortOrder.Descending;
+    const limit = 666195;
+    const sortOrder = SortOrder.Descending;
 
     const res = await sdk.listCalls(filterCriteria, limit, sortOrder);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -287,14 +304,16 @@ import { RetellClient } from "retell-sdk";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
 
     const res = await sdk.listPhoneNumbers();
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -307,14 +326,13 @@ Update an existing agent
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import { AgentNoDefaultNoRequired } from "retell-sdk/dist/models/components";
-import { UpdateAgentRequest } from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const agentNoDefaultNoRequired: AgentNoDefaultNoRequired = {
+
+    const agentNoDefaultNoRequired = {
         agentName: "Jarvis",
         beginMessage: "Hello there, how can I help you.",
         enableBeginMessage: true,
@@ -324,13 +342,15 @@ async function run() {
         prompt: "You are a marketing assistant. You help come up with creative content ideas and content like marketing emails, blog posts, tweets, ad copy and product descriptions. You respond concisely, with filler words in it.",
         voiceId: "elevenlabs-xxcrwXReTKMHWjqi7Q27",
     };
-    const agentId: string = "16b980523634a6dc504898cda492e939";
+    const agentId = "16b980523634a6dc504898cda492e939";
 
     const res = await sdk.updateAgent(agentNoDefaultNoRequired, agentId);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
@@ -343,25 +363,24 @@ Update an existing phone number
 
 ```typescript
 import { RetellClient } from "retell-sdk";
-import {
-    UpdatePhoneAgentRequest,
-    UpdatePhoneAgentRequestBody,
-} from "retell-sdk/dist/models/operations";
 
 async function run() {
     const sdk = new RetellClient({
-        apiKey: "",
+        apiKey: "YOUR_API_KEY",
     });
-    const requestBody: UpdatePhoneAgentRequestBody = {
+
+    const requestBody = {
         agentId: "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
     };
-    const phoneNumber: string = "+14159095857";
+    const phoneNumber = "+14159095857";
 
     const res = await sdk.updatePhoneAgent(requestBody, phoneNumber);
 
-    if (res.statusCode == 200) {
-        // handle response
+    if (res?.statusCode !== 200) {
+        throw new Error("Unexpected status code: " + res?.statusCode || "-");
     }
+
+    // handle response
 }
 
 run();
