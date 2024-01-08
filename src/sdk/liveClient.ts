@@ -2,7 +2,8 @@ import { EventEmitter } from "eventemitter3";
 import WebSocket, { MessageEvent } from "isomorphic-ws";
 
 export class LiveClient extends EventEmitter {
-  public ws: WebSocket;
+  private ws: WebSocket;
+  private call: any;
 
   constructor(
     apiKey: string,
@@ -54,6 +55,7 @@ export class LiveClient extends EventEmitter {
             this.ws.onclose = (event) => {
               this.emit("close", event);
             };
+            this.call = data.call;
             resolve(); // Resolve when the ready message is received
           }
         } catch (error) {
@@ -71,6 +73,10 @@ export class LiveClient extends EventEmitter {
 
   close() {
     this.ws.close();
+  }
+
+  getCall() {
+    return this.call;
   }
 }
 
