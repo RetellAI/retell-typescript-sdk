@@ -33,8 +33,8 @@ export class LiveClient extends EventEmitter {
       };
       this.ws.onerror = onError;
 
-      const onClose = () => {
-        reject("websocket closed before ready.");
+      const onClose = (event: WebSocket.CloseEvent) => {
+        reject("websocket closed before ready with code: " + event.code + ", reason: " + event.reason);
       };
       this.ws.onclose = onClose;
 
