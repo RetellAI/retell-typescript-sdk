@@ -21,7 +21,7 @@ export type ListPhoneNumbersResponse = {
     /**
      * Successfully retrieved all phone number objects.
      */
-    classes?: Array<components.PhoneNumber> | undefined;
+    phoneNumbers?: Array<components.PhoneNumber> | undefined;
 };
 
 /** @internal */
@@ -30,7 +30,7 @@ export namespace ListPhoneNumbersResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        classes?: Array<components.PhoneNumber$.Inbound> | undefined;
+        phoneNumbers?: Array<components.PhoneNumber$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<ListPhoneNumbersResponse, z.ZodTypeDef, Inbound> = z
@@ -38,14 +38,14 @@ export namespace ListPhoneNumbersResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            classes: z.array(components.PhoneNumber$.inboundSchema).optional(),
+            phoneNumbers: z.array(components.PhoneNumber$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 contentType: v.ContentType,
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.phoneNumbers === undefined ? null : { phoneNumbers: v.phoneNumbers }),
             };
         });
 
@@ -53,7 +53,7 @@ export namespace ListPhoneNumbersResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        classes?: Array<components.PhoneNumber$.Outbound> | undefined;
+        phoneNumbers?: Array<components.PhoneNumber$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListPhoneNumbersResponse> = z
@@ -63,14 +63,14 @@ export namespace ListPhoneNumbersResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            classes: z.array(components.PhoneNumber$.outboundSchema).optional(),
+            phoneNumbers: z.array(components.PhoneNumber$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 ContentType: v.contentType,
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.phoneNumbers === undefined ? null : { phoneNumbers: v.phoneNumbers }),
             };
         });
 }

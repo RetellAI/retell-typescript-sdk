@@ -4,6 +4,7 @@
 
 export * from "./createagent";
 export * from "./createphonecall";
+export * from "./createwebcall";
 export * from "./createphonenumber";
 export * from "./deleteagent";
 export * from "./deletephonenumber";

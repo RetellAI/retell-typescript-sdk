@@ -10,32 +10,17 @@ export type CreateAgentRequestBody = {
      * The name of the agent. Only used for your own reference.
      */
     agentName?: string | undefined;
+    /*
+    * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom  
+    * response generation system.
+    */
+    llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;  
     /**
-     * Pre-defined message for agent to say in the begining of call. Only used when `enable_begin_message` is true. When empty, agent would wait for user to talk first.
+     * Setting combination that controls interaction flow, like begin and end logic.
      */
-    beginMessage?: string | undefined;
+    interactionSetting?: components.InteractionSettingRequest | undefined;
     /**
-     * Whether the agent begins the call with a pre-defined message. When this is false, the agent will still start the call, but with a dynamic message. If you wish for user to be the first to talk, set this to true and set `begin_message` as empty string.
-     */
-    enableBeginMessage?: boolean | undefined;
-    /**
-     * Whether the agent can end a call. If false, the agent would never end a call.
-     */
-    enableEndCall?: boolean | undefined;
-    /**
-     * Whether the agent attempts to end the call with a pre-defined message. When this is false, the agent might still be the last one speaking in the call, but the massage can be dynamic.
-     */
-    enableEndMessage?: boolean | undefined;
-    /**
-     * Pre-defined message for agent to say when agent ends the call. Only used when `enable_end_call` and `enable_end_message` is true. If you wish for agent to hang up without saying anything, set this to empty string.
-     */
-    endMessage?: string | undefined;
-    /**
-     * The prompt agent will follow. Check out [Prompt Best Practices](/features/prompt). Can use `${YOUR_PARAM_NAME}` to represent dynamic data that would get injected at each call. Learn more about [Agent Prompt Parameters](/features/prompt#prompt-parameters).
-     */
-    prompt: string;
-    /**
-     * Unique voice id used for the agent. Find list of available voices and their characteristics in [Voices](/features/voices).
+     * Unique voice id used for the agent. Find list of available voices in documentation.
      */
     voiceId: string;
 };
@@ -63,78 +48,46 @@ export type CreateAgentResponse = {
 export namespace CreateAgentRequestBody$ {
     export type Inbound = {
         agent_name?: string | undefined;
-        begin_message?: string | undefined;
-        enable_begin_message?: boolean | undefined;
-        enable_end_call?: boolean | undefined;
-        enable_end_message?: boolean | undefined;
-        end_message?: string | undefined;
-        prompt: string;
+        llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
+        interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
         voice_id: string;
     };
 
     export const inboundSchema: z.ZodType<CreateAgentRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
             agent_name: z.string().optional(),
-            begin_message: z.string().optional(),
-            enable_begin_message: z.boolean().optional(),
-            enable_end_call: z.boolean().optional(),
-            enable_end_message: z.boolean().optional(),
-            end_message: z.string().optional(),
-            prompt: z.string(),
+            llm_setting: z.union([components.RetellLlmSetting$.inboundSchema, components.CustomLlmSetting$.inboundSchema]),
+            interaction_setting: components.InteractionSettingRequest$.inboundSchema.optional(),
             voice_id: z.string(),
         })
         .transform((v) => {
             return {
                 ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
-                ...(v.begin_message === undefined ? null : { beginMessage: v.begin_message }),
-                ...(v.enable_begin_message === undefined
-                    ? null
-                    : { enableBeginMessage: v.enable_begin_message }),
-                ...(v.enable_end_call === undefined ? null : { enableEndCall: v.enable_end_call }),
-                ...(v.enable_end_message === undefined
-                    ? null
-                    : { enableEndMessage: v.enable_end_message }),
-                ...(v.end_message === undefined ? null : { endMessage: v.end_message }),
-                prompt: v.prompt,
+                llmSetting: v.llm_setting,
+                ...(v.interaction_setting === undefined ? null : { interactionSetting: v.interaction_setting }),
                 voiceId: v.voice_id,
             };
         });
 
     export type Outbound = {
         agent_name?: string | undefined;
-        begin_message?: string | undefined;
-        enable_begin_message?: boolean | undefined;
-        enable_end_call?: boolean | undefined;
-        enable_end_message?: boolean | undefined;
-        end_message?: string | undefined;
-        prompt: string;
+        llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
+        interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
         voice_id: string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateAgentRequestBody> = z
         .object({
             agentName: z.string().optional(),
-            beginMessage: z.string().optional(),
-            enableBeginMessage: z.boolean().optional(),
-            enableEndCall: z.boolean().optional(),
-            enableEndMessage: z.boolean().optional(),
-            endMessage: z.string().optional(),
-            prompt: z.string(),
+            llmSetting: z.union([components.RetellLlmSetting$.outboundSchema, components.CustomLlmSetting$.outboundSchema]),
+            interactionSetting: components.InteractionSettingRequest$.outboundSchema.optional(),
             voiceId: z.string(),
         })
         .transform((v) => {
             return {
                 ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
-                ...(v.beginMessage === undefined ? null : { begin_message: v.beginMessage }),
-                ...(v.enableBeginMessage === undefined
-                    ? null
-                    : { enable_begin_message: v.enableBeginMessage }),
-                ...(v.enableEndCall === undefined ? null : { enable_end_call: v.enableEndCall }),
-                ...(v.enableEndMessage === undefined
-                    ? null
-                    : { enable_end_message: v.enableEndMessage }),
-                ...(v.endMessage === undefined ? null : { end_message: v.endMessage }),
-                prompt: v.prompt,
+                llm_setting: v.llmSetting,
+                ...(v.interactionSetting === undefined ? null : { interaction_setting: v.interactionSetting }),
                 voice_id: v.voiceId,
             };
         });

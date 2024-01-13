@@ -6,7 +6,6 @@ import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
 import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
-import * as components from "../models/components";
 import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 import { LiveClient } from "./liveClient";
@@ -25,17 +24,11 @@ export class RetellClient extends ClientSDK {
     }
 
     async createWebCall(
-        agentId: string,
-        sampleRate = 16000,
-        agentPromptParams: { name: string; value: string }[] = [],
-        websocketEndpoint: string = "wss://api.re-tell.ai"
+        input: operations.CreateWebCallRequestBody
       ): Promise<LiveClient> {
         const liveClient = new LiveClient(
           this.options$.apiKey as unknown as string,
-          agentId,
-          sampleRate,
-          agentPromptParams,
-          websocketEndpoint
+          input
         );
         await liveClient.waitForReady();
         return liveClient;
@@ -174,7 +167,7 @@ export class RetellClient extends ClientSDK {
             const responseBody = await response.json();
             const result = operations.CreatePhoneCallResponse$.inboundSchema.parse({
                 ...responseFields$,
-                object: responseBody,
+                callDetail: responseBody,
             });
             return result;
         } else if (this.matchResponse(response, 400, "application/json")) {
@@ -813,7 +806,7 @@ export class RetellClient extends ClientSDK {
             const responseBody = await response.json();
             const result = operations.ListAgentsResponse$.inboundSchema.parse({
                 ...responseFields$,
-                classes: responseBody,
+                agents: responseBody,
             });
             return result;
         } else if (this.matchResponse(response, 401, "application/json")) {
@@ -860,7 +853,7 @@ export class RetellClient extends ClientSDK {
         const path$ = this.templateURLComponent("/list-calls")();
 
         const query$ = [
-            enc$.encodeForm("filter_criteria", payload$.filter_criteria, {
+            enc$.encodeForm("filter_criteria", JSON.stringify(payload$.filter_criteria), {
                 explode: true,
                 charEncoding: "percent",
             }),
@@ -905,7 +898,7 @@ export class RetellClient extends ClientSDK {
             const responseBody = await response.json();
             const result = operations.ListCallsResponse$.inboundSchema.parse({
                 ...responseFields$,
-                classes: responseBody,
+                calls: responseBody,
             });
             return result;
         } else if (this.matchResponse(response, 400, "application/json")) {
@@ -970,7 +963,7 @@ export class RetellClient extends ClientSDK {
             const responseBody = await response.json();
             const result = operations.ListPhoneNumbersResponse$.inboundSchema.parse({
                 ...responseFields$,
-                classes: responseBody,
+                phoneNumbers: responseBody,
             });
             return result;
         } else if (this.matchResponse(response, 400, "application/json")) {
@@ -1004,12 +997,12 @@ export class RetellClient extends ClientSDK {
      * Update an existing agent
      */
     async updateAgent(
-        agentNoDefaultNoRequired: components.AgentNoDefaultNoRequired,
+        requestBody: operations.UpdateAgentRequestBody,
         agentId: string,
         options?: RequestOptions
     ): Promise<operations.UpdateAgentResponse> {
         const input$: operations.UpdateAgentRequest = {
-            agentNoDefaultNoRequired: agentNoDefaultNoRequired,
+            requestBody: requestBody,
             agentId: agentId,
         };
         const headers$ = new Headers();
@@ -1019,7 +1012,7 @@ export class RetellClient extends ClientSDK {
 
         const payload$ = operations.UpdateAgentRequest$.outboundSchema.parse(input$);
 
-        const body$ = enc$.encodeJSON("body", payload$.AgentNoDefaultNoRequired, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
 
         const pathParams$ = {
             agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {

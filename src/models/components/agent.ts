@@ -4,23 +4,199 @@
 
 import { z } from "zod";
 
-export type Agent = {
+export type RetellLlmSetting = {
     /**
-     * Unique id of agent.
+     * Retell picked LLM based conversation response.
      */
-    agentId: string;
+    provider: "retell";
     /**
-     * The name of the agent. Only used for your own reference.
+     * The prompt agent will follow. Can use `${YOUR_PARAM_NAME}` to represent dynamic data that would get injected at each call.
      */
-    agentName?: string | undefined;
+    prompt: string;
+}
+
+/** @internal */
+export namespace RetellLlmSetting$ {
+    export type Inbound = {
+        provider: "retell";
+        prompt: string;
+    };
+
+    export const inboundSchema: z.ZodType<RetellLlmSetting, z.ZodTypeDef, Inbound> = z
+        .object({
+            provider: z.literal("retell"),
+            prompt: z.string(),
+        })
+        .transform((v) => {
+            return {
+                provider: v.provider,
+                prompt: v.prompt,
+            };
+        });
+
+    export type Outbound = {
+        provider: "retell";
+        prompt: string;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RetellLlmSetting> = z
+        .object({
+            provider: z.literal("retell"),
+            prompt: z.string(),
+        })
+        .transform((v) => {
+            return {
+                provider: v.provider,
+                prompt: v.prompt,
+            };
+        });
+}
+
+export type CustomLlmSetting = {
+    /**
+     * Custom response system, usually your custom LLM. Note that you may see a higher latency if provided server is slow.
+     */
+    provider: "custom";
+    /**
+     * The URL we will call for getting response, usually your server.
+     */
+    url: string;
+    /**
+     * Whether the provided URL support return response via Server Sent Events.
+     */
+    stream: boolean;
+}
+
+/** @internal */
+export namespace CustomLlmSetting$ {
+    export type Inbound = {
+        provider: "custom";
+        url: string;
+        stream: boolean;
+    };
+
+    export const inboundSchema: z.ZodType<CustomLlmSetting, z.ZodTypeDef, Inbound> = z
+        .object({
+            provider: z.literal("custom"),
+            url: z.string(),
+            stream: z.boolean(),
+        })
+        .transform((v) => {
+            return {
+                provider: v.provider,
+                url: v.url,
+                stream: v.stream
+            };
+        });
+
+    export type Outbound = {
+        provider: "custom";
+        url: string;
+        stream: boolean;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CustomLlmSetting> = z
+        .object({
+            provider: z.literal("custom"),
+            url: z.string(),
+            stream: z.boolean(),
+        })
+        .transform((v) => {
+            return {
+                provider: v.provider,
+                url: v.url,
+                stream: v.stream
+            };
+        });
+}
+
+export type InteractionSettingRequest = {
+    /**
+     * Whether the agent begins the call with a pre-defined message. When this is false, the agent will still start the call, but with a dynamic message. If you wish for user to be the first to talk, set this to true and set `begin_message` as empty string.
+     */
+    enableBeginMessage?: boolean | undefined;
     /**
      * Pre-defined message for agent to say in the begining of call. Only used when `enable_begin_message` is true. When empty, agent would wait for user to talk first.
      */
     beginMessage?: string | undefined;
     /**
+     * Whether the agent can end a call. If false, the agent would never end a call.
+     */
+    enableEndCall?: boolean | undefined;
+    /**
+     * Whether the agent attempts to end the call with a pre-defined message. When this is false, the agent might still be the last one speaking in the call, but the massage can be dynamic.
+     */
+    enableEndMessage?: boolean | undefined;
+    /**
+     * Pre-defined message for agent to say when agent ends the call. Only used when `enable_end_call` and `enable_end_message` is true. If you wish for agent to hang up without saying anything, set this to empty string.
+     */
+    endMessage?: string | undefined;
+}
+
+/** @internal */
+export namespace InteractionSettingRequest$ {
+    export type Inbound = {
+        enable_begin_message?: boolean | undefined;
+        begin_message?: string | undefined;
+        enable_end_call?: boolean | undefined;
+        enable_end_message?: boolean | undefined;
+        end_message?: string | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<InteractionSettingRequest, z.ZodTypeDef, Inbound> = z
+        .object({
+            enable_begin_message: z.boolean().optional(),
+            begin_message: z.string().optional(),
+            enable_end_call: z.boolean().optional(),
+            enable_end_message: z.boolean().optional(),
+            end_message: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.enable_begin_message === undefined ? null : { enableBeginMessage: v.enable_begin_message }),
+                ...(v.begin_message === undefined ? null : { beginMessage: v.begin_message }),
+                ...(v.enable_end_call === undefined ? null : { enableEndCall: v.enable_end_call }),
+                ...(v.enable_end_message === undefined ? null : { enableEndMessage: v.enable_end_message }),
+                ...(v.end_message === undefined ? null : { endMessage: v.end_message }),
+            };
+        });
+
+    export type Outbound = {
+        enable_begin_message?: boolean | undefined;
+        begin_message?: string | undefined;
+        enable_end_call?: boolean | undefined;
+        enable_end_message?: boolean | undefined;
+        end_message?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InteractionSettingRequest> = z
+        .object({
+            enableBeginMessage: z.boolean().optional(),
+            beginMessage: z.string().optional(),
+            enableEndCall: z.boolean().optional(),
+            enableEndMessage: z.boolean().optional(),
+            endMessage: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.enableBeginMessage === undefined ? null : { enable_begin_message: v.enableBeginMessage }),
+                ...(v.beginMessage === undefined ? null : { begin_message: v.beginMessage }),
+                ...(v.enableEndCall === undefined ? null : { enable_end_call: v.enableEndCall }),
+                ...(v.enableEndMessage === undefined ? null : { enable_end_message: v.enableEndMessage }),
+                ...(v.endMessage === undefined ? null : { end_message: v.endMessage }),
+            };
+        });
+}
+
+export type InteractionSettingResponse = {
+    /**
      * Whether the agent begins the call with a pre-defined message. When this is false, the agent will still start the call, but with a dynamic message. If you wish for user to be the first to talk, set this to true and set `begin_message` as empty string.
      */
     enableBeginMessage: boolean;
+    /**
+     * Pre-defined message for agent to say in the begining of call. Only used when `enable_begin_message` is true. When empty, agent would wait for user to talk first.
+     */
+     beginMessage?: string | undefined;
     /**
      * Whether the agent can end a call. If false, the agent would never end a call.
      */
@@ -33,18 +209,89 @@ export type Agent = {
      * Pre-defined message for agent to say when agent ends the call. Only used when `enable_end_call` and `enable_end_message` is true. If you wish for agent to hang up without saying anything, set this to empty string.
      */
     endMessage?: string | undefined;
+}
+
+/** @internal */
+export namespace InteractionSettingResponse$ {
+    export type Inbound = {
+        enable_begin_message: boolean;
+        begin_message?: string | undefined;
+        enable_end_call: boolean;
+        enable_end_message: boolean;
+        end_message?: string | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<InteractionSettingResponse, z.ZodTypeDef, Inbound> = z
+        .object({
+            enable_begin_message: z.boolean(),
+            begin_message: z.string().optional(),
+            enable_end_call: z.boolean(),
+            enable_end_message: z.boolean(),
+            end_message: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                enableBeginMessage: v.enable_begin_message,
+                ...(v.begin_message === undefined ? null : { beginMessage: v.begin_message }),
+                enableEndCall: v.enable_end_call,
+                enableEndMessage: v.enable_end_message,
+                ...(v.end_message === undefined ? null : { endMessage: v.end_message }),
+            };
+        });
+
+    export type Outbound = {
+        enable_begin_message: boolean;
+        begin_message?: string | undefined;
+        enable_end_call: boolean;
+        enable_end_message: boolean;
+        end_message?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InteractionSettingResponse> = z
+        .object({
+            enableBeginMessage: z.boolean(),
+            beginMessage: z.string().optional(),
+            enableEndCall: z.boolean(),
+            enableEndMessage: z.boolean(),
+            endMessage: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                enable_begin_message: v.enableBeginMessage,
+                ...(v.beginMessage === undefined ? null : { begin_message: v.beginMessage }),
+                enable_end_call: v.enableEndCall,
+                enable_end_message: v.enableEndMessage,
+                ...(v.endMessage === undefined ? null : { end_message: v.endMessage }),
+            };
+        });
+}
+
+export type Agent = {
+    /**
+     * Unique id of agent.
+     */
+    agentId: string;
+    /**
+     * The name of the agent. Only used for your own reference.
+     */
+    agentName?: string | undefined;
+    /*
+    * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom  
+    * response generation system.
+    */
+    llmSetting: RetellLlmSetting | CustomLlmSetting;
+    /**
+     * Setting combination that controls interaction flow, like begin and end logic.
+     */
+    interactionSetting: InteractionSettingResponse;
+    /**
+     * Unique voice id used for the agent. Find list of available voices in documentation.
+     */
+    voiceId: string;
     /**
      * Last modification timestamp (milliseconds since epoch). Either the time of last update or creation if no updates available.
      */
     lastModificationTimestamp: number;
-    /**
-     * The prompt agent will follow. Check out [Prompt Best Practices](/features/prompt). Can use `${YOUR_PARAM_NAME}` to represent dynamic data that would get injected at each call. Learn more about [Agent Prompt Parameters](/features/prompt#prompt-parameters).
-     */
-    prompt: string;
-    /**
-     * Unique voice id used for the agent. Find list of available voices and their characteristics in [Voices](/features/voices).
-     */
-    voiceId: string;
 };
 
 /** @internal */
@@ -52,82 +299,58 @@ export namespace Agent$ {
     export type Inbound = {
         agent_id: string;
         agent_name?: string | undefined;
-        begin_message?: string | undefined;
-        enable_begin_message: boolean;
-        enable_end_call: boolean;
-        enable_end_message: boolean;
-        end_message?: string | undefined;
-        last_modification_timestamp: number;
-        prompt: string;
+        llm_setting: RetellLlmSetting$.Inbound | CustomLlmSetting$.Inbound;
+        interaction_setting: InteractionSettingResponse$.Inbound;
         voice_id: string;
+        last_modification_timestamp: number;
     };
 
     export const inboundSchema: z.ZodType<Agent, z.ZodTypeDef, Inbound> = z
         .object({
             agent_id: z.string(),
             agent_name: z.string().optional(),
-            begin_message: z.string().optional(),
-            enable_begin_message: z.boolean(),
-            enable_end_call: z.boolean(),
-            enable_end_message: z.boolean(),
-            end_message: z.string().optional(),
-            last_modification_timestamp: z.number().int(),
-            prompt: z.string(),
+            llm_setting: z.union([RetellLlmSetting$.inboundSchema, CustomLlmSetting$.inboundSchema]),
+            interaction_setting: InteractionSettingResponse$.inboundSchema,
             voice_id: z.string(),
+            last_modification_timestamp: z.number().int(),
         })
         .transform((v) => {
             return {
                 agentId: v.agent_id,
                 ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
-                ...(v.begin_message === undefined ? null : { beginMessage: v.begin_message }),
-                enableBeginMessage: v.enable_begin_message,
-                enableEndCall: v.enable_end_call,
-                enableEndMessage: v.enable_end_message,
-                ...(v.end_message === undefined ? null : { endMessage: v.end_message }),
-                lastModificationTimestamp: v.last_modification_timestamp,
-                prompt: v.prompt,
+                llmSetting: v.llm_setting,
+                interactionSetting: v.interaction_setting,
                 voiceId: v.voice_id,
+                lastModificationTimestamp: v.last_modification_timestamp,
             };
         });
 
     export type Outbound = {
         agent_id: string;
         agent_name?: string | undefined;
-        begin_message?: string | undefined;
-        enable_begin_message: boolean;
-        enable_end_call: boolean;
-        enable_end_message: boolean;
-        end_message?: string | undefined;
-        last_modification_timestamp: number;
-        prompt: string;
+        llm_setting: RetellLlmSetting$.Outbound | CustomLlmSetting$.Outbound;
+        interaction_setting: InteractionSettingResponse$.Outbound;
         voice_id: string;
+        last_modification_timestamp: number;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Agent> = z
         .object({
             agentId: z.string(),
             agentName: z.string().optional(),
-            beginMessage: z.string().optional(),
-            enableBeginMessage: z.boolean(),
-            enableEndCall: z.boolean(),
-            enableEndMessage: z.boolean(),
-            endMessage: z.string().optional(),
-            lastModificationTimestamp: z.number().int(),
-            prompt: z.string(),
+            llmSetting: z.union([RetellLlmSetting$.outboundSchema, CustomLlmSetting$.outboundSchema]),
+            interactionSetting: InteractionSettingResponse$.outboundSchema,
             voiceId: z.string(),
+            lastModificationTimestamp: z.number().int(),
         })
         .transform((v) => {
             return {
                 agent_id: v.agentId,
                 ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
-                ...(v.beginMessage === undefined ? null : { begin_message: v.beginMessage }),
-                enable_begin_message: v.enableBeginMessage,
-                enable_end_call: v.enableEndCall,
-                enable_end_message: v.enableEndMessage,
-                ...(v.endMessage === undefined ? null : { end_message: v.endMessage }),
-                last_modification_timestamp: v.lastModificationTimestamp,
-                prompt: v.prompt,
+                llm_setting: v.llmSetting,
+                interaction_setting: v.interactionSetting,
                 voice_id: v.voiceId,
+                last_modification_timestamp: v.lastModificationTimestamp,                
             };
         });
 }

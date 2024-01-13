@@ -12,7 +12,7 @@ export type PhoneNumber = {
     /**
      * Phone number you purchased in E.164 format. It would have an agent id associated with it.
      */
-    from?: any | undefined;
+    from: string;
     /**
      * Callee phone number in E.164 format.
      */
@@ -21,9 +21,12 @@ export type PhoneNumber = {
 
 export type CreatePhoneCallRequestBody = {
     /**
-     * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect. Learn more about [Agent Prompt Parameters](/features/agent-prompt-parameter).
+     * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect.
      */
     agentPromptParams?: Array<components.AgentPromptParams> | undefined;
+    /**
+     * Phone number associated with the call.
+     */
     phoneNumber: PhoneNumber;
 };
 
@@ -69,6 +72,9 @@ export type CreatePhoneCallResponseBody = {
      * Web call or phone call.
      */
     callType: CreatePhoneCallCallType;
+    /**
+     * Phone number associated with the call.
+     */
     phoneNumber: components.CallPhoneNumber;
     /**
      * Begin timestamp (milliseconds since epoch) of the call.
@@ -98,35 +104,35 @@ export type CreatePhoneCallResponse = {
 /** @internal */
 export namespace PhoneNumber$ {
     export type Inbound = {
-        from?: any | undefined;
+        from: string;
         to: string;
     };
 
     export const inboundSchema: z.ZodType<PhoneNumber, z.ZodTypeDef, Inbound> = z
         .object({
-            from: z.any().optional(),
+            from: z.string(),
             to: z.string(),
         })
         .transform((v) => {
             return {
-                ...(v.from === undefined ? null : { from: v.from }),
+                from: v.from,
                 to: v.to,
             };
         });
 
     export type Outbound = {
-        from?: any | undefined;
+        from: string;
         to: string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PhoneNumber> = z
         .object({
-            from: z.any().optional(),
+            from: z.string(),
             to: z.string(),
         })
         .transform((v) => {
             return {
-                ...(v.from === undefined ? null : { from: v.from }),
+                from: v.from,
                 to: v.to,
             };
         });
@@ -256,7 +262,7 @@ export namespace CreatePhoneCallResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: CreatePhoneCallResponseBody$.Inbound | undefined;
+        callDetail?: CreatePhoneCallResponseBody$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<CreatePhoneCallResponse, z.ZodTypeDef, Inbound> = z
@@ -264,14 +270,14 @@ export namespace CreatePhoneCallResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => CreatePhoneCallResponseBody$.inboundSchema).optional(),
+            callDetail: z.lazy(() => CreatePhoneCallResponseBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 contentType: v.ContentType,
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.object === undefined ? null : { object: v.object }),
+                ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
             };
         });
 
@@ -279,7 +285,7 @@ export namespace CreatePhoneCallResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: CreatePhoneCallResponseBody$.Outbound | undefined;
+        callDetail?: CreatePhoneCallResponseBody$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneCallResponse> = z
@@ -289,14 +295,14 @@ export namespace CreatePhoneCallResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => CreatePhoneCallResponseBody$.outboundSchema).optional(),
+            callDetail: z.lazy(() => CreatePhoneCallResponseBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 ContentType: v.contentType,
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.object === undefined ? null : { object: v.object }),
+                ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
             };
         });
 }

@@ -7,7 +7,7 @@ import { z } from "zod";
 
 export type CreatePhoneNumberRequestBody = {
     /**
-     * Unique agent id to associate with this phone number. Can be updated with [Update Phone Agent](/api/update-phone-agent).
+     * Unique agent id to associate with this phone number. Can be updated.
      */
     agentId: string;
     /**

@@ -5,8 +5,77 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
+export type UpdateAgentRequestBody = {
+    /**
+     * The name of the agent. Only used for your own reference.
+     */
+    agentName?: string | undefined;
+    /*
+    * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom  
+    * response generation system.
+    */
+    llmSetting?: components.RetellLlmSetting | components.CustomLlmSetting | undefined;
+    /**
+     * Setting combination that controls interaction flow, like begin and end logic.
+     */
+    interactionSetting?: components.InteractionSettingRequest | undefined;
+    /**
+     * Unique voice id used for the agent. Find list of available voices in documentation.
+     */
+    voiceId?: string | undefined;
+};
+
+/** @internal */
+export namespace UpdateAgentRequestBody$ {
+    export type Inbound = {
+        agent_name?: string | undefined;
+        llm_setting?: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound | undefined;
+        interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
+        voice_id?: string | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<UpdateAgentRequestBody, z.ZodTypeDef, Inbound> = z
+        .object({
+            agent_name: z.string().optional(),
+            llm_setting: z.union([components.RetellLlmSetting$.inboundSchema, components.CustomLlmSetting$.inboundSchema]).optional(),
+            interaction_setting: components.InteractionSettingRequest$.inboundSchema.optional(),
+            voice_id: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
+                ...(v.llm_setting === undefined ? null : { llmSetting: v.llm_setting }),
+                ...(v.interaction_setting === undefined ? null : { interactionSetting: v.interaction_setting }),
+                ...(v.voice_id === undefined ? null : { voiceId: v.voice_id }),
+            };
+        });
+
+    export type Outbound = {
+        agent_name?: string | undefined;
+        llm_setting?: components.RetellLlmSetting$.Outbound | components.CustomLlmSetting$.Outbound | undefined;
+        interaction_setting?: components.InteractionSettingRequest$.Outbound | undefined;
+        voice_id?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UpdateAgentRequestBody> = z
+        .object({
+            agentName: z.string().optional(),
+            llmSetting: z.union([components.RetellLlmSetting$.outboundSchema, components.CustomLlmSetting$.outboundSchema]).optional(),
+            interactionSetting: components.InteractionSettingRequest$.outboundSchema.optional(),
+            voiceId: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
+                ...(v.llmSetting === undefined ? null : { llm_setting: v.llmSetting }),
+                ...(v.interactionSetting === undefined ? null : { interaction_setting: v.interactionSetting }),
+                ...(v.voiceId === undefined ? null : { voice_id: v.voiceId }),
+            };
+        });
+}
+
 export type UpdateAgentRequest = {
-    agentNoDefaultNoRequired: components.AgentNoDefaultNoRequired;
+    requestBody: UpdateAgentRequestBody;
     /**
      * Unique id of the agent to be updated.
      */
@@ -35,35 +104,35 @@ export type UpdateAgentResponse = {
 /** @internal */
 export namespace UpdateAgentRequest$ {
     export type Inbound = {
-        AgentNoDefaultNoRequired: components.AgentNoDefaultNoRequired$.Inbound;
+        RequestBody: UpdateAgentRequestBody$.Inbound;
         agent_id: string;
     };
 
     export const inboundSchema: z.ZodType<UpdateAgentRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            AgentNoDefaultNoRequired: components.AgentNoDefaultNoRequired$.inboundSchema,
+            RequestBody: UpdateAgentRequestBody$.inboundSchema,
             agent_id: z.string(),
         })
         .transform((v) => {
             return {
-                agentNoDefaultNoRequired: v.AgentNoDefaultNoRequired,
+                requestBody: v.RequestBody,
                 agentId: v.agent_id,
             };
         });
 
     export type Outbound = {
-        AgentNoDefaultNoRequired: components.AgentNoDefaultNoRequired$.Outbound;
+        RequestBody: UpdateAgentRequestBody$.Outbound;
         agent_id: string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UpdateAgentRequest> = z
         .object({
-            agentNoDefaultNoRequired: components.AgentNoDefaultNoRequired$.outboundSchema,
+            requestBody: UpdateAgentRequestBody$.outboundSchema,
             agentId: z.string(),
         })
         .transform((v) => {
             return {
-                AgentNoDefaultNoRequired: v.agentNoDefaultNoRequired,
+                RequestBody: v.requestBody,
                 agent_id: v.agentId,
             };
         });

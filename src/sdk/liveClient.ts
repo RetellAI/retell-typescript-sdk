@@ -1,5 +1,8 @@
 import { EventEmitter } from "eventemitter3";
 import WebSocket, { MessageEvent } from "isomorphic-ws";
+import * as operations from "../models/operations";
+
+const baseEndpoint = "wss://api.re-tell.ai";
 
 export class LiveClient extends EventEmitter {
   private ws: WebSocket;
@@ -7,10 +10,7 @@ export class LiveClient extends EventEmitter {
 
   constructor(
     apiKey: string,
-    agentId: string,
-    sampleRate: number,
-    agentPromptParams: { name: string; value: string }[],
-    baseEndpoint: string
+    input: operations.CreateWebCallRequestBody
   ) {
     super();
 
@@ -19,10 +19,13 @@ export class LiveClient extends EventEmitter {
       "/create-web-call?api_key=" +
       apiKey +
       "&agent_id=" +
-      agentId +
-      "&sample_rate=" +
-      sampleRate;
-    endpoint += "&agent_prompt_params=" + encodeURIComponent(JSON.stringify(agentPromptParams));
+      input.agentId;
+    if (input.sampleRate != null) {
+      endpoint += "&sample_rate=" + input.sampleRate;
+    }
+    if (input.agentPromptParams != null) {
+      endpoint += "&agent_prompt_params=" + encodeURIComponent(JSON.stringify(input.agentPromptParams));
+    }
     this.ws = new WebSocket(endpoint);
     this.ws.binaryType = "arraybuffer";
   }

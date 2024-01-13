@@ -74,7 +74,7 @@ export type ListCallsResponse = {
     /**
      * Successfully retrieved all agents.
      */
-    classes?: Array<components.CallDetail> | undefined;
+    calls?: Array<components.CallDetail> | undefined;
 };
 
 /** @internal */
@@ -209,7 +209,7 @@ export namespace ListCallsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        classes?: Array<components.CallDetail$.Inbound> | undefined;
+        calls?: Array<components.CallDetail$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<ListCallsResponse, z.ZodTypeDef, Inbound> = z
@@ -217,14 +217,14 @@ export namespace ListCallsResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            classes: z.array(components.CallDetail$.inboundSchema).optional(),
+            calls: z.array(components.CallDetail$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 contentType: v.ContentType,
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.calls === undefined ? null : { calls: v.calls }),
             };
         });
 
@@ -232,7 +232,7 @@ export namespace ListCallsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        classes?: Array<components.CallDetail$.Outbound> | undefined;
+        calls?: Array<components.CallDetail$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListCallsResponse> = z
@@ -242,14 +242,14 @@ export namespace ListCallsResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            classes: z.array(components.CallDetail$.outboundSchema).optional(),
+            calls: z.array(components.CallDetail$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 ContentType: v.contentType,
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.calls === undefined ? null : { calls: v.calls }),
             };
         });
 }

@@ -21,7 +21,7 @@ export type ListAgentsResponse = {
     /**
      * Successfully retrieved all agents.
      */
-    classes?: Array<components.Agent> | undefined;
+    agents?: Array<components.Agent> | undefined;
 };
 
 /** @internal */
@@ -30,7 +30,7 @@ export namespace ListAgentsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        classes?: Array<components.Agent$.Inbound> | undefined;
+        agents?: Array<components.Agent$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<ListAgentsResponse, z.ZodTypeDef, Inbound> = z
@@ -38,14 +38,14 @@ export namespace ListAgentsResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            classes: z.array(components.Agent$.inboundSchema).optional(),
+            agents: z.array(components.Agent$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 contentType: v.ContentType,
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.agents === undefined ? null : { agents: v.agents }),
             };
         });
 
@@ -53,7 +53,7 @@ export namespace ListAgentsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        classes?: Array<components.Agent$.Outbound> | undefined;
+        agents?: Array<components.Agent$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListAgentsResponse> = z
@@ -63,14 +63,14 @@ export namespace ListAgentsResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            classes: z.array(components.Agent$.outboundSchema).optional(),
+            agents: z.array(components.Agent$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 ContentType: v.contentType,
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.agents === undefined ? null : { agents: v.agents }),
             };
         });
 }
