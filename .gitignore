@@ -7,3 +7,4 @@
 /cjs
 /node_modules
 /.tsbuildinfo
+src/example.ts
