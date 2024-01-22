@@ -4,6 +4,103 @@
 
 import { z } from "zod";
 
+export type Function = {
+    /**
+     * Link to the url where the function call parameters would sent to as a json body. Most likely your server endpoint you expose for this function.
+     */
+    url: string;
+    /**
+     * A description of what the function does, used by the model to choose when and how to call the function. Recommended to populate this for better results.
+     */
+    description?: string | undefined;
+    /**
+     * The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+     */
+    name: string;
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object for type object
+     */
+    parameters?: {
+        /**
+         * The type of parameters is object.
+         */
+        type: 'object';
+        /**
+         * Defines what properties are required for the parameters.
+         */
+        required?: string[] | undefined;
+        /**
+         * Key-value pairs object where each key is the name of a property and each value is a schema used to validate that property.
+         */
+        properties: Record<string, any>;
+    } | undefined;
+};
+
+/** @internal */
+export namespace Function$ {
+    export type Inbound = {
+        url: string;
+        description?: string | undefined;
+        name: string;
+        parameters?: {
+            type: 'object';
+            required?: string[] | undefined;
+            properties: Record<string, any>;
+        } | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<Function, z.ZodTypeDef, Inbound> = z
+        .object({
+            url: z.string(),
+            description: z.string().optional(),
+            name: z.string(),
+            parameters: z.object({
+                type: z.literal('object'),
+                required: z.array(z.string()).optional(),
+                properties: z.record(z.any()),
+            }).optional(),
+        })
+        .transform((v) => {
+            return {
+                url: v.url,
+                description: v.description,
+                name: v.name,
+                parameters: v.parameters,
+            };
+        });
+
+    export type Outbound = {
+        url: string;
+        description?: string | undefined;
+        name: string;
+        parameters?: {
+            type: 'object';
+            required?: string[] | undefined;
+            properties: Record<string, any>;
+        } | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Function, z.ZodTypeDef, Inbound> = z
+        .object({
+            url: z.string(),
+            description: z.string().optional(),
+            name: z.string(),
+            parameters: z.object({
+                type: z.literal('object'),
+                required: z.array(z.string()).optional(),
+                properties: z.record(z.any()),
+            }).optional(),
+        })
+        .transform((v) => {
+            return {
+                url: v.url,
+                description: v.description,
+                name: v.name,
+                parameters: v.parameters,
+            };
+        });
+}
+
 export type RetellLlmSetting = {
     /**
      * Retell picked LLM based conversation response.
@@ -196,7 +293,7 @@ export type InteractionSettingResponse = {
     /**
      * Pre-defined message for agent to say in the begining of call. Only used when `enable_begin_message` is true. When empty, agent would wait for user to talk first.
      */
-     beginMessage?: string | undefined;
+    beginMessage?: string | undefined;
     /**
      * Whether the agent can end a call. If false, the agent would never end a call.
      */
@@ -292,6 +389,10 @@ export type Agent = {
      * Last modification timestamp (milliseconds since epoch). Either the time of last update or creation if no updates available.
      */
     lastModificationTimestamp: number;
+    /**
+     * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
+     */
+    functions?: Function[] | undefined;
 };
 
 /** @internal */
@@ -350,7 +451,7 @@ export namespace Agent$ {
                 llm_setting: v.llmSetting,
                 interaction_setting: v.interactionSetting,
                 voice_id: v.voiceId,
-                last_modification_timestamp: v.lastModificationTimestamp,                
+                last_modification_timestamp: v.lastModificationTimestamp,
             };
         });
 }

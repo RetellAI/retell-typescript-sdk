@@ -3,6 +3,7 @@
  */
 
 import * as components from "../../models/components";
+import { Function } from "../../models/components";
 import { z } from "zod";
 
 export type CreateAgentRequestBody = {
@@ -14,7 +15,7 @@ export type CreateAgentRequestBody = {
     * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom  
     * response generation system.
     */
-    llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;  
+    llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;
     /**
      * Setting combination that controls interaction flow, like begin and end logic.
      */
@@ -23,6 +24,10 @@ export type CreateAgentRequestBody = {
      * Unique voice id used for the agent. Find list of available voices in documentation.
      */
     voiceId: string;
+    /**
+     * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
+     */
+    functions?: Function[] | undefined;
 };
 
 export type CreateAgentResponse = {
@@ -51,6 +56,7 @@ export namespace CreateAgentRequestBody$ {
         llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
         interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
         voice_id: string;
+        functions?: Function[] | undefined;
     };
 
     export const inboundSchema: z.ZodType<CreateAgentRequestBody, z.ZodTypeDef, Inbound> = z
@@ -59,6 +65,7 @@ export namespace CreateAgentRequestBody$ {
             llm_setting: z.union([components.RetellLlmSetting$.inboundSchema, components.CustomLlmSetting$.inboundSchema]),
             interaction_setting: components.InteractionSettingRequest$.inboundSchema.optional(),
             voice_id: z.string(),
+            functions: z.array(components.Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -66,6 +73,7 @@ export namespace CreateAgentRequestBody$ {
                 llmSetting: v.llm_setting,
                 ...(v.interaction_setting === undefined ? null : { interactionSetting: v.interaction_setting }),
                 voiceId: v.voice_id,
+                functions: v.functions,
             };
         });
 
@@ -74,6 +82,7 @@ export namespace CreateAgentRequestBody$ {
         llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
         interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
         voice_id: string;
+        functions?: Function[] | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateAgentRequestBody> = z
@@ -82,6 +91,7 @@ export namespace CreateAgentRequestBody$ {
             llmSetting: z.union([components.RetellLlmSetting$.outboundSchema, components.CustomLlmSetting$.outboundSchema]),
             interactionSetting: components.InteractionSettingRequest$.outboundSchema.optional(),
             voiceId: z.string(),
+            functions: z.array(components.Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -89,6 +99,7 @@ export namespace CreateAgentRequestBody$ {
                 llm_setting: v.llmSetting,
                 ...(v.interactionSetting === undefined ? null : { interaction_setting: v.interactionSetting }),
                 voice_id: v.voiceId,
+                functions: v.functions,
             };
         });
 }
