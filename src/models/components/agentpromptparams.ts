@@ -5,49 +5,57 @@
 import { z } from "zod";
 
 export type AgentPromptParams = {
-    /**
-     * The name of the parameter enclosed as `${YOUR_PARAM_NAME}` in agent prompt.
-     */
-    name: string;
-    /**
-     * The value of parameter to substitute in agent prompt.
-     */
-    value: string;
+  /**
+   * The name of the parameter enclosed as `${YOUR_PARAM_NAME}` in agent prompt.
+   */
+  name: string;
+  /**
+   * The value of parameter to substitute in agent prompt.
+   */
+  value: string;
 };
 
 /** @internal */
 export namespace AgentPromptParams$ {
-    export type Inbound = {
-        name: string;
-        value: string;
-    };
+  export type Inbound = {
+    name: string;
+    value: string;
+  };
 
-    export const inboundSchema: z.ZodType<AgentPromptParams, z.ZodTypeDef, Inbound> = z
-        .object({
-            name: z.string(),
-            value: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-                value: v.value,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    AgentPromptParams,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      name: z.string(),
+      value: z.string(),
+    })
+    .transform((v) => {
+      return {
+        name: v.name,
+        value: v.value,
+      };
+    });
 
-    export type Outbound = {
-        name: string;
-        value: string;
-    };
+  export type Outbound = {
+    name: string;
+    value: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AgentPromptParams> = z
-        .object({
-            name: z.string(),
-            value: z.string(),
-        })
-        .transform((v) => {
-            return {
-                name: v.name,
-                value: v.value,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    AgentPromptParams
+  > = z
+    .object({
+      name: z.string(),
+      value: z.string(),
+    })
+    .transform((v) => {
+      return {
+        name: v.name,
+        value: v.value,
+      };
+    });
 }

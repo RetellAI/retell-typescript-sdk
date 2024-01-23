@@ -5,79 +5,80 @@
 import { z } from "zod";
 
 export type PhoneNumber = {
-    /**
-     * Unique agent id to associate with this phone number. Can be updated with [Update Phone Agent](/api/update-phone-agent).
-     */
-    agentId: string;
-    /**
-     * The area code of the number. This is a 3 digit integer.
-     */
-    areaCode: number;
-    /**
-     * Last modification timestamp (milliseconds since epoch). Either the time of last update or creation if no updates available.
-     */
-    lastModificationTimestamp: number;
-    /**
-     * Unique phone number you purchased in E.164 format. This number is set up to handle inbound phone calls, and can be used for outbound phone calls with [Create Phone Call](/api/create-phone-call).
-     */
-    phoneNumber: string;
-    /**
-     * Unique phone number you purchased in pretty human readable format. Example: (415) 909-5857.
-     */
-    phoneNumberPretty: string;
+  /**
+   * Unique agent id to associate with this phone number. Can be updated with [Update Phone Agent](/api/update-phone-agent).
+   */
+  agentId: string;
+  /**
+   * The area code of the number. This is a 3 digit integer.
+   */
+  areaCode: number;
+  /**
+   * Last modification timestamp (milliseconds since epoch). Either the time of last update or creation if no updates available.
+   */
+  lastModificationTimestamp: number;
+  /**
+   * Unique phone number you purchased in E.164 format. This number is set up to handle inbound phone calls, and can be used for outbound phone calls with [Create Phone Call](/api/create-phone-call).
+   */
+  phoneNumber: string;
+  /**
+   * Unique phone number you purchased in pretty human readable format. Example: (415) 909-5857.
+   */
+  phoneNumberPretty: string;
 };
 
 /** @internal */
 export namespace PhoneNumber$ {
-    export type Inbound = {
-        agent_id: string;
-        area_code: number;
-        last_modification_timestamp: number;
-        phone_number: string;
-        phone_number_pretty: string;
-    };
+  export type Inbound = {
+    agent_id: string;
+    area_code: number;
+    last_modification_timestamp: number;
+    phone_number: string;
+    phone_number_pretty: string;
+  };
 
-    export const inboundSchema: z.ZodType<PhoneNumber, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_id: z.string(),
-            area_code: z.number().int(),
-            last_modification_timestamp: z.number().int(),
-            phone_number: z.string(),
-            phone_number_pretty: z.string(),
-        })
-        .transform((v) => {
-            return {
-                agentId: v.agent_id,
-                areaCode: v.area_code,
-                lastModificationTimestamp: v.last_modification_timestamp,
-                phoneNumber: v.phone_number,
-                phoneNumberPretty: v.phone_number_pretty,
-            };
-        });
+  export const inboundSchema: z.ZodType<PhoneNumber, z.ZodTypeDef, Inbound> = z
+    .object({
+      agent_id: z.string(),
+      area_code: z.number().int(),
+      last_modification_timestamp: z.number().int(),
+      phone_number: z.string(),
+      phone_number_pretty: z.string(),
+    })
+    .transform((v) => {
+      return {
+        agentId: v.agent_id,
+        areaCode: v.area_code,
+        lastModificationTimestamp: v.last_modification_timestamp,
+        phoneNumber: v.phone_number,
+        phoneNumberPretty: v.phone_number_pretty,
+      };
+    });
 
-    export type Outbound = {
-        agent_id: string;
-        area_code: number;
-        last_modification_timestamp: number;
-        phone_number: string;
-        phone_number_pretty: string;
-    };
+  export type Outbound = {
+    agent_id: string;
+    area_code: number;
+    last_modification_timestamp: number;
+    phone_number: string;
+    phone_number_pretty: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PhoneNumber> = z
-        .object({
-            agentId: z.string(),
-            areaCode: z.number().int(),
-            lastModificationTimestamp: z.number().int(),
-            phoneNumber: z.string(),
-            phoneNumberPretty: z.string(),
-        })
-        .transform((v) => {
-            return {
-                agent_id: v.agentId,
-                area_code: v.areaCode,
-                last_modification_timestamp: v.lastModificationTimestamp,
-                phone_number: v.phoneNumber,
-                phone_number_pretty: v.phoneNumberPretty,
-            };
-        });
+  export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PhoneNumber> =
+    z
+      .object({
+        agentId: z.string(),
+        areaCode: z.number().int(),
+        lastModificationTimestamp: z.number().int(),
+        phoneNumber: z.string(),
+        phoneNumberPretty: z.string(),
+      })
+      .transform((v) => {
+        return {
+          agent_id: v.agentId,
+          area_code: v.areaCode,
+          last_modification_timestamp: v.lastModificationTimestamp,
+          phone_number: v.phoneNumber,
+          phone_number_pretty: v.phoneNumberPretty,
+        };
+      });
 }

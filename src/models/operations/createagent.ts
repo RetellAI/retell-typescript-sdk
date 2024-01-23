@@ -7,150 +7,186 @@ import { Function } from "../../models/components";
 import { z } from "zod";
 
 export type CreateAgentRequestBody = {
-    /**
-     * The name of the agent. Only used for your own reference.
-     */
-    agentName?: string | undefined;
-    /*
-    * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom  
-    * response generation system.
-    */
-    llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;
-    /**
-     * Setting combination that controls interaction flow, like begin and end logic.
-     */
-    interactionSetting?: components.InteractionSettingRequest | undefined;
-    /**
-     * Unique voice id used for the agent. Find list of available voices in documentation.
-     */
-    voiceId: string;
-    /**
-     * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
-     */
-    functions?: Function[] | undefined;
+  /**
+   * The name of the agent. Only used for your own reference.
+   */
+  agentName?: string | undefined;
+  /*
+   * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom
+   * response generation system.
+   */
+  llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;
+  /**
+   * Setting combination that controls interaction flow, like begin and end logic.
+   */
+  interactionSetting?: components.InteractionSettingRequest | undefined;
+  /**
+   * Unique voice id used for the agent. Find list of available voices in documentation.
+   */
+  voiceId: string;
+  /**
+   * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
+   */
+  functions?: Function[] | undefined;
 };
 
 export type CreateAgentResponse = {
-    /**
-     * Successfully created a new agent.
-     */
-    agent?: components.Agent | undefined;
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
+  /**
+   * Successfully created a new agent.
+   */
+  agent?: components.Agent | undefined;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
 };
 
 /** @internal */
 export namespace CreateAgentRequestBody$ {
-    export type Inbound = {
-        agent_name?: string | undefined;
-        llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
-        interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
-        voice_id: string;
-        functions?: Function[] | undefined;
-    };
+  export type Inbound = {
+    agent_name?: string | undefined;
+    llm_setting:
+      | components.RetellLlmSetting$.Inbound
+      | components.CustomLlmSetting$.Inbound;
+    interaction_setting?:
+      | components.InteractionSettingRequest$.Inbound
+      | undefined;
+    voice_id: string;
+    functions?: Function[] | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<CreateAgentRequestBody, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_name: z.string().optional(),
-            llm_setting: z.union([components.RetellLlmSetting$.inboundSchema, components.CustomLlmSetting$.inboundSchema]),
-            interaction_setting: components.InteractionSettingRequest$.inboundSchema.optional(),
-            voice_id: z.string(),
-            functions: z.array(components.Function$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
-                llmSetting: v.llm_setting,
-                ...(v.interaction_setting === undefined ? null : { interactionSetting: v.interaction_setting }),
-                voiceId: v.voice_id,
-                functions: v.functions,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreateAgentRequestBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      agent_name: z.string().optional(),
+      llm_setting: z.union([
+        components.RetellLlmSetting$.inboundSchema,
+        components.CustomLlmSetting$.inboundSchema,
+      ]),
+      interaction_setting:
+        components.InteractionSettingRequest$.inboundSchema.optional(),
+      voice_id: z.string(),
+      functions: z.array(components.Function$.inboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
+        llmSetting: v.llm_setting,
+        ...(v.interaction_setting === undefined
+          ? null
+          : { interactionSetting: v.interaction_setting }),
+        voiceId: v.voice_id,
+        ...(v.functions === undefined ? null : { functions: v.functions }),
+      };
+    });
 
-    export type Outbound = {
-        agent_name?: string | undefined;
-        llm_setting: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound;
-        interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
-        voice_id: string;
-        functions?: Function[] | undefined;
-    };
+  export type Outbound = {
+    agent_name?: string | undefined;
+    llm_setting:
+      | components.RetellLlmSetting$.Inbound
+      | components.CustomLlmSetting$.Inbound;
+    interaction_setting?:
+      | components.InteractionSettingRequest$.Inbound
+      | undefined;
+    voice_id: string;
+    functions?: Function[] | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateAgentRequestBody> = z
-        .object({
-            agentName: z.string().optional(),
-            llmSetting: z.union([components.RetellLlmSetting$.outboundSchema, components.CustomLlmSetting$.outboundSchema]),
-            interactionSetting: components.InteractionSettingRequest$.outboundSchema.optional(),
-            voiceId: z.string(),
-            functions: z.array(components.Function$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
-                llm_setting: v.llmSetting,
-                ...(v.interactionSetting === undefined ? null : { interaction_setting: v.interactionSetting }),
-                voice_id: v.voiceId,
-                functions: v.functions,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreateAgentRequestBody
+  > = z
+    .object({
+      agentName: z.string().optional(),
+      llmSetting: z.union([
+        components.RetellLlmSetting$.outboundSchema,
+        components.CustomLlmSetting$.outboundSchema,
+      ]),
+      interactionSetting:
+        components.InteractionSettingRequest$.outboundSchema.optional(),
+      voiceId: z.string(),
+      functions: z.array(components.Function$.inboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
+        llm_setting: v.llmSetting,
+        ...(v.interactionSetting === undefined
+          ? null
+          : { interaction_setting: v.interactionSetting }),
+        voice_id: v.voiceId,
+        ...(v.functions === undefined ? null : { functions: v.functions }),
+      };
+    });
 }
 
 /** @internal */
 export namespace CreateAgentResponse$ {
-    export type Inbound = {
-        Agent?: components.Agent$.Inbound | undefined;
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-    };
+  export type Inbound = {
+    Agent?: components.Agent$.Inbound | undefined;
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+  };
 
-    export const inboundSchema: z.ZodType<CreateAgentResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            Agent: components.Agent$.inboundSchema.optional(),
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return {
-                ...(v.Agent === undefined ? null : { agent: v.Agent }),
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreateAgentResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      Agent: components.Agent$.inboundSchema.optional(),
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+      return {
+        ...(v.Agent === undefined ? null : { agent: v.Agent }),
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+      };
+    });
 
-    export type Outbound = {
-        Agent?: components.Agent$.Outbound | undefined;
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-    };
+  export type Outbound = {
+    Agent?: components.Agent$.Outbound | undefined;
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateAgentResponse> = z
-        .object({
-            agent: components.Agent$.outboundSchema.optional(),
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return {
-                ...(v.agent === undefined ? null : { Agent: v.agent }),
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreateAgentResponse
+  > = z
+    .object({
+      agent: components.Agent$.outboundSchema.optional(),
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+    })
+    .transform((v) => {
+      return {
+        ...(v.agent === undefined ? null : { Agent: v.agent }),
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+      };
+    });
 }

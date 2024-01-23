@@ -9,3 +9,7 @@
 /.tsbuildinfo
 src/example.ts
 .DS_Store
+example.d.ts
+example.d.ts.map
+example.js
+example.js.map

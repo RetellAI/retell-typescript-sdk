@@ -6,119 +6,139 @@ import * as components from "../../models/components";
 import { z } from "zod";
 
 export type CreatePhoneNumberRequestBody = {
-    /**
-     * Unique agent id to associate with this phone number. Can be updated.
-     */
-    agentId: string;
-    /**
-     * The desired area code of the number. Must be valid US area code, which is a 3 digit integer.
-     */
-    areaCode?: number | undefined;
+  /**
+   * Unique agent id to associate with this phone number. Can be updated.
+   */
+  agentId: string;
+  /**
+   * The desired area code of the number. Must be valid US area code, which is a 3 digit integer.
+   */
+  areaCode?: number | undefined;
 };
 
 export type CreatePhoneNumberResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * Successfully created a new phone number.
-     */
-    phoneNumber?: components.PhoneNumber | undefined;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * Successfully created a new phone number.
+   */
+  phoneNumber?: components.PhoneNumber | undefined;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
 };
 
 /** @internal */
 export namespace CreatePhoneNumberRequestBody$ {
-    export type Inbound = {
-        agent_id: string;
-        area_code?: number | undefined;
-    };
+  export type Inbound = {
+    agent_id: string;
+    area_code?: number | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneNumberRequestBody, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_id: z.string(),
-            area_code: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                agentId: v.agent_id,
-                ...(v.area_code === undefined ? null : { areaCode: v.area_code }),
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreatePhoneNumberRequestBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      agent_id: z.string(),
+      area_code: z.number().int().optional(),
+    })
+    .transform((v) => {
+      return {
+        agentId: v.agent_id,
+        ...(v.area_code === undefined ? null : { areaCode: v.area_code }),
+      };
+    });
 
-    export type Outbound = {
-        agent_id: string;
-        area_code?: number | undefined;
-    };
+  export type Outbound = {
+    agent_id: string;
+    area_code?: number | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneNumberRequestBody> = z
-        .object({
-            agentId: z.string(),
-            areaCode: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                agent_id: v.agentId,
-                ...(v.areaCode === undefined ? null : { area_code: v.areaCode }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneNumberRequestBody
+  > = z
+    .object({
+      agentId: z.string(),
+      areaCode: z.number().int().optional(),
+    })
+    .transform((v) => {
+      return {
+        agent_id: v.agentId,
+        ...(v.areaCode === undefined ? null : { area_code: v.areaCode }),
+      };
+    });
 }
 
 /** @internal */
 export namespace CreatePhoneNumberResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        PhoneNumber?: components.PhoneNumber$.Inbound | undefined;
-        StatusCode: number;
-        RawResponse: Response;
-    };
+  export type Inbound = {
+    ContentType: string;
+    PhoneNumber?: components.PhoneNumber$.Inbound | undefined;
+    StatusCode: number;
+    RawResponse: Response;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneNumberResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            PhoneNumber: components.PhoneNumber$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                ...(v.PhoneNumber === undefined ? null : { phoneNumber: v.PhoneNumber }),
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreatePhoneNumberResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      PhoneNumber: components.PhoneNumber$.inboundSchema.optional(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        ...(v.PhoneNumber === undefined
+          ? null
+          : { phoneNumber: v.PhoneNumber }),
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        PhoneNumber?: components.PhoneNumber$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-    };
+  export type Outbound = {
+    ContentType: string;
+    PhoneNumber?: components.PhoneNumber$.Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneNumberResponse> = z
-        .object({
-            contentType: z.string(),
-            phoneNumber: components.PhoneNumber$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                ...(v.phoneNumber === undefined ? null : { PhoneNumber: v.phoneNumber }),
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneNumberResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      phoneNumber: components.PhoneNumber$.outboundSchema.optional(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        ...(v.phoneNumber === undefined
+          ? null
+          : { PhoneNumber: v.phoneNumber }),
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+      };
+    });
 }

@@ -14,7 +14,6 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": ".",
-    
 
     // https://github.com/tsconfig/bases/blob/a1bf7c0fa2e094b068ca3e1448ca2ece4157977e/bases/strictest.json
     "strict": true,
@@ -33,8 +32,8 @@
     "checkJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

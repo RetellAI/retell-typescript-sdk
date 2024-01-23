@@ -6,75 +6,75 @@ import * as components from "../../models/components";
 import { z } from "zod";
 
 export enum CallType {
-    InboundPhoneCall = "inbound_phone_call",
-    OutboundPhoneCall = "outbound_phone_call",
-    WebCall = "web_call",
+  InboundPhoneCall = "inbound_phone_call",
+  OutboundPhoneCall = "outbound_phone_call",
+  WebCall = "web_call",
 }
 
 export type FilterCriteria = {
-    /**
-     * Inclusive. Filter calls that end on or after this timestamp.
-     */
-    afterEndTimestamp?: number | undefined;
-    /**
-     * Inclusive. Filter calls that start on or after this timestamp.
-     */
-    afterStartTimestamp?: number | undefined;
-    /**
-     * Only retrieve calls that are made with specific agent(s).
-     */
-    agentId?: Array<string> | undefined;
-    /**
-     * Exclusive. Filter calls that end before this timestamp.
-     */
-    beforeEndTimestamp?: number | undefined;
-    /**
-     * Exclusive. Filter calls that start before this timestamp.
-     */
-    beforeStartTimestamp?: number | undefined;
-    /**
-     * Only retrieve calls of specific type(s).
-     */
-    callType?: Array<CallType> | undefined;
+  /**
+   * Inclusive. Filter calls that end on or after this timestamp.
+   */
+  afterEndTimestamp?: number | undefined;
+  /**
+   * Inclusive. Filter calls that start on or after this timestamp.
+   */
+  afterStartTimestamp?: number | undefined;
+  /**
+   * Only retrieve calls that are made with specific agent(s).
+   */
+  agentId?: Array<string> | undefined;
+  /**
+   * Exclusive. Filter calls that end before this timestamp.
+   */
+  beforeEndTimestamp?: number | undefined;
+  /**
+   * Exclusive. Filter calls that start before this timestamp.
+   */
+  beforeStartTimestamp?: number | undefined;
+  /**
+   * Only retrieve calls of specific type(s).
+   */
+  callType?: Array<CallType> | undefined;
 };
 
 /**
  * The calls will be sorted by `start_timestamp`, whether to return the calls in ascending or descending order.
  */
 export enum SortOrder {
-    Ascending = "ascending",
-    Descending = "descending",
+  Ascending = "ascending",
+  Descending = "descending",
 }
 
 export type ListCallsRequest = {
-    filterCriteria?: FilterCriteria | undefined;
-    /**
-     * Limit the number of calls returned.
-     */
-    limit?: number | undefined;
-    /**
-     * The calls will be sorted by `start_timestamp`, whether to return the calls in ascending or descending order.
-     */
-    sortOrder?: SortOrder | undefined;
+  filterCriteria?: FilterCriteria | undefined;
+  /**
+   * Limit the number of calls returned.
+   */
+  limit?: number | undefined;
+  /**
+   * The calls will be sorted by `start_timestamp`, whether to return the calls in ascending or descending order.
+   */
+  sortOrder?: SortOrder | undefined;
 };
 
 export type ListCallsResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
-    /**
-     * Successfully retrieved all agents.
-     */
-    calls?: Array<components.CallDetail> | undefined;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
+  /**
+   * Successfully retrieved all agents.
+   */
+  calls?: Array<components.CallDetail> | undefined;
 };
 
 /** @internal */
@@ -82,79 +82,84 @@ export const CallType$ = z.nativeEnum(CallType);
 
 /** @internal */
 export namespace FilterCriteria$ {
-    export type Inbound = {
-        after_end_timestamp?: number | undefined;
-        after_start_timestamp?: number | undefined;
-        agent_id?: Array<string> | undefined;
-        before_end_timestamp?: number | undefined;
-        before_start_timestamp?: number | undefined;
-        call_type?: Array<CallType> | undefined;
-    };
+  export type Inbound = {
+    after_end_timestamp?: number | undefined;
+    after_start_timestamp?: number | undefined;
+    agent_id?: Array<string> | undefined;
+    before_end_timestamp?: number | undefined;
+    before_start_timestamp?: number | undefined;
+    call_type?: Array<CallType> | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<FilterCriteria, z.ZodTypeDef, Inbound> = z
-        .object({
-            after_end_timestamp: z.number().int().optional(),
-            after_start_timestamp: z.number().int().optional(),
-            agent_id: z.array(z.string()).optional(),
-            before_end_timestamp: z.number().int().optional(),
-            before_start_timestamp: z.number().int().optional(),
-            call_type: z.array(CallType$).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.after_end_timestamp === undefined
-                    ? null
-                    : { afterEndTimestamp: v.after_end_timestamp }),
-                ...(v.after_start_timestamp === undefined
-                    ? null
-                    : { afterStartTimestamp: v.after_start_timestamp }),
-                ...(v.agent_id === undefined ? null : { agentId: v.agent_id }),
-                ...(v.before_end_timestamp === undefined
-                    ? null
-                    : { beforeEndTimestamp: v.before_end_timestamp }),
-                ...(v.before_start_timestamp === undefined
-                    ? null
-                    : { beforeStartTimestamp: v.before_start_timestamp }),
-                ...(v.call_type === undefined ? null : { callType: v.call_type }),
-            };
-        });
+  export const inboundSchema: z.ZodType<FilterCriteria, z.ZodTypeDef, Inbound> =
+    z
+      .object({
+        after_end_timestamp: z.number().int().optional(),
+        after_start_timestamp: z.number().int().optional(),
+        agent_id: z.array(z.string()).optional(),
+        before_end_timestamp: z.number().int().optional(),
+        before_start_timestamp: z.number().int().optional(),
+        call_type: z.array(CallType$).optional(),
+      })
+      .transform((v) => {
+        return {
+          ...(v.after_end_timestamp === undefined
+            ? null
+            : { afterEndTimestamp: v.after_end_timestamp }),
+          ...(v.after_start_timestamp === undefined
+            ? null
+            : { afterStartTimestamp: v.after_start_timestamp }),
+          ...(v.agent_id === undefined ? null : { agentId: v.agent_id }),
+          ...(v.before_end_timestamp === undefined
+            ? null
+            : { beforeEndTimestamp: v.before_end_timestamp }),
+          ...(v.before_start_timestamp === undefined
+            ? null
+            : { beforeStartTimestamp: v.before_start_timestamp }),
+          ...(v.call_type === undefined ? null : { callType: v.call_type }),
+        };
+      });
 
-    export type Outbound = {
-        after_end_timestamp?: number | undefined;
-        after_start_timestamp?: number | undefined;
-        agent_id?: Array<string> | undefined;
-        before_end_timestamp?: number | undefined;
-        before_start_timestamp?: number | undefined;
-        call_type?: Array<CallType> | undefined;
-    };
+  export type Outbound = {
+    after_end_timestamp?: number | undefined;
+    after_start_timestamp?: number | undefined;
+    agent_id?: Array<string> | undefined;
+    before_end_timestamp?: number | undefined;
+    before_start_timestamp?: number | undefined;
+    call_type?: Array<CallType> | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, FilterCriteria> = z
-        .object({
-            afterEndTimestamp: z.number().int().optional(),
-            afterStartTimestamp: z.number().int().optional(),
-            agentId: z.array(z.string()).optional(),
-            beforeEndTimestamp: z.number().int().optional(),
-            beforeStartTimestamp: z.number().int().optional(),
-            callType: z.array(CallType$).optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.afterEndTimestamp === undefined
-                    ? null
-                    : { after_end_timestamp: v.afterEndTimestamp }),
-                ...(v.afterStartTimestamp === undefined
-                    ? null
-                    : { after_start_timestamp: v.afterStartTimestamp }),
-                ...(v.agentId === undefined ? null : { agent_id: v.agentId }),
-                ...(v.beforeEndTimestamp === undefined
-                    ? null
-                    : { before_end_timestamp: v.beforeEndTimestamp }),
-                ...(v.beforeStartTimestamp === undefined
-                    ? null
-                    : { before_start_timestamp: v.beforeStartTimestamp }),
-                ...(v.callType === undefined ? null : { call_type: v.callType }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    FilterCriteria
+  > = z
+    .object({
+      afterEndTimestamp: z.number().int().optional(),
+      afterStartTimestamp: z.number().int().optional(),
+      agentId: z.array(z.string()).optional(),
+      beforeEndTimestamp: z.number().int().optional(),
+      beforeStartTimestamp: z.number().int().optional(),
+      callType: z.array(CallType$).optional(),
+    })
+    .transform((v) => {
+      return {
+        ...(v.afterEndTimestamp === undefined
+          ? null
+          : { after_end_timestamp: v.afterEndTimestamp }),
+        ...(v.afterStartTimestamp === undefined
+          ? null
+          : { after_start_timestamp: v.afterStartTimestamp }),
+        ...(v.agentId === undefined ? null : { agent_id: v.agentId }),
+        ...(v.beforeEndTimestamp === undefined
+          ? null
+          : { before_end_timestamp: v.beforeEndTimestamp }),
+        ...(v.beforeStartTimestamp === undefined
+          ? null
+          : { before_start_timestamp: v.beforeStartTimestamp }),
+        ...(v.callType === undefined ? null : { call_type: v.callType }),
+      };
+    });
 }
 
 /** @internal */
@@ -162,94 +167,114 @@ export const SortOrder$ = z.nativeEnum(SortOrder);
 
 /** @internal */
 export namespace ListCallsRequest$ {
-    export type Inbound = {
-        filter_criteria?: FilterCriteria$.Inbound | undefined;
-        limit?: number | undefined;
-        sort_order?: SortOrder | undefined;
-    };
+  export type Inbound = {
+    filter_criteria?: FilterCriteria$.Inbound | undefined;
+    limit?: number | undefined;
+    sort_order?: SortOrder | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<ListCallsRequest, z.ZodTypeDef, Inbound> = z
-        .object({
-            filter_criteria: z.lazy(() => FilterCriteria$.inboundSchema).optional(),
-            limit: z.number().int().optional(),
-            sort_order: SortOrder$.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.filter_criteria === undefined ? null : { filterCriteria: v.filter_criteria }),
-                ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.sort_order === undefined ? null : { sortOrder: v.sort_order }),
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    ListCallsRequest,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      filter_criteria: z.lazy(() => FilterCriteria$.inboundSchema).optional(),
+      limit: z.number().int().optional(),
+      sort_order: SortOrder$.optional(),
+    })
+    .transform((v) => {
+      return {
+        ...(v.filter_criteria === undefined
+          ? null
+          : { filterCriteria: v.filter_criteria }),
+        ...(v.limit === undefined ? null : { limit: v.limit }),
+        ...(v.sort_order === undefined ? null : { sortOrder: v.sort_order }),
+      };
+    });
 
-    export type Outbound = {
-        filter_criteria?: FilterCriteria$.Outbound | undefined;
-        limit?: number | undefined;
-        sort_order?: SortOrder | undefined;
-    };
+  export type Outbound = {
+    filter_criteria?: FilterCriteria$.Outbound | undefined;
+    limit?: number | undefined;
+    sort_order?: SortOrder | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListCallsRequest> = z
-        .object({
-            filterCriteria: z.lazy(() => FilterCriteria$.outboundSchema).optional(),
-            limit: z.number().int().optional(),
-            sortOrder: SortOrder$.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.filterCriteria === undefined ? null : { filter_criteria: v.filterCriteria }),
-                ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.sortOrder === undefined ? null : { sort_order: v.sortOrder }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    ListCallsRequest
+  > = z
+    .object({
+      filterCriteria: z.lazy(() => FilterCriteria$.outboundSchema).optional(),
+      limit: z.number().int().optional(),
+      sortOrder: SortOrder$.optional(),
+    })
+    .transform((v) => {
+      return {
+        ...(v.filterCriteria === undefined
+          ? null
+          : { filter_criteria: v.filterCriteria }),
+        ...(v.limit === undefined ? null : { limit: v.limit }),
+        ...(v.sortOrder === undefined ? null : { sort_order: v.sortOrder }),
+      };
+    });
 }
 
 /** @internal */
 export namespace ListCallsResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-        calls?: Array<components.CallDetail$.Inbound> | undefined;
-    };
+  export type Inbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+    calls?: Array<components.CallDetail$.Inbound> | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<ListCallsResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            calls: z.array(components.CallDetail$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-                ...(v.calls === undefined ? null : { calls: v.calls }),
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    ListCallsResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+      calls: z.array(components.CallDetail$.inboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+        ...(v.calls === undefined ? null : { calls: v.calls }),
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-        calls?: Array<components.CallDetail$.Outbound> | undefined;
-    };
+  export type Outbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+    calls?: Array<components.CallDetail$.Outbound> | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListCallsResponse> = z
-        .object({
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            calls: z.array(components.CallDetail$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-                ...(v.calls === undefined ? null : { calls: v.calls }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    ListCallsResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+      calls: z.array(components.CallDetail$.outboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+        ...(v.calls === undefined ? null : { calls: v.calls }),
+      };
+    });
 }

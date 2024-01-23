@@ -8,49 +8,57 @@ import { z } from "zod";
  * Phone number associated with the call. Only populated when call_type is `inbound_phone_call` or `outbound_phone_call`.
  */
 export type CallPhoneNumber = {
-    /**
-     * Caller phone number in E.164 format.
-     */
-    from: string;
-    /**
-     * Callee phone number in E.164 format.
-     */
-    to: string;
+  /**
+   * Caller phone number in E.164 format.
+   */
+  from: string;
+  /**
+   * Callee phone number in E.164 format.
+   */
+  to: string;
 };
 
 /** @internal */
 export namespace CallPhoneNumber$ {
-    export type Inbound = {
-        from: string;
-        to: string;
-    };
+  export type Inbound = {
+    from: string;
+    to: string;
+  };
 
-    export const inboundSchema: z.ZodType<CallPhoneNumber, z.ZodTypeDef, Inbound> = z
-        .object({
-            from: z.string(),
-            to: z.string(),
-        })
-        .transform((v) => {
-            return {
-                from: v.from,
-                to: v.to,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CallPhoneNumber,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      from: z.string(),
+      to: z.string(),
+    })
+    .transform((v) => {
+      return {
+        from: v.from,
+        to: v.to,
+      };
+    });
 
-    export type Outbound = {
-        from: string;
-        to: string;
-    };
+  export type Outbound = {
+    from: string;
+    to: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CallPhoneNumber> = z
-        .object({
-            from: z.string(),
-            to: z.string(),
-        })
-        .transform((v) => {
-            return {
-                from: v.from,
-                to: v.to,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CallPhoneNumber
+  > = z
+    .object({
+      from: z.string(),
+      to: z.string(),
+    })
+    .transform((v) => {
+      return {
+        from: v.from,
+        to: v.to,
+      };
+    });
 }

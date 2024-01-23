@@ -8,387 +8,435 @@ import { z } from "zod";
  * Internal Server Error
  */
 export type DeleteAgentResponse500ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Internal Server Error
  */
 export class DeleteAgentResponse500ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: DeleteAgentResponse500ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: DeleteAgentResponse500ResponseBodyData;
 
-    constructor(err: DeleteAgentResponse500ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: DeleteAgentResponse500ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "DeleteAgentResponse500ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "DeleteAgentResponse500ResponseBody";
+  }
 }
 
 /**
  * Unprocessable Content
  */
 export type DeleteAgentResponse422ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Unprocessable Content
  */
 export class DeleteAgentResponse422ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: DeleteAgentResponse422ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: DeleteAgentResponse422ResponseBodyData;
 
-    constructor(err: DeleteAgentResponse422ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: DeleteAgentResponse422ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "DeleteAgentResponse422ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "DeleteAgentResponse422ResponseBody";
+  }
 }
 
 /**
  * Unauthorized
  */
 export type DeleteAgentResponseResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Unauthorized
  */
 export class DeleteAgentResponseResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: DeleteAgentResponseResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: DeleteAgentResponseResponseBodyData;
 
-    constructor(err: DeleteAgentResponseResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: DeleteAgentResponseResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "DeleteAgentResponseResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "DeleteAgentResponseResponseBody";
+  }
 }
 
 /**
  * Bad Request
  */
 export type DeleteAgentResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Bad Request
  */
 export class DeleteAgentResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: DeleteAgentResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: DeleteAgentResponseBodyData;
 
-    constructor(err: DeleteAgentResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(err: DeleteAgentResponseBodyData, options?: ErrorOptions) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "DeleteAgentResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "DeleteAgentResponseBody";
+  }
 }
 
 /** @internal */
 export namespace DeleteAgentResponse500ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        DeleteAgentResponse500ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    DeleteAgentResponse500ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new DeleteAgentResponse500ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentResponse500ResponseBody
+  > = z
+    .instanceof(DeleteAgentResponse500ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new DeleteAgentResponse500ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        DeleteAgentResponse500ResponseBody
-    > = z
-        .instanceof(DeleteAgentResponse500ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace DeleteAgentResponse422ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        DeleteAgentResponse422ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    DeleteAgentResponse422ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new DeleteAgentResponse422ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentResponse422ResponseBody
+  > = z
+    .instanceof(DeleteAgentResponse422ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new DeleteAgentResponse422ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        DeleteAgentResponse422ResponseBody
-    > = z
-        .instanceof(DeleteAgentResponse422ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace DeleteAgentResponseResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<DeleteAgentResponseResponseBody, z.ZodTypeDef, Inbound> =
-        z
-            .object({
-                RawResponse: z.instanceof(Response).optional(),
-                error_message: z.string().optional(),
+  export const inboundSchema: z.ZodType<
+    DeleteAgentResponseResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new DeleteAgentResponseResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentResponseResponseBody
+  > = z
+    .instanceof(DeleteAgentResponseResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
+        .object({
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
             })
-            .transform((v) => {
-                return new DeleteAgentResponseResponseBody({
-                    ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                    ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-                });
-            });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        DeleteAgentResponseResponseBody
-    > = z
-        .instanceof(DeleteAgentResponseResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+            .optional(),
+          errorMessage: z.string().optional(),
+        })
+        .transform((v) => {
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace DeleteAgentResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<DeleteAgentResponseBody, z.ZodTypeDef, Inbound> = z
+  export const inboundSchema: z.ZodType<
+    DeleteAgentResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new DeleteAgentResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentResponseBody
+  > = z
+    .instanceof(DeleteAgentResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new DeleteAgentResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteAgentResponseBody> = z
-        .instanceof(DeleteAgentResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }

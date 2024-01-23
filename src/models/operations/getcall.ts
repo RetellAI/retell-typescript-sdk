@@ -6,109 +6,122 @@ import * as components from "../../models/components";
 import { z } from "zod";
 
 export type GetCallRequest = {
-    /**
-     * The call id to retrieve call history for.
-     */
-    callId: string;
+  /**
+   * The call id to retrieve call history for.
+   */
+  callId: string;
 };
 
 export type GetCallResponse = {
-    /**
-     * Successfully retrieved an agent.
-     */
-    callDetail?: components.CallDetail | undefined;
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
+  /**
+   * Successfully retrieved an agent.
+   */
+  callDetail?: components.CallDetail | undefined;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
 };
 
 /** @internal */
 export namespace GetCallRequest$ {
-    export type Inbound = {
-        call_id: string;
-    };
+  export type Inbound = {
+    call_id: string;
+  };
 
-    export const inboundSchema: z.ZodType<GetCallRequest, z.ZodTypeDef, Inbound> = z
-        .object({
-            call_id: z.string(),
-        })
-        .transform((v) => {
-            return {
-                callId: v.call_id,
-            };
-        });
+  export const inboundSchema: z.ZodType<GetCallRequest, z.ZodTypeDef, Inbound> =
+    z
+      .object({
+        call_id: z.string(),
+      })
+      .transform((v) => {
+        return {
+          callId: v.call_id,
+        };
+      });
 
-    export type Outbound = {
-        call_id: string;
-    };
+  export type Outbound = {
+    call_id: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCallRequest> = z
-        .object({
-            callId: z.string(),
-        })
-        .transform((v) => {
-            return {
-                call_id: v.callId,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    GetCallRequest
+  > = z
+    .object({
+      callId: z.string(),
+    })
+    .transform((v) => {
+      return {
+        call_id: v.callId,
+      };
+    });
 }
 
 /** @internal */
 export namespace GetCallResponse$ {
-    export type Inbound = {
-        CallDetail?: components.CallDetail$.Inbound | undefined;
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-    };
+  export type Inbound = {
+    CallDetail?: components.CallDetail$.Inbound | undefined;
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+  };
 
-    export const inboundSchema: z.ZodType<GetCallResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            CallDetail: components.CallDetail$.inboundSchema.optional(),
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return {
-                ...(v.CallDetail === undefined ? null : { callDetail: v.CallDetail }),
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    GetCallResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      CallDetail: components.CallDetail$.inboundSchema.optional(),
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+      return {
+        ...(v.CallDetail === undefined ? null : { callDetail: v.CallDetail }),
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+      };
+    });
 
-    export type Outbound = {
-        CallDetail?: components.CallDetail$.Outbound | undefined;
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-    };
+  export type Outbound = {
+    CallDetail?: components.CallDetail$.Outbound | undefined;
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCallResponse> = z
-        .object({
-            callDetail: components.CallDetail$.outboundSchema.optional(),
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return {
-                ...(v.callDetail === undefined ? null : { CallDetail: v.callDetail }),
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    GetCallResponse
+  > = z
+    .object({
+      callDetail: components.CallDetail$.outboundSchema.optional(),
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+    })
+    .transform((v) => {
+      return {
+        ...(v.callDetail === undefined ? null : { CallDetail: v.callDetail }),
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+      };
+    });
 }

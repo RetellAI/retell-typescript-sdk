@@ -5,99 +5,115 @@
 import { z } from "zod";
 
 export type DeletePhoneNumberRequest = {
-    /**
-     * Phone number to delete in E.164 format.
-     */
-    phoneNumber: string;
+  /**
+   * Phone number to delete in E.164 format.
+   */
+  phoneNumber: string;
 };
 
 export type DeletePhoneNumberResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
 };
 
 /** @internal */
 export namespace DeletePhoneNumberRequest$ {
-    export type Inbound = {
-        phone_number: string;
-    };
+  export type Inbound = {
+    phone_number: string;
+  };
 
-    export const inboundSchema: z.ZodType<DeletePhoneNumberRequest, z.ZodTypeDef, Inbound> = z
-        .object({
-            phone_number: z.string(),
-        })
-        .transform((v) => {
-            return {
-                phoneNumber: v.phone_number,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    DeletePhoneNumberRequest,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      phone_number: z.string(),
+    })
+    .transform((v) => {
+      return {
+        phoneNumber: v.phone_number,
+      };
+    });
 
-    export type Outbound = {
-        phone_number: string;
-    };
+  export type Outbound = {
+    phone_number: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeletePhoneNumberRequest> = z
-        .object({
-            phoneNumber: z.string(),
-        })
-        .transform((v) => {
-            return {
-                phone_number: v.phoneNumber,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeletePhoneNumberRequest
+  > = z
+    .object({
+      phoneNumber: z.string(),
+    })
+    .transform((v) => {
+      return {
+        phone_number: v.phoneNumber,
+      };
+    });
 }
 
 /** @internal */
 export namespace DeletePhoneNumberResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-    };
+  export type Inbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+  };
 
-    export const inboundSchema: z.ZodType<DeletePhoneNumberResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    DeletePhoneNumberResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-    };
+  export type Outbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeletePhoneNumberResponse> = z
-        .object({
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeletePhoneNumberResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+      };
+    });
 }

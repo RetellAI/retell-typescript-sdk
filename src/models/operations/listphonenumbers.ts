@@ -6,71 +6,83 @@ import * as components from "../../models/components";
 import { z } from "zod";
 
 export type ListPhoneNumbersResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
-    /**
-     * Successfully retrieved all phone number objects.
-     */
-    phoneNumbers?: Array<components.PhoneNumber> | undefined;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
+  /**
+   * Successfully retrieved all phone number objects.
+   */
+  phoneNumbers?: Array<components.PhoneNumber> | undefined;
 };
 
 /** @internal */
 export namespace ListPhoneNumbersResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-        phoneNumbers?: Array<components.PhoneNumber$.Inbound> | undefined;
-    };
+  export type Inbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+    phoneNumbers?: Array<components.PhoneNumber$.Inbound> | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<ListPhoneNumbersResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            phoneNumbers: z.array(components.PhoneNumber$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-                ...(v.phoneNumbers === undefined ? null : { phoneNumbers: v.phoneNumbers }),
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    ListPhoneNumbersResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+      phoneNumbers: z.array(components.PhoneNumber$.inboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+        ...(v.phoneNumbers === undefined
+          ? null
+          : { phoneNumbers: v.phoneNumbers }),
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-        phoneNumbers?: Array<components.PhoneNumber$.Outbound> | undefined;
-    };
+  export type Outbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+    phoneNumbers?: Array<components.PhoneNumber$.Outbound> | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListPhoneNumbersResponse> = z
-        .object({
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            phoneNumbers: z.array(components.PhoneNumber$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-                ...(v.phoneNumbers === undefined ? null : { phoneNumbers: v.phoneNumbers }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    ListPhoneNumbersResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+      phoneNumbers: z.array(components.PhoneNumber$.outboundSchema).optional(),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+        ...(v.phoneNumbers === undefined
+          ? null
+          : { phoneNumbers: v.phoneNumbers }),
+      };
+    });
 }

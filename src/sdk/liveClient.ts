@@ -8,10 +8,7 @@ export class LiveClient extends EventEmitter {
   private ws: WebSocket;
   private call: any;
 
-  constructor(
-    apiKey: string,
-    input: operations.CreateWebCallRequestBody
-  ) {
+  constructor(apiKey: string, input: operations.CreateWebCallRequestBody) {
     super();
 
     let endpoint =
@@ -24,7 +21,9 @@ export class LiveClient extends EventEmitter {
       endpoint += "&sample_rate=" + input.sampleRate;
     }
     if (input.agentPromptParams != null) {
-      endpoint += "&agent_prompt_params=" + encodeURIComponent(JSON.stringify(input.agentPromptParams));
+      endpoint +=
+        "&agent_prompt_params=" +
+        encodeURIComponent(JSON.stringify(input.agentPromptParams));
     }
     this.ws = new WebSocket(endpoint);
     this.ws.binaryType = "arraybuffer";
@@ -38,7 +37,12 @@ export class LiveClient extends EventEmitter {
       this.ws.onerror = onError;
 
       const onClose = (event: WebSocket.CloseEvent) => {
-        reject("websocket closed before ready with code: " + event.code + ", reason: " + event.reason);
+        reject(
+          "websocket closed before ready with code: " +
+            event.code +
+            ", reason: " +
+            event.reason,
+        );
       };
       this.ws.onclose = onClose;
 
@@ -101,7 +105,7 @@ export function convertFloat32ToUint8(array: Float32Array): Uint8Array {
   const view = new DataView(buffer);
 
   for (let i = 0; i < array.length; i++) {
-    const value = array[i] as number * 32768;
+    const value = (array[i] as number) * 32768;
     view.setInt16(i * 2, value, true); // true for little-endian
   }
 

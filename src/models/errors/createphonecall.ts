@@ -8,590 +8,655 @@ import { z } from "zod";
  * Internal Server Error
  */
 export type CreatePhoneCallResponse500ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Internal Server Error
  */
 export class CreatePhoneCallResponse500ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponse500ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponse500ResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponse500ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: CreatePhoneCallResponse500ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponse500ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponse500ResponseBody";
+  }
 }
 
 /**
  * Too Many Requests
  */
 export type CreatePhoneCallResponse429ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Too Many Requests
  */
 export class CreatePhoneCallResponse429ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponse429ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponse429ResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponse429ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: CreatePhoneCallResponse429ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponse429ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponse429ResponseBody";
+  }
 }
 
 /**
  * Unprocessable Content
  */
 export type CreatePhoneCallResponse422ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Unprocessable Content
  */
 export class CreatePhoneCallResponse422ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponse422ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponse422ResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponse422ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: CreatePhoneCallResponse422ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponse422ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponse422ResponseBody";
+  }
 }
 
 /**
  * Payment Required
  */
 export type CreatePhoneCallResponse402ResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Payment Required
  */
 export class CreatePhoneCallResponse402ResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponse402ResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponse402ResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponse402ResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: CreatePhoneCallResponse402ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponse402ResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponse402ResponseBody";
+  }
 }
 
 /**
  * Unauthorized
  */
 export type CreatePhoneCallResponseResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Unauthorized
  */
 export class CreatePhoneCallResponseResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponseResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponseResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponseResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(
+    err: CreatePhoneCallResponseResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponseResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponseResponseBody";
+  }
 }
 
 /**
  * Bad Request
  */
 export type CreatePhoneCallResponseBodyData = {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 };
 
 /**
  * Bad Request
  */
 export class CreatePhoneCallResponseBody extends Error {
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse?: Response | undefined;
-    errorMessage?: string | undefined;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
 
-    /** The original data that was passed to this error instance. */
-    data$: CreatePhoneCallResponseBodyData;
+  /** The original data that was passed to this error instance. */
+  data$: CreatePhoneCallResponseBodyData;
 
-    constructor(err: CreatePhoneCallResponseBodyData, options?: ErrorOptions) {
-        super("", options);
-        this.data$ = err;
+  constructor(err: CreatePhoneCallResponseBodyData, options?: ErrorOptions) {
+    super("", options);
+    this.data$ = err;
 
-        if (err.rawResponse != null) {
-            this.rawResponse = err.rawResponse;
-        }
-        if (err.errorMessage != null) {
-            this.errorMessage = err.errorMessage;
-        }
-
-        const msg = "message" in err && typeof err.message === "string" ? err.message : "";
-        const { rawResponse, ...data } = err;
-        const content = JSON.stringify(data);
-        this.message = [msg, content].filter(Boolean).join("\n");
-
-        this.name = "CreatePhoneCallResponseBody";
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
     }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "CreatePhoneCallResponseBody";
+  }
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponse500ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        CreatePhoneCallResponse500ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponse500ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponse500ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponse500ResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponse500ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponse500ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreatePhoneCallResponse500ResponseBody
-    > = z
-        .instanceof(CreatePhoneCallResponse500ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponse429ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        CreatePhoneCallResponse429ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponse429ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponse429ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponse429ResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponse429ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponse429ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreatePhoneCallResponse429ResponseBody
-    > = z
-        .instanceof(CreatePhoneCallResponse429ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponse422ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        CreatePhoneCallResponse422ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponse422ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponse422ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponse422ResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponse422ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponse422ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreatePhoneCallResponse422ResponseBody
-    > = z
-        .instanceof(CreatePhoneCallResponse422ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponse402ResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        CreatePhoneCallResponse402ResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponse402ResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponse402ResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponse402ResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponse402ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponse402ResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreatePhoneCallResponse402ResponseBody
-    > = z
-        .instanceof(CreatePhoneCallResponse402ResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponseResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<
-        CreatePhoneCallResponseResponseBody,
-        z.ZodTypeDef,
-        Inbound
-    > = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponseResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponseResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponseResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponseResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponseResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreatePhoneCallResponseResponseBody
-    > = z
-        .instanceof(CreatePhoneCallResponseResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponseBody$ {
-    export type Inbound = {
-        RawResponse?: Response | undefined;
-        error_message?: string | undefined;
-    };
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneCallResponseBody, z.ZodTypeDef, Inbound> = z
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new CreatePhoneCallResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponseBody
+  > = z
+    .instanceof(CreatePhoneCallResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
         .object({
-            RawResponse: z.instanceof(Response).optional(),
-            error_message: z.string().optional(),
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
         })
         .transform((v) => {
-            return new CreatePhoneCallResponseBody({
-                ...(v.RawResponse === undefined ? null : { rawResponse: v.RawResponse }),
-                ...(v.error_message === undefined ? null : { errorMessage: v.error_message }),
-            });
-        });
-    export type Outbound = {
-        RawResponse?: never | undefined;
-        error_message?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneCallResponseBody> = z
-        .instanceof(CreatePhoneCallResponseBody)
-        .transform((v) => v.data$)
-        .pipe(
-            z
-                .object({
-                    rawResponse: z
-                        .instanceof(Response)
-                        .transform(() => {
-                            throw new Error("Response cannot be serialized");
-                        })
-                        .optional(),
-                    errorMessage: z.string().optional(),
-                })
-                .transform((v) => {
-                    return {
-                        ...(v.rawResponse === undefined ? null : { RawResponse: v.rawResponse }),
-                        ...(v.errorMessage === undefined
-                            ? null
-                            : { error_message: v.errorMessage }),
-                    };
-                })
-        );
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
 }

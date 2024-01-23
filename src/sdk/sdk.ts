@@ -11,1181 +11,1334 @@ import * as operations from "../models/operations";
 import { LiveClient } from "./liveClient";
 
 export class RetellClient extends ClientSDK {
-    private readonly options$: SDKOptions;
+  private readonly options$: SDKOptions;
 
-    constructor(options: SDKOptions = {}) {
-        super({
-            client: options.httpClient || new HTTPClient(),
-            baseURL: serverURLFromOptions(options),
+  constructor(options: SDKOptions = {}) {
+    super({
+      client: options.httpClient || new HTTPClient(),
+      baseURL: serverURLFromOptions(options),
+    });
+
+    this.options$ = options;
+    void this.options$;
+  }
+
+  async createWebCall(
+    input: operations.CreateWebCallRequestBody,
+  ): Promise<LiveClient> {
+    const liveClient = new LiveClient(
+      this.options$.apiKey as unknown as string,
+      input,
+    );
+    await liveClient.waitForReady();
+    return liveClient;
+  }
+
+  /**
+   * Create a new agent
+   */
+  async createAgent(
+    input: operations.CreateAgentRequestBody,
+    options?: RequestOptions,
+  ): Promise<operations.CreateAgentResponse> {
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Content-Type", "application/json");
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.CreateAgentRequestBody$.outboundSchema.parse(input);
+    const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+
+    const path$ = this.templateURLComponent("/create-agent")();
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "post",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchResponse(response, 201, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.CreateAgentResponse$.inboundSchema.parse({
+        ...responseFields$,
+        Agent: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.CreateAgentResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreateAgentResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
         });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreateAgentResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreateAgentResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
+    }
+  }
 
-        this.options$ = options;
-        void this.options$;
+  /**
+   * Initiate an outbound phone call.
+   */
+  async createPhoneCall(
+    input: operations.CreatePhoneCallRequestBody,
+    options?: RequestOptions,
+  ): Promise<operations.CreatePhoneCallResponse> {
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Content-Type", "application/json");
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.CreatePhoneCallRequestBody$.outboundSchema.parse(input);
+    const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+
+    const path$ = this.templateURLComponent("/create-phone-call")();
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "post",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchResponse(response, 201, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.CreatePhoneCallResponse$.inboundSchema.parse({
+        ...responseFields$,
+        callDetail: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.CreatePhoneCallResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneCallResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 402, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneCallResponse402ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneCallResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 429, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneCallResponse429ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneCallResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
+    }
+  }
+
+  /**
+   * Create a new phone number
+   */
+  async createPhoneNumber(
+    input: operations.CreatePhoneNumberRequestBody,
+    options?: RequestOptions,
+  ): Promise<operations.CreatePhoneNumberResponse> {
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Content-Type", "application/json");
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.CreatePhoneNumberRequestBody$.outboundSchema.parse(input);
+    const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+
+    const path$ = this.templateURLComponent("/create-phone-number")();
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "post",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchResponse(response, 201, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.CreatePhoneNumberResponse$.inboundSchema.parse({
+        ...responseFields$,
+        PhoneNumber: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.CreatePhoneNumberResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneNumberResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 402, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneNumberResponse402ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.CreatePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
+    }
+  }
+
+  /**
+   * Delete an existing agent
+   */
+  async deleteAgent(
+    agentId: string,
+    options?: RequestOptions,
+  ): Promise<operations.DeleteAgentResponse> {
+    const input$: operations.DeleteAgentRequest = {
+      agentId: agentId,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.DeleteAgentRequest$.outboundSchema.parse(input$);
+    const body$ = null;
+
+    const pathParams$ = {
+      agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
+
+    const path$ = this.templateURLComponent("/delete-agent/{agent_id}")(
+      pathParams$,
+    );
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "delete",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchStatusCode(response, 204)) {
+      // fallthrough
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.DeleteAgentResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeleteAgentResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeleteAgentResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeleteAgentResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
 
-    async createWebCall(
-        input: operations.CreateWebCallRequestBody
-      ): Promise<LiveClient> {
-        const liveClient = new LiveClient(
-          this.options$.apiKey as unknown as string,
-          input
-        );
-        await liveClient.waitForReady();
-        return liveClient;
-      }
-      
-    /**
-     * Create a new agent
-     */
-    async createAgent(
-        input: operations.CreateAgentRequestBody,
-        options?: RequestOptions
-    ): Promise<operations.CreateAgentResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
+    return operations.DeleteAgentResponse$.inboundSchema.parse(responseFields$);
+  }
 
-        const payload$ = operations.CreateAgentRequestBody$.outboundSchema.parse(input);
-        const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+  /**
+   * Delete a specific phone number
+   */
+  async deletePhoneNumber(
+    phoneNumber: string,
+    options?: RequestOptions,
+  ): Promise<operations.DeletePhoneNumberResponse> {
+    const input$: operations.DeletePhoneNumberRequest = {
+      phoneNumber: phoneNumber,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const path$ = this.templateURLComponent("/create-agent")();
+    const payload$ =
+      operations.DeletePhoneNumberRequest$.outboundSchema.parse(input$);
+    const body$ = null;
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
+    const pathParams$ = {
+      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
 
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "post",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
+    const path$ = this.templateURLComponent(
+      "/delete-phone-number/{phone_number}",
+    )(pathParams$);
 
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        if (this.matchResponse(response, 201, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.CreateAgentResponse$.inboundSchema.parse({
-                ...responseFields$,
-                Agent: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreateAgentResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreateAgentResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreateAgentResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreateAgentResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "delete",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchStatusCode(response, 204)) {
+      // fallthrough
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.DeletePhoneNumberResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeletePhoneNumberResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeletePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.DeletePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
 
-    /**
-     * Initiate an outbound phone call.
-     */
-    async createPhoneCall(
-        input: operations.CreatePhoneCallRequestBody,
-        options?: RequestOptions
-    ): Promise<operations.CreatePhoneCallResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
+    return operations.DeletePhoneNumberResponse$.inboundSchema.parse(
+      responseFields$,
+    );
+  }
 
-        const payload$ = operations.CreatePhoneCallRequestBody$.outboundSchema.parse(input);
-        const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+  /**
+   * Retrieve details of a specific agent
+   */
+  async getAgent(
+    agentId: string,
+    options?: RequestOptions,
+  ): Promise<operations.GetAgentResponse> {
+    const input$: operations.GetAgentRequest = {
+      agentId: agentId,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const path$ = this.templateURLComponent("/create-phone-call")();
+    const payload$ = operations.GetAgentRequest$.outboundSchema.parse(input$);
+    const body$ = null;
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
+    const pathParams$ = {
+      agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
 
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "post",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
+    const path$ = this.templateURLComponent("/get-agent/{agent_id}")(
+      pathParams$,
+    );
 
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 201, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.CreatePhoneCallResponse$.inboundSchema.parse({
-                ...responseFields$,
-                callDetail: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 402, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponse402ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 429, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponse429ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneCallResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * Create a new phone number
-     */
-    async createPhoneNumber(
-        input: operations.CreatePhoneNumberRequestBody,
-        options?: RequestOptions
-    ): Promise<operations.CreatePhoneNumberResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
 
-        const payload$ = operations.CreatePhoneNumberRequestBody$.outboundSchema.parse(input);
-        const body$ = enc$.encodeJSON("body", payload$, { explode: true });
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        const path$ = this.templateURLComponent("/create-phone-number")();
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "post",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 201, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.CreatePhoneNumberResponse$.inboundSchema.parse({
-                ...responseFields$,
-                PhoneNumber: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneNumberResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneNumberResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 402, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneNumberResponse402ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.CreatePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.GetAgentResponse$.inboundSchema.parse({
+        ...responseFields$,
+        Agent: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetAgentResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetAgentResponseResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.GetAgentResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.GetAgentResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
 
-    /**
-     * Delete an existing agent
-     */
-    async deleteAgent(
-        agentId: string,
-        options?: RequestOptions
-    ): Promise<operations.DeleteAgentResponse> {
-        const input$: operations.DeleteAgentRequest = {
-            agentId: agentId,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+  /**
+   * Retrieve details of a specific call
+   */
+  async getCall(
+    callId: string,
+    options?: RequestOptions,
+  ): Promise<operations.GetCallResponse> {
+    const input$: operations.GetCallRequest = {
+      callId: callId,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteAgentRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const payload$ = operations.GetCallRequest$.outboundSchema.parse(input$);
+    const body$ = null;
 
-        const pathParams$ = {
-            agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
+    const pathParams$ = {
+      call_id: enc$.encodeSimple("call_id", payload$.call_id, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
 
-        const path$ = this.templateURLComponent("/delete-agent/{agent_id}")(pathParams$);
+    const path$ = this.templateURLComponent("/get-call/{call_id}")(pathParams$);
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "delete",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchStatusCode(response, 204)) {
-            // fallthrough
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeleteAgentResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeleteAgentResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeleteAgentResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeleteAgentResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
-
-        return operations.DeleteAgentResponse$.inboundSchema.parse(responseFields$);
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * Delete a specific phone number
-     */
-    async deletePhoneNumber(
-        phoneNumber: string,
-        options?: RequestOptions
-    ): Promise<operations.DeletePhoneNumberResponse> {
-        const input$: operations.DeletePhoneNumberRequest = {
-            phoneNumber: phoneNumber,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
 
-        const payload$ = operations.DeletePhoneNumberRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        const pathParams$ = {
-            phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-
-        const path$ = this.templateURLComponent("/delete-phone-number/{phone_number}")(pathParams$);
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "delete",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchStatusCode(response, 204)) {
-            // fallthrough
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeletePhoneNumberResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeletePhoneNumberResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeletePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.DeletePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
-
-        return operations.DeletePhoneNumberResponse$.inboundSchema.parse(responseFields$);
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.GetCallResponse$.inboundSchema.parse({
+        ...responseFields$,
+        CallDetail: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetCallResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetCallResponseResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetCallResponse422ResponseBody$.inboundSchema.parse(
+        {
+          ...responseFields$,
+          ...responseBody,
+        },
+      );
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetCallResponse500ResponseBody$.inboundSchema.parse(
+        {
+          ...responseFields$,
+          ...responseBody,
+        },
+      );
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
 
-    /**
-     * Retrieve details of a specific agent
-     */
-    async getAgent(
-        agentId: string,
-        options?: RequestOptions
-    ): Promise<operations.GetAgentResponse> {
-        const input$: operations.GetAgentRequest = {
-            agentId: agentId,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+  /**
+   * Retrieve info about a specific number
+   */
+  async getPhoneNumber(
+    phoneNumber: string,
+    options?: RequestOptions,
+  ): Promise<operations.GetPhoneNumberResponse> {
+    const input$: operations.GetPhoneNumberRequest = {
+      phoneNumber: phoneNumber,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetAgentRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const payload$ =
+      operations.GetPhoneNumberRequest$.outboundSchema.parse(input$);
+    const body$ = null;
 
-        const pathParams$ = {
-            agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
+    const pathParams$ = {
+      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
 
-        const path$ = this.templateURLComponent("/get-agent/{agent_id}")(pathParams$);
+    const path$ = this.templateURLComponent("/get-phone-number/{phone_number}")(
+      pathParams$,
+    );
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "get",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.GetAgentResponse$.inboundSchema.parse({
-                ...responseFields$,
-                Agent: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetAgentResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetAgentResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetAgentResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetAgentResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * Retrieve details of a specific call
-     */
-    async getCall(callId: string, options?: RequestOptions): Promise<operations.GetCallResponse> {
-        const input$: operations.GetCallRequest = {
-            callId: callId,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
 
-        const payload$ = operations.GetCallRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        const pathParams$ = {
-            call_id: enc$.encodeSimple("call_id", payload$.call_id, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-
-        const path$ = this.templateURLComponent("/get-call/{call_id}")(pathParams$);
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "get",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.GetCallResponse$.inboundSchema.parse({
-                ...responseFields$,
-                CallDetail: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetCallResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetCallResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetCallResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetCallResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.GetPhoneNumberResponse$.inboundSchema.parse({
+        ...responseFields$,
+        PhoneNumber: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.GetPhoneNumberResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.GetPhoneNumberResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.GetPhoneNumberResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.GetPhoneNumberResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
 
-    /**
-     * Retrieve info about a specific number
-     */
-    async getPhoneNumber(
-        phoneNumber: string,
-        options?: RequestOptions
-    ): Promise<operations.GetPhoneNumberResponse> {
-        const input$: operations.GetPhoneNumberRequest = {
-            phoneNumber: phoneNumber,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+  /**
+   * List all agents
+   */
+  async listAgents(
+    options?: RequestOptions,
+  ): Promise<operations.ListAgentsResponse> {
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetPhoneNumberRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const path$ = this.templateURLComponent("/list-agents")();
 
-        const pathParams$ = {
-            phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-
-        const path$ = this.templateURLComponent("/get-phone-number/{phone_number}")(pathParams$);
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "get",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.GetPhoneNumberResponse$.inboundSchema.parse({
-                ...responseFields$,
-                PhoneNumber: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetPhoneNumberResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetPhoneNumberResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetPhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.GetPhoneNumberResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * List all agents
-     */
-    async listAgents(options?: RequestOptions): Promise<operations.ListAgentsResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+      },
+      options,
+    );
 
-        const path$ = this.templateURLComponent("/list-agents")();
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            { security: securitySettings$, method: "get", path: path$, headers: headers$ },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.ListAgentsResponse$.inboundSchema.parse({
-                ...responseFields$,
-                agents: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListAgentsResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListAgentsResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.ListAgentsResponse$.inboundSchema.parse({
+        ...responseFields$,
+        agents: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.ListAgentsResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.ListAgentsResponseResponseBody$.inboundSchema.parse(
+        {
+          ...responseFields$,
+          ...responseBody,
+        },
+      );
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
 
-    /**
-     * Retrieve call details
-     */
-    async listCalls(
-        filterCriteria?: operations.FilterCriteria | undefined,
-        limit?: number | undefined,
-        sortOrder?: operations.SortOrder | undefined,
-        options?: RequestOptions
-    ): Promise<operations.ListCallsResponse> {
-        const input$: operations.ListCallsRequest = {
-            filterCriteria: filterCriteria,
-            limit: limit,
-            sortOrder: sortOrder,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+  /**
+   * Retrieve call details
+   */
+  async listCalls(
+    filterCriteria?: operations.FilterCriteria | undefined,
+    limit?: number | undefined,
+    sortOrder?: operations.SortOrder | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListCallsResponse> {
+    const input$: operations.ListCallsRequest = {
+      filterCriteria: filterCriteria,
+      limit: limit,
+      sortOrder: sortOrder,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const payload$ = operations.ListCallsRequest$.outboundSchema.parse(input$);
-        const body$ = null;
+    const payload$ = operations.ListCallsRequest$.outboundSchema.parse(input$);
+    const body$ = null;
 
-        const path$ = this.templateURLComponent("/list-calls")();
+    const path$ = this.templateURLComponent("/list-calls")();
 
-        const query$ = [
-            enc$.encodeForm("filter_criteria", JSON.stringify(payload$.filter_criteria), {
-                explode: true,
-                charEncoding: "percent",
-            }),
-            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
-            enc$.encodeForm("sort_order", payload$.sort_order, {
-                explode: true,
-                charEncoding: "percent",
-            }),
-        ]
-            .filter(Boolean)
-            .join("&");
+    const query$ = [
+      enc$.encodeForm(
+        "filter_criteria",
+        JSON.stringify(payload$.filter_criteria),
+        {
+          explode: true,
+          charEncoding: "percent",
+        },
+      ),
+      enc$.encodeForm("limit", payload$.limit, {
+        explode: true,
+        charEncoding: "percent",
+      }),
+      enc$.encodeForm("sort_order", payload$.sort_order, {
+        explode: true,
+        charEncoding: "percent",
+      }),
+    ]
+      .filter(Boolean)
+      .join("&");
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "get",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.ListCallsResponse$.inboundSchema.parse({
-                ...responseFields$,
-                calls: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListCallsResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListCallsResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListCallsResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * List all purchased and active phone numbers
-     */
-    async listPhoneNumbers(options?: RequestOptions): Promise<operations.ListPhoneNumbersResponse> {
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+        query: query$,
+        body: body$,
+      },
+      options,
+    );
 
-        const path$ = this.templateURLComponent("/list-phone-numbers")();
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            { security: securitySettings$, method: "get", path: path$, headers: headers$ },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.ListPhoneNumbersResponse$.inboundSchema.parse({
-                ...responseFields$,
-                phoneNumbers: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListPhoneNumbersResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListPhoneNumbersResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.ListPhoneNumbersResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.ListCallsResponse$.inboundSchema.parse({
+        ...responseFields$,
+        calls: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.ListCallsResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.ListCallsResponseResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.ListCallsResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
 
-    /**
-     * Update an existing agent
-     */
-    async updateAgent(
-        requestBody: operations.UpdateAgentRequestBody,
-        agentId: string,
-        options?: RequestOptions
-    ): Promise<operations.UpdateAgentResponse> {
-        const input$: operations.UpdateAgentRequest = {
-            requestBody: requestBody,
-            agentId: agentId,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
+  /**
+   * List all purchased and active phone numbers
+   */
+  async listPhoneNumbers(
+    options?: RequestOptions,
+  ): Promise<operations.ListPhoneNumbersResponse> {
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Accept", "application/json");
 
-        const payload$ = operations.UpdateAgentRequest$.outboundSchema.parse(input$);
+    const path$ = this.templateURLComponent("/list-phone-numbers")();
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
-
-        const pathParams$ = {
-            agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-
-        const path$ = this.templateURLComponent("/update-agent/{agent_id}")(pathParams$);
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.UpdateAgentResponse$.inboundSchema.parse({
-                ...responseFields$,
-                Agent: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdateAgentResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdateAgentResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdateAgentResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdateAgentResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
     }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    /**
-     * Update an existing phone number
-     */
-    async updatePhoneAgent(
-        requestBody: operations.UpdatePhoneAgentRequestBody,
-        phoneNumber: string,
-        options?: RequestOptions
-    ): Promise<operations.UpdatePhoneAgentResponse> {
-        const input$: operations.UpdatePhoneAgentRequest = {
-            requestBody: requestBody,
-            phoneNumber: phoneNumber,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "get",
+        path: path$,
+        headers: headers$,
+      },
+      options,
+    );
 
-        const payload$ = operations.UpdatePhoneAgentRequest$.outboundSchema.parse(input$);
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
-
-        const pathParams$ = {
-            phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-
-        const path$ = this.templateURLComponent("/update-phone-agent/{phone_number}")(pathParams$);
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const response = await this.fetch$(
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                body: body$,
-            },
-            options
-        );
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-        };
-
-        if (this.matchResponse(response, 200, "application/json")) {
-            const responseBody = await response.json();
-            const result = operations.UpdatePhoneAgentResponse$.inboundSchema.parse({
-                ...responseFields$,
-                PhoneNumber: responseBody,
-            });
-            return result;
-        } else if (this.matchResponse(response, 400, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdatePhoneAgentResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 401, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdatePhoneAgentResponseResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 422, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdatePhoneAgentResponse422ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else if (this.matchResponse(response, 500, "application/json")) {
-            const responseBody = await response.json();
-            const result = errors.UpdatePhoneAgentResponse500ResponseBody$.inboundSchema.parse({
-                ...responseFields$,
-                ...responseBody,
-            });
-            throw result;
-        } else {
-            const responseBody = await response.text();
-            throw new errors.SDKError("Unexpected API response", response, responseBody);
-        }
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.ListPhoneNumbersResponse$.inboundSchema.parse({
+        ...responseFields$,
+        phoneNumbers: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.ListPhoneNumbersResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.ListPhoneNumbersResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.ListPhoneNumbersResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
     }
+  }
+
+  /**
+   * Update an existing agent
+   */
+  async updateAgent(
+    requestBody: operations.UpdateAgentRequestBody,
+    agentId: string,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateAgentResponse> {
+    const input$: operations.UpdateAgentRequest = {
+      requestBody: requestBody,
+      agentId: agentId,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Content-Type", "application/json");
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.UpdateAgentRequest$.outboundSchema.parse(input$);
+
+    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
+      explode: true,
+    });
+
+    const pathParams$ = {
+      agent_id: enc$.encodeSimple("agent_id", payload$.agent_id, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
+
+    const path$ = this.templateURLComponent("/update-agent/{agent_id}")(
+      pathParams$,
+    );
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "PATCH",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.UpdateAgentResponse$.inboundSchema.parse({
+        ...responseFields$,
+        Agent: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.UpdateAgentResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdateAgentResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdateAgentResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdateAgentResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
+    }
+  }
+
+  /**
+   * Update an existing phone number
+   */
+  async updatePhoneAgent(
+    requestBody: operations.UpdatePhoneAgentRequestBody,
+    phoneNumber: string,
+    options?: RequestOptions,
+  ): Promise<operations.UpdatePhoneAgentResponse> {
+    const input$: operations.UpdatePhoneAgentRequest = {
+      requestBody: requestBody,
+      phoneNumber: phoneNumber,
+    };
+    const headers$ = new Headers();
+    headers$.set("user-agent", SDK_METADATA.userAgent);
+    headers$.set("Content-Type", "application/json");
+    headers$.set("Accept", "application/json");
+
+    const payload$ =
+      operations.UpdatePhoneAgentRequest$.outboundSchema.parse(input$);
+
+    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
+      explode: true,
+    });
+
+    const pathParams$ = {
+      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
+        explode: false,
+        charEncoding: "percent",
+      }),
+    };
+
+    const path$ = this.templateURLComponent(
+      "/update-phone-agent/{phone_number}",
+    )(pathParams$);
+
+    let security$;
+    if (typeof this.options$.apiKey === "function") {
+      security$ = { apiKey: await this.options$.apiKey() };
+    } else if (this.options$.apiKey) {
+      security$ = { apiKey: this.options$.apiKey };
+    } else {
+      security$ = {};
+    }
+    const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+    const response = await this.fetch$(
+      {
+        security: securitySettings$,
+        method: "PATCH",
+        path: path$,
+        headers: headers$,
+        body: body$,
+      },
+      options,
+    );
+
+    const responseFields$ = {
+      ContentType:
+        response.headers.get("content-type") ?? "application/octet-stream",
+      StatusCode: response.status,
+      RawResponse: response,
+    };
+
+    if (this.matchResponse(response, 200, "application/json")) {
+      const responseBody = await response.json();
+      const result = operations.UpdatePhoneAgentResponse$.inboundSchema.parse({
+        ...responseFields$,
+        PhoneNumber: responseBody,
+      });
+      return result;
+    } else if (this.matchResponse(response, 400, "application/json")) {
+      const responseBody = await response.json();
+      const result = errors.UpdatePhoneAgentResponseBody$.inboundSchema.parse({
+        ...responseFields$,
+        ...responseBody,
+      });
+      throw result;
+    } else if (this.matchResponse(response, 401, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdatePhoneAgentResponseResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 422, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdatePhoneAgentResponse422ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else if (this.matchResponse(response, 500, "application/json")) {
+      const responseBody = await response.json();
+      const result =
+        errors.UpdatePhoneAgentResponse500ResponseBody$.inboundSchema.parse({
+          ...responseFields$,
+          ...responseBody,
+        });
+      throw result;
+    } else {
+      const responseBody = await response.text();
+      throw new errors.SDKError(
+        "Unexpected API response",
+        response,
+        responseBody,
+      );
+    }
+  }
 }

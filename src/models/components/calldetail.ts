@@ -10,58 +10,58 @@ import { z } from "zod";
  * Status of call.
  */
 export enum CallStatus {
-    Ongoing = "ongoing",
-    Ended = "ended",
-    Error = "error",
+  Ongoing = "ongoing",
+  Ended = "ended",
+  Error = "error",
 }
 
 /**
  * Web call or phone call.
  */
 export enum CallType {
-    InboundPhoneCall = "inbound_phone_call",
-    OutboundPhoneCall = "outbound_phone_call",
-    WebCall = "web_call",
+  InboundPhoneCall = "inbound_phone_call",
+  OutboundPhoneCall = "outbound_phone_call",
+  WebCall = "web_call",
 }
 
 export type CallDetail = {
-    /**
-     * Corresponding agent id of this call.
-     */
-    agentId: string;
-    /**
-     * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect. Learn more about [Agent Prompt Parameters](/features/agent-prompt-parameter).
-     */
-    agentPromptParams?: Array<AgentPromptParams> | undefined;
-    /**
-     * Unique id of the call.
-     */
-    callId: string;
-    /**
-     * Status of call.
-     */
-    callStatus: CallStatus;
-    /**
-     * Web call or phone call.
-     */
-    callType: CallType;
-    /**
-     * End timestamp (milliseconds since epoch) of the call. Available after call ends.
-     */
-    endTimestamp?: number | undefined;
-    phoneNumber?: CallPhoneNumber | undefined;
-    /**
-     * Recording of the call. Available after call ends.
-     */
-    recordingUrl?: string | undefined;
-    /**
-     * Begin timestamp (milliseconds since epoch) of the call.
-     */
-    startTimestamp: number;
-    /**
-     * Transcription of the call. Available after call ends.
-     */
-    transcript?: string | undefined;
+  /**
+   * Corresponding agent id of this call.
+   */
+  agentId: string;
+  /**
+   * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect. Learn more about [Agent Prompt Parameters](/features/agent-prompt-parameter).
+   */
+  agentPromptParams?: Array<AgentPromptParams> | undefined;
+  /**
+   * Unique id of the call.
+   */
+  callId: string;
+  /**
+   * Status of call.
+   */
+  callStatus: CallStatus;
+  /**
+   * Web call or phone call.
+   */
+  callType: CallType;
+  /**
+   * End timestamp (milliseconds since epoch) of the call. Available after call ends.
+   */
+  endTimestamp?: number | undefined;
+  phoneNumber?: CallPhoneNumber | undefined;
+  /**
+   * Recording of the call. Available after call ends.
+   */
+  recordingUrl?: string | undefined;
+  /**
+   * Begin timestamp (milliseconds since epoch) of the call.
+   */
+  startTimestamp: number;
+  /**
+   * Transcription of the call. Available after call ends.
+   */
+  transcript?: string | undefined;
 };
 
 /** @internal */
@@ -72,89 +72,101 @@ export const CallType$ = z.nativeEnum(CallType);
 
 /** @internal */
 export namespace CallDetail$ {
-    export type Inbound = {
-        agent_id: string;
-        agent_prompt_params?: Array<AgentPromptParams$.Inbound> | undefined;
-        call_id: string;
-        call_status: CallStatus;
-        call_type: CallType;
-        end_timestamp?: number | undefined;
-        phone_number?: CallPhoneNumber$.Inbound | undefined;
-        recording_url?: string | undefined;
-        start_timestamp: number;
-        transcript?: string | undefined;
-    };
+  export type Inbound = {
+    agent_id: string;
+    agent_prompt_params?: Array<AgentPromptParams$.Inbound> | undefined;
+    call_id: string;
+    call_status: CallStatus;
+    call_type: CallType;
+    end_timestamp?: number | undefined;
+    phone_number?: CallPhoneNumber$.Inbound | undefined;
+    recording_url?: string | undefined;
+    start_timestamp: number;
+    transcript?: string | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<CallDetail, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_id: z.string(),
-            agent_prompt_params: z.array(AgentPromptParams$.inboundSchema).optional(),
-            call_id: z.string(),
-            call_status: CallStatus$,
-            call_type: CallType$,
-            end_timestamp: z.number().int().optional(),
-            phone_number: CallPhoneNumber$.inboundSchema.optional(),
-            recording_url: z.string().optional(),
-            start_timestamp: z.number().int(),
-            transcript: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                agentId: v.agent_id,
-                ...(v.agent_prompt_params === undefined
-                    ? null
-                    : { agentPromptParams: v.agent_prompt_params }),
-                callId: v.call_id,
-                callStatus: v.call_status,
-                callType: v.call_type,
-                ...(v.end_timestamp === undefined ? null : { endTimestamp: v.end_timestamp }),
-                ...(v.phone_number === undefined ? null : { phoneNumber: v.phone_number }),
-                ...(v.recording_url === undefined ? null : { recordingUrl: v.recording_url }),
-                startTimestamp: v.start_timestamp,
-                ...(v.transcript === undefined ? null : { transcript: v.transcript }),
-            };
-        });
+  export const inboundSchema: z.ZodType<CallDetail, z.ZodTypeDef, Inbound> = z
+    .object({
+      agent_id: z.string(),
+      agent_prompt_params: z.array(AgentPromptParams$.inboundSchema).optional(),
+      call_id: z.string(),
+      call_status: CallStatus$,
+      call_type: CallType$,
+      end_timestamp: z.number().int().optional(),
+      phone_number: CallPhoneNumber$.inboundSchema.optional(),
+      recording_url: z.string().optional(),
+      start_timestamp: z.number().int(),
+      transcript: z.string().optional(),
+    })
+    .transform((v) => {
+      return {
+        agentId: v.agent_id,
+        ...(v.agent_prompt_params === undefined
+          ? null
+          : { agentPromptParams: v.agent_prompt_params }),
+        callId: v.call_id,
+        callStatus: v.call_status,
+        callType: v.call_type,
+        ...(v.end_timestamp === undefined
+          ? null
+          : { endTimestamp: v.end_timestamp }),
+        ...(v.phone_number === undefined
+          ? null
+          : { phoneNumber: v.phone_number }),
+        ...(v.recording_url === undefined
+          ? null
+          : { recordingUrl: v.recording_url }),
+        startTimestamp: v.start_timestamp,
+        ...(v.transcript === undefined ? null : { transcript: v.transcript }),
+      };
+    });
 
-    export type Outbound = {
-        agent_id: string;
-        agent_prompt_params?: Array<AgentPromptParams$.Outbound> | undefined;
-        call_id: string;
-        call_status: CallStatus;
-        call_type: CallType;
-        end_timestamp?: number | undefined;
-        phone_number?: CallPhoneNumber$.Outbound | undefined;
-        recording_url?: string | undefined;
-        start_timestamp: number;
-        transcript?: string | undefined;
-    };
+  export type Outbound = {
+    agent_id: string;
+    agent_prompt_params?: Array<AgentPromptParams$.Outbound> | undefined;
+    call_id: string;
+    call_status: CallStatus;
+    call_type: CallType;
+    end_timestamp?: number | undefined;
+    phone_number?: CallPhoneNumber$.Outbound | undefined;
+    recording_url?: string | undefined;
+    start_timestamp: number;
+    transcript?: string | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CallDetail> = z
-        .object({
-            agentId: z.string(),
-            agentPromptParams: z.array(AgentPromptParams$.outboundSchema).optional(),
-            callId: z.string(),
-            callStatus: CallStatus$,
-            callType: CallType$,
-            endTimestamp: z.number().int().optional(),
-            phoneNumber: CallPhoneNumber$.outboundSchema.optional(),
-            recordingUrl: z.string().optional(),
-            startTimestamp: z.number().int(),
-            transcript: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                agent_id: v.agentId,
-                ...(v.agentPromptParams === undefined
-                    ? null
-                    : { agent_prompt_params: v.agentPromptParams }),
-                call_id: v.callId,
-                call_status: v.callStatus,
-                call_type: v.callType,
-                ...(v.endTimestamp === undefined ? null : { end_timestamp: v.endTimestamp }),
-                ...(v.phoneNumber === undefined ? null : { phone_number: v.phoneNumber }),
-                ...(v.recordingUrl === undefined ? null : { recording_url: v.recordingUrl }),
-                start_timestamp: v.startTimestamp,
-                ...(v.transcript === undefined ? null : { transcript: v.transcript }),
-            };
-        });
+  export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CallDetail> = z
+    .object({
+      agentId: z.string(),
+      agentPromptParams: z.array(AgentPromptParams$.outboundSchema).optional(),
+      callId: z.string(),
+      callStatus: CallStatus$,
+      callType: CallType$,
+      endTimestamp: z.number().int().optional(),
+      phoneNumber: CallPhoneNumber$.outboundSchema.optional(),
+      recordingUrl: z.string().optional(),
+      startTimestamp: z.number().int(),
+      transcript: z.string().optional(),
+    })
+    .transform((v) => {
+      return {
+        agent_id: v.agentId,
+        ...(v.agentPromptParams === undefined
+          ? null
+          : { agent_prompt_params: v.agentPromptParams }),
+        call_id: v.callId,
+        call_status: v.callStatus,
+        call_type: v.callType,
+        ...(v.endTimestamp === undefined
+          ? null
+          : { end_timestamp: v.endTimestamp }),
+        ...(v.phoneNumber === undefined
+          ? null
+          : { phone_number: v.phoneNumber }),
+        ...(v.recordingUrl === undefined
+          ? null
+          : { recording_url: v.recordingUrl }),
+        start_timestamp: v.startTimestamp,
+        ...(v.transcript === undefined ? null : { transcript: v.transcript }),
+      };
+    });
 }

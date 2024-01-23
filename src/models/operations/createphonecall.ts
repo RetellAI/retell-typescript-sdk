@@ -9,174 +9,191 @@ import { z } from "zod";
  * Phone number associated with the call.
  */
 export type PhoneNumber = {
-    /**
-     * Phone number you purchased in E.164 format. It would have an agent id associated with it.
-     */
-    from: string;
-    /**
-     * Callee phone number in E.164 format.
-     */
-    to: string;
+  /**
+   * Phone number you purchased in E.164 format. It would have an agent id associated with it.
+   */
+  from: string;
+  /**
+   * Callee phone number in E.164 format.
+   */
+  to: string;
 };
 
 export type CreatePhoneCallRequestBody = {
-    /**
-     * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect.
-     */
-    agentPromptParams?: Array<components.AgentPromptParams> | undefined;
-    /**
-     * Phone number associated with the call.
-     */
-    phoneNumber: PhoneNumber;
+  /**
+   * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect.
+   */
+  agentPromptParams?: Array<components.AgentPromptParams> | undefined;
+  /**
+   * Phone number associated with the call.
+   */
+  phoneNumber: PhoneNumber;
 };
 
 /**
  * Status of call.
  */
 export enum CallStatus {
-    Ongoing = "ongoing",
-    Ended = "ended",
-    Error = "error",
+  Ongoing = "ongoing",
+  Ended = "ended",
+  Error = "error",
 }
 
 /**
  * Web call or phone call.
  */
 export enum CreatePhoneCallCallType {
-    InboundPhoneCall = "inbound_phone_call",
-    OutboundPhoneCall = "outbound_phone_call",
-    WebCall = "web_call",
+  InboundPhoneCall = "inbound_phone_call",
+  OutboundPhoneCall = "outbound_phone_call",
+  WebCall = "web_call",
 }
 
 /**
  * Successfully retrieved an agent.
  */
 export type CreatePhoneCallResponseBody = {
-    /**
-     * Corresponding agent id of this call.
-     */
-    agentId: string;
-    /**
-     * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect. Learn more about [Agent Prompt Parameters](/features/agent-prompt-parameter).
-     */
-    agentPromptParams?: Array<components.AgentPromptParams> | undefined;
-    /**
-     * Unique id of the call.
-     */
-    callId: string;
-    /**
-     * Status of call.
-     */
-    callStatus: CallStatus;
-    /**
-     * Web call or phone call.
-     */
-    callType: CreatePhoneCallCallType;
-    /**
-     * Phone number associated with the call.
-     */
-    phoneNumber: components.CallPhoneNumber;
-    /**
-     * Begin timestamp (milliseconds since epoch) of the call.
-     */
-    startTimestamp: number;
+  /**
+   * Corresponding agent id of this call.
+   */
+  agentId: string;
+  /**
+   * Supply values to your agent prompt parameters. If the given key value cannot match any param in prompt, it would have have any effect. Learn more about [Agent Prompt Parameters](/features/agent-prompt-parameter).
+   */
+  agentPromptParams?: Array<components.AgentPromptParams> | undefined;
+  /**
+   * Unique id of the call.
+   */
+  callId: string;
+  /**
+   * Status of call.
+   */
+  callStatus: CallStatus;
+  /**
+   * Web call or phone call.
+   */
+  callType: CreatePhoneCallCallType;
+  /**
+   * Phone number associated with the call.
+   */
+  phoneNumber: components.CallPhoneNumber;
+  /**
+   * Begin timestamp (milliseconds since epoch) of the call.
+   */
+  startTimestamp: number;
 };
 
 export type CreatePhoneCallResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
-    /**
-     * Successfully retrieved an agent.
-     */
-    object?: CreatePhoneCallResponseBody | undefined;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
+  /**
+   * Successfully retrieved an agent.
+   */
+  object?: CreatePhoneCallResponseBody | undefined;
 };
 
 /** @internal */
 export namespace PhoneNumber$ {
-    export type Inbound = {
-        from: string;
-        to: string;
-    };
+  export type Inbound = {
+    from: string;
+    to: string;
+  };
 
-    export const inboundSchema: z.ZodType<PhoneNumber, z.ZodTypeDef, Inbound> = z
-        .object({
-            from: z.string(),
-            to: z.string(),
-        })
-        .transform((v) => {
-            return {
-                from: v.from,
-                to: v.to,
-            };
-        });
+  export const inboundSchema: z.ZodType<PhoneNumber, z.ZodTypeDef, Inbound> = z
+    .object({
+      from: z.string(),
+      to: z.string(),
+    })
+    .transform((v) => {
+      return {
+        from: v.from,
+        to: v.to,
+      };
+    });
 
-    export type Outbound = {
-        from: string;
-        to: string;
-    };
+  export type Outbound = {
+    from: string;
+    to: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PhoneNumber> = z
-        .object({
-            from: z.string(),
-            to: z.string(),
-        })
-        .transform((v) => {
-            return {
-                from: v.from,
-                to: v.to,
-            };
-        });
+  export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PhoneNumber> =
+    z
+      .object({
+        from: z.string(),
+        to: z.string(),
+      })
+      .transform((v) => {
+        return {
+          from: v.from,
+          to: v.to,
+        };
+      });
 }
 
 /** @internal */
 export namespace CreatePhoneCallRequestBody$ {
-    export type Inbound = {
-        agent_prompt_params?: Array<components.AgentPromptParams$.Inbound> | undefined;
-        phone_number: PhoneNumber$.Inbound;
-    };
+  export type Inbound = {
+    agent_prompt_params?:
+      | Array<components.AgentPromptParams$.Inbound>
+      | undefined;
+    phone_number: PhoneNumber$.Inbound;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneCallRequestBody, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_prompt_params: z.array(components.AgentPromptParams$.inboundSchema).optional(),
-            phone_number: z.lazy(() => PhoneNumber$.inboundSchema),
-        })
-        .transform((v) => {
-            return {
-                ...(v.agent_prompt_params === undefined
-                    ? null
-                    : { agentPromptParams: v.agent_prompt_params }),
-                phoneNumber: v.phone_number,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallRequestBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      agent_prompt_params: z
+        .array(components.AgentPromptParams$.inboundSchema)
+        .optional(),
+      phone_number: z.lazy(() => PhoneNumber$.inboundSchema),
+    })
+    .transform((v) => {
+      return {
+        ...(v.agent_prompt_params === undefined
+          ? null
+          : { agentPromptParams: v.agent_prompt_params }),
+        phoneNumber: v.phone_number,
+      };
+    });
 
-    export type Outbound = {
-        agent_prompt_params?: Array<components.AgentPromptParams$.Outbound> | undefined;
-        phone_number: PhoneNumber$.Outbound;
-    };
+  export type Outbound = {
+    agent_prompt_params?:
+      | Array<components.AgentPromptParams$.Outbound>
+      | undefined;
+    phone_number: PhoneNumber$.Outbound;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneCallRequestBody> = z
-        .object({
-            agentPromptParams: z.array(components.AgentPromptParams$.outboundSchema).optional(),
-            phoneNumber: z.lazy(() => PhoneNumber$.outboundSchema),
-        })
-        .transform((v) => {
-            return {
-                ...(v.agentPromptParams === undefined
-                    ? null
-                    : { agent_prompt_params: v.agentPromptParams }),
-                phone_number: v.phoneNumber,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallRequestBody
+  > = z
+    .object({
+      agentPromptParams: z
+        .array(components.AgentPromptParams$.outboundSchema)
+        .optional(),
+      phoneNumber: z.lazy(() => PhoneNumber$.outboundSchema),
+    })
+    .transform((v) => {
+      return {
+        ...(v.agentPromptParams === undefined
+          ? null
+          : { agent_prompt_params: v.agentPromptParams }),
+        phone_number: v.phoneNumber,
+      };
+    });
 }
 
 /** @internal */
@@ -187,122 +204,150 @@ export const CreatePhoneCallCallType$ = z.nativeEnum(CreatePhoneCallCallType);
 
 /** @internal */
 export namespace CreatePhoneCallResponseBody$ {
-    export type Inbound = {
-        agent_id: string;
-        agent_prompt_params?: Array<components.AgentPromptParams$.Inbound> | undefined;
-        call_id: string;
-        call_status: CallStatus;
-        call_type: CreatePhoneCallCallType;
-        phone_number: components.CallPhoneNumber$.Inbound;
-        start_timestamp: number;
-    };
+  export type Inbound = {
+    agent_id: string;
+    agent_prompt_params?:
+      | Array<components.AgentPromptParams$.Inbound>
+      | undefined;
+    call_id: string;
+    call_status: CallStatus;
+    call_type: CreatePhoneCallCallType;
+    phone_number: components.CallPhoneNumber$.Inbound;
+    start_timestamp: number;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneCallResponseBody, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_id: z.string(),
-            agent_prompt_params: z.array(components.AgentPromptParams$.inboundSchema).optional(),
-            call_id: z.string(),
-            call_status: CallStatus$,
-            call_type: CreatePhoneCallCallType$,
-            phone_number: components.CallPhoneNumber$.inboundSchema,
-            start_timestamp: z.number().int(),
-        })
-        .transform((v) => {
-            return {
-                agentId: v.agent_id,
-                ...(v.agent_prompt_params === undefined
-                    ? null
-                    : { agentPromptParams: v.agent_prompt_params }),
-                callId: v.call_id,
-                callStatus: v.call_status,
-                callType: v.call_type,
-                phoneNumber: v.phone_number,
-                startTimestamp: v.start_timestamp,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      agent_id: z.string(),
+      agent_prompt_params: z
+        .array(components.AgentPromptParams$.inboundSchema)
+        .optional(),
+      call_id: z.string(),
+      call_status: CallStatus$,
+      call_type: CreatePhoneCallCallType$,
+      phone_number: components.CallPhoneNumber$.inboundSchema,
+      start_timestamp: z.number().int(),
+    })
+    .transform((v) => {
+      return {
+        agentId: v.agent_id,
+        ...(v.agent_prompt_params === undefined
+          ? null
+          : { agentPromptParams: v.agent_prompt_params }),
+        callId: v.call_id,
+        callStatus: v.call_status,
+        callType: v.call_type,
+        phoneNumber: v.phone_number,
+        startTimestamp: v.start_timestamp,
+      };
+    });
 
-    export type Outbound = {
-        agent_id: string;
-        agent_prompt_params?: Array<components.AgentPromptParams$.Outbound> | undefined;
-        call_id: string;
-        call_status: CallStatus;
-        call_type: CreatePhoneCallCallType;
-        phone_number: components.CallPhoneNumber$.Outbound;
-        start_timestamp: number;
-    };
+  export type Outbound = {
+    agent_id: string;
+    agent_prompt_params?:
+      | Array<components.AgentPromptParams$.Outbound>
+      | undefined;
+    call_id: string;
+    call_status: CallStatus;
+    call_type: CreatePhoneCallCallType;
+    phone_number: components.CallPhoneNumber$.Outbound;
+    start_timestamp: number;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneCallResponseBody> = z
-        .object({
-            agentId: z.string(),
-            agentPromptParams: z.array(components.AgentPromptParams$.outboundSchema).optional(),
-            callId: z.string(),
-            callStatus: CallStatus$,
-            callType: CreatePhoneCallCallType$,
-            phoneNumber: components.CallPhoneNumber$.outboundSchema,
-            startTimestamp: z.number().int(),
-        })
-        .transform((v) => {
-            return {
-                agent_id: v.agentId,
-                ...(v.agentPromptParams === undefined
-                    ? null
-                    : { agent_prompt_params: v.agentPromptParams }),
-                call_id: v.callId,
-                call_status: v.callStatus,
-                call_type: v.callType,
-                phone_number: v.phoneNumber,
-                start_timestamp: v.startTimestamp,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponseBody
+  > = z
+    .object({
+      agentId: z.string(),
+      agentPromptParams: z
+        .array(components.AgentPromptParams$.outboundSchema)
+        .optional(),
+      callId: z.string(),
+      callStatus: CallStatus$,
+      callType: CreatePhoneCallCallType$,
+      phoneNumber: components.CallPhoneNumber$.outboundSchema,
+      startTimestamp: z.number().int(),
+    })
+    .transform((v) => {
+      return {
+        agent_id: v.agentId,
+        ...(v.agentPromptParams === undefined
+          ? null
+          : { agent_prompt_params: v.agentPromptParams }),
+        call_id: v.callId,
+        call_status: v.callStatus,
+        call_type: v.callType,
+        phone_number: v.phoneNumber,
+        start_timestamp: v.startTimestamp,
+      };
+    });
 }
 
 /** @internal */
 export namespace CreatePhoneCallResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-        callDetail?: CreatePhoneCallResponseBody$.Inbound | undefined;
-    };
+  export type Inbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+    callDetail?: CreatePhoneCallResponseBody$.Inbound | undefined;
+  };
 
-    export const inboundSchema: z.ZodType<CreatePhoneCallResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            callDetail: z.lazy(() => CreatePhoneCallResponseBody$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-                ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    CreatePhoneCallResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+      callDetail: z
+        .lazy(() => CreatePhoneCallResponseBody$.inboundSchema)
+        .optional(),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+        ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-        callDetail?: CreatePhoneCallResponseBody$.Outbound | undefined;
-    };
+  export type Outbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+    callDetail?: CreatePhoneCallResponseBody$.Outbound | undefined;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreatePhoneCallResponse> = z
-        .object({
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            callDetail: z.lazy(() => CreatePhoneCallResponseBody$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-                ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    CreatePhoneCallResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+      callDetail: z
+        .lazy(() => CreatePhoneCallResponseBody$.outboundSchema)
+        .optional(),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+        ...(v.callDetail === undefined ? null : { callDetail: v.callDetail }),
+      };
+    });
 }

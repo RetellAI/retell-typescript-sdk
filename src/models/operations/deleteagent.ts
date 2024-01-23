@@ -5,99 +5,115 @@
 import { z } from "zod";
 
 export type DeleteAgentRequest = {
-    /**
-     * Unique id of the agent to be deleted.
-     */
-    agentId: string;
+  /**
+   * Unique id of the agent to be deleted.
+   */
+  agentId: string;
 };
 
 export type DeleteAgentResponse = {
-    /**
-     * HTTP response content type for this operation
-     */
-    contentType: string;
-    /**
-     * HTTP response status code for this operation
-     */
-    statusCode: number;
-    /**
-     * Raw HTTP response; suitable for custom response parsing
-     */
-    rawResponse: Response;
+  /**
+   * HTTP response content type for this operation
+   */
+  contentType: string;
+  /**
+   * HTTP response status code for this operation
+   */
+  statusCode: number;
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse: Response;
 };
 
 /** @internal */
 export namespace DeleteAgentRequest$ {
-    export type Inbound = {
-        agent_id: string;
-    };
+  export type Inbound = {
+    agent_id: string;
+  };
 
-    export const inboundSchema: z.ZodType<DeleteAgentRequest, z.ZodTypeDef, Inbound> = z
-        .object({
-            agent_id: z.string(),
-        })
-        .transform((v) => {
-            return {
-                agentId: v.agent_id,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    DeleteAgentRequest,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      agent_id: z.string(),
+    })
+    .transform((v) => {
+      return {
+        agentId: v.agent_id,
+      };
+    });
 
-    export type Outbound = {
-        agent_id: string;
-    };
+  export type Outbound = {
+    agent_id: string;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteAgentRequest> = z
-        .object({
-            agentId: z.string(),
-        })
-        .transform((v) => {
-            return {
-                agent_id: v.agentId,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentRequest
+  > = z
+    .object({
+      agentId: z.string(),
+    })
+    .transform((v) => {
+      return {
+        agent_id: v.agentId,
+      };
+    });
 }
 
 /** @internal */
 export namespace DeleteAgentResponse$ {
-    export type Inbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: Response;
-    };
+  export type Inbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: Response;
+  };
 
-    export const inboundSchema: z.ZodType<DeleteAgentResponse, z.ZodTypeDef, Inbound> = z
-        .object({
-            ContentType: z.string(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return {
-                contentType: v.ContentType,
-                statusCode: v.StatusCode,
-                rawResponse: v.RawResponse,
-            };
-        });
+  export const inboundSchema: z.ZodType<
+    DeleteAgentResponse,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      ContentType: z.string(),
+      StatusCode: z.number().int(),
+      RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+      return {
+        contentType: v.ContentType,
+        statusCode: v.StatusCode,
+        rawResponse: v.RawResponse,
+      };
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        StatusCode: number;
-        RawResponse: never;
-    };
+  export type Outbound = {
+    ContentType: string;
+    StatusCode: number;
+    RawResponse: never;
+  };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteAgentResponse> = z
-        .object({
-            contentType: z.string(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return {
-                ContentType: v.contentType,
-                StatusCode: v.statusCode,
-                RawResponse: v.rawResponse,
-            };
-        });
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    DeleteAgentResponse
+  > = z
+    .object({
+      contentType: z.string(),
+      statusCode: z.number().int(),
+      rawResponse: z.instanceof(Response).transform(() => {
+        throw new Error("Response cannot be serialized");
+      }),
+    })
+    .transform((v) => {
+      return {
+        ContentType: v.contentType,
+        StatusCode: v.statusCode,
+        RawResponse: v.rawResponse,
+      };
+    });
 }
