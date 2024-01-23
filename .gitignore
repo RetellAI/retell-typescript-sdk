@@ -8,3 +8,4 @@
 /node_modules
 /.tsbuildinfo
 src/example.ts
+.DS_Store
