@@ -3,6 +3,7 @@
  */
 
 import * as components from "../../models/components";
+import { Function } from "../../models/components";
 import { z } from "zod";
 
 export type UpdateAgentRequestBody = {
@@ -23,6 +24,10 @@ export type UpdateAgentRequestBody = {
      * Unique voice id used for the agent. Find list of available voices in documentation.
      */
     voiceId?: string | undefined;
+    /**
+     * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
+     */
+    functions?: Function[] | undefined;
 };
 
 /** @internal */
@@ -32,6 +37,7 @@ export namespace UpdateAgentRequestBody$ {
         llm_setting?: components.RetellLlmSetting$.Inbound | components.CustomLlmSetting$.Inbound | undefined;
         interaction_setting?: components.InteractionSettingRequest$.Inbound | undefined;
         voice_id?: string | undefined;
+        functions?: Function[] | undefined;
     };
 
     export const inboundSchema: z.ZodType<UpdateAgentRequestBody, z.ZodTypeDef, Inbound> = z
@@ -40,6 +46,7 @@ export namespace UpdateAgentRequestBody$ {
             llm_setting: z.union([components.RetellLlmSetting$.inboundSchema, components.CustomLlmSetting$.inboundSchema]).optional(),
             interaction_setting: components.InteractionSettingRequest$.inboundSchema.optional(),
             voice_id: z.string().optional(),
+            functions: z.array(components.Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -47,6 +54,7 @@ export namespace UpdateAgentRequestBody$ {
                 ...(v.llm_setting === undefined ? null : { llmSetting: v.llm_setting }),
                 ...(v.interaction_setting === undefined ? null : { interactionSetting: v.interaction_setting }),
                 ...(v.voice_id === undefined ? null : { voiceId: v.voice_id }),
+                ...(v.functions === undefined ? null : { functions: v.functions }),
             };
         });
 
@@ -55,6 +63,7 @@ export namespace UpdateAgentRequestBody$ {
         llm_setting?: components.RetellLlmSetting$.Outbound | components.CustomLlmSetting$.Outbound | undefined;
         interaction_setting?: components.InteractionSettingRequest$.Outbound | undefined;
         voice_id?: string | undefined;
+        functions?: Function[] | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UpdateAgentRequestBody> = z
@@ -63,6 +72,7 @@ export namespace UpdateAgentRequestBody$ {
             llmSetting: z.union([components.RetellLlmSetting$.outboundSchema, components.CustomLlmSetting$.outboundSchema]).optional(),
             interactionSetting: components.InteractionSettingRequest$.outboundSchema.optional(),
             voiceId: z.string().optional(),
+            functions: z.array(components.Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -70,6 +80,7 @@ export namespace UpdateAgentRequestBody$ {
                 ...(v.llmSetting === undefined ? null : { llm_setting: v.llmSetting }),
                 ...(v.interactionSetting === undefined ? null : { interaction_setting: v.interactionSetting }),
                 ...(v.voiceId === undefined ? null : { voice_id: v.voiceId }),
+                ...(v.functions === undefined ? null : { functions: v.functions }),
             };
         });
 }
