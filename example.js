@@ -9,8 +9,8 @@ const retell = new sdk_1.RetellClient({
     serverURL: "http://localhost:3002"
 });
 async function main() {
-    // const agent = await retell.createAgent({
-    //     agentName: "testNew",
+    // const res = await retell.createAgent({
+    //     agentName: "testfunction",
     //     llmSetting: {
     //         provider: "retell",
     //         prompt: "test prompt",
@@ -22,8 +22,30 @@ async function main() {
     //         enableEndCall: true,
     //         enableEndMessage: false,
     //         endMessage: "Hope you have a good day, goodbye.",
-    //     }
+    //     },
+    //     functions: [{
+    //       url: "http://localhost:3002/get-weather",
+    //       description: "Get the current weather in a given location.",
+    //       name: "get_current_weather",
+    //       parameters: {
+    //         type: "object",
+    //         properties: {
+    //           location: {
+    //             type: "string",
+    //             description: "The city and state, e.g. San Francisco, CA"
+    //           },
+    //           unit: {
+    //             type: "string",
+    //             enum: ["celsius", "fahrenheit"]
+    //           }
+    //         },
+    //         required: ["location"]
+    //       }
+    //     }]
     // });
+    // console.log(res.agent);
+    const res = await retell.getAgent("e2c8d51a88b935f3ca09170d9c248e8e");
+    console.log(res.agent);
     // const res = await retell.listAgents();
     // console.log(res.agents);
     // const agent = await retell.updateAgent({
@@ -41,8 +63,8 @@ async function main() {
     //     areaCode: 415,
     // });
     // res.phoneNumber
-    const res = await retell.deletePhoneNumber("+14159095857");
-    console.log(res.statusCode);
+    // const res = await retell.deletePhoneNumber("+14159095857");
+    // console.log(res.statusCode)
     // const res = await retell.getCall("e208e53fe334b42a21bdf065f5b121e1");
     // console.log(res.callDetail);
     // const newPhoneNumber = await retell.createPhoneNumber({

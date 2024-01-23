@@ -404,6 +404,7 @@ export namespace Agent$ {
         interaction_setting: InteractionSettingResponse$.Inbound;
         voice_id: string;
         last_modification_timestamp: number;
+        functions?: Function[] | undefined;
     };
 
     export const inboundSchema: z.ZodType<Agent, z.ZodTypeDef, Inbound> = z
@@ -414,6 +415,7 @@ export namespace Agent$ {
             interaction_setting: InteractionSettingResponse$.inboundSchema,
             voice_id: z.string(),
             last_modification_timestamp: z.number().int(),
+            functions: z.array(Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -423,6 +425,7 @@ export namespace Agent$ {
                 interactionSetting: v.interaction_setting,
                 voiceId: v.voice_id,
                 lastModificationTimestamp: v.last_modification_timestamp,
+                functions: v.functions
             };
         });
 
@@ -433,6 +436,7 @@ export namespace Agent$ {
         interaction_setting: InteractionSettingResponse$.Outbound;
         voice_id: string;
         last_modification_timestamp: number;
+        functions?: Function[] | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Agent> = z
@@ -443,6 +447,7 @@ export namespace Agent$ {
             interactionSetting: InteractionSettingResponse$.outboundSchema,
             voiceId: z.string(),
             lastModificationTimestamp: z.number().int(),
+            functions: z.array(Function$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -452,6 +457,7 @@ export namespace Agent$ {
                 interaction_setting: v.interactionSetting,
                 voice_id: v.voiceId,
                 last_modification_timestamp: v.lastModificationTimestamp,
+                functions: v.functions
             };
         });
 }
