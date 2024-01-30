@@ -32,9 +32,9 @@ export type RegisterCallRequestBody = {
 
 export type RegisterCallResponse = {
   /**
-   * Successfully created a new agent.
+   * Successfully retrieved a call.
    */
-  agent?: components.CallDetail | undefined;
+  callDetail?: components.CallDetail | undefined;
   /**
    * HTTP response content type for this operation
    */

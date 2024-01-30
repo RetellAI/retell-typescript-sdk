@@ -14,7 +14,7 @@ export type GetCallRequest = {
 
 export type GetCallResponse = {
   /**
-   * Successfully retrieved an agent.
+   * Successfully retrieved a call.
    */
   callDetail?: components.CallDetail | undefined;
   /**

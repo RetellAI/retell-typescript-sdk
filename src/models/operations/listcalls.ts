@@ -68,7 +68,7 @@ export type ListCallsResponse = {
    */
   rawResponse: Response;
   /**
-   * Successfully retrieved all agents.
+   * Successfully retrieved all calls.
    */
   calls?: Array<components.CallDetail> | undefined;
 };
