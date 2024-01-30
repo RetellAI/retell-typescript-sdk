@@ -166,7 +166,7 @@ export class RetellClient extends ClientSDK {
       const responseBody = await response.json();
       const result = operations.RegisterCallResponse$.inboundSchema.parse({
         ...responseFields$,
-        callDetail: responseBody,
+        CallDetail: responseBody,
       });
       return result;
     } else if (this.matchResponse(response, 400, "application/json")) {
