@@ -1,14 +1,15 @@
 import { EventEmitter } from "eventemitter3";
 import WebSocket from "isomorphic-ws";
 
-const baseEndpoint = "wss://api.re-tell.ai/audio-websocket/";
+let baseEndpoint = "wss://api.re-tell.ai/audio-websocket/";
 
 export class AudioWsClient extends EventEmitter {
   private ws: WebSocket;
 
-  constructor(callId: string) {
+  constructor(callId: string, customEndpoint?: string) {
     super();
 
+    if (customEndpoint) baseEndpoint = customEndpoint;
     const endpoint = baseEndpoint + callId;
     this.ws = new WebSocket(endpoint);
     this.ws.binaryType = "arraybuffer";
