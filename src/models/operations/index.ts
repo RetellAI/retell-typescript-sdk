@@ -3,16 +3,10 @@
  */
 
 export * from "./createagent";
-export * from "./createphonecall";
-export * from "./createwebcall";
-export * from "./createphonenumber";
+export * from "./registercall";
 export * from "./deleteagent";
-export * from "./deletephonenumber";
 export * from "./getagent";
 export * from "./getcall";
-export * from "./getphonenumber";
 export * from "./listagents";
 export * from "./listcalls";
-export * from "./listphonenumbers";
 export * from "./updateagent";
-export * from "./updatephoneagent";

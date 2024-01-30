@@ -3,4 +3,4 @@
  */
 
 export * from "./sdk";
-export * from "./liveClient";
+export * from "./audioWsClient";

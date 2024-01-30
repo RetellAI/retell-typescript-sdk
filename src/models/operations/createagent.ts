@@ -3,7 +3,6 @@
  */
 
 import * as components from "../../models/components";
-import { Function } from "../../models/components";
 import { z } from "zod";
 
 export type CreateAgentRequestBody = {
@@ -12,22 +11,13 @@ export type CreateAgentRequestBody = {
    */
   agentName?: string | undefined;
   /*
-   * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom
-   * response generation system.
+   * The URL we will establish LLM websocket for getting response, usually your server.
    */
-  llmSetting: components.RetellLlmSetting | components.CustomLlmSetting;
-  /**
-   * Setting combination that controls interaction flow, like begin and end logic.
-   */
-  interactionSetting?: components.InteractionSettingRequest | undefined;
+  llmWebsocketUrl: string;
   /**
    * Unique voice id used for the agent. Find list of available voices in documentation.
    */
   voiceId: string;
-  /**
-   * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
-   */
-  functions?: Function[] | undefined;
 };
 
 export type CreateAgentResponse = {
@@ -53,14 +43,8 @@ export type CreateAgentResponse = {
 export namespace CreateAgentRequestBody$ {
   export type Inbound = {
     agent_name?: string | undefined;
-    llm_setting:
-      | components.RetellLlmSetting$.Inbound
-      | components.CustomLlmSetting$.Inbound;
-    interaction_setting?:
-      | components.InteractionSettingRequest$.Inbound
-      | undefined;
+    llm_websocket_url: string;
     voice_id: string;
-    functions?: Function[] | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -70,37 +54,21 @@ export namespace CreateAgentRequestBody$ {
   > = z
     .object({
       agent_name: z.string().optional(),
-      llm_setting: z.union([
-        components.RetellLlmSetting$.inboundSchema,
-        components.CustomLlmSetting$.inboundSchema,
-      ]),
-      interaction_setting:
-        components.InteractionSettingRequest$.inboundSchema.optional(),
+      llm_websocket_url: z.string(),
       voice_id: z.string(),
-      functions: z.array(components.Function$.inboundSchema).optional(),
     })
     .transform((v) => {
       return {
         ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
-        llmSetting: v.llm_setting,
-        ...(v.interaction_setting === undefined
-          ? null
-          : { interactionSetting: v.interaction_setting }),
+        llmWebsocketUrl: v.llm_websocket_url,
         voiceId: v.voice_id,
-        ...(v.functions === undefined ? null : { functions: v.functions }),
       };
     });
 
   export type Outbound = {
     agent_name?: string | undefined;
-    llm_setting:
-      | components.RetellLlmSetting$.Inbound
-      | components.CustomLlmSetting$.Inbound;
-    interaction_setting?:
-      | components.InteractionSettingRequest$.Inbound
-      | undefined;
+    llm_websocket_url: string;
     voice_id: string;
-    functions?: Function[] | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -110,24 +78,14 @@ export namespace CreateAgentRequestBody$ {
   > = z
     .object({
       agentName: z.string().optional(),
-      llmSetting: z.union([
-        components.RetellLlmSetting$.outboundSchema,
-        components.CustomLlmSetting$.outboundSchema,
-      ]),
-      interactionSetting:
-        components.InteractionSettingRequest$.outboundSchema.optional(),
+      llmWebsocketUrl: z.string(),
       voiceId: z.string(),
-      functions: z.array(components.Function$.inboundSchema).optional(),
     })
     .transform((v) => {
       return {
         ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
-        llm_setting: v.llmSetting,
-        ...(v.interactionSetting === undefined
-          ? null
-          : { interaction_setting: v.interactionSetting }),
+        llm_websocket_url: v.llmWebsocketUrl,
         voice_id: v.voiceId,
-        ...(v.functions === undefined ? null : { functions: v.functions }),
       };
     });
 }

@@ -7,7 +7,7 @@ import { z } from "zod";
 /**
  * Internal Server Error
  */
-export type DeletePhoneNumberResponse500ResponseBodyData = {
+export type RegisterCallResponse500ResponseBodyData = {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -18,7 +18,7 @@ export type DeletePhoneNumberResponse500ResponseBodyData = {
 /**
  * Internal Server Error
  */
-export class DeletePhoneNumberResponse500ResponseBody extends Error {
+export class RegisterCallResponse500ResponseBody extends Error {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -26,10 +26,10 @@ export class DeletePhoneNumberResponse500ResponseBody extends Error {
   errorMessage?: string | undefined;
 
   /** The original data that was passed to this error instance. */
-  data$: DeletePhoneNumberResponse500ResponseBodyData;
+  data$: RegisterCallResponse500ResponseBodyData;
 
   constructor(
-    err: DeletePhoneNumberResponse500ResponseBodyData,
+    err: RegisterCallResponse500ResponseBodyData,
     options?: ErrorOptions,
   ) {
     super("", options);
@@ -48,14 +48,62 @@ export class DeletePhoneNumberResponse500ResponseBody extends Error {
     const content = JSON.stringify(data);
     this.message = [msg, content].filter(Boolean).join("\n");
 
-    this.name = "DeletePhoneNumberResponse500ResponseBody";
+    this.name = "RegisterCallResponse500ResponseBody";
+  }
+}
+
+/**
+ * Too Many Requests
+ */
+export type RegisterCallResponse429ResponseBodyData = {
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
+};
+
+/**
+ * Too Many Requests
+ */
+export class RegisterCallResponse429ResponseBody extends Error {
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: RegisterCallResponse429ResponseBodyData;
+
+  constructor(
+    err: RegisterCallResponse429ResponseBodyData,
+    options?: ErrorOptions,
+  ) {
+    super("", options);
+    this.data$ = err;
+
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
+    }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "RegisterCallResponse429ResponseBody";
   }
 }
 
 /**
  * Unprocessable Content
  */
-export type DeletePhoneNumberResponse422ResponseBodyData = {
+export type RegisterCallResponse422ResponseBodyData = {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -66,7 +114,7 @@ export type DeletePhoneNumberResponse422ResponseBodyData = {
 /**
  * Unprocessable Content
  */
-export class DeletePhoneNumberResponse422ResponseBody extends Error {
+export class RegisterCallResponse422ResponseBody extends Error {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -74,10 +122,10 @@ export class DeletePhoneNumberResponse422ResponseBody extends Error {
   errorMessage?: string | undefined;
 
   /** The original data that was passed to this error instance. */
-  data$: DeletePhoneNumberResponse422ResponseBodyData;
+  data$: RegisterCallResponse422ResponseBodyData;
 
   constructor(
-    err: DeletePhoneNumberResponse422ResponseBodyData,
+    err: RegisterCallResponse422ResponseBodyData,
     options?: ErrorOptions,
   ) {
     super("", options);
@@ -96,14 +144,14 @@ export class DeletePhoneNumberResponse422ResponseBody extends Error {
     const content = JSON.stringify(data);
     this.message = [msg, content].filter(Boolean).join("\n");
 
-    this.name = "DeletePhoneNumberResponse422ResponseBody";
+    this.name = "RegisterCallResponse422ResponseBody";
   }
 }
 
 /**
- * Unauthorized
+ * Payment Required
  */
-export type DeletePhoneNumberResponseResponseBodyData = {
+export type RegisterCallResponse402ResponseBodyData = {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -112,9 +160,9 @@ export type DeletePhoneNumberResponseResponseBodyData = {
 };
 
 /**
- * Unauthorized
+ * Payment Required
  */
-export class DeletePhoneNumberResponseResponseBody extends Error {
+export class RegisterCallResponse402ResponseBody extends Error {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -122,10 +170,10 @@ export class DeletePhoneNumberResponseResponseBody extends Error {
   errorMessage?: string | undefined;
 
   /** The original data that was passed to this error instance. */
-  data$: DeletePhoneNumberResponseResponseBodyData;
+  data$: RegisterCallResponse402ResponseBodyData;
 
   constructor(
-    err: DeletePhoneNumberResponseResponseBodyData,
+    err: RegisterCallResponse402ResponseBodyData,
     options?: ErrorOptions,
   ) {
     super("", options);
@@ -144,14 +192,14 @@ export class DeletePhoneNumberResponseResponseBody extends Error {
     const content = JSON.stringify(data);
     this.message = [msg, content].filter(Boolean).join("\n");
 
-    this.name = "DeletePhoneNumberResponseResponseBody";
+    this.name = "RegisterCallResponse402ResponseBody";
   }
 }
 
 /**
- * Bad Request
+ * Unauthorized
  */
-export type DeletePhoneNumberResponseBodyData = {
+export type RegisterCallResponseResponseBodyData = {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -160,9 +208,9 @@ export type DeletePhoneNumberResponseBodyData = {
 };
 
 /**
- * Bad Request
+ * Unauthorized
  */
-export class DeletePhoneNumberResponseBody extends Error {
+export class RegisterCallResponseResponseBody extends Error {
   /**
    * Raw HTTP response; suitable for custom response parsing
    */
@@ -170,9 +218,12 @@ export class DeletePhoneNumberResponseBody extends Error {
   errorMessage?: string | undefined;
 
   /** The original data that was passed to this error instance. */
-  data$: DeletePhoneNumberResponseBodyData;
+  data$: RegisterCallResponseResponseBodyData;
 
-  constructor(err: DeletePhoneNumberResponseBodyData, options?: ErrorOptions) {
+  constructor(
+    err: RegisterCallResponseResponseBodyData,
+    options?: ErrorOptions,
+  ) {
     super("", options);
     this.data$ = err;
 
@@ -189,19 +240,64 @@ export class DeletePhoneNumberResponseBody extends Error {
     const content = JSON.stringify(data);
     this.message = [msg, content].filter(Boolean).join("\n");
 
-    this.name = "DeletePhoneNumberResponseBody";
+    this.name = "RegisterCallResponseResponseBody";
+  }
+}
+
+/**
+ * Bad Request
+ */
+export type RegisterCallResponseBodyData = {
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
+};
+
+/**
+ * Bad Request
+ */
+export class RegisterCallResponseBody extends Error {
+  /**
+   * Raw HTTP response; suitable for custom response parsing
+   */
+  rawResponse?: Response | undefined;
+  errorMessage?: string | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: RegisterCallResponseBodyData;
+
+  constructor(err: RegisterCallResponseBodyData, options?: ErrorOptions) {
+    super("", options);
+    this.data$ = err;
+
+    if (err.rawResponse != null) {
+      this.rawResponse = err.rawResponse;
+    }
+    if (err.errorMessage != null) {
+      this.errorMessage = err.errorMessage;
+    }
+
+    const msg =
+      "message" in err && typeof err.message === "string" ? err.message : "";
+    const { rawResponse, ...data } = err;
+    const content = JSON.stringify(data);
+    this.message = [msg, content].filter(Boolean).join("\n");
+
+    this.name = "RegisterCallResponseBody";
   }
 }
 
 /** @internal */
-export namespace DeletePhoneNumberResponse500ResponseBody$ {
+export namespace RegisterCallResponse500ResponseBody$ {
   export type Inbound = {
     RawResponse?: Response | undefined;
     error_message?: string | undefined;
   };
 
   export const inboundSchema: z.ZodType<
-    DeletePhoneNumberResponse500ResponseBody,
+    RegisterCallResponse500ResponseBody,
     z.ZodTypeDef,
     Inbound
   > = z
@@ -210,7 +306,7 @@ export namespace DeletePhoneNumberResponse500ResponseBody$ {
       error_message: z.string().optional(),
     })
     .transform((v) => {
-      return new DeletePhoneNumberResponse500ResponseBody({
+      return new RegisterCallResponse500ResponseBody({
         ...(v.RawResponse === undefined
           ? null
           : { rawResponse: v.RawResponse }),
@@ -227,9 +323,9 @@ export namespace DeletePhoneNumberResponse500ResponseBody$ {
   export const outboundSchema: z.ZodType<
     Outbound,
     z.ZodTypeDef,
-    DeletePhoneNumberResponse500ResponseBody
+    RegisterCallResponse500ResponseBody
   > = z
-    .instanceof(DeletePhoneNumberResponse500ResponseBody)
+    .instanceof(RegisterCallResponse500ResponseBody)
     .transform((v) => v.data$)
     .pipe(
       z
@@ -256,14 +352,14 @@ export namespace DeletePhoneNumberResponse500ResponseBody$ {
 }
 
 /** @internal */
-export namespace DeletePhoneNumberResponse422ResponseBody$ {
+export namespace RegisterCallResponse429ResponseBody$ {
   export type Inbound = {
     RawResponse?: Response | undefined;
     error_message?: string | undefined;
   };
 
   export const inboundSchema: z.ZodType<
-    DeletePhoneNumberResponse422ResponseBody,
+    RegisterCallResponse429ResponseBody,
     z.ZodTypeDef,
     Inbound
   > = z
@@ -272,7 +368,7 @@ export namespace DeletePhoneNumberResponse422ResponseBody$ {
       error_message: z.string().optional(),
     })
     .transform((v) => {
-      return new DeletePhoneNumberResponse422ResponseBody({
+      return new RegisterCallResponse429ResponseBody({
         ...(v.RawResponse === undefined
           ? null
           : { rawResponse: v.RawResponse }),
@@ -289,9 +385,9 @@ export namespace DeletePhoneNumberResponse422ResponseBody$ {
   export const outboundSchema: z.ZodType<
     Outbound,
     z.ZodTypeDef,
-    DeletePhoneNumberResponse422ResponseBody
+    RegisterCallResponse429ResponseBody
   > = z
-    .instanceof(DeletePhoneNumberResponse422ResponseBody)
+    .instanceof(RegisterCallResponse429ResponseBody)
     .transform((v) => v.data$)
     .pipe(
       z
@@ -318,14 +414,14 @@ export namespace DeletePhoneNumberResponse422ResponseBody$ {
 }
 
 /** @internal */
-export namespace DeletePhoneNumberResponseResponseBody$ {
+export namespace RegisterCallResponse422ResponseBody$ {
   export type Inbound = {
     RawResponse?: Response | undefined;
     error_message?: string | undefined;
   };
 
   export const inboundSchema: z.ZodType<
-    DeletePhoneNumberResponseResponseBody,
+    RegisterCallResponse422ResponseBody,
     z.ZodTypeDef,
     Inbound
   > = z
@@ -334,7 +430,7 @@ export namespace DeletePhoneNumberResponseResponseBody$ {
       error_message: z.string().optional(),
     })
     .transform((v) => {
-      return new DeletePhoneNumberResponseResponseBody({
+      return new RegisterCallResponse422ResponseBody({
         ...(v.RawResponse === undefined
           ? null
           : { rawResponse: v.RawResponse }),
@@ -351,9 +447,9 @@ export namespace DeletePhoneNumberResponseResponseBody$ {
   export const outboundSchema: z.ZodType<
     Outbound,
     z.ZodTypeDef,
-    DeletePhoneNumberResponseResponseBody
+    RegisterCallResponse422ResponseBody
   > = z
-    .instanceof(DeletePhoneNumberResponseResponseBody)
+    .instanceof(RegisterCallResponse422ResponseBody)
     .transform((v) => v.data$)
     .pipe(
       z
@@ -380,14 +476,14 @@ export namespace DeletePhoneNumberResponseResponseBody$ {
 }
 
 /** @internal */
-export namespace DeletePhoneNumberResponseBody$ {
+export namespace RegisterCallResponse402ResponseBody$ {
   export type Inbound = {
     RawResponse?: Response | undefined;
     error_message?: string | undefined;
   };
 
   export const inboundSchema: z.ZodType<
-    DeletePhoneNumberResponseBody,
+    RegisterCallResponse402ResponseBody,
     z.ZodTypeDef,
     Inbound
   > = z
@@ -396,7 +492,7 @@ export namespace DeletePhoneNumberResponseBody$ {
       error_message: z.string().optional(),
     })
     .transform((v) => {
-      return new DeletePhoneNumberResponseBody({
+      return new RegisterCallResponse402ResponseBody({
         ...(v.RawResponse === undefined
           ? null
           : { rawResponse: v.RawResponse }),
@@ -413,9 +509,133 @@ export namespace DeletePhoneNumberResponseBody$ {
   export const outboundSchema: z.ZodType<
     Outbound,
     z.ZodTypeDef,
-    DeletePhoneNumberResponseBody
+    RegisterCallResponse402ResponseBody
   > = z
-    .instanceof(DeletePhoneNumberResponseBody)
+    .instanceof(RegisterCallResponse402ResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
+        .object({
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
+        })
+        .transform((v) => {
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
+}
+
+/** @internal */
+export namespace RegisterCallResponseResponseBody$ {
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const inboundSchema: z.ZodType<
+    RegisterCallResponseResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new RegisterCallResponseResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    RegisterCallResponseResponseBody
+  > = z
+    .instanceof(RegisterCallResponseResponseBody)
+    .transform((v) => v.data$)
+    .pipe(
+      z
+        .object({
+          rawResponse: z
+            .instanceof(Response)
+            .transform(() => {
+              throw new Error("Response cannot be serialized");
+            })
+            .optional(),
+          errorMessage: z.string().optional(),
+        })
+        .transform((v) => {
+          return {
+            ...(v.rawResponse === undefined
+              ? null
+              : { RawResponse: v.rawResponse }),
+            ...(v.errorMessage === undefined
+              ? null
+              : { error_message: v.errorMessage }),
+          };
+        }),
+    );
+}
+
+/** @internal */
+export namespace RegisterCallResponseBody$ {
+  export type Inbound = {
+    RawResponse?: Response | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const inboundSchema: z.ZodType<
+    RegisterCallResponseBody,
+    z.ZodTypeDef,
+    Inbound
+  > = z
+    .object({
+      RawResponse: z.instanceof(Response).optional(),
+      error_message: z.string().optional(),
+    })
+    .transform((v) => {
+      return new RegisterCallResponseBody({
+        ...(v.RawResponse === undefined
+          ? null
+          : { rawResponse: v.RawResponse }),
+        ...(v.error_message === undefined
+          ? null
+          : { errorMessage: v.error_message }),
+      });
+    });
+  export type Outbound = {
+    RawResponse?: never | undefined;
+    error_message?: string | undefined;
+  };
+
+  export const outboundSchema: z.ZodType<
+    Outbound,
+    z.ZodTypeDef,
+    RegisterCallResponseBody
+  > = z
+    .instanceof(RegisterCallResponseBody)
     .transform((v) => v.data$)
     .pipe(
       z

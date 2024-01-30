@@ -32,10 +32,6 @@ export type FilterCriteria = {
    * Exclusive. Filter calls that start before this timestamp.
    */
   beforeStartTimestamp?: number | undefined;
-  /**
-   * Only retrieve calls of specific type(s).
-   */
-  callType?: Array<CallType> | undefined;
 };
 
 /**
@@ -88,7 +84,6 @@ export namespace FilterCriteria$ {
     agent_id?: Array<string> | undefined;
     before_end_timestamp?: number | undefined;
     before_start_timestamp?: number | undefined;
-    call_type?: Array<CallType> | undefined;
   };
 
   export const inboundSchema: z.ZodType<FilterCriteria, z.ZodTypeDef, Inbound> =
@@ -99,7 +94,6 @@ export namespace FilterCriteria$ {
         agent_id: z.array(z.string()).optional(),
         before_end_timestamp: z.number().int().optional(),
         before_start_timestamp: z.number().int().optional(),
-        call_type: z.array(CallType$).optional(),
       })
       .transform((v) => {
         return {
@@ -116,7 +110,6 @@ export namespace FilterCriteria$ {
           ...(v.before_start_timestamp === undefined
             ? null
             : { beforeStartTimestamp: v.before_start_timestamp }),
-          ...(v.call_type === undefined ? null : { callType: v.call_type }),
         };
       });
 
@@ -126,7 +119,6 @@ export namespace FilterCriteria$ {
     agent_id?: Array<string> | undefined;
     before_end_timestamp?: number | undefined;
     before_start_timestamp?: number | undefined;
-    call_type?: Array<CallType> | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -140,7 +132,6 @@ export namespace FilterCriteria$ {
       agentId: z.array(z.string()).optional(),
       beforeEndTimestamp: z.number().int().optional(),
       beforeStartTimestamp: z.number().int().optional(),
-      callType: z.array(CallType$).optional(),
     })
     .transform((v) => {
       return {
@@ -157,7 +148,6 @@ export namespace FilterCriteria$ {
         ...(v.beforeStartTimestamp === undefined
           ? null
           : { before_start_timestamp: v.beforeStartTimestamp }),
-        ...(v.callType === undefined ? null : { call_type: v.callType }),
       };
     });
 }
