@@ -30,9 +30,11 @@
     "zod": "^3.22.4"
   },
   "dependencies": {
+    "bufferutil": "^4.0.8",
     "decimal.js": "^10.4.3",
     "eventemitter3": "^5.0.1",
     "isomorphic-ws": "^5.0.0",
-    "jsonpath": "^1.1.1"
+    "jsonpath": "^1.1.1",
+    "utf-8-validate": "^6.0.3"
   }
 }
