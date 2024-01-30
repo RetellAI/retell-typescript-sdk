@@ -3,7 +3,6 @@
  */
 
 import * as components from "../../models/components";
-import { Function } from "../../models/components";
 import { z } from "zod";
 
 export type UpdateAgentRequestBody = {
@@ -12,40 +11,21 @@ export type UpdateAgentRequestBody = {
    */
   agentName?: string | undefined;
   /*
-   * Determines how to generate the response in the call. Currently supports using our in-house LLM response system or your own custom
-   * response generation system.
+   * The URL we will establish LLM websocket for getting response, usually your server.
    */
-  llmSetting?:
-    | components.RetellLlmSetting
-    | components.CustomLlmSetting
-    | undefined;
-  /**
-   * Setting combination that controls interaction flow, like begin and end logic.
-   */
-  interactionSetting?: components.InteractionSettingRequest | undefined;
+  llmWebsocketUrl?: string | undefined;
   /**
    * Unique voice id used for the agent. Find list of available voices in documentation.
    */
   voiceId?: string | undefined;
-  /**
-   * Functions are the actions that the agent can perform, like booking appointments, retriving information, etc. By setting this field, either OpenAI's function calling feature or your own custom LLM's logic would determine when the function shall get called, and our server would make the call.
-   */
-  functions?: Function[] | undefined;
 };
 
 /** @internal */
 export namespace UpdateAgentRequestBody$ {
   export type Inbound = {
     agent_name?: string | undefined;
-    llm_setting?:
-      | components.RetellLlmSetting$.Inbound
-      | components.CustomLlmSetting$.Inbound
-      | undefined;
-    interaction_setting?:
-      | components.InteractionSettingRequest$.Inbound
-      | undefined;
+    llm_websocket_url?: string | undefined;
     voice_id?: string | undefined;
-    functions?: Function[] | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -55,40 +35,23 @@ export namespace UpdateAgentRequestBody$ {
   > = z
     .object({
       agent_name: z.string().optional(),
-      llm_setting: z
-        .union([
-          components.RetellLlmSetting$.inboundSchema,
-          components.CustomLlmSetting$.inboundSchema,
-        ])
-        .optional(),
-      interaction_setting:
-        components.InteractionSettingRequest$.inboundSchema.optional(),
-      voice_id: z.string().optional(),
-      functions: z.array(components.Function$.inboundSchema).optional(),
+      llm_websocket_url: z.string(),
+      voice_id: z.string(),
     })
     .transform((v) => {
       return {
         ...(v.agent_name === undefined ? null : { agentName: v.agent_name }),
-        ...(v.llm_setting === undefined ? null : { llmSetting: v.llm_setting }),
-        ...(v.interaction_setting === undefined
+        ...(v.llm_websocket_url === undefined
           ? null
-          : { interactionSetting: v.interaction_setting }),
+          : { llmWebsocketUrl: v.llm_websocket_url }),
         ...(v.voice_id === undefined ? null : { voiceId: v.voice_id }),
-        ...(v.functions === undefined ? null : { functions: v.functions }),
       };
     });
 
   export type Outbound = {
     agent_name?: string | undefined;
-    llm_setting?:
-      | components.RetellLlmSetting$.Outbound
-      | components.CustomLlmSetting$.Outbound
-      | undefined;
-    interaction_setting?:
-      | components.InteractionSettingRequest$.Outbound
-      | undefined;
+    llm_websocket_url?: string | undefined;
     voice_id?: string | undefined;
-    functions?: Function[] | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -98,26 +61,16 @@ export namespace UpdateAgentRequestBody$ {
   > = z
     .object({
       agentName: z.string().optional(),
-      llmSetting: z
-        .union([
-          components.RetellLlmSetting$.outboundSchema,
-          components.CustomLlmSetting$.outboundSchema,
-        ])
-        .optional(),
-      interactionSetting:
-        components.InteractionSettingRequest$.outboundSchema.optional(),
+      llmWebsocketUrl: z.string().optional(),
       voiceId: z.string().optional(),
-      functions: z.array(components.Function$.inboundSchema).optional(),
     })
     .transform((v) => {
       return {
         ...(v.agentName === undefined ? null : { agent_name: v.agentName }),
-        ...(v.llmSetting === undefined ? null : { llm_setting: v.llmSetting }),
-        ...(v.interactionSetting === undefined
+        ...(v.llmWebsocketUrl === undefined
           ? null
-          : { interaction_setting: v.interactionSetting }),
+          : { llm_websocket_url: v.llmWebsocketUrl }),
         ...(v.voiceId === undefined ? null : { voice_id: v.voiceId }),
-        ...(v.functions === undefined ? null : { functions: v.functions }),
       };
     });
 }

@@ -8,7 +8,6 @@ import { HTTPClient } from "../lib/http";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
 import * as errors from "../models/errors";
 import * as operations from "../models/operations";
-import { LiveClient } from "./liveClient";
 
 export class RetellClient extends ClientSDK {
   private readonly options$: SDKOptions;
@@ -21,17 +20,6 @@ export class RetellClient extends ClientSDK {
 
     this.options$ = options;
     void this.options$;
-  }
-
-  async createWebCall(
-    input: operations.CreateWebCallRequestBody,
-  ): Promise<LiveClient> {
-    const liveClient = new LiveClient(
-      this.options$.apiKey as unknown as string,
-      input,
-    );
-    await liveClient.waitForReady();
-    return liveClient;
   }
 
   /**
@@ -131,20 +119,20 @@ export class RetellClient extends ClientSDK {
   /**
    * Initiate an outbound phone call.
    */
-  async createPhoneCall(
-    input: operations.CreatePhoneCallRequestBody,
+  async registerCall(
+    input: operations.RegisterCallRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.CreatePhoneCallResponse> {
+  ): Promise<operations.RegisterCallResponse> {
     const headers$ = new Headers();
     headers$.set("user-agent", SDK_METADATA.userAgent);
     headers$.set("Content-Type", "application/json");
     headers$.set("Accept", "application/json");
 
     const payload$ =
-      operations.CreatePhoneCallRequestBody$.outboundSchema.parse(input);
+      operations.RegisterCallRequestBody$.outboundSchema.parse(input);
     const body$ = enc$.encodeJSON("body", payload$, { explode: true });
 
-    const path$ = this.templateURLComponent("/create-phone-call")();
+    const path$ = this.templateURLComponent("/register-call")();
 
     let security$;
     if (typeof this.options$.apiKey === "function") {
@@ -176,14 +164,14 @@ export class RetellClient extends ClientSDK {
 
     if (this.matchResponse(response, 201, "application/json")) {
       const responseBody = await response.json();
-      const result = operations.CreatePhoneCallResponse$.inboundSchema.parse({
+      const result = operations.RegisterCallResponse$.inboundSchema.parse({
         ...responseFields$,
         callDetail: responseBody,
       });
       return result;
     } else if (this.matchResponse(response, 400, "application/json")) {
       const responseBody = await response.json();
-      const result = errors.CreatePhoneCallResponseBody$.inboundSchema.parse({
+      const result = errors.RegisterCallResponseBody$.inboundSchema.parse({
         ...responseFields$,
         ...responseBody,
       });
@@ -191,7 +179,7 @@ export class RetellClient extends ClientSDK {
     } else if (this.matchResponse(response, 401, "application/json")) {
       const responseBody = await response.json();
       const result =
-        errors.CreatePhoneCallResponseResponseBody$.inboundSchema.parse({
+        errors.RegisterCallResponseResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
@@ -199,7 +187,7 @@ export class RetellClient extends ClientSDK {
     } else if (this.matchResponse(response, 402, "application/json")) {
       const responseBody = await response.json();
       const result =
-        errors.CreatePhoneCallResponse402ResponseBody$.inboundSchema.parse({
+        errors.RegisterCallResponse402ResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
@@ -207,7 +195,7 @@ export class RetellClient extends ClientSDK {
     } else if (this.matchResponse(response, 422, "application/json")) {
       const responseBody = await response.json();
       const result =
-        errors.CreatePhoneCallResponse422ResponseBody$.inboundSchema.parse({
+        errors.RegisterCallResponse422ResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
@@ -215,7 +203,7 @@ export class RetellClient extends ClientSDK {
     } else if (this.matchResponse(response, 429, "application/json")) {
       const responseBody = await response.json();
       const result =
-        errors.CreatePhoneCallResponse429ResponseBody$.inboundSchema.parse({
+        errors.RegisterCallResponse429ResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
@@ -223,109 +211,7 @@ export class RetellClient extends ClientSDK {
     } else if (this.matchResponse(response, 500, "application/json")) {
       const responseBody = await response.json();
       const result =
-        errors.CreatePhoneCallResponse500ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody,
-      );
-    }
-  }
-
-  /**
-   * Create a new phone number
-   */
-  async createPhoneNumber(
-    input: operations.CreatePhoneNumberRequestBody,
-    options?: RequestOptions,
-  ): Promise<operations.CreatePhoneNumberResponse> {
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.CreatePhoneNumberRequestBody$.outboundSchema.parse(input);
-    const body$ = enc$.encodeJSON("body", payload$, { explode: true });
-
-    const path$ = this.templateURLComponent("/create-phone-number")();
-
-    let security$;
-    if (typeof this.options$.apiKey === "function") {
-      security$ = { apiKey: await this.options$.apiKey() };
-    } else if (this.options$.apiKey) {
-      security$ = { apiKey: this.options$.apiKey };
-    } else {
-      security$ = {};
-    }
-    const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-    const response = await this.fetch$(
-      {
-        security: securitySettings$,
-        method: "post",
-        path: path$,
-        headers: headers$,
-        body: body$,
-      },
-      options,
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 201, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.CreatePhoneNumberResponse$.inboundSchema.parse({
-        ...responseFields$,
-        PhoneNumber: responseBody,
-      });
-      return result;
-    } else if (this.matchResponse(response, 400, "application/json")) {
-      const responseBody = await response.json();
-      const result = errors.CreatePhoneNumberResponseBody$.inboundSchema.parse({
-        ...responseFields$,
-        ...responseBody,
-      });
-      throw result;
-    } else if (this.matchResponse(response, 401, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.CreatePhoneNumberResponseResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 402, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.CreatePhoneNumberResponse402ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 422, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.CreatePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 500, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.CreatePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
+        errors.RegisterCallResponse500ResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
@@ -440,110 +326,6 @@ export class RetellClient extends ClientSDK {
     }
 
     return operations.DeleteAgentResponse$.inboundSchema.parse(responseFields$);
-  }
-
-  /**
-   * Delete a specific phone number
-   */
-  async deletePhoneNumber(
-    phoneNumber: string,
-    options?: RequestOptions,
-  ): Promise<operations.DeletePhoneNumberResponse> {
-    const input$: operations.DeletePhoneNumberRequest = {
-      phoneNumber: phoneNumber,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.DeletePhoneNumberRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent(
-      "/delete-phone-number/{phone_number}",
-    )(pathParams$);
-
-    let security$;
-    if (typeof this.options$.apiKey === "function") {
-      security$ = { apiKey: await this.options$.apiKey() };
-    } else if (this.options$.apiKey) {
-      security$ = { apiKey: this.options$.apiKey };
-    } else {
-      security$ = {};
-    }
-    const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-    const response = await this.fetch$(
-      {
-        security: securitySettings$,
-        method: "delete",
-        path: path$,
-        headers: headers$,
-        body: body$,
-      },
-      options,
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchStatusCode(response, 204)) {
-      // fallthrough
-    } else if (this.matchResponse(response, 400, "application/json")) {
-      const responseBody = await response.json();
-      const result = errors.DeletePhoneNumberResponseBody$.inboundSchema.parse({
-        ...responseFields$,
-        ...responseBody,
-      });
-      throw result;
-    } else if (this.matchResponse(response, 401, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.DeletePhoneNumberResponseResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 422, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.DeletePhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 500, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.DeletePhoneNumberResponse500ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody,
-      );
-    }
-
-    return operations.DeletePhoneNumberResponse$.inboundSchema.parse(
-      responseFields$,
-    );
   }
 
   /**
@@ -753,111 +535,6 @@ export class RetellClient extends ClientSDK {
   }
 
   /**
-   * Retrieve info about a specific number
-   */
-  async getPhoneNumber(
-    phoneNumber: string,
-    options?: RequestOptions,
-  ): Promise<operations.GetPhoneNumberResponse> {
-    const input$: operations.GetPhoneNumberRequest = {
-      phoneNumber: phoneNumber,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.GetPhoneNumberRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/get-phone-number/{phone_number}")(
-      pathParams$,
-    );
-
-    let security$;
-    if (typeof this.options$.apiKey === "function") {
-      security$ = { apiKey: await this.options$.apiKey() };
-    } else if (this.options$.apiKey) {
-      security$ = { apiKey: this.options$.apiKey };
-    } else {
-      security$ = {};
-    }
-    const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-    const response = await this.fetch$(
-      {
-        security: securitySettings$,
-        method: "get",
-        path: path$,
-        headers: headers$,
-        body: body$,
-      },
-      options,
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetPhoneNumberResponse$.inboundSchema.parse({
-        ...responseFields$,
-        PhoneNumber: responseBody,
-      });
-      return result;
-    } else if (this.matchResponse(response, 400, "application/json")) {
-      const responseBody = await response.json();
-      const result = errors.GetPhoneNumberResponseBody$.inboundSchema.parse({
-        ...responseFields$,
-        ...responseBody,
-      });
-      throw result;
-    } else if (this.matchResponse(response, 401, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.GetPhoneNumberResponseResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 422, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.GetPhoneNumberResponse422ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 500, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.GetPhoneNumberResponse500ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody,
-      );
-    }
-  }
-
-  /**
    * List all agents
    */
   async listAgents(
@@ -1042,85 +719,6 @@ export class RetellClient extends ClientSDK {
   }
 
   /**
-   * List all purchased and active phone numbers
-   */
-  async listPhoneNumbers(
-    options?: RequestOptions,
-  ): Promise<operations.ListPhoneNumbersResponse> {
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const path$ = this.templateURLComponent("/list-phone-numbers")();
-
-    let security$;
-    if (typeof this.options$.apiKey === "function") {
-      security$ = { apiKey: await this.options$.apiKey() };
-    } else if (this.options$.apiKey) {
-      security$ = { apiKey: this.options$.apiKey };
-    } else {
-      security$ = {};
-    }
-    const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-    const response = await this.fetch$(
-      {
-        security: securitySettings$,
-        method: "get",
-        path: path$,
-        headers: headers$,
-      },
-      options,
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.ListPhoneNumbersResponse$.inboundSchema.parse({
-        ...responseFields$,
-        phoneNumbers: responseBody,
-      });
-      return result;
-    } else if (this.matchResponse(response, 400, "application/json")) {
-      const responseBody = await response.json();
-      const result = errors.ListPhoneNumbersResponseBody$.inboundSchema.parse({
-        ...responseFields$,
-        ...responseBody,
-      });
-      throw result;
-    } else if (this.matchResponse(response, 401, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.ListPhoneNumbersResponseResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 500, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.ListPhoneNumbersResponse500ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody,
-      );
-    }
-  }
-
-  /**
    * Update an existing agent
    */
   async updateAgent(
@@ -1217,117 +815,6 @@ export class RetellClient extends ClientSDK {
       const responseBody = await response.json();
       const result =
         errors.UpdateAgentResponse500ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody,
-      );
-    }
-  }
-
-  /**
-   * Update an existing phone number
-   */
-  async updatePhoneAgent(
-    requestBody: operations.UpdatePhoneAgentRequestBody,
-    phoneNumber: string,
-    options?: RequestOptions,
-  ): Promise<operations.UpdatePhoneAgentResponse> {
-    const input$: operations.UpdatePhoneAgentRequest = {
-      requestBody: requestBody,
-      phoneNumber: phoneNumber,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.UpdatePhoneAgentRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const pathParams$ = {
-      phone_number: enc$.encodeSimple("phone_number", payload$.phone_number, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent(
-      "/update-phone-agent/{phone_number}",
-    )(pathParams$);
-
-    let security$;
-    if (typeof this.options$.apiKey === "function") {
-      security$ = { apiKey: await this.options$.apiKey() };
-    } else if (this.options$.apiKey) {
-      security$ = { apiKey: this.options$.apiKey };
-    } else {
-      security$ = {};
-    }
-    const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-    const response = await this.fetch$(
-      {
-        security: securitySettings$,
-        method: "PATCH",
-        path: path$,
-        headers: headers$,
-        body: body$,
-      },
-      options,
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.UpdatePhoneAgentResponse$.inboundSchema.parse({
-        ...responseFields$,
-        PhoneNumber: responseBody,
-      });
-      return result;
-    } else if (this.matchResponse(response, 400, "application/json")) {
-      const responseBody = await response.json();
-      const result = errors.UpdatePhoneAgentResponseBody$.inboundSchema.parse({
-        ...responseFields$,
-        ...responseBody,
-      });
-      throw result;
-    } else if (this.matchResponse(response, 401, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.UpdatePhoneAgentResponseResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 422, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.UpdatePhoneAgentResponse422ResponseBody$.inboundSchema.parse({
-          ...responseFields$,
-          ...responseBody,
-        });
-      throw result;
-    } else if (this.matchResponse(response, 500, "application/json")) {
-      const responseBody = await response.json();
-      const result =
-        errors.UpdatePhoneAgentResponse500ResponseBody$.inboundSchema.parse({
           ...responseFields$,
           ...responseBody,
         });
