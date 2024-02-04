@@ -15,8 +15,13 @@ export class AudioWsClient extends EventEmitter {
     this.ws.binaryType = "arraybuffer";
 
     this.ws.onmessage = (event) => {
-      const audio: ArrayBuffer = event.data as ArrayBuffer;
-      this.emit("audio", new Uint8Array(audio));
+      const eventStr = event.data.toString();
+      if (eventStr === "clear") {
+        this.emit("clear");
+      } else {
+        const audio: ArrayBuffer = event.data as ArrayBuffer;
+        this.emit("audio", new Uint8Array(audio));
+      }
     };
     this.ws.onclose = (event) => {
       this.emit("close", event.code, event.reason);
