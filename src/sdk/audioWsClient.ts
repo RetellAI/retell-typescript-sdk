@@ -15,12 +15,20 @@ export class AudioWsClient extends EventEmitter {
     this.ws.binaryType = "arraybuffer";
 
     this.ws.onmessage = (event) => {
-      const eventStr = event.data.toString();
-      if (eventStr === "clear") {
-        this.emit("clear");
+      // Check if the data is a string (text data)
+      if (typeof event.data === "string") {
+        if (event.data === "clear") {
+          this.emit("clear");
+        } else {
+          // Handle other text data if necessary
+        }
+      } else if (event.data instanceof ArrayBuffer) {
+        // Handle binary data (ArrayBuffer)
+        const audio = new Uint8Array(event.data);
+        this.emit("audio", audio);
       } else {
-        const audio: ArrayBuffer = event.data as ArrayBuffer;
-        this.emit("audio", new Uint8Array(audio));
+        this.emit("error", "Got unknown message from server.");
+        this.ws.close(1002, "Got unknown message from server.");
       }
     };
     this.ws.onclose = (event) => {
