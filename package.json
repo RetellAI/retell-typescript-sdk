@@ -1,7 +1,7 @@
 {
   "type": "commonjs",
   "name": "retell-sdk",
-  "version": "2.2.6",
+  "version": "2.3.0",
   "author": "Retell",
   "main": "./index.js",
   "sideEffects": false,

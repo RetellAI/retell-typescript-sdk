@@ -25,6 +25,14 @@ export type Agent = {
    * Last modification timestamp (milliseconds since epoch). Either the time of last update or creation if no updates available.
    */
   lastModificationTimestamp: number;
+  /**
+   * Controls whether the agent would backchannel (agent interjects the speaker with phrases like "yeah", "uh-huh" to signify interest and engagement).
+   */
+  enableBackchannel?: boolean | undefined;
+  /**
+   * Controls how stable the voice is.
+   */
+  voiceTemperature?: number | undefined;
 };
 
 /** @internal */
@@ -35,6 +43,8 @@ export namespace Agent$ {
     llm_websocket_url: string;
     voice_id: string;
     last_modification_timestamp: number;
+    enable_backchannel?: boolean | undefined;
+    voice_temperature?: number | undefined;
   };
 
   export const inboundSchema: z.ZodType<Agent, z.ZodTypeDef, Inbound> = z
@@ -44,6 +54,8 @@ export namespace Agent$ {
       llm_websocket_url: z.string(),
       voice_id: z.string(),
       last_modification_timestamp: z.number().int(),
+      enable_backchannel: z.boolean().optional(),
+      voice_temperature: z.number().optional()
     })
     .transform((v) => {
       return {
@@ -52,6 +64,8 @@ export namespace Agent$ {
         llmWebsocketUrl: v.llm_websocket_url,
         voiceId: v.voice_id,
         lastModificationTimestamp: v.last_modification_timestamp,
+        ...(v.enable_backchannel === undefined ? null : { enableBackchannel: v.enable_backchannel }),
+        ...(v.voice_temperature === undefined ? null : { voiceTemperature: v.voice_temperature }),
       };
     });
 
@@ -61,6 +75,8 @@ export namespace Agent$ {
     llm_websocket_url: string;
     voice_id: string;
     last_modification_timestamp: number;
+    enable_backchannel?: boolean | undefined;
+    voice_temperature?: number | undefined;
   };
 
   export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Agent> = z
@@ -70,6 +86,8 @@ export namespace Agent$ {
       llmWebsocketUrl: z.string(),
       voiceId: z.string(),
       lastModificationTimestamp: z.number().int(),
+      enableBackchannel: z.boolean().optional(),
+      voiceTemperature: z.number().optional()
     })
     .transform((v) => {
       return {
@@ -78,6 +96,8 @@ export namespace Agent$ {
         llm_websocket_url: v.llmWebsocketUrl,
         voice_id: v.voiceId,
         last_modification_timestamp: v.lastModificationTimestamp,
+        ...(v.enableBackchannel === undefined ? null : { enable_backchannel: v.enableBackchannel }),
+        ...(v.voiceTemperature === undefined ? null : { voice_temperature: v.voiceTemperature }),
       };
     });
 }

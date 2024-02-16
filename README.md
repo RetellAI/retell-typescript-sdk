@@ -14,4 +14,4 @@ npm install retell-sdk
 
 ## Use SDK
 
-Check out [Retell AI API Documentation](https://docs.re-tell.ai/guide/sdk) for using this SDK.
+Check out [Retell AI API Documentation](https://docs.retellai.com/guide/sdk) for using this SDK.
