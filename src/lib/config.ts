@@ -13,7 +13,7 @@ export const ServerList = [
   /**
    * The production server.
    */
-  "https://api.re-tell.ai",
+  "https://api.retellai.com",
 ] as const;
 
 export type SDKOptions = {
