@@ -3,4 +3,3 @@
  */
 
 export * from "./sdk";
-export * from "./audioWsClient";
