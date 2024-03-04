@@ -72,6 +72,10 @@ export type CallDetail = {
    * Transcription of the call. Available after call ends.
    */
   transcript?: string | undefined;
+  /**
+   * If users stay silent for a period, end the call. By default, it is set to 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   */
+  endCallAfterSilenceMs?: number | undefined;
 };
 
 /** @internal */
@@ -96,6 +100,7 @@ export namespace CallDetail$ {
     recording_url?: string | undefined;
     start_timestamp: number;
     transcript?: string | undefined;
+    end_call_after_silence_ms?: number | undefined;
   };
 
   export const inboundSchema: z.ZodType<CallDetail, z.ZodTypeDef, Inbound> = z
@@ -110,6 +115,7 @@ export namespace CallDetail$ {
       recording_url: z.string().optional(),
       start_timestamp: z.number().int(),
       transcript: z.string().optional(),
+      end_call_after_silence_ms: z.number().int().optional(),
     })
     .transform((v) => {
       return {
@@ -127,6 +133,7 @@ export namespace CallDetail$ {
           : { recordingUrl: v.recording_url }),
         startTimestamp: v.start_timestamp,
         ...(v.transcript === undefined ? null : { transcript: v.transcript }),
+        ...(v.end_call_after_silence_ms === undefined ? null : { endCallAfterSilenceMs: v.end_call_after_silence_ms }),
       };
     });
 
@@ -141,6 +148,7 @@ export namespace CallDetail$ {
     recording_url?: string | undefined;
     start_timestamp: number;
     transcript?: string | undefined;
+    end_call_after_silence_ms?: number | undefined;
   };
 
   export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CallDetail> = z
@@ -155,6 +163,7 @@ export namespace CallDetail$ {
       recordingUrl: z.string().optional(),
       startTimestamp: z.number().int(),
       transcript: z.string().optional(),
+      endCallAfterSilenceMs: z.number().int().optional(),
     })
     .transform((v) => {
       return {
@@ -172,6 +181,7 @@ export namespace CallDetail$ {
           : { recording_url: v.recordingUrl }),
         start_timestamp: v.startTimestamp,
         ...(v.transcript === undefined ? null : { transcript: v.transcript }),
+        ...(v.endCallAfterSilenceMs === undefined ? null : { end_call_after_silence_ms: v.endCallAfterSilenceMs }),
       };
     });
 }

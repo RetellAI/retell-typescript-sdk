@@ -23,9 +23,29 @@ export type CreateAgentRequestBody = {
    */
   enableBackchannel?: boolean | undefined;
   /**
-   * Controls how stable the voice is.
+   * Controls how stable the voice is. Value ranging from [0,2]. Lower value means more stable, and higher value means more variant speech generation. Currently this setting only applies to 11labs voices. If unset, default value 1 will apply.
    */
   voiceTemperature?: number | undefined;
+  /**
+  * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.
+  */
+  voiceSpeed?: number | undefined;
+  /**
+  * Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.
+  */
+  responsiveness?: number | undefined;
+  /**
+  * If set, will add ambient environment sound to the call to make experience more realistic.
+  */
+  ambientSound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
+  /**
+  * The webhook for agent to listen to call events. See what events it would get at webhook doc. If set, will binds webhook events for this agent to the specified url, and will ignore the account level webhook for this agent. Set to string null to remove webhook url from this agent.
+  */
+  webhookUrl?: string | undefined;
+  /**
+  * Provide a customized list of keywords to expand our models' vocabulary, aimed at improving performance and understanding within your specific context.
+  */
+  boostedKeywords?: string[] | undefined;
 };
 
 export type CreateAgentResponse = {
@@ -55,6 +75,11 @@ export namespace CreateAgentRequestBody$ {
     voice_id: string;
     enable_backchannel?: boolean | undefined;
     voice_temperature?: number | undefined;
+    voice_speed?: number | undefined;
+    responsiveness?: number | undefined;
+    ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
+    webhook_url?: string | undefined;
+    boosted_keywords?: string[] | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -67,7 +92,12 @@ export namespace CreateAgentRequestBody$ {
       llm_websocket_url: z.string(),
       voice_id: z.string(),
       enable_backchannel: z.boolean().optional(),
-      voice_temperature: z.number().optional()
+      voice_temperature: z.number().optional(),
+      voice_speed: z.number().optional(),
+      responsiveness: z.number().optional(),
+      ambient_sound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
+      webhook_url: z.string().optional(),
+      boosted_keywords: z.array(z.string()).optional(),
     })
     .transform((v) => {
       return {
@@ -76,6 +106,11 @@ export namespace CreateAgentRequestBody$ {
         voiceId: v.voice_id,
         ...(v.enable_backchannel === undefined ? null : { enableBackchannel: v.enable_backchannel }),
         ...(v.voice_temperature === undefined ? null : { voiceTemperature: v.voice_temperature }),
+        ...(v.voice_speed === undefined ? null : { voiceSpeed: v.voice_speed }),
+        ...(v.responsiveness === undefined ? null : { responsiveness: v.responsiveness }),
+        ...(v.ambient_sound === undefined ? null : { ambientSound: v.ambient_sound }),
+        ...(v.webhook_url === undefined ? null : { webhookUrl: v.webhook_url }),
+        ...(v.boosted_keywords === undefined ? null : { boostedKeywords: v.boosted_keywords }),
       };
     });
 
@@ -85,6 +120,11 @@ export namespace CreateAgentRequestBody$ {
     voice_id: string;
     enable_backchannel?: boolean | undefined;
     voice_temperature?: number | undefined;
+    voice_speed?: number | undefined;
+    responsiveness?: number | undefined;
+    ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
+    webhook_url?: string | undefined;
+    boosted_keywords?: string[] | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -97,7 +137,12 @@ export namespace CreateAgentRequestBody$ {
       llmWebsocketUrl: z.string(),
       voiceId: z.string(),
       enableBackchannel: z.boolean().optional(),
-      voiceTemperature: z.number().optional()
+      voiceTemperature: z.number().optional(),
+      voiceSpeed: z.number().optional(),
+      responsiveness: z.number().optional(),
+      ambientSound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
+      webhookUrl: z.string().optional(),
+      boostedKeywords: z.array(z.string()).optional(),
     })
     .transform((v) => {
       return {
@@ -106,6 +151,11 @@ export namespace CreateAgentRequestBody$ {
         voice_id: v.voiceId,
         ...(v.enableBackchannel === undefined ? null : { enable_backchannel: v.enableBackchannel }),
         ...(v.voiceTemperature === undefined ? null : { voice_temperature: v.voiceTemperature }),
+        ...(v.voiceSpeed === undefined ? null : { voice_speed: v.voiceSpeed }),
+        ...(v.responsiveness === undefined ? null : { responsiveness: v.responsiveness }),
+        ...(v.ambientSound === undefined ? null : { ambient_sound: v.ambientSound }),
+        ...(v.webhookUrl === undefined ? null : { webhook_url: v.webhookUrl }),
+        ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }), // Correctly transformed
       };
     });
 }

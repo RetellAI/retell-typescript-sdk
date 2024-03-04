@@ -28,6 +28,10 @@ export type RegisterCallRequestBody = {
    * The protocol how audio websocket read and send audio bytes.
    */
   audioWebsocketProtocol: AudioWebsocketProtocol;
+    /**
+   * If users stay silent for a period, end the call. By default, it is set to 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   */
+    endCallAfterSilenceMs?: number | undefined;
 };
 
 export type RegisterCallResponse = {
@@ -56,6 +60,7 @@ export namespace RegisterCallRequestBody$ {
     audio_encoding: AudioEncoding;
     sample_rate: number;
     audio_websocket_protocol: AudioWebsocketProtocol;
+    end_call_after_silence_ms?: number | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -69,6 +74,7 @@ export namespace RegisterCallRequestBody$ {
       audio_encoding: AudioEncoding$,
       sample_rate: z.number().int(),
       audio_websocket_protocol: AudioWebsocketProtocol$,
+      end_call_after_silence_ms: z.number().int().optional(),
     })
     .transform((v) => {
       return {
@@ -76,6 +82,7 @@ export namespace RegisterCallRequestBody$ {
         audioEncoding: v.audio_encoding,
         sampleRate: v.sample_rate,
         audioWebsocketProtocol: v.audio_websocket_protocol,
+        ...(v.end_call_after_silence_ms === undefined ? null : { endCallAfterSilenceMs: v.end_call_after_silence_ms }),
       };
     });
 
@@ -84,6 +91,7 @@ export namespace RegisterCallRequestBody$ {
     audio_encoding: components.AudioEncoding;
     sample_rate: number;
     audio_websocket_protocol: components.AudioWebsocketProtocol;
+    end_call_after_silence_ms?: number | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -96,6 +104,7 @@ export namespace RegisterCallRequestBody$ {
       audioEncoding: AudioEncoding$,
       sampleRate: z.number().int(),
       audioWebsocketProtocol: AudioWebsocketProtocol$,
+      endCallAfterSilenceMs: z.number().int().optional(),
     })
     .transform((v) => {
       return {
@@ -103,6 +112,7 @@ export namespace RegisterCallRequestBody$ {
         audio_encoding: v.audioEncoding,
         sample_rate: v.sampleRate,
         audio_websocket_protocol: v.audioWebsocketProtocol,
+        ...(v.endCallAfterSilenceMs === undefined ? null : { end_call_after_silence_ms: v.endCallAfterSilenceMs }),
       };
     });
 }
