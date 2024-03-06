@@ -6,6 +6,7 @@ import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
 import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
+import { symmetric } from "../lib/secureWebhooks";
 import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 
@@ -20,6 +21,18 @@ export class RetellClient extends ClientSDK {
 
     this.options$ = options;
     void this.options$;
+  }
+
+  verify(
+    body: string,
+    apiKey: string,
+    signature: string,
+  ): boolean {
+    return symmetric.verify(
+      body,
+      apiKey,
+      signature
+    );
   }
 
   /**

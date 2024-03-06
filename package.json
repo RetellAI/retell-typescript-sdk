@@ -1,7 +1,7 @@
 {
   "type": "commonjs",
   "name": "retell-sdk",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "author": "Retell",
   "main": "./index.js",
   "sideEffects": false,
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "bufferutil": "^4.0.8",
+    "crypto": "^1.0.1",
     "decimal.js": "^10.4.3",
     "eventemitter3": "^5.0.1",
     "isomorphic-ws": "^5.0.0",
