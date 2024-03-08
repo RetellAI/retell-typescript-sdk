@@ -27,8 +27,8 @@ export type UpdateAgentRequestBody = {
     */
   voiceTemperature?: number | undefined;
   /**
-* Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.
-*/
+  * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.
+  */
   voiceSpeed?: number | undefined;
   /**
   * Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.
@@ -46,6 +46,10 @@ export type UpdateAgentRequestBody = {
   * Provide a customized list of keywords to expand our models' vocabulary, aimed at improving performance and understanding within your specific context.
   */
   boostedKeywords?: string[] | undefined;
+  /**
+  * Disable transcripts and recordings storage for enhanced privacy. Access transcripts securely via webhooks 
+  */
+  activateHippaCompliance?: boolean | undefined;
 };
 
 /** @internal */
@@ -61,6 +65,7 @@ export namespace UpdateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
+    activate_hippa_compliance?: boolean | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -79,6 +84,7 @@ export namespace UpdateAgentRequestBody$ {
       ambient_sound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhook_url: z.string().optional(),
       boosted_keywords: z.array(z.string()).optional(),
+      activate_hippa_compliance: z.boolean().optional(),
     })
     .transform((v) => {
       return {
@@ -95,6 +101,7 @@ export namespace UpdateAgentRequestBody$ {
         ...(v.ambient_sound === undefined ? null : { ambientSound: v.ambient_sound }),
         ...(v.webhook_url === undefined ? null : { webhookUrl: v.webhook_url }),
         ...(v.boosted_keywords === undefined ? null : { boostedKeywords: v.boosted_keywords }),
+        ...(v.activate_hippa_compliance === undefined ? null : { activateHippaCompliance: v.activate_hippa_compliance }),
       };
     });
 
@@ -109,6 +116,7 @@ export namespace UpdateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
+    activate_hippa_compliance?: boolean | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -127,6 +135,7 @@ export namespace UpdateAgentRequestBody$ {
       ambientSound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhookUrl: z.string().optional(),
       boostedKeywords: z.array(z.string()).optional(),
+      activateHippaCompliance: z.boolean().optional(),
     })
     .transform((v) => {
       return {
@@ -142,6 +151,7 @@ export namespace UpdateAgentRequestBody$ {
         ...(v.ambientSound === undefined ? null : { ambient_sound: v.ambientSound }),
         ...(v.webhookUrl === undefined ? null : { webhook_url: v.webhookUrl }),
         ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }),
+        ...(v.activateHippaCompliance === undefined ? null : { activate_hippa_compliance: v.activateHippaCompliance }),
       };
     });
 }

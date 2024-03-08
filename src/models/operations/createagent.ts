@@ -46,6 +46,10 @@ export type CreateAgentRequestBody = {
   * Provide a customized list of keywords to expand our models' vocabulary, aimed at improving performance and understanding within your specific context.
   */
   boostedKeywords?: string[] | undefined;
+  /**
+  * Disable transcripts and recordings storage for enhanced privacy. Access transcripts securely via webhooks 
+  */
+  activateHippaCompliance?: boolean | undefined;
 };
 
 export type CreateAgentResponse = {
@@ -80,6 +84,7 @@ export namespace CreateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
+    activate_hippa_compliance?: boolean | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -98,6 +103,7 @@ export namespace CreateAgentRequestBody$ {
       ambient_sound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhook_url: z.string().optional(),
       boosted_keywords: z.array(z.string()).optional(),
+      activate_hippa_compliance: z.boolean().optional(),
     })
     .transform((v) => {
       return {
@@ -111,6 +117,7 @@ export namespace CreateAgentRequestBody$ {
         ...(v.ambient_sound === undefined ? null : { ambientSound: v.ambient_sound }),
         ...(v.webhook_url === undefined ? null : { webhookUrl: v.webhook_url }),
         ...(v.boosted_keywords === undefined ? null : { boostedKeywords: v.boosted_keywords }),
+        ...(v.activate_hippa_compliance === undefined ? null : { activateHippaCompliance: v.activate_hippa_compliance }),
       };
     });
 
@@ -125,6 +132,7 @@ export namespace CreateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
+    activate_hippa_compliance?: boolean | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -143,6 +151,7 @@ export namespace CreateAgentRequestBody$ {
       ambientSound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhookUrl: z.string().optional(),
       boostedKeywords: z.array(z.string()).optional(),
+      activateHippaCompliance: z.boolean().optional(),
     })
     .transform((v) => {
       return {
@@ -155,7 +164,8 @@ export namespace CreateAgentRequestBody$ {
         ...(v.responsiveness === undefined ? null : { responsiveness: v.responsiveness }),
         ...(v.ambientSound === undefined ? null : { ambient_sound: v.ambientSound }),
         ...(v.webhookUrl === undefined ? null : { webhook_url: v.webhookUrl }),
-        ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }), // Correctly transformed
+        ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }),
+        ...(v.activateHippaCompliance === undefined ? null : { activate_hippa_compliance: v.activateHippaCompliance }),
       };
     });
 }
