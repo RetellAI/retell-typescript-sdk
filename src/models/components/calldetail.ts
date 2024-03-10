@@ -76,6 +76,31 @@ export type CallDetail = {
    * If users stay silent for a period, end the call. By default, it is set to 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
    */
   endCallAfterSilenceMs?: number | undefined;
+  /**
+   * The caller number. This field is storage purpose only, set
+                    this if you want the call object to contain it so that it's
+                    easier to reference it. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  fromNumber?: string | undefined;
+  /**
+   * The callee number. This field is storage purpose only, set
+                    this if you want the call object to contain it so that it's
+                    easier to reference it. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  toNumber?: string | undefined;
+  /**
+   * An abtriary object for storage purpose only. You can put
+                    anything here like your own id for the call, twilio SID,
+                    internal customer id. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  metadata?: Record<string, any> | undefined;
+
 };
 
 /** @internal */
@@ -101,6 +126,9 @@ export namespace CallDetail$ {
     start_timestamp: number;
     transcript?: string | undefined;
     end_call_after_silence_ms?: number | undefined;
+    from_number?: string | undefined;
+    to_number?: string | undefined;
+    metadata?: Record<string, any> | undefined;
   };
 
   export const inboundSchema: z.ZodType<CallDetail, z.ZodTypeDef, Inbound> = z
@@ -116,6 +144,9 @@ export namespace CallDetail$ {
       start_timestamp: z.number().int(),
       transcript: z.string().optional(),
       end_call_after_silence_ms: z.number().int().optional(),
+      from_number: z.string().optional(),
+      to_number: z.string().optional(),
+      metadata: z.record(z.any()).optional(),
     })
     .transform((v) => {
       return {
@@ -134,6 +165,9 @@ export namespace CallDetail$ {
         startTimestamp: v.start_timestamp,
         ...(v.transcript === undefined ? null : { transcript: v.transcript }),
         ...(v.end_call_after_silence_ms === undefined ? null : { endCallAfterSilenceMs: v.end_call_after_silence_ms }),
+        ...(v.from_number === undefined ? null : { fromNumber: v.from_number }),
+        ...(v.to_number === undefined ? null : { toNumber: v.to_number }),
+        ...(v.metadata === undefined ? null : { metadata: v.metadata }),
       };
     });
 
@@ -149,6 +183,9 @@ export namespace CallDetail$ {
     start_timestamp: number;
     transcript?: string | undefined;
     end_call_after_silence_ms?: number | undefined;
+    from_number?: string | undefined;
+    to_number?: string | undefined;
+    metadata?: Record<string, any> | undefined;
   };
 
   export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CallDetail> = z
@@ -164,6 +201,9 @@ export namespace CallDetail$ {
       startTimestamp: z.number().int(),
       transcript: z.string().optional(),
       endCallAfterSilenceMs: z.number().int().optional(),
+      fromNumber: z.string().optional(),
+      toNumber: z.string().optional(),
+      metadata: z.record(z.any()).optional(),
     })
     .transform((v) => {
       return {
@@ -182,6 +222,9 @@ export namespace CallDetail$ {
         start_timestamp: v.startTimestamp,
         ...(v.transcript === undefined ? null : { transcript: v.transcript }),
         ...(v.endCallAfterSilenceMs === undefined ? null : { end_call_after_silence_ms: v.endCallAfterSilenceMs }),
+        ...(v.fromNumber === undefined ? null : { from_number: v.fromNumber }),
+        ...(v.toNumber === undefined ? null : { to_number: v.toNumber }),
+        ...(v.metadata === undefined ? null : { metadata: v.metadata }),
       };
     });
 }

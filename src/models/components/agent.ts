@@ -4,6 +4,19 @@
 
 import { z } from "zod";
 
+export enum Language {
+  EnUS = 'en-US',
+  EnIN = 'en-IN',
+  EnGB = 'en-GB',
+  DeDE = 'de-DE',
+  EsES = 'es-ES',
+  Es419 = 'es-419',
+  HiIN = 'hi-IN',
+  JaJP = 'ja-JP',
+  PtPT = 'pt-PT',
+  PtBR = 'pt-BR',
+}
+
 export type Agent = {
   /**
    * Unique id of agent.
@@ -57,6 +70,27 @@ export type Agent = {
   * Disable transcripts and recordings storage for enhanced privacy. Access transcripts securely via webhooks 
   */
   activateHippaCompliance?: boolean | undefined;
+  /**
+  *  Whether to format the text with inverse text normalization. It
+            transforms the spoken form of text into written form for entities
+            like phone number, email address, street address, etc. For example,
+            "february fourth twenty twenty two" can be converted into "february
+            4th 2022". If not set, the default is true.
+  */
+  formatText?: boolean | undefined;
+  /**
+  * `Beta feature, use with caution.`\n\n Language that agent operates
+            in. This would decide the language agent transcribes audio to
+            (locale / dialect considered), and synthesize audio into (only the
+            base language tag is considered, for a specific accent, you need to
+            listen to the voice and choose one). If not set, default to en-US
+            (American English). Currently not all voice providers support all
+            the languages listed here. \n\n- `11lab voices`: supports English,
+            German, Spanish, Hindi, Portuguese \n\n- `openAI voices`: supports
+            English, German, Spanish, Hindi, Portuguese, Japanese \n\n-
+            `deepgram voices`: supports English 
+  */
+  language?: Language | undefined;
 };
 
 /** @internal */
@@ -75,6 +109,8 @@ export namespace Agent$ {
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
     activate_hippa_compliance?: boolean | undefined;
+    format_text?: boolean | undefined;
+    language?: Language | undefined;
   };
 
   export const inboundSchema: z.ZodType<Agent, z.ZodTypeDef, Inbound> = z
@@ -92,6 +128,8 @@ export namespace Agent$ {
       webhook_url: z.string().optional(),
       boosted_keywords: z.array(z.string()).optional(),
       activate_hippa_compliance: z.boolean().optional(),
+      format_text: z.boolean().optional(),
+      language: z.nativeEnum(Language).optional(),
     })
     .transform((v) => {
       return {
@@ -108,6 +146,8 @@ export namespace Agent$ {
         ...(v.webhook_url === undefined ? null : { webhookUrl: v.webhook_url }),
         ...(v.boosted_keywords === undefined ? null : { boostedKeywords: v.boosted_keywords }),
         ...(v.activate_hippa_compliance === undefined ? null : { activateHippaCompliance: v.activate_hippa_compliance }),
+        ...(v.format_text === undefined ? null : { formatText: v.format_text }),
+        ...(v.language === undefined ? null : { language: v.language }),
       };
     });
 
@@ -125,6 +165,8 @@ export namespace Agent$ {
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
     activate_hippa_compliance?: boolean | undefined;
+    format_text?: boolean | undefined;
+    language?: Language | undefined;
   };
 
   export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Agent> = z
@@ -142,6 +184,8 @@ export namespace Agent$ {
       webhookUrl: z.string().optional(),
       boostedKeywords: z.array(z.string()).optional(),
       activateHippaCompliance: z.boolean().optional(),
+      formatText: z.boolean().optional(),
+      language: z.nativeEnum(Language).optional(),
     })
     .transform((v) => {
       return {
@@ -158,6 +202,8 @@ export namespace Agent$ {
         ...(v.webhookUrl === undefined ? null : { webhook_url: v.webhookUrl }),
         ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }),
         ...(v.activateHippaCompliance === undefined ? null : { activate_hippa_compliance: v.activateHippaCompliance }),
+        ...(v.formatText === undefined ? null : { format_text: v.formatText }),
+        ...(v.language === undefined ? null : { language: v.language }),
       };
     });
 }

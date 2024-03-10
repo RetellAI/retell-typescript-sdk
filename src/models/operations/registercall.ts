@@ -28,10 +28,34 @@ export type RegisterCallRequestBody = {
    * The protocol how audio websocket read and send audio bytes.
    */
   audioWebsocketProtocol: AudioWebsocketProtocol;
-    /**
+  /**
    * If users stay silent for a period, end the call. By default, it is set to 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
    */
-    endCallAfterSilenceMs?: number | undefined;
+  endCallAfterSilenceMs?: number | undefined;
+  /**
+   * The caller number. This field is storage purpose only, set
+                    this if you want the call object to contain it so that it's
+                    easier to reference it. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  fromNumber?: string | undefined;
+  /**
+   * The callee number. This field is storage purpose only, set
+                    this if you want the call object to contain it so that it's
+                    easier to reference it. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  toNumber?: string | undefined;
+  /**
+   * An abtriary object for storage purpose only. You can put
+                    anything here like your own id for the call, twilio SID,
+                    internal customer id. Not used for processing, when we
+                    connect to your LLM websocket server, you can then get it
+                    from the call object.
+   */
+  metadata?: Record<string, any> | undefined;
 };
 
 export type RegisterCallResponse = {
@@ -61,6 +85,9 @@ export namespace RegisterCallRequestBody$ {
     sample_rate: number;
     audio_websocket_protocol: AudioWebsocketProtocol;
     end_call_after_silence_ms?: number | undefined;
+    from_number?: string | undefined;
+    to_number?: string | undefined;
+    metadata?: Record<string, any> | undefined;
   };
 
   export const inboundSchema: z.ZodType<
@@ -75,6 +102,9 @@ export namespace RegisterCallRequestBody$ {
       sample_rate: z.number().int(),
       audio_websocket_protocol: AudioWebsocketProtocol$,
       end_call_after_silence_ms: z.number().int().optional(),
+      from_number: z.string().optional(),
+      to_number: z.string().optional(),
+      metadata: z.record(z.any()).optional(),
     })
     .transform((v) => {
       return {
@@ -83,6 +113,9 @@ export namespace RegisterCallRequestBody$ {
         sampleRate: v.sample_rate,
         audioWebsocketProtocol: v.audio_websocket_protocol,
         ...(v.end_call_after_silence_ms === undefined ? null : { endCallAfterSilenceMs: v.end_call_after_silence_ms }),
+        ...(v.from_number === undefined ? null : { fromNumber: v.from_number }),
+        ...(v.to_number === undefined ? null : { toNumber: v.to_number }),
+        ...(v.metadata === undefined ? null : { metadata: v.metadata }),
       };
     });
 
@@ -92,6 +125,9 @@ export namespace RegisterCallRequestBody$ {
     sample_rate: number;
     audio_websocket_protocol: components.AudioWebsocketProtocol;
     end_call_after_silence_ms?: number | undefined;
+    from_number?: string | undefined;
+    to_number?: string | undefined;
+    metadata?: Record<string, any> | undefined;
   };
 
   export const outboundSchema: z.ZodType<
@@ -105,6 +141,9 @@ export namespace RegisterCallRequestBody$ {
       sampleRate: z.number().int(),
       audioWebsocketProtocol: AudioWebsocketProtocol$,
       endCallAfterSilenceMs: z.number().int().optional(),
+      fromNumber: z.string().optional(),
+      toNumber: z.string().optional(),
+      metadata: z.record(z.any()).optional(),
     })
     .transform((v) => {
       return {
@@ -113,6 +152,9 @@ export namespace RegisterCallRequestBody$ {
         sample_rate: v.sampleRate,
         audio_websocket_protocol: v.audioWebsocketProtocol,
         ...(v.endCallAfterSilenceMs === undefined ? null : { end_call_after_silence_ms: v.endCallAfterSilenceMs }),
+        ...(v.fromNumber === undefined ? null : { from_number: v.fromNumber }),
+        ...(v.toNumber === undefined ? null : { to_number: v.toNumber }),
+        ...(v.metadata === undefined ? null : { metadata: v.metadata }),
       };
     });
 }
