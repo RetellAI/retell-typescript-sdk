@@ -35,6 +35,16 @@ export class RetellClient extends ClientSDK {
     );
   }
 
+  sign(
+    body: string,
+    apiKey: string,
+  ): string {
+    return symmetric.sign(
+      body,
+      apiKey,
+    );
+  }
+
   /**
    * Create a new agent
    */

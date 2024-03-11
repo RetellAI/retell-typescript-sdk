@@ -15,7 +15,7 @@ function makeSecureWebhooks(
       timestamp: number = Date.now()
     ): string {
       const signer = getSigner(secretOrPrivateKey);
-
+      
       return `v=${timestamp},d=${signer(input + timestamp)}`;
     },
     verify(
@@ -42,7 +42,7 @@ function makeSecureWebhooks(
 
       const verifier = getVerifier(secret);
 
-      return verifier(JSON.stringify(input) + poststamp, postDigest);
+      return verifier(input + poststamp, postDigest);
     },
   };
 }
