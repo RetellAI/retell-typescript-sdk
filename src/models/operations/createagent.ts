@@ -50,7 +50,7 @@ export type CreateAgentRequestBody = {
   /**
   * Disable transcripts and recordings storage for enhanced privacy. Access transcripts securely via webhooks 
   */
-  activateHippaCompliance?: boolean | undefined;
+  activateHipaaCompliance?: boolean | undefined;
   /**
   *  Whether to format the text with inverse text normalization. It
             transforms the spoken form of text into written form for entities
@@ -106,7 +106,7 @@ export namespace CreateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
-    activate_hippa_compliance?: boolean | undefined;
+    activate_hipaa_compliance?: boolean | undefined;
     format_text?: boolean | undefined;
     language?: Language | undefined;
   };
@@ -127,7 +127,7 @@ export namespace CreateAgentRequestBody$ {
       ambient_sound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhook_url: z.string().optional(),
       boosted_keywords: z.array(z.string()).optional(),
-      activate_hippa_compliance: z.boolean().optional(),
+      activate_hipaa_compliance: z.boolean().optional(),
       format_text: z.boolean().optional(),
       language: z.nativeEnum(Language).optional(),
     })
@@ -143,7 +143,7 @@ export namespace CreateAgentRequestBody$ {
         ...(v.ambient_sound === undefined ? null : { ambientSound: v.ambient_sound }),
         ...(v.webhook_url === undefined ? null : { webhookUrl: v.webhook_url }),
         ...(v.boosted_keywords === undefined ? null : { boostedKeywords: v.boosted_keywords }),
-        ...(v.activate_hippa_compliance === undefined ? null : { activateHippaCompliance: v.activate_hippa_compliance }),
+        ...(v.activate_hipaa_compliance === undefined ? null : { activateHipaaCompliance: v.activate_hipaa_compliance }),
         ...(v.format_text === undefined ? null : { formatText: v.format_text }),
         ...(v.language === undefined ? null : { language: v.language }),
       };
@@ -160,7 +160,7 @@ export namespace CreateAgentRequestBody$ {
     ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null' | undefined;
     webhook_url?: string | undefined;
     boosted_keywords?: string[] | undefined;
-    activate_hippa_compliance?: boolean | undefined;
+    activate_hipaa_compliance?: boolean | undefined;
     format_text?: boolean | undefined;
     language?: Language | undefined;
   };
@@ -181,7 +181,7 @@ export namespace CreateAgentRequestBody$ {
       ambientSound: z.enum(['coffee-shop', 'convention-hall', 'summer-outdoor', 'mountain-outdoor', 'null']).optional(),
       webhookUrl: z.string().optional(),
       boostedKeywords: z.array(z.string()).optional(),
-      activateHippaCompliance: z.boolean().optional(),
+      activateHipaaCompliance: z.boolean().optional(),
       formatText: z.boolean().optional(),
       language: z.nativeEnum(Language).optional(),
     })
@@ -197,7 +197,7 @@ export namespace CreateAgentRequestBody$ {
         ...(v.ambientSound === undefined ? null : { ambient_sound: v.ambientSound }),
         ...(v.webhookUrl === undefined ? null : { webhook_url: v.webhookUrl }),
         ...(v.boostedKeywords === undefined ? null : { boosted_keywords: v.boostedKeywords }),
-        ...(v.activateHippaCompliance === undefined ? null : { activate_hippa_compliance: v.activateHippaCompliance }),
+        ...(v.activateHipaaCompliance === undefined ? null : { activate_hipaa_compliance: v.activateHipaaCompliance }),
         ...(v.formatText === undefined ? null : { format_text: v.formatText }),
         ...(v.language === undefined ? null : { language: v.language }),
       };
