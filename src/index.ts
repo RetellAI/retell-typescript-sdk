@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from './core';
 import * as Errors from './error';
@@ -16,7 +16,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['TODDLZT_BASE_URL'].
+   * Defaults to process.env['RETELL_AI_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -70,17 +70,17 @@ export interface ClientOptions {
   defaultQuery?: Core.DefaultQuery;
 }
 
-/** API Client for interfacing with the Toddlzt API. */
-export class Toddlzt extends Core.APIClient {
+/** API Client for interfacing with the Retell AI API. */
+export class RetellAI extends Core.APIClient {
   apiKey: string;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Toddlzt API.
+   * API Client for interfacing with the Retell AI API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['TODDLZT_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['TODDLZT_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['RETELL_AI_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -89,13 +89,13 @@ export class Toddlzt extends Core.APIClient {
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = Core.readEnv('TODDLZT_BASE_URL'),
+    baseURL = Core.readEnv('RETELL_AI_BASE_URL'),
     apiKey = Core.readEnv('TODDLZT_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.ToddlztError(
-        "The TODDLZT_API_KEY environment variable is missing or empty; either provide it, or instantiate the Toddlzt client with an apiKey option, like new Toddlzt({ apiKey: 'My API Key' }).",
+      throw new Errors.RetellAIError(
+        "The TODDLZT_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellAI client with an apiKey option, like new RetellAI({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -119,6 +119,7 @@ export class Toddlzt extends Core.APIClient {
 
   calls: API.Calls = new API.Calls(this);
   agents: API.Agents = new API.Agents(this);
+  llm: API.Llm = new API.Llm(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -139,9 +140,9 @@ export class Toddlzt extends Core.APIClient {
     return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
-  static Toddlzt = this;
+  static RetellAI = this;
 
-  static ToddlztError = Errors.ToddlztError;
+  static RetellAIError = Errors.RetellAIError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -157,7 +158,7 @@ export class Toddlzt extends Core.APIClient {
 }
 
 export const {
-  ToddlztError,
+  RetellAIError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -175,7 +176,7 @@ export const {
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace Toddlzt {
+export namespace RetellAI {
   // Helper functions
   export import toFile = Uploads.toFile;
   export import fileFromPath = Uploads.fileFromPath;
@@ -195,6 +196,14 @@ export namespace Toddlzt {
   export import AgentListResponse = API.AgentListResponse;
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;
+
+  export import Llm = API.Llm;
+  export import LlmCreateResponse = API.LlmCreateResponse;
+  export import LlmRetrieveResponse = API.LlmRetrieveResponse;
+  export import LlmUpdateResponse = API.LlmUpdateResponse;
+  export import LlmListResponse = API.LlmListResponse;
+  export import LlmCreateParams = API.LlmCreateParams;
+  export import LlmUpdateParams = API.LlmUpdateParams;
 }
 
-export default Toddlzt;
+export default RetellAI;

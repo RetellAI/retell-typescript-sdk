@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from 'toddlzt/core';
 import { APIResource } from 'toddlzt/resource';
@@ -65,13 +65,8 @@ export interface CallBase {
    *   [websocket protocol](https://www.twilio.com/docs/voice/twiml/stream#message-media)
    *   defined by Twilio, used when your system uses Twilio, and supplies Retell
    *   audio websocket url to Twilio.
-   *
-   * - `vonage`: (Coming soon) The
-   *   [websocket protocol](https://developer.vonage.com/en/voice/voice-api/concepts/websockets)
-   *   defined by Vonage, used when your system uses Vonage, and supplies Retell
-   *   audio websocket url to Vonage.
    */
-  audio_websocket_protocol: 'web' | 'twilio' | 'vonage';
+  audio_websocket_protocol: 'web' | 'twilio';
 
   /**
    * Unique id of the call. Used to identify in LLM websocket and used to
@@ -96,11 +91,15 @@ export interface CallBase {
   /**
    * Sample rate of the conversation, the input and output audio bytes will all
    * conform to this rate. Check the audio source, audio format, and voice used for
-   * the agent to select one that works.
+   * the agent to select one that works. supports value ranging from [8000, 48000].
+   * Note for Twilio `mulaw` encoding, the sample rate has to be 8000.
    *
-   * - `elevenlabs voices`: supports sample rate ranging from [8000,44100]
+   * - `s16le` sample rate recommendation (natively supported, lowest latency):
    *
-   * - `openai voices`: supports sample rate ranging from [8000,24000]
+   *   - elevenlabs voices: 16000, 22050, 24000, 44100.
+   *   - openai voices: 24000.
+   *
+   *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
    */
   sample_rate: number;
 
@@ -108,6 +107,36 @@ export interface CallBase {
    * Begin timestamp (milliseconds since epoch) of the call.
    */
   start_timestamp: number;
+
+  /**
+   * If users stay silent for a period, end the call. By default, it is set to
+   * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   */
+  end_call_after_silence_ms?: number;
+
+  /**
+   * The caller number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  from_number?: string;
+
+  /**
+   * An abtriary object for storage purpose only. You can put anything here like your
+   * own id for the call, twilio SID, internal customer id. Not used for processing,
+   * when we connect to your LLM websocket server, you can then get it from the call
+   * object.
+   */
+  metadata?: unknown;
+
+  /**
+   * The callee number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  to_number?: string;
 }
 
 export interface CallBase {
@@ -139,13 +168,8 @@ export interface CallBase {
    *   [websocket protocol](https://www.twilio.com/docs/voice/twiml/stream#message-media)
    *   defined by Twilio, used when your system uses Twilio, and supplies Retell
    *   audio websocket url to Twilio.
-   *
-   * - `vonage`: (Coming soon) The
-   *   [websocket protocol](https://developer.vonage.com/en/voice/voice-api/concepts/websockets)
-   *   defined by Vonage, used when your system uses Vonage, and supplies Retell
-   *   audio websocket url to Vonage.
    */
-  audio_websocket_protocol: 'web' | 'twilio' | 'vonage';
+  audio_websocket_protocol: 'web' | 'twilio';
 
   /**
    * Unique id of the call. Used to identify in LLM websocket and used to
@@ -170,11 +194,15 @@ export interface CallBase {
   /**
    * Sample rate of the conversation, the input and output audio bytes will all
    * conform to this rate. Check the audio source, audio format, and voice used for
-   * the agent to select one that works.
+   * the agent to select one that works. supports value ranging from [8000, 48000].
+   * Note for Twilio `mulaw` encoding, the sample rate has to be 8000.
    *
-   * - `elevenlabs voices`: supports sample rate ranging from [8000,44100]
+   * - `s16le` sample rate recommendation (natively supported, lowest latency):
    *
-   * - `openai voices`: supports sample rate ranging from [8000,24000]
+   *   - elevenlabs voices: 16000, 22050, 24000, 44100.
+   *   - openai voices: 24000.
+   *
+   *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
    */
   sample_rate: number;
 
@@ -182,6 +210,36 @@ export interface CallBase {
    * Begin timestamp (milliseconds since epoch) of the call.
    */
   start_timestamp: number;
+
+  /**
+   * If users stay silent for a period, end the call. By default, it is set to
+   * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   */
+  end_call_after_silence_ms?: number;
+
+  /**
+   * The caller number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  from_number?: string;
+
+  /**
+   * An abtriary object for storage purpose only. You can put anything here like your
+   * own id for the call, twilio SID, internal customer id. Not used for processing,
+   * when we connect to your LLM websocket server, you can then get it from the call
+   * object.
+   */
+  metadata?: unknown;
+
+  /**
+   * The callee number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  to_number?: string;
 }
 
 export type CallListResponse = Array<CallBase>;
@@ -260,24 +318,53 @@ export interface CallRegisterParams {
    *   [websocket protocol](https://www.twilio.com/docs/voice/twiml/stream#message-media)
    *   defined by Twilio, used when your system uses Twilio, and supplies Retell
    *   audio websocket url to Twilio.
-   *
-   * - `vonage`: (Coming soon) The
-   *   [websocket protocol](https://developer.vonage.com/en/voice/voice-api/concepts/websockets)
-   *   defined by Vonage, used when your system uses Vonage, and supplies Retell
-   *   audio websocket url to Vonage.
    */
-  audio_websocket_protocol: 'web' | 'twilio' | 'vonage';
+  audio_websocket_protocol: 'web' | 'twilio';
 
   /**
    * Sample rate of the conversation, the input and output audio bytes will all
    * conform to this rate. Check the audio source, audio format, and voice used for
-   * the agent to select one that works.
+   * the agent to select one that works. supports value ranging from [8000, 48000].
+   * Note for Twilio `mulaw` encoding, the sample rate has to be 8000.
    *
-   * - `elevenlabs voices`: supports sample rate ranging from [8000,44100]
+   * - `s16le` sample rate recommendation (natively supported, lowest latency):
    *
-   * - `openai voices`: supports sample rate ranging from [8000,24000]
+   *   - elevenlabs voices: 16000, 22050, 24000, 44100.
+   *   - openai voices: 24000.
+   *
+   *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
    */
   sample_rate: number;
+
+  /**
+   * If users stay silent for a period, end the call. By default, it is set to
+   * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   */
+  end_call_after_silence_ms?: number;
+
+  /**
+   * The caller number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  from_number?: string;
+
+  /**
+   * An abtriary object for storage purpose only. You can put anything here like your
+   * own id for the call, twilio SID, internal customer id. Not used for processing,
+   * when we connect to your LLM websocket server, you can then get it from the call
+   * object.
+   */
+  metadata?: unknown;
+
+  /**
+   * The callee number. This field is storage purpose only, set this if you want the
+   * call object to contain it so that it's easier to reference it. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
+   */
+  to_number?: string;
 }
 
 export namespace Calls {

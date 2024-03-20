@@ -1,11 +1,11 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Toddlzt } from './index';
+import type { RetellAI } from './index';
 
 export class APIResource {
-  protected _client: Toddlzt;
+  protected _client: RetellAI;
 
-  constructor(client: Toddlzt) {
+  constructor(client: RetellAI) {
     this._client = client;
   }
 }

@@ -8,12 +8,9 @@ const retellAI = new RetellAI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource agents', () => {
-  test('create: only required params', async () => {
-    const responsePromise = retellAI.agents.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
-      voice_id: '11labs-Adrian',
-    });
+describe('resource llm', () => {
+  test('create', async () => {
+    const responsePromise = retellAI.llm.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,26 +20,8 @@ describe('resource agents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
-    const response = await retellAI.agents.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
-      voice_id: '11labs-Adrian',
-      agent_name: 'Jarvis',
-      ambient_sound: 'coffee-shop',
-      boosted_keywords: ['retell', 'kroger'],
-      enable_backchannel: true,
-      format_text: true,
-      language: 'en-US',
-      optOutSensitiveDataStorage: true,
-      responsiveness: 1,
-      voice_speed: 1,
-      voice_temperature: 1,
-      webhook_url: 'https://webhook-url-here',
-    });
-  });
-
   test('retrieve', async () => {
-    const responsePromise = retellAI.agents.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = retellAI.llm.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -55,12 +34,12 @@ describe('resource agents', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.agents.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+      retellAI.llm.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellAI.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = retellAI.agents.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = retellAI.llm.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -71,7 +50,7 @@ describe('resource agents', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retellAI.agents.list();
+    const responsePromise = retellAI.llm.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -83,13 +62,13 @@ describe('resource agents', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellAI.agents.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(retellAI.llm.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       RetellAI.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellAI.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = retellAI.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -102,7 +81,7 @@ describe('resource agents', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+      retellAI.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellAI.NotFoundError);
   });
 });

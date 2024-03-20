@@ -1,17 +1,15 @@
-# Toddlzt Node API Library
+# Retell AI Node API Library
 
 [![NPM version](https://img.shields.io/npm/v/toddlzt.svg)](https://npmjs.org/package/toddlzt)
 
-This library provides convenient access to the Toddlzt REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Retell AI REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found [on www.retellai.com](https://www.retellai.com/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-npm install --save toddlzt
-# or
-yarn add toddlzt
+npm install toddlzt
 ```
 
 ## Usage
@@ -20,14 +18,14 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Toddlzt from 'toddlzt';
+import RetellAI from 'toddlzt';
 
-const toddlzt = new Toddlzt();
+const retellAI = new RetellAI();
 
 async function main() {
-  const agentCreateResponse = await toddlzt.agents.create({
+  const agentCreateResponse = await retellAI.agents.create({
     llm_websocket_url: 'wss://your-websocket-endpoint',
-    voice_id: '11labs-Ryan',
+    voice_id: '11labs-Adrian',
   });
 
   console.log(agentCreateResponse.agent_id);
@@ -42,16 +40,16 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Toddlzt from 'toddlzt';
+import RetellAI from 'toddlzt';
 
-const toddlzt = new Toddlzt();
+const retellAI = new RetellAI();
 
 async function main() {
-  const params: Toddlzt.AgentCreateParams = {
+  const params: RetellAI.AgentCreateParams = {
     llm_websocket_url: 'wss://your-websocket-endpoint',
-    voice_id: '11labs-Ryan',
+    voice_id: '11labs-Adrian',
   };
-  const agentCreateResponse: Toddlzt.AgentCreateResponse = await toddlzt.agents.create(params);
+  const agentCreateResponse: RetellAI.AgentCreateResponse = await retellAI.agents.create(params);
 }
 
 main();
@@ -68,10 +66,10 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const agentCreateResponse = await toddlzt.agents
-    .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' })
-    .catch((err) => {
-      if (err instanceof Toddlzt.APIError) {
+  const agentCreateResponse = await retellAI.agents
+    .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+    .catch(async (err) => {
+      if (err instanceof RetellAI.APIError) {
         console.log(err.status); // 400
         console.log(err.name); // BadRequestError
         console.log(err.headers); // {server: 'nginx', ...}
@@ -108,12 +106,12 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const toddlzt = new Toddlzt({
+const retellAI = new RetellAI({
   maxRetries: 0, // default is 2
 });
 
 // Or, configure per-request:
-await toddlzt.agents.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' }, {
+await retellAI.agents.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
   maxRetries: 5,
 });
 ```
@@ -125,12 +123,12 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const toddlzt = new Toddlzt({
+const retellAI = new RetellAI({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
 // Override per-request:
-await toddlzt.agents.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' }, {
+await retellAI.agents.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -149,16 +147,16 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 
 <!-- prettier-ignore -->
 ```ts
-const toddlzt = new Toddlzt();
+const retellAI = new RetellAI();
 
-const response = await toddlzt.agents
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' })
+const response = await retellAI.agents
+  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentCreateResponse, response: raw } = await toddlzt.agents
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' })
+const { data: agentCreateResponse, response: raw } = await retellAI.agents
+  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(agentCreateResponse.agent_id);
@@ -170,27 +168,27 @@ By default, this library uses `node-fetch` in Node, and expects a global `fetch`
 
 If you would prefer to use a global, web-standards-compliant `fetch` function even in a Node environment,
 (for example, if you are running Node with `--experimental-fetch` or using NextJS which polyfills with `undici`),
-add the following import before your first import `from "Toddlzt"`:
+add the following import before your first import `from "RetellAI"`:
 
 ```ts
 // Tell TypeScript and the package to use the global web fetch instead of node-fetch.
 // Note, despite the name, this does not add any polyfills, but expects them to be provided if needed.
 import 'toddlzt/shims/web';
-import Toddlzt from 'toddlzt';
+import RetellAI from 'toddlzt';
 ```
 
 To do the inverse, add `import "toddlzt/shims/node"` (which does import polyfills).
-This can also be useful if you are getting the wrong TypeScript types for `Response` - more details [here](https://github.com/stainless-sdks/tree/main/src/_shims#readme).
+This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/stainless-sdks/tree/main/src/_shims#readme)).
 
 You may also provide a custom `fetch` function when instantiating the client,
 which can be used to inspect or alter the `Request` or `Response` before/after each request:
 
 ```ts
 import { fetch } from 'undici'; // as one example
-import Toddlzt from 'toddlzt';
+import RetellAI from 'toddlzt';
 
-const client = new Toddlzt({
-  fetch: async (url: RequestInfo, init?: RequestInfo): Promise<Response> => {
+const client = new RetellAI({
+  fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
     console.log('About to make a request', url, init);
     const response = await fetch(url, init);
     console.log('Got response', response);
@@ -211,18 +209,20 @@ If you would like to disable or customize this behavior, for example to use the 
 <!-- prettier-ignore -->
 ```ts
 import http from 'http';
-import HttpsProxyAgent from 'https-proxy-agent';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // Configure the default for all requests:
-const toddlzt = new Toddlzt({
+const retellAI = new RetellAI({
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
 });
 
 // Override per-request:
-await toddlzt.agents.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Ryan' }, {
-  baseURL: 'http://localhost:8080/test-api',
-  httpAgent: new http.Agent({ keepAlive: false }),
-})
+await retellAI.agents.create(
+  { llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' },
+  {
+    httpAgent: new http.Agent({ keepAlive: false }),
+  },
+);
 ```
 
 ## Semantic Versioning
@@ -244,7 +244,7 @@ TypeScript >= 4.5 is supported.
 The following runtimes are supported:
 
 - Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
-- Deno v1.28.0 or higher, using `import Toddlzt from "npm:toddlzt"`.
+- Deno v1.28.0 or higher, using `import RetellAI from "npm:toddlzt"`.
 - Bun 1.0 or later.
 - Cloudflare Workers.
 - Vercel Edge Runtime.

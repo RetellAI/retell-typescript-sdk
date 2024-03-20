@@ -1,10 +1,10 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { castToError, Headers } from './core';
 
-export class ToddlztError extends Error {}
+export class RetellAIError extends Error {}
 
-export class APIError extends ToddlztError {
+export class APIError extends RetellAIError {
   readonly status: number | undefined;
   readonly headers: Headers | undefined;
   readonly error: Object | undefined;

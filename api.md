@@ -28,3 +28,20 @@ Methods:
 - <code title="patch /update-agent/{agent_id}">client.agents.<a href="./src/resources/agents.ts">update</a>(agentId, { ...params }) -> AgentUpdateResponse</code>
 - <code title="get /list-agents">client.agents.<a href="./src/resources/agents.ts">list</a>() -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agents.<a href="./src/resources/agents.ts">delete</a>(agentId) -> void</code>
+
+# Llm
+
+Types:
+
+- <code><a href="./src/resources/llm.ts">LlmCreateResponse</a></code>
+- <code><a href="./src/resources/llm.ts">LlmRetrieveResponse</a></code>
+- <code><a href="./src/resources/llm.ts">LlmUpdateResponse</a></code>
+- <code><a href="./src/resources/llm.ts">LlmListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-retell-llm">client.llm.<a href="./src/resources/llm.ts">create</a>({ ...params }) -> LlmCreateResponse</code>
+- <code title="get /get-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">retrieve</a>(llmId) -> LlmRetrieveResponse</code>
+- <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmId, { ...params }) -> LlmUpdateResponse</code>
+- <code title="get /list-retell-llm">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
+- <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>
