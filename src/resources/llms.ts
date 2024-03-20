@@ -2,9 +2,9 @@
 
 import * as Core from 'toddlzt/core';
 import { APIResource } from 'toddlzt/resource';
-import * as LlmAPI from 'toddlzt/resources/llm';
+import * as LlmsAPI from 'toddlzt/resources/llms';
 
-export class Llm extends APIResource {
+export class Llms extends APIResource {
   /**
    * Create a new Retell LLM
    */
@@ -1050,11 +1050,11 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace Llm {
-  export import LlmCreateResponse = LlmAPI.LlmCreateResponse;
-  export import LlmRetrieveResponse = LlmAPI.LlmRetrieveResponse;
-  export import LlmUpdateResponse = LlmAPI.LlmUpdateResponse;
-  export import LlmListResponse = LlmAPI.LlmListResponse;
-  export import LlmCreateParams = LlmAPI.LlmCreateParams;
-  export import LlmUpdateParams = LlmAPI.LlmUpdateParams;
+export namespace Llms {
+  export import LlmCreateResponse = LlmsAPI.LlmCreateResponse;
+  export import LlmRetrieveResponse = LlmsAPI.LlmRetrieveResponse;
+  export import LlmUpdateResponse = LlmsAPI.LlmUpdateResponse;
+  export import LlmListResponse = LlmsAPI.LlmListResponse;
+  export import LlmCreateParams = LlmsAPI.LlmCreateParams;
+  export import LlmUpdateParams = LlmsAPI.LlmUpdateParams;
 }

@@ -8,9 +8,9 @@ const retellAI = new RetellAI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource llm', () => {
+describe('resource llms', () => {
   test('create', async () => {
-    const responsePromise = retellAI.llm.create({});
+    const responsePromise = retellAI.llms.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,7 @@ describe('resource llm', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retellAI.llm.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = retellAI.llms.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,12 +34,12 @@ describe('resource llm', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.llm.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+      retellAI.llms.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellAI.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = retellAI.llm.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = retellAI.llms.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -50,7 +50,7 @@ describe('resource llm', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retellAI.llm.list();
+    const responsePromise = retellAI.llms.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,13 +62,13 @@ describe('resource llm', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellAI.llm.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(retellAI.llms.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       RetellAI.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellAI.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = retellAI.llms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,7 +81,7 @@ describe('resource llm', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+      retellAI.llms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellAI.NotFoundError);
   });
 });

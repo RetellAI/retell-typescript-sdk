@@ -119,7 +119,7 @@ export class RetellAI extends Core.APIClient {
 
   calls: API.Calls = new API.Calls(this);
   agents: API.Agents = new API.Agents(this);
-  llm: API.Llm = new API.Llm(this);
+  llms: API.Llms = new API.Llms(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -197,7 +197,7 @@ export namespace RetellAI {
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;
 
-  export import Llm = API.Llm;
+  export import Llms = API.Llms;
   export import LlmCreateResponse = API.LlmCreateResponse;
   export import LlmRetrieveResponse = API.LlmRetrieveResponse;
   export import LlmUpdateResponse = API.LlmUpdateResponse;

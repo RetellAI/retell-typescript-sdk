@@ -17,5 +17,5 @@ export {
   LlmListResponse,
   LlmCreateParams,
   LlmUpdateParams,
-  Llm,
-} from './llm';
+  Llms,
+} from './llms';
