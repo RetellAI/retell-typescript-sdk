@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellAI from 'toddlzt';
-import { APIUserAbortError } from 'toddlzt';
-import { Headers } from 'toddlzt/core';
+import RetellAI from 'retell-sdk';
+import { APIUserAbortError } from 'retell-sdk';
+import { Headers } from 'retell-sdk/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {
@@ -172,14 +172,14 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['TODDLZT_API_KEY'] = 'My API Key';
+    process.env['RETELL_API_KEY'] = 'My API Key';
     const client = new RetellAI();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overriden environment variable arguments', () => {
     // set options via env var
-    process.env['TODDLZT_API_KEY'] = 'another My API Key';
+    process.env['RETELL_API_KEY'] = 'another My API Key';
     const client = new RetellAI({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });

@@ -42,12 +42,12 @@ export let isFsReadStream: Shims['isFsReadStream'] | undefined = undefined;
 export function setShims(shims: Shims, options: { auto: boolean } = { auto: false }) {
   if (auto) {
     throw new Error(
-      `you must \`import 'toddlzt/shims/${shims.kind}'\` before importing anything else from toddlzt`,
+      `you must \`import 'retell-sdk/shims/${shims.kind}'\` before importing anything else from retell-sdk`,
     );
   }
   if (kind) {
     throw new Error(
-      `can't \`import 'toddlzt/shims/${shims.kind}'\` after \`import 'toddlzt/shims/${kind}'\``,
+      `can't \`import 'retell-sdk/shims/${shims.kind}'\` after \`import 'retell-sdk/shims/${kind}'\``,
     );
   }
   auto = options.auto;

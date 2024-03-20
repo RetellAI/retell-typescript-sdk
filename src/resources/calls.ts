@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'toddlzt/core';
-import { APIResource } from 'toddlzt/resource';
-import { isRequestOptions } from 'toddlzt/core';
-import * as CallsAPI from 'toddlzt/resources/calls';
+import * as Core from 'retell-sdk/core';
+import { APIResource } from 'retell-sdk/resource';
+import { isRequestOptions } from 'retell-sdk/core';
+import * as CallsAPI from 'retell-sdk/resources/calls';
 
 export class Calls extends APIResource {
   /**
