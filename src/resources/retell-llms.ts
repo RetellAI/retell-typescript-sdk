@@ -158,19 +158,9 @@ export namespace RetellLlmCreateResponse {
 
       destinationStateName?: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: unknown | null;
 
       speakDuringTransition?: boolean;
-    }
-
-    export namespace Edge {
-      export interface Parameters {
-        properties?: Record<string, unknown>;
-
-        required?: Array<string>;
-
-        type?: 'object';
-      }
     }
 
     export interface EndCallTool {
@@ -330,19 +320,9 @@ export namespace RetellLlmRetrieveResponse {
 
       destinationStateName?: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: unknown | null;
 
       speakDuringTransition?: boolean;
-    }
-
-    export namespace Edge {
-      export interface Parameters {
-        properties?: Record<string, unknown>;
-
-        required?: Array<string>;
-
-        type?: 'object';
-      }
     }
 
     export interface EndCallTool {
@@ -502,19 +482,9 @@ export namespace RetellLlmUpdateResponse {
 
       destinationStateName?: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: unknown | null;
 
       speakDuringTransition?: boolean;
-    }
-
-    export namespace Edge {
-      export interface Parameters {
-        properties?: Record<string, unknown>;
-
-        required?: Array<string>;
-
-        type?: 'object';
-      }
     }
 
     export interface EndCallTool {
@@ -677,19 +647,9 @@ export namespace RetellLlmListResponse {
 
         destinationStateName?: string;
 
-        parameters?: Edge.Parameters | null;
+        parameters?: unknown | null;
 
         speakDuringTransition?: boolean;
-      }
-
-      export namespace Edge {
-        export interface Parameters {
-          properties?: Record<string, unknown>;
-
-          required?: Array<string>;
-
-          type?: 'object';
-        }
       }
 
       export interface EndCallTool {
@@ -839,19 +799,9 @@ export namespace RetellLlmCreateParams {
 
       destinationStateName?: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: unknown | null;
 
       speakDuringTransition?: boolean;
-    }
-
-    export namespace Edge {
-      export interface Parameters {
-        properties?: Record<string, unknown>;
-
-        required?: Array<string>;
-
-        type?: 'object';
-      }
     }
 
     export interface EndCallTool {
@@ -1000,19 +950,9 @@ export namespace RetellLlmUpdateParams {
 
       destinationStateName?: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: unknown | null;
 
       speakDuringTransition?: boolean;
-    }
-
-    export namespace Edge {
-      export interface Parameters {
-        properties?: Record<string, unknown>;
-
-        required?: Array<string>;
-
-        type?: 'object';
-      }
     }
 
     export interface EndCallTool {

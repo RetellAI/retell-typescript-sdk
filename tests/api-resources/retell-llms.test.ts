@@ -38,31 +38,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
@@ -79,31 +67,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
@@ -120,31 +96,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
@@ -207,31 +171,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
@@ -248,31 +200,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
@@ -289,31 +229,19 @@ describe('resource retellLlms', () => {
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
             {
               destinationStateName: 'string',
               description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
+              parameters: {},
               speakDuringTransition: true,
             },
           ],
