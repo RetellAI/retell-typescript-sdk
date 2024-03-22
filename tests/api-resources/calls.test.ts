@@ -64,33 +64,4 @@ describe('resource calls', () => {
       ),
     ).rejects.toThrow(RetellAI.NotFoundError);
   });
-
-  test('register: only required params', async () => {
-    const responsePromise = retellAI.calls.register({
-      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      audio_encoding: 's16le',
-      audio_websocket_protocol: 'twilio',
-      sample_rate: 24000,
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('register: required and optional params', async () => {
-    const response = await retellAI.calls.register({
-      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      audio_encoding: 's16le',
-      audio_websocket_protocol: 'twilio',
-      sample_rate: 24000,
-      end_call_after_silence_ms: 600000,
-      from_number: 'string',
-      metadata: {},
-      to_number: 'string',
-    });
-  });
 });

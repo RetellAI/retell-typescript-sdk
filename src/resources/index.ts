@@ -9,13 +9,14 @@ export {
   AgentUpdateParams,
   Agents,
 } from './agents';
-export { CallBase, CallListResponse, CallListParams, CallRegisterParams, Calls } from './calls';
+export { CallRetrieveResponse, CallListResponse, CallListParams, Calls } from './calls';
+export { RegisterCallCreateResponse, RegisterCallCreateParams, RegisterCalls } from './register-calls';
 export {
-  LlmCreateResponse,
-  LlmRetrieveResponse,
-  LlmUpdateResponse,
-  LlmListResponse,
-  LlmCreateParams,
-  LlmUpdateParams,
-  Llms,
-} from './llms';
+  RetellLlmCreateResponse,
+  RetellLlmRetrieveResponse,
+  RetellLlmUpdateResponse,
+  RetellLlmListResponse,
+  RetellLlmCreateParams,
+  RetellLlmUpdateParams,
+  RetellLlms,
+} from './retell-llms';

@@ -117,9 +117,10 @@ export class RetellAI extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
+  registerCalls: API.RegisterCalls = new API.RegisterCalls(this);
   calls: API.Calls = new API.Calls(this);
   agents: API.Agents = new API.Agents(this);
-  llms: API.Llms = new API.Llms(this);
+  retellLlms: API.RetellLlms = new API.RetellLlms(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -183,11 +184,14 @@ export namespace RetellAI {
 
   export import RequestOptions = Core.RequestOptions;
 
+  export import RegisterCalls = API.RegisterCalls;
+  export import RegisterCallCreateResponse = API.RegisterCallCreateResponse;
+  export import RegisterCallCreateParams = API.RegisterCallCreateParams;
+
   export import Calls = API.Calls;
-  export import CallBase = API.CallBase;
+  export import CallRetrieveResponse = API.CallRetrieveResponse;
   export import CallListResponse = API.CallListResponse;
   export import CallListParams = API.CallListParams;
-  export import CallRegisterParams = API.CallRegisterParams;
 
   export import Agents = API.Agents;
   export import AgentCreateResponse = API.AgentCreateResponse;
@@ -197,13 +201,13 @@ export namespace RetellAI {
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;
 
-  export import Llms = API.Llms;
-  export import LlmCreateResponse = API.LlmCreateResponse;
-  export import LlmRetrieveResponse = API.LlmRetrieveResponse;
-  export import LlmUpdateResponse = API.LlmUpdateResponse;
-  export import LlmListResponse = API.LlmListResponse;
-  export import LlmCreateParams = API.LlmCreateParams;
-  export import LlmUpdateParams = API.LlmUpdateParams;
+  export import RetellLlms = API.RetellLlms;
+  export import RetellLlmCreateResponse = API.RetellLlmCreateResponse;
+  export import RetellLlmRetrieveResponse = API.RetellLlmRetrieveResponse;
+  export import RetellLlmUpdateResponse = API.RetellLlmUpdateResponse;
+  export import RetellLlmListResponse = API.RetellLlmListResponse;
+  export import RetellLlmCreateParams = API.RetellLlmCreateParams;
+  export import RetellLlmUpdateParams = API.RetellLlmUpdateParams;
 }
 
 export default RetellAI;

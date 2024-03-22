@@ -2,20 +2,23 @@
 
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import * as LlmsAPI from 'retell-sdk/resources/llms';
+import * as RetellLlmsAPI from 'retell-sdk/resources/retell-llms';
 
-export class Llms extends APIResource {
+export class RetellLlms extends APIResource {
   /**
    * Create a new Retell LLM
    */
-  create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmCreateResponse> {
+  create(
+    body: RetellLlmCreateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<RetellLlmCreateResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific Retell LLM
    */
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmRetrieveResponse> {
+  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<RetellLlmRetrieveResponse> {
     return this._client.get(`/get-retell-llm/${llmId}`, options);
   }
 
@@ -24,16 +27,16 @@ export class Llms extends APIResource {
    */
   update(
     llmId: string,
-    body: LlmUpdateParams,
+    body: RetellLlmUpdateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<LlmUpdateResponse> {
+  ): Core.APIPromise<RetellLlmUpdateResponse> {
     return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
   }
 
   /**
    * List all retell LLM
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
+  list(options?: Core.RequestOptions): Core.APIPromise<RetellLlmListResponse> {
     return this._client.get('/list-retell-llm', options);
   }
 
@@ -48,22 +51,24 @@ export class Llms extends APIResource {
   }
 }
 
-export interface LlmCreateResponse {
+export interface RetellLlmCreateResponse {
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt: string;
+
   /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
 
   /**
-   * General prompt used in every state.
-   */
-  general_prompt?: string;
-
-  /**
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    LlmCreateResponse.EndCallTool | LlmCreateResponse.TransferCallTool | LlmCreateResponse.CustomTool
+    | RetellLlmCreateResponse.EndCallTool
+    | RetellLlmCreateResponse.TransferCallTool
+    | RetellLlmCreateResponse.CustomTool
   >;
 
   /**
@@ -85,10 +90,10 @@ export interface LlmCreateResponse {
   /**
    * Optional array of states for the agent.
    */
-  states?: Array<LlmCreateResponse.State>;
+  states?: Array<RetellLlmCreateResponse.State>;
 }
 
-export namespace LlmCreateResponse {
+export namespace RetellLlmCreateResponse {
   export interface EndCallTool {
     description?: string | null;
 
@@ -218,22 +223,24 @@ export namespace LlmCreateResponse {
   }
 }
 
-export interface LlmRetrieveResponse {
+export interface RetellLlmRetrieveResponse {
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt: string;
+
   /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
 
   /**
-   * General prompt used in every state.
-   */
-  general_prompt?: string;
-
-  /**
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    LlmRetrieveResponse.EndCallTool | LlmRetrieveResponse.TransferCallTool | LlmRetrieveResponse.CustomTool
+    | RetellLlmRetrieveResponse.EndCallTool
+    | RetellLlmRetrieveResponse.TransferCallTool
+    | RetellLlmRetrieveResponse.CustomTool
   >;
 
   /**
@@ -255,10 +262,10 @@ export interface LlmRetrieveResponse {
   /**
    * Optional array of states for the agent.
    */
-  states?: Array<LlmRetrieveResponse.State>;
+  states?: Array<RetellLlmRetrieveResponse.State>;
 }
 
-export namespace LlmRetrieveResponse {
+export namespace RetellLlmRetrieveResponse {
   export interface EndCallTool {
     description?: string | null;
 
@@ -388,22 +395,24 @@ export namespace LlmRetrieveResponse {
   }
 }
 
-export interface LlmUpdateResponse {
+export interface RetellLlmUpdateResponse {
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt: string;
+
   /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
 
   /**
-   * General prompt used in every state.
-   */
-  general_prompt?: string;
-
-  /**
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    LlmUpdateResponse.EndCallTool | LlmUpdateResponse.TransferCallTool | LlmUpdateResponse.CustomTool
+    | RetellLlmUpdateResponse.EndCallTool
+    | RetellLlmUpdateResponse.TransferCallTool
+    | RetellLlmUpdateResponse.CustomTool
   >;
 
   /**
@@ -425,10 +434,10 @@ export interface LlmUpdateResponse {
   /**
    * Optional array of states for the agent.
    */
-  states?: Array<LlmUpdateResponse.State>;
+  states?: Array<RetellLlmUpdateResponse.State>;
 }
 
-export namespace LlmUpdateResponse {
+export namespace RetellLlmUpdateResponse {
   export interface EndCallTool {
     description?: string | null;
 
@@ -558,25 +567,27 @@ export namespace LlmUpdateResponse {
   }
 }
 
-export type LlmListResponse = Array<LlmListResponse.LlmListResponseItem>;
+export type RetellLlmListResponse = Array<RetellLlmListResponse.RetellLlmListResponseItem>;
 
-export namespace LlmListResponse {
-  export interface LlmListResponseItem {
+export namespace RetellLlmListResponse {
+  export interface RetellLlmListResponseItem {
+    /**
+     * General prompt used in every state.
+     */
+    general_prompt: string;
+
     /**
      * Optional first phrase said by the agent.
      */
     begin_message?: string;
 
     /**
-     * General prompt used in every state.
-     */
-    general_prompt?: string;
-
-    /**
      * Optional array of tools used in every state.
      */
     general_tools?: Array<
-      LlmListResponseItem.EndCallTool | LlmListResponseItem.TransferCallTool | LlmListResponseItem.CustomTool
+      | RetellLlmListResponseItem.EndCallTool
+      | RetellLlmListResponseItem.TransferCallTool
+      | RetellLlmListResponseItem.CustomTool
     >;
 
     /**
@@ -598,10 +609,10 @@ export namespace LlmListResponse {
     /**
      * Optional array of states for the agent.
      */
-    states?: Array<LlmListResponseItem.State>;
+    states?: Array<RetellLlmListResponseItem.State>;
   }
 
-  export namespace LlmListResponseItem {
+  export namespace RetellLlmListResponseItem {
     export interface EndCallTool {
       description?: string | null;
 
@@ -732,22 +743,24 @@ export namespace LlmListResponse {
   }
 }
 
-export interface LlmCreateParams {
+export interface RetellLlmCreateParams {
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt: string;
+
   /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
 
   /**
-   * General prompt used in every state.
-   */
-  general_prompt?: string;
-
-  /**
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    LlmCreateParams.EndCallTool | LlmCreateParams.TransferCallTool | LlmCreateParams.CustomTool
+    | RetellLlmCreateParams.EndCallTool
+    | RetellLlmCreateParams.TransferCallTool
+    | RetellLlmCreateParams.CustomTool
   >;
 
   /**
@@ -758,10 +771,10 @@ export interface LlmCreateParams {
   /**
    * Optional array of states for the agent.
    */
-  states?: Array<LlmCreateParams.State>;
+  states?: Array<RetellLlmCreateParams.State>;
 }
 
-export namespace LlmCreateParams {
+export namespace RetellLlmCreateParams {
   export interface EndCallTool {
     description?: string | null;
 
@@ -891,22 +904,24 @@ export namespace LlmCreateParams {
   }
 }
 
-export interface LlmUpdateParams {
+export interface RetellLlmUpdateParams {
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt: string;
+
   /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
 
   /**
-   * General prompt used in every state.
-   */
-  general_prompt?: string;
-
-  /**
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    LlmUpdateParams.EndCallTool | LlmUpdateParams.TransferCallTool | LlmUpdateParams.CustomTool
+    | RetellLlmUpdateParams.EndCallTool
+    | RetellLlmUpdateParams.TransferCallTool
+    | RetellLlmUpdateParams.CustomTool
   >;
 
   /**
@@ -917,10 +932,10 @@ export interface LlmUpdateParams {
   /**
    * Optional array of states for the agent.
    */
-  states?: Array<LlmUpdateParams.State>;
+  states?: Array<RetellLlmUpdateParams.State>;
 }
 
-export namespace LlmUpdateParams {
+export namespace RetellLlmUpdateParams {
   export interface EndCallTool {
     description?: string | null;
 
@@ -1050,11 +1065,11 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace Llms {
-  export import LlmCreateResponse = LlmsAPI.LlmCreateResponse;
-  export import LlmRetrieveResponse = LlmsAPI.LlmRetrieveResponse;
-  export import LlmUpdateResponse = LlmsAPI.LlmUpdateResponse;
-  export import LlmListResponse = LlmsAPI.LlmListResponse;
-  export import LlmCreateParams = LlmsAPI.LlmCreateParams;
-  export import LlmUpdateParams = LlmsAPI.LlmUpdateParams;
+export namespace RetellLlms {
+  export import RetellLlmCreateResponse = RetellLlmsAPI.RetellLlmCreateResponse;
+  export import RetellLlmRetrieveResponse = RetellLlmsAPI.RetellLlmRetrieveResponse;
+  export import RetellLlmUpdateResponse = RetellLlmsAPI.RetellLlmUpdateResponse;
+  export import RetellLlmListResponse = RetellLlmsAPI.RetellLlmListResponse;
+  export import RetellLlmCreateParams = RetellLlmsAPI.RetellLlmCreateParams;
+  export import RetellLlmUpdateParams = RetellLlmsAPI.RetellLlmUpdateParams;
 }
