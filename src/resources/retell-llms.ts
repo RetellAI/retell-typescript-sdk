@@ -88,7 +88,7 @@ export interface RetellLlmCreateResponse {
   starting_state?: string;
 
   /**
-   * Optional array of states for the agent.
+   * Optional array of states.
    */
   states?: Array<RetellLlmCreateResponse.State>;
 }
@@ -143,24 +143,24 @@ export namespace RetellLlmCreateResponse {
   }
 
   export interface State {
+    name: string;
+
+    state_prompt: string;
+
     edges?: Array<State.Edge> | null;
-
-    name?: string;
-
-    state_prompt?: string;
 
     tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
     export interface Edge {
-      description?: string;
+      description: string;
 
-      destinationStateName?: string;
+      destination_state_name: string;
 
       parameters?: Edge.Parameters | null;
 
-      speakDuringTransition?: boolean;
+      speak_during_transition?: boolean;
     }
 
     export namespace Edge {
@@ -260,7 +260,7 @@ export interface RetellLlmRetrieveResponse {
   starting_state?: string;
 
   /**
-   * Optional array of states for the agent.
+   * Optional array of states.
    */
   states?: Array<RetellLlmRetrieveResponse.State>;
 }
@@ -315,24 +315,24 @@ export namespace RetellLlmRetrieveResponse {
   }
 
   export interface State {
+    name: string;
+
+    state_prompt: string;
+
     edges?: Array<State.Edge> | null;
-
-    name?: string;
-
-    state_prompt?: string;
 
     tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
     export interface Edge {
-      description?: string;
+      description: string;
 
-      destinationStateName?: string;
+      destination_state_name: string;
 
       parameters?: Edge.Parameters | null;
 
-      speakDuringTransition?: boolean;
+      speak_during_transition?: boolean;
     }
 
     export namespace Edge {
@@ -432,7 +432,7 @@ export interface RetellLlmUpdateResponse {
   starting_state?: string;
 
   /**
-   * Optional array of states for the agent.
+   * Optional array of states.
    */
   states?: Array<RetellLlmUpdateResponse.State>;
 }
@@ -487,24 +487,24 @@ export namespace RetellLlmUpdateResponse {
   }
 
   export interface State {
+    name: string;
+
+    state_prompt: string;
+
     edges?: Array<State.Edge> | null;
-
-    name?: string;
-
-    state_prompt?: string;
 
     tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
     export interface Edge {
-      description?: string;
+      description: string;
 
-      destinationStateName?: string;
+      destination_state_name: string;
 
       parameters?: Edge.Parameters | null;
 
-      speakDuringTransition?: boolean;
+      speak_during_transition?: boolean;
     }
 
     export namespace Edge {
@@ -607,7 +607,7 @@ export namespace RetellLlmListResponse {
     starting_state?: string;
 
     /**
-     * Optional array of states for the agent.
+     * Optional array of states.
      */
     states?: Array<RetellLlmListResponseItem.State>;
   }
@@ -662,24 +662,24 @@ export namespace RetellLlmListResponse {
     }
 
     export interface State {
+      name: string;
+
+      state_prompt: string;
+
       edges?: Array<State.Edge> | null;
-
-      name?: string;
-
-      state_prompt?: string;
 
       tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
     }
 
     export namespace State {
       export interface Edge {
-        description?: string;
+        description: string;
 
-        destinationStateName?: string;
+        destination_state_name: string;
 
         parameters?: Edge.Parameters | null;
 
-        speakDuringTransition?: boolean;
+        speak_during_transition?: boolean;
       }
 
       export namespace Edge {
@@ -769,7 +769,7 @@ export interface RetellLlmCreateParams {
   starting_state?: string;
 
   /**
-   * Optional array of states for the agent.
+   * Optional array of states.
    */
   states?: Array<RetellLlmCreateParams.State>;
 }
@@ -824,24 +824,24 @@ export namespace RetellLlmCreateParams {
   }
 
   export interface State {
+    name: string;
+
+    state_prompt: string;
+
     edges?: Array<State.Edge> | null;
-
-    name?: string;
-
-    state_prompt?: string;
 
     tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
     export interface Edge {
-      description?: string;
+      description: string;
 
-      destinationStateName?: string;
+      destination_state_name: string;
 
       parameters?: Edge.Parameters | null;
 
-      speakDuringTransition?: boolean;
+      speak_during_transition?: boolean;
     }
 
     export namespace Edge {
@@ -930,7 +930,7 @@ export interface RetellLlmUpdateParams {
   starting_state?: string;
 
   /**
-   * Optional array of states for the agent.
+   * Optional array of states.
    */
   states?: Array<RetellLlmUpdateParams.State>;
 }
@@ -985,24 +985,24 @@ export namespace RetellLlmUpdateParams {
   }
 
   export interface State {
+    name: string;
+
+    state_prompt: string;
+
     edges?: Array<State.Edge> | null;
-
-    name?: string;
-
-    state_prompt?: string;
 
     tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
     export interface Edge {
-      description?: string;
+      description: string;
 
-      destinationStateName?: string;
+      destination_state_name: string;
 
       parameters?: Edge.Parameters | null;
 
-      speakDuringTransition?: boolean;
+      speak_during_transition?: boolean;
     }
 
     export namespace Edge {
