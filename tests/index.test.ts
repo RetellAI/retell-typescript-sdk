@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellAI from 'retell-sdk';
-import { APIUserAbortError } from 'retell-sdk';
-import { Headers } from 'retell-sdk/core';
+import RetellAI from 'retell-sdka';
+import { APIUserAbortError } from 'retell-sdka';
+import { Headers } from 'retell-sdka/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {

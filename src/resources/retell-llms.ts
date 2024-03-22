@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'retell-sdk/core';
-import { APIResource } from 'retell-sdk/resource';
-import * as RetellLlmsAPI from 'retell-sdk/resources/retell-llms';
+import * as Core from 'retell-sdka/core';
+import { APIResource } from 'retell-sdka/resource';
+import * as RetellLlmsAPI from 'retell-sdka/resources/retell-llms';
 
 export class RetellLlms extends APIResource {
   /**

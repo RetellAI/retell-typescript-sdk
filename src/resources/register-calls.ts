@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'retell-sdk/core';
-import { APIResource } from 'retell-sdk/resource';
-import * as RegisterCallsAPI from 'retell-sdk/resources/register-calls';
+import * as Core from 'retell-sdka/core';
+import { APIResource } from 'retell-sdka/resource';
+import * as RegisterCallsAPI from 'retell-sdka/resources/register-calls';
 
 export class RegisterCalls extends APIResource {
   /**

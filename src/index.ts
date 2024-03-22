@@ -5,7 +5,7 @@ import * as Errors from './error';
 import { type Agent } from './_shims/index';
 import * as Uploads from './uploads';
 import * as qs from 'qs';
-import * as API from 'retell-sdk/resources/index';
+import * as API from 'retell-sdka/resources/index';
 
 export interface ClientOptions {
   /**

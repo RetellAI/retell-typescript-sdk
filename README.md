@@ -1,6 +1,6 @@
 # Retell AI Node API Library
 
-[![NPM version](https://img.shields.io/npm/v/retell-sdk.svg)](https://npmjs.org/package/retell-sdk)
+[![NPM version](https://img.shields.io/npm/v/retell-sdka.svg)](https://npmjs.org/package/retell-sdka)
 
 This library provides convenient access to the Retell AI REST API from server-side TypeScript or JavaScript.
 
@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 ## Installation
 
 ```sh
-npm install retell-sdk
+npm install retell-sdka
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import RetellAI from 'retell-sdk';
+import RetellAI from 'retell-sdka';
 
 const retellAI = new RetellAI();
 
@@ -42,7 +42,7 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import RetellAI from 'retell-sdk';
+import RetellAI from 'retell-sdka';
 
 const retellAI = new RetellAI();
 
@@ -219,11 +219,11 @@ add the following import before your first import `from "RetellAI"`:
 ```ts
 // Tell TypeScript and the package to use the global web fetch instead of node-fetch.
 // Note, despite the name, this does not add any polyfills, but expects them to be provided if needed.
-import 'retell-sdk/shims/web';
-import RetellAI from 'retell-sdk';
+import 'retell-sdka/shims/web';
+import RetellAI from 'retell-sdka';
 ```
 
-To do the inverse, add `import "retell-sdk/shims/node"` (which does import polyfills).
+To do the inverse, add `import "retell-sdka/shims/node"` (which does import polyfills).
 This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/stainless-sdks/tree/main/src/_shims#readme)).
 
 ### Logging and middleware
@@ -233,7 +233,7 @@ which can be used to inspect or alter the `Request` or `Response` before/after e
 
 ```ts
 import { fetch } from 'undici'; // as one example
-import RetellAI from 'retell-sdk';
+import RetellAI from 'retell-sdka';
 
 const client = new RetellAI({
   fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
@@ -283,7 +283,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/retell-sdk-node/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/retell-sdka-node/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 
@@ -292,7 +292,7 @@ TypeScript >= 4.5 is supported.
 The following runtimes are supported:
 
 - Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
-- Deno v1.28.0 or higher, using `import RetellAI from "npm:retell-sdk"`.
+- Deno v1.28.0 or higher, using `import RetellAI from "npm:retell-sdka"`.
 - Bun 1.0 or later.
 - Cloudflare Workers.
 - Vercel Edge Runtime.
