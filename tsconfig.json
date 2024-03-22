@@ -9,9 +9,9 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "retell-sdka/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "retell-sdka/*": ["src/*"],
-      "retell-sdka": ["src/index.ts"],
+      "retell-sdk/_shims/auto/*": ["src/_shims/auto/*-node"],
+      "retell-sdk/*": ["src/*"],
+      "retell-sdk": ["src/index.ts"],
       "digest-fetch": ["./typings/digest-fetch"]
     },
     "noEmit": true,

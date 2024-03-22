@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellAI from 'retell-sdka';
+import RetellAI from 'retell-sdk';
 import { Response } from 'node-fetch';
 
 const retellAI = new RetellAI({

@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from 'retell-sdka/core';
-import { Blob } from 'retell-sdka/_shims/index';
-import { toFile } from 'retell-sdka';
+import { multipartFormRequestOptions, createForm } from 'retell-sdk/core';
+import { Blob } from 'retell-sdk/_shims/index';
+import { toFile } from 'retell-sdk';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
