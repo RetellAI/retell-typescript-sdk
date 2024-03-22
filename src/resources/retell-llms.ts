@@ -158,7 +158,7 @@ export namespace RetellLlmCreateResponse {
 
       destinationStateName?: string;
 
-      parameters?: unknown | null;
+      parameters?: Array<unknown> | null;
 
       speakDuringTransition?: boolean;
     }
@@ -320,7 +320,7 @@ export namespace RetellLlmRetrieveResponse {
 
       destinationStateName?: string;
 
-      parameters?: unknown | null;
+      parameters?: Array<unknown> | null;
 
       speakDuringTransition?: boolean;
     }
@@ -482,7 +482,7 @@ export namespace RetellLlmUpdateResponse {
 
       destinationStateName?: string;
 
-      parameters?: unknown | null;
+      parameters?: Array<unknown> | null;
 
       speakDuringTransition?: boolean;
     }
@@ -647,7 +647,7 @@ export namespace RetellLlmListResponse {
 
         destinationStateName?: string;
 
-        parameters?: unknown | null;
+        parameters?: Array<unknown> | null;
 
         speakDuringTransition?: boolean;
       }
@@ -799,7 +799,7 @@ export namespace RetellLlmCreateParams {
 
       destinationStateName?: string;
 
-      parameters?: unknown | null;
+      parameters?: Array<unknown> | null;
 
       speakDuringTransition?: boolean;
     }
@@ -950,7 +950,7 @@ export namespace RetellLlmUpdateParams {
 
       destinationStateName?: string;
 
-      parameters?: unknown | null;
+      parameters?: Array<unknown> | null;
 
       speakDuringTransition?: boolean;
     }

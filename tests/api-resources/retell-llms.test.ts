@@ -37,7 +37,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
@@ -48,7 +48,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
@@ -59,7 +59,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
@@ -116,7 +116,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
@@ -127,7 +127,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
@@ -138,7 +138,7 @@ describe('resource retellLlms', () => {
           edges: {
             destinationStateName: 'string',
             description: 'string',
-            parameters: {},
+            parameters: [{}, {}, {}],
             speakDuringTransition: true,
           },
           tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
