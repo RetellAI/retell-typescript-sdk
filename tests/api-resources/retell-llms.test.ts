@@ -34,89 +34,35 @@ describe('resource retellLlms', () => {
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
       ],
     });
@@ -167,89 +113,35 @@ describe('resource retellLlms', () => {
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
         {
           name: 'string',
           state_prompt: 'string',
-          edges: [
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-            {
-              destinationStateName: 'string',
-              description: 'string',
-              parameters: {},
-              speakDuringTransition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
+          edges: {
+            destinationStateName: 'string',
+            description: 'string',
+            parameters: {},
+            speakDuringTransition: true,
+          },
+          tools: { type: 'pre_defined', name: 'end_call', description: 'string' },
         },
       ],
     });
