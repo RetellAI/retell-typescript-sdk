@@ -143,24 +143,34 @@ export namespace RetellLlmCreateResponse {
   }
 
   export interface State {
-    edges?: State.Edges | null;
+    edges?: Array<State.Edge> | null;
 
     name?: string;
 
     state_prompt?: string;
 
-    tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
-    export interface Edges {
+    export interface Edge {
       description?: string;
 
       destinationStateName?: string;
 
-      parameters?: Array<unknown> | null;
+      parameters?: Edge.Parameters | null;
 
       speakDuringTransition?: boolean;
+    }
+
+    export namespace Edge {
+      export interface Parameters {
+        properties?: Record<string, unknown>;
+
+        required?: Array<string>;
+
+        type?: 'object';
+      }
     }
 
     export interface EndCallTool {
@@ -305,24 +315,34 @@ export namespace RetellLlmRetrieveResponse {
   }
 
   export interface State {
-    edges?: State.Edges | null;
+    edges?: Array<State.Edge> | null;
 
     name?: string;
 
     state_prompt?: string;
 
-    tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
-    export interface Edges {
+    export interface Edge {
       description?: string;
 
       destinationStateName?: string;
 
-      parameters?: Array<unknown> | null;
+      parameters?: Edge.Parameters | null;
 
       speakDuringTransition?: boolean;
+    }
+
+    export namespace Edge {
+      export interface Parameters {
+        properties?: Record<string, unknown>;
+
+        required?: Array<string>;
+
+        type?: 'object';
+      }
     }
 
     export interface EndCallTool {
@@ -467,24 +487,34 @@ export namespace RetellLlmUpdateResponse {
   }
 
   export interface State {
-    edges?: State.Edges | null;
+    edges?: Array<State.Edge> | null;
 
     name?: string;
 
     state_prompt?: string;
 
-    tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
-    export interface Edges {
+    export interface Edge {
       description?: string;
 
       destinationStateName?: string;
 
-      parameters?: Array<unknown> | null;
+      parameters?: Edge.Parameters | null;
 
       speakDuringTransition?: boolean;
+    }
+
+    export namespace Edge {
+      export interface Parameters {
+        properties?: Record<string, unknown>;
+
+        required?: Array<string>;
+
+        type?: 'object';
+      }
     }
 
     export interface EndCallTool {
@@ -632,24 +662,34 @@ export namespace RetellLlmListResponse {
     }
 
     export interface State {
-      edges?: State.Edges | null;
+      edges?: Array<State.Edge> | null;
 
       name?: string;
 
       state_prompt?: string;
 
-      tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+      tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
     }
 
     export namespace State {
-      export interface Edges {
+      export interface Edge {
         description?: string;
 
         destinationStateName?: string;
 
-        parameters?: Array<unknown> | null;
+        parameters?: Edge.Parameters | null;
 
         speakDuringTransition?: boolean;
+      }
+
+      export namespace Edge {
+        export interface Parameters {
+          properties?: Record<string, unknown>;
+
+          required?: Array<string>;
+
+          type?: 'object';
+        }
       }
 
       export interface EndCallTool {
@@ -784,24 +824,34 @@ export namespace RetellLlmCreateParams {
   }
 
   export interface State {
-    edges?: State.Edges | null;
+    edges?: Array<State.Edge> | null;
 
     name?: string;
 
     state_prompt?: string;
 
-    tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
-    export interface Edges {
+    export interface Edge {
       description?: string;
 
       destinationStateName?: string;
 
-      parameters?: Array<unknown> | null;
+      parameters?: Edge.Parameters | null;
 
       speakDuringTransition?: boolean;
+    }
+
+    export namespace Edge {
+      export interface Parameters {
+        properties?: Record<string, unknown>;
+
+        required?: Array<string>;
+
+        type?: 'object';
+      }
     }
 
     export interface EndCallTool {
@@ -935,24 +985,34 @@ export namespace RetellLlmUpdateParams {
   }
 
   export interface State {
-    edges?: State.Edges | null;
+    edges?: Array<State.Edge> | null;
 
     name?: string;
 
     state_prompt?: string;
 
-    tools?: State.EndCallTool | State.TransferCallTool | State.CustomTool | null;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
   }
 
   export namespace State {
-    export interface Edges {
+    export interface Edge {
       description?: string;
 
       destinationStateName?: string;
 
-      parameters?: Array<unknown> | null;
+      parameters?: Edge.Parameters | null;
 
       speakDuringTransition?: boolean;
+    }
+
+    export namespace Edge {
+      export interface Parameters {
+        properties?: Record<string, unknown>;
+
+        required?: Array<string>;
+
+        type?: 'object';
+      }
     }
 
     export interface EndCallTool {
