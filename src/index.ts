@@ -117,7 +117,6 @@ export class RetellAI extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
-  registerCalls: API.RegisterCalls = new API.RegisterCalls(this);
   calls: API.Calls = new API.Calls(this);
   agents: API.Agents = new API.Agents(this);
   retellLlms: API.RetellLlms = new API.RetellLlms(this);
@@ -184,14 +183,12 @@ export namespace RetellAI {
 
   export import RequestOptions = Core.RequestOptions;
 
-  export import RegisterCalls = API.RegisterCalls;
-  export import RegisterCallCreateResponse = API.RegisterCallCreateResponse;
-  export import RegisterCallCreateParams = API.RegisterCallCreateParams;
-
   export import Calls = API.Calls;
   export import CallRetrieveResponse = API.CallRetrieveResponse;
   export import CallListResponse = API.CallListResponse;
+  export import CallRegisterResponse = API.CallRegisterResponse;
   export import CallListParams = API.CallListParams;
+  export import CallRegisterParams = API.CallRegisterParams;
 
   export import Agents = API.Agents;
   export import AgentCreateResponse = API.AgentCreateResponse;

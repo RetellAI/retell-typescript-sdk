@@ -9,8 +9,14 @@ export {
   AgentUpdateParams,
   Agents,
 } from './agents';
-export { CallRetrieveResponse, CallListResponse, CallListParams, Calls } from './calls';
-export { RegisterCallCreateResponse, RegisterCallCreateParams, RegisterCalls } from './register-calls';
+export {
+  CallRetrieveResponse,
+  CallListResponse,
+  CallRegisterResponse,
+  CallListParams,
+  CallRegisterParams,
+  Calls,
+} from './calls';
 export {
   RetellLlmCreateResponse,
   RetellLlmRetrieveResponse,

@@ -1,24 +1,16 @@
-# RegisterCalls
-
-Types:
-
-- <code><a href="./src/resources/register-calls.ts">RegisterCallCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /register-call">client.registerCalls.<a href="./src/resources/register-calls.ts">create</a>({ ...params }) -> RegisterCallCreateResponse</code>
-
 # Calls
 
 Types:
 
 - <code><a href="./src/resources/calls.ts">CallRetrieveResponse</a></code>
 - <code><a href="./src/resources/calls.ts">CallListResponse</a></code>
+- <code><a href="./src/resources/calls.ts">CallRegisterResponse</a></code>
 
 Methods:
 
 - <code title="get /get-call/{call_id}">client.calls.<a href="./src/resources/calls.ts">retrieve</a>(callId) -> CallRetrieveResponse</code>
 - <code title="get /list-calls">client.calls.<a href="./src/resources/calls.ts">list</a>({ ...params }) -> CallListResponse</code>
+- <code title="post /register-call">client.calls.<a href="./src/resources/calls.ts">register</a>({ ...params }) -> CallRegisterResponse</code>
 
 # Agents
 
