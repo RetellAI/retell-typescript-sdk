@@ -95,48 +95,48 @@ export interface RetellLlmCreateResponse {
 
 export namespace RetellLlmCreateResponse {
   export interface EndCallTool {
+    name: 'end_call';
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'end_call';
-
-    type?: 'pre_defined';
   }
 
   export interface TransferCallTool {
+    name: 'transfer_call';
+
+    number: string;
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'transfer_call';
-
-    number?: string;
-
-    type?: 'pre_defined';
   }
 
   export interface CustomTool {
-    description?: string;
+    description: string;
+
+    name: string;
+
+    type: 'custom';
+
+    url: string;
 
     execution_message_description?: string | null;
 
     execution_timing?: 'immediate' | 'await_agent_turn';
-
-    name?: string;
 
     parameters?: CustomTool.Parameters | null;
 
     speak_after_execution?: boolean;
 
     speak_during_execution?: boolean;
-
-    type?: 'custom';
-
-    url?: string;
   }
 
   export namespace CustomTool {
     export interface Parameters {
       properties?: Record<string, unknown>;
 
-      required?: Array<string>;
+      required?: Array<string> | null;
 
       type?: 'object';
     }
@@ -167,55 +167,55 @@ export namespace RetellLlmCreateResponse {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
     }
 
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
@@ -267,48 +267,48 @@ export interface RetellLlmRetrieveResponse {
 
 export namespace RetellLlmRetrieveResponse {
   export interface EndCallTool {
+    name: 'end_call';
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'end_call';
-
-    type?: 'pre_defined';
   }
 
   export interface TransferCallTool {
+    name: 'transfer_call';
+
+    number: string;
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'transfer_call';
-
-    number?: string;
-
-    type?: 'pre_defined';
   }
 
   export interface CustomTool {
-    description?: string;
+    description: string;
+
+    name: string;
+
+    type: 'custom';
+
+    url: string;
 
     execution_message_description?: string | null;
 
     execution_timing?: 'immediate' | 'await_agent_turn';
-
-    name?: string;
 
     parameters?: CustomTool.Parameters | null;
 
     speak_after_execution?: boolean;
 
     speak_during_execution?: boolean;
-
-    type?: 'custom';
-
-    url?: string;
   }
 
   export namespace CustomTool {
     export interface Parameters {
       properties?: Record<string, unknown>;
 
-      required?: Array<string>;
+      required?: Array<string> | null;
 
       type?: 'object';
     }
@@ -339,55 +339,55 @@ export namespace RetellLlmRetrieveResponse {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
     }
 
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
@@ -439,48 +439,48 @@ export interface RetellLlmUpdateResponse {
 
 export namespace RetellLlmUpdateResponse {
   export interface EndCallTool {
+    name: 'end_call';
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'end_call';
-
-    type?: 'pre_defined';
   }
 
   export interface TransferCallTool {
+    name: 'transfer_call';
+
+    number: string;
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'transfer_call';
-
-    number?: string;
-
-    type?: 'pre_defined';
   }
 
   export interface CustomTool {
-    description?: string;
+    description: string;
+
+    name: string;
+
+    type: 'custom';
+
+    url: string;
 
     execution_message_description?: string | null;
 
     execution_timing?: 'immediate' | 'await_agent_turn';
-
-    name?: string;
 
     parameters?: CustomTool.Parameters | null;
 
     speak_after_execution?: boolean;
 
     speak_during_execution?: boolean;
-
-    type?: 'custom';
-
-    url?: string;
   }
 
   export namespace CustomTool {
     export interface Parameters {
       properties?: Record<string, unknown>;
 
-      required?: Array<string>;
+      required?: Array<string> | null;
 
       type?: 'object';
     }
@@ -511,55 +511,55 @@ export namespace RetellLlmUpdateResponse {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
     }
 
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
@@ -614,48 +614,48 @@ export namespace RetellLlmListResponse {
 
   export namespace RetellLlmListResponseItem {
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
@@ -686,55 +686,55 @@ export namespace RetellLlmListResponse {
         export interface Parameters {
           properties?: Record<string, unknown>;
 
-          required?: Array<string>;
+          required?: Array<string> | null;
 
           type?: 'object';
         }
       }
 
       export interface EndCallTool {
+        name: 'end_call';
+
+        type: 'pre_defined';
+
         description?: string | null;
-
-        name?: 'end_call';
-
-        type?: 'pre_defined';
       }
 
       export interface TransferCallTool {
+        name: 'transfer_call';
+
+        number: string;
+
+        type: 'pre_defined';
+
         description?: string | null;
-
-        name?: 'transfer_call';
-
-        number?: string;
-
-        type?: 'pre_defined';
       }
 
       export interface CustomTool {
-        description?: string;
+        description: string;
+
+        name: string;
+
+        type: 'custom';
+
+        url: string;
 
         execution_message_description?: string | null;
 
         execution_timing?: 'immediate' | 'await_agent_turn';
-
-        name?: string;
 
         parameters?: CustomTool.Parameters | null;
 
         speak_after_execution?: boolean;
 
         speak_during_execution?: boolean;
-
-        type?: 'custom';
-
-        url?: string;
       }
 
       export namespace CustomTool {
         export interface Parameters {
           properties?: Record<string, unknown>;
 
-          required?: Array<string>;
+          required?: Array<string> | null;
 
           type?: 'object';
         }
@@ -776,48 +776,48 @@ export interface RetellLlmCreateParams {
 
 export namespace RetellLlmCreateParams {
   export interface EndCallTool {
+    name: 'end_call';
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'end_call';
-
-    type?: 'pre_defined';
   }
 
   export interface TransferCallTool {
+    name: 'transfer_call';
+
+    number: string;
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'transfer_call';
-
-    number?: string;
-
-    type?: 'pre_defined';
   }
 
   export interface CustomTool {
-    description?: string;
+    description: string;
+
+    name: string;
+
+    type: 'custom';
+
+    url: string;
 
     execution_message_description?: string | null;
 
     execution_timing?: 'immediate' | 'await_agent_turn';
-
-    name?: string;
 
     parameters?: CustomTool.Parameters | null;
 
     speak_after_execution?: boolean;
 
     speak_during_execution?: boolean;
-
-    type?: 'custom';
-
-    url?: string;
   }
 
   export namespace CustomTool {
     export interface Parameters {
       properties?: Record<string, unknown>;
 
-      required?: Array<string>;
+      required?: Array<string> | null;
 
       type?: 'object';
     }
@@ -848,55 +848,55 @@ export namespace RetellLlmCreateParams {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
     }
 
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
@@ -937,48 +937,48 @@ export interface RetellLlmUpdateParams {
 
 export namespace RetellLlmUpdateParams {
   export interface EndCallTool {
+    name: 'end_call';
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'end_call';
-
-    type?: 'pre_defined';
   }
 
   export interface TransferCallTool {
+    name: 'transfer_call';
+
+    number: string;
+
+    type: 'pre_defined';
+
     description?: string | null;
-
-    name?: 'transfer_call';
-
-    number?: string;
-
-    type?: 'pre_defined';
   }
 
   export interface CustomTool {
-    description?: string;
+    description: string;
+
+    name: string;
+
+    type: 'custom';
+
+    url: string;
 
     execution_message_description?: string | null;
 
     execution_timing?: 'immediate' | 'await_agent_turn';
-
-    name?: string;
 
     parameters?: CustomTool.Parameters | null;
 
     speak_after_execution?: boolean;
 
     speak_during_execution?: boolean;
-
-    type?: 'custom';
-
-    url?: string;
   }
 
   export namespace CustomTool {
     export interface Parameters {
       properties?: Record<string, unknown>;
 
-      required?: Array<string>;
+      required?: Array<string> | null;
 
       type?: 'object';
     }
@@ -1009,55 +1009,55 @@ export namespace RetellLlmUpdateParams {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }
     }
 
     export interface EndCallTool {
+      name: 'end_call';
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'end_call';
-
-      type?: 'pre_defined';
     }
 
     export interface TransferCallTool {
+      name: 'transfer_call';
+
+      number: string;
+
+      type: 'pre_defined';
+
       description?: string | null;
-
-      name?: 'transfer_call';
-
-      number?: string;
-
-      type?: 'pre_defined';
     }
 
     export interface CustomTool {
-      description?: string;
+      description: string;
+
+      name: string;
+
+      type: 'custom';
+
+      url: string;
 
       execution_message_description?: string | null;
 
       execution_timing?: 'immediate' | 'await_agent_turn';
-
-      name?: string;
 
       parameters?: CustomTool.Parameters | null;
 
       speak_after_execution?: boolean;
 
       speak_during_execution?: boolean;
-
-      type?: 'custom';
-
-      url?: string;
     }
 
     export namespace CustomTool {
       export interface Parameters {
         properties?: Record<string, unknown>;
 
-        required?: Array<string>;
+        required?: Array<string> | null;
 
         type?: 'object';
       }

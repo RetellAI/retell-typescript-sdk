@@ -40,7 +40,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -50,7 +50,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -60,48 +60,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
-        },
-        {
-          name: 'string',
-          state_prompt: 'string',
-          edges: [
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -122,7 +81,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -132,7 +91,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -142,7 +101,48 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+          ],
+          tools: [
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+          ],
+        },
+        {
+          name: 'string',
+          state_prompt: 'string',
+          edges: [
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -209,7 +209,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -219,7 +219,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -229,48 +229,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-          ],
-          tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-          ],
-        },
-        {
-          name: 'string',
-          state_prompt: 'string',
-          edges: [
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string', 'string', 'string'],
-              },
-              speak_during_transition: true,
-            },
-            {
-              destination_state_name: 'string',
-              description: 'string',
-              parameters: {
-                type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -291,7 +250,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -301,7 +260,7 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
@@ -311,7 +270,48 @@ describe('resource retellLlms', () => {
               description: 'string',
               parameters: {
                 type: 'object',
-                properties: { foo: 'bar' },
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+          ],
+          tools: [
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'pre_defined', name: 'end_call', description: 'string' },
+          ],
+        },
+        {
+          name: 'string',
+          state_prompt: 'string',
+          edges: [
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
+                required: ['string', 'string', 'string'],
+              },
+              speak_during_transition: true,
+            },
+            {
+              destination_state_name: 'string',
+              description: 'string',
+              parameters: {
+                type: 'object',
+                properties: { foo: {} },
                 required: ['string', 'string', 'string'],
               },
               speak_during_transition: true,
