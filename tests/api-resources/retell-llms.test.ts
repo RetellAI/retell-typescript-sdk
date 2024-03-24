@@ -25,9 +25,9 @@ describe('resource retellLlms', () => {
       general_prompt: 'string',
       begin_message: 'string',
       general_tools: [
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
       ],
       starting_state: 'string',
       states: [
@@ -67,9 +67,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
         {
@@ -108,9 +108,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
         {
@@ -149,9 +149,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
       ],
@@ -194,9 +194,9 @@ describe('resource retellLlms', () => {
       general_prompt: 'string',
       begin_message: 'string',
       general_tools: [
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
-        { type: 'pre_defined', name: 'end_call', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
+        { type: 'end_call', name: 'string', description: 'string' },
       ],
       starting_state: 'string',
       states: [
@@ -236,9 +236,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
         {
@@ -277,9 +277,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
         {
@@ -318,9 +318,9 @@ describe('resource retellLlms', () => {
             },
           ],
           tools: [
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
-            { type: 'pre_defined', name: 'end_call', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
+            { type: 'end_call', name: 'string', description: 'string' },
           ],
         },
       ],

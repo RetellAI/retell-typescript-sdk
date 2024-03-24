@@ -68,6 +68,9 @@ export interface RetellLlmCreateResponse {
   general_tools?: Array<
     | RetellLlmCreateResponse.EndCallTool
     | RetellLlmCreateResponse.TransferCallTool
+    | RetellLlmCreateResponse.FormatDateTimeTool
+    | RetellLlmCreateResponse.CheckAvailabilityCalTool
+    | RetellLlmCreateResponse.BookAppointmentCalTool
     | RetellLlmCreateResponse.CustomTool
   >;
 
@@ -95,27 +98,71 @@ export interface RetellLlmCreateResponse {
 
 export namespace RetellLlmCreateResponse {
   export interface EndCallTool {
-    name: 'end_call';
+    name: string;
 
-    type: 'pre_defined';
+    type: 'end_call';
 
     description?: string | null;
   }
 
   export interface TransferCallTool {
-    name: 'transfer_call';
+    name: string;
 
     number: string;
 
-    type: 'pre_defined';
+    type: 'transfer_call';
 
     description?: string | null;
+  }
+
+  export interface FormatDateTimeTool {
+    name: string;
+
+    type: 'parse_relative_date_time';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface CheckAvailabilityCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'check_availability_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface BookAppointmentCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'book_appointment_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
   }
 
   export interface CustomTool {
     description: string;
 
+    execution_timing: 'immediate' | 'await_agent_turn';
+
     name: string;
+
+    speak_after_execution: boolean;
+
+    speak_during_execution: boolean;
 
     type: 'custom';
 
@@ -123,22 +170,16 @@ export namespace RetellLlmCreateResponse {
 
     execution_message_description?: string | null;
 
-    execution_timing?: 'immediate' | 'await_agent_turn';
-
     parameters?: CustomTool.Parameters | null;
-
-    speak_after_execution?: boolean;
-
-    speak_during_execution?: boolean;
   }
 
   export namespace CustomTool {
     export interface Parameters {
-      properties?: Record<string, unknown>;
+      properties: Record<string, unknown>;
+
+      type: 'object';
 
       required?: Array<string> | null;
-
-      type?: 'object';
     }
   }
 
@@ -149,7 +190,14 @@ export namespace RetellLlmCreateResponse {
 
     edges?: Array<State.Edge> | null;
 
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.FormatDateTimeTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    > | null;
   }
 
   export namespace State {
@@ -165,36 +213,80 @@ export namespace RetellLlmCreateResponse {
 
     export namespace Edge {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -202,22 +294,16 @@ export namespace RetellLlmCreateResponse {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
   }
@@ -240,6 +326,9 @@ export interface RetellLlmRetrieveResponse {
   general_tools?: Array<
     | RetellLlmRetrieveResponse.EndCallTool
     | RetellLlmRetrieveResponse.TransferCallTool
+    | RetellLlmRetrieveResponse.FormatDateTimeTool
+    | RetellLlmRetrieveResponse.CheckAvailabilityCalTool
+    | RetellLlmRetrieveResponse.BookAppointmentCalTool
     | RetellLlmRetrieveResponse.CustomTool
   >;
 
@@ -267,27 +356,71 @@ export interface RetellLlmRetrieveResponse {
 
 export namespace RetellLlmRetrieveResponse {
   export interface EndCallTool {
-    name: 'end_call';
+    name: string;
 
-    type: 'pre_defined';
+    type: 'end_call';
 
     description?: string | null;
   }
 
   export interface TransferCallTool {
-    name: 'transfer_call';
+    name: string;
 
     number: string;
 
-    type: 'pre_defined';
+    type: 'transfer_call';
 
     description?: string | null;
+  }
+
+  export interface FormatDateTimeTool {
+    name: string;
+
+    type: 'parse_relative_date_time';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface CheckAvailabilityCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'check_availability_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface BookAppointmentCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'book_appointment_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
   }
 
   export interface CustomTool {
     description: string;
 
+    execution_timing: 'immediate' | 'await_agent_turn';
+
     name: string;
+
+    speak_after_execution: boolean;
+
+    speak_during_execution: boolean;
 
     type: 'custom';
 
@@ -295,22 +428,16 @@ export namespace RetellLlmRetrieveResponse {
 
     execution_message_description?: string | null;
 
-    execution_timing?: 'immediate' | 'await_agent_turn';
-
     parameters?: CustomTool.Parameters | null;
-
-    speak_after_execution?: boolean;
-
-    speak_during_execution?: boolean;
   }
 
   export namespace CustomTool {
     export interface Parameters {
-      properties?: Record<string, unknown>;
+      properties: Record<string, unknown>;
+
+      type: 'object';
 
       required?: Array<string> | null;
-
-      type?: 'object';
     }
   }
 
@@ -321,7 +448,14 @@ export namespace RetellLlmRetrieveResponse {
 
     edges?: Array<State.Edge> | null;
 
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.FormatDateTimeTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    > | null;
   }
 
   export namespace State {
@@ -337,36 +471,80 @@ export namespace RetellLlmRetrieveResponse {
 
     export namespace Edge {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -374,22 +552,16 @@ export namespace RetellLlmRetrieveResponse {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
   }
@@ -412,6 +584,9 @@ export interface RetellLlmUpdateResponse {
   general_tools?: Array<
     | RetellLlmUpdateResponse.EndCallTool
     | RetellLlmUpdateResponse.TransferCallTool
+    | RetellLlmUpdateResponse.FormatDateTimeTool
+    | RetellLlmUpdateResponse.CheckAvailabilityCalTool
+    | RetellLlmUpdateResponse.BookAppointmentCalTool
     | RetellLlmUpdateResponse.CustomTool
   >;
 
@@ -439,27 +614,71 @@ export interface RetellLlmUpdateResponse {
 
 export namespace RetellLlmUpdateResponse {
   export interface EndCallTool {
-    name: 'end_call';
+    name: string;
 
-    type: 'pre_defined';
+    type: 'end_call';
 
     description?: string | null;
   }
 
   export interface TransferCallTool {
-    name: 'transfer_call';
+    name: string;
 
     number: string;
 
-    type: 'pre_defined';
+    type: 'transfer_call';
 
     description?: string | null;
+  }
+
+  export interface FormatDateTimeTool {
+    name: string;
+
+    type: 'parse_relative_date_time';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface CheckAvailabilityCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'check_availability_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface BookAppointmentCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'book_appointment_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
   }
 
   export interface CustomTool {
     description: string;
 
+    execution_timing: 'immediate' | 'await_agent_turn';
+
     name: string;
+
+    speak_after_execution: boolean;
+
+    speak_during_execution: boolean;
 
     type: 'custom';
 
@@ -467,22 +686,16 @@ export namespace RetellLlmUpdateResponse {
 
     execution_message_description?: string | null;
 
-    execution_timing?: 'immediate' | 'await_agent_turn';
-
     parameters?: CustomTool.Parameters | null;
-
-    speak_after_execution?: boolean;
-
-    speak_during_execution?: boolean;
   }
 
   export namespace CustomTool {
     export interface Parameters {
-      properties?: Record<string, unknown>;
+      properties: Record<string, unknown>;
+
+      type: 'object';
 
       required?: Array<string> | null;
-
-      type?: 'object';
     }
   }
 
@@ -493,7 +706,14 @@ export namespace RetellLlmUpdateResponse {
 
     edges?: Array<State.Edge> | null;
 
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.FormatDateTimeTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    > | null;
   }
 
   export namespace State {
@@ -509,36 +729,80 @@ export namespace RetellLlmUpdateResponse {
 
     export namespace Edge {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -546,22 +810,16 @@ export namespace RetellLlmUpdateResponse {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
   }
@@ -587,6 +845,9 @@ export namespace RetellLlmListResponse {
     general_tools?: Array<
       | RetellLlmListResponseItem.EndCallTool
       | RetellLlmListResponseItem.TransferCallTool
+      | RetellLlmListResponseItem.FormatDateTimeTool
+      | RetellLlmListResponseItem.CheckAvailabilityCalTool
+      | RetellLlmListResponseItem.BookAppointmentCalTool
       | RetellLlmListResponseItem.CustomTool
     >;
 
@@ -614,27 +875,71 @@ export namespace RetellLlmListResponse {
 
   export namespace RetellLlmListResponseItem {
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -642,22 +947,16 @@ export namespace RetellLlmListResponse {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
@@ -668,7 +967,14 @@ export namespace RetellLlmListResponse {
 
       edges?: Array<State.Edge> | null;
 
-      tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+      tools?: Array<
+        | State.EndCallTool
+        | State.TransferCallTool
+        | State.FormatDateTimeTool
+        | State.CheckAvailabilityCalTool
+        | State.BookAppointmentCalTool
+        | State.CustomTool
+      > | null;
     }
 
     export namespace State {
@@ -684,36 +990,80 @@ export namespace RetellLlmListResponse {
 
       export namespace Edge {
         export interface Parameters {
-          properties?: Record<string, unknown>;
+          properties: Record<string, unknown>;
+
+          type: 'object';
 
           required?: Array<string> | null;
-
-          type?: 'object';
         }
       }
 
       export interface EndCallTool {
-        name: 'end_call';
+        name: string;
 
-        type: 'pre_defined';
+        type: 'end_call';
 
         description?: string | null;
       }
 
       export interface TransferCallTool {
-        name: 'transfer_call';
+        name: string;
 
         number: string;
 
-        type: 'pre_defined';
+        type: 'transfer_call';
 
         description?: string | null;
+      }
+
+      export interface FormatDateTimeTool {
+        name: string;
+
+        type: 'parse_relative_date_time';
+
+        description?: string | null;
+
+        timezone?: string | null;
+      }
+
+      export interface CheckAvailabilityCalTool {
+        cal_api_key: string;
+
+        event_type_id: number;
+
+        name: string;
+
+        type: 'check_availability_cal';
+
+        description?: string | null;
+
+        timezone?: string | null;
+      }
+
+      export interface BookAppointmentCalTool {
+        cal_api_key: string;
+
+        event_type_id: number;
+
+        name: string;
+
+        type: 'book_appointment_cal';
+
+        description?: string | null;
+
+        timezone?: string | null;
       }
 
       export interface CustomTool {
         description: string;
 
+        execution_timing: 'immediate' | 'await_agent_turn';
+
         name: string;
+
+        speak_after_execution: boolean;
+
+        speak_during_execution: boolean;
 
         type: 'custom';
 
@@ -721,22 +1071,16 @@ export namespace RetellLlmListResponse {
 
         execution_message_description?: string | null;
 
-        execution_timing?: 'immediate' | 'await_agent_turn';
-
         parameters?: CustomTool.Parameters | null;
-
-        speak_after_execution?: boolean;
-
-        speak_during_execution?: boolean;
       }
 
       export namespace CustomTool {
         export interface Parameters {
-          properties?: Record<string, unknown>;
+          properties: Record<string, unknown>;
+
+          type: 'object';
 
           required?: Array<string> | null;
-
-          type?: 'object';
         }
       }
     }
@@ -760,6 +1104,9 @@ export interface RetellLlmCreateParams {
   general_tools?: Array<
     | RetellLlmCreateParams.EndCallTool
     | RetellLlmCreateParams.TransferCallTool
+    | RetellLlmCreateParams.FormatDateTimeTool
+    | RetellLlmCreateParams.CheckAvailabilityCalTool
+    | RetellLlmCreateParams.BookAppointmentCalTool
     | RetellLlmCreateParams.CustomTool
   >;
 
@@ -776,27 +1123,71 @@ export interface RetellLlmCreateParams {
 
 export namespace RetellLlmCreateParams {
   export interface EndCallTool {
-    name: 'end_call';
+    name: string;
 
-    type: 'pre_defined';
+    type: 'end_call';
 
     description?: string | null;
   }
 
   export interface TransferCallTool {
-    name: 'transfer_call';
+    name: string;
 
     number: string;
 
-    type: 'pre_defined';
+    type: 'transfer_call';
 
     description?: string | null;
+  }
+
+  export interface FormatDateTimeTool {
+    name: string;
+
+    type: 'parse_relative_date_time';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface CheckAvailabilityCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'check_availability_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface BookAppointmentCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'book_appointment_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
   }
 
   export interface CustomTool {
     description: string;
 
+    execution_timing: 'immediate' | 'await_agent_turn';
+
     name: string;
+
+    speak_after_execution: boolean;
+
+    speak_during_execution: boolean;
 
     type: 'custom';
 
@@ -804,22 +1195,16 @@ export namespace RetellLlmCreateParams {
 
     execution_message_description?: string | null;
 
-    execution_timing?: 'immediate' | 'await_agent_turn';
-
     parameters?: CustomTool.Parameters | null;
-
-    speak_after_execution?: boolean;
-
-    speak_during_execution?: boolean;
   }
 
   export namespace CustomTool {
     export interface Parameters {
-      properties?: Record<string, unknown>;
+      properties: Record<string, unknown>;
+
+      type: 'object';
 
       required?: Array<string> | null;
-
-      type?: 'object';
     }
   }
 
@@ -830,7 +1215,14 @@ export namespace RetellLlmCreateParams {
 
     edges?: Array<State.Edge> | null;
 
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.FormatDateTimeTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    > | null;
   }
 
   export namespace State {
@@ -846,36 +1238,80 @@ export namespace RetellLlmCreateParams {
 
     export namespace Edge {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -883,22 +1319,16 @@ export namespace RetellLlmCreateParams {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
   }
@@ -921,6 +1351,9 @@ export interface RetellLlmUpdateParams {
   general_tools?: Array<
     | RetellLlmUpdateParams.EndCallTool
     | RetellLlmUpdateParams.TransferCallTool
+    | RetellLlmUpdateParams.FormatDateTimeTool
+    | RetellLlmUpdateParams.CheckAvailabilityCalTool
+    | RetellLlmUpdateParams.BookAppointmentCalTool
     | RetellLlmUpdateParams.CustomTool
   >;
 
@@ -937,27 +1370,71 @@ export interface RetellLlmUpdateParams {
 
 export namespace RetellLlmUpdateParams {
   export interface EndCallTool {
-    name: 'end_call';
+    name: string;
 
-    type: 'pre_defined';
+    type: 'end_call';
 
     description?: string | null;
   }
 
   export interface TransferCallTool {
-    name: 'transfer_call';
+    name: string;
 
     number: string;
 
-    type: 'pre_defined';
+    type: 'transfer_call';
 
     description?: string | null;
+  }
+
+  export interface FormatDateTimeTool {
+    name: string;
+
+    type: 'parse_relative_date_time';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface CheckAvailabilityCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'check_availability_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
+  }
+
+  export interface BookAppointmentCalTool {
+    cal_api_key: string;
+
+    event_type_id: number;
+
+    name: string;
+
+    type: 'book_appointment_cal';
+
+    description?: string | null;
+
+    timezone?: string | null;
   }
 
   export interface CustomTool {
     description: string;
 
+    execution_timing: 'immediate' | 'await_agent_turn';
+
     name: string;
+
+    speak_after_execution: boolean;
+
+    speak_during_execution: boolean;
 
     type: 'custom';
 
@@ -965,22 +1442,16 @@ export namespace RetellLlmUpdateParams {
 
     execution_message_description?: string | null;
 
-    execution_timing?: 'immediate' | 'await_agent_turn';
-
     parameters?: CustomTool.Parameters | null;
-
-    speak_after_execution?: boolean;
-
-    speak_during_execution?: boolean;
   }
 
   export namespace CustomTool {
     export interface Parameters {
-      properties?: Record<string, unknown>;
+      properties: Record<string, unknown>;
+
+      type: 'object';
 
       required?: Array<string> | null;
-
-      type?: 'object';
     }
   }
 
@@ -991,7 +1462,14 @@ export namespace RetellLlmUpdateParams {
 
     edges?: Array<State.Edge> | null;
 
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CustomTool> | null;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.FormatDateTimeTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    > | null;
   }
 
   export namespace State {
@@ -1007,36 +1485,80 @@ export namespace RetellLlmUpdateParams {
 
     export namespace Edge {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
 
     export interface EndCallTool {
-      name: 'end_call';
+      name: string;
 
-      type: 'pre_defined';
+      type: 'end_call';
 
       description?: string | null;
     }
 
     export interface TransferCallTool {
-      name: 'transfer_call';
+      name: string;
 
       number: string;
 
-      type: 'pre_defined';
+      type: 'transfer_call';
 
       description?: string | null;
+    }
+
+    export interface FormatDateTimeTool {
+      name: string;
+
+      type: 'parse_relative_date_time';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface CheckAvailabilityCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'check_availability_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
+    }
+
+    export interface BookAppointmentCalTool {
+      cal_api_key: string;
+
+      event_type_id: number;
+
+      name: string;
+
+      type: 'book_appointment_cal';
+
+      description?: string | null;
+
+      timezone?: string | null;
     }
 
     export interface CustomTool {
       description: string;
 
+      execution_timing: 'immediate' | 'await_agent_turn';
+
       name: string;
+
+      speak_after_execution: boolean;
+
+      speak_during_execution: boolean;
 
       type: 'custom';
 
@@ -1044,22 +1566,16 @@ export namespace RetellLlmUpdateParams {
 
       execution_message_description?: string | null;
 
-      execution_timing?: 'immediate' | 'await_agent_turn';
-
       parameters?: CustomTool.Parameters | null;
-
-      speak_after_execution?: boolean;
-
-      speak_during_execution?: boolean;
     }
 
     export namespace CustomTool {
       export interface Parameters {
-        properties?: Record<string, unknown>;
+        properties: Record<string, unknown>;
+
+        type: 'object';
 
         required?: Array<string> | null;
-
-        type?: 'object';
       }
     }
   }
