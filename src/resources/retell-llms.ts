@@ -179,7 +179,7 @@ export namespace RetellLlmCreateResponse {
 
       type: 'object';
 
-      required?: Array<string> | null;
+      required?: Array<string>;
     }
   }
 
@@ -217,7 +217,7 @@ export namespace RetellLlmCreateResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -303,7 +303,7 @@ export namespace RetellLlmCreateResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
   }
@@ -437,7 +437,7 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'object';
 
-      required?: Array<string> | null;
+      required?: Array<string>;
     }
   }
 
@@ -475,7 +475,7 @@ export namespace RetellLlmRetrieveResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -561,7 +561,7 @@ export namespace RetellLlmRetrieveResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
   }
@@ -695,7 +695,7 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'object';
 
-      required?: Array<string> | null;
+      required?: Array<string>;
     }
   }
 
@@ -733,7 +733,7 @@ export namespace RetellLlmUpdateResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -819,7 +819,7 @@ export namespace RetellLlmUpdateResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
   }
@@ -956,7 +956,7 @@ export namespace RetellLlmListResponse {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -994,7 +994,7 @@ export namespace RetellLlmListResponse {
 
           type: 'object';
 
-          required?: Array<string> | null;
+          required?: Array<string>;
         }
       }
 
@@ -1080,7 +1080,7 @@ export namespace RetellLlmListResponse {
 
           type: 'object';
 
-          required?: Array<string> | null;
+          required?: Array<string>;
         }
       }
     }
@@ -1204,7 +1204,7 @@ export namespace RetellLlmCreateParams {
 
       type: 'object';
 
-      required?: Array<string> | null;
+      required?: Array<string>;
     }
   }
 
@@ -1242,7 +1242,7 @@ export namespace RetellLlmCreateParams {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -1328,7 +1328,7 @@ export namespace RetellLlmCreateParams {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
   }
@@ -1451,7 +1451,7 @@ export namespace RetellLlmUpdateParams {
 
       type: 'object';
 
-      required?: Array<string> | null;
+      required?: Array<string>;
     }
   }
 
@@ -1489,7 +1489,7 @@ export namespace RetellLlmUpdateParams {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
 
@@ -1575,7 +1575,7 @@ export namespace RetellLlmUpdateParams {
 
         type: 'object';
 
-        required?: Array<string> | null;
+        required?: Array<string>;
       }
     }
   }
