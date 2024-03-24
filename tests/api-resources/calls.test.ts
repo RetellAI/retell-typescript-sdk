@@ -90,7 +90,7 @@ describe('resource calls', () => {
       end_call_after_silence_ms: 600000,
       from_number: 'string',
       metadata: {},
-      retell_llm_dynamic_variable: { type: {}, additionalProperties: {}, nullable: {} },
+      retell_llm_dynamic_variable: { foo: {} },
       to_number: 'string',
     });
   });
