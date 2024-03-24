@@ -484,6 +484,8 @@ export namespace CallRegisterParams {
   export interface RetellLlmDynamicVariable {
     additionalProperties?: unknown;
 
+    nullable?: unknown;
+
     type?: unknown;
   }
 }
