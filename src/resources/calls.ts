@@ -464,12 +464,28 @@ export interface CallRegisterParams {
   metadata?: unknown;
 
   /**
+   * Add optional dynamic variables that injects into your Retell LLM prompt.
+   */
+  retell_llm_dynamic_variable?: CallRegisterParams.RetellLlmDynamicVariable;
+
+  /**
    * The callee number. This field is storage purpose only, set this if you want the
    * call object to contain it so that it's easier to reference it. Not used for
    * processing, when we connect to your LLM websocket server, you can then get it
    * from the call object.
    */
   to_number?: string;
+}
+
+export namespace CallRegisterParams {
+  /**
+   * Add optional dynamic variables that injects into your Retell LLM prompt.
+   */
+  export interface RetellLlmDynamicVariable {
+    additionalProperties?: unknown;
+
+    type?: unknown;
+  }
 }
 
 export namespace Calls {
