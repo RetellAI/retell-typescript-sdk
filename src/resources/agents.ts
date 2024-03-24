@@ -142,6 +142,12 @@ export interface AgentCreateResponse {
   last_modification_timestamp?: number;
 
   /**
+   * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+   * using custom LLM, specific a llm_websocket_url.
+   */
+  llm_type?: 'retell-llm' | 'custom-llm';
+
+  /**
    * The URL we will establish LLM websocket for getting response, usually your
    * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
    * request format (sent from us) and response format (send to us).
@@ -161,6 +167,11 @@ export interface AgentCreateResponse {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Get your retell_llm_id from create-retell-llm API.
+   */
+  retell_llm_id?: string;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -286,6 +297,12 @@ export interface AgentRetrieveResponse {
   last_modification_timestamp?: number;
 
   /**
+   * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+   * using custom LLM, specific a llm_websocket_url.
+   */
+  llm_type?: 'retell-llm' | 'custom-llm';
+
+  /**
    * The URL we will establish LLM websocket for getting response, usually your
    * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
    * request format (sent from us) and response format (send to us).
@@ -305,6 +322,11 @@ export interface AgentRetrieveResponse {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Get your retell_llm_id from create-retell-llm API.
+   */
+  retell_llm_id?: string;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -430,6 +452,12 @@ export interface AgentUpdateResponse {
   last_modification_timestamp?: number;
 
   /**
+   * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+   * using custom LLM, specific a llm_websocket_url.
+   */
+  llm_type?: 'retell-llm' | 'custom-llm';
+
+  /**
    * The URL we will establish LLM websocket for getting response, usually your
    * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
    * request format (sent from us) and response format (send to us).
@@ -449,6 +477,11 @@ export interface AgentUpdateResponse {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Get your retell_llm_id from create-retell-llm API.
+   */
+  retell_llm_id?: string;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -577,6 +610,12 @@ export namespace AgentListResponse {
     last_modification_timestamp?: number;
 
     /**
+     * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+     * using custom LLM, specific a llm_websocket_url.
+     */
+    llm_type?: 'retell-llm' | 'custom-llm';
+
+    /**
      * The URL we will establish LLM websocket for getting response, usually your
      * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
      * request format (sent from us) and response format (send to us).
@@ -596,6 +635,11 @@ export namespace AgentListResponse {
      * apply.
      */
     responsiveness?: number;
+
+    /**
+     * Get your retell_llm_id from create-retell-llm API.
+     */
+    retell_llm_id?: string;
 
     /**
      * Unique voice id used for the agent. Find list of available voices and their
@@ -630,11 +674,10 @@ export namespace AgentListResponse {
 
 export interface AgentCreateParams {
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
+   * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+   * using custom LLM, specific a llm_websocket_url.
    */
-  llm_websocket_url: string;
+  llm_type: 'retell-llm' | 'custom-llm';
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -724,6 +767,13 @@ export interface AgentCreateParams {
     | 'pt-BR';
 
   /**
+   * The URL we will establish LLM websocket for getting response, usually your
+   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
+   * request format (sent from us) and response format (send to us).
+   */
+  llm_websocket_url?: string;
+
+  /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
@@ -736,6 +786,11 @@ export interface AgentCreateParams {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Get your retell_llm_id from create-retell-llm API.
+   */
+  retell_llm_id?: string;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -844,6 +899,12 @@ export interface AgentUpdateParams {
     | 'pt-BR';
 
   /**
+   * If using retell-llm, add retell_llm_id by calling create-retell-llm API. If
+   * using custom LLM, specific a llm_websocket_url.
+   */
+  llm_type?: 'retell-llm' | 'custom-llm';
+
+  /**
    * The URL we will establish LLM websocket for getting response, usually your
    * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
    * request format (sent from us) and response format (send to us).
@@ -863,6 +924,11 @@ export interface AgentUpdateParams {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Get your retell_llm_id from create-retell-llm API.
+   */
+  retell_llm_id?: string;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their

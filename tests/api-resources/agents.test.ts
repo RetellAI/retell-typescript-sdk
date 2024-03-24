@@ -10,10 +10,7 @@ const retellAI = new RetellAI({
 
 describe('resource agents', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellAI.agents.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
-      voice_id: '11labs-Adrian',
-    });
+    const responsePromise = retellAI.agents.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,7 +22,7 @@ describe('resource agents', () => {
 
   test('create: required and optional params', async () => {
     const response = await retellAI.agents.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
+      llm_type: 'retell-llm',
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
       ambient_sound: 'coffee-shop',
@@ -33,8 +30,10 @@ describe('resource agents', () => {
       enable_backchannel: true,
       format_text: true,
       language: 'en-US',
+      llm_websocket_url: 'wss://your-websocket-endpoint',
       optOutSensitiveDataStorage: true,
       responsiveness: 1,
+      retell_llm_id: 'string',
       voice_speed: 1,
       voice_temperature: 1,
       webhook_url: 'https://webhook-url-here',
