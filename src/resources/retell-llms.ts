@@ -102,7 +102,7 @@ export namespace RetellLlmCreateResponse {
 
     type: 'end_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface TransferCallTool {
@@ -112,7 +112,7 @@ export namespace RetellLlmCreateResponse {
 
     type: 'transfer_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface FormatDateTimeTool {
@@ -120,9 +120,9 @@ export namespace RetellLlmCreateResponse {
 
     type: 'parse_relative_date_time';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CheckAvailabilityCalTool {
@@ -134,9 +134,9 @@ export namespace RetellLlmCreateResponse {
 
     type: 'check_availability_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface BookAppointmentCalTool {
@@ -148,9 +148,9 @@ export namespace RetellLlmCreateResponse {
 
     type: 'book_appointment_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CustomTool {
@@ -168,9 +168,9 @@ export namespace RetellLlmCreateResponse {
 
     url: string;
 
-    execution_message_description?: string | null;
+    execution_message_description?: string;
 
-    parameters?: CustomTool.Parameters | null;
+    parameters?: CustomTool.Parameters;
   }
 
   export namespace CustomTool {
@@ -188,7 +188,7 @@ export namespace RetellLlmCreateResponse {
 
     state_prompt: string;
 
-    edges?: Array<State.Edge> | null;
+    edges?: Array<State.Edge>;
 
     tools?: Array<
       | State.EndCallTool
@@ -197,7 +197,7 @@ export namespace RetellLlmCreateResponse {
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
       | State.CustomTool
-    > | null;
+    >;
   }
 
   export namespace State {
@@ -206,7 +206,7 @@ export namespace RetellLlmCreateResponse {
 
       destination_state_name: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: Edge.Parameters;
 
       speak_during_transition?: boolean;
     }
@@ -226,7 +226,7 @@ export namespace RetellLlmCreateResponse {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -236,7 +236,7 @@ export namespace RetellLlmCreateResponse {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -244,9 +244,9 @@ export namespace RetellLlmCreateResponse {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -258,9 +258,9 @@ export namespace RetellLlmCreateResponse {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -272,9 +272,9 @@ export namespace RetellLlmCreateResponse {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -292,9 +292,9 @@ export namespace RetellLlmCreateResponse {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
@@ -360,7 +360,7 @@ export namespace RetellLlmRetrieveResponse {
 
     type: 'end_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface TransferCallTool {
@@ -370,7 +370,7 @@ export namespace RetellLlmRetrieveResponse {
 
     type: 'transfer_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface FormatDateTimeTool {
@@ -378,9 +378,9 @@ export namespace RetellLlmRetrieveResponse {
 
     type: 'parse_relative_date_time';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CheckAvailabilityCalTool {
@@ -392,9 +392,9 @@ export namespace RetellLlmRetrieveResponse {
 
     type: 'check_availability_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface BookAppointmentCalTool {
@@ -406,9 +406,9 @@ export namespace RetellLlmRetrieveResponse {
 
     type: 'book_appointment_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CustomTool {
@@ -426,9 +426,9 @@ export namespace RetellLlmRetrieveResponse {
 
     url: string;
 
-    execution_message_description?: string | null;
+    execution_message_description?: string;
 
-    parameters?: CustomTool.Parameters | null;
+    parameters?: CustomTool.Parameters;
   }
 
   export namespace CustomTool {
@@ -446,7 +446,7 @@ export namespace RetellLlmRetrieveResponse {
 
     state_prompt: string;
 
-    edges?: Array<State.Edge> | null;
+    edges?: Array<State.Edge>;
 
     tools?: Array<
       | State.EndCallTool
@@ -455,7 +455,7 @@ export namespace RetellLlmRetrieveResponse {
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
       | State.CustomTool
-    > | null;
+    >;
   }
 
   export namespace State {
@@ -464,7 +464,7 @@ export namespace RetellLlmRetrieveResponse {
 
       destination_state_name: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: Edge.Parameters;
 
       speak_during_transition?: boolean;
     }
@@ -484,7 +484,7 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -494,7 +494,7 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -502,9 +502,9 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -516,9 +516,9 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -530,9 +530,9 @@ export namespace RetellLlmRetrieveResponse {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -550,9 +550,9 @@ export namespace RetellLlmRetrieveResponse {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
@@ -618,7 +618,7 @@ export namespace RetellLlmUpdateResponse {
 
     type: 'end_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface TransferCallTool {
@@ -628,7 +628,7 @@ export namespace RetellLlmUpdateResponse {
 
     type: 'transfer_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface FormatDateTimeTool {
@@ -636,9 +636,9 @@ export namespace RetellLlmUpdateResponse {
 
     type: 'parse_relative_date_time';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CheckAvailabilityCalTool {
@@ -650,9 +650,9 @@ export namespace RetellLlmUpdateResponse {
 
     type: 'check_availability_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface BookAppointmentCalTool {
@@ -664,9 +664,9 @@ export namespace RetellLlmUpdateResponse {
 
     type: 'book_appointment_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CustomTool {
@@ -684,9 +684,9 @@ export namespace RetellLlmUpdateResponse {
 
     url: string;
 
-    execution_message_description?: string | null;
+    execution_message_description?: string;
 
-    parameters?: CustomTool.Parameters | null;
+    parameters?: CustomTool.Parameters;
   }
 
   export namespace CustomTool {
@@ -704,7 +704,7 @@ export namespace RetellLlmUpdateResponse {
 
     state_prompt: string;
 
-    edges?: Array<State.Edge> | null;
+    edges?: Array<State.Edge>;
 
     tools?: Array<
       | State.EndCallTool
@@ -713,7 +713,7 @@ export namespace RetellLlmUpdateResponse {
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
       | State.CustomTool
-    > | null;
+    >;
   }
 
   export namespace State {
@@ -722,7 +722,7 @@ export namespace RetellLlmUpdateResponse {
 
       destination_state_name: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: Edge.Parameters;
 
       speak_during_transition?: boolean;
     }
@@ -742,7 +742,7 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -752,7 +752,7 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -760,9 +760,9 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -774,9 +774,9 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -788,9 +788,9 @@ export namespace RetellLlmUpdateResponse {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -808,9 +808,9 @@ export namespace RetellLlmUpdateResponse {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
@@ -879,7 +879,7 @@ export namespace RetellLlmListResponse {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -889,7 +889,7 @@ export namespace RetellLlmListResponse {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -897,9 +897,9 @@ export namespace RetellLlmListResponse {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -911,9 +911,9 @@ export namespace RetellLlmListResponse {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -925,9 +925,9 @@ export namespace RetellLlmListResponse {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -945,9 +945,9 @@ export namespace RetellLlmListResponse {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
@@ -965,7 +965,7 @@ export namespace RetellLlmListResponse {
 
       state_prompt: string;
 
-      edges?: Array<State.Edge> | null;
+      edges?: Array<State.Edge>;
 
       tools?: Array<
         | State.EndCallTool
@@ -974,7 +974,7 @@ export namespace RetellLlmListResponse {
         | State.CheckAvailabilityCalTool
         | State.BookAppointmentCalTool
         | State.CustomTool
-      > | null;
+      >;
     }
 
     export namespace State {
@@ -983,7 +983,7 @@ export namespace RetellLlmListResponse {
 
         destination_state_name: string;
 
-        parameters?: Edge.Parameters | null;
+        parameters?: Edge.Parameters;
 
         speak_during_transition?: boolean;
       }
@@ -1003,7 +1003,7 @@ export namespace RetellLlmListResponse {
 
         type: 'end_call';
 
-        description?: string | null;
+        description?: string;
       }
 
       export interface TransferCallTool {
@@ -1013,7 +1013,7 @@ export namespace RetellLlmListResponse {
 
         type: 'transfer_call';
 
-        description?: string | null;
+        description?: string;
       }
 
       export interface FormatDateTimeTool {
@@ -1021,9 +1021,9 @@ export namespace RetellLlmListResponse {
 
         type: 'parse_relative_date_time';
 
-        description?: string | null;
+        description?: string;
 
-        timezone?: string | null;
+        timezone?: string;
       }
 
       export interface CheckAvailabilityCalTool {
@@ -1035,9 +1035,9 @@ export namespace RetellLlmListResponse {
 
         type: 'check_availability_cal';
 
-        description?: string | null;
+        description?: string;
 
-        timezone?: string | null;
+        timezone?: string;
       }
 
       export interface BookAppointmentCalTool {
@@ -1049,9 +1049,9 @@ export namespace RetellLlmListResponse {
 
         type: 'book_appointment_cal';
 
-        description?: string | null;
+        description?: string;
 
-        timezone?: string | null;
+        timezone?: string;
       }
 
       export interface CustomTool {
@@ -1069,9 +1069,9 @@ export namespace RetellLlmListResponse {
 
         url: string;
 
-        execution_message_description?: string | null;
+        execution_message_description?: string;
 
-        parameters?: CustomTool.Parameters | null;
+        parameters?: CustomTool.Parameters;
       }
 
       export namespace CustomTool {
@@ -1127,7 +1127,7 @@ export namespace RetellLlmCreateParams {
 
     type: 'end_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface TransferCallTool {
@@ -1137,7 +1137,7 @@ export namespace RetellLlmCreateParams {
 
     type: 'transfer_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface FormatDateTimeTool {
@@ -1145,9 +1145,9 @@ export namespace RetellLlmCreateParams {
 
     type: 'parse_relative_date_time';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CheckAvailabilityCalTool {
@@ -1159,9 +1159,9 @@ export namespace RetellLlmCreateParams {
 
     type: 'check_availability_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface BookAppointmentCalTool {
@@ -1173,9 +1173,9 @@ export namespace RetellLlmCreateParams {
 
     type: 'book_appointment_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CustomTool {
@@ -1193,9 +1193,9 @@ export namespace RetellLlmCreateParams {
 
     url: string;
 
-    execution_message_description?: string | null;
+    execution_message_description?: string;
 
-    parameters?: CustomTool.Parameters | null;
+    parameters?: CustomTool.Parameters;
   }
 
   export namespace CustomTool {
@@ -1213,7 +1213,7 @@ export namespace RetellLlmCreateParams {
 
     state_prompt: string;
 
-    edges?: Array<State.Edge> | null;
+    edges?: Array<State.Edge>;
 
     tools?: Array<
       | State.EndCallTool
@@ -1222,7 +1222,7 @@ export namespace RetellLlmCreateParams {
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
       | State.CustomTool
-    > | null;
+    >;
   }
 
   export namespace State {
@@ -1231,7 +1231,7 @@ export namespace RetellLlmCreateParams {
 
       destination_state_name: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: Edge.Parameters;
 
       speak_during_transition?: boolean;
     }
@@ -1251,7 +1251,7 @@ export namespace RetellLlmCreateParams {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -1261,7 +1261,7 @@ export namespace RetellLlmCreateParams {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -1269,9 +1269,9 @@ export namespace RetellLlmCreateParams {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -1283,9 +1283,9 @@ export namespace RetellLlmCreateParams {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -1297,9 +1297,9 @@ export namespace RetellLlmCreateParams {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -1317,9 +1317,9 @@ export namespace RetellLlmCreateParams {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
@@ -1374,7 +1374,7 @@ export namespace RetellLlmUpdateParams {
 
     type: 'end_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface TransferCallTool {
@@ -1384,7 +1384,7 @@ export namespace RetellLlmUpdateParams {
 
     type: 'transfer_call';
 
-    description?: string | null;
+    description?: string;
   }
 
   export interface FormatDateTimeTool {
@@ -1392,9 +1392,9 @@ export namespace RetellLlmUpdateParams {
 
     type: 'parse_relative_date_time';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CheckAvailabilityCalTool {
@@ -1406,9 +1406,9 @@ export namespace RetellLlmUpdateParams {
 
     type: 'check_availability_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface BookAppointmentCalTool {
@@ -1420,9 +1420,9 @@ export namespace RetellLlmUpdateParams {
 
     type: 'book_appointment_cal';
 
-    description?: string | null;
+    description?: string;
 
-    timezone?: string | null;
+    timezone?: string;
   }
 
   export interface CustomTool {
@@ -1440,9 +1440,9 @@ export namespace RetellLlmUpdateParams {
 
     url: string;
 
-    execution_message_description?: string | null;
+    execution_message_description?: string;
 
-    parameters?: CustomTool.Parameters | null;
+    parameters?: CustomTool.Parameters;
   }
 
   export namespace CustomTool {
@@ -1460,7 +1460,7 @@ export namespace RetellLlmUpdateParams {
 
     state_prompt: string;
 
-    edges?: Array<State.Edge> | null;
+    edges?: Array<State.Edge>;
 
     tools?: Array<
       | State.EndCallTool
@@ -1469,7 +1469,7 @@ export namespace RetellLlmUpdateParams {
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
       | State.CustomTool
-    > | null;
+    >;
   }
 
   export namespace State {
@@ -1478,7 +1478,7 @@ export namespace RetellLlmUpdateParams {
 
       destination_state_name: string;
 
-      parameters?: Edge.Parameters | null;
+      parameters?: Edge.Parameters;
 
       speak_during_transition?: boolean;
     }
@@ -1498,7 +1498,7 @@ export namespace RetellLlmUpdateParams {
 
       type: 'end_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface TransferCallTool {
@@ -1508,7 +1508,7 @@ export namespace RetellLlmUpdateParams {
 
       type: 'transfer_call';
 
-      description?: string | null;
+      description?: string;
     }
 
     export interface FormatDateTimeTool {
@@ -1516,9 +1516,9 @@ export namespace RetellLlmUpdateParams {
 
       type: 'parse_relative_date_time';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CheckAvailabilityCalTool {
@@ -1530,9 +1530,9 @@ export namespace RetellLlmUpdateParams {
 
       type: 'check_availability_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface BookAppointmentCalTool {
@@ -1544,9 +1544,9 @@ export namespace RetellLlmUpdateParams {
 
       type: 'book_appointment_cal';
 
-      description?: string | null;
+      description?: string;
 
-      timezone?: string | null;
+      timezone?: string;
     }
 
     export interface CustomTool {
@@ -1564,9 +1564,9 @@ export namespace RetellLlmUpdateParams {
 
       url: string;
 
-      execution_message_description?: string | null;
+      execution_message_description?: string;
 
-      parameters?: CustomTool.Parameters | null;
+      parameters?: CustomTool.Parameters;
     }
 
     export namespace CustomTool {
