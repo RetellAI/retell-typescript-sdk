@@ -119,7 +119,7 @@ export class RetellSdk extends Core.APIClient {
 
   call: API.Call = new API.Call(this);
   phoneNumber: API.PhoneNumberResource = new API.PhoneNumberResource(this);
-  agent: API.Agent = new API.Agent(this);
+  agent: API.AgentResource = new API.AgentResource(this);
   llm: API.Llm = new API.Llm(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -199,10 +199,8 @@ export namespace RetellSdk {
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
 
+  export import AgentResource = API.AgentResource;
   export import Agent = API.Agent;
-  export import AgentCreateResponse = API.AgentCreateResponse;
-  export import AgentRetrieveResponse = API.AgentRetrieveResponse;
-  export import AgentUpdateResponse = API.AgentUpdateResponse;
   export import AgentListResponse = API.AgentListResponse;
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;

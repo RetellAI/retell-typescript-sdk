@@ -25,12 +25,9 @@ import RetellSdk from 'retell-sdk';
 const retellSdk = new RetellSdk();
 
 async function main() {
-  const agentCreateResponse = await retellSdk.agent.create({
-    llm_type: 'retell-llm',
-    voice_id: '11labs-Adrian',
-  });
+  const agent = await retellSdk.agent.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' });
 
-  console.log(agentCreateResponse.agent_id);
+  console.log(agent.voice_id);
 }
 
 main();
@@ -48,7 +45,7 @@ const retellSdk = new RetellSdk();
 
 async function main() {
   const params: RetellSdk.AgentCreateParams = { llm_type: 'retell-llm', voice_id: '11labs-Adrian' };
-  const agentCreateResponse: RetellSdk.AgentCreateResponse = await retellSdk.agent.create(params);
+  const agent: RetellSdk.Agent = await retellSdk.agent.create(params);
 }
 
 main();
@@ -65,7 +62,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const agentCreateResponse = await retellSdk.agent
+  const agent = await retellSdk.agent
     .create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' })
     .catch(async (err) => {
       if (err instanceof RetellSdk.APIError) {
@@ -154,11 +151,11 @@ const response = await retellSdk.agent
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentCreateResponse, response: raw } = await retellSdk.agent
+const { data: agent, response: raw } = await retellSdk.agent
   .create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(agentCreateResponse.agent_id);
+console.log(agent.voice_id);
 ```
 
 ### Making custom/undocumented requests

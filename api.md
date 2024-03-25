@@ -33,16 +33,14 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/agent.ts">AgentCreateResponse</a></code>
-- <code><a href="./src/resources/agent.ts">AgentRetrieveResponse</a></code>
-- <code><a href="./src/resources/agent.ts">AgentUpdateResponse</a></code>
+- <code><a href="./src/resources/agent.ts">Agent</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListResponse</a></code>
 
 Methods:
 
-- <code title="post /create-agent">client.agent.<a href="./src/resources/agent.ts">create</a>({ ...params }) -> AgentCreateResponse</code>
-- <code title="get /get-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">retrieve</a>(agentId) -> AgentRetrieveResponse</code>
-- <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentId, { ...params }) -> AgentUpdateResponse</code>
+- <code title="post /create-agent">client.agent.<a href="./src/resources/agent.ts">create</a>({ ...params }) -> Agent</code>
+- <code title="get /get-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">retrieve</a>(agentId) -> Agent</code>
+- <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentId, { ...params }) -> Agent</code>
 - <code title="get /list-agents">client.agent.<a href="./src/resources/agent.ts">list</a>() -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentId) -> void</code>
 

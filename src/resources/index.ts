@@ -1,14 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export {
-  AgentCreateResponse,
-  AgentRetrieveResponse,
-  AgentUpdateResponse,
-  AgentListResponse,
-  AgentCreateParams,
-  AgentUpdateParams,
-  Agent,
-} from './agent';
+export { Agent, AgentListResponse, AgentCreateParams, AgentUpdateParams, AgentResource } from './agent';
 export {
   CallDetail,
   CallCreateResponse,
