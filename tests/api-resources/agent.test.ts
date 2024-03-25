@@ -8,9 +8,9 @@ const retellSdk = new RetellSdk({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource phoneNumbers', () => {
+describe('resource agent', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellSdk.phoneNumbers.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
+    const responsePromise = retellSdk.agent.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,14 +21,27 @@ describe('resource phoneNumbers', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await retellSdk.phoneNumbers.create({
-      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      area_code: 'string',
+    const response = await retellSdk.agent.create({
+      llm_type: 'retell-llm',
+      voice_id: '11labs-Adrian',
+      agent_name: 'Jarvis',
+      ambient_sound: 'coffee-shop',
+      boosted_keywords: ['retell', 'kroger'],
+      enable_backchannel: true,
+      format_text: true,
+      language: 'en-US',
+      llm_websocket_url: 'wss://your-websocket-endpoint',
+      optOutSensitiveDataStorage: true,
+      responsiveness: 1,
+      retell_llm_id: 'string',
+      voice_speed: 1,
+      voice_temperature: 1,
+      webhook_url: 'https://webhook-url-here',
     });
   });
 
   test('retrieve', async () => {
-    const responsePromise = retellSdk.phoneNumbers.retrieve('string');
+    const responsePromise = retellSdk.agent.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -41,12 +54,12 @@ describe('resource phoneNumbers', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.phoneNumbers.retrieve('string', { path: '/_stainless_unknown_path' }),
+      retellSdk.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
-  test('update: only required params', async () => {
-    const responsePromise = retellSdk.phoneNumbers.update('string', { agent_id: 'string' });
+  test('update', async () => {
+    const responsePromise = retellSdk.agent.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,12 +69,8 @@ describe('resource phoneNumbers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('update: required and optional params', async () => {
-    const response = await retellSdk.phoneNumbers.update('string', { agent_id: 'string' });
-  });
-
   test('list', async () => {
-    const responsePromise = retellSdk.phoneNumbers.list();
+    const responsePromise = retellSdk.agent.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -73,13 +82,13 @@ describe('resource phoneNumbers', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.phoneNumbers.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(retellSdk.agent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       RetellSdk.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellSdk.phoneNumbers.delete('string');
+    const responsePromise = retellSdk.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,7 +101,7 @@ describe('resource phoneNumbers', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.phoneNumbers.delete('string', { path: '/_stainless_unknown_path' }),
+      retellSdk.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 });

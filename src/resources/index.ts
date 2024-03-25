@@ -7,8 +7,8 @@ export {
   AgentListResponse,
   AgentCreateParams,
   AgentUpdateParams,
-  Agents,
-} from './agents';
+  Agent,
+} from './agent';
 export {
   CallCreateResponse,
   CallRetrieveResponse,
@@ -17,8 +17,8 @@ export {
   CallCreateParams,
   CallListParams,
   CallRegisterParams,
-  Calls,
-} from './calls';
+  Call,
+} from './call';
 export {
   LlmCreateResponse,
   LlmRetrieveResponse,
@@ -26,8 +26,8 @@ export {
   LlmListResponse,
   LlmCreateParams,
   LlmUpdateParams,
-  Llms,
-} from './llms';
+  Llm,
+} from './llm';
 export {
   PhoneNumberCreateResponse,
   PhoneNumberRetrieveResponse,
@@ -35,5 +35,5 @@ export {
   PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
-  PhoneNumbers,
-} from './phone-numbers';
+  PhoneNumber,
+} from './phone-number';

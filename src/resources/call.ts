@@ -3,9 +3,9 @@
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import { isRequestOptions } from 'retell-sdk/core';
-import * as CallsAPI from 'retell-sdk/resources/calls';
+import * as CallAPI from 'retell-sdk/resources/call';
 
-export class Calls extends APIResource {
+export class Call extends APIResource {
   /**
    * Create a new phone call
    */
@@ -616,12 +616,12 @@ export interface CallRegisterParams {
   to_number?: string;
 }
 
-export namespace Calls {
-  export import CallCreateResponse = CallsAPI.CallCreateResponse;
-  export import CallRetrieveResponse = CallsAPI.CallRetrieveResponse;
-  export import CallListResponse = CallsAPI.CallListResponse;
-  export import CallRegisterResponse = CallsAPI.CallRegisterResponse;
-  export import CallCreateParams = CallsAPI.CallCreateParams;
-  export import CallListParams = CallsAPI.CallListParams;
-  export import CallRegisterParams = CallsAPI.CallRegisterParams;
+export namespace Call {
+  export import CallCreateResponse = CallAPI.CallCreateResponse;
+  export import CallRetrieveResponse = CallAPI.CallRetrieveResponse;
+  export import CallListResponse = CallAPI.CallListResponse;
+  export import CallRegisterResponse = CallAPI.CallRegisterResponse;
+  export import CallCreateParams = CallAPI.CallCreateParams;
+  export import CallListParams = CallAPI.CallListParams;
+  export import CallRegisterParams = CallAPI.CallRegisterParams;
 }

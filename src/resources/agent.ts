@@ -2,9 +2,9 @@
 
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import * as AgentsAPI from 'retell-sdk/resources/agents';
+import * as AgentAPI from 'retell-sdk/resources/agent';
 
-export class Agents extends APIResource {
+export class Agent extends APIResource {
   /**
    * Create a new agent
    */
@@ -960,11 +960,11 @@ export interface AgentUpdateParams {
   webhook_url?: string;
 }
 
-export namespace Agents {
-  export import AgentCreateResponse = AgentsAPI.AgentCreateResponse;
-  export import AgentRetrieveResponse = AgentsAPI.AgentRetrieveResponse;
-  export import AgentUpdateResponse = AgentsAPI.AgentUpdateResponse;
-  export import AgentListResponse = AgentsAPI.AgentListResponse;
-  export import AgentCreateParams = AgentsAPI.AgentCreateParams;
-  export import AgentUpdateParams = AgentsAPI.AgentUpdateParams;
+export namespace Agent {
+  export import AgentCreateResponse = AgentAPI.AgentCreateResponse;
+  export import AgentRetrieveResponse = AgentAPI.AgentRetrieveResponse;
+  export import AgentUpdateResponse = AgentAPI.AgentUpdateResponse;
+  export import AgentListResponse = AgentAPI.AgentListResponse;
+  export import AgentCreateParams = AgentAPI.AgentCreateParams;
+  export import AgentUpdateParams = AgentAPI.AgentUpdateParams;
 }

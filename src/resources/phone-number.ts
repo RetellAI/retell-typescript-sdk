@@ -2,9 +2,9 @@
 
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import * as PhoneNumbersAPI from 'retell-sdk/resources/phone-numbers';
+import * as PhoneNumberAPI from 'retell-sdk/resources/phone-number';
 
-export class PhoneNumbers extends APIResource {
+export class PhoneNumber extends APIResource {
   /**
    * Buy a new phone number
    */
@@ -123,11 +123,11 @@ export interface PhoneNumberUpdateParams {
   agent_id: string;
 }
 
-export namespace PhoneNumbers {
-  export import PhoneNumberCreateResponse = PhoneNumbersAPI.PhoneNumberCreateResponse;
-  export import PhoneNumberRetrieveResponse = PhoneNumbersAPI.PhoneNumberRetrieveResponse;
-  export import PhoneNumberUpdateResponse = PhoneNumbersAPI.PhoneNumberUpdateResponse;
-  export import PhoneNumberListResponse = PhoneNumbersAPI.PhoneNumberListResponse;
-  export import PhoneNumberCreateParams = PhoneNumbersAPI.PhoneNumberCreateParams;
-  export import PhoneNumberUpdateParams = PhoneNumbersAPI.PhoneNumberUpdateParams;
+export namespace PhoneNumber {
+  export import PhoneNumberCreateResponse = PhoneNumberAPI.PhoneNumberCreateResponse;
+  export import PhoneNumberRetrieveResponse = PhoneNumberAPI.PhoneNumberRetrieveResponse;
+  export import PhoneNumberUpdateResponse = PhoneNumberAPI.PhoneNumberUpdateResponse;
+  export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
+  export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
+  export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;
 }

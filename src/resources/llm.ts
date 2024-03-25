@@ -2,9 +2,9 @@
 
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import * as LlmsAPI from 'retell-sdk/resources/llms';
+import * as LlmAPI from 'retell-sdk/resources/llm';
 
-export class Llms extends APIResource {
+export class Llm extends APIResource {
   /**
    * Create a new Retell LLM
    */
@@ -1554,11 +1554,11 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace Llms {
-  export import LlmCreateResponse = LlmsAPI.LlmCreateResponse;
-  export import LlmRetrieveResponse = LlmsAPI.LlmRetrieveResponse;
-  export import LlmUpdateResponse = LlmsAPI.LlmUpdateResponse;
-  export import LlmListResponse = LlmsAPI.LlmListResponse;
-  export import LlmCreateParams = LlmsAPI.LlmCreateParams;
-  export import LlmUpdateParams = LlmsAPI.LlmUpdateParams;
+export namespace Llm {
+  export import LlmCreateResponse = LlmAPI.LlmCreateResponse;
+  export import LlmRetrieveResponse = LlmAPI.LlmRetrieveResponse;
+  export import LlmUpdateResponse = LlmAPI.LlmUpdateResponse;
+  export import LlmListResponse = LlmAPI.LlmListResponse;
+  export import LlmCreateParams = LlmAPI.LlmCreateParams;
+  export import LlmUpdateParams = LlmAPI.LlmUpdateParams;
 }

@@ -25,7 +25,7 @@ import RetellSdk from 'retell-sdk';
 const retellSdk = new RetellSdk();
 
 async function main() {
-  const agentCreateResponse = await retellSdk.agents.create({
+  const agentCreateResponse = await retellSdk.agent.create({
     llm_type: 'retell-llm',
     voice_id: '11labs-Adrian',
   });
@@ -48,7 +48,7 @@ const retellSdk = new RetellSdk();
 
 async function main() {
   const params: RetellSdk.AgentCreateParams = { llm_type: 'retell-llm', voice_id: '11labs-Adrian' };
-  const agentCreateResponse: RetellSdk.AgentCreateResponse = await retellSdk.agents.create(params);
+  const agentCreateResponse: RetellSdk.AgentCreateResponse = await retellSdk.agent.create(params);
 }
 
 main();
@@ -65,7 +65,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const agentCreateResponse = await retellSdk.agents
+  const agentCreateResponse = await retellSdk.agent
     .create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' })
     .catch(async (err) => {
       if (err instanceof RetellSdk.APIError) {
@@ -110,7 +110,7 @@ const retellSdk = new RetellSdk({
 });
 
 // Or, configure per-request:
-await retellSdk.agents.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' }, {
+await retellSdk.agent.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' }, {
   maxRetries: 5,
 });
 ```
@@ -127,7 +127,7 @@ const retellSdk = new RetellSdk({
 });
 
 // Override per-request:
-await retellSdk.agents.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' }, {
+await retellSdk.agent.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -148,13 +148,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const retellSdk = new RetellSdk();
 
-const response = await retellSdk.agents
+const response = await retellSdk.agent
   .create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: agentCreateResponse, response: raw } = await retellSdk.agents
+const { data: agentCreateResponse, response: raw } = await retellSdk.agent
   .create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
@@ -262,7 +262,7 @@ const retellSdk = new RetellSdk({
 });
 
 // Override per-request:
-await retellSdk.agents.create(
+await retellSdk.agent.create(
   { llm_type: 'retell-llm', voice_id: '11labs-Adrian' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),

@@ -117,10 +117,10 @@ export class RetellSdk extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
-  calls: API.Calls = new API.Calls(this);
-  phoneNumbers: API.PhoneNumbers = new API.PhoneNumbers(this);
-  agents: API.Agents = new API.Agents(this);
-  llms: API.Llms = new API.Llms(this);
+  call: API.Call = new API.Call(this);
+  phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
+  agent: API.Agent = new API.Agent(this);
+  llm: API.Llm = new API.Llm(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -184,7 +184,7 @@ export namespace RetellSdk {
 
   export import RequestOptions = Core.RequestOptions;
 
-  export import Calls = API.Calls;
+  export import Call = API.Call;
   export import CallCreateResponse = API.CallCreateResponse;
   export import CallRetrieveResponse = API.CallRetrieveResponse;
   export import CallListResponse = API.CallListResponse;
@@ -193,7 +193,7 @@ export namespace RetellSdk {
   export import CallListParams = API.CallListParams;
   export import CallRegisterParams = API.CallRegisterParams;
 
-  export import PhoneNumbers = API.PhoneNumbers;
+  export import PhoneNumber = API.PhoneNumber;
   export import PhoneNumberCreateResponse = API.PhoneNumberCreateResponse;
   export import PhoneNumberRetrieveResponse = API.PhoneNumberRetrieveResponse;
   export import PhoneNumberUpdateResponse = API.PhoneNumberUpdateResponse;
@@ -201,7 +201,7 @@ export namespace RetellSdk {
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
 
-  export import Agents = API.Agents;
+  export import Agent = API.Agent;
   export import AgentCreateResponse = API.AgentCreateResponse;
   export import AgentRetrieveResponse = API.AgentRetrieveResponse;
   export import AgentUpdateResponse = API.AgentUpdateResponse;
@@ -209,7 +209,7 @@ export namespace RetellSdk {
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;
 
-  export import Llms = API.Llms;
+  export import Llm = API.Llm;
   export import LlmCreateResponse = API.LlmCreateResponse;
   export import LlmRetrieveResponse = API.LlmRetrieveResponse;
   export import LlmUpdateResponse = API.LlmUpdateResponse;
