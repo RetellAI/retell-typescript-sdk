@@ -10,7 +10,7 @@ const retellSdk = new RetellSdk({
 
 describe('resource calls', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellSdk.calls.create({ phone_number: {} });
+    const responsePromise = retellSdk.calls.create({ phone_number: { from: 'string', to: 'string' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

@@ -479,12 +479,12 @@ export namespace CallCreateParams {
     /**
      * From a number you own
      */
-    from?: string;
+    from: string;
 
     /**
      * To your customer number
      */
-    to?: string;
+    to: string;
   }
 }
 
