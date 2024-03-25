@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { toFile, type ResponseLike } from 'retell-sdk/uploads';
-import { File } from 'retell-sdk/_shims/index';
+import { toFile, type ResponseLike } from 'toddlzt/uploads';
+import { File } from 'toddlzt/_shims/index';
 
 class MyClass {
   name: string = 'foo';

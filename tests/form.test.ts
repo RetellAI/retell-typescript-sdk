@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from 'retell-sdk/core';
-import { Blob } from 'retell-sdk/_shims/index';
-import { toFile } from 'retell-sdk';
+import { multipartFormRequestOptions, createForm } from 'toddlzt/core';
+import { Blob } from 'toddlzt/_shims/index';
+import { toFile } from 'toddlzt';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

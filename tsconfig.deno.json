@@ -6,9 +6,9 @@
     "rootDir": "./deno",
     "lib": ["es2020", "DOM"],
     "paths": {
-      "retell-sdk/_shims/auto/*": ["deno/_shims/auto/*-deno"],
-      "retell-sdk/*": ["deno/*"],
-      "retell-sdk": ["deno/index.ts"],
+      "toddlzt/_shims/auto/*": ["deno/_shims/auto/*-deno"],
+      "toddlzt/*": ["deno/*"],
+      "toddlzt": ["deno/index.ts"],
       "digest-fetch": ["./typings/digest-fetch"]
     },
     "noEmit": true,

@@ -1,4 +1,4 @@
-import { APIClient } from 'retell-sdk/core';
+import { APIClient } from 'toddlzt/core';
 
 const { stringifyQuery } = APIClient.prototype as any;
 

@@ -1,12 +1,12 @@
 {
-  "name": "retell-sdk",
+  "name": "toddlzt",
   "version": "0.0.1-alpha.0",
-  "description": "The official TypeScript library for the Retell AI API",
-  "author": "Retell AI <founders@retellai.com>",
+  "description": "The official TypeScript library for the Toddlzt API",
+  "author": "Toddlzt <founders@retellai.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/retell-sdk-node",
+  "repository": "github:stainless-sdks/toddlzt-node",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.21",
   "files": [
@@ -62,8 +62,8 @@
     "./shims/web.mjs"
   ],
   "imports": {
-    "retell-sdk": ".",
-    "retell-sdk/*": "./src/*"
+    "toddlzt": ".",
+    "toddlzt/*": "./src/*"
   },
   "exports": {
     "./_shims/auto/*": {

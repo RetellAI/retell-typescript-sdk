@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellAI from 'retell-sdk';
+import Toddlzt from 'toddlzt';
 import { Response } from 'node-fetch';
 
-const retellAI = new RetellAI({
+const toddlzt = new Toddlzt({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource retellLlms', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellAI.retellLlms.create({ general_prompt: 'string' });
+    const responsePromise = toddlzt.retellLlms.create({ general_prompt: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,7 @@ describe('resource retellLlms', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await retellAI.retellLlms.create({
+    const response = await toddlzt.retellLlms.create({
       general_prompt: 'string',
       begin_message: 'string',
       general_tools: [
@@ -159,7 +159,7 @@ describe('resource retellLlms', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retellAI.retellLlms.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = toddlzt.retellLlms.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -172,12 +172,12 @@ describe('resource retellLlms', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.retellLlms.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(RetellAI.NotFoundError);
+      toddlzt.retellLlms.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Toddlzt.NotFoundError);
   });
 
   test('update: only required params', async () => {
-    const responsePromise = retellAI.retellLlms.update('16b980523634a6dc504898cda492e939', {
+    const responsePromise = toddlzt.retellLlms.update('16b980523634a6dc504898cda492e939', {
       general_prompt: 'string',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -190,7 +190,7 @@ describe('resource retellLlms', () => {
   });
 
   test('update: required and optional params', async () => {
-    const response = await retellAI.retellLlms.update('16b980523634a6dc504898cda492e939', {
+    const response = await toddlzt.retellLlms.update('16b980523634a6dc504898cda492e939', {
       general_prompt: 'string',
       begin_message: 'string',
       general_tools: [
@@ -328,7 +328,7 @@ describe('resource retellLlms', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retellAI.retellLlms.list();
+    const responsePromise = toddlzt.retellLlms.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -340,13 +340,13 @@ describe('resource retellLlms', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellAI.retellLlms.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      RetellAI.NotFoundError,
+    await expect(toddlzt.retellLlms.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Toddlzt.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellAI.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = toddlzt.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -359,7 +359,7 @@ describe('resource retellLlms', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellAI.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(RetellAI.NotFoundError);
+      toddlzt.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Toddlzt.NotFoundError);
   });
 });

@@ -9,9 +9,9 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "retell-sdk/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "retell-sdk/*": ["src/*"],
-      "retell-sdk": ["src/index.ts"],
+      "toddlzt/_shims/auto/*": ["src/_shims/auto/*-node"],
+      "toddlzt/*": ["src/*"],
+      "toddlzt": ["src/index.ts"],
       "digest-fetch": ["./typings/digest-fetch"]
     },
     "noEmit": true,

@@ -4,8 +4,8 @@
 /**
  * Types will get added to this namespace when you import one of the following:
  *
- *   import 'retell-sdk/shims/node'
- *   import 'retell-sdk/shims/web'
+ *   import 'toddlzt/shims/node'
+ *   import 'toddlzt/shims/web'
  *
  * Importing more than one will cause type and runtime errors.
  */

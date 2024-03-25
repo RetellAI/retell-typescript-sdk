@@ -2,9 +2,9 @@
 
 import { castToError, Headers } from './core';
 
-export class RetellAIError extends Error {}
+export class ToddlztError extends Error {}
 
-export class APIError extends RetellAIError {
+export class APIError extends ToddlztError {
   readonly status: number | undefined;
   readonly headers: Headers | undefined;
   readonly error: Object | undefined;

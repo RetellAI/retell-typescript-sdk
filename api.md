@@ -1,16 +1,38 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">CallBase</a></code>
+
 # Calls
 
 Types:
 
-- <code><a href="./src/resources/calls.ts">CallRetrieveResponse</a></code>
 - <code><a href="./src/resources/calls.ts">CallListResponse</a></code>
-- <code><a href="./src/resources/calls.ts">CallRegisterResponse</a></code>
 
 Methods:
 
-- <code title="get /get-call/{call_id}">client.calls.<a href="./src/resources/calls.ts">retrieve</a>(callId) -> CallRetrieveResponse</code>
+- <code title="post /create-phone-call">client.calls.<a href="./src/resources/calls.ts">create</a>({ ...params }) -> CallBase</code>
+- <code title="get /get-call/{call_id}">client.calls.<a href="./src/resources/calls.ts">retrieve</a>(callId) -> CallBase</code>
 - <code title="get /list-calls">client.calls.<a href="./src/resources/calls.ts">list</a>({ ...params }) -> CallListResponse</code>
-- <code title="post /register-call">client.calls.<a href="./src/resources/calls.ts">register</a>({ ...params }) -> CallRegisterResponse</code>
+- <code title="post /register-call">client.calls.<a href="./src/resources/calls.ts">register</a>({ ...params }) -> CallBase</code>
+
+# PhoneNumbers
+
+Types:
+
+- <code><a href="./src/resources/phone-numbers.ts">PhoneNumberCreateResponse</a></code>
+- <code><a href="./src/resources/phone-numbers.ts">PhoneNumberRetrieveResponse</a></code>
+- <code><a href="./src/resources/phone-numbers.ts">PhoneNumberUpdateResponse</a></code>
+- <code><a href="./src/resources/phone-numbers.ts">PhoneNumberListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-phone-number">client.phoneNumbers.<a href="./src/resources/phone-numbers.ts">create</a>({ ...params }) -> PhoneNumberCreateResponse</code>
+- <code title="get /get-phone-number/{phone_number}">client.phoneNumbers.<a href="./src/resources/phone-numbers.ts">retrieve</a>(phoneNumber) -> PhoneNumberRetrieveResponse</code>
+- <code title="patch /update-phone-number/{phone_number}">client.phoneNumbers.<a href="./src/resources/phone-numbers.ts">update</a>(phoneNumber, { ...params }) -> PhoneNumberUpdateResponse</code>
+- <code title="get /list-phone-number">client.phoneNumbers.<a href="./src/resources/phone-numbers.ts">list</a>() -> PhoneNumberListResponse</code>
+- <code title="delete /delete-phone-number/{phone_number}">client.phoneNumbers.<a href="./src/resources/phone-numbers.ts">delete</a>(phoneNumber) -> void</code>
 
 # Agents
 

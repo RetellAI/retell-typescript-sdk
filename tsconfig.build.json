@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "retell-sdk/*": ["dist/src/*"],
-      "retell-sdk": ["dist/src/index.ts"],
+      "toddlzt/*": ["dist/src/*"],
+      "toddlzt": ["dist/src/index.ts"],
       "digest-fetch": ["./typings/digest-fetch"]
     },
     "noEmit": false,
