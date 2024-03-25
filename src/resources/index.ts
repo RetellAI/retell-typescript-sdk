@@ -11,15 +11,7 @@ export {
   CallRegisterParams,
   Call,
 } from './call';
-export {
-  LlmCreateResponse,
-  LlmRetrieveResponse,
-  LlmUpdateResponse,
-  LlmListResponse,
-  LlmCreateParams,
-  LlmUpdateParams,
-  Llm,
-} from './llm';
+export { Llm, LlmListResponse, LlmCreateParams, LlmUpdateParams, LlmResource } from './llm';
 export {
   PhoneNumber,
   PhoneNumberListResponse,
