@@ -10,8 +10,8 @@ export {
   Agent,
 } from './agent';
 export {
+  CallDetail,
   CallCreateResponse,
-  CallRetrieveResponse,
   CallListResponse,
   CallRegisterResponse,
   CallCreateParams,
@@ -29,11 +29,9 @@ export {
   Llm,
 } from './llm';
 export {
-  PhoneNumberCreateResponse,
-  PhoneNumberRetrieveResponse,
-  PhoneNumberUpdateResponse,
+  PhoneNumber,
   PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
-  PhoneNumber,
+  PhoneNumberResource,
 } from './phone-number';

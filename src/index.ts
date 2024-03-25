@@ -9,7 +9,7 @@ import * as API from 'retell-sdk/resources/index';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['TODDLZT_API_KEY'].
+   * Defaults to process.env['RETELL_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -79,7 +79,7 @@ export class RetellSdk extends Core.APIClient {
   /**
    * API Client for interfacing with the Retell Sdk API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['TODDLZT_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['RETELL_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['RETELL_SDK_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -90,12 +90,12 @@ export class RetellSdk extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('RETELL_SDK_BASE_URL'),
-    apiKey = Core.readEnv('TODDLZT_API_KEY'),
+    apiKey = Core.readEnv('RETELL_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.RetellSdkError(
-        "The TODDLZT_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: 'My API Key' }).",
+        "The RETELL_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -118,7 +118,7 @@ export class RetellSdk extends Core.APIClient {
   }
 
   call: API.Call = new API.Call(this);
-  phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
+  phoneNumber: API.PhoneNumberResource = new API.PhoneNumberResource(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
 
@@ -185,18 +185,16 @@ export namespace RetellSdk {
   export import RequestOptions = Core.RequestOptions;
 
   export import Call = API.Call;
+  export import CallDetail = API.CallDetail;
   export import CallCreateResponse = API.CallCreateResponse;
-  export import CallRetrieveResponse = API.CallRetrieveResponse;
   export import CallListResponse = API.CallListResponse;
   export import CallRegisterResponse = API.CallRegisterResponse;
   export import CallCreateParams = API.CallCreateParams;
   export import CallListParams = API.CallListParams;
   export import CallRegisterParams = API.CallRegisterParams;
 
+  export import PhoneNumberResource = API.PhoneNumberResource;
   export import PhoneNumber = API.PhoneNumber;
-  export import PhoneNumberCreateResponse = API.PhoneNumberCreateResponse;
-  export import PhoneNumberRetrieveResponse = API.PhoneNumberRetrieveResponse;
-  export import PhoneNumberUpdateResponse = API.PhoneNumberUpdateResponse;
   export import PhoneNumberListResponse = API.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;

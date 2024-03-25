@@ -4,21 +4,18 @@ import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import * as PhoneNumberAPI from 'retell-sdk/resources/phone-number';
 
-export class PhoneNumber extends APIResource {
+export class PhoneNumberResource extends APIResource {
   /**
    * Buy a new phone number
    */
-  create(
-    body: PhoneNumberCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneNumberCreateResponse> {
+  create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumber> {
     return this._client.post('/create-phone-number', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific phone number
    */
-  retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberRetrieveResponse> {
+  retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumber> {
     return this._client.get(`/get-phone-number/${phoneNumber}`, options);
   }
 
@@ -29,7 +26,7 @@ export class PhoneNumber extends APIResource {
     phoneNumber: string,
     body: PhoneNumberUpdateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneNumberUpdateResponse> {
+  ): Core.APIPromise<PhoneNumber> {
     return this._client.patch(`/update-phone-number/${phoneNumber}`, { body, ...options });
   }
 
@@ -51,7 +48,7 @@ export class PhoneNumber extends APIResource {
   }
 }
 
-export interface PhoneNumberCreateResponse {
+export interface PhoneNumber {
   agent_id: string;
 
   area_code: number;
@@ -63,45 +60,7 @@ export interface PhoneNumberCreateResponse {
   phone_number_pretty: string;
 }
 
-export interface PhoneNumberRetrieveResponse {
-  agent_id: string;
-
-  area_code: number;
-
-  last_modification_timestamp: number;
-
-  phone_number: string;
-
-  phone_number_pretty: string;
-}
-
-export interface PhoneNumberUpdateResponse {
-  agent_id: string;
-
-  area_code: number;
-
-  last_modification_timestamp: number;
-
-  phone_number: string;
-
-  phone_number_pretty: string;
-}
-
-export type PhoneNumberListResponse = Array<PhoneNumberListResponse.PhoneNumberListResponseItem>;
-
-export namespace PhoneNumberListResponse {
-  export interface PhoneNumberListResponseItem {
-    agent_id: string;
-
-    area_code: number;
-
-    last_modification_timestamp: number;
-
-    phone_number: string;
-
-    phone_number_pretty: string;
-  }
-}
+export type PhoneNumberListResponse = Array<PhoneNumber>;
 
 export interface PhoneNumberCreateParams {
   /**
@@ -123,10 +82,8 @@ export interface PhoneNumberUpdateParams {
   agent_id: string;
 }
 
-export namespace PhoneNumber {
-  export import PhoneNumberCreateResponse = PhoneNumberAPI.PhoneNumberCreateResponse;
-  export import PhoneNumberRetrieveResponse = PhoneNumberAPI.PhoneNumberRetrieveResponse;
-  export import PhoneNumberUpdateResponse = PhoneNumberAPI.PhoneNumberUpdateResponse;
+export namespace PhoneNumberResource {
+  export import PhoneNumber = PhoneNumberAPI.PhoneNumber;
   export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;
