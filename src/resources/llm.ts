@@ -46,6 +46,23 @@ export class LlmResource extends APIResource {
 
 export interface Llm {
   /**
+   * Last modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  last_modification_timestamp: number;
+
+  /**
+   * Unique id of Retell LLM.
+   */
+  llm_id: string;
+
+  /**
+   * The LLM Websocket URL constructed from unique id of Retell LLM. Used in agent
+   * API to create / update agent.
+   */
+  llm_websocket_url: string;
+
+  /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
@@ -77,25 +94,6 @@ export interface Llm {
     | Llm.BookAppointmentCalTool
     | Llm.CustomTool
   >;
-
-  /**
-   * Last modification timestamp (milliseconds since epoch). Either the time of last
-   * update or creation if no updates available.
-   */
-  last_modification_timestamp?: number;
-
-  /**
-   * Unique id of Retell LLM.
-   */
-  llm_id?: string;
-
-  /**
-   * The LLM Websocket URL constructed from unique id of Retell LLM. Used in agent
-   * API to create / update agent.
-   */
-  llm_websocket_url?: string;
-
-  required?: unknown;
 
   /**
    * Name of the starting state. Required if states is not empty.

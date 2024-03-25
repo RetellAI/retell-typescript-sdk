@@ -48,7 +48,20 @@ export interface Agent {
   /**
    * Unique id of agent.
    */
-  agent_id?: string;
+  agent_id: string;
+
+  /**
+   * The URL we will establish LLM websocket for getting response, usually your
+   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
+   * request format (sent from us) and response format (send to us).
+   */
+  llm_websocket_url: string;
+
+  /**
+   * Unique voice id used for the agent. Find list of available voices and their
+   * preview in Dashboard.
+   */
+  voice_id: string;
 
   /**
    * The name of the agent. Only used for your own reference.
@@ -138,19 +151,10 @@ export interface Agent {
   last_modification_timestamp?: number;
 
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
-   */
-  llm_websocket_url?: string;
-
-  /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
   optOutSensitiveDataStorage?: boolean;
-
-  required?: unknown;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -159,12 +163,6 @@ export interface Agent {
    * apply.
    */
   responsiveness?: number;
-
-  /**
-   * Unique voice id used for the agent. Find list of available voices and their
-   * preview in Dashboard.
-   */
-  voice_id?: string;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
