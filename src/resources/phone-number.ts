@@ -4,18 +4,18 @@ import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import * as PhoneNumberAPI from 'retell-sdk/resources/phone-number';
 
-export class PhoneNumberResource extends APIResource {
+export class PhoneNumber extends APIResource {
   /**
    * Buy a new phone number & Bind an agent
    */
-  create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumber> {
+  create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.post('/create-phone-number', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific phone number
    */
-  retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumber> {
+  retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.get(`/get-phone-number/${phoneNumber}`, options);
   }
 
@@ -26,7 +26,7 @@ export class PhoneNumberResource extends APIResource {
     phoneNumber: string,
     body: PhoneNumberUpdateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneNumber> {
+  ): Core.APIPromise<PhoneNumberResponse> {
     return this._client.patch(`/update-phone-number/${phoneNumber}`, { body, ...options });
   }
 
@@ -48,7 +48,7 @@ export class PhoneNumberResource extends APIResource {
   }
 }
 
-export interface PhoneNumber {
+export interface PhoneNumberResponse {
   /**
    * Unique id of agent to bind to newly obtained number. The number will
    * automatically use the agent when doing inbound / outbound calls.
@@ -79,7 +79,7 @@ export interface PhoneNumber {
   phone_number_pretty: string;
 }
 
-export type PhoneNumberListResponse = Array<PhoneNumber>;
+export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
 
 export interface PhoneNumberCreateParams {
   /**
@@ -103,8 +103,8 @@ export interface PhoneNumberUpdateParams {
   agent_id: string;
 }
 
-export namespace PhoneNumberResource {
-  export import PhoneNumber = PhoneNumberAPI.PhoneNumber;
+export namespace PhoneNumber {
+  export import PhoneNumberResponse = PhoneNumberAPI.PhoneNumberResponse;
   export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;

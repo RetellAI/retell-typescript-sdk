@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Agent, AgentListResponse, AgentCreateParams, AgentUpdateParams, AgentResource } from './agent';
+export { AgentResponse, AgentListResponse, AgentCreateParams, AgentUpdateParams, Agent } from './agent';
 export {
   CallDetail,
   CallCreateResponse,
@@ -11,11 +11,11 @@ export {
   CallRegisterParams,
   Call,
 } from './call';
-export { Llm, LlmListResponse, LlmCreateParams, LlmUpdateParams, LlmResource } from './llm';
+export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';
 export {
-  PhoneNumber,
+  PhoneNumberResponse,
   PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
-  PhoneNumberResource,
+  PhoneNumber,
 } from './phone-number';

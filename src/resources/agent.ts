@@ -4,25 +4,29 @@ import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import * as AgentAPI from 'retell-sdk/resources/agent';
 
-export class AgentResource extends APIResource {
+export class Agent extends APIResource {
   /**
    * Create a new agent
    */
-  create(body: AgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<Agent> {
+  create(body: AgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
     return this._client.post('/create-agent', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific agent
    */
-  retrieve(agentId: string, options?: Core.RequestOptions): Core.APIPromise<Agent> {
+  retrieve(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
     return this._client.get(`/get-agent/${agentId}`, options);
   }
 
   /**
    * Update an existing agent
    */
-  update(agentId: string, body: AgentUpdateParams, options?: Core.RequestOptions): Core.APIPromise<Agent> {
+  update(
+    agentId: string,
+    body: AgentUpdateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<AgentResponse> {
     return this._client.patch(`/update-agent/${agentId}`, { body, ...options });
   }
 
@@ -44,7 +48,7 @@ export class AgentResource extends APIResource {
   }
 }
 
-export interface Agent {
+export interface AgentResponse {
   /**
    * Unique id of agent.
    */
@@ -188,7 +192,7 @@ export interface Agent {
   webhook_url?: string;
 }
 
-export type AgentListResponse = Array<Agent>;
+export type AgentListResponse = Array<AgentResponse>;
 
 export interface AgentCreateParams {
   /**
@@ -456,8 +460,8 @@ export interface AgentUpdateParams {
   webhook_url?: string;
 }
 
-export namespace AgentResource {
-  export import Agent = AgentAPI.Agent;
+export namespace Agent {
+  export import AgentResponse = AgentAPI.AgentResponse;
   export import AgentListResponse = AgentAPI.AgentListResponse;
   export import AgentCreateParams = AgentAPI.AgentCreateParams;
   export import AgentUpdateParams = AgentAPI.AgentUpdateParams;

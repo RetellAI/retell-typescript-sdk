@@ -4,25 +4,25 @@ import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import * as LlmAPI from 'retell-sdk/resources/llm';
 
-export class LlmResource extends APIResource {
+export class Llm extends APIResource {
   /**
    * Create a new Retell LLM
    */
-  create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<Llm> {
+  create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific Retell LLM
    */
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<Llm> {
+  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.get(`/get-retell-llm/${llmId}`, options);
   }
 
   /**
    * Update an existing Retell LLM
    */
-  update(llmId: string, body: LlmUpdateParams, options?: Core.RequestOptions): Core.APIPromise<Llm> {
+  update(llmId: string, body: LlmUpdateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
   }
 
@@ -44,7 +44,7 @@ export class LlmResource extends APIResource {
   }
 }
 
-export interface Llm {
+export interface LlmResponse {
   /**
    * Last modification timestamp (milliseconds since epoch). Either the time of last
    * update or creation if no updates available.
@@ -88,11 +88,11 @@ export interface Llm {
    * - Tools of LLM (no state) = general tools
    */
   general_tools?: Array<
-    | Llm.EndCallTool
-    | Llm.TransferCallTool
-    | Llm.CheckAvailabilityCalTool
-    | Llm.BookAppointmentCalTool
-    | Llm.CustomTool
+    | LlmResponse.EndCallTool
+    | LlmResponse.TransferCallTool
+    | LlmResponse.CheckAvailabilityCalTool
+    | LlmResponse.BookAppointmentCalTool
+    | LlmResponse.CustomTool
   >;
 
   /**
@@ -107,10 +107,10 @@ export interface Llm {
    * If this field is not set, the agent would only have general prompt and general
    * tools (essentially one state).
    */
-  states?: Array<Llm.State>;
+  states?: Array<LlmResponse.State>;
 }
 
-export namespace Llm {
+export namespace LlmResponse {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -585,7 +585,7 @@ export namespace Llm {
   }
 }
 
-export type LlmListResponse = Array<Llm>;
+export type LlmListResponse = Array<LlmResponse>;
 
 export interface LlmCreateParams {
   /**
@@ -1635,8 +1635,8 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace LlmResource {
-  export import Llm = LlmAPI.Llm;
+export namespace Llm {
+  export import LlmResponse = LlmAPI.LlmResponse;
   export import LlmListResponse = LlmAPI.LlmListResponse;
   export import LlmCreateParams = LlmAPI.LlmCreateParams;
   export import LlmUpdateParams = LlmAPI.LlmUpdateParams;

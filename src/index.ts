@@ -118,9 +118,9 @@ export class RetellSdk extends Core.APIClient {
   }
 
   call: API.Call = new API.Call(this);
-  phoneNumber: API.PhoneNumberResource = new API.PhoneNumberResource(this);
-  agent: API.AgentResource = new API.AgentResource(this);
-  llm: API.LlmResource = new API.LlmResource(this);
+  phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
+  agent: API.Agent = new API.Agent(this);
+  llm: API.Llm = new API.Llm(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -193,20 +193,20 @@ export namespace RetellSdk {
   export import CallListParams = API.CallListParams;
   export import CallRegisterParams = API.CallRegisterParams;
 
-  export import PhoneNumberResource = API.PhoneNumberResource;
   export import PhoneNumber = API.PhoneNumber;
+  export import PhoneNumberResponse = API.PhoneNumberResponse;
   export import PhoneNumberListResponse = API.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
 
-  export import AgentResource = API.AgentResource;
   export import Agent = API.Agent;
+  export import AgentResponse = API.AgentResponse;
   export import AgentListResponse = API.AgentListResponse;
   export import AgentCreateParams = API.AgentCreateParams;
   export import AgentUpdateParams = API.AgentUpdateParams;
 
-  export import LlmResource = API.LlmResource;
   export import Llm = API.Llm;
+  export import LlmResponse = API.LlmResponse;
   export import LlmListResponse = API.LlmListResponse;
   export import LlmCreateParams = API.LlmCreateParams;
   export import LlmUpdateParams = API.LlmUpdateParams;

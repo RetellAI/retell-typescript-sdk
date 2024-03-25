@@ -18,14 +18,14 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/phone-number.ts">PhoneNumber</a></code>
+- <code><a href="./src/resources/phone-number.ts">PhoneNumberResponse</a></code>
 - <code><a href="./src/resources/phone-number.ts">PhoneNumberListResponse</a></code>
 
 Methods:
 
-- <code title="post /create-phone-number">client.phoneNumber.<a href="./src/resources/phone-number.ts">create</a>({ ...params }) -> PhoneNumber</code>
-- <code title="get /get-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">retrieve</a>(phoneNumber) -> PhoneNumber</code>
-- <code title="patch /update-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">update</a>(phoneNumber, { ...params }) -> PhoneNumber</code>
+- <code title="post /create-phone-number">client.phoneNumber.<a href="./src/resources/phone-number.ts">create</a>({ ...params }) -> PhoneNumberResponse</code>
+- <code title="get /get-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">retrieve</a>(phoneNumber) -> PhoneNumberResponse</code>
+- <code title="patch /update-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">update</a>(phoneNumber, { ...params }) -> PhoneNumberResponse</code>
 - <code title="get /list-phone-numbers">client.phoneNumber.<a href="./src/resources/phone-number.ts">list</a>() -> PhoneNumberListResponse</code>
 - <code title="delete /delete-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">delete</a>(phoneNumber) -> void</code>
 
@@ -33,14 +33,14 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/agent.ts">Agent</a></code>
+- <code><a href="./src/resources/agent.ts">AgentResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListResponse</a></code>
 
 Methods:
 
-- <code title="post /create-agent">client.agent.<a href="./src/resources/agent.ts">create</a>({ ...params }) -> Agent</code>
-- <code title="get /get-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">retrieve</a>(agentId) -> Agent</code>
-- <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentId, { ...params }) -> Agent</code>
+- <code title="post /create-agent">client.agent.<a href="./src/resources/agent.ts">create</a>({ ...params }) -> AgentResponse</code>
+- <code title="get /get-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">retrieve</a>(agentId) -> AgentResponse</code>
+- <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentId, { ...params }) -> AgentResponse</code>
 - <code title="get /list-agents">client.agent.<a href="./src/resources/agent.ts">list</a>() -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentId) -> void</code>
 
@@ -48,13 +48,13 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/llm.ts">Llm</a></code>
+- <code><a href="./src/resources/llm.ts">LlmResponse</a></code>
 - <code><a href="./src/resources/llm.ts">LlmListResponse</a></code>
 
 Methods:
 
-- <code title="post /create-retell-llm">client.llm.<a href="./src/resources/llm.ts">create</a>({ ...params }) -> Llm</code>
-- <code title="get /get-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">retrieve</a>(llmId) -> Llm</code>
-- <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmId, { ...params }) -> Llm</code>
+- <code title="post /create-retell-llm">client.llm.<a href="./src/resources/llm.ts">create</a>({ ...params }) -> LlmResponse</code>
+- <code title="get /get-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">retrieve</a>(llmId) -> LlmResponse</code>
+- <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmId, { ...params }) -> LlmResponse</code>
 - <code title="get /list-retell-llms">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
 - <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>
