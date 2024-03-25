@@ -1,5 +1,5 @@
-import { createResponseHeaders } from 'toddlzt/core';
-import { Headers } from 'toddlzt/_shims/index';
+import { createResponseHeaders } from 'retell-sdk/core';
+import { Headers } from 'retell-sdk/_shims/index';
 
 describe('response parsing', () => {
   // TODO: test unicode characters

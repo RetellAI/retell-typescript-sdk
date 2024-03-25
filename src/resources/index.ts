@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './shared';
 export {
   AgentCreateResponse,
   AgentRetrieveResponse,
@@ -10,7 +9,16 @@ export {
   AgentUpdateParams,
   Agents,
 } from './agents';
-export { CallListResponse, CallCreateParams, CallListParams, CallRegisterParams, Calls } from './calls';
+export {
+  CallCreateResponse,
+  CallRetrieveResponse,
+  CallListResponse,
+  CallRegisterResponse,
+  CallCreateParams,
+  CallListParams,
+  CallRegisterParams,
+  Calls,
+} from './calls';
 export {
   PhoneNumberCreateResponse,
   PhoneNumberRetrieveResponse,

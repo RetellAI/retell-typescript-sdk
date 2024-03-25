@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Toddlzt from 'toddlzt';
+import RetellSdk from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const toddlzt = new Toddlzt({
+const retellSdk = new RetellSdk({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource calls', () => {
   test('create: only required params', async () => {
-    const responsePromise = toddlzt.calls.create({
+    const responsePromise = retellSdk.calls.create({
       phone_number: { type: 'object', properties: { foo: {} } },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -23,7 +23,7 @@ describe('resource calls', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await toddlzt.calls.create({
+    const response = await retellSdk.calls.create({
       phone_number: { type: 'object', properties: { foo: {} }, required: ['string', 'string', 'string'] },
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       retell_llm_dynamic_variable: { foo: {} },
@@ -31,7 +31,7 @@ describe('resource calls', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = toddlzt.calls.retrieve('119c3f8e47135a29e65947eeb34cf12d');
+    const responsePromise = retellSdk.calls.retrieve('119c3f8e47135a29e65947eeb34cf12d');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -44,12 +44,12 @@ describe('resource calls', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      toddlzt.calls.retrieve('119c3f8e47135a29e65947eeb34cf12d', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Toddlzt.NotFoundError);
+      retellSdk.calls.retrieve('119c3f8e47135a29e65947eeb34cf12d', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('list', async () => {
-    const responsePromise = toddlzt.calls.list();
+    const responsePromise = retellSdk.calls.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,15 +61,15 @@ describe('resource calls', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(toddlzt.calls.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Toddlzt.NotFoundError,
+    await expect(retellSdk.calls.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      RetellSdk.NotFoundError,
     );
   });
 
   test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      toddlzt.calls.list(
+      retellSdk.calls.list(
         {
           filter_criteria: {
             agent_id: ['oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD'],
@@ -83,11 +83,11 @@ describe('resource calls', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Toddlzt.NotFoundError);
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('register: only required params', async () => {
-    const responsePromise = toddlzt.calls.register({
+    const responsePromise = retellSdk.calls.register({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       audio_encoding: 's16le',
       audio_websocket_protocol: 'twilio',
@@ -103,7 +103,7 @@ describe('resource calls', () => {
   });
 
   test('register: required and optional params', async () => {
-    const response = await toddlzt.calls.register({
+    const response = await retellSdk.calls.register({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       audio_encoding: 's16le',
       audio_websocket_protocol: 'twilio',

@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Toddlzt from 'toddlzt';
+import RetellSdk from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const toddlzt = new Toddlzt({
+const retellSdk = new RetellSdk({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource agents', () => {
   test('create: only required params', async () => {
-    const responsePromise = toddlzt.agents.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' });
+    const responsePromise = retellSdk.agents.create({ llm_type: 'retell-llm', voice_id: '11labs-Adrian' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,7 @@ describe('resource agents', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await toddlzt.agents.create({
+    const response = await retellSdk.agents.create({
       llm_type: 'retell-llm',
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
@@ -41,7 +41,7 @@ describe('resource agents', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = toddlzt.agents.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = retellSdk.agents.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -54,12 +54,12 @@ describe('resource agents', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      toddlzt.agents.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Toddlzt.NotFoundError);
+      retellSdk.agents.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = toddlzt.agents.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = retellSdk.agents.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -70,7 +70,7 @@ describe('resource agents', () => {
   });
 
   test('list', async () => {
-    const responsePromise = toddlzt.agents.list();
+    const responsePromise = retellSdk.agents.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -82,13 +82,13 @@ describe('resource agents', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(toddlzt.agents.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Toddlzt.NotFoundError,
+    await expect(retellSdk.agents.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      RetellSdk.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = toddlzt.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = retellSdk.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -101,7 +101,7 @@ describe('resource agents', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      toddlzt.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Toddlzt.NotFoundError);
+      retellSdk.agents.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 });

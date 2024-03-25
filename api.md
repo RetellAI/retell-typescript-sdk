@@ -1,21 +1,18 @@
-# Shared
-
-Types:
-
-- <code><a href="./src/resources/shared.ts">CallBase</a></code>
-
 # Calls
 
 Types:
 
+- <code><a href="./src/resources/calls.ts">CallCreateResponse</a></code>
+- <code><a href="./src/resources/calls.ts">CallRetrieveResponse</a></code>
 - <code><a href="./src/resources/calls.ts">CallListResponse</a></code>
+- <code><a href="./src/resources/calls.ts">CallRegisterResponse</a></code>
 
 Methods:
 
-- <code title="post /create-phone-call">client.calls.<a href="./src/resources/calls.ts">create</a>({ ...params }) -> CallBase</code>
-- <code title="get /get-call/{call_id}">client.calls.<a href="./src/resources/calls.ts">retrieve</a>(callId) -> CallBase</code>
+- <code title="post /create-phone-call">client.calls.<a href="./src/resources/calls.ts">create</a>({ ...params }) -> CallCreateResponse</code>
+- <code title="get /get-call/{call_id}">client.calls.<a href="./src/resources/calls.ts">retrieve</a>(callId) -> CallRetrieveResponse</code>
 - <code title="get /list-calls">client.calls.<a href="./src/resources/calls.ts">list</a>({ ...params }) -> CallListResponse</code>
-- <code title="post /register-call">client.calls.<a href="./src/resources/calls.ts">register</a>({ ...params }) -> CallBase</code>
+- <code title="post /register-call">client.calls.<a href="./src/resources/calls.ts">register</a>({ ...params }) -> CallRegisterResponse</code>
 
 # PhoneNumbers
 

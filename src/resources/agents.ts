@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'toddlzt/core';
-import { APIResource } from 'toddlzt/resource';
-import * as AgentsAPI from 'toddlzt/resources/agents';
+import * as Core from 'retell-sdk/core';
+import { APIResource } from 'retell-sdk/resource';
+import * as AgentsAPI from 'retell-sdk/resources/agents';
 
 export class Agents extends APIResource {
   /**

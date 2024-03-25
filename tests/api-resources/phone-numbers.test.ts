@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Toddlzt from 'toddlzt';
+import RetellSdk from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const toddlzt = new Toddlzt({
+const retellSdk = new RetellSdk({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource phoneNumbers', () => {
   test('create: only required params', async () => {
-    const responsePromise = toddlzt.phoneNumbers.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
+    const responsePromise = retellSdk.phoneNumbers.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,14 +21,14 @@ describe('resource phoneNumbers', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await toddlzt.phoneNumbers.create({
+    const response = await retellSdk.phoneNumbers.create({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       area_code: 'string',
     });
   });
 
   test('retrieve', async () => {
-    const responsePromise = toddlzt.phoneNumbers.retrieve('string');
+    const responsePromise = retellSdk.phoneNumbers.retrieve('string');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -41,12 +41,12 @@ describe('resource phoneNumbers', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      toddlzt.phoneNumbers.retrieve('string', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Toddlzt.NotFoundError);
+      retellSdk.phoneNumbers.retrieve('string', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('update: only required params', async () => {
-    const responsePromise = toddlzt.phoneNumbers.update('string', { general_prompt: 'string' });
+    const responsePromise = retellSdk.phoneNumbers.update('string', { general_prompt: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -57,11 +57,11 @@ describe('resource phoneNumbers', () => {
   });
 
   test('update: required and optional params', async () => {
-    const response = await toddlzt.phoneNumbers.update('string', { general_prompt: 'string' });
+    const response = await retellSdk.phoneNumbers.update('string', { general_prompt: 'string' });
   });
 
   test('list', async () => {
-    const responsePromise = toddlzt.phoneNumbers.list();
+    const responsePromise = retellSdk.phoneNumbers.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -73,13 +73,13 @@ describe('resource phoneNumbers', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(toddlzt.phoneNumbers.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Toddlzt.NotFoundError,
+    await expect(retellSdk.phoneNumbers.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      RetellSdk.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = toddlzt.phoneNumbers.delete('string');
+    const responsePromise = retellSdk.phoneNumbers.delete('string');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -91,8 +91,8 @@ describe('resource phoneNumbers', () => {
 
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(toddlzt.phoneNumbers.delete('string', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Toddlzt.NotFoundError,
-    );
+    await expect(
+      retellSdk.phoneNumbers.delete('string', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 });

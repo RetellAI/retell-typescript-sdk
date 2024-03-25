@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'toddlzt/core';
-import { APIResource } from 'toddlzt/resource';
-import * as PhoneNumbersAPI from 'toddlzt/resources/phone-numbers';
+import * as Core from 'retell-sdk/core';
+import { APIResource } from 'retell-sdk/resource';
+import * as PhoneNumbersAPI from 'retell-sdk/resources/phone-numbers';
 
 export class PhoneNumbers extends APIResource {
   /**

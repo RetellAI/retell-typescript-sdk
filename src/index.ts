@@ -5,7 +5,7 @@ import * as Errors from './error';
 import { type Agent } from './_shims/index';
 import * as Uploads from './uploads';
 import * as qs from 'qs';
-import * as API from 'toddlzt/resources/index';
+import * as API from 'retell-sdk/resources/index';
 
 export interface ClientOptions {
   /**
@@ -16,7 +16,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['TODDLZT_BASE_URL'].
+   * Defaults to process.env['RETELL_SDK_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -70,17 +70,17 @@ export interface ClientOptions {
   defaultQuery?: Core.DefaultQuery;
 }
 
-/** API Client for interfacing with the Toddlzt API. */
-export class Toddlzt extends Core.APIClient {
+/** API Client for interfacing with the Retell Sdk API. */
+export class RetellSdk extends Core.APIClient {
   apiKey: string;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Toddlzt API.
+   * API Client for interfacing with the Retell Sdk API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['TODDLZT_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['TODDLZT_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['RETELL_SDK_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -89,13 +89,13 @@ export class Toddlzt extends Core.APIClient {
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = Core.readEnv('TODDLZT_BASE_URL'),
+    baseURL = Core.readEnv('RETELL_SDK_BASE_URL'),
     apiKey = Core.readEnv('TODDLZT_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.ToddlztError(
-        "The TODDLZT_API_KEY environment variable is missing or empty; either provide it, or instantiate the Toddlzt client with an apiKey option, like new Toddlzt({ apiKey: 'My API Key' }).",
+      throw new Errors.RetellSdkError(
+        "The TODDLZT_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -141,9 +141,9 @@ export class Toddlzt extends Core.APIClient {
     return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
-  static Toddlzt = this;
+  static RetellSdk = this;
 
-  static ToddlztError = Errors.ToddlztError;
+  static RetellSdkError = Errors.RetellSdkError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -159,7 +159,7 @@ export class Toddlzt extends Core.APIClient {
 }
 
 export const {
-  ToddlztError,
+  RetellSdkError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -177,7 +177,7 @@ export const {
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace Toddlzt {
+export namespace RetellSdk {
   // Helper functions
   export import toFile = Uploads.toFile;
   export import fileFromPath = Uploads.fileFromPath;
@@ -185,7 +185,10 @@ export namespace Toddlzt {
   export import RequestOptions = Core.RequestOptions;
 
   export import Calls = API.Calls;
+  export import CallCreateResponse = API.CallCreateResponse;
+  export import CallRetrieveResponse = API.CallRetrieveResponse;
   export import CallListResponse = API.CallListResponse;
+  export import CallRegisterResponse = API.CallRegisterResponse;
   export import CallCreateParams = API.CallCreateParams;
   export import CallListParams = API.CallListParams;
   export import CallRegisterParams = API.CallRegisterParams;
@@ -213,8 +216,6 @@ export namespace Toddlzt {
   export import RetellLlmListResponse = API.RetellLlmListResponse;
   export import RetellLlmCreateParams = API.RetellLlmCreateParams;
   export import RetellLlmUpdateParams = API.RetellLlmUpdateParams;
-
-  export import CallBase = API.CallBase;
 }
 
-export default Toddlzt;
+export default RetellSdk;
