@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from 'retell-sdk/core';
+import { APIPromise } from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
+import { isRequestOptions } from 'retell-sdk/core';
+import { type Response } from 'retell-sdk/_shims/index';
 import * as AgentAPI from 'retell-sdk/resources/agent';
 
 export class Agent extends APIResource {
@@ -22,11 +25,7 @@ export class Agent extends APIResource {
   /**
    * Update an existing agent
    */
-  update(
-    agentId: string,
-    body: AgentUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentResponse> {
+  update(agentId: string, body: AgentUpdateParams, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
     return this._client.patch(`/update-agent/${agentId}`, { body, ...options });
   }
 
@@ -41,10 +40,7 @@ export class Agent extends APIResource {
    * Delete an existing agent
    */
   delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-agent/${agentId}`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
+    return this._client.delete(`/delete-agent/${agentId}`, { ...options, headers: { 'Accept': '*/*', ...options?.headers } });
   }
 }
 
@@ -142,17 +138,7 @@ export interface AgentResponse {
    *
    * - `deepgram voices`: supports English(en)
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'ja-JP' | 'pt-PT' | 'pt-BR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
@@ -192,7 +178,7 @@ export interface AgentResponse {
   webhook_url?: string;
 }
 
-export type AgentListResponse = Array<AgentResponse>;
+export type AgentListResponse = Array<AgentResponse>
 
 export interface AgentCreateParams {
   /**
@@ -277,17 +263,7 @@ export interface AgentCreateParams {
    *
    * - `deepgram voices`: supports English(en)
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'ja-JP' | 'pt-PT' | 'pt-BR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
@@ -397,17 +373,7 @@ export interface AgentUpdateParams {
    *
    * - `deepgram voices`: supports English(en)
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'ja-JP' | 'pt-PT' | 'pt-BR';
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your

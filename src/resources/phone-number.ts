@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from 'retell-sdk/core';
+import { APIPromise } from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
+import { isRequestOptions } from 'retell-sdk/core';
+import { type Response } from 'retell-sdk/_shims/index';
 import * as PhoneNumberAPI from 'retell-sdk/resources/phone-number';
 
 export class PhoneNumber extends APIResource {
@@ -22,11 +25,7 @@ export class PhoneNumber extends APIResource {
   /**
    * Update an existing Retell LLM
    */
-  update(
-    phoneNumber: string,
-    body: PhoneNumberUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneNumberResponse> {
+  update(phoneNumber: string, body: PhoneNumberUpdateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.patch(`/update-phone-number/${phoneNumber}`, { body, ...options });
   }
 
@@ -41,10 +40,7 @@ export class PhoneNumber extends APIResource {
    * Delete an existing phone number
    */
   delete(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-phone-number/${phoneNumber}`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
+    return this._client.delete(`/delete-phone-number/${phoneNumber}`, { ...options, headers: { 'Accept': '*/*', ...options?.headers } });
   }
 }
 
@@ -79,7 +75,7 @@ export interface PhoneNumberResponse {
   phone_number_pretty: string;
 }
 
-export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
+export type PhoneNumberListResponse = Array<PhoneNumberResponse>
 
 export interface PhoneNumberCreateParams {
   /**

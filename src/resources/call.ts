@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from 'retell-sdk/core';
+import { APIPromise } from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
 import { isRequestOptions } from 'retell-sdk/core';
+import { type Response } from 'retell-sdk/_shims/index';
 import * as CallAPI from 'retell-sdk/resources/call';
 
 export class Call extends APIResource {
@@ -23,12 +25,9 @@ export class Call extends APIResource {
   /**
    * Retrieve call details
    */
-  list(query?: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<CallListResponse>;
-  list(
-    query: CallListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CallListResponse> {
+  list(query?: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse>
+  list(options?: Core.RequestOptions): Core.APIPromise<CallListResponse>
+  list(query: CallListParams | Core.RequestOptions = {}, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
@@ -261,7 +260,7 @@ export interface CallCreateResponse {
   to_number?: string;
 }
 
-export type CallListResponse = Array<CallDetailResponse>;
+export type CallListResponse = Array<CallDetailResponse>
 
 export interface CallRegisterResponse {
   /**

@@ -1,5 +1,6 @@
 declare module 'digest-fetch';
 
+import type NodeFetch from 'node-fetch';
 import type { RequestInfo, RequestInit, Response } from 'node-fetch';
 
 type Algorithm = 'MD5' | 'MD5-sess';
