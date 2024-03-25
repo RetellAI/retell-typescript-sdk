@@ -46,6 +46,11 @@ export class AgentResource extends APIResource {
 
 export interface Agent {
   /**
+   * Unique id of agent.
+   */
+  agent_id?: string;
+
+  /**
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string;
@@ -125,6 +130,12 @@ export interface Agent {
     | 'ja-JP'
     | 'pt-PT'
     | 'pt-BR';
+
+  /**
+   * Last modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  last_modification_timestamp?: number;
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your
