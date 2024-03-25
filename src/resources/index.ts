@@ -20,6 +20,15 @@ export {
   Calls,
 } from './calls';
 export {
+  LlmCreateResponse,
+  LlmRetrieveResponse,
+  LlmUpdateResponse,
+  LlmListResponse,
+  LlmCreateParams,
+  LlmUpdateParams,
+  Llms,
+} from './llms';
+export {
   PhoneNumberCreateResponse,
   PhoneNumberRetrieveResponse,
   PhoneNumberUpdateResponse,
@@ -28,12 +37,3 @@ export {
   PhoneNumberUpdateParams,
   PhoneNumbers,
 } from './phone-numbers';
-export {
-  RetellLlmCreateResponse,
-  RetellLlmRetrieveResponse,
-  RetellLlmUpdateResponse,
-  RetellLlmListResponse,
-  RetellLlmCreateParams,
-  RetellLlmUpdateParams,
-  RetellLlms,
-} from './retell-llms';

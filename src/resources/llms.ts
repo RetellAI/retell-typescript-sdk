@@ -2,23 +2,20 @@
 
 import * as Core from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import * as RetellLlmsAPI from 'retell-sdk/resources/retell-llms';
+import * as LlmsAPI from 'retell-sdk/resources/llms';
 
-export class RetellLlms extends APIResource {
+export class Llms extends APIResource {
   /**
    * Create a new Retell LLM
    */
-  create(
-    body: RetellLlmCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<RetellLlmCreateResponse> {
+  create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmCreateResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
   /**
    * Retrieve details of a specific Retell LLM
    */
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<RetellLlmRetrieveResponse> {
+  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmRetrieveResponse> {
     return this._client.get(`/get-retell-llm/${llmId}`, options);
   }
 
@@ -27,16 +24,16 @@ export class RetellLlms extends APIResource {
    */
   update(
     llmId: string,
-    body: RetellLlmUpdateParams,
+    body: LlmUpdateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<RetellLlmUpdateResponse> {
+  ): Core.APIPromise<LlmUpdateResponse> {
     return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
   }
 
   /**
    * List all retell LLM
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<RetellLlmListResponse> {
+  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llm', options);
   }
 
@@ -51,7 +48,7 @@ export class RetellLlms extends APIResource {
   }
 }
 
-export interface RetellLlmCreateResponse {
+export interface LlmCreateResponse {
   /**
    * Optional first phrase said by the agent.
    */
@@ -66,12 +63,12 @@ export interface RetellLlmCreateResponse {
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    | RetellLlmCreateResponse.EndCallTool
-    | RetellLlmCreateResponse.TransferCallTool
-    | RetellLlmCreateResponse.FormatDateTimeTool
-    | RetellLlmCreateResponse.CheckAvailabilityCalTool
-    | RetellLlmCreateResponse.BookAppointmentCalTool
-    | RetellLlmCreateResponse.CustomTool
+    | LlmCreateResponse.EndCallTool
+    | LlmCreateResponse.TransferCallTool
+    | LlmCreateResponse.FormatDateTimeTool
+    | LlmCreateResponse.CheckAvailabilityCalTool
+    | LlmCreateResponse.BookAppointmentCalTool
+    | LlmCreateResponse.CustomTool
   >;
 
   /**
@@ -93,10 +90,10 @@ export interface RetellLlmCreateResponse {
   /**
    * Optional array of states.
    */
-  states?: Array<RetellLlmCreateResponse.State>;
+  states?: Array<LlmCreateResponse.State>;
 }
 
-export namespace RetellLlmCreateResponse {
+export namespace LlmCreateResponse {
   export interface EndCallTool {
     name: string;
 
@@ -305,7 +302,7 @@ export namespace RetellLlmCreateResponse {
   }
 }
 
-export interface RetellLlmRetrieveResponse {
+export interface LlmRetrieveResponse {
   /**
    * Optional first phrase said by the agent.
    */
@@ -320,12 +317,12 @@ export interface RetellLlmRetrieveResponse {
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    | RetellLlmRetrieveResponse.EndCallTool
-    | RetellLlmRetrieveResponse.TransferCallTool
-    | RetellLlmRetrieveResponse.FormatDateTimeTool
-    | RetellLlmRetrieveResponse.CheckAvailabilityCalTool
-    | RetellLlmRetrieveResponse.BookAppointmentCalTool
-    | RetellLlmRetrieveResponse.CustomTool
+    | LlmRetrieveResponse.EndCallTool
+    | LlmRetrieveResponse.TransferCallTool
+    | LlmRetrieveResponse.FormatDateTimeTool
+    | LlmRetrieveResponse.CheckAvailabilityCalTool
+    | LlmRetrieveResponse.BookAppointmentCalTool
+    | LlmRetrieveResponse.CustomTool
   >;
 
   /**
@@ -347,10 +344,10 @@ export interface RetellLlmRetrieveResponse {
   /**
    * Optional array of states.
    */
-  states?: Array<RetellLlmRetrieveResponse.State>;
+  states?: Array<LlmRetrieveResponse.State>;
 }
 
-export namespace RetellLlmRetrieveResponse {
+export namespace LlmRetrieveResponse {
   export interface EndCallTool {
     name: string;
 
@@ -559,7 +556,7 @@ export namespace RetellLlmRetrieveResponse {
   }
 }
 
-export interface RetellLlmUpdateResponse {
+export interface LlmUpdateResponse {
   /**
    * Optional first phrase said by the agent.
    */
@@ -574,12 +571,12 @@ export interface RetellLlmUpdateResponse {
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    | RetellLlmUpdateResponse.EndCallTool
-    | RetellLlmUpdateResponse.TransferCallTool
-    | RetellLlmUpdateResponse.FormatDateTimeTool
-    | RetellLlmUpdateResponse.CheckAvailabilityCalTool
-    | RetellLlmUpdateResponse.BookAppointmentCalTool
-    | RetellLlmUpdateResponse.CustomTool
+    | LlmUpdateResponse.EndCallTool
+    | LlmUpdateResponse.TransferCallTool
+    | LlmUpdateResponse.FormatDateTimeTool
+    | LlmUpdateResponse.CheckAvailabilityCalTool
+    | LlmUpdateResponse.BookAppointmentCalTool
+    | LlmUpdateResponse.CustomTool
   >;
 
   /**
@@ -601,10 +598,10 @@ export interface RetellLlmUpdateResponse {
   /**
    * Optional array of states.
    */
-  states?: Array<RetellLlmUpdateResponse.State>;
+  states?: Array<LlmUpdateResponse.State>;
 }
 
-export namespace RetellLlmUpdateResponse {
+export namespace LlmUpdateResponse {
   export interface EndCallTool {
     name: string;
 
@@ -813,10 +810,10 @@ export namespace RetellLlmUpdateResponse {
   }
 }
 
-export type RetellLlmListResponse = Array<RetellLlmListResponse.RetellLlmListResponseItem>;
+export type LlmListResponse = Array<LlmListResponse.LlmListResponseItem>;
 
-export namespace RetellLlmListResponse {
-  export interface RetellLlmListResponseItem {
+export namespace LlmListResponse {
+  export interface LlmListResponseItem {
     /**
      * Optional first phrase said by the agent.
      */
@@ -831,12 +828,12 @@ export namespace RetellLlmListResponse {
      * Optional array of tools used in every state.
      */
     general_tools?: Array<
-      | RetellLlmListResponseItem.EndCallTool
-      | RetellLlmListResponseItem.TransferCallTool
-      | RetellLlmListResponseItem.FormatDateTimeTool
-      | RetellLlmListResponseItem.CheckAvailabilityCalTool
-      | RetellLlmListResponseItem.BookAppointmentCalTool
-      | RetellLlmListResponseItem.CustomTool
+      | LlmListResponseItem.EndCallTool
+      | LlmListResponseItem.TransferCallTool
+      | LlmListResponseItem.FormatDateTimeTool
+      | LlmListResponseItem.CheckAvailabilityCalTool
+      | LlmListResponseItem.BookAppointmentCalTool
+      | LlmListResponseItem.CustomTool
     >;
 
     /**
@@ -858,10 +855,10 @@ export namespace RetellLlmListResponse {
     /**
      * Optional array of states.
      */
-    states?: Array<RetellLlmListResponseItem.State>;
+    states?: Array<LlmListResponseItem.State>;
   }
 
-  export namespace RetellLlmListResponseItem {
+  export namespace LlmListResponseItem {
     export interface EndCallTool {
       name: string;
 
@@ -1071,7 +1068,7 @@ export namespace RetellLlmListResponse {
   }
 }
 
-export interface RetellLlmCreateParams {
+export interface LlmCreateParams {
   /**
    * Optional first phrase said by the agent.
    */
@@ -1086,12 +1083,12 @@ export interface RetellLlmCreateParams {
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    | RetellLlmCreateParams.EndCallTool
-    | RetellLlmCreateParams.TransferCallTool
-    | RetellLlmCreateParams.FormatDateTimeTool
-    | RetellLlmCreateParams.CheckAvailabilityCalTool
-    | RetellLlmCreateParams.BookAppointmentCalTool
-    | RetellLlmCreateParams.CustomTool
+    | LlmCreateParams.EndCallTool
+    | LlmCreateParams.TransferCallTool
+    | LlmCreateParams.FormatDateTimeTool
+    | LlmCreateParams.CheckAvailabilityCalTool
+    | LlmCreateParams.BookAppointmentCalTool
+    | LlmCreateParams.CustomTool
   >;
 
   /**
@@ -1102,10 +1099,10 @@ export interface RetellLlmCreateParams {
   /**
    * Optional array of states.
    */
-  states?: Array<RetellLlmCreateParams.State>;
+  states?: Array<LlmCreateParams.State>;
 }
 
-export namespace RetellLlmCreateParams {
+export namespace LlmCreateParams {
   export interface EndCallTool {
     name: string;
 
@@ -1314,7 +1311,7 @@ export namespace RetellLlmCreateParams {
   }
 }
 
-export interface RetellLlmUpdateParams {
+export interface LlmUpdateParams {
   /**
    * Optional first phrase said by the agent.
    */
@@ -1329,12 +1326,12 @@ export interface RetellLlmUpdateParams {
    * Optional array of tools used in every state.
    */
   general_tools?: Array<
-    | RetellLlmUpdateParams.EndCallTool
-    | RetellLlmUpdateParams.TransferCallTool
-    | RetellLlmUpdateParams.FormatDateTimeTool
-    | RetellLlmUpdateParams.CheckAvailabilityCalTool
-    | RetellLlmUpdateParams.BookAppointmentCalTool
-    | RetellLlmUpdateParams.CustomTool
+    | LlmUpdateParams.EndCallTool
+    | LlmUpdateParams.TransferCallTool
+    | LlmUpdateParams.FormatDateTimeTool
+    | LlmUpdateParams.CheckAvailabilityCalTool
+    | LlmUpdateParams.BookAppointmentCalTool
+    | LlmUpdateParams.CustomTool
   >;
 
   /**
@@ -1345,10 +1342,10 @@ export interface RetellLlmUpdateParams {
   /**
    * Optional array of states.
    */
-  states?: Array<RetellLlmUpdateParams.State>;
+  states?: Array<LlmUpdateParams.State>;
 }
 
-export namespace RetellLlmUpdateParams {
+export namespace LlmUpdateParams {
   export interface EndCallTool {
     name: string;
 
@@ -1557,11 +1554,11 @@ export namespace RetellLlmUpdateParams {
   }
 }
 
-export namespace RetellLlms {
-  export import RetellLlmCreateResponse = RetellLlmsAPI.RetellLlmCreateResponse;
-  export import RetellLlmRetrieveResponse = RetellLlmsAPI.RetellLlmRetrieveResponse;
-  export import RetellLlmUpdateResponse = RetellLlmsAPI.RetellLlmUpdateResponse;
-  export import RetellLlmListResponse = RetellLlmsAPI.RetellLlmListResponse;
-  export import RetellLlmCreateParams = RetellLlmsAPI.RetellLlmCreateParams;
-  export import RetellLlmUpdateParams = RetellLlmsAPI.RetellLlmUpdateParams;
+export namespace Llms {
+  export import LlmCreateResponse = LlmsAPI.LlmCreateResponse;
+  export import LlmRetrieveResponse = LlmsAPI.LlmRetrieveResponse;
+  export import LlmUpdateResponse = LlmsAPI.LlmUpdateResponse;
+  export import LlmListResponse = LlmsAPI.LlmListResponse;
+  export import LlmCreateParams = LlmsAPI.LlmCreateParams;
+  export import LlmUpdateParams = LlmsAPI.LlmUpdateParams;
 }

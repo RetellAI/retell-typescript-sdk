@@ -8,9 +8,9 @@ const retellSdk = new RetellSdk({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource retellLlms', () => {
+describe('resource llms', () => {
   test('create', async () => {
-    const responsePromise = retellSdk.retellLlms.create({});
+    const responsePromise = retellSdk.llms.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,7 @@ describe('resource retellLlms', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retellSdk.retellLlms.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = retellSdk.llms.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,12 +34,12 @@ describe('resource retellLlms', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.retellLlms.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+      retellSdk.llms.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = retellSdk.retellLlms.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = retellSdk.llms.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -50,7 +50,7 @@ describe('resource retellLlms', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retellSdk.retellLlms.list();
+    const responsePromise = retellSdk.llms.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,13 +62,13 @@ describe('resource retellLlms', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.retellLlms.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(retellSdk.llms.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       RetellSdk.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellSdk.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = retellSdk.llms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,7 +81,7 @@ describe('resource retellLlms', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.retellLlms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+      retellSdk.llms.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 });
