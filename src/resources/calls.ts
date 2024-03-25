@@ -471,7 +471,7 @@ export interface CallCreateParams {
   /**
    * Add optional dynamic variables that injects into your Retell LLM prompt.
    */
-  retell_llm_dynamic_variable?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: Record<string, unknown>;
 }
 
 export namespace CallCreateParams {
@@ -605,7 +605,7 @@ export interface CallRegisterParams {
   /**
    * Add optional dynamic variables that injects into your Retell LLM prompt.
    */
-  retell_llm_dynamic_variable?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: Record<string, unknown>;
 
   /**
    * The callee number. This field is storage purpose only, set this if you want the

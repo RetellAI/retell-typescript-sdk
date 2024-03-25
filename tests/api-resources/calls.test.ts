@@ -24,7 +24,7 @@ describe('resource calls', () => {
     const response = await retellSdk.calls.create({
       phone_number: { from: 'string', to: 'string' },
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      retell_llm_dynamic_variable: { foo: {} },
+      retell_llm_dynamic_variables: { foo: {} },
     });
   });
 
@@ -109,7 +109,7 @@ describe('resource calls', () => {
       end_call_after_silence_ms: 600000,
       from_number: 'string',
       metadata: {},
-      retell_llm_dynamic_variable: { foo: {} },
+      retell_llm_dynamic_variables: { foo: {} },
       to_number: 'string',
     });
   });
