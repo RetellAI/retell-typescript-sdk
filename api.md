@@ -2,7 +2,7 @@
 
 Types:
 
-- <code><a href="./src/resources/call.ts">CallDetail</a></code>
+- <code><a href="./src/resources/call.ts">CallDetailResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallCreateResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallRegisterResponse</a></code>
@@ -10,7 +10,7 @@ Types:
 Methods:
 
 - <code title="post /create-phone-call">client.call.<a href="./src/resources/call.ts">create</a>({ ...params }) -> CallCreateResponse</code>
-- <code title="get /get-call/{call_id}">client.call.<a href="./src/resources/call.ts">retrieve</a>(callId) -> CallDetail</code>
+- <code title="get /get-call/{call_id}">client.call.<a href="./src/resources/call.ts">retrieve</a>(callId) -> CallDetailResponse</code>
 - <code title="get /list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
 - <code title="post /register-call">client.call.<a href="./src/resources/call.ts">register</a>({ ...params }) -> CallRegisterResponse</code>
 

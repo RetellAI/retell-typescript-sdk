@@ -185,7 +185,7 @@ export namespace RetellSdk {
   export import RequestOptions = Core.RequestOptions;
 
   export import Call = API.Call;
-  export import CallDetail = API.CallDetail;
+  export import CallDetailResponse = API.CallDetailResponse;
   export import CallCreateResponse = API.CallCreateResponse;
   export import CallListResponse = API.CallListResponse;
   export import CallRegisterResponse = API.CallRegisterResponse;
