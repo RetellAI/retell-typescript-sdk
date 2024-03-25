@@ -46,11 +46,6 @@ export class AgentResource extends APIResource {
 
 export interface Agent {
   /**
-   * Unique id of agent.
-   */
-  agent_id: string;
-
-  /**
    * The URL we will establish LLM websocket for getting response, usually your
    * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
    * request format (sent from us) and response format (send to us).
@@ -143,12 +138,6 @@ export interface Agent {
     | 'ja-JP'
     | 'pt-PT'
     | 'pt-BR';
-
-  /**
-   * Last modification timestamp (milliseconds since epoch). Either the time of last
-   * update or creation if no updates available.
-   */
-  last_modification_timestamp?: number;
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access

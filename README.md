@@ -30,7 +30,7 @@ async function main() {
     voice_id: '11labs-Adrian',
   });
 
-  console.log(agent.agent_id);
+  console.log(agent.voice_id);
 }
 
 main();
@@ -161,7 +161,7 @@ const { data: agent, response: raw } = await retellSdk.agent
   .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(agent.agent_id);
+console.log(agent.voice_id);
 ```
 
 ### Making custom/undocumented requests
