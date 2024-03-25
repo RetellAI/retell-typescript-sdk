@@ -79,6 +79,25 @@ export interface Llm {
   >;
 
   /**
+   * Last modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  last_modification_timestamp?: number;
+
+  /**
+   * Unique id of Retell LLM.
+   */
+  llm_id?: string;
+
+  /**
+   * The LLM Websocket URL constructed from unique id of Retell LLM. Used in agent
+   * API to create / update agent.
+   */
+  llm_websocket_url?: string;
+
+  required?: unknown;
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string;

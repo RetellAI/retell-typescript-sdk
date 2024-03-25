@@ -150,6 +150,8 @@ export interface Agent {
    */
   optOutSensitiveDataStorage?: boolean;
 
+  required?: unknown;
+
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
    * means less responsive agent (wait more, respond slower), while higher value
