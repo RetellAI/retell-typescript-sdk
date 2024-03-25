@@ -10,9 +10,7 @@ const retellSdk = new RetellSdk({
 
 describe('resource calls', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellSdk.calls.create({
-      phone_number: { type: 'object', properties: { foo: {} } },
-    });
+    const responsePromise = retellSdk.calls.create({ phone_number: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +22,7 @@ describe('resource calls', () => {
 
   test('create: required and optional params', async () => {
     const response = await retellSdk.calls.create({
-      phone_number: { type: 'object', properties: { foo: {} }, required: ['string', 'string', 'string'] },
+      phone_number: { from: 'string', to: 'string' },
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       retell_llm_dynamic_variable: { foo: {} },
     });

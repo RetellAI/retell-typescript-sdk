@@ -476,11 +476,15 @@ export interface CallCreateParams {
 
 export namespace CallCreateParams {
   export interface PhoneNumber {
-    properties: Record<string, unknown>;
+    /**
+     * From a number you own
+     */
+    from?: string;
 
-    type: 'object';
-
-    required?: Array<string>;
+    /**
+     * To your customer number
+     */
+    to?: string;
   }
 }
 
