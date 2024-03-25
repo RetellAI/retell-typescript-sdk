@@ -60,6 +60,24 @@ describe('resource phoneNumber', () => {
     const response = await retellSdk.phoneNumber.update('string', { agent_id: 'string' });
   });
 
+  test('list', async () => {
+    const responsePromise = retellSdk.phoneNumber.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('list: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(retellSdk.phoneNumber.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      RetellSdk.NotFoundError,
+    );
+  });
+
   test('delete', async () => {
     const responsePromise = retellSdk.phoneNumber.delete('string');
     const rawResponse = await responsePromise.asResponse();

@@ -31,6 +31,13 @@ export class PhoneNumberResource extends APIResource {
   }
 
   /**
+   * List all phone numbers
+   */
+  list(options?: Core.RequestOptions): Core.APIPromise<PhoneNumberListResponse> {
+    return this._client.get('/list-phone-numbers', options);
+  }
+
+  /**
    * Delete an existing phone number
    */
   delete(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<void> {
@@ -72,6 +79,8 @@ export interface PhoneNumber {
   phone_number_pretty: string;
 }
 
+export type PhoneNumberListResponse = Array<PhoneNumber>;
+
 export interface PhoneNumberCreateParams {
   /**
    * Unique id of agent to bind to newly obtained number. The number will
@@ -96,6 +105,7 @@ export interface PhoneNumberUpdateParams {
 
 export namespace PhoneNumberResource {
   export import PhoneNumber = PhoneNumberAPI.PhoneNumber;
+  export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;
 }

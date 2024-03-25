@@ -21,6 +21,7 @@ export {
 } from './llm';
 export {
   PhoneNumber,
+  PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
   PhoneNumberResource,
