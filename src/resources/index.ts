@@ -15,6 +15,7 @@ export {
   LlmCreateResponse,
   LlmRetrieveResponse,
   LlmUpdateResponse,
+  LlmListResponse,
   LlmCreateParams,
   LlmUpdateParams,
   Llm,
