@@ -15,14 +15,12 @@ export {
   LlmCreateResponse,
   LlmRetrieveResponse,
   LlmUpdateResponse,
-  LlmListResponse,
   LlmCreateParams,
   LlmUpdateParams,
   Llm,
 } from './llm';
 export {
   PhoneNumber,
-  PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
   PhoneNumberResource,

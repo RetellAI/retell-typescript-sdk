@@ -195,7 +195,6 @@ export namespace RetellSdk {
 
   export import PhoneNumberResource = API.PhoneNumberResource;
   export import PhoneNumber = API.PhoneNumber;
-  export import PhoneNumberListResponse = API.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
 
@@ -209,7 +208,6 @@ export namespace RetellSdk {
   export import LlmCreateResponse = API.LlmCreateResponse;
   export import LlmRetrieveResponse = API.LlmRetrieveResponse;
   export import LlmUpdateResponse = API.LlmUpdateResponse;
-  export import LlmListResponse = API.LlmListResponse;
   export import LlmCreateParams = API.LlmCreateParams;
   export import LlmUpdateParams = API.LlmUpdateParams;
 }

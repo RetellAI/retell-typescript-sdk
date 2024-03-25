@@ -19,14 +19,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/phone-number.ts">PhoneNumber</a></code>
-- <code><a href="./src/resources/phone-number.ts">PhoneNumberListResponse</a></code>
 
 Methods:
 
 - <code title="post /create-phone-number">client.phoneNumber.<a href="./src/resources/phone-number.ts">create</a>({ ...params }) -> PhoneNumber</code>
 - <code title="get /get-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">retrieve</a>(phoneNumber) -> PhoneNumber</code>
 - <code title="patch /update-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">update</a>(phoneNumber, { ...params }) -> PhoneNumber</code>
-- <code title="get /list-phone-number">client.phoneNumber.<a href="./src/resources/phone-number.ts">list</a>() -> PhoneNumberListResponse</code>
 - <code title="delete /delete-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">delete</a>(phoneNumber) -> void</code>
 
 # Agent
@@ -51,12 +49,10 @@ Types:
 - <code><a href="./src/resources/llm.ts">LlmCreateResponse</a></code>
 - <code><a href="./src/resources/llm.ts">LlmRetrieveResponse</a></code>
 - <code><a href="./src/resources/llm.ts">LlmUpdateResponse</a></code>
-- <code><a href="./src/resources/llm.ts">LlmListResponse</a></code>
 
 Methods:
 
 - <code title="post /create-retell-llm">client.llm.<a href="./src/resources/llm.ts">create</a>({ ...params }) -> LlmCreateResponse</code>
 - <code title="get /get-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">retrieve</a>(llmId) -> LlmRetrieveResponse</code>
 - <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmId, { ...params }) -> LlmUpdateResponse</code>
-- <code title="get /list-retell-llm">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
 - <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>

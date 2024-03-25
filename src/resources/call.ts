@@ -138,6 +138,12 @@ export interface CallDetail {
   metadata?: unknown;
 
   /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   */
+  retell_llm_dynamic_variables?: Record<string, unknown>;
+
+  /**
    * The callee number. This field is storage purpose only, set this if you want the
    * call object to contain it so that it's easier to reference it. Not used for
    * processing, when we connect to your LLM websocket server, you can then get it
@@ -239,6 +245,12 @@ export interface CallCreateResponse {
    * object.
    */
   metadata?: unknown;
+
+  /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   */
+  retell_llm_dynamic_variables?: Record<string, unknown>;
 
   /**
    * The callee number. This field is storage purpose only, set this if you want the
@@ -346,6 +358,12 @@ export interface CallRegisterResponse {
   metadata?: unknown;
 
   /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   */
+  retell_llm_dynamic_variables?: Record<string, unknown>;
+
+  /**
    * The callee number. This field is storage purpose only, set this if you want the
    * call object to contain it so that it's easier to reference it. Not used for
    * processing, when we connect to your LLM websocket server, you can then get it
@@ -358,13 +376,14 @@ export interface CallCreateParams {
   phone_number: CallCreateParams.PhoneNumber;
 
   /**
-   * Unique id of agent used for the call. Your agent would contain the LLM Websocket
-   * url used for this call.
+   * For this particular call, override the agent used with this agent id. This does
+   * not bind the agent to this number, this is for one time override.
    */
   override_agent_id?: string;
 
   /**
-   * Add optional dynamic variables that injects into your Retell LLM prompt.
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 }
@@ -372,12 +391,12 @@ export interface CallCreateParams {
 export namespace CallCreateParams {
   export interface PhoneNumber {
     /**
-     * From a number you own
+     * The number you own in BCP 47 format.
      */
     from: string;
 
     /**
-     * To your customer number
+     * The number you want to call, in BCP 47 format.
      */
     to: string;
   }
@@ -498,7 +517,8 @@ export interface CallRegisterParams {
   metadata?: unknown;
 
   /**
-   * Add optional dynamic variables that injects into your Retell LLM prompt.
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
