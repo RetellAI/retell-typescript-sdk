@@ -46,7 +46,7 @@ describe('resource phoneNumbers', () => {
   });
 
   test('update: only required params', async () => {
-    const responsePromise = retellSdk.phoneNumbers.update('string', { general_prompt: 'string' });
+    const responsePromise = retellSdk.phoneNumbers.update('string', { agent_id: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -57,7 +57,7 @@ describe('resource phoneNumbers', () => {
   });
 
   test('update: required and optional params', async () => {
-    const response = await retellSdk.phoneNumbers.update('string', { general_prompt: 'string' });
+    const response = await retellSdk.phoneNumbers.update('string', { agent_id: 'string' });
   });
 
   test('list', async () => {

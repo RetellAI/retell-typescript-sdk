@@ -118,9 +118,9 @@ export interface PhoneNumberCreateParams {
 
 export interface PhoneNumberUpdateParams {
   /**
-   * General prompt used in every state.
+   * update agent used when a call connects.
    */
-  general_prompt: string;
+  agent_id: string;
 }
 
 export namespace PhoneNumbers {

@@ -53,14 +53,14 @@ export class RetellLlms extends APIResource {
 
 export interface RetellLlmCreateResponse {
   /**
-   * General prompt used in every state.
-   */
-  general_prompt: string;
-
-  /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
+
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt?: string;
 
   /**
    * Optional array of tools used in every state.
@@ -156,8 +156,6 @@ export namespace RetellLlmCreateResponse {
   export interface CustomTool {
     description: string;
 
-    execution_timing: 'immediate' | 'await_agent_turn';
-
     name: string;
 
     speak_after_execution: boolean;
@@ -280,8 +278,6 @@ export namespace RetellLlmCreateResponse {
     export interface CustomTool {
       description: string;
 
-      execution_timing: 'immediate' | 'await_agent_turn';
-
       name: string;
 
       speak_after_execution: boolean;
@@ -311,14 +307,14 @@ export namespace RetellLlmCreateResponse {
 
 export interface RetellLlmRetrieveResponse {
   /**
-   * General prompt used in every state.
-   */
-  general_prompt: string;
-
-  /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
+
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt?: string;
 
   /**
    * Optional array of tools used in every state.
@@ -414,8 +410,6 @@ export namespace RetellLlmRetrieveResponse {
   export interface CustomTool {
     description: string;
 
-    execution_timing: 'immediate' | 'await_agent_turn';
-
     name: string;
 
     speak_after_execution: boolean;
@@ -538,8 +532,6 @@ export namespace RetellLlmRetrieveResponse {
     export interface CustomTool {
       description: string;
 
-      execution_timing: 'immediate' | 'await_agent_turn';
-
       name: string;
 
       speak_after_execution: boolean;
@@ -569,14 +561,14 @@ export namespace RetellLlmRetrieveResponse {
 
 export interface RetellLlmUpdateResponse {
   /**
-   * General prompt used in every state.
-   */
-  general_prompt: string;
-
-  /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
+
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt?: string;
 
   /**
    * Optional array of tools used in every state.
@@ -672,8 +664,6 @@ export namespace RetellLlmUpdateResponse {
   export interface CustomTool {
     description: string;
 
-    execution_timing: 'immediate' | 'await_agent_turn';
-
     name: string;
 
     speak_after_execution: boolean;
@@ -796,8 +786,6 @@ export namespace RetellLlmUpdateResponse {
     export interface CustomTool {
       description: string;
 
-      execution_timing: 'immediate' | 'await_agent_turn';
-
       name: string;
 
       speak_after_execution: boolean;
@@ -830,14 +818,14 @@ export type RetellLlmListResponse = Array<RetellLlmListResponse.RetellLlmListRes
 export namespace RetellLlmListResponse {
   export interface RetellLlmListResponseItem {
     /**
-     * General prompt used in every state.
-     */
-    general_prompt: string;
-
-    /**
      * Optional first phrase said by the agent.
      */
     begin_message?: string;
+
+    /**
+     * General prompt used in every state.
+     */
+    general_prompt?: string;
 
     /**
      * Optional array of tools used in every state.
@@ -932,8 +920,6 @@ export namespace RetellLlmListResponse {
 
     export interface CustomTool {
       description: string;
-
-      execution_timing: 'immediate' | 'await_agent_turn';
 
       name: string;
 
@@ -1057,8 +1043,6 @@ export namespace RetellLlmListResponse {
       export interface CustomTool {
         description: string;
 
-        execution_timing: 'immediate' | 'await_agent_turn';
-
         name: string;
 
         speak_after_execution: boolean;
@@ -1089,14 +1073,14 @@ export namespace RetellLlmListResponse {
 
 export interface RetellLlmCreateParams {
   /**
-   * General prompt used in every state.
-   */
-  general_prompt: string;
-
-  /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
+
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt?: string;
 
   /**
    * Optional array of tools used in every state.
@@ -1181,8 +1165,6 @@ export namespace RetellLlmCreateParams {
   export interface CustomTool {
     description: string;
 
-    execution_timing: 'immediate' | 'await_agent_turn';
-
     name: string;
 
     speak_after_execution: boolean;
@@ -1305,8 +1287,6 @@ export namespace RetellLlmCreateParams {
     export interface CustomTool {
       description: string;
 
-      execution_timing: 'immediate' | 'await_agent_turn';
-
       name: string;
 
       speak_after_execution: boolean;
@@ -1336,14 +1316,14 @@ export namespace RetellLlmCreateParams {
 
 export interface RetellLlmUpdateParams {
   /**
-   * General prompt used in every state.
-   */
-  general_prompt: string;
-
-  /**
    * Optional first phrase said by the agent.
    */
   begin_message?: string;
+
+  /**
+   * General prompt used in every state.
+   */
+  general_prompt?: string;
 
   /**
    * Optional array of tools used in every state.
@@ -1428,8 +1408,6 @@ export namespace RetellLlmUpdateParams {
   export interface CustomTool {
     description: string;
 
-    execution_timing: 'immediate' | 'await_agent_turn';
-
     name: string;
 
     speak_after_execution: boolean;
@@ -1551,8 +1529,6 @@ export namespace RetellLlmUpdateParams {
 
     export interface CustomTool {
       description: string;
-
-      execution_timing: 'immediate' | 'await_agent_turn';
 
       name: string;
 
