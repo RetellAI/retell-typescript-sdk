@@ -46,19 +46,6 @@ export class AgentResource extends APIResource {
 
 export interface Agent {
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
-   */
-  llm_websocket_url: string;
-
-  /**
-   * Unique voice id used for the agent. Find list of available voices and their
-   * preview in Dashboard.
-   */
-  voice_id: string;
-
-  /**
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string;
@@ -140,6 +127,13 @@ export interface Agent {
     | 'pt-BR';
 
   /**
+   * The URL we will establish LLM websocket for getting response, usually your
+   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
+   * request format (sent from us) and response format (send to us).
+   */
+  llm_websocket_url?: string;
+
+  /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
@@ -152,6 +146,12 @@ export interface Agent {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * Unique voice id used for the agent. Find list of available voices and their
+   * preview in Dashboard.
+   */
+  voice_id?: string;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
