@@ -2,10 +2,8 @@
 
 import * as Core from './core';
 import * as Errors from './error';
-import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as Uploads from './uploads';
-import DigestFetch from 'digest-fetch';
 import * as qs from 'qs';
 import * as API from 'retell-sdk/resources/index';
 
@@ -97,7 +95,7 @@ export class RetellSdk extends Core.APIClient {
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.RetellSdkError(
-        'The RETELL_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: \'My API Key\' }).'
+        "The RETELL_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -140,7 +138,7 @@ export class RetellSdk extends Core.APIClient {
   }
 
   protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' })
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   static RetellSdk = this;
@@ -160,7 +158,21 @@ export class RetellSdk extends Core.APIClient {
   static UnprocessableEntityError = Errors.UnprocessableEntityError;
 }
 
-export const { RetellSdkError, APIError, APIConnectionError, APIConnectionTimeoutError, APIUserAbortError, NotFoundError, ConflictError, RateLimitError, BadRequestError, AuthenticationError, InternalServerError, PermissionDeniedError, UnprocessableEntityError } = Errors
+export const {
+  RetellSdkError,
+  APIError,
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIUserAbortError,
+  NotFoundError,
+  ConflictError,
+  RateLimitError,
+  BadRequestError,
+  AuthenticationError,
+  InternalServerError,
+  PermissionDeniedError,
+  UnprocessableEntityError,
+} = Errors;
 
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
