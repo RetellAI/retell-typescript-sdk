@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Core from 'retell-sdk/core';
-import { APIPromise } from 'retell-sdk/core';
 import { APIResource } from 'retell-sdk/resource';
-import { isRequestOptions } from 'retell-sdk/core';
-import { type Response } from 'retell-sdk/_shims/index';
 import * as LlmAPI from 'retell-sdk/resources/llm';
 
 export class Llm extends APIResource {
@@ -40,7 +37,10 @@ export class Llm extends APIResource {
    * Delete an existing Retell LLM
    */
   delete(llmId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-retell-llm/${llmId}`, { ...options, headers: { 'Accept': '*/*', ...options?.headers } });
+    return this._client.delete(`/delete-retell-llm/${llmId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
 }
 
@@ -87,7 +87,13 @@ export interface LlmResponse {
    *
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<LlmResponse.EndCallTool | LlmResponse.TransferCallTool | LlmResponse.CheckAvailabilityCalTool | LlmResponse.BookAppointmentCalTool | LlmResponse.CustomTool>;
+  general_tools?: Array<
+    | LlmResponse.EndCallTool
+    | LlmResponse.TransferCallTool
+    | LlmResponse.CheckAvailabilityCalTool
+    | LlmResponse.BookAppointmentCalTool
+    | LlmResponse.CustomTool
+  >;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -316,7 +322,13 @@ export namespace LlmResponse {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.CustomTool>;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    >;
   }
 
   export namespace State {
@@ -573,7 +585,7 @@ export namespace LlmResponse {
   }
 }
 
-export type LlmListResponse = Array<LlmResponse>
+export type LlmListResponse = Array<LlmResponse>;
 
 export interface LlmCreateParams {
   /**
@@ -601,7 +613,13 @@ export interface LlmCreateParams {
    *
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<LlmCreateParams.EndCallTool | LlmCreateParams.TransferCallTool | LlmCreateParams.CheckAvailabilityCalTool | LlmCreateParams.BookAppointmentCalTool | LlmCreateParams.CustomTool>;
+  general_tools?: Array<
+    | LlmCreateParams.EndCallTool
+    | LlmCreateParams.TransferCallTool
+    | LlmCreateParams.CheckAvailabilityCalTool
+    | LlmCreateParams.BookAppointmentCalTool
+    | LlmCreateParams.CustomTool
+  >;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -830,7 +848,13 @@ export namespace LlmCreateParams {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.CustomTool>;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    >;
   }
 
   export namespace State {
@@ -1113,7 +1137,13 @@ export interface LlmUpdateParams {
    *
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<LlmUpdateParams.EndCallTool | LlmUpdateParams.TransferCallTool | LlmUpdateParams.CheckAvailabilityCalTool | LlmUpdateParams.BookAppointmentCalTool | LlmUpdateParams.CustomTool>;
+  general_tools?: Array<
+    | LlmUpdateParams.EndCallTool
+    | LlmUpdateParams.TransferCallTool
+    | LlmUpdateParams.CheckAvailabilityCalTool
+    | LlmUpdateParams.BookAppointmentCalTool
+    | LlmUpdateParams.CustomTool
+  >;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1342,7 +1372,13 @@ export namespace LlmUpdateParams {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.CustomTool>;
+    tools?: Array<
+      | State.EndCallTool
+      | State.TransferCallTool
+      | State.CheckAvailabilityCalTool
+      | State.BookAppointmentCalTool
+      | State.CustomTool
+    >;
   }
 
   export namespace State {

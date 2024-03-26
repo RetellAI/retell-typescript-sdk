@@ -1,9 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellSdk, { toFile } from 'retell-sdk';
+import RetellSdk from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const retellSdk = new RetellSdk({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const retellSdk = new RetellSdk({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource phoneNumber', () => {
   test('create: only required params', async () => {
@@ -18,7 +21,10 @@ describe('resource phoneNumber', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await retellSdk.phoneNumber.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', area_code: 415 });
+    const response = await retellSdk.phoneNumber.create({
+      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      area_code: 415,
+    });
   });
 
   test('retrieve', async () => {
@@ -34,9 +40,9 @@ describe('resource phoneNumber', () => {
 
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.phoneNumber.retrieve('string', { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(RetellSdk.NotFoundError);
+    await expect(
+      retellSdk.phoneNumber.retrieve('string', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 
   test('update: only required params', async () => {
@@ -67,9 +73,9 @@ describe('resource phoneNumber', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.phoneNumber.list({ path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(RetellSdk.NotFoundError);
+    await expect(retellSdk.phoneNumber.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      RetellSdk.NotFoundError,
+    );
   });
 
   test('delete', async () => {
@@ -85,8 +91,8 @@ describe('resource phoneNumber', () => {
 
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.phoneNumber.delete('string', { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(RetellSdk.NotFoundError);
+    await expect(
+      retellSdk.phoneNumber.delete('string', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(RetellSdk.NotFoundError);
   });
 });
