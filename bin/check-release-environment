@@ -4,7 +4,7 @@ warnings=()
 errors=()
 
 if [ -z "${NPM_TOKEN}" ]; then
-  warnings+=("The RETELL_SDK_NPM_TOKEN secret has not been set. Please set it in either this repository's secrets or your organization secrets")
+  warnings+=("The RETELL_NPM_TOKEN secret has not been set. Please set it in either this repository's secrets or your organization secrets")
 fi
 
 lenWarnings=${#warnings[@]}

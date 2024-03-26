@@ -16,7 +16,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['RETELL_SDK_BASE_URL'].
+   * Defaults to process.env['RETELL_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -70,17 +70,17 @@ export interface ClientOptions {
   defaultQuery?: Core.DefaultQuery;
 }
 
-/** API Client for interfacing with the Retell Sdk API. */
-export class RetellSdk extends Core.APIClient {
+/** API Client for interfacing with the Retell API. */
+export class Retell extends Core.APIClient {
   apiKey: string;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Retell Sdk API.
+   * API Client for interfacing with the Retell API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['RETELL_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['RETELL_SDK_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['RETELL_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -89,13 +89,13 @@ export class RetellSdk extends Core.APIClient {
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = Core.readEnv('RETELL_SDK_BASE_URL'),
+    baseURL = Core.readEnv('RETELL_BASE_URL'),
     apiKey = Core.readEnv('RETELL_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.RetellSdkError(
-        "The RETELL_API_KEY environment variable is missing or empty; either provide it, or instantiate the RetellSdk client with an apiKey option, like new RetellSdk({ apiKey: 'My API Key' }).",
+      throw new Errors.RetellError(
+        "The RETELL_API_KEY environment variable is missing or empty; either provide it, or instantiate the Retell client with an apiKey option, like new Retell({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -141,9 +141,9 @@ export class RetellSdk extends Core.APIClient {
     return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
-  static RetellSdk = this;
+  static Retell = this;
 
-  static RetellSdkError = Errors.RetellSdkError;
+  static RetellError = Errors.RetellError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -159,7 +159,7 @@ export class RetellSdk extends Core.APIClient {
 }
 
 export const {
-  RetellSdkError,
+  RetellError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -177,7 +177,7 @@ export const {
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace RetellSdk {
+export namespace Retell {
   // Helper functions
   export import toFile = Uploads.toFile;
   export import fileFromPath = Uploads.fileFromPath;
@@ -212,4 +212,4 @@ export namespace RetellSdk {
   export import LlmUpdateParams = API.LlmUpdateParams;
 }
 
-export default RetellSdk;
+export default Retell;

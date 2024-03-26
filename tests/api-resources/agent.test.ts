@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import RetellSdk from 'retell-sdk';
+import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const retellSdk = new RetellSdk({
+const retell = new Retell({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource agent', () => {
   test('create: only required params', async () => {
-    const responsePromise = retellSdk.agent.create({
+    const responsePromise = retell.agent.create({
       llm_websocket_url: 'wss://your-websocket-endpoint',
       voice_id: '11labs-Adrian',
     });
@@ -24,7 +24,7 @@ describe('resource agent', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await retellSdk.agent.create({
+    const response = await retell.agent.create({
       llm_websocket_url: 'wss://your-websocket-endpoint',
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
@@ -42,7 +42,7 @@ describe('resource agent', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retellSdk.agent.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = retell.agent.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -55,12 +55,12 @@ describe('resource agent', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(RetellSdk.NotFoundError);
+      retell.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = retellSdk.agent.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = retell.agent.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -71,7 +71,7 @@ describe('resource agent', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retellSdk.agent.list();
+    const responsePromise = retell.agent.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -83,13 +83,13 @@ describe('resource agent', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retellSdk.agent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      RetellSdk.NotFoundError,
+    await expect(retell.agent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Retell.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retellSdk.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = retell.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -102,7 +102,7 @@ describe('resource agent', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retellSdk.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(RetellSdk.NotFoundError);
+      retell.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 });
