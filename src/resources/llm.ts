@@ -595,8 +595,7 @@ export interface LlmCreateParams {
   begin_message?: string;
 
   /**
-   * General prompt that's appended to system prompt no matter what state the agent
-   * is in.
+   * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
    *
@@ -1119,8 +1118,7 @@ export interface LlmUpdateParams {
   begin_message?: string;
 
   /**
-   * General prompt that's appended to system prompt no matter what state the agent
-   * is in.
+   * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
    *
