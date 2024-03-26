@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0 (2024-03-26)
+
+Full Changelog: [v0.1.0-alpha.3...v3.0.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v0.1.0-alpha.3...v3.0.0)
+
+### Features
+
+* **api:** update via SDK Studio ([#13](https://github.com/RetellAI/retell-typescript-sdk/issues/13)) ([5cc5c8e](https://github.com/RetellAI/retell-typescript-sdk/commit/5cc5c8edd25c963d9ff4f3e55385f8831c56ed35))
+
 ## 0.1.0-alpha.3 (2024-03-26)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/RetellAI/retell-typescript-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
