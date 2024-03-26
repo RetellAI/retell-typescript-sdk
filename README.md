@@ -224,7 +224,7 @@ import RetellSdk from 'retell-sdk';
 ```
 
 To do the inverse, add `import "retell-sdk/shims/node"` (which does import polyfills).
-This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/RetellAI/retell-typescript-sdk/tree/stainless/src/_shims#readme)).
+This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/RetellAI/retell-typescript-sdk/tree/main/src/_shims#readme)).
 
 ### Logging and middleware
 
