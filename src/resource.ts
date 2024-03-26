@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { RetellSdk } from './index';
+import type { Retell } from './index';
 
 export class APIResource {
-  protected _client: RetellSdk;
+  protected _client: Retell;
 
-  constructor(client: RetellSdk) {
+  constructor(client: Retell) {
     this._client = client;
   }
 }
