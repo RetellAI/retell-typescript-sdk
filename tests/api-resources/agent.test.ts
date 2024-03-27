@@ -33,7 +33,7 @@ describe('resource agent', () => {
       enable_backchannel: true,
       format_text: true,
       language: 'en-US',
-      optOutSensitiveDataStorage: true,
+      opt_out_sensitive_data_storage: true,
       responsiveness: 1,
       voice_speed: 1,
       voice_temperature: 1,
