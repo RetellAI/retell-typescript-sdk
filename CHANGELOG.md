@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.1.0 (2024-03-27)
+
+Full Changelog: [v3.0.0...v3.1.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.0.0...v3.1.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#22](https://github.com/RetellAI/retell-typescript-sdk/issues/22)) ([a56af5d](https://github.com/RetellAI/retell-typescript-sdk/commit/a56af5de57cdf020c331fa26165ed5309ba74145))
+* **api:** update via SDK Studio ([#15](https://github.com/RetellAI/retell-typescript-sdk/issues/15)) ([70b23eb](https://github.com/RetellAI/retell-typescript-sdk/commit/70b23ebc8b688ccff5e3fdbb0a4090a704006074))
+* **api:** update via SDK Studio ([#17](https://github.com/RetellAI/retell-typescript-sdk/issues/17)) ([d3e8a75](https://github.com/RetellAI/retell-typescript-sdk/commit/d3e8a756529fc5f54d62e77525bbc781299c840a))
+* **api:** update via SDK Studio ([#18](https://github.com/RetellAI/retell-typescript-sdk/issues/18)) ([f1cc79e](https://github.com/RetellAI/retell-typescript-sdk/commit/f1cc79ed6e387caa289a26c96c13d310ffc2ddcd))
+* **api:** update via SDK Studio ([#19](https://github.com/RetellAI/retell-typescript-sdk/issues/19)) ([5ed4414](https://github.com/RetellAI/retell-typescript-sdk/commit/5ed44148dfb0fb8bdf45cbfa606cb5da8a826c22))
+* **api:** update via SDK Studio ([#20](https://github.com/RetellAI/retell-typescript-sdk/issues/20)) ([1dd6bc4](https://github.com/RetellAI/retell-typescript-sdk/commit/1dd6bc44088585a85200fe76d678777e4703a9e9))
+* **api:** update via SDK Studio ([#21](https://github.com/RetellAI/retell-typescript-sdk/issues/21)) ([f810f4e](https://github.com/RetellAI/retell-typescript-sdk/commit/f810f4e95f9e62053d817b31f2b731b85aba926a))
+* **api:** update via SDK Studio ([#23](https://github.com/RetellAI/retell-typescript-sdk/issues/23)) ([560bbc5](https://github.com/RetellAI/retell-typescript-sdk/commit/560bbc5498ee98155da9f0caabd0fddf8259e5be))
+* **api:** update via SDK Studio ([#24](https://github.com/RetellAI/retell-typescript-sdk/issues/24)) ([a5c3e28](https://github.com/RetellAI/retell-typescript-sdk/commit/a5c3e283525c1c3e536450e7197eb85a76268c94))
+* **api:** update via SDK Studio ([#25](https://github.com/RetellAI/retell-typescript-sdk/issues/25)) ([c47e029](https://github.com/RetellAI/retell-typescript-sdk/commit/c47e029d8044c9e1260dad8414c7cbb2a7bbd8f2))
+* **api:** update via SDK Studio ([#26](https://github.com/RetellAI/retell-typescript-sdk/issues/26)) ([f60bcd6](https://github.com/RetellAI/retell-typescript-sdk/commit/f60bcd69827051106b867220c2a0fdc755376f2c))
+* **api:** update via SDK Studio ([#27](https://github.com/RetellAI/retell-typescript-sdk/issues/27)) ([477e5ed](https://github.com/RetellAI/retell-typescript-sdk/commit/477e5ed75137e683dc221617be7a9401c242cdee))
+
 ## 3.0.0 (2024-03-26)
 
 Full Changelog: [v0.1.0-alpha.3...v3.0.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v0.1.0-alpha.3...v3.0.0)

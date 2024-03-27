@@ -66,17 +66,16 @@ export interface LlmResponse {
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
-  begin_message?: string;
+  begin_message?: string | null;
 
   /**
-   * General prompt that's appended to system prompt no matter what state the agent
-   * is in.
+   * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
    *
    * - System prompt (no state) = general prompt.
    */
-  general_prompt?: string;
+  general_prompt?: string | null;
 
   /**
    * A list of tools the model may call (to get external knowledge, call API, etc).
@@ -93,12 +92,12 @@ export interface LlmResponse {
     | LlmResponse.CheckAvailabilityCalTool
     | LlmResponse.BookAppointmentCalTool
     | LlmResponse.CustomTool
-  >;
+  > | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
    */
-  starting_state?: string;
+  starting_state?: string | null;
 
   /**
    * States of the LLM. This is to help reduce prompt length and tool choices when
@@ -107,7 +106,7 @@ export interface LlmResponse {
    * If this field is not set, the agent would only have general prompt and general
    * tools (essentially one state).
    */
-  states?: Array<LlmResponse.State>;
+  states?: Array<LlmResponse.State> | null;
 }
 
 export namespace LlmResponse {
@@ -592,7 +591,7 @@ export interface LlmCreateParams {
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
-  begin_message?: string;
+  begin_message?: string | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
@@ -601,7 +600,7 @@ export interface LlmCreateParams {
    *
    * - System prompt (no state) = general prompt.
    */
-  general_prompt?: string;
+  general_prompt?: string | null;
 
   /**
    * A list of tools the model may call (to get external knowledge, call API, etc).
@@ -618,12 +617,12 @@ export interface LlmCreateParams {
     | LlmCreateParams.CheckAvailabilityCalTool
     | LlmCreateParams.BookAppointmentCalTool
     | LlmCreateParams.CustomTool
-  >;
+  > | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
    */
-  starting_state?: string;
+  starting_state?: string | null;
 
   /**
    * States of the LLM. This is to help reduce prompt length and tool choices when
@@ -632,7 +631,7 @@ export interface LlmCreateParams {
    * If this field is not set, the agent would only have general prompt and general
    * tools (essentially one state).
    */
-  states?: Array<LlmCreateParams.State>;
+  states?: Array<LlmCreateParams.State> | null;
 }
 
 export namespace LlmCreateParams {
@@ -1115,7 +1114,7 @@ export interface LlmUpdateParams {
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
-  begin_message?: string;
+  begin_message?: string | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
@@ -1124,7 +1123,7 @@ export interface LlmUpdateParams {
    *
    * - System prompt (no state) = general prompt.
    */
-  general_prompt?: string;
+  general_prompt?: string | null;
 
   /**
    * A list of tools the model may call (to get external knowledge, call API, etc).
@@ -1141,12 +1140,12 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.CheckAvailabilityCalTool
     | LlmUpdateParams.BookAppointmentCalTool
     | LlmUpdateParams.CustomTool
-  >;
+  > | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
    */
-  starting_state?: string;
+  starting_state?: string | null;
 
   /**
    * States of the LLM. This is to help reduce prompt length and tool choices when
@@ -1155,7 +1154,7 @@ export interface LlmUpdateParams {
    * If this field is not set, the agent would only have general prompt and general
    * tools (essentially one state).
    */
-  states?: Array<LlmUpdateParams.State>;
+  states?: Array<LlmUpdateParams.State> | null;
 }
 
 export namespace LlmUpdateParams {

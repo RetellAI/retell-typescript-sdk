@@ -4,7 +4,7 @@ import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
 const retell = new Retell({
-  apiKey: 'My API Key',
+  apiKey: 'YOUR_RETELL_API_KEY',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
@@ -33,7 +33,7 @@ describe('resource agent', () => {
       enable_backchannel: true,
       format_text: true,
       language: 'en-US',
-      optOutSensitiveDataStorage: true,
+      opt_out_sensitive_data_storage: true,
       responsiveness: 1,
       voice_speed: 1,
       voice_temperature: 1,

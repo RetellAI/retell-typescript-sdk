@@ -2,10 +2,9 @@
 
 export { AgentResponse, AgentListResponse, AgentCreateParams, AgentUpdateParams, Agent } from './agent';
 export {
-  CallDetailResponse,
-  CallCreateResponse,
+  CallResponse,
+  RegisterCallResponse,
   CallListResponse,
-  CallRegisterResponse,
   CallCreateParams,
   CallListParams,
   CallRegisterParams,

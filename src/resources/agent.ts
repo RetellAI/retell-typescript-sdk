@@ -76,7 +76,7 @@ export interface AgentResponse {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -95,16 +95,16 @@ export interface AgentResponse {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -134,6 +134,8 @@ export interface AgentResponse {
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
    *
+   * If unset, will use default value `en-US`.
+   *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
    *
@@ -156,9 +158,10 @@ export interface AgentResponse {
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -187,9 +190,9 @@ export interface AgentResponse {
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -211,7 +214,7 @@ export interface AgentCreateParams {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -230,16 +233,16 @@ export interface AgentCreateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -269,6 +272,8 @@ export interface AgentCreateParams {
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
    *
+   * If unset, will use default value `en-US`.
+   *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
    *
@@ -291,9 +296,10 @@ export interface AgentCreateParams {
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -322,16 +328,16 @@ export interface AgentCreateParams {
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export interface AgentUpdateParams {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -350,16 +356,16 @@ export interface AgentUpdateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -388,6 +394,8 @@ export interface AgentUpdateParams {
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
+   *
+   * If unset, will use default value `en-US`.
    *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
@@ -418,9 +426,10 @@ export interface AgentUpdateParams {
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -455,9 +464,9 @@ export interface AgentUpdateParams {
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export namespace Agent {
