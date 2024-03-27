@@ -169,6 +169,20 @@ describe('instantiate client', () => {
     const client2 = new Retell({ apiKey: 'My API Key' });
     expect(client2.maxRetries).toEqual(2);
   });
+
+  test('with environment variable arguments', () => {
+    // set options via env var
+    process.env['ORG_AUTH_TOKEN'] = 'My API Key';
+    const client = new Retell();
+    expect(client.apiKey).toBe('My API Key');
+  });
+
+  test('with overriden environment variable arguments', () => {
+    // set options via env var
+    process.env['ORG_AUTH_TOKEN'] = 'another My API Key';
+    const client = new Retell({ apiKey: 'My API Key' });
+    expect(client.apiKey).toBe('My API Key');
+  });
 });
 
 describe('request building', () => {
