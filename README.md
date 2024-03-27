@@ -6,8 +6,6 @@ This library provides convenient access to the Retell REST API from server-side 
 
 The REST API documentation can be found [on docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
-
 ## Installation
 
 ```sh
