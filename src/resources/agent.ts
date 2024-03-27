@@ -76,7 +76,7 @@ export interface AgentResponse {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -95,16 +95,16 @@ export interface AgentResponse {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -112,7 +112,7 @@ export interface AgentResponse {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean;
+  enable_backchannel?: boolean | null;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -121,7 +121,7 @@ export interface AgentResponse {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean;
+  format_text?: boolean | null;
 
   /**
    * `Beta feature, use with caution.`
@@ -133,6 +133,8 @@ export interface AgentResponse {
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
+   *
+   * If unset, will use default value `en-US`.
    *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
@@ -152,13 +154,14 @@ export interface AgentResponse {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | null;
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean | null;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -166,14 +169,14 @@ export interface AgentResponse {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number;
+  responsiveness?: number | null;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number;
+  voice_speed?: number | null;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -181,15 +184,15 @@ export interface AgentResponse {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number;
+  voice_temperature?: number | null;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -211,7 +214,7 @@ export interface AgentCreateParams {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -230,16 +233,16 @@ export interface AgentCreateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -247,7 +250,7 @@ export interface AgentCreateParams {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean;
+  enable_backchannel?: boolean | null;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -256,7 +259,7 @@ export interface AgentCreateParams {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean;
+  format_text?: boolean | null;
 
   /**
    * `Beta feature, use with caution.`
@@ -268,6 +271,8 @@ export interface AgentCreateParams {
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
+   *
+   * If unset, will use default value `en-US`.
    *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
@@ -287,13 +292,14 @@ export interface AgentCreateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | null;
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean | null;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -301,14 +307,14 @@ export interface AgentCreateParams {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number;
+  responsiveness?: number | null;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number;
+  voice_speed?: number | null;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -316,22 +322,22 @@ export interface AgentCreateParams {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number;
+  voice_temperature?: number | null;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export interface AgentUpdateParams {
   /**
    * The name of the agent. Only used for your own reference.
    */
-  agent_name?: string;
+  agent_name?: string | null;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -350,16 +356,16 @@ export interface AgentUpdateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to string `null` to remove ambient sound from this agent.
+   * Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'null';
+  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
    * these words are more likely to get transcribed. Commonly used for names, brands,
    * street, etc.
    */
-  boosted_keywords?: Array<string>;
+  boosted_keywords?: Array<string> | null;
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -367,7 +373,7 @@ export interface AgentUpdateParams {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean;
+  enable_backchannel?: boolean | null;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -376,7 +382,7 @@ export interface AgentUpdateParams {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean;
+  format_text?: boolean | null;
 
   /**
    * `Beta feature, use with caution.`
@@ -388,6 +394,8 @@ export interface AgentUpdateParams {
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English, yet text-to-speech output will be in standard English. If
    * dialect-specific text-to-speech is required, please contact us for support.
+   *
+   * If unset, will use default value `en-US`.
    *
    * - `11lab voices`: supports English(en), German(de), Spanish(es), Hindi(hi),
    *   Portuguese(pt)
@@ -407,7 +415,8 @@ export interface AgentUpdateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | null;
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your
@@ -420,7 +429,7 @@ export interface AgentUpdateParams {
    * Disable transcripts and recordings storage for enhanced privacy. Access
    * transcripts securely via webhooks.
    */
-  optOutSensitiveDataStorage?: boolean;
+  opt_out_sensitive_data_storage?: boolean | null;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -428,7 +437,7 @@ export interface AgentUpdateParams {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number;
+  responsiveness?: number | null;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -441,7 +450,7 @@ export interface AgentUpdateParams {
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number;
+  voice_speed?: number | null;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -449,15 +458,15 @@ export interface AgentUpdateParams {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number;
+  voice_temperature?: number | null;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
-   * agent. Set to string `null` to remove webhook url from this agent.
+   * agent. Set to `null` to remove webhook url from this agent.
    */
-  webhook_url?: string;
+  webhook_url?: string | null;
 }
 
 export namespace Agent {
