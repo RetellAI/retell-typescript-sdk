@@ -112,7 +112,7 @@ export interface AgentResponse {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean | null;
+  enable_backchannel?: boolean;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -121,7 +121,7 @@ export interface AgentResponse {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean | null;
+  format_text?: boolean;
 
   /**
    * `Beta feature, use with caution.`
@@ -154,14 +154,14 @@ export interface AgentResponse {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR'
-    | null;
+    | 'pt-BR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  opt_out_sensitive_data_storage?: boolean | null;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -169,14 +169,14 @@ export interface AgentResponse {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number | null;
+  responsiveness?: number;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number | null;
+  voice_speed?: number;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -184,7 +184,7 @@ export interface AgentResponse {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number | null;
+  voice_temperature?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -250,7 +250,7 @@ export interface AgentCreateParams {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean | null;
+  enable_backchannel?: boolean;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -259,7 +259,7 @@ export interface AgentCreateParams {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean | null;
+  format_text?: boolean;
 
   /**
    * `Beta feature, use with caution.`
@@ -292,14 +292,14 @@ export interface AgentCreateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR'
-    | null;
+    | 'pt-BR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  opt_out_sensitive_data_storage?: boolean | null;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -307,14 +307,14 @@ export interface AgentCreateParams {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number | null;
+  responsiveness?: number;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number | null;
+  voice_speed?: number;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -322,7 +322,7 @@ export interface AgentCreateParams {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number | null;
+  voice_temperature?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -373,7 +373,7 @@ export interface AgentUpdateParams {
    * when enabled tends to show up more in longer user utterances. If not set, agent
    * will not backchannel.
    */
-  enable_backchannel?: boolean | null;
+  enable_backchannel?: boolean;
 
   /**
    * Whether to format the transcribed text with inverse text normalization. It
@@ -382,7 +382,7 @@ export interface AgentUpdateParams {
    * twenty two" can be converted into "february 4th 2022". If not set, the default
    * is true.
    */
-  format_text?: boolean | null;
+  format_text?: boolean;
 
   /**
    * `Beta feature, use with caution.`
@@ -415,8 +415,7 @@ export interface AgentUpdateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR'
-    | null;
+    | 'pt-BR';
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your
@@ -427,9 +426,10 @@ export interface AgentUpdateParams {
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks.
+   * transcripts securely via webhooks. If not set, default value of false will
+   * apply.
    */
-  opt_out_sensitive_data_storage?: boolean | null;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -437,7 +437,7 @@ export interface AgentUpdateParams {
    * means faster exchanges (respond when it can). If unset, default value 1 will
    * apply.
    */
-  responsiveness?: number | null;
+  responsiveness?: number;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -450,7 +450,7 @@ export interface AgentUpdateParams {
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
    */
-  voice_speed?: number | null;
+  voice_speed?: number;
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
@@ -458,7 +458,7 @@ export interface AgentUpdateParams {
    * this setting only applies to `11labs` voices. If unset, default value 1 will
    * apply.
    */
-  voice_temperature?: number | null;
+  voice_temperature?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
