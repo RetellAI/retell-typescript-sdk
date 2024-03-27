@@ -23,7 +23,7 @@ describe('instantiate client', () => {
     const client = new Retell({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
-      apiKey: 'RETELL_API_KEY',
+      apiKey: 'YOUR_RETELL_API_KEY',
     });
 
     test('they are used in the request', () => {
@@ -55,7 +55,7 @@ describe('instantiate client', () => {
       const client = new Retell({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
-        apiKey: 'RETELL_API_KEY',
+        apiKey: 'YOUR_RETELL_API_KEY',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
     });
@@ -64,7 +64,7 @@ describe('instantiate client', () => {
       const client = new Retell({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
-        apiKey: 'RETELL_API_KEY',
+        apiKey: 'YOUR_RETELL_API_KEY',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
     });
@@ -73,7 +73,7 @@ describe('instantiate client', () => {
       const client = new Retell({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
-        apiKey: 'RETELL_API_KEY',
+        apiKey: 'YOUR_RETELL_API_KEY',
       });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
     });
@@ -82,7 +82,7 @@ describe('instantiate client', () => {
   test('custom fetch', async () => {
     const client = new Retell({
       baseURL: 'http://localhost:5000/',
-      apiKey: 'RETELL_API_KEY',
+      apiKey: 'YOUR_RETELL_API_KEY',
       fetch: (url) => {
         return Promise.resolve(
           new Response(JSON.stringify({ url, custom: true }), {
@@ -99,7 +99,7 @@ describe('instantiate client', () => {
   test('custom signal', async () => {
     const client = new Retell({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-      apiKey: 'RETELL_API_KEY',
+      apiKey: 'YOUR_RETELL_API_KEY',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
           setTimeout(
@@ -124,12 +124,18 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new Retell({ baseURL: 'http://localhost:5000/custom/path/', apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({
+        baseURL: 'http://localhost:5000/custom/path/',
+        apiKey: 'YOUR_RETELL_API_KEY',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new Retell({ baseURL: 'http://localhost:5000/custom/path', apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({
+        baseURL: 'http://localhost:5000/custom/path',
+        apiKey: 'YOUR_RETELL_API_KEY',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
@@ -138,41 +144,41 @@ describe('instantiate client', () => {
     });
 
     test('explicit option', () => {
-      const client = new Retell({ baseURL: 'https://example.com', apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({ baseURL: 'https://example.com', apiKey: 'YOUR_RETELL_API_KEY' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
       process.env['RETELL_BASE_URL'] = 'https://example.com/from_env';
-      const client = new Retell({ apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['RETELL_BASE_URL'] = ''; // empty
-      const client = new Retell({ apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
       expect(client.baseURL).toEqual('https://api.retellai.com');
     });
 
     test('blank env variable', () => {
       process.env['RETELL_BASE_URL'] = '  '; // blank
-      const client = new Retell({ apiKey: 'RETELL_API_KEY' });
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
       expect(client.baseURL).toEqual('https://api.retellai.com');
     });
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new Retell({ maxRetries: 4, apiKey: 'RETELL_API_KEY' });
+    const client = new Retell({ maxRetries: 4, apiKey: 'YOUR_RETELL_API_KEY' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Retell({ apiKey: 'RETELL_API_KEY' });
+    const client2 = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
     expect(client2.maxRetries).toEqual(2);
   });
 });
 
 describe('request building', () => {
-  const client = new Retell({ apiKey: 'RETELL_API_KEY' });
+  const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
 
   describe('Content-Length', () => {
     test('handles multi-byte characters', () => {
@@ -214,7 +220,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Retell({ apiKey: 'RETELL_API_KEY', timeout: 10, fetch: testFetch });
+    const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -241,7 +247,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Retell({ apiKey: 'RETELL_API_KEY', fetch: testFetch });
+    const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -268,7 +274,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Retell({ apiKey: 'RETELL_API_KEY', fetch: testFetch });
+    const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
