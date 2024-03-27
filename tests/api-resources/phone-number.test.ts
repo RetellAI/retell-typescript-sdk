@@ -3,7 +3,10 @@
 import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const retell = new Retell({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
+const retell = new Retell({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource phoneNumber', () => {
   test('create: only required params', async () => {
