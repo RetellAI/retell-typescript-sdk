@@ -16,7 +16,7 @@ export class Call extends APIResource {
   /**
    * Retrieve details of a specific call
    */
-  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallDetailResponse> {
+  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallResponse> {
     return this._client.get(`/get-call/${callId}`, options);
   }
 
@@ -43,7 +43,7 @@ export class Call extends APIResource {
   }
 }
 
-export interface CallDetailResponse {
+export interface CallResponse {
   /**
    * Corresponding agent id of this call.
    */
@@ -261,7 +261,7 @@ export interface CallCreateResponse {
   to_number?: string;
 }
 
-export type CallListResponse = Array<CallDetailResponse>;
+export type CallListResponse = Array<CallResponse>;
 
 export interface CallRegisterResponse {
   /**
@@ -532,7 +532,7 @@ export interface CallRegisterParams {
 }
 
 export namespace Call {
-  export import CallDetailResponse = CallAPI.CallDetailResponse;
+  export import CallResponse = CallAPI.CallResponse;
   export import CallCreateResponse = CallAPI.CallCreateResponse;
   export import CallListResponse = CallAPI.CallListResponse;
   export import CallRegisterResponse = CallAPI.CallRegisterResponse;
