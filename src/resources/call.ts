@@ -111,11 +111,6 @@ export interface CallResponse {
   sample_rate: number;
 
   /**
-   * Begin timestamp (milliseconds since epoch) of the call.
-   */
-  start_timestamp: number;
-
-  /**
    * End to end latency (from user stops talking to agent start talking) tracking of
    * the call, available after call ends. This latency does not account for the
    * network trip time from Retell server to user frontend.
@@ -166,6 +161,12 @@ export interface CallResponse {
    * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
+
+  /**
+   * Begin timestamp (milliseconds since epoch) of the call. Available after call
+   * starts.
+   */
+  start_timestamp?: number;
 
   /**
    * The callee number. This field is storage purpose only, set this if you want the
@@ -338,11 +339,6 @@ export interface RegisterCallResponse {
    *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
    */
   sample_rate: number;
-
-  /**
-   * Begin timestamp (milliseconds since epoch) of the call.
-   */
-  start_timestamp: number;
 
   /**
    * If users stay silent for a period, end the call. By default, it is set to
