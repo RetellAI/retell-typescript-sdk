@@ -347,16 +347,6 @@ export namespace LlmResponse {
       destination_state_name: string;
 
       /**
-       * After the state transitions, the agent would speak based on the new prompt and
-       * tools in the new state. This bit here controls whether to speak a transition
-       * sentence during the transition (so agent would say sentences like "Let's move on
-       * to the next section to help you set up an acount.", and state transitions, and
-       * agent continue to speak.). Usually this is not necessary, and is recommended to
-       * set to false to avoid LLM repeating itself during and after transition.
-       */
-      speak_during_transition: boolean;
-
-      /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
        * descriptions of later states via dynamic variables. The parameters the functions
@@ -872,16 +862,6 @@ export namespace LlmCreateParams {
       destination_state_name: string;
 
       /**
-       * After the state transitions, the agent would speak based on the new prompt and
-       * tools in the new state. This bit here controls whether to speak a transition
-       * sentence during the transition (so agent would say sentences like "Let's move on
-       * to the next section to help you set up an acount.", and state transitions, and
-       * agent continue to speak.). Usually this is not necessary, and is recommended to
-       * set to false to avoid LLM repeating itself during and after transition.
-       */
-      speak_during_transition: boolean;
-
-      /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
        * descriptions of later states via dynamic variables. The parameters the functions
@@ -1393,16 +1373,6 @@ export namespace LlmUpdateParams {
        * free to reference it inside the prompt.
        */
       destination_state_name: string;
-
-      /**
-       * After the state transitions, the agent would speak based on the new prompt and
-       * tools in the new state. This bit here controls whether to speak a transition
-       * sentence during the transition (so agent would say sentences like "Let's move on
-       * to the next section to help you set up an acount.", and state transitions, and
-       * agent continue to speak.). Usually this is not necessary, and is recommended to
-       * set to false to avoid LLM repeating itself during and after transition.
-       */
-      speak_during_transition: boolean;
 
       /**
        * Describes what parameters you want to extract out when the transition changes.
