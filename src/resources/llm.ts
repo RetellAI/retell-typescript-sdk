@@ -113,7 +113,9 @@ export namespace LlmResponse {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -161,7 +163,9 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -195,7 +199,9 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -223,7 +229,9 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -297,7 +305,9 @@ export namespace LlmResponse {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state.
+     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -390,7 +400,9 @@ export namespace LlmResponse {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -438,7 +450,9 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -472,7 +486,9 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -500,7 +516,9 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
        */
       name: string;
 
@@ -628,7 +646,9 @@ export namespace LlmCreateParams {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -676,7 +696,9 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -710,7 +732,9 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -738,7 +762,9 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -812,7 +838,9 @@ export namespace LlmCreateParams {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state.
+     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -905,7 +933,9 @@ export namespace LlmCreateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -953,7 +983,9 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -987,7 +1019,9 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -1015,7 +1049,9 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
        */
       name: string;
 
@@ -1141,7 +1177,9 @@ export namespace LlmUpdateParams {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -1189,7 +1227,9 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -1223,7 +1263,9 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -1251,7 +1293,9 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -1325,7 +1369,9 @@ export namespace LlmUpdateParams {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state.
+     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
      */
     name: string;
 
@@ -1418,7 +1464,9 @@ export namespace LlmUpdateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -1466,7 +1514,9 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -1500,7 +1550,9 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -1528,7 +1580,9 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
        */
       name: string;
 
