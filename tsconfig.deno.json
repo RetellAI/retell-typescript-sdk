@@ -9,7 +9,6 @@
       "retell-sdk/_shims/auto/*": ["deno/_shims/auto/*-deno"],
       "retell-sdk/*": ["deno/*"],
       "retell-sdk": ["deno/index.ts"],
-      "digest-fetch": ["./typings/digest-fetch"]
     },
     "noEmit": true,
     "declaration": true,
