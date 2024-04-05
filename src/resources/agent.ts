@@ -115,15 +115,6 @@ export interface AgentResponse {
   enable_backchannel?: boolean;
 
   /**
-   * Whether to format the transcribed text with inverse text normalization. It
-   * transforms the spoken form of text into written form for entities like phone
-   * number, email address, street address, etc. For example, "february fourth twenty
-   * twenty two" can be converted into "february 4th 2022". If not set, the default
-   * is true.
-   */
-  format_text?: boolean;
-
-  /**
    * `Beta feature, use with caution.`
    *
    * This setting specifies the agent's operational language, including base language
@@ -253,15 +244,6 @@ export interface AgentCreateParams {
   enable_backchannel?: boolean;
 
   /**
-   * Whether to format the transcribed text with inverse text normalization. It
-   * transforms the spoken form of text into written form for entities like phone
-   * number, email address, street address, etc. For example, "february fourth twenty
-   * twenty two" can be converted into "february 4th 2022". If not set, the default
-   * is true.
-   */
-  format_text?: boolean;
-
-  /**
    * `Beta feature, use with caution.`
    *
    * This setting specifies the agent's operational language, including base language
@@ -374,15 +356,6 @@ export interface AgentUpdateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
-
-  /**
-   * Whether to format the transcribed text with inverse text normalization. It
-   * transforms the spoken form of text into written form for entities like phone
-   * number, email address, street address, etc. For example, "february fourth twenty
-   * twenty two" can be converted into "february 4th 2022". If not set, the default
-   * is true.
-   */
-  format_text?: boolean;
 
   /**
    * `Beta feature, use with caution.`
