@@ -95,6 +95,13 @@ export interface LlmResponse {
   > | null;
 
   /**
+   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
+   * to it to retrieve dynamic variables to use for the call. Without this, there's
+   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   */
+  inbound_dynamic_variables_webhook_url?: string | null;
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -628,6 +635,13 @@ export interface LlmCreateParams {
   > | null;
 
   /**
+   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
+   * to it to retrieve dynamic variables to use for the call. Without this, there's
+   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   */
+  inbound_dynamic_variables_webhook_url?: string | null;
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -1157,6 +1171,13 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.BookAppointmentCalTool
     | LlmUpdateParams.CustomTool
   > | null;
+
+  /**
+   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
+   * to it to retrieve dynamic variables to use for the call. Without this, there's
+   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   */
+  inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
