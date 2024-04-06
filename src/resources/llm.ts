@@ -129,7 +129,8 @@ export namespace LlmResponse {
     type: 'end_call';
 
     /**
-     * Describes when to end the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -150,7 +151,8 @@ export namespace LlmResponse {
     type: 'transfer_call';
 
     /**
-     * Describes when to transfer the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -179,7 +181,8 @@ export namespace LlmResponse {
     type: 'check_availability_cal';
 
     /**
-     * Describes when to check availability.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -215,7 +218,8 @@ export namespace LlmResponse {
     type: 'book_appointment_cal';
 
     /**
-     * Describes when to book the appointment.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -260,8 +264,8 @@ export namespace LlmResponse {
     type: 'custom';
 
     /**
-     * The URL we will post the function name and arguments to get a result for the
-     * function. Usually this is your server.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     url: string;
 
@@ -416,7 +420,8 @@ export namespace LlmResponse {
       type: 'end_call';
 
       /**
-       * Describes when to end the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -437,7 +442,8 @@ export namespace LlmResponse {
       type: 'transfer_call';
 
       /**
-       * Describes when to transfer the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -466,7 +472,8 @@ export namespace LlmResponse {
       type: 'check_availability_cal';
 
       /**
-       * Describes when to check availability.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -502,7 +509,8 @@ export namespace LlmResponse {
       type: 'book_appointment_cal';
 
       /**
-       * Describes when to book the appointment.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -547,8 +555,8 @@ export namespace LlmResponse {
       type: 'custom';
 
       /**
-       * The URL we will post the function name and arguments to get a result for the
-       * function. Usually this is your server.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       url: string;
 
@@ -669,7 +677,8 @@ export namespace LlmCreateParams {
     type: 'end_call';
 
     /**
-     * Describes when to end the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -690,7 +699,8 @@ export namespace LlmCreateParams {
     type: 'transfer_call';
 
     /**
-     * Describes when to transfer the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -719,7 +729,8 @@ export namespace LlmCreateParams {
     type: 'check_availability_cal';
 
     /**
-     * Describes when to check availability.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -755,7 +766,8 @@ export namespace LlmCreateParams {
     type: 'book_appointment_cal';
 
     /**
-     * Describes when to book the appointment.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -800,8 +812,8 @@ export namespace LlmCreateParams {
     type: 'custom';
 
     /**
-     * The URL we will post the function name and arguments to get a result for the
-     * function. Usually this is your server.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     url: string;
 
@@ -956,7 +968,8 @@ export namespace LlmCreateParams {
       type: 'end_call';
 
       /**
-       * Describes when to end the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -977,7 +990,8 @@ export namespace LlmCreateParams {
       type: 'transfer_call';
 
       /**
-       * Describes when to transfer the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -1006,7 +1020,8 @@ export namespace LlmCreateParams {
       type: 'check_availability_cal';
 
       /**
-       * Describes when to check availability.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -1042,7 +1057,8 @@ export namespace LlmCreateParams {
       type: 'book_appointment_cal';
 
       /**
-       * Describes when to book the appointment.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -1087,8 +1103,8 @@ export namespace LlmCreateParams {
       type: 'custom';
 
       /**
-       * The URL we will post the function name and arguments to get a result for the
-       * function. Usually this is your server.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       url: string;
 
@@ -1207,7 +1223,8 @@ export namespace LlmUpdateParams {
     type: 'end_call';
 
     /**
-     * Describes when to end the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -1228,7 +1245,8 @@ export namespace LlmUpdateParams {
     type: 'transfer_call';
 
     /**
-     * Describes when to transfer the call.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
   }
@@ -1257,7 +1275,8 @@ export namespace LlmUpdateParams {
     type: 'check_availability_cal';
 
     /**
-     * Describes when to check availability.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -1293,7 +1312,8 @@ export namespace LlmUpdateParams {
     type: 'book_appointment_cal';
 
     /**
-     * Describes when to book the appointment.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     description?: string;
 
@@ -1338,8 +1358,8 @@ export namespace LlmUpdateParams {
     type: 'custom';
 
     /**
-     * The URL we will post the function name and arguments to get a result for the
-     * function. Usually this is your server.
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
      */
     url: string;
 
@@ -1494,7 +1514,8 @@ export namespace LlmUpdateParams {
       type: 'end_call';
 
       /**
-       * Describes when to end the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -1515,7 +1536,8 @@ export namespace LlmUpdateParams {
       type: 'transfer_call';
 
       /**
-       * Describes when to transfer the call.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
     }
@@ -1544,7 +1566,8 @@ export namespace LlmUpdateParams {
       type: 'check_availability_cal';
 
       /**
-       * Describes when to check availability.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -1580,7 +1603,8 @@ export namespace LlmUpdateParams {
       type: 'book_appointment_cal';
 
       /**
-       * Describes when to book the appointment.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       description?: string;
 
@@ -1625,8 +1649,8 @@ export namespace LlmUpdateParams {
       type: 'custom';
 
       /**
-       * The URL we will post the function name and arguments to get a result for the
-       * function. Usually this is your server.
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
        */
       url: string;
 
