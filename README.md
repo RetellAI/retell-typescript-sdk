@@ -23,9 +23,12 @@ import Retell from 'retell-sdk';
 const retell = new Retell();
 
 async function main() {
-  const llmResponse = await retell.llm.create();
+  const agentResponse = await retell.agent.create({
+    llm_websocket_url: 'wss://your-websocket-endpoint',
+    voice_id: '11labs-Adrian',
+  });
 
-  console.log(llmResponse.llm_id);
+  console.log(agentResponse.agent_id);
 }
 
 main();
