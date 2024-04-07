@@ -20,15 +20,39 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Retell from 'retell-sdk';
 
-const retell = new Retell();
+const retell = new Retell({
+  apiKey: 'RETELL_API_KEY',
+});
 
 async function main() {
-  const agentResponse = await retell.agent.create({
-    llm_websocket_url: 'wss://your-websocket-endpoint',
-    voice_id: '11labs-Adrian',
+  const llmResponse = await retell.llm.create({
+    begin_message: "Hi, I'm your virtual weather assistant, how can I help you?",
+    general_prompt: 'You are a friendly agent that helps people retrieves weather information.',
+    general_tools: [
+      {
+        type: 'end_call',
+        name: 'end_call',
+        description: 'End the call with user only when user explicitly requests it.',
+      },
+      {
+        type: 'custom',
+        name: 'get_weather',
+        description: 'Get the current weather, called when user is asking whether of a specific city.',
+        parameters: {
+          type: 'object',
+          properties: {
+            city: { type: 'string', description: 'The city for which the weather is to be fetched.' },
+          },
+          required: ['city'],
+        },
+        speak_during_execution: true,
+        speak_after_execution: true,
+        url: 'http://your-server-url-here/get_weawther',
+      },
+    ],
   });
 
-  console.log(agentResponse.agent_id);
+  console.log(llmResponse.llm_websocket_url);
 }
 
 main();
@@ -42,12 +66,15 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Retell from 'retell-sdk';
 
-const retell = new Retell();
+const retell = new Retell({
+  apiKey: 'RETELL_API_KEY',
+});
 
 async function main() {
   const params: Retell.AgentCreateParams = {
-    llm_websocket_url: 'wss://your-websocket-endpoint',
+    llm_websocket_url: 'llm-websocket-url from retell.llm.create()',
     voice_id: '11labs-Adrian',
+    agent_name: 'Ryan',
   };
   const agentResponse: Retell.AgentResponse = await retell.agent.create(params);
 }
@@ -67,7 +94,11 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const agentResponse = await retell.agent
-    .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+    .create({
+      llm_websocket_url: 'llm-websocket-url from retell.llm.create()',
+      voice_id: '11labs-Adrian',
+      agent_name: 'Ryan',
+    })
     .catch(async (err) => {
       if (err instanceof Retell.APIError) {
         console.log(err.status); // 400
@@ -111,7 +142,7 @@ const retell = new Retell({
 });
 
 // Or, configure per-request:
-await retell.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await retell.agent.create({ llm_websocket_url: 'llm-websocket-url from retell.llm.create()', voice_id: '11labs-Adrian', agent_name: 'Ryan' }, {
   maxRetries: 5,
 });
 ```
@@ -128,7 +159,7 @@ const retell = new Retell({
 });
 
 // Override per-request:
-await retell.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await retell.agent.create({ llm_websocket_url: 'llm-websocket-url from retell.llm.create()', voice_id: '11labs-Adrian', agent_name: 'Ryan' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -150,13 +181,21 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 const retell = new Retell();
 
 const response = await retell.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    llm_websocket_url: 'llm-websocket-url from retell.llm.create()',
+    voice_id: '11labs-Adrian',
+    agent_name: 'Ryan',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: agentResponse, response: raw } = await retell.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    llm_websocket_url: 'llm-websocket-url from retell.llm.create()',
+    voice_id: '11labs-Adrian',
+    agent_name: 'Ryan',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(agentResponse.agent_id);
@@ -264,7 +303,11 @@ const retell = new Retell({
 
 // Override per-request:
 await retell.agent.create(
-  { llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' },
+  {
+    llm_websocket_url: 'llm-websocket-url from retell.llm.create()',
+    voice_id: '11labs-Adrian',
+    agent_name: 'Ryan',
+  },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
