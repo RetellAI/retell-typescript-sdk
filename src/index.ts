@@ -88,7 +88,7 @@ export class Retell extends Core.APIClient {
   constructor({ baseURL = Core.readEnv('RETELL_BASE_URL'), apiKey, ...opts }: ClientOptions) {
     if (apiKey === undefined) {
       throw new Errors.RetellError(
-        "Missing required client option apiKey; you need to instantiate the Retell client with an apiKey option, like new Retell({ apiKey: 'YOUR_RETELL_API_KEY' }).",
+        "Missing required client option apiKey; you need to instantiate the Retell client with an apiKey option, like new Retell({ apiKey: 'RETELL_API_KEY' }).",
       );
     }
 
