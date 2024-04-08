@@ -20,7 +20,9 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Retell from 'retell-sdk';
 
-const retell = new Retell();
+const retell = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+});
 
 async function main() {
   const agentResponse = await retell.agent.create({
@@ -42,7 +44,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Retell from 'retell-sdk';
 
-const retell = new Retell();
+const retell = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+});
 
 async function main() {
   const params: Retell.AgentCreateParams = {
