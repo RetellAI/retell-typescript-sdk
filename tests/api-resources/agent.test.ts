@@ -4,7 +4,7 @@ import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
 const retell = new Retell({
-  apiKey: 'RETELL_API_KEY',
+  apiKey: 'YOUR_RETELL_API_KEY',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
