@@ -31,6 +31,7 @@ describe('resource agent', () => {
       ambient_sound: 'coffee-shop',
       boosted_keywords: ['retell', 'kroger'],
       enable_backchannel: true,
+      interruption_sensitivity: 1,
       language: 'en-US',
       opt_out_sensitive_data_storage: true,
       responsiveness: 1,
