@@ -99,7 +99,13 @@ export interface AgentResponse {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
@@ -239,7 +245,13 @@ export interface AgentCreateParams {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
@@ -364,7 +376,13 @@ export interface AgentUpdateParams {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
