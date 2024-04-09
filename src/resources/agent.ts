@@ -97,7 +97,8 @@ export interface AgentResponse {
    *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *   Set to `null` to remove ambient sound from this agent.
+   *
+   * Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
@@ -243,7 +244,8 @@ export interface AgentCreateParams {
    *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *   Set to `null` to remove ambient sound from this agent.
+   *
+   * Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
@@ -374,7 +376,8 @@ export interface AgentUpdateParams {
    *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *   Set to `null` to remove ambient sound from this agent.
+   *
+   * Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
