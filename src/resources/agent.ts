@@ -95,7 +95,9 @@ export interface AgentResponse {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to `null` to remove ambient sound from this agent.
+   * - `static-noise`: Constant static noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
@@ -113,6 +115,15 @@ export interface AgentResponse {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Controls how sensitive the agent is to user interruptions. Value ranging from
+   * [0,1]. Lower value means it will take longer / more words for user to interrupt
+   * agent, while higher value means it's easier for user to interrupt agent. If
+   * unset, default value 1 will apply. When this is set to 0, agent would never be
+   * interrupted.
+   */
+  interruption_sensitivity?: number;
 
   /**
    * `Beta feature, use with caution.`
@@ -224,7 +235,9 @@ export interface AgentCreateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to `null` to remove ambient sound from this agent.
+   * - `static-noise`: Constant static noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
@@ -242,6 +255,15 @@ export interface AgentCreateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Controls how sensitive the agent is to user interruptions. Value ranging from
+   * [0,1]. Lower value means it will take longer / more words for user to interrupt
+   * agent, while higher value means it's easier for user to interrupt agent. If
+   * unset, default value 1 will apply. When this is set to 0, agent would never be
+   * interrupted.
+   */
+  interruption_sensitivity?: number;
 
   /**
    * `Beta feature, use with caution.`
@@ -338,7 +360,9 @@ export interface AgentUpdateParams {
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
    *
-   * Set to `null` to remove ambient sound from this agent.
+   * - `static-noise`: Constant static noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | null;
 
@@ -356,6 +380,15 @@ export interface AgentUpdateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Controls how sensitive the agent is to user interruptions. Value ranging from
+   * [0,1]. Lower value means it will take longer / more words for user to interrupt
+   * agent, while higher value means it's easier for user to interrupt agent. If
+   * unset, default value 1 will apply. When this is set to 0, agent would never be
+   * interrupted.
+   */
+  interruption_sensitivity?: number;
 
   /**
    * `Beta feature, use with caution.`
