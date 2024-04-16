@@ -102,6 +102,11 @@ export interface LlmResponse {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
+   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   */
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo';
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -650,6 +655,11 @@ export interface LlmCreateParams {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
+   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   */
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo';
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -1194,6 +1204,11 @@ export interface LlmUpdateParams {
    * no way to pass dynamic variables to inbound calls of Retell numbers.
    */
   inbound_dynamic_variables_webhook_url?: string | null;
+
+  /**
+   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   */
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo';
 
   /**
    * Name of the starting state. Required if states is not empty.
