@@ -163,7 +163,8 @@ export interface AgentResponse {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | 'fr-FR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
@@ -310,7 +311,8 @@ export interface AgentCreateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | 'fr-FR';
 
   /**
    * Disable transcripts and recordings storage for enhanced privacy. Access
@@ -442,7 +444,8 @@ export interface AgentUpdateParams {
     | 'hi-IN'
     | 'ja-JP'
     | 'pt-PT'
-    | 'pt-BR';
+    | 'pt-BR'
+    | 'fr-FR';
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your
