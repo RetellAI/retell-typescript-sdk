@@ -78,6 +78,7 @@ describe('resource call', () => {
             after_end_timestamp: 1703302428800,
           },
           limit: 0,
+          pagination_key: 'string',
           sort_order: 'ascending',
         },
         { path: '/_stainless_unknown_path' },

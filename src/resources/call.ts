@@ -111,6 +111,37 @@ export interface CallResponse {
   sample_rate: number;
 
   /**
+   * Post conversation evaluation of the call. Including information such as
+   * sentiment, intent, call completion status and other metrics. Available after
+   * call ends. Subscribe to "call_analyzed" webhook event type to receive it once
+   * ready.
+   */
+  conversation_eval?: CallResponse.ConversationEval;
+
+  /**
+   * The reason for the disconnection of the call. Debug using explanation in docs
+   * based on the reason code. Please reachout to Retell team having trouble
+   * understanding the reason.
+   */
+  disconnection_reason?:
+    | 'user_hangup'
+    | 'agent_hangup'
+    | 'call_transfer'
+    | 'inactivity'
+    | 'machine_detected'
+    | 'concurrency_limit_reached'
+    | 'error_llm_websocket_open'
+    | 'error_llm_websocket_lost_connection'
+    | 'error_llm_websocket_runtime'
+    | 'error_llm_websocket_corrupt_payload'
+    | 'error_frontend_corrupted_payload'
+    | 'error_twilio'
+    | 'error_no_audio_received'
+    | 'error_asr'
+    | 'error_retell'
+    | 'error_unknown';
+
+  /**
    * End to end latency (from user stops talking to agent start talking) tracking of
    * the call, available after call ends. This latency does not account for the
    * network trip time from Retell server to user frontend. The latency is tracked
@@ -201,9 +232,59 @@ export interface CallResponse {
    * Available after call ends.
    */
   transcript_object?: Array<CallResponse.TranscriptObject>;
+
+  /**
+   * Transcript of the call weaved with tool call invocation and results. It
+   * precisely captures when (at what utterance, which word) the tool was invoked and
+   * what was the result. Available after call ends.
+   */
+  transcript_with_tool_calls?: Array<unknown>;
 }
 
 export namespace CallResponse {
+  /**
+   * Post conversation evaluation of the call. Including information such as
+   * sentiment, intent, call completion status and other metrics. Available after
+   * call ends. Subscribe to "call_analyzed" webhook event type to receive it once
+   * ready.
+   */
+  export interface ConversationEval {
+    /**
+     * Evaluate agent task completion status, whether the agent has completed his task.
+     */
+    agent_task_completion?: 'Completed' | 'Incomplete' | 'Partial';
+
+    /**
+     * Reason for the agent task completion status.
+     */
+    agent_task_completion_reason?: string;
+
+    /**
+     * Sentiment of the agent in the conversation.
+     */
+    agnet_sentiment?: 'Aggressive' | 'Friendly' | 'Neutral';
+
+    /**
+     * Evaluate whether the conversation ended normally or was cut off.
+     */
+    conversation_completion?: 'Completed' | 'Incomplete' | 'Partial';
+
+    /**
+     * Reason for the conversation completion status.
+     */
+    conversation_completion_reason?: string;
+
+    /**
+     * A high level summary of the conversation conversation.
+     */
+    conversation_summary?: string;
+
+    /**
+     * Sentiment of the user in the conversation.
+     */
+    user_sentiment?: 'Frustrated' | 'Positive' | 'Neutral';
+  }
+
   /**
    * End to end latency (from user stops talking to agent start talking) tracking of
    * the call, available after call ends. This latency does not account for the
@@ -440,6 +521,12 @@ export interface RegisterCallResponse {
   sample_rate: number;
 
   /**
+   * If set, will drop the call if machine (voicemail, IVR) is detected. If not set,
+   * default value of false will apply.
+   */
+  drop_call_if_machine_detected?: boolean;
+
+  /**
    * If users stay silent for a period, end the call. By default, it is set to
    * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
    */
@@ -509,6 +596,12 @@ export interface CallListParams {
    * Limit the number of calls returned.
    */
   limit?: number;
+
+  /**
+   * The pagination call id to continue fetching the next page of calls. If not set,
+   * will start from the beginning.
+   */
+  pagination_key?: string;
 
   /**
    * The calls will be sorted by `start_timestamp`, whether to return the calls in
