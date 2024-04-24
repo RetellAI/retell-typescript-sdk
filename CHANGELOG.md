@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.9.0 (2024-04-24)
+
+Full Changelog: [v3.8.0...v3.9.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.8.0...v3.9.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#61](https://github.com/RetellAI/retell-typescript-sdk/issues/61)) ([7439431](https://github.com/RetellAI/retell-typescript-sdk/commit/7439431773de5d6095be811b1d8c80d94aa05f12))
+* **api:** OpenAPI spec update via Stainless API ([#62](https://github.com/RetellAI/retell-typescript-sdk/issues/62)) ([e306f52](https://github.com/RetellAI/retell-typescript-sdk/commit/e306f5297ecf3c4df5f0f0eb18d2b85cbbb27020))
+* **api:** update via SDK Studio ([#58](https://github.com/RetellAI/retell-typescript-sdk/issues/58)) ([bd1dfdc](https://github.com/RetellAI/retell-typescript-sdk/commit/bd1dfdc2ead997e38d3043a502f0a14b49b3fbce))
+* **api:** update via SDK Studio ([#60](https://github.com/RetellAI/retell-typescript-sdk/issues/60)) ([530ecb2](https://github.com/RetellAI/retell-typescript-sdk/commit/530ecb27c6f1bcf7c5880ebbb8ea39b70ad45ce9))
+* **api:** update via SDK Studio ([#63](https://github.com/RetellAI/retell-typescript-sdk/issues/63)) ([28cdc27](https://github.com/RetellAI/retell-typescript-sdk/commit/28cdc27632b7940651f73f46db7eed9f474b0c13))
+* **api:** update via SDK Studio ([#64](https://github.com/RetellAI/retell-typescript-sdk/issues/64)) ([a555e7f](https://github.com/RetellAI/retell-typescript-sdk/commit/a555e7fc41320e80612408b0d2ab069bb1c4994a))
+* **api:** update via SDK Studio ([#65](https://github.com/RetellAI/retell-typescript-sdk/issues/65)) ([2a7b667](https://github.com/RetellAI/retell-typescript-sdk/commit/2a7b667c38ae48f6e8b82b96f08545665c7dcaf9))
+* **api:** update via SDK Studio ([#66](https://github.com/RetellAI/retell-typescript-sdk/issues/66)) ([3fbaa13](https://github.com/RetellAI/retell-typescript-sdk/commit/3fbaa13d05d545eb7ec93f4afe97cc64e5e737c7))
+
 ## 3.8.0 (2024-04-21)
 
 Full Changelog: [v3.7.0...v3.8.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.7.0...v3.8.0)
