@@ -556,6 +556,12 @@ export interface CallCreateParams {
   to_number: string;
 
   /**
+   * If set, will drop the call if machine (voicemail, IVR) is detected. If not set,
+   * default value of false will apply.
+   */
+  drop_call_if_machine_detected?: boolean;
+
+  /**
    * For this particular call, override the agent used with this agent id. This does
    * not bind the agent to this number, this is for one time override.
    */
