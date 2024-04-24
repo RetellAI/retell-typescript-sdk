@@ -10,6 +10,8 @@ import * as API from 'retell-sdk/resources/index';
 export interface ClientOptions {
   apiKey: string;
 
+  retellSdkVersion?: string | null | undefined;
+
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
@@ -70,6 +72,7 @@ export interface ClientOptions {
 /** API Client for interfacing with the Retell API. */
 export class Retell extends Core.APIClient {
   apiKey: string;
+  retellSdkVersion: string | null;
 
   private _options: ClientOptions;
 
@@ -77,6 +80,7 @@ export class Retell extends Core.APIClient {
    * API Client for interfacing with the Retell API.
    *
    * @param {string} opts.apiKey
+   * @param {string | null | undefined} [opts.retellSdkVersion=v3]
    * @param {string} [opts.baseURL=process.env['RETELL_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -85,7 +89,12 @@ export class Retell extends Core.APIClient {
    * @param {Core.Headers} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({ baseURL = Core.readEnv('RETELL_BASE_URL'), apiKey, ...opts }: ClientOptions) {
+  constructor({
+    baseURL = Core.readEnv('RETELL_BASE_URL'),
+    apiKey,
+    retellSdkVersion = 'v3',
+    ...opts
+  }: ClientOptions) {
     if (apiKey === undefined) {
       throw new Errors.RetellError(
         "Missing required client option apiKey; you need to instantiate the Retell client with an apiKey option, like new Retell({ apiKey: 'YOUR_RETELL_API_KEY' }).",
@@ -94,6 +103,7 @@ export class Retell extends Core.APIClient {
 
     const options: ClientOptions = {
       apiKey,
+      retellSdkVersion,
       ...opts,
       baseURL: baseURL || `https://api.retellai.com`,
     };
@@ -108,6 +118,7 @@ export class Retell extends Core.APIClient {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.retellSdkVersion = retellSdkVersion;
   }
 
   call: API.Call = new API.Call(this);
@@ -122,6 +133,7 @@ export class Retell extends Core.APIClient {
   protected override defaultHeaders(opts: Core.FinalRequestOptions): Core.Headers {
     return {
       ...super.defaultHeaders(opts),
+      'X-Retell-Version': this.retellSdkVersion,
       ...this._options.defaultHeaders,
     };
   }
@@ -149,6 +161,9 @@ export class Retell extends Core.APIClient {
   static InternalServerError = Errors.InternalServerError;
   static PermissionDeniedError = Errors.PermissionDeniedError;
   static UnprocessableEntityError = Errors.UnprocessableEntityError;
+
+  static toFile = Uploads.toFile;
+  static fileFromPath = Uploads.fileFromPath;
 }
 
 export const {
@@ -171,10 +186,6 @@ export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
 export namespace Retell {
-  // Helper functions
-  export import toFile = Uploads.toFile;
-  export import fileFromPath = Uploads.fileFromPath;
-
   export import RequestOptions = Core.RequestOptions;
 
   export import Call = API.Call;
