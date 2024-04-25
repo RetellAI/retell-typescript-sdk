@@ -45,13 +45,11 @@ export class Call extends APIResource {
 
 export interface CallResponse extends RegisterCallResponse {
   /**
-   * BETA feature, schema might change, might not always be populated. Please do not
-   * rely on this object schema for post processing.
-   *
-   * Post conversation evaluation of the call. Including information such as
-   * sentiment, intent, call completion status and other metrics. Available after
-   * call ends. Subscribe to `call_analyzed` webhook event type to receive it once
-   * ready.
+   * - BETA feature, schema might change, might not always be populated. Please do
+   *   not rely on this object schema for post processing. Post conversation
+   *   evaluation of the call. Including information such as sentiment, intent, call
+   *   completion status and other metrics. Available after call ends. Subscribe to
+   *   `call_analyzed` webhook event type to receive it once ready.
    */
   conversation_eval?: CallResponse.ConversationEval;
 
@@ -146,13 +144,11 @@ export interface CallResponse extends RegisterCallResponse {
 
 export namespace CallResponse {
   /**
-   * BETA feature, schema might change, might not always be populated. Please do not
-   * rely on this object schema for post processing.
-   *
-   * Post conversation evaluation of the call. Including information such as
-   * sentiment, intent, call completion status and other metrics. Available after
-   * call ends. Subscribe to `call_analyzed` webhook event type to receive it once
-   * ready.
+   * - BETA feature, schema might change, might not always be populated. Please do
+   *   not rely on this object schema for post processing. Post conversation
+   *   evaluation of the call. Including information such as sentiment, intent, call
+   *   completion status and other metrics. Available after call ends. Subscribe to
+   *   `call_analyzed` webhook event type to receive it once ready.
    */
   export interface ConversationEval {
     /**
