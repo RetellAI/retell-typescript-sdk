@@ -46,7 +46,7 @@ export class Call extends APIResource {
 export interface CallResponse extends RegisterCallResponse {
   /**
    * BETA feature, schema might change, might not always be populated. Please do not
-   * rely on schema for post processing.
+   * rely on this object schema for post processing.
    *
    * Post conversation evaluation of the call. Including information such as
    * sentiment, intent, call completion status and other metrics. Available after
@@ -147,7 +147,7 @@ export interface CallResponse extends RegisterCallResponse {
 export namespace CallResponse {
   /**
    * BETA feature, schema might change, might not always be populated. Please do not
-   * rely on schema for post processing.
+   * rely on this object schema for post processing.
    *
    * Post conversation evaluation of the call. Including information such as
    * sentiment, intent, call completion status and other metrics. Available after
