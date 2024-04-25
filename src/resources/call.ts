@@ -45,9 +45,12 @@ export class Call extends APIResource {
 
 export interface CallResponse extends RegisterCallResponse {
   /**
+   * BETA feature, schema might change, might not always be populated. Please do not
+   * rely on schema for post processing.
+   *
    * Post conversation evaluation of the call. Including information such as
    * sentiment, intent, call completion status and other metrics. Available after
-   * call ends. Subscribe to "call_analyzed" webhook event type to receive it once
+   * call ends. Subscribe to `call_analyzed` webhook event type to receive it once
    * ready.
    */
   conversation_eval?: CallResponse.ConversationEval;
@@ -143,9 +146,12 @@ export interface CallResponse extends RegisterCallResponse {
 
 export namespace CallResponse {
   /**
+   * BETA feature, schema might change, might not always be populated. Please do not
+   * rely on schema for post processing.
+   *
    * Post conversation evaluation of the call. Including information such as
    * sentiment, intent, call completion status and other metrics. Available after
-   * call ends. Subscribe to "call_analyzed" webhook event type to receive it once
+   * call ends. Subscribe to `call_analyzed` webhook event type to receive it once
    * ready.
    */
   export interface ConversationEval {
@@ -162,7 +168,7 @@ export namespace CallResponse {
     /**
      * Sentiment of the agent in the conversation.
      */
-    agnet_sentiment?: 'Aggressive' | 'Friendly' | 'Neutral';
+    agnet_sentiment?: 'Negative' | 'Positive' | 'Neutral';
 
     /**
      * Evaluate whether the conversation ended normally or was cut off.
@@ -182,7 +188,7 @@ export namespace CallResponse {
     /**
      * Sentiment of the user in the conversation.
      */
-    user_sentiment?: 'Frustrated' | 'Positive' | 'Neutral';
+    user_sentiment?: 'Negative' | 'Positive' | 'Neutral';
   }
 
   /**
