@@ -51,7 +51,7 @@ export interface CallResponse extends RegisterCallResponse {
    *   completion status and other metrics. Available after call ends. Subscribe to
    *   `call_analyzed` webhook event type to receive it once ready.
    */
-  conversation_eval?: CallResponse.ConversationEval;
+  call_analysis?: CallResponse.CallAnalysis;
 
   /**
    * The reason for the disconnection of the call. Debug using explanation in docs
@@ -150,39 +150,39 @@ export namespace CallResponse {
    *   completion status and other metrics. Available after call ends. Subscribe to
    *   `call_analyzed` webhook event type to receive it once ready.
    */
-  export interface ConversationEval {
+  export interface CallAnalysis {
+    /**
+     * Sentiment of the agent in the call.
+     */
+    agent_sentiment?: 'Negative' | 'Positive' | 'Neutral';
+
     /**
      * Evaluate agent task completion status, whether the agent has completed his task.
      */
-    agent_task_completion?: 'Completed' | 'Incomplete' | 'Partial';
+    agent_task_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
 
     /**
      * Reason for the agent task completion status.
      */
-    agent_task_completion_reason?: string;
+    agent_task_completion_rating_reason?: string;
 
     /**
-     * Sentiment of the agent in the conversation.
+     * Evaluate whether the call ended normally or was cut off.
      */
-    agnet_sentiment?: 'Negative' | 'Positive' | 'Neutral';
+    call_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
 
     /**
-     * Evaluate whether the conversation ended normally or was cut off.
+     * Reason for the call completion status.
      */
-    conversation_completion?: 'Completed' | 'Incomplete' | 'Partial';
+    call_completion_rating_reason?: string;
 
     /**
-     * Reason for the conversation completion status.
+     * A high level summary of the call.
      */
-    conversation_completion_reason?: string;
+    call_summary?: string;
 
     /**
-     * A high level summary of the conversation conversation.
-     */
-    conversation_summary?: string;
-
-    /**
-     * Sentiment of the user in the conversation.
+     * Sentiment of the user in the call.
      */
     user_sentiment?: 'Negative' | 'Positive' | 'Neutral';
   }
@@ -326,9 +326,9 @@ export namespace CallResponse {
     role: 'agent' | 'user';
 
     /**
-     * Array of words in the utternace with the word timestamp. Useful for
+     * Array of words in the utterance with the word timestamp. Useful for
      * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guranteed to be accurate, it's more like an approximation.
+     * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<TranscriptObject.Word>;
   }
@@ -366,9 +366,9 @@ export namespace CallResponse {
     role: 'agent' | 'user';
 
     /**
-     * Array of words in the utternace with the word timestamp. Useful for
+     * Array of words in the utterance with the word timestamp. Useful for
      * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guranteed to be accurate, it's more like an approximation.
+     * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
   }
@@ -689,10 +689,10 @@ export interface CallRegisterParams {
   from_number?: string;
 
   /**
-   * An abtriary object for storage purpose only. You can put anything here like your
-   * own id for the call, twilio SID, internal customer id. Not used for processing,
-   * when we connect to your LLM websocket server, you can then get it from the call
-   * object.
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your own id for the call, twilio SID, internal customer id. Not used for
+   * processing, when we connect to your LLM websocket server, you can then get it
+   * from the call object.
    */
   metadata?: unknown;
 
