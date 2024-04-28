@@ -1,6 +1,6 @@
 {
   "name": "retell-sdk",
-  "version": "3.11.0",
+  "version": "3.9.0",
   "description": "The official TypeScript library for the Retell API",
   "author": "Retell <founders@retellai.com>",
   "types": "dist/index.d.ts",
@@ -30,6 +30,7 @@
     "@types/qs": "^6.9.7",
     "abort-controller": "^3.0.0",
     "agentkeepalive": "^4.2.1",
+    "crypto": "^1.0.1",
     "form-data-encoder": "1.7.2",
     "formdata-node": "^4.3.2",
     "node-fetch": "^2.6.7",
