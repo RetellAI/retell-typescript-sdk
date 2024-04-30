@@ -533,6 +533,12 @@ export interface RegisterCallResponse {
   metadata?: unknown;
 
   /**
+   * Whether this call opts out of sensitive data storage like transcript, recording,
+   * logging.
+   */
+  opt_out_sensitive_data_storage?: boolean;
+
+  /**
    * Add optional dynamic variables in key value pairs of string that injects into
    * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
