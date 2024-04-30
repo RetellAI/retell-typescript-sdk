@@ -169,9 +169,9 @@ export interface AgentResponse {
     | 'fr-FR';
 
   /**
-   * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks. If not set, default value of false will
-   * apply.
+   * Whether this agent opts out of sensitive data storage like transcript,
+   * recording, logging. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
@@ -333,9 +333,9 @@ export interface AgentCreateParams {
     | 'fr-FR';
 
   /**
-   * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks. If not set, default value of false will
-   * apply.
+   * Whether this agent opts out of sensitive data storage like transcript,
+   * recording, logging. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
@@ -489,9 +489,9 @@ export interface AgentUpdateParams {
   llm_websocket_url?: string;
 
   /**
-   * Disable transcripts and recordings storage for enhanced privacy. Access
-   * transcripts securely via webhooks. If not set, default value of false will
-   * apply.
+   * Whether this agent opts out of sensitive data storage like transcript,
+   * recording, logging. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
