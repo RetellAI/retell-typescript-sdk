@@ -54,9 +54,9 @@ export interface CallResponse extends RegisterCallResponse {
   call_analysis?: CallResponse.CallAnalysis;
 
   /**
-   * The reason for the disconnection of the call. Debug using explanation in docs
-   * based on the reason code. Please reachout to Retell team having trouble
-   * understanding the reason.
+   * The reason for the disconnection of the call. Read details desciption about
+   * reasons listed here at
+   * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
    */
   disconnection_reason?:
     | 'user_hangup'
@@ -65,6 +65,9 @@ export interface CallResponse extends RegisterCallResponse {
     | 'inactivity'
     | 'machine_detected'
     | 'concurrency_limit_reached'
+    | 'dial_busy'
+    | 'dial_failed'
+    | 'dial_no_answer'
     | 'error_llm_websocket_open'
     | 'error_llm_websocket_lost_connection'
     | 'error_llm_websocket_runtime'
@@ -82,7 +85,7 @@ export interface CallResponse extends RegisterCallResponse {
    * network trip time from Retell server to user frontend. The latency is tracked
    * every time turn change between user and agent.
    */
-  e2e_latency?: CallResponse.E2eLatency;
+  e2e_latency?: CallResponse.E2ELatency;
 
   /**
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
@@ -193,7 +196,7 @@ export namespace CallResponse {
    * network trip time from Retell server to user frontend. The latency is tracked
    * every time turn change between user and agent.
    */
-  export interface E2eLatency {
+  export interface E2ELatency {
     /**
      * Maximum latency in the call, measured in milliseconds.
      */
