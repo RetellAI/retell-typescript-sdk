@@ -10,7 +10,7 @@ const retell = new Retell({
 
 describe('resource call', () => {
   test('create: only required params', async () => {
-    const responsePromise = retell.call.create({ from_number: 'string', to_number: 'string' });
+    const responsePromise = retell.call.create({ from_number: '+14157774444', to_number: '+12137774445' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,8 +22,8 @@ describe('resource call', () => {
 
   test('create: required and optional params', async () => {
     const response = await retell.call.create({
-      from_number: 'string',
-      to_number: 'string',
+      from_number: '+14157774444',
+      to_number: '+12137774445',
       drop_call_if_machine_detected: true,
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
@@ -110,10 +110,10 @@ describe('resource call', () => {
       audio_websocket_protocol: 'twilio',
       sample_rate: 24000,
       end_call_after_silence_ms: 600000,
-      from_number: 'string',
+      from_number: '+12137771234',
       metadata: {},
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
-      to_number: 'string',
+      to_number: '+12137771235',
     });
   });
 });
