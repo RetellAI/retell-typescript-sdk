@@ -557,12 +557,12 @@ export type CallListResponse = Array<CallResponse>;
 
 export interface CallCreateParams {
   /**
-   * The number you own in BCP 47 format.
+   * The number you own in E.164 format.
    */
   from_number: string;
 
   /**
-   * The number you want to call, in BCP 47 format.
+   * The number you want to call, in E.164 format.
    */
   to_number: string;
 
