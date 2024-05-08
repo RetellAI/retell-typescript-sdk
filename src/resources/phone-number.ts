@@ -20,7 +20,7 @@ export class PhoneNumber extends APIResource {
   }
 
   /**
-   * Update an existing Retell LLM
+   * Update agent bound to a purchased phone number
    */
   update(
     phoneNumber: string,
