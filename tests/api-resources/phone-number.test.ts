@@ -28,7 +28,7 @@ describe('resource phoneNumber', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retell.phoneNumber.retrieve('string');
+    const responsePromise = retell.phoneNumber.retrieve('+14157774444');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -40,13 +40,13 @@ describe('resource phoneNumber', () => {
 
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retell.phoneNumber.retrieve('string', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
+    await expect(
+      retell.phoneNumber.retrieve('+14157774444', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   test('update: only required params', async () => {
-    const responsePromise = retell.phoneNumber.update('string', { agent_id: 'string' });
+    const responsePromise = retell.phoneNumber.update('+14157774444', { agent_id: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -57,7 +57,7 @@ describe('resource phoneNumber', () => {
   });
 
   test('update: required and optional params', async () => {
-    const response = await retell.phoneNumber.update('string', { agent_id: 'string' });
+    const response = await retell.phoneNumber.update('+14157774444', { agent_id: 'string' });
   });
 
   test('list', async () => {
@@ -79,7 +79,7 @@ describe('resource phoneNumber', () => {
   });
 
   test('delete', async () => {
-    const responsePromise = retell.phoneNumber.delete('string');
+    const responsePromise = retell.phoneNumber.delete('+14157774444');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -91,8 +91,8 @@ describe('resource phoneNumber', () => {
 
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retell.phoneNumber.delete('string', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
+    await expect(
+      retell.phoneNumber.delete('+14157774444', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 });
