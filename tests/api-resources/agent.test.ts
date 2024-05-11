@@ -36,6 +36,11 @@ describe('resource agent', () => {
       interruption_sensitivity: 1,
       language: 'en-US',
       opt_out_sensitive_data_storage: true,
+      pronunciation_dictionary: [
+        { word: 'actually', alphabet: 'ipa', phoneme: 'ˈæktʃuəli' },
+        { word: 'actually', alphabet: 'ipa', phoneme: 'ˈæktʃuəli' },
+        { word: 'actually', alphabet: 'ipa', phoneme: 'ˈæktʃuəli' },
+      ],
       reminder_max_count: 2,
       reminder_trigger_ms: 10000,
       responsiveness: 1,
