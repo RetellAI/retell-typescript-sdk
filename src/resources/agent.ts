@@ -176,6 +176,13 @@ export interface AgentResponse {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * A list of words / phrases and their pronunciation to be used to guide the audio
+   * synthesize for consistent pronunciation. Currently only supported for English &
+   * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+   */
+  pronunciation_dictionary?: Array<AgentResponse.PronunciationDictionary> | null;
+
+  /**
    * If set, controls how many times agent would remind user when user is
    * unresponsive. Must be a non negative integer. If unset, default value of 1 will
    * apply (remind once). Set to 0 to disable agent from reminding.
@@ -219,6 +226,25 @@ export interface AgentResponse {
    * agent. Set to `null` to remove webhook url from this agent.
    */
   webhook_url?: string | null;
+}
+
+export namespace AgentResponse {
+  export interface PronunciationDictionary {
+    /**
+     * The phonetic alphabet to be used for pronunciation.
+     */
+    alphabet?: 'ipa' | 'cmu';
+
+    /**
+     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     */
+    phoneme?: string;
+
+    /**
+     * The string of word / phrase to be annotated with pronunciation.
+     */
+    word?: string;
+  }
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -340,6 +366,13 @@ export interface AgentCreateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * A list of words / phrases and their pronunciation to be used to guide the audio
+   * synthesize for consistent pronunciation. Currently only supported for English &
+   * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+   */
+  pronunciation_dictionary?: Array<AgentCreateParams.PronunciationDictionary> | null;
+
+  /**
    * If set, controls how many times agent would remind user when user is
    * unresponsive. Must be a non negative integer. If unset, default value of 1 will
    * apply (remind once). Set to 0 to disable agent from reminding.
@@ -383,6 +416,25 @@ export interface AgentCreateParams {
    * agent. Set to `null` to remove webhook url from this agent.
    */
   webhook_url?: string | null;
+}
+
+export namespace AgentCreateParams {
+  export interface PronunciationDictionary {
+    /**
+     * The phonetic alphabet to be used for pronunciation.
+     */
+    alphabet?: 'ipa' | 'cmu';
+
+    /**
+     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     */
+    phoneme?: string;
+
+    /**
+     * The string of word / phrase to be annotated with pronunciation.
+     */
+    word?: string;
+  }
 }
 
 export interface AgentUpdateParams {
@@ -496,6 +548,13 @@ export interface AgentUpdateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * A list of words / phrases and their pronunciation to be used to guide the audio
+   * synthesize for consistent pronunciation. Currently only supported for English &
+   * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+   */
+  pronunciation_dictionary?: Array<AgentUpdateParams.PronunciationDictionary> | null;
+
+  /**
    * If set, controls how many times agent would remind user when user is
    * unresponsive. Must be a non negative integer. If unset, default value of 1 will
    * apply (remind once). Set to 0 to disable agent from reminding.
@@ -545,6 +604,25 @@ export interface AgentUpdateParams {
    * agent. Set to `null` to remove webhook url from this agent.
    */
   webhook_url?: string | null;
+}
+
+export namespace AgentUpdateParams {
+  export interface PronunciationDictionary {
+    /**
+     * The phonetic alphabet to be used for pronunciation.
+     */
+    alphabet?: 'ipa' | 'cmu';
+
+    /**
+     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     */
+    phoneme?: string;
+
+    /**
+     * The string of word / phrase to be annotated with pronunciation.
+     */
+    word?: string;
+  }
 }
 
 export namespace Agent {
