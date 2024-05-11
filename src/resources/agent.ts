@@ -233,17 +233,17 @@ export namespace AgentResponse {
     /**
      * The phonetic alphabet to be used for pronunciation.
      */
-    alphabet?: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu';
 
     /**
      * Pronunciation of the word in the format of a IPA / CMU pronunciation.
      */
-    phoneme?: string;
+    phoneme: string;
 
     /**
      * The string of word / phrase to be annotated with pronunciation.
      */
-    word?: string;
+    word: string;
   }
 }
 
@@ -423,17 +423,17 @@ export namespace AgentCreateParams {
     /**
      * The phonetic alphabet to be used for pronunciation.
      */
-    alphabet?: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu';
 
     /**
      * Pronunciation of the word in the format of a IPA / CMU pronunciation.
      */
-    phoneme?: string;
+    phoneme: string;
 
     /**
      * The string of word / phrase to be annotated with pronunciation.
      */
-    word?: string;
+    word: string;
   }
 }
 
@@ -611,17 +611,17 @@ export namespace AgentUpdateParams {
     /**
      * The phonetic alphabet to be used for pronunciation.
      */
-    alphabet?: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu';
 
     /**
      * Pronunciation of the word in the format of a IPA / CMU pronunciation.
      */
-    phoneme?: string;
+    phoneme: string;
 
     /**
      * The string of word / phrase to be annotated with pronunciation.
      */
-    word?: string;
+    word: string;
   }
 }
 
