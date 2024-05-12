@@ -35,6 +35,7 @@ describe('resource agent', () => {
       enable_backchannel: true,
       interruption_sensitivity: 1,
       language: 'en-US',
+      normalize_for_speech: true,
       opt_out_sensitive_data_storage: true,
       pronunciation_dictionary: [
         { word: 'actually', alphabet: 'ipa', phoneme: 'ˈæktʃuəli' },
