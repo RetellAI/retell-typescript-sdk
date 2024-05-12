@@ -169,6 +169,17 @@ export interface AgentResponse {
     | 'fr-FR';
 
   /**
+   * If set to true, will normalize the some part of text (number, currency, date,
+   * etc) to spoken to its spoken form for more consistent speech synthesis
+   * (sometimes the voice synthesize system itself might read these wrong with the
+   * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
+   * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
+   * three four two on july fifth, twenty twenty four for the twenty four dollars
+   * twelve cents payment" before starting audio generation.
+   */
+  normalize_for_speech?: boolean;
+
+  /**
    * Whether this agent opts out of sensitive data storage like transcript,
    * recording, logging. These data can still be accessed securely via webhooks. If
    * not set, default value of false will apply.
@@ -359,6 +370,17 @@ export interface AgentCreateParams {
     | 'fr-FR';
 
   /**
+   * If set to true, will normalize the some part of text (number, currency, date,
+   * etc) to spoken to its spoken form for more consistent speech synthesis
+   * (sometimes the voice synthesize system itself might read these wrong with the
+   * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
+   * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
+   * three four two on july fifth, twenty twenty four for the twenty four dollars
+   * twelve cents payment" before starting audio generation.
+   */
+  normalize_for_speech?: boolean;
+
+  /**
    * Whether this agent opts out of sensitive data storage like transcript,
    * recording, logging. These data can still be accessed securely via webhooks. If
    * not set, default value of false will apply.
@@ -539,6 +561,17 @@ export interface AgentUpdateParams {
    * request format (sent from us) and response format (send to us).
    */
   llm_websocket_url?: string;
+
+  /**
+   * If set to true, will normalize the some part of text (number, currency, date,
+   * etc) to spoken to its spoken form for more consistent speech synthesis
+   * (sometimes the voice synthesize system itself might read these wrong with the
+   * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
+   * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
+   * three four two on july fifth, twenty twenty four for the twenty four dollars
+   * twelve cents payment" before starting audio generation.
+   */
+  normalize_for_speech?: boolean;
 
   /**
    * Whether this agent opts out of sensitive data storage like transcript,
