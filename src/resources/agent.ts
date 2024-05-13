@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from 'retell-sdk/core';
-import { APIResource } from 'retell-sdk/resource';
-import * as AgentAPI from 'retell-sdk/resources/agent';
+import * as Core from '../core';
+import { APIResource } from '../resource';
+import * as AgentAPI from './agent';
 
 export class Agent extends APIResource {
   /**
