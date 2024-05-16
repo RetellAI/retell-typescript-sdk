@@ -511,8 +511,9 @@ export interface RegisterCallResponse {
   drop_call_if_machine_detected?: boolean;
 
   /**
-   * If users stay silent for a period, end the call. By default, it is set to
-   * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
+   * level end_call_after_silence_ms parameter.
    */
   end_call_after_silence_ms?: number;
 
@@ -684,8 +685,9 @@ export interface CallRegisterParams {
   sample_rate: number;
 
   /**
-   * If users stay silent for a period, end the call. By default, it is set to
-   * 600,000 ms (10 min). The minimum value allowed is 10,000 ms (10 s).
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
+   * level end_call_after_silence_ms parameter.
    */
   end_call_after_silence_ms?: number;
 
