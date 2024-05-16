@@ -33,6 +33,7 @@ describe('resource agent', () => {
       backchannel_words: ['yeah', 'uh-huh'],
       boosted_keywords: ['retell', 'kroger'],
       enable_backchannel: true,
+      end_call_after_silence_ms: 600000,
       interruption_sensitivity: 1,
       language: 'en-US',
       normalize_for_speech: true,

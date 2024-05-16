@@ -142,6 +142,12 @@ export interface AgentResponse {
   enable_backchannel?: boolean;
 
   /**
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
+   */
+  end_call_after_silence_ms?: number;
+
+  /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
    * [0,1]. Lower value means it will take longer / more words for user to interrupt
    * agent, while higher value means it's easier for user to interrupt agent. If
@@ -343,6 +349,12 @@ export interface AgentCreateParams {
   enable_backchannel?: boolean;
 
   /**
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
+   */
+  end_call_after_silence_ms?: number;
+
+  /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
    * [0,1]. Lower value means it will take longer / more words for user to interrupt
    * agent, while higher value means it's easier for user to interrupt agent. If
@@ -527,6 +539,12 @@ export interface AgentUpdateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
+   */
+  end_call_after_silence_ms?: number;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
