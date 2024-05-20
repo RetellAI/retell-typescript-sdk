@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.15.0 (2024-05-20)
+
+Full Changelog: [v3.14.0...v3.15.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.14.0...v3.15.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#85](https://github.com/RetellAI/retell-typescript-sdk/issues/85)) ([0d2d105](https://github.com/RetellAI/retell-typescript-sdk/commit/0d2d105dd1b27f315f330b0801db0c6007d38141))
+* **api:** OpenAPI spec update via Stainless API ([#87](https://github.com/RetellAI/retell-typescript-sdk/issues/87)) ([6abc5e9](https://github.com/RetellAI/retell-typescript-sdk/commit/6abc5e96e60d68bf63ffe95e5f753e7a9cf3ab4a))
+
+
+### Bug Fixes
+
+* **client:** correct array format for query strings ([7d4b48f](https://github.com/RetellAI/retell-typescript-sdk/commit/7d4b48fcd6b5d3264cf2713ac21b0775a2306543))
+
+
+### Chores
+
+* **internal:** format webhook file ([467b8b5](https://github.com/RetellAI/retell-typescript-sdk/commit/467b8b5ccc0424de70f810077d2c840b2075e00f))
+
 ## 3.14.0 (2024-05-12)
 
 Full Changelog: [v3.13.0...v3.14.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.13.0...v3.14.0)
