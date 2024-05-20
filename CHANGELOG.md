@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.15.1 (2024-05-20)
+
+Full Changelog: [v3.15.0...v3.15.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.15.0...v3.15.1)
+
+### Bug Fixes
+
+* **client:** correct formatting of array query params ([eb54ecd](https://github.com/RetellAI/retell-typescript-sdk/commit/eb54ecdceda4336c0ffb72b46bc56b3cf7f73f4e))
+
 ## 3.15.0 (2024-05-20)
 
 Full Changelog: [v3.14.0...v3.15.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.14.0...v3.15.0)
