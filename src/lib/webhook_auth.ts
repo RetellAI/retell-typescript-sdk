@@ -49,13 +49,13 @@ export const asymmetric = makeSecureWebhooks(
 
 export const combined: SecureWebhooks = {
   sign: (input, secretOrPrivateKey, timestamp) =>
-    secretOrPrivateKey.includes('PRIVATE KEY')
-      ? asymmetric.sign(input, secretOrPrivateKey, timestamp)
-      : symmetric.sign(input, secretOrPrivateKey, timestamp),
+    secretOrPrivateKey.includes('PRIVATE KEY') ?
+      asymmetric.sign(input, secretOrPrivateKey, timestamp)
+    : symmetric.sign(input, secretOrPrivateKey, timestamp),
   verify: (input, secretOrPublicKey, signature, opts) =>
-    secretOrPublicKey.includes('PUBLIC KEY')
-      ? asymmetric.verify(input, secretOrPublicKey, signature, opts)
-      : symmetric.verify(input, secretOrPublicKey, signature, opts),
+    secretOrPublicKey.includes('PUBLIC KEY') ?
+      asymmetric.verify(input, secretOrPublicKey, signature, opts)
+    : symmetric.verify(input, secretOrPublicKey, signature, opts),
 };
 // export const sign = symmetric.sign;
 // export const verify = symmetric.verify;
