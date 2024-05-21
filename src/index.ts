@@ -131,7 +131,7 @@ export class Retell extends Core.APIClient {
   }
 
   protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'brackets' });
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   static Retell = this;
