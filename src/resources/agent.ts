@@ -106,7 +106,15 @@ export interface AgentResponse {
     | 'summer-outdoor'
     | 'mountain-outdoor'
     | 'static-noise'
+    | 'call-center'
     | null;
+
+  /**
+   * If set, will control the volume of the ambient sound. Value ranging from [0,2].
+   * Lower value means quieter ambient sound, while higher value means louder ambient
+   * sound. If unset, default value 1 will apply.
+   */
+  ambient_sound_volume?: number;
 
   /**
    * Only applicable when enable_backchannel is true. Controls how often the agent
@@ -146,6 +154,15 @@ export interface AgentResponse {
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
   end_call_after_silence_ms?: number;
+
+  /**
+   * When TTS provide is experiencing outages, we would use fallback voices listed
+   * here for the agent. Voice id and the fallback voice ids must be from different
+   * TTS providers. The system would go through the list in order, if the first one
+   * in the list is also having outage, it would use the next one. Set to null to
+   * remove fallback for the agent.
+   */
+  fallback_voice_ids?: Array<string> | null;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
@@ -313,7 +330,15 @@ export interface AgentCreateParams {
     | 'summer-outdoor'
     | 'mountain-outdoor'
     | 'static-noise'
+    | 'call-center'
     | null;
+
+  /**
+   * If set, will control the volume of the ambient sound. Value ranging from [0,2].
+   * Lower value means quieter ambient sound, while higher value means louder ambient
+   * sound. If unset, default value 1 will apply.
+   */
+  ambient_sound_volume?: number;
 
   /**
    * Only applicable when enable_backchannel is true. Controls how often the agent
@@ -353,6 +378,15 @@ export interface AgentCreateParams {
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
   end_call_after_silence_ms?: number;
+
+  /**
+   * When TTS provide is experiencing outages, we would use fallback voices listed
+   * here for the agent. Voice id and the fallback voice ids must be from different
+   * TTS providers. The system would go through the list in order, if the first one
+   * in the list is also having outage, it would use the next one. Set to null to
+   * remove fallback for the agent.
+   */
+  fallback_voice_ids?: Array<string> | null;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
@@ -505,7 +539,15 @@ export interface AgentUpdateParams {
     | 'summer-outdoor'
     | 'mountain-outdoor'
     | 'static-noise'
+    | 'call-center'
     | null;
+
+  /**
+   * If set, will control the volume of the ambient sound. Value ranging from [0,2].
+   * Lower value means quieter ambient sound, while higher value means louder ambient
+   * sound. If unset, default value 1 will apply.
+   */
+  ambient_sound_volume?: number;
 
   /**
    * Only applicable when enable_backchannel is true. Controls how often the agent
@@ -545,6 +587,15 @@ export interface AgentUpdateParams {
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
   end_call_after_silence_ms?: number;
+
+  /**
+   * When TTS provide is experiencing outages, we would use fallback voices listed
+   * here for the agent. Voice id and the fallback voice ids must be from different
+   * TTS providers. The system would go through the list in order, if the first one
+   * in the list is also having outage, it would use the next one. Set to null to
+   * remove fallback for the agent.
+   */
+  fallback_voice_ids?: Array<string> | null;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
