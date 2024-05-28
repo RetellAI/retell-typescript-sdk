@@ -156,11 +156,11 @@ export interface AgentResponse {
   end_call_after_silence_ms?: number;
 
   /**
-   * When TTS provide is experiencing outages, we would use fallback voices listed
-   * here for the agent. Voice id and the fallback voice ids must be from different
-   * TTS providers. The system would go through the list in order, if the first one
-   * in the list is also having outage, it would use the next one. Set to null to
-   * remove fallback for the agent.
+   * When TTS provider for the selected voice is experiencing outages, we would use
+   * fallback voices listed here for the agent. Voice id and the fallback voice ids
+   * must be from different TTS providers. The system would go through the list in
+   * order, if the first one in the list is also having outage, it would use the next
+   * one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
 
@@ -380,11 +380,11 @@ export interface AgentCreateParams {
   end_call_after_silence_ms?: number;
 
   /**
-   * When TTS provide is experiencing outages, we would use fallback voices listed
-   * here for the agent. Voice id and the fallback voice ids must be from different
-   * TTS providers. The system would go through the list in order, if the first one
-   * in the list is also having outage, it would use the next one. Set to null to
-   * remove fallback for the agent.
+   * When TTS provider for the selected voice is experiencing outages, we would use
+   * fallback voices listed here for the agent. Voice id and the fallback voice ids
+   * must be from different TTS providers. The system would go through the list in
+   * order, if the first one in the list is also having outage, it would use the next
+   * one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
 
@@ -589,11 +589,11 @@ export interface AgentUpdateParams {
   end_call_after_silence_ms?: number;
 
   /**
-   * When TTS provide is experiencing outages, we would use fallback voices listed
-   * here for the agent. Voice id and the fallback voice ids must be from different
-   * TTS providers. The system would go through the list in order, if the first one
-   * in the list is also having outage, it would use the next one. Set to null to
-   * remove fallback for the agent.
+   * When TTS provider for the selected voice is experiencing outages, we would use
+   * fallback voices listed here for the agent. Voice id and the fallback voice ids
+   * must be from different TTS providers. The system would go through the list in
+   * order, if the first one in the list is also having outage, it would use the next
+   * one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
 
