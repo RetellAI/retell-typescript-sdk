@@ -98,6 +98,9 @@ export interface AgentResponse {
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
    *
+   * - `call-center`: Call center work noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
+   *
    * Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
@@ -322,6 +325,9 @@ export interface AgentCreateParams {
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
    *
+   * - `call-center`: Call center work noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
+   *
    * Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
@@ -530,6 +536,9 @@ export interface AgentUpdateParams {
    *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
+   *
+   * - `call-center`: Call center work noise.
+   *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
    *
    * Set to `null` to remove ambient sound from this agent.
    */
