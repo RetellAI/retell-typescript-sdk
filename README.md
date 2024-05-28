@@ -1,6 +1,6 @@
 # Retell Node API Library
 
-[![NPM version](https://img.shields.io/npm/v/retell-sdk.svg)](https://npmjs.org/package/retell-sdk)
+[![NPM version](https://img.shields.io/npm/v/retell-sdk.svg)](https://npmjs.org/package/retell-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/retell-sdk)
 
 This library provides convenient access to the Retell REST API from server-side TypeScript or JavaScript.
 
