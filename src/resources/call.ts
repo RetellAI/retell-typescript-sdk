@@ -595,8 +595,10 @@ export interface CallListParams {
   limit?: number;
 
   /**
-   * The pagination call id to continue fetching the next page of calls. If not set,
-   * will start from the beginning.
+   * The pagination key to continue fetching the next page of calls. Pagination key
+   * is represented by a call id here, and it's exclusive (not included in the
+   * fetched calls). The last call id from the list calls is usually used as
+   * pagination key here. If not set, will start from the beginning.
    */
   pagination_key?: string;
 
