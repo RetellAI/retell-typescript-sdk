@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.16.0 (2024-06-02)
+
+Full Changelog: [v3.15.1...v3.16.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.15.1...v3.16.0)
+
+### Features
+
+* **api:** manual updates ([#100](https://github.com/RetellAI/retell-typescript-sdk/issues/100)) ([0105ba3](https://github.com/RetellAI/retell-typescript-sdk/commit/0105ba35988162092e3fbd7dc91660e2ecf7eb59))
+* **api:** manual updates ([#96](https://github.com/RetellAI/retell-typescript-sdk/issues/96)) ([c2152ab](https://github.com/RetellAI/retell-typescript-sdk/commit/c2152ab895a88254683698e7e5f01ebdc188c959))
+* **api:** OpenAPI spec update via Stainless API ([#94](https://github.com/RetellAI/retell-typescript-sdk/issues/94)) ([1060aa4](https://github.com/RetellAI/retell-typescript-sdk/commit/1060aa41165c9c8bb55a1dad3979222e9e5c0068))
+* **api:** OpenAPI spec update via Stainless API ([#97](https://github.com/RetellAI/retell-typescript-sdk/issues/97)) ([e46a226](https://github.com/RetellAI/retell-typescript-sdk/commit/e46a2261919171598e8a9e3bd729b89ed27cab3e))
+* **api:** OpenAPI spec update via Stainless API ([#98](https://github.com/RetellAI/retell-typescript-sdk/issues/98)) ([e94c425](https://github.com/RetellAI/retell-typescript-sdk/commit/e94c42546a1104575c4a2404148297fd8ec6e315))
+* **api:** OpenAPI spec update via Stainless API ([#99](https://github.com/RetellAI/retell-typescript-sdk/issues/99)) ([8b8f7bd](https://github.com/RetellAI/retell-typescript-sdk/commit/8b8f7bd31309e264da1da64104d8266fa9c34cff))
+
 ## 3.15.1 (2024-05-20)
 
 Full Changelog: [v3.15.0...v3.15.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.15.0...v3.15.1)
