@@ -57,3 +57,15 @@ Methods:
 - <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmId, { ...params }) -> LlmResponse</code>
 - <code title="get /list-retell-llms">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
 - <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>
+
+# Voice
+
+Types:
+
+- <code><a href="./src/resources/voice.ts">VoiceResponse</a></code>
+- <code><a href="./src/resources/voice.ts">VoiceListResponse</a></code>
+
+Methods:
+
+- <code title="get /get-phone-number/{phone_number}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(phoneNumber) -> PhoneNumberResponse</code>
+- <code title="get /list-phone-numbers">client.voice.<a href="./src/resources/voice.ts">list</a>() -> VoiceListResponse</code>
