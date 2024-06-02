@@ -18,3 +18,4 @@ export {
   PhoneNumberUpdateParams,
   PhoneNumber,
 } from './phone-number';
+export { VoiceResponse, VoiceListResponse, Voice } from './voice';
