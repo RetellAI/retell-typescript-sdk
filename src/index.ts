@@ -115,6 +115,7 @@ export class Retell extends Core.APIClient {
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
+  voice: API.Voice = new API.Voice(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -205,6 +206,10 @@ export namespace Retell {
   export import LlmListResponse = API.LlmListResponse;
   export import LlmCreateParams = API.LlmCreateParams;
   export import LlmUpdateParams = API.LlmUpdateParams;
+
+  export import Voice = API.Voice;
+  export import VoiceRetrieveResponse = API.VoiceRetrieveResponse;
+  export import VoiceListResponse = API.VoiceListResponse;
 }
 
 export default Retell;
