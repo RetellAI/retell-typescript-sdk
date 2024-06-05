@@ -505,6 +505,11 @@ export interface RegisterCallResponse {
   sample_rate: number;
 
   /**
+   * Direction of the phone call. Not populated for web call.
+   */
+  direction?: 'inbound' | 'outbound';
+
+  /**
    * If set, will drop the call if machine (voicemail, IVR) is detected. If not set,
    * default value of false will apply.
    */
@@ -518,18 +523,14 @@ export interface RegisterCallResponse {
   end_call_after_silence_ms?: number;
 
   /**
-   * The caller number. This field is storage purpose only, set this if you want the
-   * call object to contain it so that it's easier to reference it. Not used for
-   * processing, when we connect to your LLM websocket server, you can then get it
-   * from the call object.
+   * The caller number.
    */
   from_number?: string;
 
   /**
-   * An abtriary object for storage purpose only. You can put anything here like your
-   * own id for the call, twilio SID, internal customer id. Not used for processing,
-   * when we connect to your LLM websocket server, you can then get it from the call
-   * object.
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the call. Not used for processing. You
+   * can later get this field from the call object.
    */
   metadata?: unknown;
 
@@ -546,10 +547,7 @@ export interface RegisterCallResponse {
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
   /**
-   * The callee number. This field is storage purpose only, set this if you want the
-   * call object to contain it so that it's easier to reference it. Not used for
-   * processing, when we connect to your LLM websocket server, you can then get it
-   * from the call object.
+   * The callee number.
    */
   to_number?: string;
 }
@@ -572,6 +570,13 @@ export interface CallCreateParams {
    * default value of false will apply.
    */
   drop_call_if_machine_detected?: boolean;
+
+  /**
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the call. Not used for processing. You
+   * can later get this field from the call object.
+   */
+  metadata?: unknown;
 
   /**
    * For this particular call, override the agent used with this agent id. This does
@@ -687,6 +692,13 @@ export interface CallRegisterParams {
   sample_rate: number;
 
   /**
+   * Direction of the phone call. Not populated for web call. When you are using
+   * custom Twilio, we don't have this information, so you would need to specify this
+   * field if you want this information in the call history.
+   */
+  direction?: 'inbound' | 'outbound';
+
+  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
    * level end_call_after_silence_ms parameter.
@@ -694,18 +706,16 @@ export interface CallRegisterParams {
   end_call_after_silence_ms?: number;
 
   /**
-   * The caller number. This field is storage purpose only, set this if you want the
-   * call object to contain it so that it's easier to reference it. Not used for
-   * processing, when we connect to your LLM websocket server, you can then get it
-   * from the call object.
+   * The caller number. When you are using custom Twilio, we don't have this
+   * information, so you would need to specify this field if you want this
+   * information in the call history.
    */
   from_number?: string;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
-   * your own id for the call, twilio SID, internal customer id. Not used for
-   * processing, when we connect to your LLM websocket server, you can then get it
-   * from the call object.
+   * your internal customer id associated with the call. Not used for processing. You
+   * can later get this field from the call object.
    */
   metadata?: unknown;
 
@@ -716,10 +726,9 @@ export interface CallRegisterParams {
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
   /**
-   * The callee number. This field is storage purpose only, set this if you want the
-   * call object to contain it so that it's easier to reference it. Not used for
-   * processing, when we connect to your LLM websocket server, you can then get it
-   * from the call object.
+   * The callee number. When you are using custom Twilio, we don't have this
+   * information, so you would need to specify this field if you want this
+   * information in the call history.
    */
   to_number?: string;
 }
