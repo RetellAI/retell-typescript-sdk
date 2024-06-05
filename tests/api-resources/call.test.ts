@@ -25,6 +25,7 @@ describe('resource call', () => {
       from_number: '+14157774444',
       to_number: '+12137774445',
       drop_call_if_machine_detected: true,
+      metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
@@ -109,6 +110,7 @@ describe('resource call', () => {
       audio_encoding: 's16le',
       audio_websocket_protocol: 'twilio',
       sample_rate: 24000,
+      direction: 'inbound',
       end_call_after_silence_ms: 600000,
       from_number: '+12137771234',
       metadata: {},
