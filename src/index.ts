@@ -133,7 +133,7 @@ export class Retell extends Core.APIClient {
   }
 
   protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+    return qs.stringify(query, { arrayFormat: 'brackets' });
   }
 
   static Retell = this;
@@ -208,7 +208,7 @@ export namespace Retell {
   export import LlmUpdateParams = API.LlmUpdateParams;
 
   export import Voice = API.Voice;
-  export import VoiceRetrieveResponse = API.VoiceRetrieveResponse;
+  export import LlmResponse = API.LlmResponse;
   export import VoiceListResponse = API.VoiceListResponse;
 }
 
