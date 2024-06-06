@@ -8,7 +8,7 @@ export class Voice extends APIResource {
   /**
    * Retrieve details of a specific voice
    */
-  retrieve(voiceId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
+  retrieve(voiceId: string, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
     return this._client.get(`/get-voice/${voiceId}`, options);
   }
 
@@ -20,7 +20,7 @@ export class Voice extends APIResource {
   }
 }
 
-export interface LlmResponse {
+export interface VoiceResponse {
   /**
    * Gender of voice.
    */
@@ -57,9 +57,9 @@ export interface LlmResponse {
   preview_audio_url?: string;
 }
 
-export type VoiceListResponse = Array<LlmResponse>;
+export type VoiceListResponse = Array<VoiceResponse>;
 
 export namespace Voice {
-  export import LlmResponse = VoiceAPI.LlmResponse;
+  export import VoiceResponse = VoiceAPI.VoiceResponse;
   export import VoiceListResponse = VoiceAPI.VoiceListResponse;
 }
