@@ -11,7 +11,6 @@ export {
   Call,
 } from './call';
 export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';
-export { LlmResponse, VoiceListResponse, Voice } from './voice';
 export {
   PhoneNumberResponse,
   PhoneNumberListResponse,
@@ -19,3 +18,4 @@ export {
   PhoneNumberUpdateParams,
   PhoneNumber,
 } from './phone-number';
+export { VoiceResponse, VoiceListResponse, Voice } from './voice';
