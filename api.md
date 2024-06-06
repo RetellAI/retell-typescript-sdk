@@ -62,10 +62,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/voice.ts">VoiceRetrieveResponse</a></code>
+- <code><a href="./src/resources/voice.ts">LlmResponse</a></code>
 - <code><a href="./src/resources/voice.ts">VoiceListResponse</a></code>
 
 Methods:
 
-- <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> VoiceRetrieveResponse</code>
+- <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> LlmResponse</code>
 - <code title="get /list-voices">client.voice.<a href="./src/resources/voice.ts">list</a>() -> VoiceListResponse</code>
