@@ -8,7 +8,7 @@ export class Voice extends APIResource {
   /**
    * Retrieve details of a specific voice
    */
-  retrieve(voiceId: string, options?: Core.RequestOptions): Core.APIPromise<VoiceRetrieveResponse> {
+  retrieve(voiceId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.get(`/get-voice/${voiceId}`, options);
   }
 
@@ -20,7 +20,7 @@ export class Voice extends APIResource {
   }
 }
 
-export interface VoiceRetrieveResponse {
+export interface LlmResponse {
   /**
    * Gender of voice.
    */
@@ -57,48 +57,9 @@ export interface VoiceRetrieveResponse {
   preview_audio_url?: string;
 }
 
-export type VoiceListResponse = Array<VoiceListResponse.VoiceListResponseItem>;
-
-export namespace VoiceListResponse {
-  export interface VoiceListResponseItem {
-    /**
-     * Gender of voice.
-     */
-    gender: 'male' | 'female';
-
-    /**
-     * Indicates the provider of voice.
-     */
-    provider: 'elevenlabs' | 'openai' | 'deepgram';
-
-    /**
-     * Unique id for the voice.
-     */
-    voice_id: string;
-
-    /**
-     * Name of the voice.
-     */
-    voice_name: string;
-
-    /**
-     * Accent annotation of the voice.
-     */
-    accent?: string;
-
-    /**
-     * Age annotation of the voice.
-     */
-    age?: string;
-
-    /**
-     * URL to the preview audio of the voice.
-     */
-    preview_audio_url?: string;
-  }
-}
+export type VoiceListResponse = Array<LlmResponse>;
 
 export namespace Voice {
-  export import VoiceRetrieveResponse = VoiceAPI.VoiceRetrieveResponse;
+  export import LlmResponse = VoiceAPI.LlmResponse;
   export import VoiceListResponse = VoiceAPI.VoiceListResponse;
 }
