@@ -208,7 +208,7 @@ export namespace Retell {
   export import LlmUpdateParams = API.LlmUpdateParams;
 
   export import Voice = API.Voice;
-  export import LlmResponse = API.LlmResponse;
+  export import VoiceResponse = API.VoiceResponse;
   export import VoiceListResponse = API.VoiceListResponse;
 }
 
