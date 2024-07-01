@@ -74,13 +74,15 @@ export interface PhoneNumberResponse {
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls.
+   * agent when receiving inbound calls. If unset, this number would not accept
+   * inbound call.
    */
   inbound_agent_id?: string;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls.
+   * agent when conducting outbound calls. If unset, this number would not be able to
+   * initiate inbound call without agent id override.
    */
   outbound_agent_id?: string;
 }
@@ -96,13 +98,15 @@ export interface PhoneNumberCreateParams {
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls.
+   * agent when receiving inbound calls. If unset, this number would not accept
+   * inbound call.
    */
   inbound_agent_id?: string;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls.
+   * agent when conducting outbound calls. If unset, this number would not be able to
+   * initiate inbound call without agent id override.
    */
   outbound_agent_id?: string;
 }
@@ -110,13 +114,15 @@ export interface PhoneNumberCreateParams {
 export interface PhoneNumberUpdateParams {
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls.
+   * agent when receiving inbound calls. If unset, this number would not accept
+   * inbound call.
    */
   inbound_agent_id?: string;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls.
+   * agent when conducting outbound calls. If unset, this number would not be able to
+   * initiate inbound call without agent id override.
    */
   outbound_agent_id?: string;
 }
