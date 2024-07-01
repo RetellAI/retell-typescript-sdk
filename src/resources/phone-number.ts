@@ -50,12 +50,6 @@ export class PhoneNumber extends APIResource {
 
 export interface PhoneNumberResponse {
   /**
-   * Unique id of agent to bind to newly obtained number. The number will
-   * automatically use the agent when doing inbound / outbound calls.
-   */
-  agent_id: string;
-
-  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
@@ -77,30 +71,54 @@ export interface PhoneNumberResponse {
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when receiving inbound calls.
+   */
+  inbound_agent_id?: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when conducting outbound calls.
+   */
+  outbound_agent_id?: string;
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
 
 export interface PhoneNumberCreateParams {
   /**
-   * Unique id of agent to bind to newly obtained number. The number will
-   * automatically use the agent when doing inbound / outbound calls.
-   */
-  agent_id: string;
-
-  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
   area_code?: number;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when receiving inbound calls.
+   */
+  inbound_agent_id?: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when conducting outbound calls.
+   */
+  outbound_agent_id?: string;
 }
 
 export interface PhoneNumberUpdateParams {
   /**
-   * Unique id of agent to bind to number. The number will automatically use the
-   * agent when doing inbound / outbound calls.
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when receiving inbound calls.
    */
-  agent_id: string;
+  inbound_agent_id?: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when conducting outbound calls.
+   */
+  outbound_agent_id?: string;
 }
 
 export namespace PhoneNumber {
