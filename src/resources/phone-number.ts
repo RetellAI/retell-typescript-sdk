@@ -50,6 +50,12 @@ export class PhoneNumber extends APIResource {
 
 export interface PhoneNumberResponse {
   /**
+   * Unique id of agent to bind to newly obtained number. The number will
+   * automatically use the agent when doing inbound / outbound calls.
+   */
+  agent_id: string;
+
+  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
@@ -71,60 +77,30 @@ export interface PhoneNumberResponse {
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty: string;
-
-  /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If null, this number would not accept
-   * inbound call.
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If null, this number would not be able to
-   * initiate outbound call without agent id override.
-   */
-  outbound_agent_id?: string | null;
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
 
 export interface PhoneNumberCreateParams {
   /**
+   * Unique id of agent to bind to newly obtained number. The number will
+   * automatically use the agent when doing inbound / outbound calls.
+   */
+  agent_id: string;
+
+  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
   area_code?: number;
-
-  /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If null, this number would not accept
-   * inbound call.
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If null, this number would not be able to
-   * initiate outbound call without agent id override.
-   */
-  outbound_agent_id?: string | null;
 }
 
 export interface PhoneNumberUpdateParams {
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If set to null, this number would not accept
-   * inbound call.
+   * Unique id of agent to bind to number. The number will automatically use the
+   * agent when doing inbound / outbound calls.
    */
-  inbound_agent_id?: string | null;
-
-  /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If set to null, this number would not be
-   * able to initiate outbound call without agent id override.
-   */
-  outbound_agent_id?: string | null;
+  agent_id: string;
 }
 
 export namespace PhoneNumber {
