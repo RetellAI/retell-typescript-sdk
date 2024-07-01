@@ -3,16 +3,15 @@
 Types:
 
 - <code><a href="./src/resources/call.ts">CallResponse</a></code>
-- <code><a href="./src/resources/call.ts">PhoneCallResponse</a></code>
+- <code><a href="./src/resources/call.ts">RegisterCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
-- <code><a href="./src/resources/call.ts">CallCreateWebCallResponse</a></code>
 
 Methods:
 
-- <code title="get /v2/get-call/{call_id}">client.call.<a href="./src/resources/call.ts">retrieve</a>(callId) -> CallResponse</code>
-- <code title="get /v2/list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
-- <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
-- <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> CallCreateWebCallResponse</code>
+- <code title="post /create-phone-call">client.call.<a href="./src/resources/call.ts">create</a>({ ...params }) -> RegisterCallResponse</code>
+- <code title="get /get-call/{call_id}">client.call.<a href="./src/resources/call.ts">retrieve</a>(callId) -> CallResponse</code>
+- <code title="get /list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
+- <code title="post /register-call">client.call.<a href="./src/resources/call.ts">register</a>({ ...params }) -> RegisterCallResponse</code>
 
 # PhoneNumber
 
@@ -63,10 +62,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/voice.ts">VoiceResponse</a></code>
+- <code><a href="./src/resources/voice.ts">VoiceRetrieveResponse</a></code>
 - <code><a href="./src/resources/voice.ts">VoiceListResponse</a></code>
 
 Methods:
 
-- <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> VoiceResponse</code>
+- <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> VoiceRetrieveResponse</code>
 - <code title="get /list-voices">client.voice.<a href="./src/resources/voice.ts">list</a>() -> VoiceListResponse</code>
