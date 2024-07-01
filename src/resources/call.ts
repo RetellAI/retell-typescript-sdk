@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
 import * as Core from '../core';
 import * as CallAPI from './call';
 
@@ -16,16 +15,8 @@ export class Call extends APIResource {
   /**
    * Retrieve call details
    */
-  list(query?: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<CallListResponse>;
-  list(
-    query: CallListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CallListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.get('/v2/list-calls', { query, ...options });
+  list(body: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
+    return this._client.post('/v2/list-calls', { body, ...options });
   }
 
   /**
