@@ -74,15 +74,15 @@ export interface PhoneNumberResponse {
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If unset, this number would not accept
+   * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
    */
   inbound_agent_id?: string;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If unset, this number would not be able to
-   * initiate inbound call without agent id override.
+   * agent when conducting outbound calls. If null, this number would not be able to
+   * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string;
 }
@@ -106,7 +106,7 @@ export interface PhoneNumberCreateParams {
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when conducting outbound calls. If unset, this number would not be able to
-   * initiate inbound call without agent id override.
+   * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string;
 }
@@ -114,17 +114,17 @@ export interface PhoneNumberCreateParams {
 export interface PhoneNumberUpdateParams {
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If unset, this number would not accept
+   * agent when receiving inbound calls. If set to null, this number would not accept
    * inbound call.
    */
-  inbound_agent_id?: string;
+  inbound_agent_id?: string | null;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If unset, this number would not be able to
-   * initiate inbound call without agent id override.
+   * agent when conducting outbound calls. If set to null, this number would not be
+   * able to initiate outbound call without agent id override.
    */
-  outbound_agent_id?: string;
+  outbound_agent_id?: string | null;
 }
 
 export namespace PhoneNumber {
