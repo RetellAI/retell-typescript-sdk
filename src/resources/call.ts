@@ -9,7 +9,7 @@ export class Call extends APIResource {
   /**
    * Retrieve details of a specific call
    */
-  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallDetail> {
+  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallResponse> {
     return this._client.get(`/v2/get-call/${callId}`, options);
   }
 
@@ -34,7 +34,7 @@ export class Call extends APIResource {
   createPhoneCall(
     body: CallCreatePhoneCallParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneCallDetail> {
+  ): Core.APIPromise<PhoneCallResponse> {
     return this._client.post('/v2/create-phone-call', { body, ...options });
   }
 
@@ -49,9 +49,9 @@ export class Call extends APIResource {
   }
 }
 
-export type CallDetail = CallDetail.V2WebCallResponse | PhoneCallDetail;
+export type CallResponse = CallResponse.V2WebCallResponse | PhoneCallResponse;
 
-export namespace CallDetail {
+export namespace CallResponse {
   export interface V2WebCallResponse {
     /**
      * Access token to enter the web call room. This needs to be passed to your
@@ -117,7 +117,7 @@ export namespace CallDetail {
   }
 }
 
-export interface PhoneCallDetail {
+export interface PhoneCallResponse {
   /**
    * Corresponding agent id of this call.
    */
@@ -190,7 +190,7 @@ export interface PhoneCallDetail {
   retell_llm_dynamic_variables?: Record<string, unknown>;
 }
 
-export type CallListResponse = Array<CallDetail>;
+export type CallListResponse = Array<CallResponse>;
 
 export interface CallCreateWebCallResponse {
   /**
@@ -362,8 +362,8 @@ export interface CallCreateWebCallParams {
 }
 
 export namespace Call {
-  export import CallDetail = CallAPI.CallDetail;
-  export import PhoneCallDetail = CallAPI.PhoneCallDetail;
+  export import CallResponse = CallAPI.CallResponse;
+  export import PhoneCallResponse = CallAPI.PhoneCallResponse;
   export import CallListResponse = CallAPI.CallListResponse;
   export import CallCreateWebCallResponse = CallAPI.CallCreateWebCallResponse;
   export import CallListParams = CallAPI.CallListParams;
