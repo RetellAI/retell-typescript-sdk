@@ -9,8 +9,8 @@ const retell = new Retell({
 });
 
 describe('resource phoneNumber', () => {
-  test('create: only required params', async () => {
-    const responsePromise = retell.phoneNumber.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
+  test('create', async () => {
+    const responsePromise = retell.phoneNumber.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,13 +18,6 @@ describe('resource phoneNumber', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('create: required and optional params', async () => {
-    const response = await retell.phoneNumber.create({
-      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      area_code: 415,
-    });
   });
 
   test('retrieve', async () => {
@@ -45,8 +38,8 @@ describe('resource phoneNumber', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('update: only required params', async () => {
-    const responsePromise = retell.phoneNumber.update('+14157774444', { agent_id: 'string' });
+  test('update', async () => {
+    const responsePromise = retell.phoneNumber.update('+14157774444', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -54,10 +47,6 @@ describe('resource phoneNumber', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('update: required and optional params', async () => {
-    const response = await retell.phoneNumber.update('+14157774444', { agent_id: 'string' });
   });
 
   test('list', async () => {
