@@ -90,13 +90,6 @@ export namespace CallResponse {
     call_type: 'web_call';
 
     /**
-     * If users stay silent for a period after agent speech, end the call. The minimum
-     * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
-     * level end_call_after_silence_ms parameter.
-     */
-    end_call_after_silence_ms?: number;
-
-    /**
      * An arbitrary object for storage purpose only. You can put anything here like
      * your internal customer id associated with the call. Not used for processing. You
      * can later get this field from the call object.
@@ -164,13 +157,6 @@ export interface PhoneCallResponse {
   to_number: string;
 
   /**
-   * If users stay silent for a period after agent speech, end the call. The minimum
-   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
-   * level end_call_after_silence_ms parameter.
-   */
-  end_call_after_silence_ms?: number;
-
-  /**
    * An arbitrary object for storage purpose only. You can put anything here like
    * your internal customer id associated with the call. Not used for processing. You
    * can later get this field from the call object.
@@ -228,13 +214,6 @@ export interface CallCreateWebCallResponse {
    * Type of the call. Used to distinguish between web call and phone call.
    */
   call_type: 'web_call';
-
-  /**
-   * If users stay silent for a period after agent speech, end the call. The minimum
-   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
-   * level end_call_after_silence_ms parameter.
-   */
-  end_call_after_silence_ms?: number;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
