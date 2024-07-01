@@ -28,7 +28,7 @@ describe('resource call', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retell.call.list();
+    const responsePromise = retell.call.list({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -36,34 +36,6 @@ describe('resource call', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('list: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retell.call.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
-  });
-
-  test('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      retell.call.list(
-        {
-          filter_criteria: {
-            agent_id: ['oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD'],
-            before_start_timestamp: 1703302407399,
-            after_start_timestamp: 1703302407300,
-            before_end_timestamp: 1703302428899,
-            after_end_timestamp: 1703302428800,
-          },
-          limit: 0,
-          pagination_key: 'string',
-          sort_order: 'ascending',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   test('createPhoneCall: only required params', async () => {
