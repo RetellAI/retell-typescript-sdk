@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from './core';
 import * as Errors from './error';
-import { type Agent } from './_shims/index';
 import * as Uploads from './uploads';
+import { type Agent } from './_shims/index';
 import * as qs from 'qs';
+import * as Core from './core';
 import * as API from './resources/index';
 
 export interface ClientOptions {
@@ -67,7 +67,9 @@ export interface ClientOptions {
   defaultQuery?: Core.DefaultQuery;
 }
 
-/** API Client for interfacing with the Retell API. */
+/**
+ * API Client for interfacing with the Retell API.
+ */
 export class Retell extends Core.APIClient {
   apiKey: string;
 
@@ -105,6 +107,7 @@ export class Retell extends Core.APIClient {
       maxRetries: options.maxRetries,
       fetch: options.fetch,
     });
+
     this._options = options;
 
     this.apiKey = apiKey;
@@ -178,12 +181,13 @@ export namespace Retell {
   export import RequestOptions = Core.RequestOptions;
 
   export import Call = API.Call;
-  export import CallResponse = API.CallResponse;
-  export import RegisterCallResponse = API.RegisterCallResponse;
+  export import CallDetail = API.CallDetail;
+  export import PhoneCallDetail = API.PhoneCallDetail;
   export import CallListResponse = API.CallListResponse;
-  export import CallCreateParams = API.CallCreateParams;
+  export import CallCreateWebCallResponse = API.CallCreateWebCallResponse;
   export import CallListParams = API.CallListParams;
-  export import CallRegisterParams = API.CallRegisterParams;
+  export import CallCreatePhoneCallParams = API.CallCreatePhoneCallParams;
+  export import CallCreateWebCallParams = API.CallCreateWebCallParams;
 
   export import PhoneNumber = API.PhoneNumber;
   export import PhoneNumberResponse = API.PhoneNumberResponse;

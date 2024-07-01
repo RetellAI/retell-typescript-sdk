@@ -1,23 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from '../core';
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
+import * as Core from '../core';
 import * as CallAPI from './call';
 
 export class Call extends APIResource {
   /**
-   * Create a new phone call
-   */
-  create(body: CallCreateParams, options?: Core.RequestOptions): Core.APIPromise<RegisterCallResponse> {
-    return this._client.post('/create-phone-call', { body, ...options });
-  }
-
-  /**
    * Retrieve details of a specific call
    */
-  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallResponse> {
-    return this._client.get(`/get-call/${callId}`, options);
+  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallDetail> {
+    return this._client.get(`/v2/get-call/${callId}`, options);
   }
 
   /**
@@ -32,442 +25,103 @@ export class Call extends APIResource {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
-    return this._client.get('/list-calls', { query, ...options });
+    return this._client.get('/v2/list-calls', { query, ...options });
   }
 
   /**
-   * Register Call To Get CallId To Establish Connection
+   * Create a new outbound phone call
    */
-  register(body: CallRegisterParams, options?: Core.RequestOptions): Core.APIPromise<RegisterCallResponse> {
-    return this._client.post('/register-call', { body, ...options });
-  }
-}
-
-export interface CallResponse extends RegisterCallResponse {
-  /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
-   */
-  call_analysis?: CallResponse.CallAnalysis;
-
-  /**
-   * The reason for the disconnection of the call. Read details desciption about
-   * reasons listed here at
-   * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
-   */
-  disconnection_reason?:
-    | 'user_hangup'
-    | 'agent_hangup'
-    | 'call_transfer'
-    | 'inactivity'
-    | 'machine_detected'
-    | 'concurrency_limit_reached'
-    | 'dial_busy'
-    | 'dial_failed'
-    | 'dial_no_answer'
-    | 'error_llm_websocket_open'
-    | 'error_llm_websocket_lost_connection'
-    | 'error_llm_websocket_runtime'
-    | 'error_llm_websocket_corrupt_payload'
-    | 'error_frontend_corrupted_payload'
-    | 'error_twilio'
-    | 'error_no_audio_received'
-    | 'error_asr'
-    | 'error_retell'
-    | 'error_unknown';
-
-  /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
-   */
-  e2e_latency?: CallResponse.E2ELatency;
-
-  /**
-   * End timestamp (milliseconds since epoch) of the call. Available after call ends.
-   */
-  end_timestamp?: number;
-
-  /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
-   */
-  llm_latency?: CallResponse.LlmLatency;
-
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  llm_websocket_network_rtt_latency?: CallResponse.LlmWebsocketNetworkRttLatency;
-
-  /**
-   * Public log of the call, containing details about all the requests and responses
-   * received in LLM WebSocket, latency tracking for each turntaking, helpful for
-   * debugging and tracing. Available after call ends.
-   */
-  public_log_url?: string;
-
-  /**
-   * Recording of the call. Available after call ends.
-   */
-  recording_url?: string;
-
-  /**
-   * Begin timestamp (milliseconds since epoch) of the call. Available after call
-   * starts.
-   */
-  start_timestamp?: number;
-
-  /**
-   * Transcription of the call. Available after call ends.
-   */
-  transcript?: string;
-
-  /**
-   * Transcript of the call in the format of a list of utterance, with timestamp.
-   * Available after call ends.
-   */
-  transcript_object?: Array<CallResponse.TranscriptObject>;
-
-  /**
-   * Transcript of the call weaved with tool call invocation and results. It
-   * precisely captures when (at what utterance, which word) the tool was invoked and
-   * what was the result. Available after call ends.
-   */
-  transcript_with_tool_calls?: Array<
-    CallResponse.Utterance | CallResponse.ToolCallInvocationUtterance | CallResponse.ToolCallResultUtterance
-  >;
-}
-
-export namespace CallResponse {
-  /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
-   */
-  export interface CallAnalysis {
-    /**
-     * Sentiment of the agent in the call.
-     */
-    agent_sentiment?: 'Negative' | 'Positive' | 'Neutral';
-
-    /**
-     * Evaluate agent task completion status, whether the agent has completed his task.
-     */
-    agent_task_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the agent task completion status.
-     */
-    agent_task_completion_rating_reason?: string;
-
-    /**
-     * Evaluate whether the call ended normally or was cut off.
-     */
-    call_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the call completion status.
-     */
-    call_completion_rating_reason?: string;
-
-    /**
-     * A high level summary of the call.
-     */
-    call_summary?: string;
-
-    /**
-     * Sentiment of the user in the call.
-     */
-    user_sentiment?: 'Negative' | 'Positive' | 'Neutral';
+  createPhoneCall(
+    body: CallCreatePhoneCallParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PhoneCallDetail> {
+    return this._client.post('/v2/create-phone-call', { body, ...options });
   }
 
   /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
+   * Create a new web call
    */
-  export interface E2ELatency {
-    /**
-     * Maximum latency in the call, measured in milliseconds.
-     */
-    max?: number;
-
-    /**
-     * Minimum latency in the call, measured in milliseconds.
-     */
-    min?: number;
-
-    /**
-     * Number of data points (number of times latency is tracked).
-     */
-    num?: number;
-
-    /**
-     * 50 percentile of latency, measured in milliseconds.
-     */
-    p50?: number;
-
-    /**
-     * 90 percentile of latency, measured in milliseconds.
-     */
-    p90?: number;
-
-    /**
-     * 95 percentile of latency, measured in milliseconds.
-     */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
-  }
-
-  /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
-   */
-  export interface LlmLatency {
-    /**
-     * Maximum latency in the call, measured in milliseconds.
-     */
-    max?: number;
-
-    /**
-     * Minimum latency in the call, measured in milliseconds.
-     */
-    min?: number;
-
-    /**
-     * Number of data points (number of times latency is tracked).
-     */
-    num?: number;
-
-    /**
-     * 50 percentile of latency, measured in milliseconds.
-     */
-    p50?: number;
-
-    /**
-     * 90 percentile of latency, measured in milliseconds.
-     */
-    p90?: number;
-
-    /**
-     * 95 percentile of latency, measured in milliseconds.
-     */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
-  }
-
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  export interface LlmWebsocketNetworkRttLatency {
-    /**
-     * Maximum latency in the call, measured in milliseconds.
-     */
-    max?: number;
-
-    /**
-     * Minimum latency in the call, measured in milliseconds.
-     */
-    min?: number;
-
-    /**
-     * Number of data points (number of times latency is tracked).
-     */
-    num?: number;
-
-    /**
-     * 50 percentile of latency, measured in milliseconds.
-     */
-    p50?: number;
-
-    /**
-     * 90 percentile of latency, measured in milliseconds.
-     */
-    p90?: number;
-
-    /**
-     * 95 percentile of latency, measured in milliseconds.
-     */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
-  }
-
-  export interface TranscriptObject {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<TranscriptObject.Word>;
-  }
-
-  export namespace TranscriptObject {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-  }
-
-  export interface Utterance {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<Utterance.Word>;
-  }
-
-  export namespace Utterance {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-  }
-
-  export interface ToolCallInvocationUtterance {
-    /**
-     * Arguments for this tool call, it's a stringified JSON object.
-     */
-    arguments: string;
-
-    /**
-     * Name of the function in this tool call.
-     */
-    name: string;
-
-    /**
-     * This is a tool call invocation.
-     */
-    role: 'tool_call_invocation';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-  }
-
-  export interface ToolCallResultUtterance {
-    /**
-     * Result of the tool call, can be a string, a stringified json, etc.
-     */
-    content: string;
-
-    /**
-     * This is result of a tool call.
-     */
-    role: 'tool_call_result';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
+  createWebCall(
+    body: CallCreateWebCallParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<CallCreateWebCallResponse> {
+    return this._client.post('/v2/create-web-call', { body, ...options });
   }
 }
 
-export interface RegisterCallResponse {
+export type CallDetail = CallDetail.V2WebCallResponse | PhoneCallDetail;
+
+export namespace CallDetail {
+  export interface V2WebCallResponse {
+    /**
+     * Access token to enter the web call room. This needs to be passed to your
+     * frontend to join the call.
+     */
+    access_token: string;
+
+    /**
+     * Corresponding agent id of this call.
+     */
+    agent_id: string;
+
+    /**
+     * Unique id of the call. Used to identify in LLM websocket and used to
+     * authenticate in audio websocket.
+     */
+    call_id: string;
+
+    /**
+     * Status of call.
+     *
+     * - `registered`: Call id issued, starting to make a call using this id.
+     *
+     * - `ongoing`: Call connected and ongoing.
+     *
+     * - `ended`: The underlying websocket has ended for the call. Either user or agent
+     *   hanged up, or call transferred.
+     *
+     * - `error`: Call encountered error.
+     */
+    call_status: 'registered' | 'ongoing' | 'ended' | 'error';
+
+    /**
+     * Type of the call. Used to distinguish between web call and phone call.
+     */
+    call_type: 'web_call';
+
+    /**
+     * If users stay silent for a period after agent speech, end the call. The minimum
+     * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
+     * level end_call_after_silence_ms parameter.
+     */
+    end_call_after_silence_ms?: number;
+
+    /**
+     * An arbitrary object for storage purpose only. You can put anything here like
+     * your internal customer id associated with the call. Not used for processing. You
+     * can later get this field from the call object.
+     */
+    metadata?: unknown;
+
+    /**
+     * Whether this call opts out of sensitive data storage like transcript, recording,
+     * logging.
+     */
+    opt_out_sensitive_data_storage?: boolean;
+
+    /**
+     * Add optional dynamic variables in key value pairs of string that injects into
+     * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+     */
+    retell_llm_dynamic_variables?: Record<string, unknown>;
+  }
+}
+
+export interface PhoneCallDetail {
   /**
    * Corresponding agent id of this call.
    */
   agent_id: string;
-
-  /**
-   * The audio encoding of the call. The following formats are supported:
-   *
-   * - `s16le` 16 bit linear PCM audio, the native format for web audio capture and
-   *   playback.
-   *
-   * - `mulaw` non-linear audio encoding technique used in telephony. Commonly used
-   *   by Twilio.
-   */
-  audio_encoding: 's16le' | 'mulaw';
-
-  /**
-   * Where the audio websocket would connect from would determine the format /
-   * protocol of websocket messages, and would determine how our server read audio
-   * bytes and send audio bytes.:
-   *
-   * - `web`: The protocol defined by Retell, commonly used for connecting from web
-   *   frontend. Also useful for those who want to manipulate audio bytes directly.
-   *
-   * - `twilio`: The
-   *   [websocket protocol](https://www.twilio.com/docs/voice/twiml/stream#message-media)
-   *   defined by Twilio, used when your system uses Twilio, and supplies Retell
-   *   audio websocket url to Twilio.
-   */
-  audio_websocket_protocol: 'web' | 'twilio';
 
   /**
    * Unique id of the call. Used to identify in LLM websocket and used to
@@ -478,7 +132,7 @@ export interface RegisterCallResponse {
   /**
    * Status of call.
    *
-   * - `registered`: Call id issued, ready to make a call using this id.
+   * - `registered`: Call id issued, starting to make a call using this id.
    *
    * - `ongoing`: Call connected and ongoing.
    *
@@ -490,30 +144,24 @@ export interface RegisterCallResponse {
   call_status: 'registered' | 'ongoing' | 'ended' | 'error';
 
   /**
-   * Sample rate of the conversation, the input and output audio bytes will all
-   * conform to this rate. Check the audio source, audio format, and voice used for
-   * the agent to select one that works. supports value ranging from [8000, 48000].
-   * Note for Twilio `mulaw` encoding, the sample rate has to be 8000.
-   *
-   * - `s16le` sample rate recommendation (natively supported, lowest latency):
-   *
-   *   - elevenlabs voices: 16000, 22050, 24000, 44100.
-   *   - openai voices: 24000.
-   *
-   *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
+   * Type of the call. Used to distinguish between web call and phone call.
    */
-  sample_rate: number;
+  call_type: 'phone_call';
 
   /**
-   * Direction of the phone call. Not populated for web call.
+   * Direction of the phone call.
    */
-  direction?: 'inbound' | 'outbound';
+  direction: 'inbound' | 'outbound';
 
   /**
-   * If set, will drop the call if machine (voicemail, IVR) is detected. If not set,
-   * default value of false will apply.
+   * The caller number.
    */
-  drop_call_if_machine_detected?: boolean;
+  from_number: string;
+
+  /**
+   * The callee number.
+   */
+  to_number: string;
 
   /**
    * If users stay silent for a period after agent speech, end the call. The minimum
@@ -521,11 +169,6 @@ export interface RegisterCallResponse {
    * level end_call_after_silence_ms parameter.
    */
   end_call_after_silence_ms?: number;
-
-  /**
-   * The caller number.
-   */
-  from_number?: string;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -545,31 +188,53 @@ export interface RegisterCallResponse {
    * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
-
-  /**
-   * The callee number.
-   */
-  to_number?: string;
 }
 
-export type CallListResponse = Array<CallResponse>;
+export type CallListResponse = Array<CallDetail>;
 
-export interface CallCreateParams {
+export interface CallCreateWebCallResponse {
   /**
-   * The number you own in E.164 format.
+   * Access token to enter the web call room. This needs to be passed to your
+   * frontend to join the call.
    */
-  from_number: string;
-
-  /**
-   * The number you want to call, in E.164 format.
-   */
-  to_number: string;
+  access_token: string;
 
   /**
-   * If set, will drop the call if machine (voicemail, IVR) is detected. If not set,
-   * default value of false will apply.
+   * Corresponding agent id of this call.
    */
-  drop_call_if_machine_detected?: boolean;
+  agent_id: string;
+
+  /**
+   * Unique id of the call. Used to identify in LLM websocket and used to
+   * authenticate in audio websocket.
+   */
+  call_id: string;
+
+  /**
+   * Status of call.
+   *
+   * - `registered`: Call id issued, starting to make a call using this id.
+   *
+   * - `ongoing`: Call connected and ongoing.
+   *
+   * - `ended`: The underlying websocket has ended for the call. Either user or agent
+   *   hanged up, or call transferred.
+   *
+   * - `error`: Call encountered error.
+   */
+  call_status: 'registered' | 'ongoing' | 'ended' | 'error';
+
+  /**
+   * Type of the call. Used to distinguish between web call and phone call.
+   */
+  call_type: 'web_call';
+
+  /**
+   * If users stay silent for a period after agent speech, end the call. The minimum
+   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
+   * level end_call_after_silence_ms parameter.
+   */
+  end_call_after_silence_ms?: number;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -579,10 +244,10 @@ export interface CallCreateParams {
   metadata?: unknown;
 
   /**
-   * For this particular call, override the agent used with this agent id. This does
-   * not bind the agent to this number, this is for one time override.
+   * Whether this call opts out of sensitive data storage like transcript, recording,
+   * logging.
    */
-  override_agent_id?: string;
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
@@ -643,74 +308,44 @@ export namespace CallListParams {
   }
 }
 
-export interface CallRegisterParams {
+export interface CallCreatePhoneCallParams {
+  /**
+   * The number you own in E.164 format. Must be a Retell managed number.
+   */
+  from_number: string;
+
+  /**
+   * The number you want to call, in E.164 format. Right now only US numbers are
+   * officially supported.
+   */
+  to_number: string;
+
+  /**
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the call. Not used for processing. You
+   * can later get this field from the call object.
+   */
+  metadata?: unknown;
+
+  /**
+   * For this particular call, override the agent used with this agent id. This does
+   * not bind the agent to this number, this is for one time override.
+   */
+  override_agent_id?: string;
+
+  /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   */
+  retell_llm_dynamic_variables?: Record<string, unknown>;
+}
+
+export interface CallCreateWebCallParams {
   /**
    * Unique id of agent used for the call. Your agent would contain the LLM Websocket
    * url used for this call.
    */
   agent_id: string;
-
-  /**
-   * The audio encoding of the call. The following formats are supported:
-   *
-   * - `s16le` 16 bit linear PCM audio, the native format for web audio capture and
-   *   playback.
-   *
-   * - `mulaw` non-linear audio encoding technique used in telephony. Commonly used
-   *   by Twilio.
-   */
-  audio_encoding: 's16le' | 'mulaw';
-
-  /**
-   * Where the audio websocket would connect from would determine the format /
-   * protocol of websocket messages, and would determine how our server read audio
-   * bytes and send audio bytes.:
-   *
-   * - `web`: The protocol defined by Retell, commonly used for connecting from web
-   *   frontend. Also useful for those who want to manipulate audio bytes directly.
-   *
-   * - `twilio`: The
-   *   [websocket protocol](https://www.twilio.com/docs/voice/twiml/stream#message-media)
-   *   defined by Twilio, used when your system uses Twilio, and supplies Retell
-   *   audio websocket url to Twilio.
-   */
-  audio_websocket_protocol: 'web' | 'twilio';
-
-  /**
-   * Sample rate of the conversation, the input and output audio bytes will all
-   * conform to this rate. Check the audio source, audio format, and voice used for
-   * the agent to select one that works. supports value ranging from [8000, 48000].
-   * Note for Twilio `mulaw` encoding, the sample rate has to be 8000.
-   *
-   * - `s16le` sample rate recommendation (natively supported, lowest latency):
-   *
-   *   - elevenlabs voices: 16000, 22050, 24000, 44100.
-   *   - openai voices: 24000.
-   *
-   *   - deepgram voices: 8000, 16000, 24000, 32000, 48000.
-   */
-  sample_rate: number;
-
-  /**
-   * Direction of the phone call. Not populated for web call. When you are using
-   * custom Twilio, we don't have this information, so you would need to specify this
-   * field if you want this information in the call history.
-   */
-  direction?: 'inbound' | 'outbound';
-
-  /**
-   * If users stay silent for a period after agent speech, end the call. The minimum
-   * value allowed is 10,000 ms (10 s). This value, if set, would overwrite the agent
-   * level end_call_after_silence_ms parameter.
-   */
-  end_call_after_silence_ms?: number;
-
-  /**
-   * The caller number. When you are using custom Twilio, we don't have this
-   * information, so you would need to specify this field if you want this
-   * information in the call history.
-   */
-  from_number?: string;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -724,20 +359,14 @@ export interface CallRegisterParams {
    * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
-
-  /**
-   * The callee number. When you are using custom Twilio, we don't have this
-   * information, so you would need to specify this field if you want this
-   * information in the call history.
-   */
-  to_number?: string;
 }
 
 export namespace Call {
-  export import CallResponse = CallAPI.CallResponse;
-  export import RegisterCallResponse = CallAPI.RegisterCallResponse;
+  export import CallDetail = CallAPI.CallDetail;
+  export import PhoneCallDetail = CallAPI.PhoneCallDetail;
   export import CallListResponse = CallAPI.CallListResponse;
-  export import CallCreateParams = CallAPI.CallCreateParams;
+  export import CallCreateWebCallResponse = CallAPI.CallCreateWebCallResponse;
   export import CallListParams = CallAPI.CallListParams;
-  export import CallRegisterParams = CallAPI.CallRegisterParams;
+  export import CallCreatePhoneCallParams = CallAPI.CallCreatePhoneCallParams;
+  export import CallCreateWebCallParams = CallAPI.CallCreateWebCallParams;
 }
