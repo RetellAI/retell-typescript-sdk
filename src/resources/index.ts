@@ -2,12 +2,13 @@
 
 export { AgentResponse, AgentListResponse, AgentCreateParams, AgentUpdateParams, Agent } from './agent';
 export {
-  CallResponse,
-  RegisterCallResponse,
+  CallDetail,
+  PhoneCallDetail,
   CallListResponse,
-  CallCreateParams,
+  CallCreateWebCallResponse,
   CallListParams,
-  CallRegisterParams,
+  CallCreatePhoneCallParams,
+  CallCreateWebCallParams,
   Call,
 } from './call';
 export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';

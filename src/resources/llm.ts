@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Core from '../core';
 import { APIResource } from '../resource';
+import * as Core from '../core';
 import * as LlmAPI from './llm';
 
 export class Llm extends APIResource {
@@ -104,7 +104,7 @@ export interface LlmResponse {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -657,7 +657,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1208,7 +1208,7 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
