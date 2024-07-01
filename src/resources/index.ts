@@ -3,11 +3,12 @@
 export { AgentResponse, AgentListResponse, AgentCreateParams, AgentUpdateParams, Agent } from './agent';
 export {
   CallResponse,
-  RegisterCallResponse,
+  PhoneCallResponse,
+  WebCallResponse,
   CallListResponse,
-  CallCreateParams,
   CallListParams,
-  CallRegisterParams,
+  CallCreatePhoneCallParams,
+  CallCreateWebCallParams,
   Call,
 } from './call';
 export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';
@@ -18,4 +19,4 @@ export {
   PhoneNumberUpdateParams,
   PhoneNumber,
 } from './phone-number';
-export { VoiceRetrieveResponse, VoiceListResponse, Voice } from './voice';
+export { VoiceResponse, VoiceListResponse, Voice } from './voice';
