@@ -77,14 +77,14 @@ export interface PhoneNumberResponse {
    * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
    */
-  inbound_agent_id?: string;
+  inbound_agent_id?: string | null;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when conducting outbound calls. If null, this number would not be able to
    * initiate outbound call without agent id override.
    */
-  outbound_agent_id?: string;
+  outbound_agent_id?: string | null;
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
