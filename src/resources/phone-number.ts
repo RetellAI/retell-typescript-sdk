@@ -50,12 +50,6 @@ export class PhoneNumber extends APIResource {
 
 export interface PhoneNumberResponse {
   /**
-   * Area code of the number to obtain. Format is a 3 digit integer. Currently only
-   * supports US area code.
-   */
-  area_code: number;
-
-  /**
    * Last modification timestamp (milliseconds since epoch). Either the time of last
    * update or creation if no updates available.
    */
@@ -73,11 +67,22 @@ export interface PhoneNumberResponse {
   phone_number_pretty: string;
 
   /**
+   * Area code of the number to obtain. Format is a 3 digit integer. Currently only
+   * supports US area code.
+   */
+  area_code?: number;
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
    */
   inbound_agent_id?: string | null;
+
+  /**
+   * Nickname of the number. This is for your reference only.
+   */
+  nickname?: string | null;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
@@ -104,6 +109,11 @@ export interface PhoneNumberCreateParams {
   inbound_agent_id?: string | null;
 
   /**
+   * Nickname of the number. This is for your reference only.
+   */
+  nickname?: string;
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when conducting outbound calls. If null, this number would not be able to
    * initiate outbound call without agent id override.
@@ -118,6 +128,11 @@ export interface PhoneNumberUpdateParams {
    * inbound call.
    */
   inbound_agent_id?: string | null;
+
+  /**
+   * Nickname of the number. This is for your reference only.
+   */
+  nickname?: string | null;
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the

@@ -11,6 +11,7 @@ export {
   CallCreateWebCallParams,
   Call,
 } from './call';
+export { ConcurrencyRetrieveResponse, Concurrency } from './concurrency';
 export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';
 export {
   PhoneNumberResponse,
