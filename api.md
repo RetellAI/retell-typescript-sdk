@@ -70,3 +70,13 @@ Methods:
 
 - <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> VoiceResponse</code>
 - <code title="get /list-voices">client.voice.<a href="./src/resources/voice.ts">list</a>() -> VoiceListResponse</code>
+
+# Concurrency
+
+Types:
+
+- <code><a href="./src/resources/concurrency.ts">ConcurrencyRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /get-concurrency">client.concurrency.<a href="./src/resources/concurrency.ts">retrieve</a>() -> ConcurrencyRetrieveResponse</code>
