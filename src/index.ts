@@ -118,6 +118,7 @@ export class Retell extends Core.APIClient {
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
   voice: API.Voice = new API.Voice(this);
+  concurrency: API.Concurrency = new API.Concurrency(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -209,6 +210,9 @@ export namespace Retell {
   export import Voice = API.Voice;
   export import VoiceResponse = API.VoiceResponse;
   export import VoiceListResponse = API.VoiceListResponse;
+
+  export import Concurrency = API.Concurrency;
+  export import ConcurrencyRetrieveResponse = API.ConcurrencyRetrieveResponse;
 }
 
 export default Retell;
