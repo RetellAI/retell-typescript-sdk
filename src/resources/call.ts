@@ -38,6 +38,16 @@ export class Call extends APIResource {
   ): Core.APIPromise<WebCallResponse> {
     return this._client.post('/v2/create-web-call', { body, ...options });
   }
+
+  /**
+   * Register a new outbound phone call for custom telephony
+   */
+  registerPhoneCall(
+    body: CallRegisterPhoneCallParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PhoneCallResponse> {
+    return this._client.post('/v2/register-phone-call', { body, ...options });
+  }
 }
 
 export type CallResponse = WebCallResponse | PhoneCallResponse;
@@ -1060,6 +1070,36 @@ export interface CallCreateWebCallParams {
   retell_llm_dynamic_variables?: Record<string, unknown>;
 }
 
+export interface CallRegisterPhoneCallParams {
+  /**
+   * The agent to use for the call.
+   */
+  agent_id: string;
+
+  /**
+   * The number you own in E.164 format. Stored for tracking purpose.
+   */
+  from_number?: string;
+
+  /**
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the call. Not used for processing. You
+   * can later get this field from the call object.
+   */
+  metadata?: unknown;
+
+  /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   */
+  retell_llm_dynamic_variables?: Record<string, unknown>;
+
+  /**
+   * The number you want to call, in E.164 format. Stored for tracking purpose.
+   */
+  to_number?: string;
+}
+
 export namespace Call {
   export import CallResponse = CallAPI.CallResponse;
   export import PhoneCallResponse = CallAPI.PhoneCallResponse;
@@ -1068,4 +1108,5 @@ export namespace Call {
   export import CallListParams = CallAPI.CallListParams;
   export import CallCreatePhoneCallParams = CallAPI.CallCreatePhoneCallParams;
   export import CallCreateWebCallParams = CallAPI.CallCreateWebCallParams;
+  export import CallRegisterPhoneCallParams = CallAPI.CallRegisterPhoneCallParams;
 }

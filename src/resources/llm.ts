@@ -104,7 +104,7 @@ export interface LlmResponse {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -657,7 +657,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1208,7 +1208,7 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.

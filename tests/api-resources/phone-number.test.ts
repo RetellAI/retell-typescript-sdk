@@ -84,4 +84,28 @@ describe('resource phoneNumber', () => {
       retell.phoneNumber.delete('+14157774444', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
+
+  test('import: only required params', async () => {
+    const responsePromise = retell.phoneNumber.import({
+      phone_number: '+14157774444',
+      termination_uri: 'someuri.pstn.twilio.com',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('import: required and optional params', async () => {
+    const response = await retell.phoneNumber.import({
+      phone_number: '+14157774444',
+      termination_uri: 'someuri.pstn.twilio.com',
+      inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      nickname: 'Frontdesk Number',
+      outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+    });
+  });
 });
