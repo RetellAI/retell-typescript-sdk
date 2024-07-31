@@ -1,5 +1,27 @@
 # Changelog
 
+## 4.1.0 (2024-07-31)
+
+Full Changelog: [v4.0.0...v4.1.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.0.0...v4.1.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#136](https://github.com/RetellAI/retell-typescript-sdk/issues/136)) ([ce869a2](https://github.com/RetellAI/retell-typescript-sdk/commit/ce869a272af5c906ea1cbba50acf26cea93d1f4f))
+* **api:** OpenAPI spec update via Stainless API ([#141](https://github.com/RetellAI/retell-typescript-sdk/issues/141)) ([68c7d0c](https://github.com/RetellAI/retell-typescript-sdk/commit/68c7d0c1c29cd782cd39d176030eb8893ab8526b))
+
+
+### Bug Fixes
+
+* **compat:** remove ReadableStream polyfill redundant since node v16 ([#140](https://github.com/RetellAI/retell-typescript-sdk/issues/140)) ([2651490](https://github.com/RetellAI/retell-typescript-sdk/commit/265149053e326a9d8f89214406888258c63a47ba))
+
+
+### Chores
+
+* **docs:** fix incorrect client var names ([#142](https://github.com/RetellAI/retell-typescript-sdk/issues/142)) ([168ceaa](https://github.com/RetellAI/retell-typescript-sdk/commit/168ceaa1f9732f7aa45a2f40cc4f38dc600dd4f8))
+* **internal:** add constant for default timeout ([#143](https://github.com/RetellAI/retell-typescript-sdk/issues/143)) ([61cc95c](https://github.com/RetellAI/retell-typescript-sdk/commit/61cc95c57dc96fcd90d8172cb2aea24b47bdc773))
+* **internal:** codegen related update ([#138](https://github.com/RetellAI/retell-typescript-sdk/issues/138)) ([b713b4d](https://github.com/RetellAI/retell-typescript-sdk/commit/b713b4d5527b975df071363f30b3dc9f75db6ef9))
+* **tests:** update prism version ([#139](https://github.com/RetellAI/retell-typescript-sdk/issues/139)) ([d2418bf](https://github.com/RetellAI/retell-typescript-sdk/commit/d2418bfc215c69cb1d96c36ce3914041f8361aba))
+
 ## 4.0.0 (2024-07-08)
 
 Full Changelog: [v3.20.0...v4.0.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v3.20.0...v4.0.0)
