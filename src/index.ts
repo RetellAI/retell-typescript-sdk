@@ -135,6 +135,7 @@ export class Retell extends Core.APIClient {
   }
 
   static Retell = this;
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
   static RetellError = Errors.RetellError;
   static APIError = Errors.APIError;
