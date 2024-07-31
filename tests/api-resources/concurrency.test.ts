@@ -3,14 +3,14 @@
 import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const retell = new Retell({
+const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource concurrency', () => {
   test('retrieve', async () => {
-    const responsePromise = retell.concurrency.retrieve();
+    const responsePromise = client.concurrency.retrieve();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource concurrency', () => {
 
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retell.concurrency.retrieve({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.concurrency.retrieve({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
