@@ -80,4 +80,25 @@ describe('resource call', () => {
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
+
+  test('registerPhoneCall: only required params', async () => {
+    const responsePromise = retell.call.registerPhoneCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('registerPhoneCall: required and optional params', async () => {
+    const response = await retell.call.registerPhoneCall({
+      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      from_number: '+14157774444',
+      metadata: {},
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
+      to_number: '+12137774445',
+    });
+  });
 });

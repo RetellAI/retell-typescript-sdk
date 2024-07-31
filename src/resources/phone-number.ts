@@ -6,7 +6,7 @@ import * as PhoneNumberAPI from './phone-number';
 
 export class PhoneNumber extends APIResource {
   /**
-   * Buy a new phone number & Bind an agent
+   * Buy a new phone number & Bind agents
    */
   create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.post('/create-phone-number', { body, ...options });
@@ -45,6 +45,13 @@ export class PhoneNumber extends APIResource {
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
     });
+  }
+
+  /**
+   * Import a phone number from custom telephony & Bind agents
+   */
+  import(body: PhoneNumberImportParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
+    return this._client.post('/import-phone-number', { body, ...options });
   }
 }
 
@@ -142,9 +149,45 @@ export interface PhoneNumberUpdateParams {
   outbound_agent_id?: string | null;
 }
 
+export interface PhoneNumberImportParams {
+  /**
+   * The number you are trying to import in E.164 format of the number (+country
+   * code, then number with no space, no special characters), used as the unique
+   * identifier for phone number APIs.
+   */
+  phone_number: string;
+
+  /**
+   * The termination uri to uniquely identify your elastic SIP trunk. This is used
+   * for outbound calls. For Twilio elastic SIP trunks it always end with
+   * ".pstn.twilio.com".
+   */
+  termination_uri: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when receiving inbound calls. If null, this number would not accept
+   * inbound call.
+   */
+  inbound_agent_id?: string | null;
+
+  /**
+   * Nickname of the number. This is for your reference only.
+   */
+  nickname?: string;
+
+  /**
+   * Unique id of agent to bind to the number. The number will automatically use the
+   * agent when conducting outbound calls. If null, this number would not be able to
+   * initiate outbound call without agent id override.
+   */
+  outbound_agent_id?: string | null;
+}
+
 export namespace PhoneNumber {
   export import PhoneNumberResponse = PhoneNumberAPI.PhoneNumberResponse;
   export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;
+  export import PhoneNumberImportParams = PhoneNumberAPI.PhoneNumberImportParams;
 }

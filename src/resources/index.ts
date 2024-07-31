@@ -9,6 +9,7 @@ export {
   CallListParams,
   CallCreatePhoneCallParams,
   CallCreateWebCallParams,
+  CallRegisterPhoneCallParams,
   Call,
 } from './call';
 export { ConcurrencyRetrieveResponse, Concurrency } from './concurrency';
@@ -18,6 +19,7 @@ export {
   PhoneNumberListResponse,
   PhoneNumberCreateParams,
   PhoneNumberUpdateParams,
+  PhoneNumberImportParams,
   PhoneNumber,
 } from './phone-number';
 export { VoiceResponse, VoiceListResponse, Voice } from './voice';
