@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Retell REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found [on docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -20,7 +20,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Retell from 'retell-sdk';
 
-const retell = new Retell({
+const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
 });
 
@@ -44,7 +44,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Retell from 'retell-sdk';
 
-const retell = new Retell({
+const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
 });
 
@@ -110,7 +110,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const retell = new Retell({
+const client = new Retell({
   maxRetries: 0, // default is 2
 });
 
@@ -127,7 +127,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const retell = new Retell({
+const client = new Retell({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -151,7 +151,7 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 
 <!-- prettier-ignore -->
 ```ts
-const retell = new Retell();
+const client = new Retell();
 
 const response = await retell.agent
   .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
@@ -262,7 +262,7 @@ import http from 'http';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // Configure the default for all requests:
-const retell = new Retell({
+const client = new Retell({
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
 });
 
@@ -292,14 +292,6 @@ We are keen for your feedback; please open an [issue](https://www.github.com/Ret
 TypeScript >= 4.5 is supported.
 
 The following runtimes are supported:
-
-- Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
-- Deno v1.28.0 or higher, using `import Retell from "npm:retell-sdk"`.
-- Bun 1.0 or later.
-- Cloudflare Workers.
-- Vercel Edge Runtime.
-- Jest 28 or greater with the `"node"` environment (`"jsdom"` is not supported at this time).
-- Nitro v2.6 or greater.
 
 Note that React Native is not supported at this time.
 
