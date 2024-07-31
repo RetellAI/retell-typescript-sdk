@@ -188,12 +188,14 @@ export namespace Retell {
   export import CallListParams = API.CallListParams;
   export import CallCreatePhoneCallParams = API.CallCreatePhoneCallParams;
   export import CallCreateWebCallParams = API.CallCreateWebCallParams;
+  export import CallRegisterPhoneCallParams = API.CallRegisterPhoneCallParams;
 
   export import PhoneNumber = API.PhoneNumber;
   export import PhoneNumberResponse = API.PhoneNumberResponse;
   export import PhoneNumberListResponse = API.PhoneNumberListResponse;
   export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
   export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
+  export import PhoneNumberImportParams = API.PhoneNumberImportParams;
 
   export import Agent = API.Agent;
   export import AgentResponse = API.AgentResponse;
