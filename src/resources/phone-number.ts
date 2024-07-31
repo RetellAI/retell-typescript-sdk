@@ -69,11 +69,6 @@ export interface PhoneNumberResponse {
   phone_number: string;
 
   /**
-   * Pretty printed phone number, provided for your reference.
-   */
-  phone_number_pretty: string;
-
-  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
@@ -97,6 +92,11 @@ export interface PhoneNumberResponse {
    * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string | null;
+
+  /**
+   * Pretty printed phone number, provided for your reference.
+   */
+  phone_number_pretty?: string;
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
