@@ -3,14 +3,14 @@
 import Retell from 'retell-sdk';
 import { Response } from 'node-fetch';
 
-const retell = new Retell({
+const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource agent', () => {
   test('create: only required params', async () => {
-    const responsePromise = retell.agent.create({
+    const responsePromise = client.agent.create({
       llm_websocket_url: 'wss://your-websocket-endpoint',
       voice_id: '11labs-Adrian',
     });
@@ -24,7 +24,7 @@ describe('resource agent', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await retell.agent.create({
+    const response = await client.agent.create({
       llm_websocket_url: 'wss://your-websocket-endpoint',
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
@@ -55,7 +55,7 @@ describe('resource agent', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = retell.agent.retrieve('16b980523634a6dc504898cda492e939');
+    const responsePromise = client.agent.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,12 +68,12 @@ describe('resource agent', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retell.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+      client.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
   test('update', async () => {
-    const responsePromise = retell.agent.update('16b980523634a6dc504898cda492e939', {});
+    const responsePromise = client.agent.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -84,7 +84,7 @@ describe('resource agent', () => {
   });
 
   test('list', async () => {
-    const responsePromise = retell.agent.list();
+    const responsePromise = client.agent.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -96,13 +96,13 @@ describe('resource agent', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(retell.agent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.agent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = retell.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+    const responsePromise = client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -115,7 +115,7 @@ describe('resource agent', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      retell.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+      client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 });
