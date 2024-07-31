@@ -1077,6 +1077,11 @@ export interface CallRegisterPhoneCallParams {
   agent_id: string;
 
   /**
+   * Direction of the phone call. Stored for tracking purpose.
+   */
+  direction?: 'inbound' | 'outbound';
+
+  /**
    * The number you own in E.164 format. Stored for tracking purpose.
    */
   from_number?: string;

@@ -95,6 +95,7 @@ describe('resource call', () => {
   test('registerPhoneCall: required and optional params', async () => {
     const response = await retell.call.registerPhoneCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      direction: 'inbound',
       from_number: '+14157774444',
       metadata: {},
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
