@@ -91,6 +91,7 @@ export interface LlmResponse {
     | LlmResponse.TransferCallTool
     | LlmResponse.CheckAvailabilityCalTool
     | LlmResponse.BookAppointmentCalTool
+    | LlmResponse.PressDigitTool
     | LlmResponse.CustomTool
   > | null;
 
@@ -237,6 +238,24 @@ export namespace LlmResponse {
     timezone?: string;
   }
 
+  export interface PressDigitTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'press_digit';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
   export interface CustomTool {
     /**
      * Describes what this tool does and when to call this tool.
@@ -352,6 +371,7 @@ export namespace LlmResponse {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.PressDigitTool
       | State.CustomTool
     >;
   }
@@ -528,6 +548,24 @@ export namespace LlmResponse {
       timezone?: string;
     }
 
+    export interface PressDigitTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'press_digit';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
     export interface CustomTool {
       /**
        * Describes what this tool does and when to call this tool.
@@ -644,6 +682,7 @@ export interface LlmCreateParams {
     | LlmCreateParams.TransferCallTool
     | LlmCreateParams.CheckAvailabilityCalTool
     | LlmCreateParams.BookAppointmentCalTool
+    | LlmCreateParams.PressDigitTool
     | LlmCreateParams.CustomTool
   > | null;
 
@@ -790,6 +829,24 @@ export namespace LlmCreateParams {
     timezone?: string;
   }
 
+  export interface PressDigitTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'press_digit';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
   export interface CustomTool {
     /**
      * Describes what this tool does and when to call this tool.
@@ -905,6 +962,7 @@ export namespace LlmCreateParams {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.PressDigitTool
       | State.CustomTool
     >;
   }
@@ -1081,6 +1139,24 @@ export namespace LlmCreateParams {
       timezone?: string;
     }
 
+    export interface PressDigitTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'press_digit';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
     export interface CustomTool {
       /**
        * Describes what this tool does and when to call this tool.
@@ -1195,6 +1271,7 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.TransferCallTool
     | LlmUpdateParams.CheckAvailabilityCalTool
     | LlmUpdateParams.BookAppointmentCalTool
+    | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.CustomTool
   > | null;
 
@@ -1341,6 +1418,24 @@ export namespace LlmUpdateParams {
     timezone?: string;
   }
 
+  export interface PressDigitTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'press_digit';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
   export interface CustomTool {
     /**
      * Describes what this tool does and when to call this tool.
@@ -1456,6 +1551,7 @@ export namespace LlmUpdateParams {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.PressDigitTool
       | State.CustomTool
     >;
   }
@@ -1630,6 +1726,24 @@ export namespace LlmUpdateParams {
        * will use the timezone of the Retell servers.
        */
       timezone?: string;
+    }
+
+    export interface PressDigitTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'press_digit';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
     }
 
     export interface CustomTool {
