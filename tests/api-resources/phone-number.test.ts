@@ -106,6 +106,8 @@ describe('resource phoneNumber', () => {
       inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       nickname: 'Frontdesk Number',
       outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      sip_trunk_auth_password: '123456',
+      sip_trunk_auth_username: 'username',
     });
   });
 });

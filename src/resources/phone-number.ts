@@ -182,6 +182,16 @@ export interface PhoneNumberImportParams {
    * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string | null;
+
+  /**
+   * The password used for authentication for the SIP trunk.
+   */
+  sip_trunk_auth_password?: string;
+
+  /**
+   * The username used for authentication for the SIP trunk.
+   */
+  sip_trunk_auth_username?: string;
 }
 
 export namespace PhoneNumber {
