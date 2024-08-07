@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.2.0 (2024-08-07)
+
+Full Changelog: [v4.1.0...v4.2.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.1.0...v4.2.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#145](https://github.com/RetellAI/retell-typescript-sdk/issues/145)) ([063409b](https://github.com/RetellAI/retell-typescript-sdk/commit/063409b406e742ae8847bddc04cd0c23e5367981))
+
+
+### Chores
+
+* **internal:** codegen related update ([#147](https://github.com/RetellAI/retell-typescript-sdk/issues/147)) ([13b344e](https://github.com/RetellAI/retell-typescript-sdk/commit/13b344ec84db7119a5113262836ddcb56c69a065))
+
 ## 4.1.0 (2024-07-31)
 
 Full Changelog: [v4.0.0...v4.1.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.0.0...v4.1.0)
