@@ -96,9 +96,9 @@ export interface LlmResponse {
   > | null;
 
   /**
-   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
-   * to it to retrieve dynamic variables to use for the call. Without this, there's
-   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
+   * dynamic variables to use for the call. Without this, there's no way to pass
+   * dynamic variables for inbound calls.
    */
   inbound_dynamic_variables_webhook_url?: string | null;
 
@@ -687,9 +687,9 @@ export interface LlmCreateParams {
   > | null;
 
   /**
-   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
-   * to it to retrieve dynamic variables to use for the call. Without this, there's
-   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
+   * dynamic variables to use for the call. Without this, there's no way to pass
+   * dynamic variables for inbound calls.
    */
   inbound_dynamic_variables_webhook_url?: string | null;
 
@@ -1276,9 +1276,9 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
-   * For inbound phone calls with Retell numbers, if this webhook is set, will POST
-   * to it to retrieve dynamic variables to use for the call. Without this, there's
-   * no way to pass dynamic variables to inbound calls of Retell numbers.
+   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
+   * dynamic variables to use for the call. Without this, there's no way to pass
+   * dynamic variables for inbound calls.
    */
   inbound_dynamic_variables_webhook_url?: string | null;
 
