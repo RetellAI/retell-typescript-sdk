@@ -34,6 +34,7 @@ describe('resource agent', () => {
       backchannel_words: ['yeah', 'uh-huh'],
       boosted_keywords: ['retell', 'kroger'],
       enable_backchannel: true,
+      enable_voicemail_detection: true,
       end_call_after_silence_ms: 600000,
       fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
       interruption_sensitivity: 1,
@@ -50,6 +51,7 @@ describe('resource agent', () => {
       responsiveness: 1,
       voice_speed: 1,
       voice_temperature: 1,
+      voicemail_message: 'Hi, please give us a callback.',
       webhook_url: 'https://webhook-url-here',
     });
   });
