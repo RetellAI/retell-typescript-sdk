@@ -135,7 +135,7 @@ export interface AgentResponse {
    * more details. Note that certain voices do not work too well with certain words,
    * so it's recommended to expeirment before adding any words.
    */
-  backchannel_words?: Array<string>;
+  backchannel_words?: Array<string> | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
@@ -151,6 +151,12 @@ export interface AgentResponse {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will detect whether the call enters a voicemail. Note that this
+   * feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
 
   /**
    * If users stay silent for a period after agent speech, end the call. The minimum
@@ -255,6 +261,13 @@ export interface AgentResponse {
    * apply.
    */
   voice_temperature?: number;
+
+  /**
+   * The message to be played when the call enters a voicemail. Note that this
+   * feature is only available for phone calls. If you want to hangup after hitting
+   * voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -362,7 +375,7 @@ export interface AgentCreateParams {
    * more details. Note that certain voices do not work too well with certain words,
    * so it's recommended to expeirment before adding any words.
    */
-  backchannel_words?: Array<string>;
+  backchannel_words?: Array<string> | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
@@ -378,6 +391,12 @@ export interface AgentCreateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will detect whether the call enters a voicemail. Note that this
+   * feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
 
   /**
    * If users stay silent for a period after agent speech, end the call. The minimum
@@ -484,6 +503,13 @@ export interface AgentCreateParams {
   voice_temperature?: number;
 
   /**
+   * The message to be played when the call enters a voicemail. Note that this
+   * feature is only available for phone calls. If you want to hangup after hitting
+   * voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
+
+  /**
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
@@ -574,7 +600,7 @@ export interface AgentUpdateParams {
    * more details. Note that certain voices do not work too well with certain words,
    * so it's recommended to expeirment before adding any words.
    */
-  backchannel_words?: Array<string>;
+  backchannel_words?: Array<string> | null;
 
   /**
    * Provide a customized list of keywords to bias the transcriber model, so that
@@ -590,6 +616,12 @@ export interface AgentUpdateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will detect whether the call enters a voicemail. Note that this
+   * feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
 
   /**
    * If users stay silent for a period after agent speech, end the call. The minimum
@@ -707,6 +739,13 @@ export interface AgentUpdateParams {
    * apply.
    */
   voice_temperature?: number;
+
+  /**
+   * The message to be played when the call enters a voicemail. Note that this
+   * feature is only available for phone calls. If you want to hangup after hitting
+   * voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
