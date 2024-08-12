@@ -248,6 +248,20 @@ export interface AgentResponse {
   responsiveness?: number;
 
   /**
+   * Optionally set the voice model used for the selected voice. Currently only
+   * elevenlab voices have voice model selections. Set to null to remove voice model
+   * selection, and default ones will apply. Supported voice models are:
+   *
+   * - `eleven_turbo_v2`: Fast english only model, supports pronunciation tags.
+   *
+   * - `eleven_turbo_v2_5`: Multilingual model with lowest latency.
+   *
+   * - `eleven_multilingual_v2`: Multilingual model with rich emotion and nice
+   *   accent.
+   */
+  voice_model?: 'eleven_turbo_v2' | 'eleven_turbo_v2_5' | 'eleven_multilingual_v2' | null;
+
+  /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
@@ -488,6 +502,20 @@ export interface AgentCreateParams {
   responsiveness?: number;
 
   /**
+   * Optionally set the voice model used for the selected voice. Currently only
+   * elevenlab voices have voice model selections. Set to null to remove voice model
+   * selection, and default ones will apply. Supported voice models are:
+   *
+   * - `eleven_turbo_v2`: Fast english only model, supports pronunciation tags.
+   *
+   * - `eleven_turbo_v2_5`: Multilingual model with lowest latency.
+   *
+   * - `eleven_multilingual_v2`: Multilingual model with rich emotion and nice
+   *   accent.
+   */
+  voice_model?: 'eleven_turbo_v2' | 'eleven_turbo_v2_5' | 'eleven_multilingual_v2' | null;
+
+  /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
    * speech, while higher value means faster speech rate. If unset, default value 1
    * will apply.
@@ -724,6 +752,20 @@ export interface AgentUpdateParams {
    * preview in Dashboard.
    */
   voice_id?: string;
+
+  /**
+   * Optionally set the voice model used for the selected voice. Currently only
+   * elevenlab voices have voice model selections. Set to null to remove voice model
+   * selection, and default ones will apply. Supported voice models are:
+   *
+   * - `eleven_turbo_v2`: Fast english only model, supports pronunciation tags.
+   *
+   * - `eleven_turbo_v2_5`: Multilingual model with lowest latency.
+   *
+   * - `eleven_multilingual_v2`: Multilingual model with rich emotion and nice
+   *   accent.
+   */
+  voice_model?: 'eleven_turbo_v2' | 'eleven_turbo_v2_5' | 'eleven_multilingual_v2' | null;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
