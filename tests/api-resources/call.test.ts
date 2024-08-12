@@ -58,7 +58,7 @@ describe('resource call', () => {
       to_number: '+12137774445',
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
+      retell_llm_dynamic_variables: { customer_name: 'bar' },
     });
   });
 
@@ -77,7 +77,7 @@ describe('resource call', () => {
     const response = await client.call.createWebCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
+      retell_llm_dynamic_variables: { customer_name: 'bar' },
     });
   });
 
@@ -98,7 +98,7 @@ describe('resource call', () => {
       direction: 'inbound',
       from_number: '+14157774444',
       metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
+      retell_llm_dynamic_variables: { customer_name: 'bar' },
       to_number: '+12137774445',
     });
   });
