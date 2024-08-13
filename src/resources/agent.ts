@@ -185,7 +185,8 @@ export interface AgentResponse {
   /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
-   * English. If unset, will use default value `en-US`.
+   * English. If unset, will use default value `en-US`. Select `multi` for
+   * multilingual support, currently this supports Spanish and English.
    */
   language?:
     | 'en-US'
@@ -198,7 +199,8 @@ export interface AgentResponse {
     | 'ja-JP'
     | 'pt-PT'
     | 'pt-BR'
-    | 'fr-FR';
+    | 'fr-FR'
+    | 'multi';
 
   /**
    * If set to true, will normalize the some part of text (number, currency, date,
@@ -439,7 +441,8 @@ export interface AgentCreateParams {
   /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
-   * English. If unset, will use default value `en-US`.
+   * English. If unset, will use default value `en-US`. Select `multi` for
+   * multilingual support, currently this supports Spanish and English.
    */
   language?:
     | 'en-US'
@@ -452,7 +455,8 @@ export interface AgentCreateParams {
     | 'ja-JP'
     | 'pt-PT'
     | 'pt-BR'
-    | 'fr-FR';
+    | 'fr-FR'
+    | 'multi';
 
   /**
    * If set to true, will normalize the some part of text (number, currency, date,
@@ -678,7 +682,8 @@ export interface AgentUpdateParams {
   /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
-   * English. If unset, will use default value `en-US`.
+   * English. If unset, will use default value `en-US`. Select `multi` for
+   * multilingual support, currently this supports Spanish and English.
    */
   language?:
     | 'en-US'
@@ -691,7 +696,8 @@ export interface AgentUpdateParams {
     | 'ja-JP'
     | 'pt-PT'
     | 'pt-BR'
-    | 'fr-FR';
+    | 'fr-FR'
+    | 'multi';
 
   /**
    * The URL we will establish LLM websocket for getting response, usually your
