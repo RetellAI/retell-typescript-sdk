@@ -231,34 +231,26 @@ export namespace PhoneCallResponse {
    */
   export interface CallAnalysis {
     /**
-     * Sentiment of the agent in the call.
+     * Whether the agent seems to have a successful call with the user, where the agent
+     * finishes the task, and the call was complete without being cutoff.
      */
-    agent_sentiment?: 'Negative' | 'Positive' | 'Neutral';
-
-    /**
-     * Evaluate agent task completion status, whether the agent has completed his task.
-     */
-    agent_task_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the agent task completion status.
-     */
-    agent_task_completion_rating_reason?: string;
-
-    /**
-     * Evaluate whether the call ended normally or was cut off.
-     */
-    call_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the call completion status.
-     */
-    call_completion_rating_reason?: string;
+    call_successful?: boolean;
 
     /**
      * A high level summary of the call.
      */
     call_summary?: string;
+
+    /**
+     * Custom analysis data that was extracted based on the schema defined in agent
+     * post call analysis data. Can be empty if nothing is specified.
+     */
+    custom_analysis_data?: unknown;
+
+    /**
+     * Whether the call is entered voicemail.
+     */
+    in_voicemail?: boolean;
 
     /**
      * Sentiment of the user in the call.
@@ -683,34 +675,26 @@ export namespace WebCallResponse {
    */
   export interface CallAnalysis {
     /**
-     * Sentiment of the agent in the call.
+     * Whether the agent seems to have a successful call with the user, where the agent
+     * finishes the task, and the call was complete without being cutoff.
      */
-    agent_sentiment?: 'Negative' | 'Positive' | 'Neutral';
-
-    /**
-     * Evaluate agent task completion status, whether the agent has completed his task.
-     */
-    agent_task_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the agent task completion status.
-     */
-    agent_task_completion_rating_reason?: string;
-
-    /**
-     * Evaluate whether the call ended normally or was cut off.
-     */
-    call_completion_rating?: 'Complete' | 'Incomplete' | 'Partial';
-
-    /**
-     * Reason for the call completion status.
-     */
-    call_completion_rating_reason?: string;
+    call_successful?: boolean;
 
     /**
      * A high level summary of the call.
      */
     call_summary?: string;
+
+    /**
+     * Custom analysis data that was extracted based on the schema defined in agent
+     * post call analysis data. Can be empty if nothing is specified.
+     */
+    custom_analysis_data?: unknown;
+
+    /**
+     * Whether the call is entered voicemail.
+     */
+    in_voicemail?: boolean;
 
     /**
      * Sentiment of the user in the call.
