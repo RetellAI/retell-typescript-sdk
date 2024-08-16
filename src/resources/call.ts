@@ -99,11 +99,9 @@ export interface PhoneCallResponse {
   to_number: string;
 
   /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   call_analysis?: PhoneCallResponse.CallAnalysis;
 
@@ -223,11 +221,9 @@ export interface PhoneCallResponse {
 
 export namespace PhoneCallResponse {
   /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   export interface CallAnalysis {
     /**
@@ -255,7 +251,7 @@ export namespace PhoneCallResponse {
     /**
      * Sentiment of the user in the call.
      */
-    user_sentiment?: 'Negative' | 'Positive' | 'Neutral';
+    user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
   }
 
   /**
@@ -543,11 +539,9 @@ export interface WebCallResponse {
   call_type: 'web_call';
 
   /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   call_analysis?: WebCallResponse.CallAnalysis;
 
@@ -667,11 +661,9 @@ export interface WebCallResponse {
 
 export namespace WebCallResponse {
   /**
-   * - BETA feature, schema might change, might not always be populated. Please do
-   *   not rely on this object schema for post processing. Post conversation
-   *   evaluation of the call. Including information such as sentiment, intent, call
-   *   completion status and other metrics. Available after call ends. Subscribe to
-   *   `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   export interface CallAnalysis {
     /**
@@ -699,7 +691,7 @@ export namespace WebCallResponse {
     /**
      * Sentiment of the user in the call.
      */
-    user_sentiment?: 'Negative' | 'Positive' | 'Neutral';
+    user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
   }
 
   /**
