@@ -221,6 +221,18 @@ export interface AgentResponse {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Post call analysis data to extract from the call. This data will augment the
+   * pre-defined variables extracted in the call analysis. This will be available
+   * after the call ends.
+   */
+  post_call_analysis_data?: Array<
+    | AgentResponse.StringAnalysisData
+    | AgentResponse.EnumAnalysisData
+    | AgentResponse.BooleanAnalysisData
+    | AgentResponse.NumberAnalysisData
+  > | null;
+
+  /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
    * synthesize for consistent pronunciation. Currently only supported for English &
    * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
@@ -295,6 +307,84 @@ export interface AgentResponse {
 }
 
 export namespace AgentResponse {
+  export interface StringAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'string';
+
+    /**
+     * Examples of the variable value to teach model the style and syntax.
+     */
+    examples?: Array<string>;
+  }
+
+  export interface EnumAnalysisData {
+    /**
+     * The possible values of the variable, must be non empty array.
+     */
+    choices: Array<string>;
+
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'enum';
+  }
+
+  export interface BooleanAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'boolean';
+  }
+
+  export interface NumberAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'number';
+  }
+
   export interface PronunciationDictionary {
     /**
      * The phonetic alphabet to be used for pronunciation.
@@ -477,6 +567,18 @@ export interface AgentCreateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Post call analysis data to extract from the call. This data will augment the
+   * pre-defined variables extracted in the call analysis. This will be available
+   * after the call ends.
+   */
+  post_call_analysis_data?: Array<
+    | AgentCreateParams.StringAnalysisData
+    | AgentCreateParams.EnumAnalysisData
+    | AgentCreateParams.BooleanAnalysisData
+    | AgentCreateParams.NumberAnalysisData
+  > | null;
+
+  /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
    * synthesize for consistent pronunciation. Currently only supported for English &
    * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
@@ -551,6 +653,84 @@ export interface AgentCreateParams {
 }
 
 export namespace AgentCreateParams {
+  export interface StringAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'string';
+
+    /**
+     * Examples of the variable value to teach model the style and syntax.
+     */
+    examples?: Array<string>;
+  }
+
+  export interface EnumAnalysisData {
+    /**
+     * The possible values of the variable, must be non empty array.
+     */
+    choices: Array<string>;
+
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'enum';
+  }
+
+  export interface BooleanAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'boolean';
+  }
+
+  export interface NumberAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'number';
+  }
+
   export interface PronunciationDictionary {
     /**
      * The phonetic alphabet to be used for pronunciation.
@@ -725,6 +905,18 @@ export interface AgentUpdateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Post call analysis data to extract from the call. This data will augment the
+   * pre-defined variables extracted in the call analysis. This will be available
+   * after the call ends.
+   */
+  post_call_analysis_data?: Array<
+    | AgentUpdateParams.StringAnalysisData
+    | AgentUpdateParams.EnumAnalysisData
+    | AgentUpdateParams.BooleanAnalysisData
+    | AgentUpdateParams.NumberAnalysisData
+  > | null;
+
+  /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
    * synthesize for consistent pronunciation. Currently only supported for English &
    * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
@@ -805,6 +997,84 @@ export interface AgentUpdateParams {
 }
 
 export namespace AgentUpdateParams {
+  export interface StringAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'string';
+
+    /**
+     * Examples of the variable value to teach model the style and syntax.
+     */
+    examples?: Array<string>;
+  }
+
+  export interface EnumAnalysisData {
+    /**
+     * The possible values of the variable, must be non empty array.
+     */
+    choices: Array<string>;
+
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'enum';
+  }
+
+  export interface BooleanAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'boolean';
+  }
+
+  export interface NumberAnalysisData {
+    /**
+     * Description of the variable.
+     */
+    description: string;
+
+    /**
+     * Name of the variable.
+     */
+    name: string;
+
+    /**
+     * Type of the variable to extract.
+     */
+    type: 'number';
+  }
+
   export interface PronunciationDictionary {
     /**
      * The phonetic alphabet to be used for pronunciation.
