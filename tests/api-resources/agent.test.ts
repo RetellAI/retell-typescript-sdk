@@ -41,6 +41,26 @@ describe('resource agent', () => {
       language: 'en-US',
       normalize_for_speech: true,
       opt_out_sensitive_data_storage: true,
+      post_call_analysis_data: [
+        {
+          description: 'The name of the customer.',
+          name: 'customer_name',
+          type: 'string',
+          examples: ['John Doe', 'Jane Smith'],
+        },
+        {
+          description: 'The name of the customer.',
+          name: 'customer_name',
+          type: 'string',
+          examples: ['John Doe', 'Jane Smith'],
+        },
+        {
+          description: 'The name of the customer.',
+          name: 'customer_name',
+          type: 'string',
+          examples: ['John Doe', 'Jane Smith'],
+        },
+      ],
       pronunciation_dictionary: [
         { alphabet: 'ipa', phoneme: 'ˈæktʃuəli', word: 'actually' },
         { alphabet: 'ipa', phoneme: 'ˈæktʃuəli', word: 'actually' },
