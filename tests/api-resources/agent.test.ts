@@ -39,6 +39,7 @@ describe('resource agent', () => {
       fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
       interruption_sensitivity: 1,
       language: 'en-US',
+      max_call_duration_ms: 3600000,
       normalize_for_speech: true,
       opt_out_sensitive_data_storage: true,
       post_call_analysis_data: [
@@ -72,6 +73,7 @@ describe('resource agent', () => {
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
+      voicemail_detection_timeout_ms: 30000,
       voicemail_message: 'Hi, please give us a callback.',
       webhook_url: 'https://webhook-url-here',
     });
