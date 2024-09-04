@@ -103,9 +103,9 @@ export interface LlmResponse {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   * Select the underlying LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -694,9 +694,9 @@ export interface LlmCreateParams {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   * Select the underlying LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1283,9 +1283,9 @@ export interface LlmUpdateParams {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-3.5-turbo.
+   * Select the underlying LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-3.5-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
   /**
    * Name of the starting state. Required if states is not empty.
