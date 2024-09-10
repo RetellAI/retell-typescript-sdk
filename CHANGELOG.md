@@ -1,5 +1,25 @@
 # Changelog
 
+## 4.5.0 (2024-09-10)
+
+Full Changelog: [v4.4.0...v4.5.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.4.0...v4.5.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#172](https://github.com/RetellAI/retell-typescript-sdk/issues/172)) ([ac68e97](https://github.com/RetellAI/retell-typescript-sdk/commit/ac68e979327fe1709db7390ef0708b1383dc8107))
+
+
+### Bug Fixes
+
+* **client:** correct File construction from node-fetch Responses ([#171](https://github.com/RetellAI/retell-typescript-sdk/issues/171)) ([d5dc735](https://github.com/RetellAI/retell-typescript-sdk/commit/d5dc735b6415f512fe1429cb11beff723a35f398))
+
+
+### Chores
+
+* **ci:** install deps via ./script/bootstrap ([#170](https://github.com/RetellAI/retell-typescript-sdk/issues/170)) ([c2e6309](https://github.com/RetellAI/retell-typescript-sdk/commit/c2e630979ccc475f6997c932ba9939042626fbca))
+* **internal:** codegen related update ([#173](https://github.com/RetellAI/retell-typescript-sdk/issues/173)) ([c7d3da1](https://github.com/RetellAI/retell-typescript-sdk/commit/c7d3da1cd07a3b8f4a8050dc4fa4c3aab086fa6d))
+* run tsc as part of lint script ([#168](https://github.com/RetellAI/retell-typescript-sdk/issues/168)) ([37f22b9](https://github.com/RetellAI/retell-typescript-sdk/commit/37f22b94544eec59f215fe87492281dd243fe306))
+
 ## 4.4.0 (2024-09-04)
 
 Full Changelog: [v4.3.0...v4.4.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.3.0...v4.4.0)
