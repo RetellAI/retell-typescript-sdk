@@ -308,6 +308,14 @@ export namespace LlmResponse {
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
   }
 
   export namespace CustomTool {
@@ -618,6 +626,14 @@ export namespace LlmResponse {
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      /**
+       * The maximum time in milliseconds the tool can run before it's considered
+       * timeout. If the tool times out, the agent would have that info. The minimum
+       * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+       * min). By default, this is set to 120,000 ms (2 min).
+       */
+      timeout_ms?: number;
     }
 
     export namespace CustomTool {
@@ -899,6 +915,14 @@ export namespace LlmCreateParams {
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
   }
 
   export namespace CustomTool {
@@ -1209,6 +1233,14 @@ export namespace LlmCreateParams {
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      /**
+       * The maximum time in milliseconds the tool can run before it's considered
+       * timeout. If the tool times out, the agent would have that info. The minimum
+       * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+       * min). By default, this is set to 120,000 ms (2 min).
+       */
+      timeout_ms?: number;
     }
 
     export namespace CustomTool {
@@ -1488,6 +1520,14 @@ export namespace LlmUpdateParams {
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
   }
 
   export namespace CustomTool {
@@ -1798,6 +1838,14 @@ export namespace LlmUpdateParams {
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      /**
+       * The maximum time in milliseconds the tool can run before it's considered
+       * timeout. If the tool times out, the agent would have that info. The minimum
+       * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+       * min). By default, this is set to 120,000 ms (2 min).
+       */
+      timeout_ms?: number;
     }
 
     export namespace CustomTool {
