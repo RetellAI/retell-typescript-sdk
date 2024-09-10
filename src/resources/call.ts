@@ -117,7 +117,11 @@ export interface PhoneCallResponse {
     | 'voicemail_reached'
     | 'inactivity'
     | 'machine_detected'
+    | 'max_duration_reached'
     | 'concurrency_limit_reached'
+    | 'no_valid_payment'
+    | 'scam_detected'
+    | 'error_inbound_webhook'
     | 'dial_busy'
     | 'dial_failed'
     | 'dial_no_answer'
@@ -130,7 +134,9 @@ export interface PhoneCallResponse {
     | 'error_no_audio_received'
     | 'error_asr'
     | 'error_retell'
-    | 'error_unknown';
+    | 'error_unknown'
+    | 'error_user_not_joined'
+    | 'registered_call_timeout';
 
   /**
    * End to end latency (from user stops talking to agent start talking) tracking of
@@ -557,7 +563,11 @@ export interface WebCallResponse {
     | 'voicemail_reached'
     | 'inactivity'
     | 'machine_detected'
+    | 'max_duration_reached'
     | 'concurrency_limit_reached'
+    | 'no_valid_payment'
+    | 'scam_detected'
+    | 'error_inbound_webhook'
     | 'dial_busy'
     | 'dial_failed'
     | 'dial_no_answer'
@@ -570,7 +580,9 @@ export interface WebCallResponse {
     | 'error_no_audio_received'
     | 'error_asr'
     | 'error_retell'
-    | 'error_unknown';
+    | 'error_unknown'
+    | 'error_user_not_joined'
+    | 'registered_call_timeout';
 
   /**
    * End to end latency (from user stops talking to agent start talking) tracking of
