@@ -75,6 +75,7 @@ describe('resource agent', () => {
       voice_temperature: 1,
       voicemail_detection_timeout_ms: 30000,
       voicemail_message: 'Hi, please give us a callback.',
+      volume: 1,
       webhook_url: 'https://webhook-url-here',
     });
   });

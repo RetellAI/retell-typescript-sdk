@@ -200,6 +200,14 @@ export interface AgentResponse {
     | 'pt-PT'
     | 'pt-BR'
     | 'fr-FR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
     | 'multi';
 
   /**
@@ -311,6 +319,13 @@ export interface AgentResponse {
    * voicemail, set this to empty string.
    */
   voicemail_message?: string;
+
+  /**
+   * If set, will control the volume of the agent. Value ranging from [0,2]. Lower
+   * value means quieter agent speech, while higher value means louder agent speech.
+   * If unset, default value 1 will apply.
+   */
+  volume?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -561,6 +576,14 @@ export interface AgentCreateParams {
     | 'pt-PT'
     | 'pt-BR'
     | 'fr-FR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
     | 'multi';
 
   /**
@@ -672,6 +695,13 @@ export interface AgentCreateParams {
    * voicemail, set this to empty string.
    */
   voicemail_message?: string;
+
+  /**
+   * If set, will control the volume of the agent. Value ranging from [0,2]. Lower
+   * value means quieter agent speech, while higher value means louder agent speech.
+   * If unset, default value 1 will apply.
+   */
+  volume?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -907,6 +937,14 @@ export interface AgentUpdateParams {
     | 'pt-PT'
     | 'pt-BR'
     | 'fr-FR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
     | 'multi';
 
   /**
@@ -1031,6 +1069,13 @@ export interface AgentUpdateParams {
    * voicemail, set this to empty string.
    */
   voicemail_message?: string;
+
+  /**
+   * If set, will control the volume of the agent. Value ranging from [0,2]. Lower
+   * value means quieter agent speech, while higher value means louder agent speech.
+   * If unset, default value 1 will apply.
+   */
+  volume?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
