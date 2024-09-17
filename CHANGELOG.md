@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.6.0 (2024-09-17)
+
+Full Changelog: [v4.5.0...v4.6.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.5.0...v4.6.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#178](https://github.com/RetellAI/retell-typescript-sdk/issues/178)) ([d771a48](https://github.com/RetellAI/retell-typescript-sdk/commit/d771a4875c9a02634659421820e6869304ac08ff))
+* **api:** OpenAPI spec update via Stainless API ([#184](https://github.com/RetellAI/retell-typescript-sdk/issues/184)) ([b1f7f80](https://github.com/RetellAI/retell-typescript-sdk/commit/b1f7f8017f953873174773f76a655aa4f70c1a60))
+
+
+### Bug Fixes
+
+* **errors:** pass message through to APIConnectionError ([#182](https://github.com/RetellAI/retell-typescript-sdk/issues/182)) ([ad6947f](https://github.com/RetellAI/retell-typescript-sdk/commit/ad6947ffbd1f9b7f4a48c3e6ae6717aeae325853))
+* **uploads:** avoid making redundant memory copies ([#175](https://github.com/RetellAI/retell-typescript-sdk/issues/175)) ([2a8f98b](https://github.com/RetellAI/retell-typescript-sdk/commit/2a8f98b64e3c7bf7258ed1a2bad0ab6bd954480d))
+
+
+### Chores
+
+* better object fallback behaviour for casting errors ([#183](https://github.com/RetellAI/retell-typescript-sdk/issues/183)) ([01c9728](https://github.com/RetellAI/retell-typescript-sdk/commit/01c9728a888e85ba4c2981b8194e6bb4b69ae498))
+* **internal:** codegen related update ([#177](https://github.com/RetellAI/retell-typescript-sdk/issues/177)) ([b03ae81](https://github.com/RetellAI/retell-typescript-sdk/commit/b03ae81b9637786e600b781f233c7178bdc06857))
+* **internal:** codegen related update ([#179](https://github.com/RetellAI/retell-typescript-sdk/issues/179)) ([e79a065](https://github.com/RetellAI/retell-typescript-sdk/commit/e79a065202da3b27c0056026fbbbcdb85f34b1e5))
+* **internal:** codegen related update ([#180](https://github.com/RetellAI/retell-typescript-sdk/issues/180)) ([aceb32f](https://github.com/RetellAI/retell-typescript-sdk/commit/aceb32facc57c84ef8e3f4a23219a1bcbbccdee2))
+
 ## 4.5.0 (2024-09-10)
 
 Full Changelog: [v4.4.0...v4.5.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.4.0...v4.5.0)
