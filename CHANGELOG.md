@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.7.0 (2024-09-24)
+
+Full Changelog: [v4.6.0...v4.7.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.6.0...v4.7.0)
+
+### Features
+
+* remove crypto ([6c74580](https://github.com/RetellAI/retell-typescript-sdk/commit/6c74580db3eb6c295e99177d85849b2e17a2704c))
+
+
+### Documentation
+
+* update CONTRIBUTING.md ([#186](https://github.com/RetellAI/retell-typescript-sdk/issues/186)) ([ef11ad5](https://github.com/RetellAI/retell-typescript-sdk/commit/ef11ad5e49196189eb3fc7683ae4abfe10c1973e))
+
 ## 4.6.0 (2024-09-17)
 
 Full Changelog: [v4.5.0...v4.6.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.5.0...v4.6.0)
