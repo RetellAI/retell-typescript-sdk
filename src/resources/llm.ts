@@ -157,8 +157,8 @@ export namespace LlmResponse {
     name: string;
 
     /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
      */
     number: string;
 
@@ -169,6 +169,36 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set, when transfer is successful, will perform a warm handoff. Can leave
+     * either a static message or a dynamic one based on prompt. Set to null to disable
+     * warm handoff.
+     */
+    warm_transfer_option?:
+      | TransferCallTool.WarmTransferPrompt
+      | TransferCallTool.WarmTransferStaticMessage
+      | null;
+  }
+
+  export namespace TransferCallTool {
+    export interface WarmTransferPrompt {
+      /**
+       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'prompt';
+    }
+
+    export interface WarmTransferStaticMessage {
+      /**
+       * The static message to be used for warm handoff. Can contain dynamic variables.
+       */
+      message?: string;
+
+      type?: 'static_message';
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -475,8 +505,8 @@ export namespace LlmResponse {
       name: string;
 
       /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
        */
       number: string;
 
@@ -487,6 +517,36 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set, when transfer is successful, will perform a warm handoff. Can leave
+       * either a static message or a dynamic one based on prompt. Set to null to disable
+       * warm handoff.
+       */
+      warm_transfer_option?:
+        | TransferCallTool.WarmTransferPrompt
+        | TransferCallTool.WarmTransferStaticMessage
+        | null;
+    }
+
+    export namespace TransferCallTool {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
 
     export interface CheckAvailabilityCalTool {
@@ -772,8 +832,8 @@ export namespace LlmCreateParams {
     name: string;
 
     /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
      */
     number: string;
 
@@ -784,6 +844,36 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set, when transfer is successful, will perform a warm handoff. Can leave
+     * either a static message or a dynamic one based on prompt. Set to null to disable
+     * warm handoff.
+     */
+    warm_transfer_option?:
+      | TransferCallTool.WarmTransferPrompt
+      | TransferCallTool.WarmTransferStaticMessage
+      | null;
+  }
+
+  export namespace TransferCallTool {
+    export interface WarmTransferPrompt {
+      /**
+       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'prompt';
+    }
+
+    export interface WarmTransferStaticMessage {
+      /**
+       * The static message to be used for warm handoff. Can contain dynamic variables.
+       */
+      message?: string;
+
+      type?: 'static_message';
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -1090,8 +1180,8 @@ export namespace LlmCreateParams {
       name: string;
 
       /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
        */
       number: string;
 
@@ -1102,6 +1192,36 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set, when transfer is successful, will perform a warm handoff. Can leave
+       * either a static message or a dynamic one based on prompt. Set to null to disable
+       * warm handoff.
+       */
+      warm_transfer_option?:
+        | TransferCallTool.WarmTransferPrompt
+        | TransferCallTool.WarmTransferStaticMessage
+        | null;
+    }
+
+    export namespace TransferCallTool {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
 
     export interface CheckAvailabilityCalTool {
@@ -1385,8 +1505,8 @@ export namespace LlmUpdateParams {
     name: string;
 
     /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
      */
     number: string;
 
@@ -1397,6 +1517,36 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set, when transfer is successful, will perform a warm handoff. Can leave
+     * either a static message or a dynamic one based on prompt. Set to null to disable
+     * warm handoff.
+     */
+    warm_transfer_option?:
+      | TransferCallTool.WarmTransferPrompt
+      | TransferCallTool.WarmTransferStaticMessage
+      | null;
+  }
+
+  export namespace TransferCallTool {
+    export interface WarmTransferPrompt {
+      /**
+       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'prompt';
+    }
+
+    export interface WarmTransferStaticMessage {
+      /**
+       * The static message to be used for warm handoff. Can contain dynamic variables.
+       */
+      message?: string;
+
+      type?: 'static_message';
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -1703,8 +1853,8 @@ export namespace LlmUpdateParams {
       name: string;
 
       /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
        */
       number: string;
 
@@ -1715,6 +1865,36 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set, when transfer is successful, will perform a warm handoff. Can leave
+       * either a static message or a dynamic one based on prompt. Set to null to disable
+       * warm handoff.
+       */
+      warm_transfer_option?:
+        | TransferCallTool.WarmTransferPrompt
+        | TransferCallTool.WarmTransferStaticMessage
+        | null;
+    }
+
+    export namespace TransferCallTool {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
 
     export interface CheckAvailabilityCalTool {
