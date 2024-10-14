@@ -153,6 +153,13 @@ export interface AgentResponse {
   enable_backchannel?: boolean;
 
   /**
+   * If set to true, will format transcription to number, date, email, etc. If set to
+   * false, will return transcripts in raw words. If not set, default value of true
+   * will apply.
+   */
+  enable_transcription_formatting?: boolean;
+
+  /**
    * If set to true, will detect whether the call enters a voicemail. Note that this
    * feature is only available for phone calls.
    */
@@ -529,6 +536,13 @@ export interface AgentCreateParams {
   enable_backchannel?: boolean;
 
   /**
+   * If set to true, will format transcription to number, date, email, etc. If set to
+   * false, will return transcripts in raw words. If not set, default value of true
+   * will apply.
+   */
+  enable_transcription_formatting?: boolean;
+
+  /**
    * If set to true, will detect whether the call enters a voicemail. Note that this
    * feature is only available for phone calls.
    */
@@ -888,6 +902,13 @@ export interface AgentUpdateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will format transcription to number, date, email, etc. If set to
+   * false, will return transcripts in raw words. If not set, default value of true
+   * will apply.
+   */
+  enable_transcription_formatting?: boolean;
 
   /**
    * If set to true, will detect whether the call enters a voicemail. Note that this

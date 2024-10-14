@@ -34,6 +34,7 @@ describe('resource agent', () => {
       backchannel_words: ['yeah', 'uh-huh'],
       boosted_keywords: ['retell', 'kroger'],
       enable_backchannel: true,
+      enable_transcription_formatting: true,
       enable_voicemail_detection: true,
       end_call_after_silence_ms: 600000,
       fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
