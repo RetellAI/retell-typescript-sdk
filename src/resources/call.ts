@@ -40,7 +40,7 @@ export class Call extends APIResource {
   }
 
   /**
-   * Register a new outbound phone call for custom telephony
+   * Register a new phone call for custom telephony
    */
   registerPhoneCall(
     body: CallRegisterPhoneCallParams,
