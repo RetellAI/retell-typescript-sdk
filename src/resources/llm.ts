@@ -103,7 +103,13 @@ export interface LlmResponse {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * A list of knowledge base ids to use for this resource. Set to null to remove all
+   * knowledge bases.
+   */
+  knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
@@ -114,6 +120,12 @@ export interface LlmResponse {
    * recommended.
    */
   model_temperature?: number;
+
+  /**
+   * Select the underlying speech to speech model. Can only set this or model, not
+   * both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -169,6 +181,14 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set to true, will show transferee (the user, not the AI agent) as caller when
+     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+     * only applicable for cold transfer, so if warm transfer option is specified, this
+     * field will be ignored. Default to false (default to show AI agent as caller).
+     */
+    show_transferee_as_caller?: boolean | null;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -517,6 +537,14 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean | null;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -778,7 +806,13 @@ export interface LlmCreateParams {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * A list of knowledge base ids to use for this resource. Set to null to remove all
+   * knowledge bases.
+   */
+  knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
@@ -789,6 +823,12 @@ export interface LlmCreateParams {
    * recommended.
    */
   model_temperature?: number;
+
+  /**
+   * Select the underlying speech to speech model. Can only set this or model, not
+   * both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -844,6 +884,14 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set to true, will show transferee (the user, not the AI agent) as caller when
+     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+     * only applicable for cold transfer, so if warm transfer option is specified, this
+     * field will be ignored. Default to false (default to show AI agent as caller).
+     */
+    show_transferee_as_caller?: boolean | null;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1192,6 +1240,14 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean | null;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1451,7 +1507,13 @@ export interface LlmUpdateParams {
   inbound_dynamic_variables_webhook_url?: string | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * A list of knowledge base ids to use for this resource. Set to null to remove all
+   * knowledge bases.
+   */
+  knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
 
@@ -1462,6 +1524,12 @@ export interface LlmUpdateParams {
    * recommended.
    */
   model_temperature?: number;
+
+  /**
+   * Select the underlying speech to speech model. Can only set this or model, not
+   * both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1517,6 +1585,14 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * If set to true, will show transferee (the user, not the AI agent) as caller when
+     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+     * only applicable for cold transfer, so if warm transfer option is specified, this
+     * field will be ignored. Default to false (default to show AI agent as caller).
+     */
+    show_transferee_as_caller?: boolean | null;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1865,6 +1941,14 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean | null;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave

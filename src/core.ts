@@ -84,8 +84,10 @@ export class APIPromise<T> extends Promise<T> {
     });
   }
 
-  _thenUnwrap<U>(transform: (data: T) => U): APIPromise<U> {
-    return new APIPromise(this.responsePromise, async (props) => transform(await this.parseResponse(props)));
+  _thenUnwrap<U>(transform: (data: T, props: APIResponseProps) => U): APIPromise<U> {
+    return new APIPromise(this.responsePromise, async (props) =>
+      transform(await this.parseResponse(props), props),
+    );
   }
 
   /**
@@ -349,9 +351,13 @@ export abstract class APIClient {
       delete reqHeaders['content-type'];
     }
 
-    // Don't set the retry count header if it was already set or removed by the caller. We check `headers`,
-    // which can contain nulls, instead of `reqHeaders` to account for the removal case.
-    if (getHeader(headers, 'x-stainless-retry-count') === undefined) {
+    // Don't set the retry count header if it was already set or removed through default headers or by the
+    // caller. We check `defaultHeaders` and `headers`, which can contain nulls, instead of `reqHeaders` to
+    // account for the removal case.
+    if (
+      getHeader(defaultHeaders, 'x-stainless-retry-count') === undefined &&
+      getHeader(headers, 'x-stainless-retry-count') === undefined
+    ) {
       reqHeaders['x-stainless-retry-count'] = String(retryCount);
     }
 
