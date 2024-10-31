@@ -111,7 +111,7 @@ export interface LlmResponse {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -822,7 +822,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -1531,7 +1531,7 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
