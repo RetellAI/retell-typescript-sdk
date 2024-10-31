@@ -13,6 +13,12 @@ export {
   Call,
 } from './call';
 export { ConcurrencyRetrieveResponse, Concurrency } from './concurrency';
+export {
+  KnowledgeBaseResponse,
+  KnowledgeBaseListResponse,
+  KnowledgeBaseCreateParams,
+  KnowledgeBase,
+} from './knowledge-base';
 export { LlmResponse, LlmListResponse, LlmCreateParams, LlmUpdateParams, Llm } from './llm';
 export {
   PhoneNumberResponse,

@@ -140,6 +140,14 @@ export interface LlmResponse {
    * tools (essentially one state).
    */
   states?: Array<LlmResponse.State> | null;
+
+  /**
+   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
+   * structured output to make sure tool call arguments follow the json schema. The
+   * time to save a new tool or change to a tool will be longer as additional
+   * processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
 }
 
 export namespace LlmResponse {
@@ -843,6 +851,14 @@ export interface LlmCreateParams {
    * tools (essentially one state).
    */
   states?: Array<LlmCreateParams.State> | null;
+
+  /**
+   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
+   * structured output to make sure tool call arguments follow the json schema. The
+   * time to save a new tool or change to a tool will be longer as additional
+   * processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
 }
 
 export namespace LlmCreateParams {
@@ -1544,6 +1560,14 @@ export interface LlmUpdateParams {
    * tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
+
+  /**
+   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
+   * structured output to make sure tool call arguments follow the json schema. The
+   * time to save a new tool or change to a tool will be longer as additional
+   * processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
 }
 
 export namespace LlmUpdateParams {
