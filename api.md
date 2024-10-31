@@ -61,6 +61,20 @@ Methods:
 - <code title="get /list-retell-llms">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
 - <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>
 
+# KnowledgeBase
+
+Types:
+
+- <code><a href="./src/resources/knowledge-base.ts">KnowledgeBaseResponse</a></code>
+- <code><a href="./src/resources/knowledge-base.ts">KnowledgeBaseListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-knowledge-base">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">create</a>({ ...params }) -> KnowledgeBaseResponse</code>
+- <code title="get /get-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">retrieve</a>(knowledgeBaseId) -> KnowledgeBaseResponse</code>
+- <code title="get /list-knowledge-bases">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">list</a>() -> KnowledgeBaseListResponse</code>
+- <code title="delete /delete-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">delete</a>(knowledgeBaseId) -> void</code>
+
 # Voice
 
 Types:

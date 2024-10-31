@@ -20,7 +20,7 @@ or products provided by Retell please follow the respective company's security r
 
 ### Retell Terms and Policies
 
-Please contact founders@retellai.com for any questions or concerns regarding security of our services.
+Please contact support@retellai.com for any questions or concerns regarding security of our services.
 
 ---
 
