@@ -117,6 +117,7 @@ export class Retell extends Core.APIClient {
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
+  knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
 
@@ -209,6 +210,11 @@ export namespace Retell {
   export import LlmListResponse = API.LlmListResponse;
   export import LlmCreateParams = API.LlmCreateParams;
   export import LlmUpdateParams = API.LlmUpdateParams;
+
+  export import KnowledgeBase = API.KnowledgeBase;
+  export import KnowledgeBaseResponse = API.KnowledgeBaseResponse;
+  export import KnowledgeBaseListResponse = API.KnowledgeBaseListResponse;
+  export import KnowledgeBaseCreateParams = API.KnowledgeBaseCreateParams;
 
   export import Voice = API.Voice;
   export import VoiceResponse = API.VoiceResponse;
