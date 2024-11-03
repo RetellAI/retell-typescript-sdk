@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as KnowledgeBaseAPI from './knowledge-base';
 
 export class KnowledgeBase extends APIResource {
   /**
@@ -192,8 +191,10 @@ export namespace KnowledgeBaseCreateParams {
   }
 }
 
-export namespace KnowledgeBase {
-  export import KnowledgeBaseResponse = KnowledgeBaseAPI.KnowledgeBaseResponse;
-  export import KnowledgeBaseListResponse = KnowledgeBaseAPI.KnowledgeBaseListResponse;
-  export import KnowledgeBaseCreateParams = KnowledgeBaseAPI.KnowledgeBaseCreateParams;
+export declare namespace KnowledgeBase {
+  export {
+    type KnowledgeBaseResponse as KnowledgeBaseResponse,
+    type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
+    type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
+  };
 }

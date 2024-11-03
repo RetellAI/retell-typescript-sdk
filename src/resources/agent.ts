@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as AgentAPI from './agent';
 
 export class Agent extends APIResource {
   /**
@@ -61,11 +60,9 @@ export interface AgentResponse {
   last_modification_timestamp: number;
 
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
+   * The response engine to use for the agent.
    */
-  llm_websocket_url: string;
+  response_engine: AgentResponse.ResponseEngineRetellLm | AgentResponse.ResponseEngineCustomLm;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -344,6 +341,30 @@ export interface AgentResponse {
 }
 
 export namespace AgentResponse {
+  export interface ResponseEngineRetellLm {
+    /**
+     * id of the Retell LLM to use.
+     */
+    llm_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'retell-llm';
+  }
+
+  export interface ResponseEngineCustomLm {
+    /**
+     * LLM websocket url of the custom LLM.
+     */
+    llm_websocket_url: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'custom-llm';
+  }
+
   export interface StringAnalysisData {
     /**
      * Description of the variable.
@@ -444,11 +465,9 @@ export type AgentListResponse = Array<AgentResponse>;
 
 export interface AgentCreateParams {
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
+   * The response engine to use for the agent.
    */
-  llm_websocket_url: string;
+  response_engine: AgentCreateParams.ResponseEngineRetellLm | AgentCreateParams.ResponseEngineCustomLm;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -727,6 +746,30 @@ export interface AgentCreateParams {
 }
 
 export namespace AgentCreateParams {
+  export interface ResponseEngineRetellLm {
+    /**
+     * id of the Retell LLM to use.
+     */
+    llm_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'retell-llm';
+  }
+
+  export interface ResponseEngineCustomLm {
+    /**
+     * LLM websocket url of the custom LLM.
+     */
+    llm_websocket_url: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'custom-llm';
+  }
+
   export interface StringAnalysisData {
     /**
      * Description of the variable.
@@ -969,13 +1012,6 @@ export interface AgentUpdateParams {
     | 'multi';
 
   /**
-   * The URL we will establish LLM websocket for getting response, usually your
-   * server. Check out [LLM WebSocket](/api-references/llm-websocket) for more about
-   * request format (sent from us) and response format (send to us).
-   */
-  llm_websocket_url?: string;
-
-  /**
    * Maximum allowed length for the call, will force end the call if reached. The
    * minimum value allowed is 60,000 ms (1 min), and maximum value allowed is
    * 7,200,000 (2 hours). By default, this is set to 3,600,000 (1 hour).
@@ -1032,6 +1068,11 @@ export interface AgentUpdateParams {
    * a positive number. If unset, default value of 10000 ms (10 s) will apply.
    */
   reminder_trigger_ms?: number;
+
+  /**
+   * The response engine to use for the agent.
+   */
+  response_engine?: AgentUpdateParams.ResponseEngineRetellLm | AgentUpdateParams.ResponseEngineCustomLm;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -1202,11 +1243,37 @@ export namespace AgentUpdateParams {
      */
     word: string;
   }
+
+  export interface ResponseEngineRetellLm {
+    /**
+     * id of the Retell LLM to use.
+     */
+    llm_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'retell-llm';
+  }
+
+  export interface ResponseEngineCustomLm {
+    /**
+     * LLM websocket url of the custom LLM.
+     */
+    llm_websocket_url: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'custom-llm';
+  }
 }
 
-export namespace Agent {
-  export import AgentResponse = AgentAPI.AgentResponse;
-  export import AgentListResponse = AgentAPI.AgentListResponse;
-  export import AgentCreateParams = AgentAPI.AgentCreateParams;
-  export import AgentUpdateParams = AgentAPI.AgentUpdateParams;
+export declare namespace Agent {
+  export {
+    type AgentResponse as AgentResponse,
+    type AgentListResponse as AgentListResponse,
+    type AgentCreateParams as AgentCreateParams,
+    type AgentUpdateParams as AgentUpdateParams,
+  };
 }
