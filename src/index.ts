@@ -1,10 +1,45 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Errors from './error';
-import * as Uploads from './uploads';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
+import * as Errors from './error';
+import * as Uploads from './uploads';
 import * as API from './resources/index';
+import {
+  Agent as AgentAPIAgent,
+  AgentCreateParams,
+  AgentListResponse,
+  AgentResponse,
+  AgentUpdateParams,
+} from './resources/agent';
+import {
+  Call,
+  CallCreatePhoneCallParams,
+  CallCreateWebCallParams,
+  CallListParams,
+  CallListResponse,
+  CallRegisterPhoneCallParams,
+  CallResponse,
+  PhoneCallResponse,
+  WebCallResponse,
+} from './resources/call';
+import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
+import {
+  KnowledgeBase,
+  KnowledgeBaseCreateParams,
+  KnowledgeBaseListResponse,
+  KnowledgeBaseResponse,
+} from './resources/knowledge-base';
+import { Llm, LlmCreateParams, LlmListResponse, LlmResponse, LlmUpdateParams } from './resources/llm';
+import {
+  PhoneNumber,
+  PhoneNumberCreateParams,
+  PhoneNumberImportParams,
+  PhoneNumberListResponse,
+  PhoneNumberResponse,
+  PhoneNumberUpdateParams,
+} from './resources/phone-number';
+import { Voice, VoiceListResponse, VoiceResponse } from './resources/voice';
 import * as Webhooks from 'retell-sdk/lib/webhook_auth';
 
 export interface ClientOptions {
@@ -160,7 +195,7 @@ export class Retell extends Core.APIClient {
   static sign = Webhooks.sign;
 }
 
-export const {
+export {
   RetellError,
   APIError,
   APIConnectionError,
@@ -174,54 +209,69 @@ export const {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} = Errors;
+} from './error';
 
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace Retell {
-  export import RequestOptions = Core.RequestOptions;
+Retell.Call = Call;
+Retell.PhoneNumber = PhoneNumber;
+Retell.Agent = AgentAPIAgent;
+Retell.Llm = Llm;
+Retell.KnowledgeBase = KnowledgeBase;
+Retell.Voice = Voice;
+Retell.Concurrency = Concurrency;
 
-  export import Call = API.Call;
-  export import CallResponse = API.CallResponse;
-  export import PhoneCallResponse = API.PhoneCallResponse;
-  export import WebCallResponse = API.WebCallResponse;
-  export import CallListResponse = API.CallListResponse;
-  export import CallListParams = API.CallListParams;
-  export import CallCreatePhoneCallParams = API.CallCreatePhoneCallParams;
-  export import CallCreateWebCallParams = API.CallCreateWebCallParams;
-  export import CallRegisterPhoneCallParams = API.CallRegisterPhoneCallParams;
+export declare namespace Retell {
+  export type RequestOptions = Core.RequestOptions;
 
-  export import PhoneNumber = API.PhoneNumber;
-  export import PhoneNumberResponse = API.PhoneNumberResponse;
-  export import PhoneNumberListResponse = API.PhoneNumberListResponse;
-  export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
-  export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
-  export import PhoneNumberImportParams = API.PhoneNumberImportParams;
+  export {
+    Call as Call,
+    type CallResponse as CallResponse,
+    type PhoneCallResponse as PhoneCallResponse,
+    type WebCallResponse as WebCallResponse,
+    type CallListResponse as CallListResponse,
+    type CallListParams as CallListParams,
+    type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
+    type CallCreateWebCallParams as CallCreateWebCallParams,
+    type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+  };
 
-  export import Agent = API.Agent;
-  export import AgentResponse = API.AgentResponse;
-  export import AgentListResponse = API.AgentListResponse;
-  export import AgentCreateParams = API.AgentCreateParams;
-  export import AgentUpdateParams = API.AgentUpdateParams;
+  export {
+    PhoneNumber as PhoneNumber,
+    type PhoneNumberResponse as PhoneNumberResponse,
+    type PhoneNumberListResponse as PhoneNumberListResponse,
+    type PhoneNumberCreateParams as PhoneNumberCreateParams,
+    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
+    type PhoneNumberImportParams as PhoneNumberImportParams,
+  };
 
-  export import Llm = API.Llm;
-  export import LlmResponse = API.LlmResponse;
-  export import LlmListResponse = API.LlmListResponse;
-  export import LlmCreateParams = API.LlmCreateParams;
-  export import LlmUpdateParams = API.LlmUpdateParams;
+  export {
+    AgentAPIAgent as Agent,
+    type AgentResponse as AgentResponse,
+    type AgentListResponse as AgentListResponse,
+    type AgentCreateParams as AgentCreateParams,
+    type AgentUpdateParams as AgentUpdateParams,
+  };
 
-  export import KnowledgeBase = API.KnowledgeBase;
-  export import KnowledgeBaseResponse = API.KnowledgeBaseResponse;
-  export import KnowledgeBaseListResponse = API.KnowledgeBaseListResponse;
-  export import KnowledgeBaseCreateParams = API.KnowledgeBaseCreateParams;
+  export {
+    Llm as Llm,
+    type LlmResponse as LlmResponse,
+    type LlmListResponse as LlmListResponse,
+    type LlmCreateParams as LlmCreateParams,
+    type LlmUpdateParams as LlmUpdateParams,
+  };
 
-  export import Voice = API.Voice;
-  export import VoiceResponse = API.VoiceResponse;
-  export import VoiceListResponse = API.VoiceListResponse;
+  export {
+    KnowledgeBase as KnowledgeBase,
+    type KnowledgeBaseResponse as KnowledgeBaseResponse,
+    type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
+    type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
+  };
 
-  export import Concurrency = API.Concurrency;
-  export import ConcurrencyRetrieveResponse = API.ConcurrencyRetrieveResponse;
+  export { Voice as Voice, type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
+
+  export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 }
 
 export default Retell;
