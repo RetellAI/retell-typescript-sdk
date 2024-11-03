@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as LlmAPI from './llm';
 
 export class Llm extends APIResource {
   /**
@@ -55,12 +54,6 @@ export interface LlmResponse {
    * Unique id of Retell LLM.
    */
   llm_id: string;
-
-  /**
-   * The LLM Websocket URL constructed from unique id of Retell LLM. Used in agent
-   * API to create / update agent.
-   */
-  llm_websocket_url: string;
 
   /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
@@ -2190,9 +2183,11 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace Llm {
-  export import LlmResponse = LlmAPI.LlmResponse;
-  export import LlmListResponse = LlmAPI.LlmListResponse;
-  export import LlmCreateParams = LlmAPI.LlmCreateParams;
-  export import LlmUpdateParams = LlmAPI.LlmUpdateParams;
+export declare namespace Llm {
+  export {
+    type LlmResponse as LlmResponse,
+    type LlmListResponse as LlmListResponse,
+    type LlmCreateParams as LlmCreateParams,
+    type LlmUpdateParams as LlmUpdateParams,
+  };
 }

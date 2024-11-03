@@ -11,7 +11,7 @@ const client = new Retell({
 describe('resource agent', () => {
   test('create: only required params', async () => {
     const responsePromise = client.agent.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
+      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
       voice_id: '11labs-Adrian',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,7 +25,7 @@ describe('resource agent', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.agent.create({
-      llm_websocket_url: 'wss://your-websocket-endpoint',
+      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
       ambient_sound: 'coffee-shop',

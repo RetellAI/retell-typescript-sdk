@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as PhoneNumberAPI from './phone-number';
 
 export class PhoneNumber extends APIResource {
   /**
@@ -194,10 +193,12 @@ export interface PhoneNumberImportParams {
   sip_trunk_auth_username?: string;
 }
 
-export namespace PhoneNumber {
-  export import PhoneNumberResponse = PhoneNumberAPI.PhoneNumberResponse;
-  export import PhoneNumberListResponse = PhoneNumberAPI.PhoneNumberListResponse;
-  export import PhoneNumberCreateParams = PhoneNumberAPI.PhoneNumberCreateParams;
-  export import PhoneNumberUpdateParams = PhoneNumberAPI.PhoneNumberUpdateParams;
-  export import PhoneNumberImportParams = PhoneNumberAPI.PhoneNumberImportParams;
+export declare namespace PhoneNumber {
+  export {
+    type PhoneNumberResponse as PhoneNumberResponse,
+    type PhoneNumberListResponse as PhoneNumberListResponse,
+    type PhoneNumberCreateParams as PhoneNumberCreateParams,
+    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
+    type PhoneNumberImportParams as PhoneNumberImportParams,
+  };
 }

@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as CallAPI from './call';
 
 export class Call extends APIResource {
   /**
@@ -1095,13 +1094,15 @@ export interface CallRegisterPhoneCallParams {
   to_number?: string;
 }
 
-export namespace Call {
-  export import CallResponse = CallAPI.CallResponse;
-  export import PhoneCallResponse = CallAPI.PhoneCallResponse;
-  export import WebCallResponse = CallAPI.WebCallResponse;
-  export import CallListResponse = CallAPI.CallListResponse;
-  export import CallListParams = CallAPI.CallListParams;
-  export import CallCreatePhoneCallParams = CallAPI.CallCreatePhoneCallParams;
-  export import CallCreateWebCallParams = CallAPI.CallCreateWebCallParams;
-  export import CallRegisterPhoneCallParams = CallAPI.CallRegisterPhoneCallParams;
+export declare namespace Call {
+  export {
+    type CallResponse as CallResponse,
+    type PhoneCallResponse as PhoneCallResponse,
+    type WebCallResponse as WebCallResponse,
+    type CallListResponse as CallListResponse,
+    type CallListParams as CallListParams,
+    type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
+    type CallCreateWebCallParams as CallCreateWebCallParams,
+    type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+  };
 }
