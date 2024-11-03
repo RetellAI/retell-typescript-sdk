@@ -26,7 +26,7 @@ const client = new Retell({
 
 async function main() {
   const agentResponse = await client.agent.create({
-    llm_websocket_url: 'wss://your-websocket-endpoint',
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
     voice_id: '11labs-Adrian',
   });
 
@@ -50,7 +50,7 @@ const client = new Retell({
 
 async function main() {
   const params: Retell.AgentCreateParams = {
-    llm_websocket_url: 'wss://your-websocket-endpoint',
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
     voice_id: '11labs-Adrian',
   };
   const agentResponse: Retell.AgentResponse = await client.agent.create(params);
@@ -71,7 +71,10 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const agentResponse = await client.agent
-    .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+    .create({
+      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+      voice_id: '11labs-Adrian',
+    })
     .catch(async (err) => {
       if (err instanceof Retell.APIError) {
         console.log(err.status); // 400
@@ -115,7 +118,7 @@ const client = new Retell({
 });
 
 // Or, configure per-request:
-await client.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
   maxRetries: 5,
 });
 ```
@@ -132,7 +135,7 @@ const client = new Retell({
 });
 
 // Override per-request:
-await client.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -154,13 +157,19 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 const client = new Retell();
 
 const response = await client.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: agentResponse, response: raw } = await client.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(agentResponse.agent_id);
@@ -268,7 +277,7 @@ const client = new Retell({
 
 // Override per-request:
 await client.agent.create(
-  { llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' },
+  { response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },

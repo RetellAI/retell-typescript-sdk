@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as ConcurrencyAPI from './concurrency';
 
 export class Concurrency extends APIResource {
   /**
@@ -25,6 +24,6 @@ export interface ConcurrencyRetrieveResponse {
   current_concurrency?: number;
 }
 
-export namespace Concurrency {
-  export import ConcurrencyRetrieveResponse = ConcurrencyAPI.ConcurrencyRetrieveResponse;
+export declare namespace Concurrency {
+  export { type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 }
