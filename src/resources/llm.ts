@@ -309,6 +309,13 @@ export namespace LlmResponse {
     type: 'press_digit';
 
     /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -663,6 +670,13 @@ export namespace LlmResponse {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1020,6 +1034,13 @@ export namespace LlmCreateParams {
     type: 'press_digit';
 
     /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -1374,6 +1395,13 @@ export namespace LlmCreateParams {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1729,6 +1757,13 @@ export namespace LlmUpdateParams {
     type: 'press_digit';
 
     /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -2083,6 +2118,13 @@ export namespace LlmUpdateParams {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
