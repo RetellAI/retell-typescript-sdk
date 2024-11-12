@@ -191,25 +191,6 @@ export class Retell extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-export {
-  RetellError,
-  APIError,
-  APIConnectionError,
-  APIConnectionTimeoutError,
-  APIUserAbortError,
-  NotFoundError,
-  ConflictError,
-  RateLimitError,
-  BadRequestError,
-  AuthenticationError,
-  InternalServerError,
-  PermissionDeniedError,
-  UnprocessableEntityError,
-} from './error';
-
-export import toFile = Uploads.toFile;
-export import fileFromPath = Uploads.fileFromPath;
-
 Retell.Call = Call;
 Retell.PhoneNumber = PhoneNumber;
 Retell.Agent = AgentAPIAgent;
@@ -217,7 +198,6 @@ Retell.Llm = Llm;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
-
 export declare namespace Retell {
   export type RequestOptions = Core.RequestOptions;
 
@@ -269,5 +249,22 @@ export declare namespace Retell {
 
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 }
+
+export { toFile, fileFromPath } from 'retell-sdk/uploads';
+export {
+  RetellError,
+  APIError,
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIUserAbortError,
+  NotFoundError,
+  ConflictError,
+  RateLimitError,
+  BadRequestError,
+  AuthenticationError,
+  InternalServerError,
+  PermissionDeniedError,
+  UnprocessableEntityError,
+} from 'retell-sdk/error';
 
 export default Retell;
