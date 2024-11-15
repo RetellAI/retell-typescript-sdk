@@ -250,7 +250,7 @@ export declare namespace Retell {
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 }
 
-export { toFile, fileFromPath } from 'retell-sdk/uploads';
+export { toFile, fileFromPath } from './uploads';
 export {
   RetellError,
   APIError,
@@ -265,6 +265,6 @@ export {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} from 'retell-sdk/error';
+} from './error';
 
 export default Retell;
