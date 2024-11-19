@@ -24,16 +24,8 @@ describe('resource knowledgeBase', () => {
     const response = await client.knowledgeBase.create({
       knowledge_base_name: 'Sample KB',
       enable_auto_refresh: true,
-      knowledge_base_files: [
-        await toFile(Buffer.from('# my file contents'), 'README.md'),
-        await toFile(Buffer.from('# my file contents'), 'README.md'),
-        await toFile(Buffer.from('# my file contents'), 'README.md'),
-      ],
-      knowledge_base_texts: [
-        { text: 'text', title: 'title' },
-        { text: 'text', title: 'title' },
-        { text: 'text', title: 'title' },
-      ],
+      knowledge_base_files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      knowledge_base_texts: [{ text: 'text', title: 'title' }],
       knowledge_base_urls: ['https://www.example.com', 'https://www.retellai.com'],
     });
   });
