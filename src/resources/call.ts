@@ -138,31 +138,15 @@ export interface PhoneCallResponse {
     | 'registered_call_timeout';
 
   /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
-   */
-  e2e_latency?: PhoneCallResponse.E2ELatency;
-
-  /**
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
    */
   end_timestamp?: number;
 
   /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
+   * Latency tracking of the call, available after call ends. Not all fields here
+   * will be available, as it depends on the type of call and feature used.
    */
-  llm_latency?: PhoneCallResponse.LlmLatency;
-
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  llm_websocket_network_rtt_latency?: PhoneCallResponse.LlmWebsocketNetworkRttLatency;
+  latency?: PhoneCallResponse.Latency;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -260,130 +244,333 @@ export namespace PhoneCallResponse {
   }
 
   /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
+   * Latency tracking of the call, available after call ends. Not all fields here
+   * will be available, as it depends on the type of call and feature used.
    */
-  export interface E2ELatency {
+  export interface Latency {
     /**
-     * Maximum latency in the call, measured in milliseconds.
+     * End to end latency (from user stops talking to agent start talking) tracking of
+     * the call. This latency does not account for the network trip time from Retell
+     * server to user frontend. The latency is tracked every time turn change between
+     * user and agent.
      */
-    max?: number;
+    e2e?: Latency.E2E;
 
     /**
-     * Minimum latency in the call, measured in milliseconds.
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * relevant context received) tracking of the call. Only populated when using
+     * knowledge base feature for the agent of the call.
      */
-    min?: number;
+    knowledge_base?: Latency.KnowledgeBase;
 
     /**
-     * Number of data points (number of times latency is tracked).
+     * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+     * of the call. When using custom LLM. this latency includes LLM websocket
+     * roundtrip time between user server and Retell server.
      */
-    num?: number;
+    llm?: Latency.Llm;
 
     /**
-     * 50 percentile of latency, measured in milliseconds.
+     * LLM websocket roundtrip latency (between user server and Retell server) tracking
+     * of the call. Only populated for calls using custom LLM.
      */
-    p50?: number;
+    llm_websocket_network_rtt?: Latency.LlmWebsocketNetworkRtt;
 
     /**
-     * 90 percentile of latency, measured in milliseconds.
+     * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
-    p90?: number;
+    s2s?: Latency.S2s;
 
     /**
-     * 95 percentile of latency, measured in milliseconds.
+     * Text-to-speech latency (from the triggering of TTS to first byte received)
+     * tracking of the call.
      */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
+    tts?: Latency.Tts;
   }
 
-  /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
-   */
-  export interface LlmLatency {
+  export namespace Latency {
     /**
-     * Maximum latency in the call, measured in milliseconds.
+     * End to end latency (from user stops talking to agent start talking) tracking of
+     * the call. This latency does not account for the network trip time from Retell
+     * server to user frontend. The latency is tracked every time turn change between
+     * user and agent.
      */
-    max?: number;
+    export interface E2E {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * Minimum latency in the call, measured in milliseconds.
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * relevant context received) tracking of the call. Only populated when using
+     * knowledge base feature for the agent of the call.
      */
-    min?: number;
+    export interface KnowledgeBase {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * Number of data points (number of times latency is tracked).
+     * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+     * of the call. When using custom LLM. this latency includes LLM websocket
+     * roundtrip time between user server and Retell server.
      */
-    num?: number;
+    export interface Llm {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 50 percentile of latency, measured in milliseconds.
+     * LLM websocket roundtrip latency (between user server and Retell server) tracking
+     * of the call. Only populated for calls using custom LLM.
      */
-    p50?: number;
+    export interface LlmWebsocketNetworkRtt {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 90 percentile of latency, measured in milliseconds.
+     * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
-    p90?: number;
+    export interface S2s {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 95 percentile of latency, measured in milliseconds.
+     * Text-to-speech latency (from the triggering of TTS to first byte received)
+     * tracking of the call.
      */
-    p95?: number;
+    export interface Tts {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
 
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
-  }
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
 
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  export interface LlmWebsocketNetworkRttLatency {
-    /**
-     * Maximum latency in the call, measured in milliseconds.
-     */
-    max?: number;
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
 
-    /**
-     * Minimum latency in the call, measured in milliseconds.
-     */
-    min?: number;
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
 
-    /**
-     * Number of data points (number of times latency is tracked).
-     */
-    num?: number;
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
 
-    /**
-     * 50 percentile of latency, measured in milliseconds.
-     */
-    p50?: number;
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
 
-    /**
-     * 90 percentile of latency, measured in milliseconds.
-     */
-    p90?: number;
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
 
-    /**
-     * 95 percentile of latency, measured in milliseconds.
-     */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
   }
 
   export interface TranscriptObject {
@@ -584,31 +771,15 @@ export interface WebCallResponse {
     | 'registered_call_timeout';
 
   /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
-   */
-  e2e_latency?: WebCallResponse.E2ELatency;
-
-  /**
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
    */
   end_timestamp?: number;
 
   /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
+   * Latency tracking of the call, available after call ends. Not all fields here
+   * will be available, as it depends on the type of call and feature used.
    */
-  llm_latency?: WebCallResponse.LlmLatency;
-
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  llm_websocket_network_rtt_latency?: WebCallResponse.LlmWebsocketNetworkRttLatency;
+  latency?: WebCallResponse.Latency;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -706,130 +877,333 @@ export namespace WebCallResponse {
   }
 
   /**
-   * End to end latency (from user stops talking to agent start talking) tracking of
-   * the call, available after call ends. This latency does not account for the
-   * network trip time from Retell server to user frontend. The latency is tracked
-   * every time turn change between user and agent.
+   * Latency tracking of the call, available after call ends. Not all fields here
+   * will be available, as it depends on the type of call and feature used.
    */
-  export interface E2ELatency {
+  export interface Latency {
     /**
-     * Maximum latency in the call, measured in milliseconds.
+     * End to end latency (from user stops talking to agent start talking) tracking of
+     * the call. This latency does not account for the network trip time from Retell
+     * server to user frontend. The latency is tracked every time turn change between
+     * user and agent.
      */
-    max?: number;
+    e2e?: Latency.E2E;
 
     /**
-     * Minimum latency in the call, measured in milliseconds.
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * relevant context received) tracking of the call. Only populated when using
+     * knowledge base feature for the agent of the call.
      */
-    min?: number;
+    knowledge_base?: Latency.KnowledgeBase;
 
     /**
-     * Number of data points (number of times latency is tracked).
+     * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+     * of the call. When using custom LLM. this latency includes LLM websocket
+     * roundtrip time between user server and Retell server.
      */
-    num?: number;
+    llm?: Latency.Llm;
 
     /**
-     * 50 percentile of latency, measured in milliseconds.
+     * LLM websocket roundtrip latency (between user server and Retell server) tracking
+     * of the call. Only populated for calls using custom LLM.
      */
-    p50?: number;
+    llm_websocket_network_rtt?: Latency.LlmWebsocketNetworkRtt;
 
     /**
-     * 90 percentile of latency, measured in milliseconds.
+     * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
-    p90?: number;
+    s2s?: Latency.S2s;
 
     /**
-     * 95 percentile of latency, measured in milliseconds.
+     * Text-to-speech latency (from the triggering of TTS to first byte received)
+     * tracking of the call.
      */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
+    tts?: Latency.Tts;
   }
 
-  /**
-   * LLM latency (from issue of LLM call to first token received) tracking of the
-   * call, available after call ends. When using custom LLM. this latency includes
-   * LLM websocket roundtrip time between user server and Retell server.
-   */
-  export interface LlmLatency {
+  export namespace Latency {
     /**
-     * Maximum latency in the call, measured in milliseconds.
+     * End to end latency (from user stops talking to agent start talking) tracking of
+     * the call. This latency does not account for the network trip time from Retell
+     * server to user frontend. The latency is tracked every time turn change between
+     * user and agent.
      */
-    max?: number;
+    export interface E2E {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * Minimum latency in the call, measured in milliseconds.
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * relevant context received) tracking of the call. Only populated when using
+     * knowledge base feature for the agent of the call.
      */
-    min?: number;
+    export interface KnowledgeBase {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * Number of data points (number of times latency is tracked).
+     * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+     * of the call. When using custom LLM. this latency includes LLM websocket
+     * roundtrip time between user server and Retell server.
      */
-    num?: number;
+    export interface Llm {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 50 percentile of latency, measured in milliseconds.
+     * LLM websocket roundtrip latency (between user server and Retell server) tracking
+     * of the call. Only populated for calls using custom LLM.
      */
-    p50?: number;
+    export interface LlmWebsocketNetworkRtt {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 90 percentile of latency, measured in milliseconds.
+     * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
-    p90?: number;
+    export interface S2s {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
 
     /**
-     * 95 percentile of latency, measured in milliseconds.
+     * Text-to-speech latency (from the triggering of TTS to first byte received)
+     * tracking of the call.
      */
-    p95?: number;
+    export interface Tts {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
 
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
-  }
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
 
-  /**
-   * LLM websocket roundtrip latency (between user server and Retell server) tracking
-   * of the call, available after call ends. Only populated for calls using custom
-   * LLM.
-   */
-  export interface LlmWebsocketNetworkRttLatency {
-    /**
-     * Maximum latency in the call, measured in milliseconds.
-     */
-    max?: number;
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
 
-    /**
-     * Minimum latency in the call, measured in milliseconds.
-     */
-    min?: number;
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
 
-    /**
-     * Number of data points (number of times latency is tracked).
-     */
-    num?: number;
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
 
-    /**
-     * 50 percentile of latency, measured in milliseconds.
-     */
-    p50?: number;
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
 
-    /**
-     * 90 percentile of latency, measured in milliseconds.
-     */
-    p90?: number;
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
 
-    /**
-     * 95 percentile of latency, measured in milliseconds.
-     */
-    p95?: number;
-
-    /**
-     * 99 percentile of latency, measured in milliseconds.
-     */
-    p99?: number;
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
   }
 
   export interface TranscriptObject {
