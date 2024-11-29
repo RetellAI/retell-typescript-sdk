@@ -1,5 +1,30 @@
 # Changelog
 
+## 4.10.0 (2024-11-29)
+
+Full Changelog: [v4.9.0...v4.10.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.9.0...v4.10.0)
+
+### Features
+
+* **api:** api update ([#204](https://github.com/RetellAI/retell-typescript-sdk/issues/204)) ([92d9151](https://github.com/RetellAI/retell-typescript-sdk/commit/92d9151d9df218b9e8651e817d4929cc6d9e6f7c))
+* **api:** api update ([#213](https://github.com/RetellAI/retell-typescript-sdk/issues/213)) ([a5ecc43](https://github.com/RetellAI/retell-typescript-sdk/commit/a5ecc437af1923021d6578b02aafbec94b2d7e0a))
+* fix: knowledge base api ([d0997b9](https://github.com/RetellAI/retell-typescript-sdk/commit/d0997b95db8b46476685d74e2b8fa1514af98e7d))
+* **internal:** make git install file structure match npm ([#212](https://github.com/RetellAI/retell-typescript-sdk/issues/212)) ([3b91c22](https://github.com/RetellAI/retell-typescript-sdk/commit/3b91c22b28c1afcfaa4821c1f09605ab5dd2bc3b))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#206](https://github.com/RetellAI/retell-typescript-sdk/issues/206)) ([85beb82](https://github.com/RetellAI/retell-typescript-sdk/commit/85beb828da33ab12dda8c57a9a8d739e1fe72685))
+* rebuild project due to codegen change ([#207](https://github.com/RetellAI/retell-typescript-sdk/issues/207)) ([bff45a1](https://github.com/RetellAI/retell-typescript-sdk/commit/bff45a19fa776fd27d9b61768c3b4673daee5ce6))
+* rebuild project due to codegen change ([#208](https://github.com/RetellAI/retell-typescript-sdk/issues/208)) ([f0a57e0](https://github.com/RetellAI/retell-typescript-sdk/commit/f0a57e0e60be74417b01bc67229dfb2fb9e192d6))
+* rebuild project due to codegen change ([#209](https://github.com/RetellAI/retell-typescript-sdk/issues/209)) ([91b8218](https://github.com/RetellAI/retell-typescript-sdk/commit/91b8218bb1fd38be92c5537d332baa776c4bc651))
+* remove redundant word in comment ([#211](https://github.com/RetellAI/retell-typescript-sdk/issues/211)) ([76aea44](https://github.com/RetellAI/retell-typescript-sdk/commit/76aea444971b3352145ab82b5dbdba5abca4731c))
+
+
+### Documentation
+
+* remove suggestion to use `npm` call out ([#210](https://github.com/RetellAI/retell-typescript-sdk/issues/210)) ([64fbf4c](https://github.com/RetellAI/retell-typescript-sdk/commit/64fbf4cf0f54b9aa844a70e73bd78d8c34a3d120))
+
 ## 4.9.0 (2024-11-03)
 
 Full Changelog: [v4.8.0...v4.9.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.8.0...v4.9.0)
