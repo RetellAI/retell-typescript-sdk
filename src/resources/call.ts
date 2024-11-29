@@ -1354,29 +1354,111 @@ export interface CallListParams {
 export namespace CallListParams {
   export interface FilterCriteria {
     /**
-     * Inclusive. Filter calls that end on or after this timestamp.
-     */
-    after_end_timestamp?: number;
-
-    /**
-     * Inclusive. Filter calls that start on or after this timestamp.
-     */
-    after_start_timestamp?: number;
-
-    /**
      * Only retrieve calls that are made with specific agent(s).
      */
     agent_id?: Array<string>;
 
     /**
-     * Exclusive. Filter calls that end before this timestamp.
+     * Only retrieve calls with specific call status(es).
      */
-    before_end_timestamp?: number;
+    call_status?: Array<'registered' | 'ongoing' | 'ended' | 'error'>;
 
     /**
-     * Exclusive. Filter calls that start before this timestamp.
+     * Only retrieve calls with specific call successful(s).
      */
-    before_start_timestamp?: number;
+    call_successful?: Array<boolean>;
+
+    /**
+     * Only retrieve calls with specific call type(s).
+     */
+    call_type?: Array<'web_call' | 'phone_call'>;
+
+    /**
+     * Only retrieve calls with specific direction(s).
+     */
+    direction?: Array<'inbound' | 'outbound'>;
+
+    /**
+     * Only retrieve calls with specific disconnection reason(s).
+     */
+    disconnection_reason?: Array<
+      | 'user_hangup'
+      | 'agent_hangup'
+      | 'call_transfer'
+      | 'voicemail_reached'
+      | 'inactivity'
+      | 'machine_detected'
+      | 'max_duration_reached'
+      | 'concurrency_limit_reached'
+      | 'no_valid_payment'
+      | 'scam_detected'
+      | 'error_inbound_webhook'
+      | 'dial_busy'
+      | 'dial_failed'
+      | 'dial_no_answer'
+      | 'error_llm_websocket_open'
+      | 'error_llm_websocket_lost_connection'
+      | 'error_llm_websocket_runtime'
+      | 'error_llm_websocket_corrupt_payload'
+      | 'error_frontend_corrupted_payload'
+      | 'error_twilio'
+      | 'error_no_audio_received'
+      | 'error_asr'
+      | 'error_retell'
+      | 'error_unknown'
+      | 'error_user_not_joined'
+      | 'registered_call_timeout'
+    >;
+
+    /**
+     * Only retrieve calls with specific range of duration(s).
+     */
+    duration_ms?: FilterCriteria.DurationMs;
+
+    /**
+     * Only retrieve calls with specific from number(s).
+     */
+    from_number?: Array<string>;
+
+    /**
+     * Only retrieve calls that are in voicemail or not in voicemail.
+     */
+    in_voicemail?: Array<boolean>;
+
+    /**
+     * Only retrieve calls with specific range of start timestamp(s).
+     */
+    start_timestamp?: FilterCriteria.StartTimestamp;
+
+    /**
+     * Only retrieve calls with specific to number(s).
+     */
+    to_number?: Array<string>;
+
+    /**
+     * Only retrieve calls with specific user sentiment(s).
+     */
+    user_sentiment?: Array<'Negative' | 'Positive' | 'Neutral' | 'Unknown'>;
+  }
+
+  export namespace FilterCriteria {
+    /**
+     * Only retrieve calls with specific range of duration(s).
+     */
+    export interface DurationMs {
+      lower_threshold?: number;
+
+      upper_threshold?: number;
+    }
+
+    /**
+     * Only retrieve calls with specific range of start timestamp(s).
+     */
+    export interface StartTimestamp {
+      lower_threshold?: number;
+
+      upper_threshold?: number;
+    }
   }
 }
 
