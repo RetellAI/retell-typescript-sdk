@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.12.0 (2024-12-02)
+
+Full Changelog: [v4.11.0...v4.12.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.11.0...v4.12.0)
+
+### Features
+
+* Delete knowledge-base.test.ts ([8208efe](https://github.com/RetellAI/retell-typescript-sdk/commit/8208efe66e55cb6a0b1175c9814bb1ef791688b9))
+* remove unnecessary tests ([094c5a4](https://github.com/RetellAI/retell-typescript-sdk/commit/094c5a41904f5a8a7bbeecbfea0d9cf627e3d0d2))
+
 ## 4.11.0 (2024-11-29)
 
 Full Changelog: [v4.10.0...v4.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.10.0...v4.11.0)
