@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.11.1 (2024-12-09)
+
+Full Changelog: [v4.11.0...v4.11.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.11.0...v4.11.1)
+
+### Chores
+
+* **internal:** remove unnecessary getRequestClient function ([#220](https://github.com/RetellAI/retell-typescript-sdk/issues/220)) ([6796a4a](https://github.com/RetellAI/retell-typescript-sdk/commit/6796a4ad9d3e425709c4d6c0b7c457a7caf7f53a))
+
 ## 4.11.0 (2024-11-29)
 
 Full Changelog: [v4.10.0...v4.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.10.0...v4.11.0)
