@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.11.1 (2024-12-10)
+
+Full Changelog: [v4.11.0...v4.11.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.11.0...v4.11.1)
+
+### Chores
+
+* **internal:** bump cross-spawn to v7.0.6 ([#221](https://github.com/RetellAI/retell-typescript-sdk/issues/221)) ([2f13650](https://github.com/RetellAI/retell-typescript-sdk/commit/2f13650004113a9c144541b47f9a8785dfe70811))
+* **internal:** remove unnecessary getRequestClient function ([#220](https://github.com/RetellAI/retell-typescript-sdk/issues/220)) ([6796a4a](https://github.com/RetellAI/retell-typescript-sdk/commit/6796a4ad9d3e425709c4d6c0b7c457a7caf7f53a))
+* **types:** nicer error class types + jsdocs ([#222](https://github.com/RetellAI/retell-typescript-sdk/issues/222)) ([fc53c20](https://github.com/RetellAI/retell-typescript-sdk/commit/fc53c208532d127a8ff4ce257950abfdd14d8501))
+
 ## 4.11.0 (2024-11-29)
 
 Full Changelog: [v4.10.0...v4.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.10.0...v4.11.0)
