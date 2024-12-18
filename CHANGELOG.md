@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.12.0 (2024-12-18)
+
+Full Changelog: [v4.11.0...v4.12.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.11.0...v4.12.0)
+
+### Features
+
+* **api:** api update ([#225](https://github.com/RetellAI/retell-typescript-sdk/issues/225)) ([9609f88](https://github.com/RetellAI/retell-typescript-sdk/commit/9609f888110b5bd5616d5b094950c9c4ae36deff))
+
+
+### Chores
+
+* **internal:** bump cross-spawn to v7.0.6 ([#221](https://github.com/RetellAI/retell-typescript-sdk/issues/221)) ([2f13650](https://github.com/RetellAI/retell-typescript-sdk/commit/2f13650004113a9c144541b47f9a8785dfe70811))
+* **internal:** codegen related update ([#224](https://github.com/RetellAI/retell-typescript-sdk/issues/224)) ([29f3060](https://github.com/RetellAI/retell-typescript-sdk/commit/29f3060fbed7edfe0edd48f6d9ea621dc3712571))
+* **internal:** remove unnecessary getRequestClient function ([#220](https://github.com/RetellAI/retell-typescript-sdk/issues/220)) ([6796a4a](https://github.com/RetellAI/retell-typescript-sdk/commit/6796a4ad9d3e425709c4d6c0b7c457a7caf7f53a))
+* **internal:** update isAbsoluteURL ([#223](https://github.com/RetellAI/retell-typescript-sdk/issues/223)) ([1265bce](https://github.com/RetellAI/retell-typescript-sdk/commit/1265bceb81a9b6d023616095c82a75544ce40723))
+* **types:** nicer error class types + jsdocs ([#222](https://github.com/RetellAI/retell-typescript-sdk/issues/222)) ([fc53c20](https://github.com/RetellAI/retell-typescript-sdk/commit/fc53c208532d127a8ff4ce257950abfdd14d8501))
+
 ## 4.11.0 (2024-11-29)
 
 Full Changelog: [v4.10.0...v4.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.10.0...v4.11.0)
