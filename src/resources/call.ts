@@ -105,6 +105,11 @@ export interface PhoneCallResponse {
   call_analysis?: PhoneCallResponse.CallAnalysis;
 
   /**
+   * Cost of the call, including all the products and their costs and discount.
+   */
+  call_cost?: PhoneCallResponse.CallCost;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
@@ -241,6 +246,55 @@ export namespace PhoneCallResponse {
      * Sentiment of the user in the call.
      */
     user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
+  }
+
+  /**
+   * Cost of the call, including all the products and their costs and discount.
+   */
+  export interface CallCost {
+    /**
+     * Combined cost of all individual costs in cents
+     */
+    combined_cost: number;
+
+    /**
+     * List of products with their unit prices and costs in cents
+     */
+    product_costs: Array<CallCost.ProductCost>;
+
+    /**
+     * Total duration of the call in seconds
+     */
+    total_duration_seconds: number;
+
+    /**
+     * Total unit duration price of all products in cents per second
+     */
+    total_duration_unit_price: number;
+
+    /**
+     * Total one time price of all products in cents per call
+     */
+    total_one_time_price: number;
+  }
+
+  export namespace CallCost {
+    export interface ProductCost {
+      /**
+       * Cost for the product in cents for the duration of the call.
+       */
+      cost: number;
+
+      /**
+       * Product name that has a cost associated with it.
+       */
+      product: string;
+
+      /**
+       * Unit price of the product in cents per second.
+       */
+      unitPrice: number;
+    }
   }
 
   /**
@@ -738,6 +792,11 @@ export interface WebCallResponse {
   call_analysis?: WebCallResponse.CallAnalysis;
 
   /**
+   * Cost of the call, including all the products and their costs and discount.
+   */
+  call_cost?: WebCallResponse.CallCost;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
@@ -874,6 +933,55 @@ export namespace WebCallResponse {
      * Sentiment of the user in the call.
      */
     user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
+  }
+
+  /**
+   * Cost of the call, including all the products and their costs and discount.
+   */
+  export interface CallCost {
+    /**
+     * Combined cost of all individual costs in cents
+     */
+    combined_cost: number;
+
+    /**
+     * List of products with their unit prices and costs in cents
+     */
+    product_costs: Array<CallCost.ProductCost>;
+
+    /**
+     * Total duration of the call in seconds
+     */
+    total_duration_seconds: number;
+
+    /**
+     * Total unit duration price of all products in cents per second
+     */
+    total_duration_unit_price: number;
+
+    /**
+     * Total one time price of all products in cents per call
+     */
+    total_one_time_price: number;
+  }
+
+  export namespace CallCost {
+    export interface ProductCost {
+      /**
+       * Cost for the product in cents for the duration of the call.
+       */
+      cost: number;
+
+      /**
+       * Product name that has a cost associated with it.
+       */
+      product: string;
+
+      /**
+       * Unit price of the product in cents per second.
+       */
+      unitPrice: number;
+    }
   }
 
   /**
