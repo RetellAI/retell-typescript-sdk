@@ -104,7 +104,7 @@ export interface LlmResponse {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -118,7 +118,7 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -829,7 +829,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -843,7 +843,7 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1552,7 +1552,7 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -1566,7 +1566,7 @@ export interface LlmUpdateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
