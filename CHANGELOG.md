@@ -1,5 +1,35 @@
 # Changelog
 
+## 4.12.0 (2024-12-27)
+
+Full Changelog: [v4.11.0...v4.12.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.11.0...v4.12.0)
+
+### Features
+
+* **api:** api update ([#225](https://github.com/RetellAI/retell-typescript-sdk/issues/225)) ([9609f88](https://github.com/RetellAI/retell-typescript-sdk/commit/9609f888110b5bd5616d5b094950c9c4ae36deff))
+* **api:** api update ([#228](https://github.com/RetellAI/retell-typescript-sdk/issues/228)) ([6287a06](https://github.com/RetellAI/retell-typescript-sdk/commit/6287a0632f60cabbaccc000e39845d00e5b20036))
+* **api:** api update ([#229](https://github.com/RetellAI/retell-typescript-sdk/issues/229)) ([d1bb0b4](https://github.com/RetellAI/retell-typescript-sdk/commit/d1bb0b4dfde26e3fe8b47b98c7e0a98b9dc981b2))
+* Update index.test.ts ([05e658a](https://github.com/RetellAI/retell-typescript-sdk/commit/05e658a3c0e363a77d78a7f3c7bb7b28f51f2559))
+
+
+### Bug Fixes
+
+* **client:** normalize method ([#226](https://github.com/RetellAI/retell-typescript-sdk/issues/226)) ([756d74e](https://github.com/RetellAI/retell-typescript-sdk/commit/756d74e87f0da01d7ec7acbd160aafd05ee38f04))
+
+
+### Chores
+
+* **internal:** bump cross-spawn to v7.0.6 ([#221](https://github.com/RetellAI/retell-typescript-sdk/issues/221)) ([2f13650](https://github.com/RetellAI/retell-typescript-sdk/commit/2f13650004113a9c144541b47f9a8785dfe70811))
+* **internal:** codegen related update ([#224](https://github.com/RetellAI/retell-typescript-sdk/issues/224)) ([29f3060](https://github.com/RetellAI/retell-typescript-sdk/commit/29f3060fbed7edfe0edd48f6d9ea621dc3712571))
+* **internal:** remove unnecessary getRequestClient function ([#220](https://github.com/RetellAI/retell-typescript-sdk/issues/220)) ([6796a4a](https://github.com/RetellAI/retell-typescript-sdk/commit/6796a4ad9d3e425709c4d6c0b7c457a7caf7f53a))
+* **internal:** update isAbsoluteURL ([#223](https://github.com/RetellAI/retell-typescript-sdk/issues/223)) ([1265bce](https://github.com/RetellAI/retell-typescript-sdk/commit/1265bceb81a9b6d023616095c82a75544ce40723))
+* **types:** nicer error class types + jsdocs ([#222](https://github.com/RetellAI/retell-typescript-sdk/issues/222)) ([fc53c20](https://github.com/RetellAI/retell-typescript-sdk/commit/fc53c208532d127a8ff4ce257950abfdd14d8501))
+
+
+### Documentation
+
+* minor formatting changes ([#227](https://github.com/RetellAI/retell-typescript-sdk/issues/227)) ([18892ca](https://github.com/RetellAI/retell-typescript-sdk/commit/18892ca63a0465d3213ff9d2d3b4fc065fc1942d))
+
 ## 4.11.0 (2024-11-29)
 
 Full Changelog: [v4.10.0...v4.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.10.0...v4.11.0)
