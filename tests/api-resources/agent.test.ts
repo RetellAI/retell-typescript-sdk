@@ -32,6 +32,7 @@ describe('resource agent', () => {
       ambient_sound_volume: 1,
       backchannel_frequency: 0.9,
       backchannel_words: ['yeah', 'uh-huh'],
+      begin_message_delay_ms: 1000,
       boosted_keywords: ['retell', 'kroger'],
       enable_backchannel: true,
       enable_transcription_formatting: true,
