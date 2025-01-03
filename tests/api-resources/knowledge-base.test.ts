@@ -31,7 +31,7 @@ describe('resource knowledgeBase', () => {
   });
 
   test('retrieve', async () => {
-    const responsePromise = client.knowledgeBase.retrieve('knowledge_base_id');
+    const responsePromise = client.knowledgeBase.retrieve('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -44,7 +44,7 @@ describe('resource knowledgeBase', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.knowledgeBase.retrieve('knowledge_base_id', { path: '/_stainless_unknown_path' }),
+      client.knowledgeBase.retrieve('kb_1234567890', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
@@ -67,7 +67,7 @@ describe('resource knowledgeBase', () => {
   });
 
   test('delete', async () => {
-    const responsePromise = client.knowledgeBase.delete('knowledge_base_id');
+    const responsePromise = client.knowledgeBase.delete('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -80,7 +80,7 @@ describe('resource knowledgeBase', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.knowledgeBase.delete('knowledge_base_id', { path: '/_stainless_unknown_path' }),
+      client.knowledgeBase.delete('kb_1234567890', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 });
