@@ -210,6 +210,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.Utterance
     | PhoneCallResponse.ToolCallInvocationUtterance
     | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.DtmfUtterance
   >;
 }
 
@@ -745,6 +746,19 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
   }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * This is user pressed digit from their phone keypad.
+     */
+    role: 'dtmf';
+  }
 }
 
 export interface WebCallResponse {
@@ -897,6 +911,7 @@ export interface WebCallResponse {
     | WebCallResponse.Utterance
     | WebCallResponse.ToolCallInvocationUtterance
     | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.DtmfUtterance
   >;
 }
 
@@ -1431,6 +1446,19 @@ export namespace WebCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * This is user pressed digit from their phone keypad.
+     */
+    role: 'dtmf';
   }
 }
 
