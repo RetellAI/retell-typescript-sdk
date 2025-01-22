@@ -1601,13 +1601,14 @@ export namespace CallListParams {
 
 export interface CallCreatePhoneCallParams {
   /**
-   * The number you own in E.164 format. Must be a Retell managed number.
+   * The number you own in E.164 format. Must be a number purchased from Retell or
+   * imported to Retell.
    */
   from_number: string;
 
   /**
-   * The number you want to call, in E.164 format. Right now only US numbers are
-   * officially supported.
+   * The number you want to call, in E.164 format. If using a number purchased from
+   * Retell, only US numbers are supported as destination.
    */
   to_number: string;
 
