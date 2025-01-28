@@ -19,6 +19,16 @@ export class Call extends APIResource {
   }
 
   /**
+   * Delete a specific call and its associated data
+   */
+  delete(callId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.delete(`/v2/delete-call/${callId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
+  }
+
+  /**
    * Create a new outbound phone call
    */
   createPhoneCall(
