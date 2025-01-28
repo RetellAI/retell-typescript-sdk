@@ -24,6 +24,7 @@ export {
   type KnowledgeBaseResponse,
   type KnowledgeBaseListResponse,
   type KnowledgeBaseCreateParams,
+  type KnowledgeBaseAddSourcesParams,
 } from './knowledge-base';
 export {
   Llm,
