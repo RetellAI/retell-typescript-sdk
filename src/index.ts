@@ -26,6 +26,7 @@ import {
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
   KnowledgeBase,
+  KnowledgeBaseAddSourcesParams,
   KnowledgeBaseCreateParams,
   KnowledgeBaseListResponse,
   KnowledgeBaseResponse,
@@ -247,6 +248,7 @@ export declare namespace Retell {
     type KnowledgeBaseResponse as KnowledgeBaseResponse,
     type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
     type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
+    type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
   };
 
   export { Voice as Voice, type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
