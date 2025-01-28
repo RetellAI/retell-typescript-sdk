@@ -1,5 +1,23 @@
 # Changelog
 
+## 4.14.0 (2025-01-28)
+
+Full Changelog: [v4.13.0...v4.14.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.13.0...v4.14.0)
+
+### Features
+
+* **api:** api update ([#234](https://github.com/RetellAI/retell-typescript-sdk/issues/234)) ([89e7eb2](https://github.com/RetellAI/retell-typescript-sdk/commit/89e7eb26c31aa4febbdcce6aaa892bb60686401b))
+* **api:** api update ([#236](https://github.com/RetellAI/retell-typescript-sdk/issues/236)) ([23055a5](https://github.com/RetellAI/retell-typescript-sdk/commit/23055a530cbde8ae8e711fe04a70d421c048a357))
+* **api:** api update ([#242](https://github.com/RetellAI/retell-typescript-sdk/issues/242)) ([fc1f7ba](https://github.com/RetellAI/retell-typescript-sdk/commit/fc1f7ba797d3b83742cba019c7dfcac70f2f65da))
+* **api:** api update ([#244](https://github.com/RetellAI/retell-typescript-sdk/issues/244)) ([78afa9d](https://github.com/RetellAI/retell-typescript-sdk/commit/78afa9dd77919aa3652cceded18214d06439b991))
+
+
+### Chores
+
+* **internal:** add test ([#241](https://github.com/RetellAI/retell-typescript-sdk/issues/241)) ([03a4b2a](https://github.com/RetellAI/retell-typescript-sdk/commit/03a4b2a354a3fdb7616296282263ea8236495582))
+* **internal:** codegen related update ([#237](https://github.com/RetellAI/retell-typescript-sdk/issues/237)) ([1bf38bb](https://github.com/RetellAI/retell-typescript-sdk/commit/1bf38bb73327a1d9af74efb078fc950269e7c5d2))
+* **types:** add `| undefined` to client options properties ([#240](https://github.com/RetellAI/retell-typescript-sdk/issues/240)) ([16e2b39](https://github.com/RetellAI/retell-typescript-sdk/commit/16e2b399cd16c05587be66a3a3681ad9a4eeb409))
+
 ## 4.13.0 (2025-01-03)
 
 Full Changelog: [v4.12.0...v4.13.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.12.0...v4.13.0)
