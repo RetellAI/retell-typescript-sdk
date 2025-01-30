@@ -201,6 +201,12 @@ export interface PhoneCallResponse {
   start_timestamp?: number;
 
   /**
+   * Telephony identifier of the call, populated when available. Tracking purposes
+   * only.
+   */
+  telephony_identifier?: PhoneCallResponse.TelephonyIdentifier;
+
+  /**
    * Transcription of the call. Available after call ends.
    */
   transcript?: string;
@@ -636,6 +642,17 @@ export namespace PhoneCallResponse {
        */
       values?: Array<number>;
     }
+  }
+
+  /**
+   * Telephony identifier of the call, populated when available. Tracking purposes
+   * only.
+   */
+  export interface TelephonyIdentifier {
+    /**
+     * Twilio call sid.
+     */
+    twilio_call_sid?: string;
   }
 
   export interface TranscriptObject {
