@@ -289,6 +289,13 @@ export interface AgentResponse {
   responsiveness?: number;
 
   /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -704,6 +711,13 @@ export interface AgentCreateParams {
   responsiveness?: number;
 
   /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -1109,6 +1123,13 @@ export interface AgentUpdateParams {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
