@@ -99,3 +99,13 @@ Types:
 Methods:
 
 - <code title="get /get-concurrency">client.concurrency.<a href="./src/resources/concurrency.ts">retrieve</a>() -> ConcurrencyRetrieveResponse</code>
+
+# BatchCall
+
+Types:
+
+- <code><a href="./src/resources/batch-call.ts">BatchCallResponse</a></code>
+
+Methods:
+
+- <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> BatchCallResponse</code>
