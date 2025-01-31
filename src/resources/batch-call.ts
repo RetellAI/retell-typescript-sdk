@@ -10,12 +10,12 @@ export class BatchCall extends APIResource {
   createBatchCall(
     body: BatchCallCreateBatchCallParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentResponse> {
+  ): Core.APIPromise<BatchCallResponse> {
     return this._client.post('/create-batch-call', { body, ...options });
   }
 }
 
-export interface AgentResponse {
+export interface BatchCallResponse {
   /**
    * Unique id of the batch call.
    */
@@ -78,7 +78,7 @@ export namespace BatchCallCreateBatchCallParams {
 
 export declare namespace BatchCall {
   export {
-    type AgentResponse as AgentResponse,
+    type BatchCallResponse as BatchCallResponse,
     type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
   };
 }
