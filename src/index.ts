@@ -12,11 +12,7 @@ import {
   AgentResponse,
   AgentUpdateParams,
 } from './resources/agent';
-import {
-  AgentResponse as BatchCallAPIAgentResponse,
-  BatchCall,
-  BatchCallCreateBatchCallParams,
-} from './resources/batch-call';
+import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
 import {
   Call,
   CallCreatePhoneCallParams,
@@ -260,7 +256,7 @@ export declare namespace Retell {
 
   export {
     BatchCall as BatchCall,
-    type BatchCallAPIAgentResponse as AgentResponse,
+    type BatchCallResponse as BatchCallResponse,
     type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
   };
 }
