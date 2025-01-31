@@ -7,7 +7,7 @@ export {
   type AgentCreateParams,
   type AgentUpdateParams,
 } from './agent';
-export { BatchCall, type AgentResponse, type BatchCallCreateBatchCallParams } from './batch-call';
+export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
   Call,
   type CallResponse,

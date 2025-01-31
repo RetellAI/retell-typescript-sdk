@@ -104,8 +104,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/batch-call.ts">AgentResponse</a></code>
+- <code><a href="./src/resources/batch-call.ts">BatchCallResponse</a></code>
 
 Methods:
 
-- <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> AgentResponse</code>
+- <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> BatchCallResponse</code>
