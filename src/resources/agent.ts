@@ -62,7 +62,10 @@ export interface AgentResponse {
   /**
    * The response engine to use for the agent.
    */
-  response_engine: AgentResponse.ResponseEngineRetellLm | AgentResponse.ResponseEngineCustomLm;
+  response_engine:
+    | AgentResponse.ResponseEngineRetellLm
+    | AgentResponse.ResponseEngineCustomLm
+    | AgentResponse.ResponseEngineConversationFlow;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -382,6 +385,18 @@ export namespace AgentResponse {
     type: 'custom-llm';
   }
 
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
+  }
+
   export interface StringAnalysisData {
     /**
      * Description of the variable.
@@ -484,7 +499,10 @@ export interface AgentCreateParams {
   /**
    * The response engine to use for the agent.
    */
-  response_engine: AgentCreateParams.ResponseEngineRetellLm | AgentCreateParams.ResponseEngineCustomLm;
+  response_engine:
+    | AgentCreateParams.ResponseEngineRetellLm
+    | AgentCreateParams.ResponseEngineCustomLm
+    | AgentCreateParams.ResponseEngineConversationFlow;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -804,6 +822,18 @@ export namespace AgentCreateParams {
     type: 'custom-llm';
   }
 
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
+  }
+
   export interface StringAnalysisData {
     /**
      * Description of the variable.
@@ -1114,7 +1144,10 @@ export interface AgentUpdateParams {
   /**
    * The response engine to use for the agent.
    */
-  response_engine?: AgentUpdateParams.ResponseEngineRetellLm | AgentUpdateParams.ResponseEngineCustomLm;
+  response_engine?:
+    | AgentUpdateParams.ResponseEngineRetellLm
+    | AgentUpdateParams.ResponseEngineCustomLm
+    | AgentUpdateParams.ResponseEngineConversationFlow;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -1317,6 +1350,18 @@ export namespace AgentUpdateParams {
      * type of the response engine.
      */
     type: 'custom-llm';
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
   }
 }
 
