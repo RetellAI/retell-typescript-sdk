@@ -1492,6 +1492,9 @@ export namespace WebCallResponse {
 export type CallListResponse = Array<CallResponse>;
 
 export interface CallListParams {
+  /**
+   * Filter criteria for the calls to retrieve.
+   */
   filter_criteria?: CallListParams.FilterCriteria;
 
   /**
@@ -1516,6 +1519,9 @@ export interface CallListParams {
 }
 
 export namespace CallListParams {
+  /**
+   * Filter criteria for the calls to retrieve.
+   */
   export interface FilterCriteria {
     /**
      * Only retrieve calls that are made with specific agent(s).
@@ -1579,6 +1585,8 @@ export namespace CallListParams {
      */
     duration_ms?: FilterCriteria.DurationMs;
 
+    e2e_latency_p50?: FilterCriteria.E2ELatencyP50;
+
     /**
      * Only retrieve calls with specific from number(s).
      */
@@ -1610,6 +1618,12 @@ export namespace CallListParams {
      * Only retrieve calls with specific range of duration(s).
      */
     export interface DurationMs {
+      lower_threshold?: number;
+
+      upper_threshold?: number;
+    }
+
+    export interface E2ELatencyP50 {
       lower_threshold?: number;
 
       upper_threshold?: number;
