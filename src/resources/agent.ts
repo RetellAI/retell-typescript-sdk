@@ -163,7 +163,7 @@ export interface AgentResponse {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
@@ -600,7 +600,7 @@ export interface AgentCreateParams {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
@@ -1021,7 +1021,7 @@ export interface AgentUpdateParams {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
