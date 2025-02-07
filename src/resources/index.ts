@@ -14,6 +14,7 @@ export {
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
+  type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
