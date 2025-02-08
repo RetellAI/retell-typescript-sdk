@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.19.0 (2025-02-08)
+
+Full Changelog: [v4.18.0...v4.19.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.18.0...v4.19.0)
+
+### Features
+
+* **api:** api update ([#258](https://github.com/RetellAI/retell-typescript-sdk/issues/258)) ([cbdceaa](https://github.com/RetellAI/retell-typescript-sdk/commit/cbdceaab363a837b9050f8041e383e5de4300a0b))
+* **api:** api update ([#261](https://github.com/RetellAI/retell-typescript-sdk/issues/261)) ([aa2f038](https://github.com/RetellAI/retell-typescript-sdk/commit/aa2f03841a274f34c630d9ea1c897f15649fd592))
+* **api:** api update ([#262](https://github.com/RetellAI/retell-typescript-sdk/issues/262)) ([e6d6fc3](https://github.com/RetellAI/retell-typescript-sdk/commit/e6d6fc3a0b7a807cc9791f3d3762669d05b32026))
+* **client:** send `X-Stainless-Timeout` header ([#260](https://github.com/RetellAI/retell-typescript-sdk/issues/260)) ([0cf7ef4](https://github.com/RetellAI/retell-typescript-sdk/commit/0cf7ef4863c8025988b7acfd0a8f4f2d3295b976))
+
 ## 4.18.0 (2025-01-31)
 
 Full Changelog: [v4.17.0...v4.18.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.17.0...v4.18.0)

@@ -21,6 +21,7 @@ import {
   CallListResponse,
   CallRegisterPhoneCallParams,
   CallResponse,
+  CallUpdateParams,
   PhoneCallResponse,
   WebCallResponse,
 } from './resources/call';
@@ -215,6 +216,7 @@ export declare namespace Retell {
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
+    type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
