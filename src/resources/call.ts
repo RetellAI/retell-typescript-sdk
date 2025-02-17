@@ -1506,7 +1506,7 @@ export interface CallUpdateParams {
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
    * your internal customer id associated with the call. Not used for processing. You
-   * can later get this field from the call object. Size limited to 100kB max.
+   * can later get this field from the call object. Size limited to 50kB max.
    */
   metadata?: unknown;
 
