@@ -81,6 +81,12 @@ export interface PhoneNumberResponse {
   inbound_agent_id?: string | null;
 
   /**
+   * If set, will send a webhook for inbound calls, where you can to override agent
+   * id, set dynamic variables and other fields specific to that call.
+   */
+  inbound_webhook_url?: string | null;
+
+  /**
    * Nickname of the number. This is for your reference only.
    */
   nickname?: string | null;
@@ -115,6 +121,12 @@ export interface PhoneNumberCreateParams {
   inbound_agent_id?: string | null;
 
   /**
+   * If set, will send a webhook for inbound calls, where you can to override agent
+   * id, set dynamic variables and other fields specific to that call.
+   */
+  inbound_webhook_url?: string | null;
+
+  /**
    * Nickname of the number. This is for your reference only.
    */
   nickname?: string;
@@ -134,6 +146,12 @@ export interface PhoneNumberUpdateParams {
    * inbound call.
    */
   inbound_agent_id?: string | null;
+
+  /**
+   * If set, will send a webhook for inbound calls, where you can to override agent
+   * id, set dynamic variables and other fields specific to that call.
+   */
+  inbound_webhook_url?: string | null;
 
   /**
    * Nickname of the number. This is for your reference only.
@@ -169,6 +187,12 @@ export interface PhoneNumberImportParams {
    * inbound call.
    */
   inbound_agent_id?: string | null;
+
+  /**
+   * If set, will send a webhook for inbound calls, where you can to override agent
+   * id, set dynamic variables and other fields specific to that call.
+   */
+  inbound_webhook_url?: string | null;
 
   /**
    * Nickname of the number. This is for your reference only.
