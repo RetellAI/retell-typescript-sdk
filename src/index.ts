@@ -12,7 +12,6 @@ import {
   AgentResponse,
   AgentUpdateParams,
 } from './resources/agent';
-import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
 import {
   Call,
   CallCreatePhoneCallParams,
@@ -21,14 +20,12 @@ import {
   CallListResponse,
   CallRegisterPhoneCallParams,
   CallResponse,
-  CallUpdateParams,
   PhoneCallResponse,
   WebCallResponse,
 } from './resources/call';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
   KnowledgeBase,
-  KnowledgeBaseAddSourcesParams,
   KnowledgeBaseCreateParams,
   KnowledgeBaseListResponse,
   KnowledgeBaseResponse,
@@ -158,7 +155,6 @@ export class Retell extends Core.APIClient {
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
-  batchCall: API.BatchCall = new API.BatchCall(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -206,7 +202,6 @@ Retell.Llm = Llm;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
-Retell.BatchCall = BatchCall;
 export declare namespace Retell {
   export type RequestOptions = Core.RequestOptions;
 
@@ -216,7 +211,6 @@ export declare namespace Retell {
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
-    type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
@@ -253,18 +247,11 @@ export declare namespace Retell {
     type KnowledgeBaseResponse as KnowledgeBaseResponse,
     type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
     type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
-    type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
   };
 
   export { Voice as Voice, type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
 
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
-
-  export {
-    BatchCall as BatchCall,
-    type BatchCallResponse as BatchCallResponse,
-    type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
-  };
 }
 
 export { toFile, fileFromPath } from './uploads';

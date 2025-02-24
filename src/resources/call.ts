@@ -12,31 +12,10 @@ export class Call extends APIResource {
   }
 
   /**
-   * Update metadata and sensitive data storage settings for an existing call
-   */
-  update(
-    callId: string,
-    body: CallUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CallResponse> {
-    return this._client.patch(`/v2/update-call/${callId}`, { body, ...options });
-  }
-
-  /**
    * Retrieve call details
    */
   list(body: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
     return this._client.post('/v2/list-calls', { body, ...options });
-  }
-
-  /**
-   * Delete a specific call and its associated data
-   */
-  delete(callId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/v2/delete-call/${callId}`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
   }
 
   /**
@@ -210,12 +189,6 @@ export interface PhoneCallResponse {
    * starts.
    */
   start_timestamp?: number;
-
-  /**
-   * Telephony identifier of the call, populated when available. Tracking purposes
-   * only.
-   */
-  telephony_identifier?: PhoneCallResponse.TelephonyIdentifier;
 
   /**
    * Transcription of the call. Available after call ends.
@@ -653,17 +626,6 @@ export namespace PhoneCallResponse {
        */
       values?: Array<number>;
     }
-  }
-
-  /**
-   * Telephony identifier of the call, populated when available. Tracking purposes
-   * only.
-   */
-  export interface TelephonyIdentifier {
-    /**
-     * Twilio call sid.
-     */
-    twilio_call_sid?: string;
   }
 
   export interface TranscriptObject {
@@ -1502,25 +1464,7 @@ export namespace WebCallResponse {
 
 export type CallListResponse = Array<CallResponse>;
 
-export interface CallUpdateParams {
-  /**
-   * An arbitrary object for storage purpose only. You can put anything here like
-   * your internal customer id associated with the call. Not used for processing. You
-   * can later get this field from the call object. Size limited to 50kB max.
-   */
-  metadata?: unknown;
-
-  /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging. Can only be changed from false to true.
-   */
-  opt_out_sensitive_data_storage?: boolean;
-}
-
 export interface CallListParams {
-  /**
-   * Filter criteria for the calls to retrieve.
-   */
   filter_criteria?: CallListParams.FilterCriteria;
 
   /**
@@ -1545,9 +1489,6 @@ export interface CallListParams {
 }
 
 export namespace CallListParams {
-  /**
-   * Filter criteria for the calls to retrieve.
-   */
   export interface FilterCriteria {
     /**
      * Only retrieve calls that are made with specific agent(s).
@@ -1611,8 +1552,6 @@ export namespace CallListParams {
      */
     duration_ms?: FilterCriteria.DurationMs;
 
-    e2e_latency_p50?: FilterCriteria.E2ELatencyP50;
-
     /**
      * Only retrieve calls with specific from number(s).
      */
@@ -1644,12 +1583,6 @@ export namespace CallListParams {
      * Only retrieve calls with specific range of duration(s).
      */
     export interface DurationMs {
-      lower_threshold?: number;
-
-      upper_threshold?: number;
-    }
-
-    export interface E2ELatencyP50 {
       lower_threshold?: number;
 
       upper_threshold?: number;
@@ -1761,7 +1694,6 @@ export declare namespace Call {
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
-    type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,

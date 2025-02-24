@@ -40,34 +40,6 @@ export class KnowledgeBase extends APIResource {
       headers: { Accept: '*/*', ...options?.headers },
     });
   }
-
-  /**
-   * Add sources to a knowledge base
-   */
-  addSources(
-    knowledgeBaseId: string,
-    body: KnowledgeBaseAddSourcesParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<KnowledgeBaseResponse> {
-    return this._client.post(
-      `/add-knowledge-base-sources/${knowledgeBaseId}`,
-      Core.multipartFormRequestOptions({ body, ...options }),
-    );
-  }
-
-  /**
-   * Delete an existing source from knowledge base
-   */
-  deleteSource(
-    knowledgeBaseId: string,
-    sourceId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<KnowledgeBaseResponse> {
-    return this._client.delete(
-      `/delete-knowledge-base-source/${knowledgeBaseId}/source/${sourceId}`,
-      options,
-    );
-  }
 }
 
 export interface KnowledgeBaseResponse {
@@ -219,43 +191,10 @@ export namespace KnowledgeBaseCreateParams {
   }
 }
 
-export interface KnowledgeBaseAddSourcesParams {
-  /**
-   * Files to add to the knowledge base. Limit to 25 files, where each file is
-   * limited to 50MB.
-   */
-  knowledge_base_files?: Array<Core.Uploadable>;
-
-  /**
-   * Texts to add to the knowledge base.
-   */
-  knowledge_base_texts?: Array<KnowledgeBaseAddSourcesParams.KnowledgeBaseText>;
-
-  /**
-   * URLs to be scraped and added to the knowledge base. Must be valid urls.
-   */
-  knowledge_base_urls?: Array<string>;
-}
-
-export namespace KnowledgeBaseAddSourcesParams {
-  export interface KnowledgeBaseText {
-    /**
-     * Text to add to the knowledge base.
-     */
-    text: string;
-
-    /**
-     * Title of the text.
-     */
-    title: string;
-  }
-}
-
 export declare namespace KnowledgeBase {
   export {
     type KnowledgeBaseResponse as KnowledgeBaseResponse,
     type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
     type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
-    type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
   };
 }
