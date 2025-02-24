@@ -10,9 +10,7 @@ Types:
 Methods:
 
 - <code title="get /v2/get-call/{call_id}">client.call.<a href="./src/resources/call.ts">retrieve</a>(callId) -> CallResponse</code>
-- <code title="patch /v2/update-call/{call_id}">client.call.<a href="./src/resources/call.ts">update</a>(callId, { ...params }) -> CallResponse</code>
 - <code title="post /v2/list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
-- <code title="delete /v2/delete-call/{call_id}">client.call.<a href="./src/resources/call.ts">delete</a>(callId) -> void</code>
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
@@ -76,8 +74,6 @@ Methods:
 - <code title="get /get-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">retrieve</a>(knowledgeBaseId) -> KnowledgeBaseResponse</code>
 - <code title="get /list-knowledge-bases">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">list</a>() -> KnowledgeBaseListResponse</code>
 - <code title="delete /delete-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">delete</a>(knowledgeBaseId) -> void</code>
-- <code title="post /add-knowledge-base-sources/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">addSources</a>(knowledgeBaseId, { ...params }) -> KnowledgeBaseResponse</code>
-- <code title="delete /delete-knowledge-base-source/{knowledge_base_id}/source/{source_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">deleteSource</a>(knowledgeBaseId, sourceId) -> KnowledgeBaseResponse</code>
 
 # Voice
 
@@ -100,13 +96,3 @@ Types:
 Methods:
 
 - <code title="get /get-concurrency">client.concurrency.<a href="./src/resources/concurrency.ts">retrieve</a>() -> ConcurrencyRetrieveResponse</code>
-
-# BatchCall
-
-Types:
-
-- <code><a href="./src/resources/batch-call.ts">BatchCallResponse</a></code>
-
-Methods:
-
-- <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> BatchCallResponse</code>
