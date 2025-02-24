@@ -7,14 +7,12 @@ export {
   type AgentCreateParams,
   type AgentUpdateParams,
 } from './agent';
-export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
   Call,
   type CallResponse,
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
-  type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
@@ -26,7 +24,6 @@ export {
   type KnowledgeBaseResponse,
   type KnowledgeBaseListResponse,
   type KnowledgeBaseCreateParams,
-  type KnowledgeBaseAddSourcesParams,
 } from './knowledge-base';
 export {
   Llm,
