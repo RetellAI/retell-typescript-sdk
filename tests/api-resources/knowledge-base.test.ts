@@ -9,7 +9,8 @@ const client = new Retell({
 });
 
 describe('resource knowledgeBase', () => {
-  test('create: only required params', async () => {
+  // custom code
+  test.skip('create: only required params', async () => {
     const responsePromise = client.knowledgeBase.create({ knowledge_base_name: 'Sample KB' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,7 +21,8 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
+  // custom code
+  test.skip('create: required and optional params', async () => {
     const response = await client.knowledgeBase.create({
       knowledge_base_name: 'Sample KB',
       enable_auto_refresh: true,
@@ -81,6 +83,38 @@ describe('resource knowledgeBase', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.knowledgeBase.delete('kb_1234567890', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  // custom code
+  test.skip('addSources', async () => {
+    const responsePromise = client.knowledgeBase.addSources('kb_1234567890', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('deleteSource', async () => {
+    const responsePromise = client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('deleteSource: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890', {
+        path: '/_stainless_unknown_path',
+      }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 });

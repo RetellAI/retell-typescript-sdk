@@ -89,13 +89,6 @@ export interface LlmResponse {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
-   */
-  inbound_dynamic_variables_webhook_url?: string | null;
-
-  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -105,6 +98,13 @@ export interface LlmResponse {
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+
+  /**
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
+   */
+  model_high_priority?: boolean;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -169,12 +169,6 @@ export namespace LlmResponse {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number: string;
-
     type: 'transfer_call';
 
     /**
@@ -184,12 +178,22 @@ export namespace LlmResponse {
     description?: string;
 
     /**
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
+     */
+    number?: string | null;
+
+    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
+
+    transfer_destination?:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -203,6 +207,33 @@ export namespace LlmResponse {
   }
 
   export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
     export interface WarmTransferPrompt {
       /**
        * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -532,12 +563,6 @@ export namespace LlmResponse {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number: string;
-
       type: 'transfer_call';
 
       /**
@@ -547,12 +572,22 @@ export namespace LlmResponse {
       description?: string;
 
       /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number?: string | null;
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
+
+      transfer_destination?:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -566,6 +601,33 @@ export namespace LlmResponse {
     }
 
     export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -814,13 +876,6 @@ export interface LlmCreateParams {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
-   */
-  inbound_dynamic_variables_webhook_url?: string | null;
-
-  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -830,6 +885,13 @@ export interface LlmCreateParams {
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+
+  /**
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
+   */
+  model_high_priority?: boolean;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -894,12 +956,6 @@ export namespace LlmCreateParams {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number: string;
-
     type: 'transfer_call';
 
     /**
@@ -909,12 +965,22 @@ export namespace LlmCreateParams {
     description?: string;
 
     /**
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
+     */
+    number?: string | null;
+
+    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
+
+    transfer_destination?:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -928,6 +994,33 @@ export namespace LlmCreateParams {
   }
 
   export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
     export interface WarmTransferPrompt {
       /**
        * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1257,12 +1350,6 @@ export namespace LlmCreateParams {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number: string;
-
       type: 'transfer_call';
 
       /**
@@ -1272,12 +1359,22 @@ export namespace LlmCreateParams {
       description?: string;
 
       /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number?: string | null;
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
+
+      transfer_destination?:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1291,6 +1388,33 @@ export namespace LlmCreateParams {
     }
 
     export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1537,13 +1661,6 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
-   */
-  inbound_dynamic_variables_webhook_url?: string | null;
-
-  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -1553,6 +1670,13 @@ export interface LlmUpdateParams {
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+
+  /**
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
+   */
+  model_high_priority?: boolean;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -1617,12 +1741,6 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number: string;
-
     type: 'transfer_call';
 
     /**
@@ -1632,12 +1750,22 @@ export namespace LlmUpdateParams {
     description?: string;
 
     /**
+     * The number to transfer to in E.164 format or a dynamic variable like
+     * {{transfer_number}}.
+     */
+    number?: string | null;
+
+    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
+
+    transfer_destination?:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1651,6 +1779,33 @@ export namespace LlmUpdateParams {
   }
 
   export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
     export interface WarmTransferPrompt {
       /**
        * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1980,12 +2135,6 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number: string;
-
       type: 'transfer_call';
 
       /**
@@ -1995,12 +2144,22 @@ export namespace LlmUpdateParams {
       description?: string;
 
       /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number?: string | null;
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
+
+      transfer_destination?:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -2014,6 +2173,33 @@ export namespace LlmUpdateParams {
     }
 
     export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
