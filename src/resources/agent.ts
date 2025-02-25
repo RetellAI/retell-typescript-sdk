@@ -62,7 +62,10 @@ export interface AgentResponse {
   /**
    * The response engine to use for the agent.
    */
-  response_engine: AgentResponse.ResponseEngineRetellLm | AgentResponse.ResponseEngineCustomLm;
+  response_engine:
+    | AgentResponse.ResponseEngineRetellLm
+    | AgentResponse.ResponseEngineCustomLm
+    | AgentResponse.ResponseEngineConversationFlow;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -160,7 +163,7 @@ export interface AgentResponse {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
@@ -289,6 +292,13 @@ export interface AgentResponse {
   responsiveness?: number;
 
   /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -373,6 +383,18 @@ export namespace AgentResponse {
      * type of the response engine.
      */
     type: 'custom-llm';
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
   }
 
   export interface StringAnalysisData {
@@ -477,7 +499,10 @@ export interface AgentCreateParams {
   /**
    * The response engine to use for the agent.
    */
-  response_engine: AgentCreateParams.ResponseEngineRetellLm | AgentCreateParams.ResponseEngineCustomLm;
+  response_engine:
+    | AgentCreateParams.ResponseEngineRetellLm
+    | AgentCreateParams.ResponseEngineCustomLm
+    | AgentCreateParams.ResponseEngineConversationFlow;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -575,7 +600,7 @@ export interface AgentCreateParams {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
@@ -704,6 +729,13 @@ export interface AgentCreateParams {
   responsiveness?: number;
 
   /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -788,6 +820,18 @@ export namespace AgentCreateParams {
      * type of the response engine.
      */
     type: 'custom-llm';
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
   }
 
   export interface StringAnalysisData {
@@ -977,7 +1021,7 @@ export interface AgentUpdateParams {
   /**
    * If set to true, will format transcription to number, date, email, etc. If set to
    * false, will return transcripts in raw words. If not set, default value of true
-   * will apply.
+   * will apply. This currently only applies to English.
    */
   enable_transcription_formatting?: boolean;
 
@@ -1100,7 +1144,10 @@ export interface AgentUpdateParams {
   /**
    * The response engine to use for the agent.
    */
-  response_engine?: AgentUpdateParams.ResponseEngineRetellLm | AgentUpdateParams.ResponseEngineCustomLm;
+  response_engine?:
+    | AgentUpdateParams.ResponseEngineRetellLm
+    | AgentUpdateParams.ResponseEngineCustomLm
+    | AgentUpdateParams.ResponseEngineConversationFlow;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -1109,6 +1156,13 @@ export interface AgentUpdateParams {
    * apply.
    */
   responsiveness?: number;
+
+  /**
+   * If set, the phone ringing will last for the specified amount of milliseconds.
+   * This applies for both outbound call ringtime, and call transfer ringtime.
+   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   */
+  ring_duration_ms?: number;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -1296,6 +1350,18 @@ export namespace AgentUpdateParams {
      * type of the response engine.
      */
     type: 'custom-llm';
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the conversation flow to use.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the response engine.
+     */
+    type: 'conversation-flow';
   }
 }
 
