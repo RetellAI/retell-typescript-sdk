@@ -1,5 +1,26 @@
 # Changelog
 
+## 4.20.0 (2025-02-25)
+
+Full Changelog: [v4.19.0...v4.20.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.19.0...v4.20.0)
+
+### Features
+
+* **api:** api update ([#266](https://github.com/RetellAI/retell-typescript-sdk/issues/266)) ([17c419d](https://github.com/RetellAI/retell-typescript-sdk/commit/17c419d90dff23219128ea23366b22acea840f81))
+* **api:** api update ([#267](https://github.com/RetellAI/retell-typescript-sdk/issues/267)) ([94c940b](https://github.com/RetellAI/retell-typescript-sdk/commit/94c940bb0daee1c3f64737f352c4c2a7c78772b4))
+* **api:** api update ([#269](https://github.com/RetellAI/retell-typescript-sdk/issues/269)) ([d16b37d](https://github.com/RetellAI/retell-typescript-sdk/commit/d16b37db6d7d82a620fefe7331f169c85b90e9b5))
+* **api:** api update ([#270](https://github.com/RetellAI/retell-typescript-sdk/issues/270)) ([9b4ea79](https://github.com/RetellAI/retell-typescript-sdk/commit/9b4ea79a1d42790835cf8803e14aab44fbc8afb4))
+
+
+### Bug Fixes
+
+* **client:** fix export map for index exports ([#264](https://github.com/RetellAI/retell-typescript-sdk/issues/264)) ([8511aa4](https://github.com/RetellAI/retell-typescript-sdk/commit/8511aa4cb326bd0e828ec900a376a7028b424bd1))
+
+
+### Chores
+
+* **internal:** fix devcontainers setup ([#268](https://github.com/RetellAI/retell-typescript-sdk/issues/268)) ([81281d5](https://github.com/RetellAI/retell-typescript-sdk/commit/81281d57ef24c84385a735cc3581c8ab6e3628e2))
+
 ## 4.19.0 (2025-02-08)
 
 Full Changelog: [v4.18.0...v4.19.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.18.0...v4.19.0)
