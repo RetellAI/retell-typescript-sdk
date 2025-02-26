@@ -5,35 +5,36 @@ import * as Core from '../core';
 
 export class Llm extends APIResource {
   /**
-   * Create a new Retell LLM
+   * Create a new Retell LLM Response Engine that can be attached to an agent. This
+   * is used to generate response output for the agent.
    */
   create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
   /**
-   * Retrieve details of a specific Retell LLM
+   * Retrieve details of a specific Retell LLM Response Engine
    */
   retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.get(`/get-retell-llm/${llmId}`, options);
   }
 
   /**
-   * Update an existing Retell LLM
+   * Update an existing Retell LLM Response Engine
    */
   update(llmId: string, body: LlmUpdateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
   }
 
   /**
-   * List all retell LLM
+   * List all Retell LLM Response Engines that can be attached to an agent.
    */
   list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llms', options);
   }
 
   /**
-   * Delete an existing Retell LLM
+   * Delete an existing Retell LLM Response Engine
    */
   delete(llmId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-retell-llm/${llmId}`, {
@@ -51,7 +52,7 @@ export interface LlmResponse {
   last_modification_timestamp: number;
 
   /**
-   * Unique id of Retell LLM.
+   * Unique id of Retell LLM Response Engine.
    */
   llm_id: string;
 
