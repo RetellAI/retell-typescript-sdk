@@ -201,7 +201,8 @@ export interface PhoneCallResponse {
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
-   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   * your Retell LLM Response Engine prompt and tool description. Only applicable for
+   * Retell LLM Response Engine.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
@@ -919,7 +920,8 @@ export interface WebCallResponse {
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
-   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   * your Retell LLM Response Engine prompt and tool description. Only applicable for
+   * Retell LLM Response Engine.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
@@ -1694,7 +1696,8 @@ export interface CallCreatePhoneCallParams {
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
-   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   * your Retell LLM Response Engine prompt and tool description. Only applicable for
+   * Retell LLM Response Engine.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 }
@@ -1715,7 +1718,8 @@ export interface CallCreateWebCallParams {
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
-   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   * your Retell LLM Response Engine prompt and tool description. Only applicable for
+   * Retell LLM Response Engine.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 }
@@ -1745,7 +1749,8 @@ export interface CallRegisterPhoneCallParams {
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
-   * your Retell LLM prompt and tool description. Only applicable for Retell LLM.
+   * your Retell LLM Response Engine prompt and tool description. Only applicable for
+   * Retell LLM Response Engine.
    */
   retell_llm_dynamic_variables?: Record<string, unknown>;
 
