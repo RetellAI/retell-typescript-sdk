@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.21.0 (2025-02-27)
+
+Full Changelog: [v4.20.0...v4.21.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.20.0...v4.21.0)
+
+### Features
+
+* **api:** api update ([#272](https://github.com/RetellAI/retell-typescript-sdk/issues/272)) ([c6145a0](https://github.com/RetellAI/retell-typescript-sdk/commit/c6145a0170d581b14eee12d145ee7b01509fff56))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#274](https://github.com/RetellAI/retell-typescript-sdk/issues/274)) ([e8c21b0](https://github.com/RetellAI/retell-typescript-sdk/commit/e8c21b0eb31d984909f61f6ca62c696f6d071b0b))
+
 ## 4.20.0 (2025-02-25)
 
 Full Changelog: [v4.19.0...v4.20.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.19.0...v4.20.0)

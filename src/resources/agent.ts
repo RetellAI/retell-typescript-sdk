@@ -60,7 +60,9 @@ export interface AgentResponse {
   last_modification_timestamp: number;
 
   /**
-   * The response engine to use for the agent.
+   * The Retell LLM Response Engine to attach to the agent. It is used to generate
+   * responses for the agent. You need to create a Retell LLM Response Engine first
+   * before attaching it to an agent.
    */
   response_engine:
     | AgentResponse.ResponseEngineRetellLm
@@ -368,7 +370,7 @@ export namespace AgentResponse {
     llm_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'retell-llm';
   }
@@ -380,7 +382,7 @@ export namespace AgentResponse {
     llm_websocket_url: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'custom-llm';
   }
@@ -392,7 +394,7 @@ export namespace AgentResponse {
     conversation_flow_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'conversation-flow';
   }
@@ -497,7 +499,9 @@ export type AgentListResponse = Array<AgentResponse>;
 
 export interface AgentCreateParams {
   /**
-   * The response engine to use for the agent.
+   * The Retell LLM Response Engine to attach to the agent. It is used to generate
+   * responses for the agent. You need to create a Retell LLM Response Engine first
+   * before attaching it to an agent.
    */
   response_engine:
     | AgentCreateParams.ResponseEngineRetellLm
@@ -805,7 +809,7 @@ export namespace AgentCreateParams {
     llm_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'retell-llm';
   }
@@ -817,7 +821,7 @@ export namespace AgentCreateParams {
     llm_websocket_url: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'custom-llm';
   }
@@ -829,7 +833,7 @@ export namespace AgentCreateParams {
     conversation_flow_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'conversation-flow';
   }
@@ -1142,7 +1146,9 @@ export interface AgentUpdateParams {
   reminder_trigger_ms?: number;
 
   /**
-   * The response engine to use for the agent.
+   * The Retell LLM Response Engine to attach to the agent. It is used to generate
+   * responses for the agent. You need to create a Retell LLM Response Engine first
+   * before attaching it to an agent.
    */
   response_engine?:
     | AgentUpdateParams.ResponseEngineRetellLm
@@ -1335,7 +1341,7 @@ export namespace AgentUpdateParams {
     llm_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'retell-llm';
   }
@@ -1347,7 +1353,7 @@ export namespace AgentUpdateParams {
     llm_websocket_url: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'custom-llm';
   }
@@ -1359,7 +1365,7 @@ export namespace AgentUpdateParams {
     conversation_flow_id: string;
 
     /**
-     * type of the response engine.
+     * type of the Retell LLM Response Engine.
      */
     type: 'conversation-flow';
   }
