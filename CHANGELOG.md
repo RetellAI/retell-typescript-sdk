@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.21.0 (2025-03-09)
+
+Full Changelog: [v4.20.0...v4.21.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.20.0...v4.21.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#276](https://github.com/RetellAI/retell-typescript-sdk/issues/276)) ([697642e](https://github.com/RetellAI/retell-typescript-sdk/commit/697642e1061034316bfa6ae99a938285ac56217d))
+* **api:** api update ([#272](https://github.com/RetellAI/retell-typescript-sdk/issues/272)) ([c6145a0](https://github.com/RetellAI/retell-typescript-sdk/commit/c6145a0170d581b14eee12d145ee7b01509fff56))
+* **api:** api update ([#277](https://github.com/RetellAI/retell-typescript-sdk/issues/277)) ([1b15300](https://github.com/RetellAI/retell-typescript-sdk/commit/1b153009c5918e979f4bce86e8eb303692bbb5c1))
+* **api:** api update ([#278](https://github.com/RetellAI/retell-typescript-sdk/issues/278)) ([6d4b6c2](https://github.com/RetellAI/retell-typescript-sdk/commit/6d4b6c25399aa9aa7eb2ed306be5d7d38e9c895c))
+* **api:** api update ([#279](https://github.com/RetellAI/retell-typescript-sdk/issues/279)) ([cf00af5](https://github.com/RetellAI/retell-typescript-sdk/commit/cf00af5e4705703abd11be8e9311e3137c966a5a))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#274](https://github.com/RetellAI/retell-typescript-sdk/issues/274)) ([e8c21b0](https://github.com/RetellAI/retell-typescript-sdk/commit/e8c21b0eb31d984909f61f6ca62c696f6d071b0b))
+
 ## 4.20.0 (2025-02-25)
 
 Full Changelog: [v4.19.0...v4.20.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.19.0...v4.20.0)
