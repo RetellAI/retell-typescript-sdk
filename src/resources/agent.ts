@@ -365,12 +365,12 @@ export interface AgentResponse {
 export namespace AgentResponse {
   export interface ResponseEngineRetellLm {
     /**
-     * id of the Retell LLM to use.
+     * id of the Retell LLM Response Engine.
      */
     llm_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'retell-llm';
   }
@@ -382,19 +382,19 @@ export namespace AgentResponse {
     llm_websocket_url: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'custom-llm';
   }
 
   export interface ResponseEngineConversationFlow {
     /**
-     * ID of the conversation flow to use.
+     * ID of the Conversation Flow Response Engine.
      */
     conversation_flow_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'conversation-flow';
   }
@@ -804,12 +804,12 @@ export interface AgentCreateParams {
 export namespace AgentCreateParams {
   export interface ResponseEngineRetellLm {
     /**
-     * id of the Retell LLM to use.
+     * id of the Retell LLM Response Engine.
      */
     llm_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'retell-llm';
   }
@@ -821,19 +821,19 @@ export namespace AgentCreateParams {
     llm_websocket_url: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'custom-llm';
   }
 
   export interface ResponseEngineConversationFlow {
     /**
-     * ID of the conversation flow to use.
+     * ID of the Conversation Flow Response Engine.
      */
     conversation_flow_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'conversation-flow';
   }
@@ -1336,12 +1336,12 @@ export namespace AgentUpdateParams {
 
   export interface ResponseEngineRetellLm {
     /**
-     * id of the Retell LLM to use.
+     * id of the Retell LLM Response Engine.
      */
     llm_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'retell-llm';
   }
@@ -1353,19 +1353,19 @@ export namespace AgentUpdateParams {
     llm_websocket_url: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'custom-llm';
   }
 
   export interface ResponseEngineConversationFlow {
     /**
-     * ID of the conversation flow to use.
+     * ID of the Conversation Flow Response Engine.
      */
     conversation_flow_id: string;
 
     /**
-     * type of the Retell LLM Response Engine.
+     * type of the Response Engine.
      */
     type: 'conversation-flow';
   }
