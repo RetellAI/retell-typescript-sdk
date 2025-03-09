@@ -102,6 +102,11 @@ export interface PhoneNumberResponse {
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty?: string;
+
+  /**
+   * Type of the phone number.
+   */
+  phone_number_type?: 'retell-twilio' | 'retell-telnyx' | 'custom';
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
@@ -130,6 +135,11 @@ export interface PhoneNumberCreateParams {
    * Nickname of the number. This is for your reference only.
    */
   nickname?: string;
+
+  /**
+   * The provider to purchase the phone number from. Default to twilio.
+   */
+  number_provider?: 'twilio' | 'telnyx';
 
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
