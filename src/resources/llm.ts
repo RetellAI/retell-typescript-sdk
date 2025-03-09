@@ -98,7 +98,7 @@ export interface LlmResponse {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -885,7 +885,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -1670,7 +1670,7 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku' | 'claude-3.5-haiku' | null;
+  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
