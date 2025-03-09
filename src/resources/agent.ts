@@ -60,9 +60,9 @@ export interface AgentResponse {
   last_modification_timestamp: number;
 
   /**
-   * The Retell LLM Response Engine to attach to the agent. It is used to generate
-   * responses for the agent. You need to create a Retell LLM Response Engine first
-   * before attaching it to an agent.
+   * The Response Engine to attach to the agent. It is used to generate responses for
+   * the agent. You need to create a Response Engine first before attaching it to an
+   * agent.
    */
   response_engine:
     | AgentResponse.ResponseEngineRetellLm
@@ -499,9 +499,9 @@ export type AgentListResponse = Array<AgentResponse>;
 
 export interface AgentCreateParams {
   /**
-   * The Retell LLM Response Engine to attach to the agent. It is used to generate
-   * responses for the agent. You need to create a Retell LLM Response Engine first
-   * before attaching it to an agent.
+   * The Response Engine to attach to the agent. It is used to generate responses for
+   * the agent. You need to create a Response Engine first before attaching it to an
+   * agent.
    */
   response_engine:
     | AgentCreateParams.ResponseEngineRetellLm
@@ -1146,9 +1146,9 @@ export interface AgentUpdateParams {
   reminder_trigger_ms?: number;
 
   /**
-   * The Retell LLM Response Engine to attach to the agent. It is used to generate
-   * responses for the agent. You need to create a Retell LLM Response Engine first
-   * before attaching it to an agent.
+   * The Response Engine to attach to the agent. It is used to generate responses for
+   * the agent. You need to create a Response Engine first before attaching it to an
+   * agent.
    */
   response_engine?:
     | AgentUpdateParams.ResponseEngineRetellLm
