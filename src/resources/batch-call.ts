@@ -70,8 +70,8 @@ export namespace BatchCallCreateBatchCallParams {
 
     /**
      * Add optional dynamic variables in key value pairs of string that injects into
-     * your Retell LLM Response Engine prompt and tool description. Only applicable for
-     * Retell LLM Response Engine.
+     * your Response Engine prompt and tool description. Only applicable for Response
+     * Engine.
      */
     retell_llm_dynamic_variables?: Record<string, unknown>;
   }
