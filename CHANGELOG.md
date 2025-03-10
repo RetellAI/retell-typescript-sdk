@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.22.0 (2025-03-10)
+
+Full Changelog: [v4.21.0...v4.22.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.21.0...v4.22.0)
+
+### Features
+
+* **client:** accept RFC6838 JSON content types ([#281](https://github.com/RetellAI/retell-typescript-sdk/issues/281)) ([1b4d836](https://github.com/RetellAI/retell-typescript-sdk/commit/1b4d8366fb89c085125e1f72a1ec952cad59057c))
+
 ## 4.21.0 (2025-03-09)
 
 Full Changelog: [v4.20.0...v4.21.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.20.0...v4.21.0)
