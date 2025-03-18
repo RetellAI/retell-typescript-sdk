@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.22.0 (2025-03-18)
+
+Full Changelog: [v4.21.0...v4.22.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.21.0...v4.22.0)
+
+### Features
+
+* **api:** api update ([#284](https://github.com/RetellAI/retell-typescript-sdk/issues/284)) ([3d87549](https://github.com/RetellAI/retell-typescript-sdk/commit/3d8754970d19895c3a74a9906e86fc809c9ee5a2))
+* **client:** accept RFC6838 JSON content types ([#281](https://github.com/RetellAI/retell-typescript-sdk/issues/281)) ([1b4d836](https://github.com/RetellAI/retell-typescript-sdk/commit/1b4d8366fb89c085125e1f72a1ec952cad59057c))
+
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#283](https://github.com/RetellAI/retell-typescript-sdk/issues/283)) ([41bf84a](https://github.com/RetellAI/retell-typescript-sdk/commit/41bf84ab0efd94bdda6466b7bba46f95e7c1216e))
+
 ## 4.21.0 (2025-03-09)
 
 Full Changelog: [v4.20.0...v4.21.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.20.0...v4.21.0)
