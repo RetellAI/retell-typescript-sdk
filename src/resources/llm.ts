@@ -63,6 +63,13 @@ export interface LlmResponse {
   begin_message?: string | null;
 
   /**
+   * Default dynamic variables represented as key-value pairs of strings. These are
+   * injected into your Retell LLM prompt and tool description when specific values
+   * are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
+
+  /**
    * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
@@ -850,6 +857,13 @@ export interface LlmCreateParams {
   begin_message?: string | null;
 
   /**
+   * Default dynamic variables represented as key-value pairs of strings. These are
+   * injected into your Retell LLM prompt and tool description when specific values
+   * are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
+
+  /**
    * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
@@ -1633,6 +1647,13 @@ export interface LlmUpdateParams {
    * generate a message. If set to "", agent will wait for user to speak first.
    */
   begin_message?: string | null;
+
+  /**
+   * Default dynamic variables represented as key-value pairs of strings. These are
+   * injected into your Retell LLM prompt and tool description when specific values
+   * are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
