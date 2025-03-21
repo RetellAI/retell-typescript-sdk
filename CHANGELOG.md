@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.22.1 (2025-03-21)
+
+Full Changelog: [v4.22.0...v4.22.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.22.0...v4.22.1)
+
+### Bug Fixes
+
+* avoid type error in certain environments ([#289](https://github.com/RetellAI/retell-typescript-sdk/issues/289)) ([262d7eb](https://github.com/RetellAI/retell-typescript-sdk/commit/262d7ebaa42a39e848dcb78ac9d5b997abebfdbf))
+
+
+### Chores
+
+* **exports:** cleaner resource index imports ([#286](https://github.com/RetellAI/retell-typescript-sdk/issues/286)) ([4ad50d5](https://github.com/RetellAI/retell-typescript-sdk/commit/4ad50d536a2b8c7852328fef938113965f298ba2))
+* **exports:** stop using path fallbacks ([#288](https://github.com/RetellAI/retell-typescript-sdk/issues/288)) ([44f9f50](https://github.com/RetellAI/retell-typescript-sdk/commit/44f9f50138e5d97828315d4426069f538f9fb93f))
+
 ## 4.22.0 (2025-03-18)
 
 Full Changelog: [v4.21.0...v4.22.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.21.0...v4.22.0)
