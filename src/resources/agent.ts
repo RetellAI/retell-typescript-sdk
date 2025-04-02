@@ -301,6 +301,12 @@ export interface AgentResponse {
   ring_duration_ms?: number;
 
   /**
+   * If set, determines whether speech to text should focus on latency or accuracy.
+   * Default to fast mode.
+   */
+  stt_mode?: 'fast' | 'accurate';
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -740,6 +746,12 @@ export interface AgentCreateParams {
   ring_duration_ms?: number;
 
   /**
+   * If set, determines whether speech to text should focus on latency or accuracy.
+   * Default to fast mode.
+   */
+  stt_mode?: 'fast' | 'accurate';
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -1169,6 +1181,12 @@ export interface AgentUpdateParams {
    * Default to 30000 (30 s). Valid range is [5000, 90000].
    */
   ring_duration_ms?: number;
+
+  /**
+   * If set, determines whether speech to text should focus on latency or accuracy.
+   * Default to fast mode.
+   */
+  stt_mode?: 'fast' | 'accurate';
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
