@@ -57,6 +57,7 @@ describe('resource agent', () => {
       reminder_trigger_ms: 10000,
       responsiveness: 1,
       ring_duration_ms: 30000,
+      stt_mode: 'fast',
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
