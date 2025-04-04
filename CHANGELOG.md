@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.23.0 (2025-04-04)
+
+Full Changelog: [v4.22.0...v4.23.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.22.0...v4.23.0)
+
+### Features
+
+* **api:** api update ([#292](https://github.com/RetellAI/retell-typescript-sdk/issues/292)) ([6e20bed](https://github.com/RetellAI/retell-typescript-sdk/commit/6e20bedf809bef74e18d2922eb79ceb24ab2f8d9))
+* **api:** api update ([#295](https://github.com/RetellAI/retell-typescript-sdk/issues/295)) ([c0fc421](https://github.com/RetellAI/retell-typescript-sdk/commit/c0fc421d3515ab796bb915228026c900474e7f9a))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#294](https://github.com/RetellAI/retell-typescript-sdk/issues/294)) ([104f5e7](https://github.com/RetellAI/retell-typescript-sdk/commit/104f5e78ea2d8df9fedfbd0aa8c58fb7064d1eca))
+* avoid type error in certain environments ([#289](https://github.com/RetellAI/retell-typescript-sdk/issues/289)) ([262d7eb](https://github.com/RetellAI/retell-typescript-sdk/commit/262d7ebaa42a39e848dcb78ac9d5b997abebfdbf))
+* **client:** send `X-Stainless-Timeout` in seconds ([#291](https://github.com/RetellAI/retell-typescript-sdk/issues/291)) ([fbe29cb](https://github.com/RetellAI/retell-typescript-sdk/commit/fbe29cb4a427255a999db18e369825cd123127e5))
+* **internal:** work around https://github.com/vercel/next.js/issues/76881 ([#290](https://github.com/RetellAI/retell-typescript-sdk/issues/290)) ([92597b2](https://github.com/RetellAI/retell-typescript-sdk/commit/92597b29fb583e5dfc400cc2f957eebdb035102a))
+
+
+### Chores
+
+* **exports:** cleaner resource index imports ([#286](https://github.com/RetellAI/retell-typescript-sdk/issues/286)) ([4ad50d5](https://github.com/RetellAI/retell-typescript-sdk/commit/4ad50d536a2b8c7852328fef938113965f298ba2))
+* **exports:** stop using path fallbacks ([#288](https://github.com/RetellAI/retell-typescript-sdk/issues/288)) ([44f9f50](https://github.com/RetellAI/retell-typescript-sdk/commit/44f9f50138e5d97828315d4426069f538f9fb93f))
+* **internal:** add aliases for Record and Array ([#293](https://github.com/RetellAI/retell-typescript-sdk/issues/293)) ([1bf2347](https://github.com/RetellAI/retell-typescript-sdk/commit/1bf2347ca9a086bd77627e030f0520930456f1d3))
+
 ## 4.22.0 (2025-03-18)
 
 Full Changelog: [v4.21.0...v4.22.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.21.0...v4.22.0)
