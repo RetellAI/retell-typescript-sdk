@@ -265,6 +265,12 @@ export interface AgentResponse {
   > | null;
 
   /**
+   * The model to use for post call analysis. Currently only supports gpt-4o-mini and
+   * gpt-4o. Default to gpt-4o-mini.
+   */
+  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
+
+  /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
    * synthesize for consistent pronunciation. Currently only supported for English &
    * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
@@ -710,6 +716,12 @@ export interface AgentCreateParams {
   > | null;
 
   /**
+   * The model to use for post call analysis. Currently only supports gpt-4o-mini and
+   * gpt-4o. Default to gpt-4o-mini.
+   */
+  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
+
+  /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
    * synthesize for consistent pronunciation. Currently only supported for English &
    * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
@@ -1135,6 +1147,12 @@ export interface AgentUpdateParams {
     | AgentUpdateParams.BooleanAnalysisData
     | AgentUpdateParams.NumberAnalysisData
   > | null;
+
+  /**
+   * The model to use for post call analysis. Currently only supports gpt-4o-mini and
+   * gpt-4o. Default to gpt-4o-mini.
+   */
+  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
