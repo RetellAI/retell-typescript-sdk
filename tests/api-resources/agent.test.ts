@@ -52,6 +52,7 @@ describe('resource agent', () => {
           examples: ['John Doe', 'Jane Smith'],
         },
       ],
+      post_call_analysis_model: 'gpt-4o-mini',
       pronunciation_dictionary: [{ alphabet: 'ipa', phoneme: 'ˈæktʃuəli', word: 'actually' }],
       reminder_max_count: 2,
       reminder_trigger_ms: 10000,
