@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.25.0 (2025-04-10)
+
+Full Changelog: [v4.24.0...v4.25.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.24.0...v4.25.0)
+
+### Features
+
+* **api:** api update ([8d71723](https://github.com/RetellAI/retell-typescript-sdk/commit/8d71723de2bc32d612429cd6d285a70304e8e315))
+
+
+### Chores
+
+* **internal:** reduce CI branch coverage ([86caec4](https://github.com/RetellAI/retell-typescript-sdk/commit/86caec47f43c3095c59154eaf2ea820abf552232))
+* **internal:** upload builds and expand CI branch coverage ([#301](https://github.com/RetellAI/retell-typescript-sdk/issues/301)) ([72c4e4e](https://github.com/RetellAI/retell-typescript-sdk/commit/72c4e4e1717cbc341ed02e696d575531f33fd98b))
+
 ## 4.24.0 (2025-04-06)
 
 Full Changelog: [v4.23.0...v4.24.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.23.0...v4.24.0)
