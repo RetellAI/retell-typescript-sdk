@@ -105,7 +105,14 @@ export interface LlmResponse {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -177,6 +184,10 @@ export namespace LlmResponse {
      */
     name: string;
 
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
     type: 'transfer_call';
 
     /**
@@ -186,22 +197,12 @@ export namespace LlmResponse {
     description?: string;
 
     /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number?: string | null;
-
-    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
-
-    transfer_destination?:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -571,6 +572,10 @@ export namespace LlmResponse {
        */
       name: string;
 
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
       type: 'transfer_call';
 
       /**
@@ -580,22 +585,12 @@ export namespace LlmResponse {
       description?: string;
 
       /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number?: string | null;
-
-      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
-
-      transfer_destination?:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -899,7 +894,14 @@ export interface LlmCreateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -971,6 +973,10 @@ export namespace LlmCreateParams {
      */
     name: string;
 
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
     type: 'transfer_call';
 
     /**
@@ -980,22 +986,12 @@ export namespace LlmCreateParams {
     description?: string;
 
     /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number?: string | null;
-
-    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
-
-    transfer_destination?:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1365,6 +1361,10 @@ export namespace LlmCreateParams {
        */
       name: string;
 
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
       type: 'transfer_call';
 
       /**
@@ -1374,22 +1374,12 @@ export namespace LlmCreateParams {
       description?: string;
 
       /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number?: string | null;
-
-      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
-
-      transfer_destination?:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -1691,7 +1681,14 @@ export interface LlmUpdateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.7-sonnet' | 'claude-3.5-haiku' | null;
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -1763,6 +1760,10 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
     type: 'transfer_call';
 
     /**
@@ -1772,22 +1773,12 @@ export namespace LlmUpdateParams {
     description?: string;
 
     /**
-     * The number to transfer to in E.164 format or a dynamic variable like
-     * {{transfer_number}}.
-     */
-    number?: string | null;
-
-    /**
      * If set to true, will show transferee (the user, not the AI agent) as caller when
      * transferring, requires the telephony side to support SIP REFER to PSTN. This is
      * only applicable for cold transfer, so if warm transfer option is specified, this
      * field will be ignored. Default to false (default to show AI agent as caller).
      */
     show_transferee_as_caller?: boolean | null;
-
-    transfer_destination?:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
 
     /**
      * If set, when transfer is successful, will perform a warm handoff. Can leave
@@ -2157,6 +2148,10 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
       type: 'transfer_call';
 
       /**
@@ -2166,22 +2161,12 @@ export namespace LlmUpdateParams {
       description?: string;
 
       /**
-       * The number to transfer to in E.164 format or a dynamic variable like
-       * {{transfer_number}}.
-       */
-      number?: string | null;
-
-      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
       show_transferee_as_caller?: boolean | null;
-
-      transfer_destination?:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
 
       /**
        * If set, when transfer is successful, will perform a warm handoff. Can leave
