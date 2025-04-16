@@ -104,9 +104,11 @@ describe('resource phoneNumber', () => {
       phone_number: '+14157774444',
       termination_uri: 'someuri.pstn.twilio.com',
       inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      inbound_agent_version: 1,
       inbound_webhook_url: 'https://example.com/inbound-webhook',
       nickname: 'Frontdesk Number',
       outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      outbound_agent_version: 1,
       sip_trunk_auth_password: '123456',
       sip_trunk_auth_username: 'username',
     });

@@ -8,8 +8,10 @@ import * as API from './resources/index';
 import {
   Agent as AgentAPIAgent,
   AgentCreateParams,
+  AgentGetVersionsResponse,
   AgentListResponse,
   AgentResponse,
+  AgentRetrieveParams,
   AgentUpdateParams,
 } from './resources/agent';
 import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
@@ -33,7 +35,14 @@ import {
   KnowledgeBaseListResponse,
   KnowledgeBaseResponse,
 } from './resources/knowledge-base';
-import { Llm, LlmCreateParams, LlmListResponse, LlmResponse, LlmUpdateParams } from './resources/llm';
+import {
+  Llm,
+  LlmCreateParams,
+  LlmListResponse,
+  LlmResponse,
+  LlmRetrieveParams,
+  LlmUpdateParams,
+} from './resources/llm';
 import {
   PhoneNumber,
   PhoneNumberCreateParams,
@@ -236,7 +245,9 @@ export declare namespace Retell {
     AgentAPIAgent as Agent,
     type AgentResponse as AgentResponse,
     type AgentListResponse as AgentListResponse,
+    type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
+    type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
   };
 
@@ -245,6 +256,7 @@ export declare namespace Retell {
     type LlmResponse as LlmResponse,
     type LlmListResponse as LlmListResponse,
     type LlmCreateParams as LlmCreateParams,
+    type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
   };
 
