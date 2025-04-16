@@ -181,7 +181,7 @@ export interface LlmResponse {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Version of the Retell LLM. Default to 0. Is part of the query parameter.
+   * Version of the Retell LLM.
    */
   version?: number | null;
 }
@@ -975,7 +975,7 @@ export interface LlmCreateParams {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Version of the Retell LLM. Default to 0. Is part of the query parameter.
+   * Version of the Retell LLM.
    */
   version?: number | null;
 }
@@ -1782,8 +1782,7 @@ export interface LlmUpdateParams {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Body param: Version of the Retell LLM. Default to 0. Is part of the query
-   * parameter.
+   * Body param: Version of the Retell LLM.
    */
   body_version?: number | null;
 }
