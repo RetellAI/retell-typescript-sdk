@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.26.0 (2025-04-16)
+
+Full Changelog: [v4.25.0...v4.26.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.25.0...v4.26.0)
+
+### Features
+
+* **api:** api update ([ad06b5b](https://github.com/RetellAI/retell-typescript-sdk/commit/ad06b5b8dfafd64737231b3d9a9c2b0e82fef606))
+* **api:** api update ([b250262](https://github.com/RetellAI/retell-typescript-sdk/commit/b250262a7f9a4c01f7c2b1f60aaea4a41867f067))
+
+
+### Chores
+
+* **client:** minor internal fixes ([e1d3ddb](https://github.com/RetellAI/retell-typescript-sdk/commit/e1d3ddbd7be3a811af8001423d457f1c30b664f0))
+
 ## 4.25.0 (2025-04-10)
 
 Full Changelog: [v4.24.0...v4.25.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.24.0...v4.25.0)
