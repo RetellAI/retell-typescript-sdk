@@ -59,6 +59,7 @@ describe('resource agent', () => {
       responsiveness: 1,
       ring_duration_ms: 30000,
       stt_mode: 'fast',
+      version: 0,
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
@@ -84,6 +85,17 @@ describe('resource agent', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.agent.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  test('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.agent.retrieve(
+        '16b980523634a6dc504898cda492e939',
+        { version: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
@@ -131,6 +143,24 @@ describe('resource agent', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  test('getVersions', async () => {
+    const responsePromise = client.agent.getVersions('16b980523634a6dc504898cda492e939');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('getVersions: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.agent.getVersions('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 });
