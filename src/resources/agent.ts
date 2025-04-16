@@ -353,7 +353,7 @@ export interface AgentResponse {
   stt_mode?: 'fast' | 'accurate';
 
   /**
-   * Version of the agent. Default to 0. Is part of the query parameter.
+   * Version of the agent.
    */
   version?: number | null;
 
@@ -825,7 +825,7 @@ export interface AgentCreateParams {
   stt_mode?: 'fast' | 'accurate';
 
   /**
-   * Version of the agent. Default to 0. Is part of the query parameter.
+   * Version of the agent.
    */
   version?: number | null;
 
@@ -1303,7 +1303,7 @@ export interface AgentUpdateParams {
   stt_mode?: 'fast' | 'accurate';
 
   /**
-   * Body param: Version of the agent. Default to 0. Is part of the query parameter.
+   * Body param: Version of the agent.
    */
   body_version?: number | null;
 
