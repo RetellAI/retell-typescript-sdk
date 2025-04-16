@@ -240,6 +240,11 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.ToolCallResultUtterance
     | PhoneCallResponse.DtmfUtterance
   >;
+
+  /**
+   * The version of the agent.
+   */
+  version?: number | null;
 }
 
 export namespace PhoneCallResponse {
@@ -953,6 +958,11 @@ export interface WebCallResponse {
     | WebCallResponse.ToolCallResultUtterance
     | WebCallResponse.DtmfUtterance
   >;
+
+  /**
+   * The version of the agent.
+   */
+  version?: number | null;
 }
 
 export namespace WebCallResponse {
@@ -1639,6 +1649,11 @@ export namespace CallListParams {
      * Only retrieve calls with specific user sentiment(s).
      */
     user_sentiment?: Array<'Negative' | 'Positive' | 'Neutral' | 'Unknown'>;
+
+    /**
+     * The version of the agent to use for the call.
+     */
+    version?: Array<number>;
   }
 
   export namespace FilterCriteria {
@@ -1695,6 +1710,13 @@ export interface CallCreatePhoneCallParams {
   override_agent_id?: string;
 
   /**
+   * For this particular call, override the agent version used with this version.
+   * This does not bind the agent to this number, this is for one time override.
+   * Default to 0.
+   */
+  override_agent_version?: number;
+
+  /**
    * Add optional dynamic variables in key value pairs of string that injects into
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
@@ -1708,6 +1730,11 @@ export interface CallCreateWebCallParams {
    * url used for this call.
    */
   agent_id: string;
+
+  /**
+   * The version of the agent to use for the call.
+   */
+  agent_version?: number;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -1729,6 +1756,11 @@ export interface CallRegisterPhoneCallParams {
    * The agent to use for the call.
    */
   agent_id: string;
+
+  /**
+   * The version of the agent to use for the call.
+   */
+  agent_version?: number;
 
   /**
    * Direction of the phone call. Stored for tracking purpose.

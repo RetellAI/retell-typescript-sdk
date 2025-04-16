@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import { isRequestOptions } from '../core';
 import * as Core from '../core';
 
 export class Llm extends APIResource {
@@ -15,15 +16,37 @@ export class Llm extends APIResource {
   /**
    * Retrieve details of a specific Retell LLM Response Engine
    */
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
-    return this._client.get(`/get-retell-llm/${llmId}`, options);
+  retrieve(
+    llmId: string,
+    query?: LlmRetrieveParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse>;
+  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse>;
+  retrieve(
+    llmId: string,
+    query: LlmRetrieveParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse> {
+    if (isRequestOptions(query)) {
+      return this.retrieve(llmId, {}, query);
+    }
+    return this._client.get(`/get-retell-llm/${llmId}`, { query, ...options });
   }
 
   /**
    * Update an existing Retell LLM Response Engine
    */
-  update(llmId: string, body: LlmUpdateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
-    return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
+  update(
+    llmId: string,
+    params: LlmUpdateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse> {
+    const { query_version, ...body } = params;
+    return this._client.patch(`/update-retell-llm/${llmId}`, {
+      query: { version: query_version },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -156,6 +179,11 @@ export interface LlmResponse {
    * processing is needed. Default to false.
    */
   tool_call_strict_mode?: boolean;
+
+  /**
+   * Version of the Retell LLM. Default to 0. Is part of the query parameter.
+   */
+  version?: number | null;
 }
 
 export namespace LlmResponse {
@@ -945,6 +973,11 @@ export interface LlmCreateParams {
    * processing is needed. Default to false.
    */
   tool_call_strict_mode?: boolean;
+
+  /**
+   * Version of the Retell LLM. Default to 0. Is part of the query parameter.
+   */
+  version?: number | null;
 }
 
 export namespace LlmCreateParams {
@@ -1631,22 +1664,36 @@ export namespace LlmCreateParams {
   }
 }
 
+export interface LlmRetrieveParams {
+  /**
+   * Optional version of the API to use for this request. Default to 0.
+   */
+  version?: number;
+}
+
 export interface LlmUpdateParams {
   /**
-   * First utterance said by the agent in the call. If not set, LLM will dynamically
-   * generate a message. If set to "", agent will wait for user to speak first.
+   * Query param: Optional version of the API to use for this request. Default to 0.
+   */
+  query_version?: number;
+
+  /**
+   * Body param: First utterance said by the agent in the call. If not set, LLM will
+   * dynamically generate a message. If set to "", agent will wait for user to speak
+   * first.
    */
   begin_message?: string | null;
 
   /**
-   * Default dynamic variables represented as key-value pairs of strings. These are
-   * injected into your Retell LLM prompt and tool description when specific values
-   * are not provided in a request. Only applicable for Retell LLM.
+   * Body param: Default dynamic variables represented as key-value pairs of strings.
+   * These are injected into your Retell LLM prompt and tool description when
+   * specific values are not provided in a request. Only applicable for Retell LLM.
    */
   default_dynamic_variables?: Record<string, string> | null;
 
   /**
-   * General prompt appended to system prompt no matter what state the agent is in.
+   * Body param: General prompt appended to system prompt no matter what state the
+   * agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
    *
@@ -1655,9 +1702,10 @@ export interface LlmUpdateParams {
   general_prompt?: string | null;
 
   /**
-   * A list of tools the model may call (to get external knowledge, call API, etc).
-   * You can select from some common predefined tools like end call, transfer call,
-   * etc; or you can create your own custom tool (last option) for the LLM to use.
+   * Body param: A list of tools the model may call (to get external knowledge, call
+   * API, etc). You can select from some common predefined tools like end call,
+   * transfer call, etc; or you can create your own custom tool (last option) for the
+   * LLM to use.
    *
    * - Tools of LLM (with state) = general tools + state tools + state transitions
    *
@@ -1673,13 +1721,13 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
-   * A list of knowledge base ids to use for this resource. Set to null to remove all
-   * knowledge bases.
+   * Body param: A list of knowledge base ids to use for this resource. Set to null
+   * to remove all knowledge bases.
    */
   knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-4o.
+   * Body param: Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?:
     | 'gpt-4o'
@@ -1691,47 +1739,53 @@ export interface LlmUpdateParams {
     | null;
 
   /**
-   * If set to true, will use high priority pool with more dedicated resource to
-   * ensure lower and more consistent latency, default to false. This feature usually
-   * comes with a higher cost.
+   * Body param: If set to true, will use high priority pool with more dedicated
+   * resource to ensure lower and more consistent latency, default to false. This
+   * feature usually comes with a higher cost.
    */
   model_high_priority?: boolean;
 
   /**
-   * If set, will control the randomness of the response. Value ranging from [0,1].
-   * Lower value means more deterministic, while higher value means more random. If
-   * unset, default value 0 will apply. Note that for tool calling, a lower value is
-   * recommended.
+   * Body param: If set, will control the randomness of the response. Value ranging
+   * from [0,1]. Lower value means more deterministic, while higher value means more
+   * random. If unset, default value 0 will apply. Note that for tool calling, a
+   * lower value is recommended.
    */
   model_temperature?: number;
 
   /**
-   * Select the underlying speech to speech model. Can only set this or model, not
-   * both.
+   * Body param: Select the underlying speech to speech model. Can only set this or
+   * model, not both.
    */
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
-   * Name of the starting state. Required if states is not empty.
+   * Body param: Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
 
   /**
-   * States of the LLM. This is to help reduce prompt length and tool choices when
-   * the call can be broken into distinct states. With shorter prompts and less
-   * tools, the LLM can better focus and follow the rules, minimizing hallucination.
-   * If this field is not set, the agent would only have general prompt and general
-   * tools (essentially one state).
+   * Body param: States of the LLM. This is to help reduce prompt length and tool
+   * choices when the call can be broken into distinct states. With shorter prompts
+   * and less tools, the LLM can better focus and follow the rules, minimizing
+   * hallucination. If this field is not set, the agent would only have general
+   * prompt and general tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
 
   /**
-   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
-   * structured output to make sure tool call arguments follow the json schema. The
-   * time to save a new tool or change to a tool will be longer as additional
-   * processing is needed. Default to false.
+   * Body param: Only applicable when model is gpt-4o or gpt-4o mini. If set to true,
+   * will use structured output to make sure tool call arguments follow the json
+   * schema. The time to save a new tool or change to a tool will be longer as
+   * additional processing is needed. Default to false.
    */
   tool_call_strict_mode?: boolean;
+
+  /**
+   * Body param: Version of the Retell LLM. Default to 0. Is part of the query
+   * parameter.
+   */
+  body_version?: number | null;
 }
 
 export namespace LlmUpdateParams {
@@ -2423,6 +2477,7 @@ export declare namespace Llm {
     type LlmResponse as LlmResponse,
     type LlmListResponse as LlmListResponse,
     type LlmCreateParams as LlmCreateParams,
+    type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
   };
 }

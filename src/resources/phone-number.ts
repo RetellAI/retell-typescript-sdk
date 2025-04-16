@@ -81,6 +81,11 @@ export interface PhoneNumberResponse {
   inbound_agent_id?: string | null;
 
   /**
+   * The version of the inbound agent.
+   */
+  inbound_agent_version?: number | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -97,6 +102,11 @@ export interface PhoneNumberResponse {
    * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string | null;
+
+  /**
+   * The version of the outbound agent.
+   */
+  outbound_agent_version?: number | null;
 
   /**
    * Pretty printed phone number, provided for your reference.
@@ -126,6 +136,12 @@ export interface PhoneNumberCreateParams {
   inbound_agent_id?: string | null;
 
   /**
+   * Version of the inbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  inbound_agent_version?: number | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -147,6 +163,12 @@ export interface PhoneNumberCreateParams {
    * initiate outbound call without agent id override.
    */
   outbound_agent_id?: string | null;
+
+  /**
+   * Version of the outbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  outbound_agent_version?: number | null;
 }
 
 export interface PhoneNumberUpdateParams {
@@ -156,6 +178,12 @@ export interface PhoneNumberUpdateParams {
    * inbound call.
    */
   inbound_agent_id?: string | null;
+
+  /**
+   * Version of the inbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  inbound_agent_version?: number | null;
 
   /**
    * If set, will send a webhook for inbound calls, where you can to override agent
@@ -174,6 +202,12 @@ export interface PhoneNumberUpdateParams {
    * able to initiate outbound call without agent id override.
    */
   outbound_agent_id?: string | null;
+
+  /**
+   * Version of the outbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  outbound_agent_version?: number | null;
 }
 
 export interface PhoneNumberImportParams {
@@ -199,6 +233,12 @@ export interface PhoneNumberImportParams {
   inbound_agent_id?: string | null;
 
   /**
+   * Version of the inbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  inbound_agent_version?: number | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -214,7 +254,13 @@ export interface PhoneNumberImportParams {
    * agent when conducting outbound calls. If null, this number would not be able to
    * initiate outbound call without agent id override.
    */
-  outbound_agent_id?: string | null;
+  outbound_agent_id?: string;
+
+  /**
+   * Version of the outbound agent to bind to the number. If not provided, will
+   * default to 0.
+   */
+  outbound_agent_version?: number | null;
 
   /**
    * The password used for authentication for the SIP trunk.

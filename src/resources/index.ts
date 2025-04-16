@@ -4,7 +4,9 @@ export {
   Agent,
   type AgentResponse,
   type AgentListResponse,
+  type AgentGetVersionsResponse,
   type AgentCreateParams,
+  type AgentRetrieveParams,
   type AgentUpdateParams,
 } from './agent';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
@@ -33,6 +35,7 @@ export {
   type LlmResponse,
   type LlmListResponse,
   type LlmCreateParams,
+  type LlmRetrieveParams,
   type LlmUpdateParams,
 } from './llm';
 export {
