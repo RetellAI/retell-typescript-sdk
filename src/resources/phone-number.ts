@@ -81,7 +81,8 @@ export interface PhoneNumberResponse {
   inbound_agent_id?: string | null;
 
   /**
-   * The version of the inbound agent.
+   * Version of the inbound agent to bind to the number. If not provided, will
+   * default to 0.
    */
   inbound_agent_version?: number | null;
 
@@ -104,7 +105,8 @@ export interface PhoneNumberResponse {
   outbound_agent_id?: string | null;
 
   /**
-   * The version of the outbound agent.
+   * Version of the outbound agent to bind to the number. If not provided, will
+   * default to 0.
    */
   outbound_agent_version?: number | null;
 
