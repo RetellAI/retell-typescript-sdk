@@ -131,6 +131,9 @@ export interface LlmResponse {
   model?:
     | 'gpt-4o'
     | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
     | 'claude-3.7-sonnet'
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
@@ -925,6 +928,9 @@ export interface LlmCreateParams {
   model?:
     | 'gpt-4o'
     | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
     | 'claude-3.7-sonnet'
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
@@ -1732,6 +1738,9 @@ export interface LlmUpdateParams {
   model?:
     | 'gpt-4o'
     | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
     | 'claude-3.7-sonnet'
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
