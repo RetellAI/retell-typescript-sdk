@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.27.1 (2025-04-17)
+
+Full Changelog: [v4.27.0...v4.27.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.27.0...v4.27.1)
+
+### Bug Fixes
+
+* **tests:** skip unsupported test failure ([004c2cc](https://github.com/RetellAI/retell-typescript-sdk/commit/004c2cc51c3da4628154868ef0fb2b777aaedafb))
+
 ## 4.27.0 (2025-04-17)
 
 Full Changelog: [v4.26.0...v4.27.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.26.0...v4.27.0)
