@@ -146,8 +146,7 @@ describe('resource agent', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // prism test failure
-  test.skip('getVersions', async () => {
+  test('getVersions', async () => {
     const responsePromise = client.agent.getVersions('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -158,8 +157,7 @@ describe('resource agent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // prism test failure
-  test.skip('getVersions: request options instead of params are passed correctly', async () => {
+  test('getVersions: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.agent.getVersions('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
