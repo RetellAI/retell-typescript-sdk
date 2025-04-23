@@ -1672,14 +1672,15 @@ export namespace LlmCreateParams {
 
 export interface LlmRetrieveParams {
   /**
-   * Optional version of the API to use for this request. Default to 0.
+   * Optional version of the API to use for this request. Default to latest version.
    */
   version?: number;
 }
 
 export interface LlmUpdateParams {
   /**
-   * Query param: Optional version of the API to use for this request. Default to 0.
+   * Query param: Optional version of the API to use for this request. Default to
+   * latest version.
    */
   query_version?: number;
 

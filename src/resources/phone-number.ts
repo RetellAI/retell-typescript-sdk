@@ -82,7 +82,7 @@ export interface PhoneNumberResponse {
 
   /**
    * Version of the inbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   inbound_agent_version?: number | null;
 
@@ -106,7 +106,7 @@ export interface PhoneNumberResponse {
 
   /**
    * Version of the outbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   outbound_agent_version?: number | null;
 
@@ -139,7 +139,7 @@ export interface PhoneNumberCreateParams {
 
   /**
    * Version of the inbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   inbound_agent_version?: number | null;
 
@@ -168,7 +168,7 @@ export interface PhoneNumberCreateParams {
 
   /**
    * Version of the outbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   outbound_agent_version?: number | null;
 }
@@ -183,7 +183,7 @@ export interface PhoneNumberUpdateParams {
 
   /**
    * Version of the inbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   inbound_agent_version?: number | null;
 
@@ -207,7 +207,7 @@ export interface PhoneNumberUpdateParams {
 
   /**
    * Version of the outbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   outbound_agent_version?: number | null;
 }
@@ -236,7 +236,7 @@ export interface PhoneNumberImportParams {
 
   /**
    * Version of the inbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   inbound_agent_version?: number | null;
 
@@ -260,7 +260,7 @@ export interface PhoneNumberImportParams {
 
   /**
    * Version of the outbound agent to bind to the number. If not provided, will
-   * default to 0.
+   * default to latest version.
    */
   outbound_agent_version?: number | null;
 
