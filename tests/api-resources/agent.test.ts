@@ -25,7 +25,7 @@ describe('resource agent', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.agent.create({
-      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm', version: 0 },
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
       ambient_sound: 'coffee-shop',

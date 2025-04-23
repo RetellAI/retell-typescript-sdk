@@ -430,6 +430,11 @@ export namespace AgentResponse {
      * type of the Response Engine.
      */
     type: 'retell-llm';
+
+    /**
+     * Version of the Retell LLM Response Engine.
+     */
+    version?: number | null;
   }
 
   export interface ResponseEngineCustomLm {
@@ -454,6 +459,11 @@ export namespace AgentResponse {
      * type of the Response Engine.
      */
     type: 'conversation-flow';
+
+    /**
+     * Version of the Conversation Flow Response Engine.
+     */
+    version?: number | null;
   }
 
   export interface StringAnalysisData {
@@ -902,6 +912,11 @@ export namespace AgentCreateParams {
      * type of the Response Engine.
      */
     type: 'retell-llm';
+
+    /**
+     * Version of the Retell LLM Response Engine.
+     */
+    version?: number | null;
   }
 
   export interface ResponseEngineCustomLm {
@@ -926,6 +941,11 @@ export namespace AgentCreateParams {
      * type of the Response Engine.
      */
     type: 'conversation-flow';
+
+    /**
+     * Version of the Conversation Flow Response Engine.
+     */
+    version?: number | null;
   }
 
   export interface StringAnalysisData {
@@ -1026,14 +1046,15 @@ export namespace AgentCreateParams {
 
 export interface AgentRetrieveParams {
   /**
-   * Optional version of the API to use for this request. Default to 0.
+   * Optional version of the API to use for this request. Default to latest version.
    */
   version?: number;
 }
 
 export interface AgentUpdateParams {
   /**
-   * Query param: Optional version of the API to use for this request. Default to 0.
+   * Query param: Optional version of the API to use for this request. Default to
+   * latest version.
    */
   query_version?: number;
 
@@ -1481,6 +1502,11 @@ export namespace AgentUpdateParams {
      * type of the Response Engine.
      */
     type: 'retell-llm';
+
+    /**
+     * Version of the Retell LLM Response Engine.
+     */
+    version?: number | null;
   }
 
   export interface ResponseEngineCustomLm {
@@ -1505,6 +1531,11 @@ export namespace AgentUpdateParams {
      * type of the Response Engine.
      */
     type: 'conversation-flow';
+
+    /**
+     * Version of the Conversation Flow Response Engine.
+     */
+    version?: number | null;
   }
 }
 
