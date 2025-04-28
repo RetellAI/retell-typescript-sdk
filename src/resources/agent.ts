@@ -286,6 +286,13 @@ export interface AgentResponse {
   normalize_for_speech?: boolean;
 
   /**
+   * Whether this agent opts in for signed URLs for public logs and recordings. When
+   * enabled, the generated URLs will include security signatures that restrict
+   * access and automatically expire after 24 hours.
+   */
+  opt_in_signed_url?: boolean;
+
+  /**
    * Whether this agent opts out of sensitive data storage like transcript,
    * recording, logging, inbound/outbound phone numbers, etc. These data can still be
    * accessed securely via webhooks. If not set, default value of false will apply.
@@ -768,6 +775,13 @@ export interface AgentCreateParams {
   normalize_for_speech?: boolean;
 
   /**
+   * Whether this agent opts in for signed URLs for public logs and recordings. When
+   * enabled, the generated URLs will include security signatures that restrict
+   * access and automatically expire after 24 hours.
+   */
+  opt_in_signed_url?: boolean;
+
+  /**
    * Whether this agent opts out of sensitive data storage like transcript,
    * recording, logging, inbound/outbound phone numbers, etc. These data can still be
    * accessed securely via webhooks. If not set, default value of false will apply.
@@ -1242,6 +1256,13 @@ export interface AgentUpdateParams {
    * dollars twelve cents payment" before starting audio generation.
    */
   normalize_for_speech?: boolean;
+
+  /**
+   * Body param: Whether this agent opts in for signed URLs for public logs and
+   * recordings. When enabled, the generated URLs will include security signatures
+   * that restrict access and automatically expire after 24 hours.
+   */
+  opt_in_signed_url?: boolean;
 
   /**
    * Body param: Whether this agent opts out of sensitive data storage like
