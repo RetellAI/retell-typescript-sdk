@@ -182,6 +182,13 @@ export interface PhoneCallResponse {
   metadata?: unknown;
 
   /**
+   * Whether this agent opts in for signed URLs for public logs and recordings. When
+   * enabled, the generated URLs will include security signatures that restrict
+   * access and automatically expire after 24 hours.
+   */
+  opt_in_signed_url?: boolean;
+
+  /**
    * Whether this call opts out of sensitive data storage like transcript, recording,
    * logging.
    */
@@ -904,6 +911,13 @@ export interface WebCallResponse {
    * can later get this field from the call object.
    */
   metadata?: unknown;
+
+  /**
+   * Whether this agent opts in for signed URLs for public logs and recordings. When
+   * enabled, the generated URLs will include security signatures that restrict
+   * access and automatically expire after 24 hours.
+   */
+  opt_in_signed_url?: boolean;
 
   /**
    * Whether this call opts out of sensitive data storage like transcript, recording,
