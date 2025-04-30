@@ -1,5 +1,33 @@
 # Changelog
 
+## 4.28.0 (2025-04-30)
+
+Full Changelog: [v4.27.0...v4.28.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.27.0...v4.28.0)
+
+### Features
+
+* **api:** api update ([409ffb7](https://github.com/RetellAI/retell-typescript-sdk/commit/409ffb70fc9178b645fc18377e48934c244da9b9))
+* **api:** api update ([05b8160](https://github.com/RetellAI/retell-typescript-sdk/commit/05b81604ef0268b561ecccaa0fbd68b1503ad523))
+* **api:** api update ([649f890](https://github.com/RetellAI/retell-typescript-sdk/commit/649f89096a6951d7f67551b5b965daa593b97535))
+* **api:** api update ([d1e681d](https://github.com/RetellAI/retell-typescript-sdk/commit/d1e681df930da0d72fedc64dab2986aac5734c73))
+
+
+### Bug Fixes
+
+* **tests:** skip unsupported test failure ([004c2cc](https://github.com/RetellAI/retell-typescript-sdk/commit/004c2cc51c3da4628154868ef0fb2b777aaedafb))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([343018e](https://github.com/RetellAI/retell-typescript-sdk/commit/343018ec69a9a4b42ff0a2e91cca20088799e7ee))
+* **ci:** only use depot for staging repos ([101074a](https://github.com/RetellAI/retell-typescript-sdk/commit/101074ab41ca76af42fa71acf2883596e2105a32))
+* **ci:** run on more branches and use depot runners ([0dfabce](https://github.com/RetellAI/retell-typescript-sdk/commit/0dfabceeccedc37dea61735290fcc63bdaecd77d))
+
+
+### Documentation
+
+* **readme:** fix typo ([8ef3b01](https://github.com/RetellAI/retell-typescript-sdk/commit/8ef3b0178f03e8fded149067fa047d1a5c81fd2d))
+
 ## 4.27.0 (2025-04-17)
 
 Full Changelog: [v4.26.0...v4.27.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.26.0...v4.27.0)
