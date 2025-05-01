@@ -120,6 +120,11 @@ export interface LlmResponse {
   > | null;
 
   /**
+   * Whether the Retell LLM Response Engine is published.
+   */
+  is_published?: boolean;
+
+  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -186,7 +191,7 @@ export interface LlmResponse {
   /**
    * Version of the Retell LLM.
    */
-  version?: number | null;
+  version?: unknown;
 }
 
 export namespace LlmResponse {
