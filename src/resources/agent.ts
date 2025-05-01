@@ -226,6 +226,11 @@ export interface AgentResponse {
   interruption_sensitivity?: number;
 
   /**
+   * Whether the agent is published.
+   */
+  is_published?: boolean;
+
+  /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English. If unset, will use default value `en-US`. Select `multi` for
@@ -362,7 +367,7 @@ export interface AgentResponse {
   /**
    * Version of the agent.
    */
-  version?: number | null;
+  version?: unknown;
 
   /**
    * Optionally set the voice model used for the selected voice. Currently only
