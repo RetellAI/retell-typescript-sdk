@@ -6,6 +6,12 @@ import * as Core from '../core';
 export class PhoneNumber extends APIResource {
   /**
    * Buy a new phone number & Bind agents
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponse =
+   *   await client.phoneNumber.create();
+   * ```
    */
   create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.post('/create-phone-number', { body, ...options });
@@ -13,6 +19,12 @@ export class PhoneNumber extends APIResource {
 
   /**
    * Retrieve details of a specific phone number
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponse =
+   *   await client.phoneNumber.retrieve('+14157774444');
+   * ```
    */
   retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.get(`/get-phone-number/${phoneNumber}`, options);
@@ -20,6 +32,18 @@ export class PhoneNumber extends APIResource {
 
   /**
    * Update agent bound to a purchased phone number
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponse = await client.phoneNumber.update(
+   *   '+14157774444',
+   *   {
+   *     inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *     nickname: 'Frontdesk Number',
+   *     outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *   },
+   * );
+   * ```
    */
   update(
     phoneNumber: string,
@@ -31,6 +55,12 @@ export class PhoneNumber extends APIResource {
 
   /**
    * List all phone numbers
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponses =
+   *   await client.phoneNumber.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<PhoneNumberListResponse> {
     return this._client.get('/list-phone-numbers', options);
@@ -38,6 +68,11 @@ export class PhoneNumber extends APIResource {
 
   /**
    * Delete an existing phone number
+   *
+   * @example
+   * ```ts
+   * await client.phoneNumber.delete('+14157774444');
+   * ```
    */
   delete(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-phone-number/${phoneNumber}`, {
@@ -48,6 +83,16 @@ export class PhoneNumber extends APIResource {
 
   /**
    * Import a phone number from custom telephony & Bind agents
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponse = await client.phoneNumber.import(
+   *   {
+   *     phone_number: '+14157774444',
+   *     termination_uri: 'someuri.pstn.twilio.com',
+   *   },
+   * );
+   * ```
    */
   import(body: PhoneNumberImportParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
     return this._client.post('/import-phone-number', { body, ...options });

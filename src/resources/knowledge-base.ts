@@ -6,6 +6,14 @@ import * as Core from '../core';
 export class KnowledgeBase extends APIResource {
   /**
    * Create a new knowledge base
+   *
+   * @example
+   * ```ts
+   * const knowledgeBaseResponse =
+   *   await client.knowledgeBase.create({
+   *     knowledge_base_name: 'Sample KB',
+   *   });
+   * ```
    */
   create(
     body: KnowledgeBaseCreateParams,
@@ -19,6 +27,12 @@ export class KnowledgeBase extends APIResource {
 
   /**
    * Retrieve details of a specific knowledge base
+   *
+   * @example
+   * ```ts
+   * const knowledgeBaseResponse =
+   *   await client.knowledgeBase.retrieve('kb_1234567890');
+   * ```
    */
   retrieve(knowledgeBaseId: string, options?: Core.RequestOptions): Core.APIPromise<KnowledgeBaseResponse> {
     return this._client.get(`/get-knowledge-base/${knowledgeBaseId}`, options);
@@ -26,6 +40,12 @@ export class KnowledgeBase extends APIResource {
 
   /**
    * List all knowledge bases
+   *
+   * @example
+   * ```ts
+   * const knowledgeBaseResponses =
+   *   await client.knowledgeBase.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<KnowledgeBaseListResponse> {
     return this._client.get('/list-knowledge-bases', options);
@@ -33,6 +53,11 @@ export class KnowledgeBase extends APIResource {
 
   /**
    * Delete an existing knowledge base
+   *
+   * @example
+   * ```ts
+   * await client.knowledgeBase.delete('kb_1234567890');
+   * ```
    */
   delete(knowledgeBaseId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-knowledge-base/${knowledgeBaseId}`, {
@@ -43,6 +68,12 @@ export class KnowledgeBase extends APIResource {
 
   /**
    * Add sources to a knowledge base
+   *
+   * @example
+   * ```ts
+   * const knowledgeBaseResponse =
+   *   await client.knowledgeBase.addSources('kb_1234567890');
+   * ```
    */
   addSources(
     knowledgeBaseId: string,
@@ -57,6 +88,15 @@ export class KnowledgeBase extends APIResource {
 
   /**
    * Delete an existing source from knowledge base
+   *
+   * @example
+   * ```ts
+   * const knowledgeBaseResponse =
+   *   await client.knowledgeBase.deleteSource(
+   *     'kb_1234567890',
+   *     'source_1234567890',
+   *   );
+   * ```
    */
   deleteSource(
     knowledgeBaseId: string,
