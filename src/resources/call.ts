@@ -6,6 +6,13 @@ import * as Core from '../core';
 export class Call extends APIResource {
   /**
    * Retrieve details of a specific call
+   *
+   * @example
+   * ```ts
+   * const callResponse = await client.call.retrieve(
+   *   '119c3f8e47135a29e65947eeb34cf12d',
+   * );
+   * ```
    */
   retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallResponse> {
     return this._client.get(`/v2/get-call/${callId}`, options);
@@ -13,6 +20,20 @@ export class Call extends APIResource {
 
   /**
    * Update metadata and sensitive data storage settings for an existing call
+   *
+   * @example
+   * ```ts
+   * const callResponse = await client.call.update(
+   *   'call_a4441234567890777c4a4a123e6',
+   *   {
+   *     metadata: {
+   *       customer_id: 'cust_123',
+   *       notes: 'Follow-up required',
+   *     },
+   *     opt_out_sensitive_data_storage: true,
+   *   },
+   * );
+   * ```
    */
   update(
     callId: string,
@@ -24,6 +45,11 @@ export class Call extends APIResource {
 
   /**
    * Retrieve call details
+   *
+   * @example
+   * ```ts
+   * const callResponses = await client.call.list();
+   * ```
    */
   list(body: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
     return this._client.post('/v2/list-calls', { body, ...options });
@@ -31,6 +57,13 @@ export class Call extends APIResource {
 
   /**
    * Delete a specific call and its associated data
+   *
+   * @example
+   * ```ts
+   * await client.call.delete(
+   *   '119c3f8e47135a29e65947eeb34cf12d',
+   * );
+   * ```
    */
   delete(callId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/v2/delete-call/${callId}`, {
@@ -41,6 +74,16 @@ export class Call extends APIResource {
 
   /**
    * Create a new outbound phone call
+   *
+   * @example
+   * ```ts
+   * const phoneCallResponse = await client.call.createPhoneCall(
+   *   {
+   *     from_number: '+14157774444',
+   *     to_number: '+12137774445',
+   *   },
+   * );
+   * ```
    */
   createPhoneCall(
     body: CallCreatePhoneCallParams,
@@ -51,6 +94,13 @@ export class Call extends APIResource {
 
   /**
    * Create a new web call
+   *
+   * @example
+   * ```ts
+   * const webCallResponse = await client.call.createWebCall({
+   *   agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   * });
+   * ```
    */
   createWebCall(
     body: CallCreateWebCallParams,
@@ -61,6 +111,14 @@ export class Call extends APIResource {
 
   /**
    * Register a new phone call for custom telephony
+   *
+   * @example
+   * ```ts
+   * const phoneCallResponse =
+   *   await client.call.registerPhoneCall({
+   *     agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *   });
+   * ```
    */
   registerPhoneCall(
     body: CallRegisterPhoneCallParams,

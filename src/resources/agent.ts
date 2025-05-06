@@ -7,6 +7,17 @@ import * as Core from '../core';
 export class Agent extends APIResource {
   /**
    * Create a new agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.create({
+   *   response_engine: {
+   *     llm_id: 'llm_234sdertfsdsfsdf',
+   *     type: 'retell-llm',
+   *   },
+   *   voice_id: '11labs-Adrian',
+   * });
+   * ```
    */
   create(body: AgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
     return this._client.post('/create-agent', { body, ...options });
@@ -14,6 +25,13 @@ export class Agent extends APIResource {
 
   /**
    * Retrieve details of a specific agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.retrieve(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
   retrieve(
     agentId: string,
@@ -34,6 +52,14 @@ export class Agent extends APIResource {
 
   /**
    * Update an existing agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.update(
+   *   '16b980523634a6dc504898cda492e939',
+   *   { agent_name: 'Jarvis' },
+   * );
+   * ```
    */
   update(
     agentId: string,
@@ -50,6 +76,11 @@ export class Agent extends APIResource {
 
   /**
    * List all agents
+   *
+   * @example
+   * ```ts
+   * const agentResponses = await client.agent.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<AgentListResponse> {
     return this._client.get('/list-agents', options);
@@ -57,6 +88,13 @@ export class Agent extends APIResource {
 
   /**
    * Delete an existing agent
+   *
+   * @example
+   * ```ts
+   * await client.agent.delete(
+   *   'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   * );
+   * ```
    */
   delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-agent/${agentId}`, {
@@ -67,6 +105,13 @@ export class Agent extends APIResource {
 
   /**
    * Get all versions of an agent
+   *
+   * @example
+   * ```ts
+   * const agentResponses = await client.agent.getVersions(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
   getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentGetVersionsResponse> {
     return this._client.get(`/get-agent-versions/${agentId}`, options);
