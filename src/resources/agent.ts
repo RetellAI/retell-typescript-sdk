@@ -152,6 +152,11 @@ export interface AgentResponse {
   agent_name?: string | null;
 
   /**
+   * If set to true, will allow user to input DTMF digits.
+   */
+  allow_user_dtmf?: boolean;
+
+  /**
    * If set, will add ambient environment sound to the call to make experience more
    * realistic. Currently supports the following options:
    *
@@ -409,6 +414,8 @@ export interface AgentResponse {
    */
   stt_mode?: 'fast' | 'accurate';
 
+  user_dtmf_options?: AgentResponse.UserDtmfOptions | null;
+
   /**
    * Version of the agent.
    */
@@ -617,6 +624,23 @@ export namespace AgentResponse {
      */
     word: string;
   }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in user DTMF input.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * The key that terminates the DTMF input. Any digit, #, or \* is allowed.
+     */
+    termination_key?: string | null;
+
+    /**
+     * The timeout for user DTMF input in milliseconds.
+     */
+    timeout_ms?: number;
+  }
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -644,6 +668,11 @@ export interface AgentCreateParams {
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * If set to true, will allow user to input DTMF digits.
+   */
+  allow_user_dtmf?: boolean;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -898,6 +927,8 @@ export interface AgentCreateParams {
    */
   stt_mode?: 'fast' | 'accurate';
 
+  user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
+
   /**
    * Version of the agent.
    */
@@ -1106,6 +1137,23 @@ export namespace AgentCreateParams {
      */
     word: string;
   }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in user DTMF input.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * The key that terminates the DTMF input. Any digit, #, or \* is allowed.
+     */
+    termination_key?: string | null;
+
+    /**
+     * The timeout for user DTMF input in milliseconds.
+     */
+    timeout_ms?: number;
+  }
 }
 
 export interface AgentRetrieveParams {
@@ -1126,6 +1174,11 @@ export interface AgentUpdateParams {
    * Body param: The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * Body param: If set to true, will allow user to input DTMF digits.
+   */
+  allow_user_dtmf?: boolean;
 
   /**
    * Body param: If set, will add ambient environment sound to the call to make
@@ -1395,6 +1448,11 @@ export interface AgentUpdateParams {
   stt_mode?: 'fast' | 'accurate';
 
   /**
+   * Body param:
+   */
+  user_dtmf_options?: AgentUpdateParams.UserDtmfOptions | null;
+
+  /**
    * Body param: Version of the agent.
    */
   body_version?: number | null;
@@ -1607,6 +1665,23 @@ export namespace AgentUpdateParams {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in user DTMF input.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * The key that terminates the DTMF input. Any digit, #, or \* is allowed.
+     */
+    termination_key?: string | null;
+
+    /**
+     * The timeout for user DTMF input in milliseconds.
+     */
+    timeout_ms?: number;
   }
 }
 
