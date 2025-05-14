@@ -153,7 +153,7 @@ export interface AgentResponse {
 
   /**
    * If set to true, DTMF input will be accepted and processed. If false, any DTMF
-   * input will be ignored.
+   * input will be ignored. Default to true.
    */
   allow_user_dtmf?: boolean;
 
@@ -230,6 +230,11 @@ export interface AgentResponse {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -676,7 +681,7 @@ export interface AgentCreateParams {
 
   /**
    * If set to true, DTMF input will be accepted and processed. If false, any DTMF
-   * input will be ignored.
+   * input will be ignored. Default to true.
    */
   allow_user_dtmf?: boolean;
 
@@ -753,6 +758,11 @@ export interface AgentCreateParams {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -1187,7 +1197,7 @@ export interface AgentUpdateParams {
 
   /**
    * Body param: If set to true, DTMF input will be accepted and processed. If false,
-   * any DTMF input will be ignored.
+   * any DTMF input will be ignored. Default to true.
    */
   allow_user_dtmf?: boolean;
 
@@ -1264,6 +1274,12 @@ export interface AgentUpdateParams {
    * brands, street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Body param: If set, determines what denoising mode to use. Default to
+   * noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Body param: Controls whether the agent would backchannel (agent interjects the
