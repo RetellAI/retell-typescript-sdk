@@ -8,6 +8,11 @@ export class Llm extends APIResource {
   /**
    * Create a new Retell LLM Response Engine that can be attached to an agent. This
    * is used to generate response output for the agent.
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.create();
+   * ```
    */
   create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
@@ -15,6 +20,13 @@ export class Llm extends APIResource {
 
   /**
    * Retrieve details of a specific Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.retrieve(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
   retrieve(
     llmId: string,
@@ -35,6 +47,17 @@ export class Llm extends APIResource {
 
   /**
    * Update an existing Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.update(
+   *   '16b980523634a6dc504898cda492e939',
+   *   {
+   *     begin_message:
+   *       'Hey I am a virtual assistant calling from Retell Hospital.',
+   *   },
+   * );
+   * ```
    */
   update(
     llmId: string,
@@ -51,6 +74,11 @@ export class Llm extends APIResource {
 
   /**
    * List all Retell LLM Response Engines that can be attached to an agent.
+   *
+   * @example
+   * ```ts
+   * const llmResponses = await client.llm.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llms', options);
@@ -58,6 +86,11 @@ export class Llm extends APIResource {
 
   /**
    * Delete an existing Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * await client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+   * ```
    */
   delete(llmId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-retell-llm/${llmId}`, {
@@ -118,6 +151,11 @@ export interface LlmResponse {
     | LlmResponse.PressDigitTool
     | LlmResponse.CustomTool
   > | null;
+
+  /**
+   * Whether the Retell LLM Response Engine is published.
+   */
+  is_published?: boolean;
 
   /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
@@ -186,7 +224,7 @@ export interface LlmResponse {
   /**
    * Version of the Retell LLM.
    */
-  version?: number | null;
+  version?: unknown;
 }
 
 export namespace LlmResponse {

@@ -6,6 +6,15 @@ import * as Core from '../core';
 export class BatchCall extends APIResource {
   /**
    * Create a batch call
+   *
+   * @example
+   * ```ts
+   * const batchCallResponse =
+   *   await client.batchCall.createBatchCall({
+   *     from_number: '+14157774444',
+   *     tasks: [{ to_number: '+12137774445' }],
+   *   });
+   * ```
    */
   createBatchCall(
     body: BatchCallCreateBatchCallParams,

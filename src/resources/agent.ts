@@ -7,6 +7,17 @@ import * as Core from '../core';
 export class Agent extends APIResource {
   /**
    * Create a new agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.create({
+   *   response_engine: {
+   *     llm_id: 'llm_234sdertfsdsfsdf',
+   *     type: 'retell-llm',
+   *   },
+   *   voice_id: '11labs-Adrian',
+   * });
+   * ```
    */
   create(body: AgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
     return this._client.post('/create-agent', { body, ...options });
@@ -14,6 +25,13 @@ export class Agent extends APIResource {
 
   /**
    * Retrieve details of a specific agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.retrieve(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
   retrieve(
     agentId: string,
@@ -34,6 +52,14 @@ export class Agent extends APIResource {
 
   /**
    * Update an existing agent
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.update(
+   *   '16b980523634a6dc504898cda492e939',
+   *   { agent_name: 'Jarvis' },
+   * );
+   * ```
    */
   update(
     agentId: string,
@@ -50,6 +76,11 @@ export class Agent extends APIResource {
 
   /**
    * List all agents
+   *
+   * @example
+   * ```ts
+   * const agentResponses = await client.agent.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<AgentListResponse> {
     return this._client.get('/list-agents', options);
@@ -57,6 +88,13 @@ export class Agent extends APIResource {
 
   /**
    * Delete an existing agent
+   *
+   * @example
+   * ```ts
+   * await client.agent.delete(
+   *   'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   * );
+   * ```
    */
   delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-agent/${agentId}`, {
@@ -67,6 +105,13 @@ export class Agent extends APIResource {
 
   /**
    * Get all versions of an agent
+   *
+   * @example
+   * ```ts
+   * const agentResponses = await client.agent.getVersions(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
   getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentGetVersionsResponse> {
     return this._client.get(`/get-agent-versions/${agentId}`, options);
@@ -105,6 +150,12 @@ export interface AgentResponse {
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * If set to true, DTMF input will be accepted and processed. If false, any DTMF
+   * input will be ignored. Default to true.
+   */
+  allow_user_dtmf?: boolean;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -181,6 +232,11 @@ export interface AgentResponse {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+
+  /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
    * phrases like "yeah", "uh-huh" to signify interest and engagement). Backchannel
    * when enabled tends to show up more in longer user utterances. If not set, agent
@@ -224,6 +280,11 @@ export interface AgentResponse {
    * interrupted.
    */
   interruption_sensitivity?: number;
+
+  /**
+   * Whether the agent is published.
+   */
+  is_published?: boolean;
 
   /**
    * Specifies what language (and dialect) the speech recognition will operate in.
@@ -359,10 +420,12 @@ export interface AgentResponse {
    */
   stt_mode?: 'fast' | 'accurate';
 
+  user_dtmf_options?: AgentResponse.UserDtmfOptions | null;
+
   /**
    * Version of the agent.
    */
-  version?: number | null;
+  version?: unknown;
 
   /**
    * Optionally set the voice model used for the selected voice. Currently only
@@ -567,6 +630,27 @@ export namespace AgentResponse {
      */
     word: string;
   }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in the user's DTMF (Dual-Tone
+     * Multi-Frequency) input per turn. Once this limit is reached, the input is
+     * considered complete and a response will be generated immediately.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * A single key that signals the end of DTMF input. Acceptable values include any
+     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     */
+    termination_key?: string | null;
+
+    /**
+     * The time (in milliseconds) to wait for user DTMF input before timing out. The
+     * timer resets with each digit received.
+     */
+    timeout_ms?: number;
+  }
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -594,6 +678,12 @@ export interface AgentCreateParams {
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * If set to true, DTMF input will be accepted and processed. If false, any DTMF
+   * input will be ignored. Default to true.
+   */
+  allow_user_dtmf?: boolean;
 
   /**
    * If set, will add ambient environment sound to the call to make experience more
@@ -668,6 +758,11 @@ export interface AgentCreateParams {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -847,6 +942,8 @@ export interface AgentCreateParams {
    * Default to fast mode.
    */
   stt_mode?: 'fast' | 'accurate';
+
+  user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
 
   /**
    * Version of the agent.
@@ -1056,6 +1153,27 @@ export namespace AgentCreateParams {
      */
     word: string;
   }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in the user's DTMF (Dual-Tone
+     * Multi-Frequency) input per turn. Once this limit is reached, the input is
+     * considered complete and a response will be generated immediately.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * A single key that signals the end of DTMF input. Acceptable values include any
+     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     */
+    termination_key?: string | null;
+
+    /**
+     * The time (in milliseconds) to wait for user DTMF input before timing out. The
+     * timer resets with each digit received.
+     */
+    timeout_ms?: number;
+  }
 }
 
 export interface AgentRetrieveParams {
@@ -1076,6 +1194,12 @@ export interface AgentUpdateParams {
    * Body param: The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * Body param: If set to true, DTMF input will be accepted and processed. If false,
+   * any DTMF input will be ignored. Default to true.
+   */
+  allow_user_dtmf?: boolean;
 
   /**
    * Body param: If set, will add ambient environment sound to the call to make
@@ -1150,6 +1274,12 @@ export interface AgentUpdateParams {
    * brands, street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Body param: If set, determines what denoising mode to use. Default to
+   * noise-cancellation.
+   */
+  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Body param: Controls whether the agent would backchannel (agent interjects the
@@ -1343,6 +1473,11 @@ export interface AgentUpdateParams {
    * accuracy. Default to fast mode.
    */
   stt_mode?: 'fast' | 'accurate';
+
+  /**
+   * Body param:
+   */
+  user_dtmf_options?: AgentUpdateParams.UserDtmfOptions | null;
 
   /**
    * Body param: Version of the agent.
@@ -1557,6 +1692,27 @@ export namespace AgentUpdateParams {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  export interface UserDtmfOptions {
+    /**
+     * The maximum number of digits allowed in the user's DTMF (Dual-Tone
+     * Multi-Frequency) input per turn. Once this limit is reached, the input is
+     * considered complete and a response will be generated immediately.
+     */
+    digit_limit?: number | null;
+
+    /**
+     * A single key that signals the end of DTMF input. Acceptable values include any
+     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     */
+    termination_key?: string | null;
+
+    /**
+     * The time (in milliseconds) to wait for user DTMF input before timing out. The
+     * timer resets with each digit received.
+     */
+    timeout_ms?: number;
   }
 }
 
