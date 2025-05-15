@@ -191,7 +191,7 @@ export interface PhoneCallResponse {
   /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
-   * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
+   * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
   disconnection_reason?:
     | 'user_hangup'
@@ -212,14 +212,17 @@ export interface PhoneCallResponse {
     | 'error_llm_websocket_lost_connection'
     | 'error_llm_websocket_runtime'
     | 'error_llm_websocket_corrupt_payload'
-    | 'error_frontend_corrupted_payload'
-    | 'error_twilio'
     | 'error_no_audio_received'
     | 'error_asr'
     | 'error_retell'
     | 'error_unknown'
     | 'error_user_not_joined'
     | 'registered_call_timeout';
+
+  /**
+   * Duration of the call in milliseconds. Available after call ends.
+   */
+  duration_ms?: number;
 
   /**
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
@@ -922,7 +925,7 @@ export interface WebCallResponse {
   /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
-   * [Disconnection Reason Doc](/get-started/debug-guide#disconnection-reason).
+   * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
   disconnection_reason?:
     | 'user_hangup'
@@ -943,14 +946,17 @@ export interface WebCallResponse {
     | 'error_llm_websocket_lost_connection'
     | 'error_llm_websocket_runtime'
     | 'error_llm_websocket_corrupt_payload'
-    | 'error_frontend_corrupted_payload'
-    | 'error_twilio'
     | 'error_no_audio_received'
     | 'error_asr'
     | 'error_retell'
     | 'error_unknown'
     | 'error_user_not_joined'
     | 'registered_call_timeout';
+
+  /**
+   * Duration of the call in milliseconds. Available after call ends.
+   */
+  duration_ms?: number;
 
   /**
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
@@ -1680,8 +1686,6 @@ export namespace CallListParams {
       | 'error_llm_websocket_lost_connection'
       | 'error_llm_websocket_runtime'
       | 'error_llm_websocket_corrupt_payload'
-      | 'error_frontend_corrupted_payload'
-      | 'error_twilio'
       | 'error_no_audio_received'
       | 'error_asr'
       | 'error_retell'
