@@ -22,6 +22,14 @@ export {
   type CallCreateWebCallParams,
   type CallRegisterPhoneCallParams,
 } from './call';
+export {
+  Chat,
+  type ChatResponse,
+  type ChatListResponse,
+  type ChatCreateChatCompletionResponse,
+  type ChatCreateParams,
+  type ChatCreateChatCompletionParams,
+} from './chat';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
   KnowledgeBase,
