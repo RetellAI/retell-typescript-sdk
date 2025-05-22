@@ -17,6 +17,22 @@ Methods:
 - <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 
+# Chat
+
+Types:
+
+- <code><a href="./src/resources/chat.ts">ChatResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatListResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatCreateChatCompletionResponse</a></code>
+
+Methods:
+
+- <code title="post /create-chat">client.chat.<a href="./src/resources/chat.ts">create</a>({ ...params }) -> ChatResponse</code>
+- <code title="get /get-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">retrieve</a>(chatId) -> ChatResponse</code>
+- <code title="get /list-chat">client.chat.<a href="./src/resources/chat.ts">list</a>() -> ChatListResponse</code>
+- <code title="post /create-chat-completion">client.chat.<a href="./src/resources/chat.ts">createChatCompletion</a>({ ...params }) -> ChatCreateChatCompletionResponse</code>
+- <code title="patch /end-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">end</a>(chatId) -> void</code>
+
 # PhoneNumber
 
 Types:

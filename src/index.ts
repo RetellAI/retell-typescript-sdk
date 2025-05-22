@@ -27,6 +27,14 @@ import {
   PhoneCallResponse,
   WebCallResponse,
 } from './resources/call';
+import {
+  Chat,
+  ChatCreateChatCompletionParams,
+  ChatCreateChatCompletionResponse,
+  ChatCreateParams,
+  ChatListResponse,
+  ChatResponse,
+} from './resources/chat';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
   KnowledgeBase,
@@ -160,6 +168,7 @@ export class Retell extends Core.APIClient {
   }
 
   call: API.Call = new API.Call(this);
+  chat: API.Chat = new API.Chat(this);
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
@@ -205,6 +214,7 @@ export class Retell extends Core.APIClient {
 }
 
 Retell.Call = Call;
+Retell.Chat = Chat;
 Retell.PhoneNumber = PhoneNumber;
 Retell.Agent = AgentAPIAgent;
 Retell.Llm = Llm;
@@ -226,6 +236,15 @@ export declare namespace Retell {
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
     type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+  };
+
+  export {
+    Chat as Chat,
+    type ChatResponse as ChatResponse,
+    type ChatListResponse as ChatListResponse,
+    type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
+    type ChatCreateParams as ChatCreateParams,
+    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
   };
 
   export {
