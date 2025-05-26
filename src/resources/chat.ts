@@ -111,6 +111,11 @@ export interface ChatResponse {
   chat_cost?: ChatResponse.ChatCost;
 
   /**
+   * Dynamic variables collected from the chat. Only available after the chat ends.
+   */
+  collected_dynamic_variables?: Record<string, unknown>;
+
+  /**
    * End timestamp (milliseconds since epoch) of the chat. Available after chat ends.
    */
   end_timestamp?: number;
