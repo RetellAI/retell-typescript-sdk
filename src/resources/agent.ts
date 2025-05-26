@@ -428,6 +428,13 @@ export interface AgentResponse {
   version?: unknown;
 
   /**
+   * If set, determines the vocabulary set to use for transcription. This setting
+   * only applies for English agents, for non English agent, this setting is a no-op.
+   * Default to general.
+   */
+  vocab_specialization?: 'general' | 'medical';
+
+  /**
    * Optionally set the voice model used for the selected voice. Currently only
    * elevenlab voices have voice model selections. Set to null to remove voice model
    * selection, and default ones will apply. Check out the dashboard for details on
@@ -949,6 +956,13 @@ export interface AgentCreateParams {
    * Version of the agent.
    */
   version?: number | null;
+
+  /**
+   * If set, determines the vocabulary set to use for transcription. This setting
+   * only applies for English agents, for non English agent, this setting is a no-op.
+   * Default to general.
+   */
+  vocab_specialization?: 'general' | 'medical';
 
   /**
    * Optionally set the voice model used for the selected voice. Currently only
@@ -1483,6 +1497,13 @@ export interface AgentUpdateParams {
    * Body param: Version of the agent.
    */
   body_version?: number | null;
+
+  /**
+   * Body param: If set, determines the vocabulary set to use for transcription. This
+   * setting only applies for English agents, for non English agent, this setting is
+   * a no-op. Default to general.
+   */
+  vocab_specialization?: 'general' | 'medical';
 
   /**
    * Body param: Unique voice id used for the agent. Find list of available voices

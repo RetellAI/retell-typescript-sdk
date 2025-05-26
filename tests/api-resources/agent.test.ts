@@ -64,6 +64,7 @@ describe('resource agent', () => {
       stt_mode: 'fast',
       user_dtmf_options: { digit_limit: 1, termination_key: '#', timeout_ms: 1000 },
       version: 0,
+      vocab_specialization: 'general',
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
