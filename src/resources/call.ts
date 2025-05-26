@@ -189,6 +189,11 @@ export interface PhoneCallResponse {
   call_cost?: PhoneCallResponse.CallCost;
 
   /**
+   * Dynamic variables collected from the call. Only available after the call ends.
+   */
+  collected_dynamic_variables?: Record<string, unknown>;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -234,6 +239,12 @@ export interface PhoneCallResponse {
    * will be available, as it depends on the type of call and feature used.
    */
   latency?: PhoneCallResponse.Latency;
+
+  /**
+   * LLM token usage of the call, available after call ends. Not populated if using
+   * custom LLM, realtime API, or no LLM call is made.
+   */
+  llm_token_usage?: PhoneCallResponse.LlmTokenUsage;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -730,6 +741,27 @@ export namespace PhoneCallResponse {
   }
 
   /**
+   * LLM token usage of the call, available after call ends. Not populated if using
+   * custom LLM, realtime API, or no LLM call is made.
+   */
+  export interface LlmTokenUsage {
+    /**
+     * Average token count of the call.
+     */
+    average: number;
+
+    /**
+     * Number of requests made to the LLM.
+     */
+    num_requests: number;
+
+    /**
+     * All the token count values in the call.
+     */
+    values: Array<number>;
+  }
+
+  /**
    * Telephony identifier of the call, populated when available. Tracking purposes
    * only.
    */
@@ -923,6 +955,11 @@ export interface WebCallResponse {
   call_cost?: WebCallResponse.CallCost;
 
   /**
+   * Dynamic variables collected from the call. Only available after the call ends.
+   */
+  collected_dynamic_variables?: Record<string, unknown>;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -968,6 +1005,12 @@ export interface WebCallResponse {
    * will be available, as it depends on the type of call and feature used.
    */
   latency?: WebCallResponse.Latency;
+
+  /**
+   * LLM token usage of the call, available after call ends. Not populated if using
+   * custom LLM, realtime API, or no LLM call is made.
+   */
+  llm_token_usage?: WebCallResponse.LlmTokenUsage;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -1455,6 +1498,27 @@ export namespace WebCallResponse {
        */
       values?: Array<number>;
     }
+  }
+
+  /**
+   * LLM token usage of the call, available after call ends. Not populated if using
+   * custom LLM, realtime API, or no LLM call is made.
+   */
+  export interface LlmTokenUsage {
+    /**
+     * Average token count of the call.
+     */
+    average: number;
+
+    /**
+     * Number of requests made to the LLM.
+     */
+    num_requests: number;
+
+    /**
+     * All the token count values in the call.
+     */
+    values: Array<number>;
   }
 
   export interface TranscriptObject {
