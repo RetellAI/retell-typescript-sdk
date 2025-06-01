@@ -19,8 +19,7 @@ export class Call extends APIResource {
   }
 
   /**
-   * Update metadata and sensitive data storage settings for an existing call. Note
-   * that ongoing calls cannot be updated.
+   * Update metadata and sensitive data storage settings for an existing call.
    *
    * @example
    * ```ts
