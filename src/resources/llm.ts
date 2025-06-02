@@ -257,6 +257,10 @@ export namespace LlmResponse {
       | TransferCallTool.TransferDestinationPredefined
       | TransferCallTool.TransferDestinationInferred;
 
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
+
     type: 'transfer_call';
 
     /**
@@ -264,24 +268,6 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
-
-    /**
-     * If set to true, will show transferee (the user, not the AI agent) as caller when
-     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-     * only applicable for cold transfer, so if warm transfer option is specified, this
-     * field will be ignored. Default to false (default to show AI agent as caller).
-     */
-    show_transferee_as_caller?: boolean | null;
-
-    /**
-     * If set, when transfer is successful, will perform a warm handoff. Can leave
-     * either a static message or a dynamic one based on prompt. Set to null to disable
-     * warm handoff.
-     */
-    warm_transfer_option?:
-      | TransferCallTool.WarmTransferPrompt
-      | TransferCallTool.WarmTransferStaticMessage
-      | null;
   }
 
   export namespace TransferCallTool {
@@ -312,22 +298,55 @@ export namespace LlmResponse {
       type: 'inferred';
     }
 
-    export interface WarmTransferPrompt {
+    export interface TransferOptionColdTransfer {
       /**
-       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      prompt?: string;
+      show_transferee_as_caller: boolean;
 
-      type?: 'prompt';
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
     }
 
-    export interface WarmTransferStaticMessage {
+    export interface TransferOptionWarmTransfer {
       /**
-       * The static message to be used for warm handoff. Can contain dynamic variables.
+       * The type of the transfer.
        */
-      message?: string;
+      type: 'warm_transfer';
 
-      type?: 'static_message';
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
   }
 
@@ -645,6 +664,10 @@ export namespace LlmResponse {
         | TransferCallTool.TransferDestinationPredefined
         | TransferCallTool.TransferDestinationInferred;
 
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
+
       type: 'transfer_call';
 
       /**
@@ -652,24 +675,6 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
-
-      /**
-       * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
-       */
-      show_transferee_as_caller?: boolean | null;
-
-      /**
-       * If set, when transfer is successful, will perform a warm handoff. Can leave
-       * either a static message or a dynamic one based on prompt. Set to null to disable
-       * warm handoff.
-       */
-      warm_transfer_option?:
-        | TransferCallTool.WarmTransferPrompt
-        | TransferCallTool.WarmTransferStaticMessage
-        | null;
     }
 
     export namespace TransferCallTool {
@@ -700,22 +705,55 @@ export namespace LlmResponse {
         type: 'inferred';
       }
 
-      export interface WarmTransferPrompt {
+      export interface TransferOptionColdTransfer {
         /**
-         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        prompt?: string;
+        show_transferee_as_caller: boolean;
 
-        type?: 'prompt';
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
       }
 
-      export interface WarmTransferStaticMessage {
+      export interface TransferOptionWarmTransfer {
         /**
-         * The static message to be used for warm handoff. Can contain dynamic variables.
+         * The type of the transfer.
          */
-        message?: string;
+        type: 'warm_transfer';
 
-        type?: 'static_message';
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
       }
     }
 
@@ -1054,6 +1092,10 @@ export namespace LlmCreateParams {
       | TransferCallTool.TransferDestinationPredefined
       | TransferCallTool.TransferDestinationInferred;
 
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
+
     type: 'transfer_call';
 
     /**
@@ -1061,24 +1103,6 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
-
-    /**
-     * If set to true, will show transferee (the user, not the AI agent) as caller when
-     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-     * only applicable for cold transfer, so if warm transfer option is specified, this
-     * field will be ignored. Default to false (default to show AI agent as caller).
-     */
-    show_transferee_as_caller?: boolean | null;
-
-    /**
-     * If set, when transfer is successful, will perform a warm handoff. Can leave
-     * either a static message or a dynamic one based on prompt. Set to null to disable
-     * warm handoff.
-     */
-    warm_transfer_option?:
-      | TransferCallTool.WarmTransferPrompt
-      | TransferCallTool.WarmTransferStaticMessage
-      | null;
   }
 
   export namespace TransferCallTool {
@@ -1109,22 +1133,55 @@ export namespace LlmCreateParams {
       type: 'inferred';
     }
 
-    export interface WarmTransferPrompt {
+    export interface TransferOptionColdTransfer {
       /**
-       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      prompt?: string;
+      show_transferee_as_caller: boolean;
 
-      type?: 'prompt';
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
     }
 
-    export interface WarmTransferStaticMessage {
+    export interface TransferOptionWarmTransfer {
       /**
-       * The static message to be used for warm handoff. Can contain dynamic variables.
+       * The type of the transfer.
        */
-      message?: string;
+      type: 'warm_transfer';
 
-      type?: 'static_message';
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
   }
 
@@ -1442,6 +1499,10 @@ export namespace LlmCreateParams {
         | TransferCallTool.TransferDestinationPredefined
         | TransferCallTool.TransferDestinationInferred;
 
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
+
       type: 'transfer_call';
 
       /**
@@ -1449,24 +1510,6 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
-
-      /**
-       * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
-       */
-      show_transferee_as_caller?: boolean | null;
-
-      /**
-       * If set, when transfer is successful, will perform a warm handoff. Can leave
-       * either a static message or a dynamic one based on prompt. Set to null to disable
-       * warm handoff.
-       */
-      warm_transfer_option?:
-        | TransferCallTool.WarmTransferPrompt
-        | TransferCallTool.WarmTransferStaticMessage
-        | null;
     }
 
     export namespace TransferCallTool {
@@ -1497,22 +1540,55 @@ export namespace LlmCreateParams {
         type: 'inferred';
       }
 
-      export interface WarmTransferPrompt {
+      export interface TransferOptionColdTransfer {
         /**
-         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        prompt?: string;
+        show_transferee_as_caller: boolean;
 
-        type?: 'prompt';
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
       }
 
-      export interface WarmTransferStaticMessage {
+      export interface TransferOptionWarmTransfer {
         /**
-         * The static message to be used for warm handoff. Can contain dynamic variables.
+         * The type of the transfer.
          */
-        message?: string;
+        type: 'warm_transfer';
 
-        type?: 'static_message';
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
       }
     }
 
@@ -1865,6 +1941,10 @@ export namespace LlmUpdateParams {
       | TransferCallTool.TransferDestinationPredefined
       | TransferCallTool.TransferDestinationInferred;
 
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
+
     type: 'transfer_call';
 
     /**
@@ -1872,24 +1952,6 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
-
-    /**
-     * If set to true, will show transferee (the user, not the AI agent) as caller when
-     * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-     * only applicable for cold transfer, so if warm transfer option is specified, this
-     * field will be ignored. Default to false (default to show AI agent as caller).
-     */
-    show_transferee_as_caller?: boolean | null;
-
-    /**
-     * If set, when transfer is successful, will perform a warm handoff. Can leave
-     * either a static message or a dynamic one based on prompt. Set to null to disable
-     * warm handoff.
-     */
-    warm_transfer_option?:
-      | TransferCallTool.WarmTransferPrompt
-      | TransferCallTool.WarmTransferStaticMessage
-      | null;
   }
 
   export namespace TransferCallTool {
@@ -1920,22 +1982,55 @@ export namespace LlmUpdateParams {
       type: 'inferred';
     }
 
-    export interface WarmTransferPrompt {
+    export interface TransferOptionColdTransfer {
       /**
-       * The prompt to be used for warm handoff. Can contain dynamic variables.
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      prompt?: string;
+      show_transferee_as_caller: boolean;
 
-      type?: 'prompt';
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
     }
 
-    export interface WarmTransferStaticMessage {
+    export interface TransferOptionWarmTransfer {
       /**
-       * The static message to be used for warm handoff. Can contain dynamic variables.
+       * The type of the transfer.
        */
-      message?: string;
+      type: 'warm_transfer';
 
-      type?: 'static_message';
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
     }
   }
 
@@ -2253,6 +2348,10 @@ export namespace LlmUpdateParams {
         | TransferCallTool.TransferDestinationPredefined
         | TransferCallTool.TransferDestinationInferred;
 
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
+
       type: 'transfer_call';
 
       /**
@@ -2260,24 +2359,6 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
-
-      /**
-       * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
-       */
-      show_transferee_as_caller?: boolean | null;
-
-      /**
-       * If set, when transfer is successful, will perform a warm handoff. Can leave
-       * either a static message or a dynamic one based on prompt. Set to null to disable
-       * warm handoff.
-       */
-      warm_transfer_option?:
-        | TransferCallTool.WarmTransferPrompt
-        | TransferCallTool.WarmTransferStaticMessage
-        | null;
     }
 
     export namespace TransferCallTool {
@@ -2308,22 +2389,55 @@ export namespace LlmUpdateParams {
         type: 'inferred';
       }
 
-      export interface WarmTransferPrompt {
+      export interface TransferOptionColdTransfer {
         /**
-         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        prompt?: string;
+        show_transferee_as_caller: boolean;
 
-        type?: 'prompt';
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
       }
 
-      export interface WarmTransferStaticMessage {
+      export interface TransferOptionWarmTransfer {
         /**
-         * The static message to be used for warm handoff. Can contain dynamic variables.
+         * The type of the transfer.
          */
-        message?: string;
+        type: 'warm_transfer';
 
-        type?: 'static_message';
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
       }
     }
 
