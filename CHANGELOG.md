@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.33.0 (2025-06-04)
+
+Full Changelog: [v4.32.0...v4.33.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.32.0...v4.33.0)
+
+### Features
+
+* **api:** api update ([a47993c](https://github.com/RetellAI/retell-typescript-sdk/commit/a47993cbfd7a2bcded1220ec932ee03f49c1a73c))
+* **api:** api update ([1f3b3e3](https://github.com/RetellAI/retell-typescript-sdk/commit/1f3b3e3590abb0b77431b89a91c6da82f0ba8ed0))
+* **api:** api update ([397bdf0](https://github.com/RetellAI/retell-typescript-sdk/commit/397bdf013dbcebff1b75329d9855d83c139aab5f))
+* **api:** api update ([a74e7bd](https://github.com/RetellAI/retell-typescript-sdk/commit/a74e7bd24f9654dfc36b694ffbb3fa138ee8a1b3))
+* **api:** api update ([4d474bd](https://github.com/RetellAI/retell-typescript-sdk/commit/4d474bd69ba13622738a001ec879dbcbe8a7370a))
+* **api:** api update ([ca2e08b](https://github.com/RetellAI/retell-typescript-sdk/commit/ca2e08b1daee6db444caf0a729dc9ba60f7e54dc))
+
+
+### Chores
+
+* **docs:** use top-level-await in example snippets ([5796338](https://github.com/RetellAI/retell-typescript-sdk/commit/579633888761a2171676253a067a1f7616cc9d2d))
+* improve publish-npm script --latest tag logic ([91b5313](https://github.com/RetellAI/retell-typescript-sdk/commit/91b5313504566820da426276dc487edb123c22d9))
+
 ## 4.32.0 (2025-05-26)
 
 Full Changelog: [v4.31.0...v4.32.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.31.0...v4.32.0)
