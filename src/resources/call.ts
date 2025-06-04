@@ -19,7 +19,7 @@ export class Call extends APIResource {
   }
 
   /**
-   * Update metadata and sensitive data storage settings for an existing call
+   * Update metadata and sensitive data storage settings for an existing call.
    *
    * @example
    * ```ts
@@ -233,6 +233,15 @@ export interface PhoneCallResponse {
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
    */
   end_timestamp?: number;
+
+  /**
+   * URL to the knowledge base retrieved contents of the call. Available after call
+   * ends if the call utilizes knowledge base feature. It consists of the respond id
+   * and the retrieved contents related to that response. It's already rendered in
+   * call history tab of dashboard, and you can also manually download and check
+   * against the transcript to view the knowledge base retrieval results.
+   */
+  knowledge_base_retrieved_contents_url?: string;
 
   /**
    * Latency tracking of the call, available after call ends. Not all fields here
@@ -999,6 +1008,15 @@ export interface WebCallResponse {
    * End timestamp (milliseconds since epoch) of the call. Available after call ends.
    */
   end_timestamp?: number;
+
+  /**
+   * URL to the knowledge base retrieved contents of the call. Available after call
+   * ends if the call utilizes knowledge base feature. It consists of the respond id
+   * and the retrieved contents related to that response. It's already rendered in
+   * call history tab of dashboard, and you can also manually download and check
+   * against the transcript to view the knowledge base retrieval results.
+   */
+  knowledge_base_retrieved_contents_url?: string;
 
   /**
    * Latency tracking of the call, available after call ends. Not all fields here
