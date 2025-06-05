@@ -300,17 +300,17 @@ export namespace LlmResponse {
 
     export interface TransferOptionColdTransfer {
       /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      show_transferee_as_caller: boolean;
-
-      /**
-       * The type of the transfer.
-       */
-      type: 'cold_transfer';
+      show_transferee_as_caller?: boolean;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -707,17 +707,17 @@ export namespace LlmResponse {
 
       export interface TransferOptionColdTransfer {
         /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring, requires the telephony side to support SIP REFER to PSTN. This is
          * only applicable for cold transfer, so if warm transfer option is specified, this
          * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        show_transferee_as_caller: boolean;
-
-        /**
-         * The type of the transfer.
-         */
-        type: 'cold_transfer';
+        show_transferee_as_caller?: boolean;
       }
 
       export interface TransferOptionWarmTransfer {
@@ -1135,17 +1135,17 @@ export namespace LlmCreateParams {
 
     export interface TransferOptionColdTransfer {
       /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      show_transferee_as_caller: boolean;
-
-      /**
-       * The type of the transfer.
-       */
-      type: 'cold_transfer';
+      show_transferee_as_caller?: boolean;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -1542,17 +1542,17 @@ export namespace LlmCreateParams {
 
       export interface TransferOptionColdTransfer {
         /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring, requires the telephony side to support SIP REFER to PSTN. This is
          * only applicable for cold transfer, so if warm transfer option is specified, this
          * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        show_transferee_as_caller: boolean;
-
-        /**
-         * The type of the transfer.
-         */
-        type: 'cold_transfer';
+        show_transferee_as_caller?: boolean;
       }
 
       export interface TransferOptionWarmTransfer {
@@ -1984,17 +1984,17 @@ export namespace LlmUpdateParams {
 
     export interface TransferOptionColdTransfer {
       /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
        * transferring, requires the telephony side to support SIP REFER to PSTN. This is
        * only applicable for cold transfer, so if warm transfer option is specified, this
        * field will be ignored. Default to false (default to show AI agent as caller).
        */
-      show_transferee_as_caller: boolean;
-
-      /**
-       * The type of the transfer.
-       */
-      type: 'cold_transfer';
+      show_transferee_as_caller?: boolean;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -2391,17 +2391,17 @@ export namespace LlmUpdateParams {
 
       export interface TransferOptionColdTransfer {
         /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring, requires the telephony side to support SIP REFER to PSTN. This is
          * only applicable for cold transfer, so if warm transfer option is specified, this
          * field will be ignored. Default to false (default to show AI agent as caller).
          */
-        show_transferee_as_caller: boolean;
-
-        /**
-         * The type of the transfer.
-         */
-        type: 'cold_transfer';
+        show_transferee_as_caller?: boolean;
       }
 
       export interface TransferOptionWarmTransfer {
