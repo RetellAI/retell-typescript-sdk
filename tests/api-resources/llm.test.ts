@@ -38,6 +38,17 @@ describe('resource llm', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
+  test('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.llm.retrieve(
+        '16b980523634a6dc504898cda492e939',
+        { version: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
   test('update', async () => {
     const responsePromise = client.llm.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();

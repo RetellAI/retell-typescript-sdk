@@ -24,16 +24,12 @@ const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
 });
 
-async function main() {
-  const agentResponse = await client.agent.create({
-    llm_websocket_url: 'wss://your-websocket-endpoint',
-    voice_id: '11labs-Adrian',
-  });
+const agentResponse = await client.agent.create({
+  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+  voice_id: '11labs-Adrian',
+});
 
-  console.log(agentResponse.agent_id);
-}
-
-main();
+console.log(agentResponse.agent_id);
 ```
 
 ### Request & Response types
@@ -48,15 +44,11 @@ const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
 });
 
-async function main() {
-  const params: Retell.AgentCreateParams = {
-    llm_websocket_url: 'wss://your-websocket-endpoint',
-    voice_id: '11labs-Adrian',
-  };
-  const agentResponse: Retell.AgentResponse = await client.agent.create(params);
-}
-
-main();
+const params: Retell.AgentCreateParams = {
+  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+  voice_id: '11labs-Adrian',
+};
+const agentResponse: Retell.AgentResponse = await client.agent.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -69,24 +61,23 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const agentResponse = await client.agent
-    .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
-    .catch(async (err) => {
-      if (err instanceof Retell.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
-}
-
-main();
+const agentResponse = await client.agent
+  .create({
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  })
+  .catch(async (err) => {
+    if (err instanceof Retell.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
-Error codes are as followed:
+Error codes are as follows:
 
 | Status Code | Error Type                 |
 | ----------- | -------------------------- |
@@ -115,7 +106,7 @@ const client = new Retell({
 });
 
 // Or, configure per-request:
-await client.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
   maxRetries: 5,
 });
 ```
@@ -132,7 +123,7 @@ const client = new Retell({
 });
 
 // Override per-request:
-await client.agent.create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' }, {
+await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -154,13 +145,19 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 const client = new Retell();
 
 const response = await client.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: agentResponse, response: raw } = await client.agent
-  .create({ llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' })
+  .create({
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(agentResponse.agent_id);
@@ -268,7 +265,7 @@ const client = new Retell({
 
 // Override per-request:
 await client.agent.create(
-  { llm_websocket_url: 'wss://your-websocket-endpoint', voice_id: '11labs-Adrian' },
+  { response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
@@ -280,7 +277,7 @@ await client.agent.create(
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
 1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals)_.
+2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
 3. Changes that we do not expect to impact the vast majority of users in practice.
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
@@ -293,6 +290,19 @@ TypeScript >= 4.5 is supported.
 
 The following runtimes are supported:
 
+- Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)
+- Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
+- Deno v1.28.0 or higher.
+- Bun 1.0 or later.
+- Cloudflare Workers.
+- Vercel Edge Runtime.
+- Jest 28 or greater with the `"node"` environment (`"jsdom"` is not supported at this time).
+- Nitro v2.6 or greater.
+
 Note that React Native is not supported at this time.
 
 If you are interested in other runtime environments, please open or upvote an issue on GitHub.
+
+## Contributing
+
+See [the contributing documentation](./CONTRIBUTING.md).

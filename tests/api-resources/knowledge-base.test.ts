@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Retell from 'retell-sdk';
+import Retell, { toFile } from 'retell-sdk';
 import { Response } from 'node-fetch';
 
 const client = new Retell({
@@ -8,9 +8,10 @@ const client = new Retell({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource phoneNumber', () => {
-  test('create', async () => {
-    const responsePromise = client.phoneNumber.create({});
+describe('resource knowledgeBase', () => {
+  // custom code
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.knowledgeBase.create({ knowledge_base_name: 'Sample KB' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,8 +21,19 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
+  // custom code
+  test.skip('create: required and optional params', async () => {
+    const response = await client.knowledgeBase.create({
+      knowledge_base_name: 'Sample KB',
+      enable_auto_refresh: true,
+      knowledge_base_files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      knowledge_base_texts: [{ text: 'text', title: 'title' }],
+      knowledge_base_urls: ['https://www.example.com', 'https://www.retellai.com'],
+    });
+  });
+
   test('retrieve', async () => {
-    const responsePromise = client.phoneNumber.retrieve('+14157774444');
+    const responsePromise = client.knowledgeBase.retrieve('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,23 +46,12 @@ describe('resource phoneNumber', () => {
   test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.phoneNumber.retrieve('+14157774444', { path: '/_stainless_unknown_path' }),
+      client.knowledgeBase.retrieve('kb_1234567890', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('update', async () => {
-    const responsePromise = client.phoneNumber.update('+14157774444', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
   test('list', async () => {
-    const responsePromise = client.phoneNumber.list();
+    const responsePromise = client.knowledgeBase.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,13 +63,13 @@ describe('resource phoneNumber', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.phoneNumber.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.knowledgeBase.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
 
   test('delete', async () => {
-    const responsePromise = client.phoneNumber.delete('+14157774444');
+    const responsePromise = client.knowledgeBase.delete('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,15 +82,13 @@ describe('resource phoneNumber', () => {
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.phoneNumber.delete('+14157774444', { path: '/_stainless_unknown_path' }),
+      client.knowledgeBase.delete('kb_1234567890', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('import: only required params', async () => {
-    const responsePromise = client.phoneNumber.import({
-      phone_number: '+14157774444',
-      termination_uri: 'someuri.pstn.twilio.com',
-    });
+  // custom code
+  test.skip('addSources', async () => {
+    const responsePromise = client.knowledgeBase.addSources('kb_1234567890', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -99,18 +98,23 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('import: required and optional params', async () => {
-    const response = await client.phoneNumber.import({
-      phone_number: '+14157774444',
-      termination_uri: 'someuri.pstn.twilio.com',
-      inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      inbound_agent_version: 1,
-      inbound_webhook_url: 'https://example.com/inbound-webhook',
-      nickname: 'Frontdesk Number',
-      outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      outbound_agent_version: 1,
-      sip_trunk_auth_password: '123456',
-      sip_trunk_auth_username: 'username',
-    });
+  test('deleteSource', async () => {
+    const responsePromise = client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('deleteSource: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890', {
+        path: '/_stainless_unknown_path',
+      }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 });

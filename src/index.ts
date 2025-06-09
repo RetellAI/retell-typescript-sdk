@@ -1,10 +1,65 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Errors from './error';
-import * as Uploads from './uploads';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
+import * as Errors from './error';
+import * as Uploads from './uploads';
 import * as API from './resources/index';
+import {
+  Agent as AgentAPIAgent,
+  AgentCreateParams,
+  AgentGetVersionsResponse,
+  AgentListResponse,
+  AgentResponse,
+  AgentRetrieveParams,
+  AgentUpdateParams,
+} from './resources/agent';
+import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
+import {
+  Call,
+  CallCreatePhoneCallParams,
+  CallCreateWebCallParams,
+  CallListParams,
+  CallListResponse,
+  CallRegisterPhoneCallParams,
+  CallResponse,
+  CallUpdateParams,
+  PhoneCallResponse,
+  WebCallResponse,
+} from './resources/call';
+import {
+  Chat,
+  ChatCreateChatCompletionParams,
+  ChatCreateChatCompletionResponse,
+  ChatCreateParams,
+  ChatListResponse,
+  ChatResponse,
+} from './resources/chat';
+import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
+import {
+  KnowledgeBase,
+  KnowledgeBaseAddSourcesParams,
+  KnowledgeBaseCreateParams,
+  KnowledgeBaseListResponse,
+  KnowledgeBaseResponse,
+} from './resources/knowledge-base';
+import {
+  Llm,
+  LlmCreateParams,
+  LlmListResponse,
+  LlmResponse,
+  LlmRetrieveParams,
+  LlmUpdateParams,
+} from './resources/llm';
+import {
+  PhoneNumber,
+  PhoneNumberCreateParams,
+  PhoneNumberImportParams,
+  PhoneNumberListResponse,
+  PhoneNumberResponse,
+  PhoneNumberUpdateParams,
+} from './resources/phone-number';
+import { Voice, VoiceListResponse, VoiceResponse } from './resources/voice';
 
 export interface ClientOptions {
   apiKey: string;
@@ -23,7 +78,7 @@ export interface ClientOptions {
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
    */
-  timeout?: number;
+  timeout?: number | undefined;
 
   /**
    * An HTTP agent used to manage HTTP(S) connections.
@@ -31,7 +86,7 @@ export interface ClientOptions {
    * If not provided, an agent will be constructed by default in the Node.js environment,
    * otherwise no agent is used.
    */
-  httpAgent?: Agent;
+  httpAgent?: Agent | undefined;
 
   /**
    * Specify a custom `fetch` function implementation.
@@ -47,7 +102,7 @@ export interface ClientOptions {
    *
    * @default 2
    */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
 
   /**
    * Default headers to include with every request to the API.
@@ -55,7 +110,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * header to `undefined` or `null` in request options.
    */
-  defaultHeaders?: Core.Headers;
+  defaultHeaders?: Core.Headers | undefined;
 
   /**
    * Default query parameters to include with every request to the API.
@@ -63,7 +118,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * param to `undefined` in request options.
    */
-  defaultQuery?: Core.DefaultQuery;
+  defaultQuery?: Core.DefaultQuery | undefined;
 }
 
 /**
@@ -113,11 +168,14 @@ export class Retell extends Core.APIClient {
   }
 
   call: API.Call = new API.Call(this);
+  chat: API.Chat = new API.Chat(this);
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
+  knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
+  batchCall: API.BatchCall = new API.BatchCall(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -155,7 +213,89 @@ export class Retell extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-export const {
+Retell.Call = Call;
+Retell.Chat = Chat;
+Retell.PhoneNumber = PhoneNumber;
+Retell.Agent = AgentAPIAgent;
+Retell.Llm = Llm;
+Retell.KnowledgeBase = KnowledgeBase;
+Retell.Voice = Voice;
+Retell.Concurrency = Concurrency;
+Retell.BatchCall = BatchCall;
+export declare namespace Retell {
+  export type RequestOptions = Core.RequestOptions;
+
+  export {
+    Call as Call,
+    type CallResponse as CallResponse,
+    type PhoneCallResponse as PhoneCallResponse,
+    type WebCallResponse as WebCallResponse,
+    type CallListResponse as CallListResponse,
+    type CallUpdateParams as CallUpdateParams,
+    type CallListParams as CallListParams,
+    type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
+    type CallCreateWebCallParams as CallCreateWebCallParams,
+    type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+  };
+
+  export {
+    Chat as Chat,
+    type ChatResponse as ChatResponse,
+    type ChatListResponse as ChatListResponse,
+    type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
+    type ChatCreateParams as ChatCreateParams,
+    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
+  };
+
+  export {
+    PhoneNumber as PhoneNumber,
+    type PhoneNumberResponse as PhoneNumberResponse,
+    type PhoneNumberListResponse as PhoneNumberListResponse,
+    type PhoneNumberCreateParams as PhoneNumberCreateParams,
+    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
+    type PhoneNumberImportParams as PhoneNumberImportParams,
+  };
+
+  export {
+    AgentAPIAgent as Agent,
+    type AgentResponse as AgentResponse,
+    type AgentListResponse as AgentListResponse,
+    type AgentGetVersionsResponse as AgentGetVersionsResponse,
+    type AgentCreateParams as AgentCreateParams,
+    type AgentRetrieveParams as AgentRetrieveParams,
+    type AgentUpdateParams as AgentUpdateParams,
+  };
+
+  export {
+    Llm as Llm,
+    type LlmResponse as LlmResponse,
+    type LlmListResponse as LlmListResponse,
+    type LlmCreateParams as LlmCreateParams,
+    type LlmRetrieveParams as LlmRetrieveParams,
+    type LlmUpdateParams as LlmUpdateParams,
+  };
+
+  export {
+    KnowledgeBase as KnowledgeBase,
+    type KnowledgeBaseResponse as KnowledgeBaseResponse,
+    type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
+    type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
+    type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
+  };
+
+  export { Voice as Voice, type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
+
+  export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
+
+  export {
+    BatchCall as BatchCall,
+    type BatchCallResponse as BatchCallResponse,
+    type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
+  };
+}
+
+export { toFile, fileFromPath } from './uploads';
+export {
   RetellError,
   APIError,
   APIConnectionError,
@@ -169,49 +309,6 @@ export const {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} = Errors;
-
-export import toFile = Uploads.toFile;
-export import fileFromPath = Uploads.fileFromPath;
-
-export namespace Retell {
-  export import RequestOptions = Core.RequestOptions;
-
-  export import Call = API.Call;
-  export import CallResponse = API.CallResponse;
-  export import PhoneCallResponse = API.PhoneCallResponse;
-  export import WebCallResponse = API.WebCallResponse;
-  export import CallListResponse = API.CallListResponse;
-  export import CallListParams = API.CallListParams;
-  export import CallCreatePhoneCallParams = API.CallCreatePhoneCallParams;
-  export import CallCreateWebCallParams = API.CallCreateWebCallParams;
-  export import CallRegisterPhoneCallParams = API.CallRegisterPhoneCallParams;
-
-  export import PhoneNumber = API.PhoneNumber;
-  export import PhoneNumberResponse = API.PhoneNumberResponse;
-  export import PhoneNumberListResponse = API.PhoneNumberListResponse;
-  export import PhoneNumberCreateParams = API.PhoneNumberCreateParams;
-  export import PhoneNumberUpdateParams = API.PhoneNumberUpdateParams;
-  export import PhoneNumberImportParams = API.PhoneNumberImportParams;
-
-  export import Agent = API.Agent;
-  export import AgentResponse = API.AgentResponse;
-  export import AgentListResponse = API.AgentListResponse;
-  export import AgentCreateParams = API.AgentCreateParams;
-  export import AgentUpdateParams = API.AgentUpdateParams;
-
-  export import Llm = API.Llm;
-  export import LlmResponse = API.LlmResponse;
-  export import LlmListResponse = API.LlmListResponse;
-  export import LlmCreateParams = API.LlmCreateParams;
-  export import LlmUpdateParams = API.LlmUpdateParams;
-
-  export import Voice = API.Voice;
-  export import VoiceResponse = API.VoiceResponse;
-  export import VoiceListResponse = API.VoiceListResponse;
-
-  export import Concurrency = API.Concurrency;
-  export import ConcurrencyRetrieveResponse = API.ConcurrencyRetrieveResponse;
-}
+} from './error';
 
 export default Retell;

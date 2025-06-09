@@ -11,7 +11,7 @@
     "paths": {
       "retell-sdk/_shims/auto/*": ["src/_shims/auto/*-node"],
       "retell-sdk/*": ["src/*"],
-      "retell-sdk": ["src/index.ts"],
+      "retell-sdk": ["src/index.ts"]
     },
     "noEmit": true,
 
@@ -32,6 +32,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+		"isolatedModules": false,
 
     "skipLibCheck": true
   }

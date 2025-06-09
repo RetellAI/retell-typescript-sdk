@@ -1,40 +1,96 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import { isRequestOptions } from '../core';
 import * as Core from '../core';
-import * as LlmAPI from './llm';
 
 export class Llm extends APIResource {
   /**
-   * Create a new Retell LLM
+   * Create a new Retell LLM Response Engine that can be attached to an agent. This
+   * is used to generate response output for the agent.
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.create();
+   * ```
    */
   create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
   /**
-   * Retrieve details of a specific Retell LLM
+   * Retrieve details of a specific Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.retrieve(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
    */
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
-    return this._client.get(`/get-retell-llm/${llmId}`, options);
+  retrieve(
+    llmId: string,
+    query?: LlmRetrieveParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse>;
+  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse>;
+  retrieve(
+    llmId: string,
+    query: LlmRetrieveParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse> {
+    if (isRequestOptions(query)) {
+      return this.retrieve(llmId, {}, query);
+    }
+    return this._client.get(`/get-retell-llm/${llmId}`, { query, ...options });
   }
 
   /**
-   * Update an existing Retell LLM
+   * Update an existing Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * const llmResponse = await client.llm.update(
+   *   '16b980523634a6dc504898cda492e939',
+   *   {
+   *     begin_message:
+   *       'Hey I am a virtual assistant calling from Retell Hospital.',
+   *   },
+   * );
+   * ```
    */
-  update(llmId: string, body: LlmUpdateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
-    return this._client.patch(`/update-retell-llm/${llmId}`, { body, ...options });
+  update(
+    llmId: string,
+    params: LlmUpdateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmResponse> {
+    const { query_version, ...body } = params;
+    return this._client.patch(`/update-retell-llm/${llmId}`, {
+      query: { version: query_version },
+      body,
+      ...options,
+    });
   }
 
   /**
-   * List all retell LLM
+   * List all Retell LLM Response Engines that can be attached to an agent.
+   *
+   * @example
+   * ```ts
+   * const llmResponses = await client.llm.list();
+   * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llms', options);
   }
 
   /**
-   * Delete an existing Retell LLM
+   * Delete an existing Retell LLM Response Engine
+   *
+   * @example
+   * ```ts
+   * await client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
+   * ```
    */
   delete(llmId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.delete(`/delete-retell-llm/${llmId}`, {
@@ -52,21 +108,22 @@ export interface LlmResponse {
   last_modification_timestamp: number;
 
   /**
-   * Unique id of Retell LLM.
+   * Unique id of Retell LLM Response Engine.
    */
   llm_id: string;
-
-  /**
-   * The LLM Websocket URL constructed from unique id of Retell LLM. Used in agent
-   * API to create / update agent.
-   */
-  llm_websocket_url: string;
 
   /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
   begin_message?: string | null;
+
+  /**
+   * Default dynamic variables represented as key-value pairs of strings. These are
+   * injected into your Retell LLM prompt and tool description when specific values
+   * are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
@@ -96,16 +153,51 @@ export interface LlmResponse {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
+   * Whether the Retell LLM Response Engine is published.
    */
-  inbound_dynamic_variables_webhook_url?: string | null;
+  is_published?: boolean;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * A list of knowledge base ids to use for this resource. Set to null to remove all
+   * knowledge bases.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * Select the underlying text LLM. If not set, would default to gpt-4o.
+   */
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
+
+  /**
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
+   */
+  model_high_priority?: boolean;
+
+  /**
+   * If set, will control the randomness of the response. Value ranging from [0,1].
+   * Lower value means more deterministic, while higher value means more random. If
+   * unset, default value 0 will apply. Note that for tool calling, a lower value is
+   * recommended.
+   */
+  model_temperature?: number;
+
+  /**
+   * Select the underlying speech to speech model. Can only set this or model, not
+   * both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -120,6 +212,19 @@ export interface LlmResponse {
    * tools (essentially one state).
    */
   states?: Array<LlmResponse.State> | null;
+
+  /**
+   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
+   * structured output to make sure tool call arguments follow the json schema. The
+   * time to save a new tool or change to a tool will be longer as additional
+   * processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
+
+  /**
+   * Version of the Retell LLM.
+   */
+  version?: unknown;
 }
 
 export namespace LlmResponse {
@@ -148,11 +253,13 @@ export namespace LlmResponse {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
-     */
-    number: string;
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
 
     type: 'transfer_call';
 
@@ -161,6 +268,86 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
+    export interface TransferOptionColdTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export interface TransferOptionWarmTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'warm_transfer';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -248,6 +435,13 @@ export namespace LlmResponse {
     name: string;
 
     type: 'press_digit';
+
+    /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -466,11 +660,13 @@ export namespace LlmResponse {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
-       */
-      number: string;
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
 
@@ -479,6 +675,86 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
+      export interface TransferOptionColdTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export interface TransferOptionWarmTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'warm_transfer';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
     }
 
     export interface CheckAvailabilityCalTool {
@@ -566,6 +842,13 @@ export namespace LlmResponse {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -676,6 +959,13 @@ export interface LlmCreateParams {
   begin_message?: string | null;
 
   /**
+   * Default dynamic variables represented as key-value pairs of strings. These are
+   * injected into your Retell LLM prompt and tool description when specific values
+   * are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
+
+  /**
    * General prompt appended to system prompt no matter what state the agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
@@ -703,16 +993,46 @@ export interface LlmCreateParams {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
+   * A list of knowledge base ids to use for this resource. Set to null to remove all
+   * knowledge bases.
    */
-  inbound_dynamic_variables_webhook_url?: string | null;
+  knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
+
+  /**
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
+   */
+  model_high_priority?: boolean;
+
+  /**
+   * If set, will control the randomness of the response. Value ranging from [0,1].
+   * Lower value means more deterministic, while higher value means more random. If
+   * unset, default value 0 will apply. Note that for tool calling, a lower value is
+   * recommended.
+   */
+  model_temperature?: number;
+
+  /**
+   * Select the underlying speech to speech model. Can only set this or model, not
+   * both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -727,6 +1047,19 @@ export interface LlmCreateParams {
    * tools (essentially one state).
    */
   states?: Array<LlmCreateParams.State> | null;
+
+  /**
+   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
+   * structured output to make sure tool call arguments follow the json schema. The
+   * time to save a new tool or change to a tool will be longer as additional
+   * processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
+
+  /**
+   * Version of the Retell LLM.
+   */
+  version?: number | null;
 }
 
 export namespace LlmCreateParams {
@@ -755,11 +1088,13 @@ export namespace LlmCreateParams {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
-     */
-    number: string;
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
 
     type: 'transfer_call';
 
@@ -768,6 +1103,86 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
+    export interface TransferOptionColdTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export interface TransferOptionWarmTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'warm_transfer';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -855,6 +1270,13 @@ export namespace LlmCreateParams {
     name: string;
 
     type: 'press_digit';
+
+    /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1073,11 +1495,13 @@ export namespace LlmCreateParams {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
-       */
-      number: string;
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
 
@@ -1086,6 +1510,86 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
+      export interface TransferOptionColdTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export interface TransferOptionWarmTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'warm_transfer';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
     }
 
     export interface CheckAvailabilityCalTool {
@@ -1173,6 +1677,13 @@ export namespace LlmCreateParams {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1273,15 +1784,37 @@ export namespace LlmCreateParams {
   }
 }
 
+export interface LlmRetrieveParams {
+  /**
+   * Optional version of the API to use for this request. Default to latest version.
+   */
+  version?: number;
+}
+
 export interface LlmUpdateParams {
   /**
-   * First utterance said by the agent in the call. If not set, LLM will dynamically
-   * generate a message. If set to "", agent will wait for user to speak first.
+   * Query param: Optional version of the API to use for this request. Default to
+   * latest version.
+   */
+  query_version?: number;
+
+  /**
+   * Body param: First utterance said by the agent in the call. If not set, LLM will
+   * dynamically generate a message. If set to "", agent will wait for user to speak
+   * first.
    */
   begin_message?: string | null;
 
   /**
-   * General prompt appended to system prompt no matter what state the agent is in.
+   * Body param: Default dynamic variables represented as key-value pairs of strings.
+   * These are injected into your Retell LLM prompt and tool description when
+   * specific values are not provided in a request. Only applicable for Retell LLM.
+   */
+  default_dynamic_variables?: Record<string, string> | null;
+
+  /**
+   * Body param: General prompt appended to system prompt no matter what state the
+   * agent is in.
    *
    * - System prompt (with state) = general prompt + state prompt.
    *
@@ -1290,9 +1823,10 @@ export interface LlmUpdateParams {
   general_prompt?: string | null;
 
   /**
-   * A list of tools the model may call (to get external knowledge, call API, etc).
-   * You can select from some common predefined tools like end call, transfer call,
-   * etc; or you can create your own custom tool (last option) for the LLM to use.
+   * Body param: A list of tools the model may call (to get external knowledge, call
+   * API, etc). You can select from some common predefined tools like end call,
+   * transfer call, etc; or you can create your own custom tool (last option) for the
+   * LLM to use.
    *
    * - Tools of LLM (with state) = general tools + state tools + state transitions
    *
@@ -1308,30 +1842,73 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
-   * For inbound phone calls, if this webhook is set, will POST to it to retrieve
-   * dynamic variables to use for the call. Without this, there's no way to pass
-   * dynamic variables for inbound calls.
+   * Body param: A list of knowledge base ids to use for this resource. Set to null
+   * to remove all knowledge bases.
    */
-  inbound_dynamic_variables_webhook_url?: string | null;
+  knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Select the underlying LLM. If not set, would default to gpt-4o.
+   * Body param: Select the underlying text LLM. If not set, would default to gpt-4o.
    */
-  model?: 'gpt-4o' | 'gpt-4o-mini' | 'claude-3.5-sonnet' | 'claude-3-haiku';
+  model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | null;
 
   /**
-   * Name of the starting state. Required if states is not empty.
+   * Body param: If set to true, will use high priority pool with more dedicated
+   * resource to ensure lower and more consistent latency, default to false. This
+   * feature usually comes with a higher cost.
+   */
+  model_high_priority?: boolean;
+
+  /**
+   * Body param: If set, will control the randomness of the response. Value ranging
+   * from [0,1]. Lower value means more deterministic, while higher value means more
+   * random. If unset, default value 0 will apply. Note that for tool calling, a
+   * lower value is recommended.
+   */
+  model_temperature?: number;
+
+  /**
+   * Body param: Select the underlying speech to speech model. Can only set this or
+   * model, not both.
+   */
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
+
+  /**
+   * Body param: Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
 
   /**
-   * States of the LLM. This is to help reduce prompt length and tool choices when
-   * the call can be broken into distinct states. With shorter prompts and less
-   * tools, the LLM can better focus and follow the rules, minimizing hallucination.
-   * If this field is not set, the agent would only have general prompt and general
-   * tools (essentially one state).
+   * Body param: States of the LLM. This is to help reduce prompt length and tool
+   * choices when the call can be broken into distinct states. With shorter prompts
+   * and less tools, the LLM can better focus and follow the rules, minimizing
+   * hallucination. If this field is not set, the agent would only have general
+   * prompt and general tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
+
+  /**
+   * Body param: Only applicable when model is gpt-4o or gpt-4o mini. If set to true,
+   * will use structured output to make sure tool call arguments follow the json
+   * schema. The time to save a new tool or change to a tool will be longer as
+   * additional processing is needed. Default to false.
+   */
+  tool_call_strict_mode?: boolean;
+
+  /**
+   * Body param: Version of the Retell LLM.
+   */
+  body_version?: number | null;
 }
 
 export namespace LlmUpdateParams {
@@ -1360,11 +1937,13 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
-    /**
-     * The number to transfer to in E.164 format (a + and country code, then the phone
-     * number with no space or other special characters). For example, +16175551212.
-     */
-    number: string;
+    transfer_destination:
+      | TransferCallTool.TransferDestinationPredefined
+      | TransferCallTool.TransferDestinationInferred;
+
+    transfer_option:
+      | TransferCallTool.TransferOptionColdTransfer
+      | TransferCallTool.TransferOptionWarmTransfer;
 
     type: 'transfer_call';
 
@@ -1373,6 +1952,86 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export namespace TransferCallTool {
+    export interface TransferDestinationPredefined {
+      /**
+       * The number to transfer to in E.164 format or a dynamic variable like
+       * {{transfer_number}}.
+       */
+      number: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'predefined';
+    }
+
+    export interface TransferDestinationInferred {
+      /**
+       * The prompt to be used to help infer the transfer destination. The model will
+       * take the global prompt, the call transcript, and this prompt together to deduce
+       * the right number to transfer to. Can contain dynamic variables.
+       */
+      prompt: string;
+
+      /**
+       * The type of transfer destination.
+       */
+      type: 'inferred';
+    }
+
+    export interface TransferOptionColdTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'cold_transfer';
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+       * only applicable for cold transfer, so if warm transfer option is specified, this
+       * field will be ignored. Default to false (default to show AI agent as caller).
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export interface TransferOptionWarmTransfer {
+      /**
+       * The type of the transfer.
+       */
+      type: 'warm_transfer';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+    }
+
+    export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
   }
 
   export interface CheckAvailabilityCalTool {
@@ -1460,6 +2119,13 @@ export namespace LlmUpdateParams {
     name: string;
 
     type: 'press_digit';
+
+    /**
+     * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+     * speak very slowly, and a delay can make sure the agent hears the full menu.
+     * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+     */
+    delay_ms?: number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1678,11 +2344,13 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
-      /**
-       * The number to transfer to in E.164 format (a + and country code, then the phone
-       * number with no space or other special characters). For example, +16175551212.
-       */
-      number: string;
+      transfer_destination:
+        | TransferCallTool.TransferDestinationPredefined
+        | TransferCallTool.TransferDestinationInferred;
+
+      transfer_option:
+        | TransferCallTool.TransferOptionColdTransfer
+        | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
 
@@ -1691,6 +2359,86 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export namespace TransferCallTool {
+      export interface TransferDestinationPredefined {
+        /**
+         * The number to transfer to in E.164 format or a dynamic variable like
+         * {{transfer_number}}.
+         */
+        number: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'predefined';
+      }
+
+      export interface TransferDestinationInferred {
+        /**
+         * The prompt to be used to help infer the transfer destination. The model will
+         * take the global prompt, the call transcript, and this prompt together to deduce
+         * the right number to transfer to. Can contain dynamic variables.
+         */
+        prompt: string;
+
+        /**
+         * The type of transfer destination.
+         */
+        type: 'inferred';
+      }
+
+      export interface TransferOptionColdTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'cold_transfer';
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
+         * only applicable for cold transfer, so if warm transfer option is specified, this
+         * field will be ignored. Default to false (default to show AI agent as caller).
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export interface TransferOptionWarmTransfer {
+        /**
+         * The type of the transfer.
+         */
+        type: 'warm_transfer';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      }
+
+      export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
     }
 
     export interface CheckAvailabilityCalTool {
@@ -1778,6 +2526,13 @@ export namespace LlmUpdateParams {
       name: string;
 
       type: 'press_digit';
+
+      /**
+       * Delay in milliseconds before pressing the digit, because a lot of IVR systems
+       * speak very slowly, and a delay can make sure the agent hears the full menu.
+       * Default to 1000 ms (1s). Valid range is 0 to 5000 ms (inclusive).
+       */
+      delay_ms?: number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1878,9 +2633,12 @@ export namespace LlmUpdateParams {
   }
 }
 
-export namespace Llm {
-  export import LlmResponse = LlmAPI.LlmResponse;
-  export import LlmListResponse = LlmAPI.LlmListResponse;
-  export import LlmCreateParams = LlmAPI.LlmCreateParams;
-  export import LlmUpdateParams = LlmAPI.LlmUpdateParams;
+export declare namespace Llm {
+  export {
+    type LlmResponse as LlmResponse,
+    type LlmListResponse as LlmListResponse,
+    type LlmCreateParams as LlmCreateParams,
+    type LlmRetrieveParams as LlmRetrieveParams,
+    type LlmUpdateParams as LlmUpdateParams,
+  };
 }

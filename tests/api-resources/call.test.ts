@@ -27,6 +27,17 @@ describe('resource call', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
+  test('update', async () => {
+    const responsePromise = client.call.update('call_a4441234567890777c4a4a123e6', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
   test('list', async () => {
     const responsePromise = client.call.list({});
     const rawResponse = await responsePromise.asResponse();
@@ -36,6 +47,24 @@ describe('resource call', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('delete', async () => {
+    const responsePromise = client.call.delete('119c3f8e47135a29e65947eeb34cf12d');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('delete: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.call.delete('119c3f8e47135a29e65947eeb34cf12d', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   test('createPhoneCall: only required params', async () => {
@@ -58,6 +87,7 @@ describe('resource call', () => {
       to_number: '+12137774445',
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      override_agent_version: 1,
       retell_llm_dynamic_variables: { customer_name: 'bar' },
     });
   });
@@ -76,6 +106,7 @@ describe('resource call', () => {
   test('createWebCall: required and optional params', async () => {
     const response = await client.call.createWebCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      agent_version: 1,
       metadata: {},
       retell_llm_dynamic_variables: { customer_name: 'bar' },
     });
@@ -95,6 +126,7 @@ describe('resource call', () => {
   test('registerPhoneCall: required and optional params', async () => {
     const response = await client.call.registerPhoneCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      agent_version: 1,
       direction: 'inbound',
       from_number: '+14157774444',
       metadata: {},
