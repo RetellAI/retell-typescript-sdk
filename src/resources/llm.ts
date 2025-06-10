@@ -513,7 +513,7 @@ export namespace LlmResponse {
      */
     parameters?: CustomTool.Parameters;
 
-    queryParams?: Record<string, string>;
+    query_params?: Record<string, string>;
 
     /**
      * Response variables to add to the dynamic variables.
@@ -937,7 +937,7 @@ export namespace LlmResponse {
        */
       parameters?: CustomTool.Parameters;
 
-      queryParams?: Record<string, string>;
+      query_params?: Record<string, string>;
 
       /**
        * Response variables to add to the dynamic variables.
@@ -1382,7 +1382,7 @@ export namespace LlmCreateParams {
      */
     parameters?: CustomTool.Parameters;
 
-    queryParams?: Record<string, string>;
+    query_params?: Record<string, string>;
 
     /**
      * Response variables to add to the dynamic variables.
@@ -1806,7 +1806,7 @@ export namespace LlmCreateParams {
        */
       parameters?: CustomTool.Parameters;
 
-      queryParams?: Record<string, string>;
+      query_params?: Record<string, string>;
 
       /**
        * Response variables to add to the dynamic variables.
@@ -2265,7 +2265,7 @@ export namespace LlmUpdateParams {
      */
     parameters?: CustomTool.Parameters;
 
-    queryParams?: Record<string, string>;
+    query_params?: Record<string, string>;
 
     /**
      * Response variables to add to the dynamic variables.
@@ -2689,7 +2689,7 @@ export namespace LlmUpdateParams {
        */
       parameters?: CustomTool.Parameters;
 
-      queryParams?: Record<string, string>;
+      query_params?: Record<string, string>;
 
       /**
        * Response variables to add to the dynamic variables.
