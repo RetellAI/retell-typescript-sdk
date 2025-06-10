@@ -496,12 +496,29 @@ export namespace LlmResponse {
     execution_message_description?: string;
 
     /**
+     * Headers to add to the request.
+     */
+    headers?: Record<string, string>;
+
+    /**
+     * Method to use for the request.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    queryParams?: Record<string, string>;
+
+    /**
+     * Response variables to add to the dynamic variables.
+     */
+    response_variables?: Record<string, string>;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -903,12 +920,29 @@ export namespace LlmResponse {
       execution_message_description?: string;
 
       /**
+       * Headers to add to the request.
+       */
+      headers?: Record<string, string>;
+
+      /**
+       * Method to use for the request.
+       */
+      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      queryParams?: Record<string, string>;
+
+      /**
+       * Response variables to add to the dynamic variables.
+       */
+      response_variables?: Record<string, string>;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -1331,12 +1365,29 @@ export namespace LlmCreateParams {
     execution_message_description?: string;
 
     /**
+     * Headers to add to the request.
+     */
+    headers?: Record<string, string>;
+
+    /**
+     * Method to use for the request.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    queryParams?: Record<string, string>;
+
+    /**
+     * Response variables to add to the dynamic variables.
+     */
+    response_variables?: Record<string, string>;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -1738,12 +1789,29 @@ export namespace LlmCreateParams {
       execution_message_description?: string;
 
       /**
+       * Headers to add to the request.
+       */
+      headers?: Record<string, string>;
+
+      /**
+       * Method to use for the request.
+       */
+      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      queryParams?: Record<string, string>;
+
+      /**
+       * Response variables to add to the dynamic variables.
+       */
+      response_variables?: Record<string, string>;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -2180,12 +2248,29 @@ export namespace LlmUpdateParams {
     execution_message_description?: string;
 
     /**
+     * Headers to add to the request.
+     */
+    headers?: Record<string, string>;
+
+    /**
+     * Method to use for the request.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
     parameters?: CustomTool.Parameters;
+
+    queryParams?: Record<string, string>;
+
+    /**
+     * Response variables to add to the dynamic variables.
+     */
+    response_variables?: Record<string, string>;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -2587,12 +2672,29 @@ export namespace LlmUpdateParams {
       execution_message_description?: string;
 
       /**
+       * Headers to add to the request.
+       */
+      headers?: Record<string, string>;
+
+      /**
+       * Method to use for the request.
+       */
+      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
        */
       parameters?: CustomTool.Parameters;
+
+      queryParams?: Record<string, string>;
+
+      /**
+       * Response variables to add to the dynamic variables.
+       */
+      response_variables?: Record<string, string>;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
