@@ -448,6 +448,8 @@ export interface AgentResponse {
     | 'eleven_multilingual_v2'
     | 'Play3.0-mini'
     | 'PlayDialog'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
     | null;
 
   /**
@@ -978,6 +980,8 @@ export interface AgentCreateParams {
     | 'eleven_multilingual_v2'
     | 'Play3.0-mini'
     | 'PlayDialog'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
     | null;
 
   /**
@@ -1525,6 +1529,8 @@ export interface AgentUpdateParams {
     | 'eleven_multilingual_v2'
     | 'Play3.0-mini'
     | 'PlayDialog'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
     | null;
 
   /**
