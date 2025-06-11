@@ -137,6 +137,11 @@ export interface PhoneCallResponse {
   agent_id: string;
 
   /**
+   * The version of the agent.
+   */
+  agent_version: number;
+
+  /**
    * Unique id of the call. Used to identify in LLM websocket and used to
    * authenticate in audio websocket.
    */
@@ -328,11 +333,6 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.ToolCallResultUtterance
     | PhoneCallResponse.DtmfUtterance
   >;
-
-  /**
-   * The version of the agent.
-   */
-  version?: number | null;
 }
 
 export namespace PhoneCallResponse {
@@ -927,6 +927,11 @@ export interface WebCallResponse {
   agent_id: string;
 
   /**
+   * The version of the agent.
+   */
+  agent_version: number;
+
+  /**
    * Unique id of the call. Used to identify in LLM websocket and used to
    * authenticate in audio websocket.
    */
@@ -1097,11 +1102,6 @@ export interface WebCallResponse {
     | WebCallResponse.ToolCallResultUtterance
     | WebCallResponse.DtmfUtterance
   >;
-
-  /**
-   * The version of the agent.
-   */
-  version?: number | null;
 }
 
 export namespace WebCallResponse {
