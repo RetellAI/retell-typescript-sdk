@@ -513,10 +513,15 @@ export namespace LlmResponse {
      */
     parameters?: CustomTool.Parameters;
 
+    /**
+     * Query parameters to append to the request URL.
+     */
     query_params?: Record<string, string>;
 
     /**
-     * Response variables to add to the dynamic variables.
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
      */
     response_variables?: Record<string, string>;
 
@@ -937,10 +942,15 @@ export namespace LlmResponse {
        */
       parameters?: CustomTool.Parameters;
 
+      /**
+       * Query parameters to append to the request URL.
+       */
       query_params?: Record<string, string>;
 
       /**
-       * Response variables to add to the dynamic variables.
+       * A mapping of variable names to JSON paths in the response body. These values
+       * will be extracted from the response and made available as dynamic variables for
+       * use.
        */
       response_variables?: Record<string, string>;
 
@@ -1382,10 +1392,15 @@ export namespace LlmCreateParams {
      */
     parameters?: CustomTool.Parameters;
 
+    /**
+     * Query parameters to append to the request URL.
+     */
     query_params?: Record<string, string>;
 
     /**
-     * Response variables to add to the dynamic variables.
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
      */
     response_variables?: Record<string, string>;
 
@@ -1806,10 +1821,15 @@ export namespace LlmCreateParams {
        */
       parameters?: CustomTool.Parameters;
 
+      /**
+       * Query parameters to append to the request URL.
+       */
       query_params?: Record<string, string>;
 
       /**
-       * Response variables to add to the dynamic variables.
+       * A mapping of variable names to JSON paths in the response body. These values
+       * will be extracted from the response and made available as dynamic variables for
+       * use.
        */
       response_variables?: Record<string, string>;
 
@@ -2265,10 +2285,15 @@ export namespace LlmUpdateParams {
      */
     parameters?: CustomTool.Parameters;
 
+    /**
+     * Query parameters to append to the request URL.
+     */
     query_params?: Record<string, string>;
 
     /**
-     * Response variables to add to the dynamic variables.
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
      */
     response_variables?: Record<string, string>;
 
@@ -2689,10 +2714,15 @@ export namespace LlmUpdateParams {
        */
       parameters?: CustomTool.Parameters;
 
+      /**
+       * Query parameters to append to the request URL.
+       */
       query_params?: Record<string, string>;
 
       /**
-       * Response variables to add to the dynamic variables.
+       * A mapping of variable names to JSON paths in the response body. These values
+       * will be extracted from the response and made available as dynamic variables for
+       * use.
        */
       response_variables?: Record<string, string>;
 
