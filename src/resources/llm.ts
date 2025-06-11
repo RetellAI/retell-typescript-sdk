@@ -457,6 +457,11 @@ export namespace LlmResponse {
     description: string;
 
     /**
+     * Method to use for the request.
+     */
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -499,11 +504,6 @@ export namespace LlmResponse {
      * Headers to add to the request.
      */
     headers?: Record<string, string>;
-
-    /**
-     * Method to use for the request.
-     */
-    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
@@ -881,6 +881,11 @@ export namespace LlmResponse {
       description: string;
 
       /**
+       * Method to use for the request.
+       */
+      method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -923,11 +928,6 @@ export namespace LlmResponse {
        * Headers to add to the request.
        */
       headers?: Record<string, string>;
-
-      /**
-       * Method to use for the request.
-       */
-      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
@@ -1326,6 +1326,11 @@ export namespace LlmCreateParams {
     description: string;
 
     /**
+     * Method to use for the request.
+     */
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -1368,11 +1373,6 @@ export namespace LlmCreateParams {
      * Headers to add to the request.
      */
     headers?: Record<string, string>;
-
-    /**
-     * Method to use for the request.
-     */
-    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
@@ -1750,6 +1750,11 @@ export namespace LlmCreateParams {
       description: string;
 
       /**
+       * Method to use for the request.
+       */
+      method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -1792,11 +1797,6 @@ export namespace LlmCreateParams {
        * Headers to add to the request.
        */
       headers?: Record<string, string>;
-
-      /**
-       * Method to use for the request.
-       */
-      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
@@ -2209,6 +2209,11 @@ export namespace LlmUpdateParams {
     description: string;
 
     /**
+     * Method to use for the request.
+     */
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -2251,11 +2256,6 @@ export namespace LlmUpdateParams {
      * Headers to add to the request.
      */
     headers?: Record<string, string>;
-
-    /**
-     * Method to use for the request.
-     */
-    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
@@ -2633,6 +2633,11 @@ export namespace LlmUpdateParams {
       description: string;
 
       /**
+       * Method to use for the request.
+       */
+      method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
@@ -2675,11 +2680,6 @@ export namespace LlmUpdateParams {
        * Headers to add to the request.
        */
       headers?: Record<string, string>;
-
-      /**
-       * Method to use for the request.
-       */
-      method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
