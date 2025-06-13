@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.36.0 (2025-06-13)
+
+Full Changelog: [v4.35.0...v4.36.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.35.0...v4.36.0)
+
+### Features
+
+* **api:** api update ([9a718b9](https://github.com/RetellAI/retell-typescript-sdk/commit/9a718b9dff4e53b76f09d98efb7641e6c26d7b3a))
+* **api:** api update ([1b3da08](https://github.com/RetellAI/retell-typescript-sdk/commit/1b3da0895257c3e2a19b01f427d4aa63326eb95f))
+
+
+### Bug Fixes
+
+* publish script — handle NPM errors correctly ([74e157b](https://github.com/RetellAI/retell-typescript-sdk/commit/74e157beca1fb029c18aa6878639c1ed172e3690))
+
+
+### Chores
+
+* **internal:** make base APIResource abstract ([0d933ef](https://github.com/RetellAI/retell-typescript-sdk/commit/0d933ef59161679e93fbe5766a33f6e9f118241f))
+
 ## 4.35.0 (2025-06-11)
 
 Full Changelog: [v4.34.0...v4.35.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.34.0...v4.35.0)
