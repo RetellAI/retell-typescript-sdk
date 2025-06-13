@@ -2,7 +2,7 @@
 
 import type { Retell } from './index';
 
-export class APIResource {
+export abstract class APIResource {
   protected _client: Retell;
 
   constructor(client: Retell) {
