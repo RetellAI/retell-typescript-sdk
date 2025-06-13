@@ -252,12 +252,6 @@ export interface AgentResponse {
   enable_transcription_formatting?: boolean;
 
   /**
-   * If set to true, will detect whether the call enters a voicemail. Note that this
-   * feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
@@ -312,8 +306,10 @@ export interface AgentResponse {
     | 'it-IT'
     | 'ko-KR'
     | 'nl-NL'
+    | 'nl-BE'
     | 'pl-PL'
     | 'tr-TR'
+    | 'th-TH'
     | 'vi-VN'
     | 'ro-RO'
     | 'bg-BG'
@@ -468,19 +464,12 @@ export interface AgentResponse {
   voice_temperature?: number;
 
   /**
-   * Configures when to stop running voicemail detection, as it becomes unlikely to
-   * hit voicemail after a couple minutes, and keep running it will only have
-   * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-   * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   * If this option is set, the call will try to detect voicemail in the first 3
+   * minutes of the call. Actions defined (hangup, or leave a message) will be
+   * applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
    */
-  voicemail_detection_timeout_ms?: number;
-
-  /**
-   * The message to be played when the call enters a voicemail. Note that this
-   * feature is only available for phone calls. If you want to hangup after hitting
-   * voicemail, set this to empty string.
-   */
-  voicemail_message?: string;
+  voicemail_option?: AgentResponse.VoicemailOption | null;
 
   /**
    * If set, will control the volume of the agent. Value ranging from [0,2]. Lower
@@ -660,6 +649,44 @@ export namespace AgentResponse {
      */
     timeout_ms?: number;
   }
+
+  /**
+   * If this option is set, the call will try to detect voicemail in the first 3
+   * minutes of the call. Actions defined (hangup, or leave a message) will be
+   * applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
+   */
+  export interface VoicemailOption {
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup;
+  }
+
+  export namespace VoicemailOption {
+    export interface VoicemailActionPrompt {
+      /**
+       * The prompt used to generate the text to be spoken when the call is detected to
+       * be in voicemail.
+       */
+      text: string;
+
+      type: 'prompt';
+    }
+
+    export interface VoicemailActionStaticText {
+      /**
+       * The text to be spoken when the call is detected to be in voicemail.
+       */
+      text: string;
+
+      type: 'static_text';
+    }
+
+    export interface VoicemailActionHangup {
+      type: 'hangup';
+    }
+  }
 }
 
 export type AgentListResponse = Array<AgentResponse>;
@@ -789,12 +816,6 @@ export interface AgentCreateParams {
   enable_transcription_formatting?: boolean;
 
   /**
-   * If set to true, will detect whether the call enters a voicemail. Note that this
-   * feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
@@ -844,8 +865,10 @@ export interface AgentCreateParams {
     | 'it-IT'
     | 'ko-KR'
     | 'nl-NL'
+    | 'nl-BE'
     | 'pl-PL'
     | 'tr-TR'
+    | 'th-TH'
     | 'vi-VN'
     | 'ro-RO'
     | 'bg-BG'
@@ -1000,19 +1023,12 @@ export interface AgentCreateParams {
   voice_temperature?: number;
 
   /**
-   * Configures when to stop running voicemail detection, as it becomes unlikely to
-   * hit voicemail after a couple minutes, and keep running it will only have
-   * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-   * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   * If this option is set, the call will try to detect voicemail in the first 3
+   * minutes of the call. Actions defined (hangup, or leave a message) will be
+   * applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
    */
-  voicemail_detection_timeout_ms?: number;
-
-  /**
-   * The message to be played when the call enters a voicemail. Note that this
-   * feature is only available for phone calls. If you want to hangup after hitting
-   * voicemail, set this to empty string.
-   */
-  voicemail_message?: string;
+  voicemail_option?: AgentCreateParams.VoicemailOption | null;
 
   /**
    * If set, will control the volume of the agent. Value ranging from [0,2]. Lower
@@ -1192,6 +1208,44 @@ export namespace AgentCreateParams {
      */
     timeout_ms?: number;
   }
+
+  /**
+   * If this option is set, the call will try to detect voicemail in the first 3
+   * minutes of the call. Actions defined (hangup, or leave a message) will be
+   * applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
+   */
+  export interface VoicemailOption {
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup;
+  }
+
+  export namespace VoicemailOption {
+    export interface VoicemailActionPrompt {
+      /**
+       * The prompt used to generate the text to be spoken when the call is detected to
+       * be in voicemail.
+       */
+      text: string;
+
+      type: 'prompt';
+    }
+
+    export interface VoicemailActionStaticText {
+      /**
+       * The text to be spoken when the call is detected to be in voicemail.
+       */
+      text: string;
+
+      type: 'static_text';
+    }
+
+    export interface VoicemailActionHangup {
+      type: 'hangup';
+    }
+  }
 }
 
 export interface AgentRetrieveParams {
@@ -1315,12 +1369,6 @@ export interface AgentUpdateParams {
   enable_transcription_formatting?: boolean;
 
   /**
-   * Body param: If set to true, will detect whether the call enters a voicemail.
-   * Note that this feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * Body param: If users stay silent for a period after agent speech, end the call.
    * The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000
    * (10 min).
@@ -1371,8 +1419,10 @@ export interface AgentUpdateParams {
     | 'it-IT'
     | 'ko-KR'
     | 'nl-NL'
+    | 'nl-BE'
     | 'pl-PL'
     | 'tr-TR'
+    | 'th-TH'
     | 'vi-VN'
     | 'ro-RO'
     | 'bg-BG'
@@ -1549,19 +1599,12 @@ export interface AgentUpdateParams {
   voice_temperature?: number;
 
   /**
-   * Body param: Configures when to stop running voicemail detection, as it becomes
-   * unlikely to hit voicemail after a couple minutes, and keep running it will only
-   * have negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum
-   * value allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   * Body param: If this option is set, the call will try to detect voicemail in the
+   * first 3 minutes of the call. Actions defined (hangup, or leave a message) will
+   * be applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
    */
-  voicemail_detection_timeout_ms?: number;
-
-  /**
-   * Body param: The message to be played when the call enters a voicemail. Note that
-   * this feature is only available for phone calls. If you want to hangup after
-   * hitting voicemail, set this to empty string.
-   */
-  voicemail_message?: string;
+  voicemail_option?: AgentUpdateParams.VoicemailOption | null;
 
   /**
    * Body param: If set, will control the volume of the agent. Value ranging from
@@ -1740,6 +1783,44 @@ export namespace AgentUpdateParams {
      * timer resets with each digit received.
      */
     timeout_ms?: number;
+  }
+
+  /**
+   * If this option is set, the call will try to detect voicemail in the first 3
+   * minutes of the call. Actions defined (hangup, or leave a message) will be
+   * applied when the voicemail is detected. Set this to null to disable voicemail
+   * detection.
+   */
+  export interface VoicemailOption {
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup;
+  }
+
+  export namespace VoicemailOption {
+    export interface VoicemailActionPrompt {
+      /**
+       * The prompt used to generate the text to be spoken when the call is detected to
+       * be in voicemail.
+       */
+      text: string;
+
+      type: 'prompt';
+    }
+
+    export interface VoicemailActionStaticText {
+      /**
+       * The text to be spoken when the call is detected to be in voicemail.
+       */
+      text: string;
+
+      type: 'static_text';
+    }
+
+    export interface VoicemailActionHangup {
+      type: 'hangup';
+    }
   }
 }
 
