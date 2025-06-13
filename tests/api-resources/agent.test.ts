@@ -38,7 +38,6 @@ describe('resource agent', () => {
       denoising_mode: 'noise-cancellation',
       enable_backchannel: true,
       enable_transcription_formatting: true,
-      enable_voicemail_detection: true,
       end_call_after_silence_ms: 600000,
       fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
       interruption_sensitivity: 1,
@@ -68,8 +67,9 @@ describe('resource agent', () => {
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
-      voicemail_detection_timeout_ms: 30000,
-      voicemail_message: 'Hi, please give us a callback.',
+      voicemail_option: {
+        action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
+      },
       volume: 1,
       webhook_url: 'https://webhook-url-here',
     });
