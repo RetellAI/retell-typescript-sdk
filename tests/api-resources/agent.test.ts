@@ -37,7 +37,6 @@ describe('resource agent', () => {
       boosted_keywords: ['retell', 'kroger'],
       denoising_mode: 'noise-cancellation',
       enable_backchannel: true,
-      enable_transcription_formatting: true,
       end_call_after_silence_ms: 600000,
       fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
       interruption_sensitivity: 1,
