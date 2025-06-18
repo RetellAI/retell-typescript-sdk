@@ -199,6 +199,11 @@ export interface PhoneCallResponse {
   collected_dynamic_variables?: Record<string, unknown>;
 
   /**
+   * Custom SIP headers to be added to the call.
+   */
+  custom_sip_headers?: Record<string, string>;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -971,6 +976,11 @@ export interface WebCallResponse {
    * Dynamic variables collected from the call. Only available after the call ends.
    */
   collected_dynamic_variables?: Record<string, unknown>;
+
+  /**
+   * Custom SIP headers to be added to the call.
+   */
+  custom_sip_headers?: Record<string, string>;
 
   /**
    * The reason for the disconnection of the call. Read details desciption about
