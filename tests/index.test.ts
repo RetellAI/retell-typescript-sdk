@@ -191,6 +191,28 @@ describe('instantiate client', () => {
       const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
       expect(client.baseURL).toEqual('https://api.retellai.com');
     });
+
+    test('in request options', () => {
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
+      expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
+        'http://localhost:5000/option/foo',
+      );
+    });
+
+    test('in request options overridden by client options', () => {
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: 'http://localhost:5000/client' });
+      expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
+        'http://localhost:5000/client/foo',
+      );
+    });
+
+    test('in request options overridden by env variable', () => {
+      process.env['RETELL_BASE_URL'] = 'http://localhost:5000/env';
+      const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
+      expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
+        'http://localhost:5000/env/foo',
+      );
+    });
   });
 
   test('maxRetries option is correctly set', () => {
