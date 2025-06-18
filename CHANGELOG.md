@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.38.0 (2025-06-18)
+
+Full Changelog: [v4.37.0...v4.38.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.37.0...v4.38.0)
+
+### Features
+
+* **api:** api update ([78d4e81](https://github.com/RetellAI/retell-typescript-sdk/commit/78d4e8163ed88665897383a3451120540aa4b8b8))
+* **api:** api update ([0f0e31b](https://github.com/RetellAI/retell-typescript-sdk/commit/0f0e31bf5338193f05cfa5578d27b1955af3e195))
+* **client:** add support for endpoint-specific base URLs ([a4a67f3](https://github.com/RetellAI/retell-typescript-sdk/commit/a4a67f36865085c7bcf7bac3b7cb19dd27f594ff))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([a70cbc3](https://github.com/RetellAI/retell-typescript-sdk/commit/a70cbc3f897d349319fc865c63387fd9ec05f751))
+
 ## 4.37.0 (2025-06-16)
 
 Full Changelog: [v4.36.0...v4.37.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.36.0...v4.37.0)
