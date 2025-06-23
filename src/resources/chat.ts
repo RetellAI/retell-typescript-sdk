@@ -113,7 +113,7 @@ export interface ChatResponse {
   /**
    * Dynamic variables collected from the chat. Only available after the chat ends.
    */
-  collected_dynamic_variables?: Record<string, unknown>;
+  collected_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * End timestamp (milliseconds since epoch) of the chat. Available after chat ends.
@@ -143,7 +143,7 @@ export interface ChatResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * Begin timestamp (milliseconds since epoch) of the chat. Available after chat
@@ -552,7 +552,7 @@ export interface ChatCreateParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 }
 
 export interface ChatCreateChatCompletionParams {

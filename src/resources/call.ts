@@ -196,12 +196,12 @@ export interface PhoneCallResponse {
   /**
    * Dynamic variables collected from the call. Only available after the call ends.
    */
-  collected_dynamic_variables?: Record<string, unknown>;
+  collected_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * Custom SIP headers to be added to the call.
    */
-  custom_sip_headers?: Record<string, string>;
+  custom_sip_headers?: { [key: string]: string };
 
   /**
    * The reason for the disconnection of the call. Read details desciption about
@@ -301,7 +301,7 @@ export interface PhoneCallResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -975,12 +975,12 @@ export interface WebCallResponse {
   /**
    * Dynamic variables collected from the call. Only available after the call ends.
    */
-  collected_dynamic_variables?: Record<string, unknown>;
+  collected_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * Custom SIP headers to be added to the call.
    */
-  custom_sip_headers?: Record<string, string>;
+  custom_sip_headers?: { [key: string]: string };
 
   /**
    * The reason for the disconnection of the call. Read details desciption about
@@ -1080,7 +1080,7 @@ export interface WebCallResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -1864,7 +1864,7 @@ export interface CallCreatePhoneCallParams {
   /**
    * Add optional custom SIP headers to the call.
    */
-  custom_sip_headers?: Record<string, string>;
+  custom_sip_headers?: { [key: string]: string };
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -1891,7 +1891,7 @@ export interface CallCreatePhoneCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 }
 
 export interface CallCreateWebCallParams {
@@ -1918,7 +1918,7 @@ export interface CallCreateWebCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 }
 
 export interface CallRegisterPhoneCallParams {
@@ -1954,7 +1954,7 @@ export interface CallRegisterPhoneCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: Record<string, unknown>;
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
    * The number you want to call, in E.164 format. Stored for tracking purpose.

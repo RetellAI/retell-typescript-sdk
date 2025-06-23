@@ -123,7 +123,7 @@ export interface LlmResponse {
    * injected into your Retell LLM prompt and tool description when specific values
    * are not provided in a request. Only applicable for Retell LLM.
    */
-  default_dynamic_variables?: Record<string, string> | null;
+  default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
@@ -266,7 +266,7 @@ export namespace LlmResponse {
     /**
      * Custom SIP headers to be added to the call.
      */
-    custom_sip_headers?: Record<string, string>;
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -503,7 +503,7 @@ export namespace LlmResponse {
     /**
      * Headers to add to the request.
      */
-    headers?: Record<string, string>;
+    headers?: { [key: string]: string };
 
     /**
      * Method to use for the request, default to POST.
@@ -521,14 +521,14 @@ export namespace LlmResponse {
     /**
      * Query parameters to append to the request URL.
      */
-    query_params?: Record<string, string>;
+    query_params?: { [key: string]: string };
 
     /**
      * A mapping of variable names to JSON paths in the response body. These values
      * will be extracted from the response and made available as dynamic variables for
      * use.
      */
-    response_variables?: Record<string, string>;
+    response_variables?: { [key: string]: string };
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -551,7 +551,7 @@ export namespace LlmResponse {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: Record<string, unknown>;
+      properties: { [key: string]: unknown };
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -646,7 +646,7 @@ export namespace LlmResponse {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -700,7 +700,7 @@ export namespace LlmResponse {
       /**
        * Custom SIP headers to be added to the call.
        */
-      custom_sip_headers?: Record<string, string>;
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -937,7 +937,7 @@ export namespace LlmResponse {
       /**
        * Headers to add to the request.
        */
-      headers?: Record<string, string>;
+      headers?: { [key: string]: string };
 
       /**
        * Method to use for the request, default to POST.
@@ -955,14 +955,14 @@ export namespace LlmResponse {
       /**
        * Query parameters to append to the request URL.
        */
-      query_params?: Record<string, string>;
+      query_params?: { [key: string]: string };
 
       /**
        * A mapping of variable names to JSON paths in the response body. These values
        * will be extracted from the response and made available as dynamic variables for
        * use.
        */
-      response_variables?: Record<string, string>;
+      response_variables?: { [key: string]: string };
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -985,7 +985,7 @@ export namespace LlmResponse {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -1017,7 +1017,7 @@ export interface LlmCreateParams {
    * injected into your Retell LLM prompt and tool description when specific values
    * are not provided in a request. Only applicable for Retell LLM.
    */
-  default_dynamic_variables?: Record<string, string> | null;
+  default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
    * General prompt appended to system prompt no matter what state the agent is in.
@@ -1155,7 +1155,7 @@ export namespace LlmCreateParams {
     /**
      * Custom SIP headers to be added to the call.
      */
-    custom_sip_headers?: Record<string, string>;
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1392,7 +1392,7 @@ export namespace LlmCreateParams {
     /**
      * Headers to add to the request.
      */
-    headers?: Record<string, string>;
+    headers?: { [key: string]: string };
 
     /**
      * Method to use for the request, default to POST.
@@ -1410,14 +1410,14 @@ export namespace LlmCreateParams {
     /**
      * Query parameters to append to the request URL.
      */
-    query_params?: Record<string, string>;
+    query_params?: { [key: string]: string };
 
     /**
      * A mapping of variable names to JSON paths in the response body. These values
      * will be extracted from the response and made available as dynamic variables for
      * use.
      */
-    response_variables?: Record<string, string>;
+    response_variables?: { [key: string]: string };
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -1440,7 +1440,7 @@ export namespace LlmCreateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: Record<string, unknown>;
+      properties: { [key: string]: unknown };
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -1535,7 +1535,7 @@ export namespace LlmCreateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -1589,7 +1589,7 @@ export namespace LlmCreateParams {
       /**
        * Custom SIP headers to be added to the call.
        */
-      custom_sip_headers?: Record<string, string>;
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1826,7 +1826,7 @@ export namespace LlmCreateParams {
       /**
        * Headers to add to the request.
        */
-      headers?: Record<string, string>;
+      headers?: { [key: string]: string };
 
       /**
        * Method to use for the request, default to POST.
@@ -1844,14 +1844,14 @@ export namespace LlmCreateParams {
       /**
        * Query parameters to append to the request URL.
        */
-      query_params?: Record<string, string>;
+      query_params?: { [key: string]: string };
 
       /**
        * A mapping of variable names to JSON paths in the response body. These values
        * will be extracted from the response and made available as dynamic variables for
        * use.
        */
-      response_variables?: Record<string, string>;
+      response_variables?: { [key: string]: string };
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -1874,7 +1874,7 @@ export namespace LlmCreateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -1918,7 +1918,7 @@ export interface LlmUpdateParams {
    * These are injected into your Retell LLM prompt and tool description when
    * specific values are not provided in a request. Only applicable for Retell LLM.
    */
-  default_dynamic_variables?: Record<string, string> | null;
+  default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
    * Body param: General prompt appended to system prompt no matter what state the
@@ -2058,7 +2058,7 @@ export namespace LlmUpdateParams {
     /**
      * Custom SIP headers to be added to the call.
      */
-    custom_sip_headers?: Record<string, string>;
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -2295,7 +2295,7 @@ export namespace LlmUpdateParams {
     /**
      * Headers to add to the request.
      */
-    headers?: Record<string, string>;
+    headers?: { [key: string]: string };
 
     /**
      * Method to use for the request, default to POST.
@@ -2313,14 +2313,14 @@ export namespace LlmUpdateParams {
     /**
      * Query parameters to append to the request URL.
      */
-    query_params?: Record<string, string>;
+    query_params?: { [key: string]: string };
 
     /**
      * A mapping of variable names to JSON paths in the response body. These values
      * will be extracted from the response and made available as dynamic variables for
      * use.
      */
-    response_variables?: Record<string, string>;
+    response_variables?: { [key: string]: string };
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -2343,7 +2343,7 @@ export namespace LlmUpdateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: Record<string, unknown>;
+      properties: { [key: string]: unknown };
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -2438,7 +2438,7 @@ export namespace LlmUpdateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -2492,7 +2492,7 @@ export namespace LlmUpdateParams {
       /**
        * Custom SIP headers to be added to the call.
        */
-      custom_sip_headers?: Record<string, string>;
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2729,7 +2729,7 @@ export namespace LlmUpdateParams {
       /**
        * Headers to add to the request.
        */
-      headers?: Record<string, string>;
+      headers?: { [key: string]: string };
 
       /**
        * Method to use for the request, default to POST.
@@ -2747,14 +2747,14 @@ export namespace LlmUpdateParams {
       /**
        * Query parameters to append to the request URL.
        */
-      query_params?: Record<string, string>;
+      query_params?: { [key: string]: string };
 
       /**
        * A mapping of variable names to JSON paths in the response body. These values
        * will be extracted from the response and made available as dynamic variables for
        * use.
        */
-      response_variables?: Record<string, string>;
+      response_variables?: { [key: string]: string };
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -2777,7 +2777,7 @@ export namespace LlmUpdateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: Record<string, unknown>;
+        properties: { [key: string]: unknown };
 
         /**
          * Type must be "object" for a JSON Schema object.
