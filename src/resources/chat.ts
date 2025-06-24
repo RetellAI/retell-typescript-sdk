@@ -535,8 +535,7 @@ export interface ChatCreateParams {
   agent_id: string;
 
   /**
-   * The version of the chat agent to use for the call. If not provided, will default
-   * to latest version.
+   * The version of the chat agent to use for the call.
    */
   agent_version?: number;
 

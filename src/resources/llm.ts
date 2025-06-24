@@ -264,11 +264,6 @@ export namespace LlmResponse {
     type: 'transfer_call';
 
     /**
-     * Custom SIP headers to be added to the call.
-     */
-    custom_sip_headers?: { [key: string]: string };
-
-    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -696,11 +691,6 @@ export namespace LlmResponse {
         | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
-
-      /**
-       * Custom SIP headers to be added to the call.
-       */
-      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1153,11 +1143,6 @@ export namespace LlmCreateParams {
     type: 'transfer_call';
 
     /**
-     * Custom SIP headers to be added to the call.
-     */
-    custom_sip_headers?: { [key: string]: string };
-
-    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -1585,11 +1570,6 @@ export namespace LlmCreateParams {
         | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
-
-      /**
-       * Custom SIP headers to be added to the call.
-       */
-      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2056,11 +2036,6 @@ export namespace LlmUpdateParams {
     type: 'transfer_call';
 
     /**
-     * Custom SIP headers to be added to the call.
-     */
-    custom_sip_headers?: { [key: string]: string };
-
-    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -2488,11 +2463,6 @@ export namespace LlmUpdateParams {
         | TransferCallTool.TransferOptionWarmTransfer;
 
       type: 'transfer_call';
-
-      /**
-       * Custom SIP headers to be added to the call.
-       */
-      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
