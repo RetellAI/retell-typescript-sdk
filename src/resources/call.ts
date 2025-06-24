@@ -199,11 +199,6 @@ export interface PhoneCallResponse {
   collected_dynamic_variables?: { [key: string]: unknown };
 
   /**
-   * Custom SIP headers to be added to the call.
-   */
-  custom_sip_headers?: { [key: string]: string };
-
-  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -976,11 +971,6 @@ export interface WebCallResponse {
    * Dynamic variables collected from the call. Only available after the call ends.
    */
   collected_dynamic_variables?: { [key: string]: unknown };
-
-  /**
-   * Custom SIP headers to be added to the call.
-   */
-  custom_sip_headers?: { [key: string]: string };
 
   /**
    * The reason for the disconnection of the call. Read details desciption about
@@ -1860,11 +1850,6 @@ export interface CallCreatePhoneCallParams {
    * Retell, only US numbers are supported as destination.
    */
   to_number: string;
-
-  /**
-   * Add optional custom SIP headers to the call.
-   */
-  custom_sip_headers?: { [key: string]: string };
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
