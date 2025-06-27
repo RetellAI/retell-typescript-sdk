@@ -150,7 +150,7 @@ export interface LlmResponse {
     | LlmResponse.BookAppointmentCalTool
     | LlmResponse.PressDigitTool
     | LlmResponse.CustomTool
-    | unknown
+    | LlmResponse.ExtractDynamicVariableTool
   > | null;
 
   /**
@@ -563,6 +563,114 @@ export namespace LlmResponse {
     }
   }
 
+  export interface ExtractDynamicVariableTool {
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'extract_dynamic_variable';
+
+    /**
+     * The variables to be extracted.
+     */
+    variables: Array<
+      | ExtractDynamicVariableTool.StringAnalysisData
+      | ExtractDynamicVariableTool.EnumAnalysisData
+      | ExtractDynamicVariableTool.BooleanAnalysisData
+      | ExtractDynamicVariableTool.NumberAnalysisData
+    >;
+  }
+
+  export namespace ExtractDynamicVariableTool {
+    export interface StringAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'string';
+
+      /**
+       * Examples of the variable value to teach model the style and syntax.
+       */
+      examples?: Array<string>;
+    }
+
+    export interface EnumAnalysisData {
+      /**
+       * The possible values of the variable, must be non empty array.
+       */
+      choices: Array<string>;
+
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'enum';
+    }
+
+    export interface BooleanAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'boolean';
+    }
+
+    export interface NumberAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'number';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -598,7 +706,7 @@ export namespace LlmResponse {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
-      | unknown
+      | State.ExtractDynamicVariableTool
     >;
   }
 
@@ -992,6 +1100,114 @@ export namespace LlmResponse {
         required?: Array<string>;
       }
     }
+
+    export interface ExtractDynamicVariableTool {
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'extract_dynamic_variable';
+
+      /**
+       * The variables to be extracted.
+       */
+      variables: Array<
+        | ExtractDynamicVariableTool.StringAnalysisData
+        | ExtractDynamicVariableTool.EnumAnalysisData
+        | ExtractDynamicVariableTool.BooleanAnalysisData
+        | ExtractDynamicVariableTool.NumberAnalysisData
+      >;
+    }
+
+    export namespace ExtractDynamicVariableTool {
+      export interface StringAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'string';
+
+        /**
+         * Examples of the variable value to teach model the style and syntax.
+         */
+        examples?: Array<string>;
+      }
+
+      export interface EnumAnalysisData {
+        /**
+         * The possible values of the variable, must be non empty array.
+         */
+        choices: Array<string>;
+
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'enum';
+      }
+
+      export interface BooleanAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'boolean';
+      }
+
+      export interface NumberAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'number';
+      }
+    }
   }
 }
 
@@ -1036,7 +1252,7 @@ export interface LlmCreateParams {
     | LlmCreateParams.BookAppointmentCalTool
     | LlmCreateParams.PressDigitTool
     | LlmCreateParams.CustomTool
-    | unknown
+    | LlmCreateParams.ExtractDynamicVariableTool
   > | null;
 
   /**
@@ -1444,6 +1660,114 @@ export namespace LlmCreateParams {
     }
   }
 
+  export interface ExtractDynamicVariableTool {
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'extract_dynamic_variable';
+
+    /**
+     * The variables to be extracted.
+     */
+    variables: Array<
+      | ExtractDynamicVariableTool.StringAnalysisData
+      | ExtractDynamicVariableTool.EnumAnalysisData
+      | ExtractDynamicVariableTool.BooleanAnalysisData
+      | ExtractDynamicVariableTool.NumberAnalysisData
+    >;
+  }
+
+  export namespace ExtractDynamicVariableTool {
+    export interface StringAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'string';
+
+      /**
+       * Examples of the variable value to teach model the style and syntax.
+       */
+      examples?: Array<string>;
+    }
+
+    export interface EnumAnalysisData {
+      /**
+       * The possible values of the variable, must be non empty array.
+       */
+      choices: Array<string>;
+
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'enum';
+    }
+
+    export interface BooleanAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'boolean';
+    }
+
+    export interface NumberAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'number';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -1479,7 +1803,7 @@ export namespace LlmCreateParams {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
-      | unknown
+      | State.ExtractDynamicVariableTool
     >;
   }
 
@@ -1873,6 +2197,114 @@ export namespace LlmCreateParams {
         required?: Array<string>;
       }
     }
+
+    export interface ExtractDynamicVariableTool {
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'extract_dynamic_variable';
+
+      /**
+       * The variables to be extracted.
+       */
+      variables: Array<
+        | ExtractDynamicVariableTool.StringAnalysisData
+        | ExtractDynamicVariableTool.EnumAnalysisData
+        | ExtractDynamicVariableTool.BooleanAnalysisData
+        | ExtractDynamicVariableTool.NumberAnalysisData
+      >;
+    }
+
+    export namespace ExtractDynamicVariableTool {
+      export interface StringAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'string';
+
+        /**
+         * Examples of the variable value to teach model the style and syntax.
+         */
+        examples?: Array<string>;
+      }
+
+      export interface EnumAnalysisData {
+        /**
+         * The possible values of the variable, must be non empty array.
+         */
+        choices: Array<string>;
+
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'enum';
+      }
+
+      export interface BooleanAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'boolean';
+      }
+
+      export interface NumberAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'number';
+      }
+    }
   }
 }
 
@@ -1931,7 +2363,7 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.BookAppointmentCalTool
     | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.CustomTool
-    | unknown
+    | LlmUpdateParams.ExtractDynamicVariableTool
   > | null;
 
   /**
@@ -2339,6 +2771,114 @@ export namespace LlmUpdateParams {
     }
   }
 
+  export interface ExtractDynamicVariableTool {
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'extract_dynamic_variable';
+
+    /**
+     * The variables to be extracted.
+     */
+    variables: Array<
+      | ExtractDynamicVariableTool.StringAnalysisData
+      | ExtractDynamicVariableTool.EnumAnalysisData
+      | ExtractDynamicVariableTool.BooleanAnalysisData
+      | ExtractDynamicVariableTool.NumberAnalysisData
+    >;
+  }
+
+  export namespace ExtractDynamicVariableTool {
+    export interface StringAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'string';
+
+      /**
+       * Examples of the variable value to teach model the style and syntax.
+       */
+      examples?: Array<string>;
+    }
+
+    export interface EnumAnalysisData {
+      /**
+       * The possible values of the variable, must be non empty array.
+       */
+      choices: Array<string>;
+
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'enum';
+    }
+
+    export interface BooleanAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'boolean';
+    }
+
+    export interface NumberAnalysisData {
+      /**
+       * Description of the variable.
+       */
+      description: string;
+
+      /**
+       * Name of the variable.
+       */
+      name: string;
+
+      /**
+       * Type of the variable to extract.
+       */
+      type: 'number';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -2374,7 +2914,7 @@ export namespace LlmUpdateParams {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
-      | unknown
+      | State.ExtractDynamicVariableTool
     >;
   }
 
@@ -2766,6 +3306,114 @@ export namespace LlmUpdateParams {
          * must exist in properties.
          */
         required?: Array<string>;
+      }
+    }
+
+    export interface ExtractDynamicVariableTool {
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'extract_dynamic_variable';
+
+      /**
+       * The variables to be extracted.
+       */
+      variables: Array<
+        | ExtractDynamicVariableTool.StringAnalysisData
+        | ExtractDynamicVariableTool.EnumAnalysisData
+        | ExtractDynamicVariableTool.BooleanAnalysisData
+        | ExtractDynamicVariableTool.NumberAnalysisData
+      >;
+    }
+
+    export namespace ExtractDynamicVariableTool {
+      export interface StringAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'string';
+
+        /**
+         * Examples of the variable value to teach model the style and syntax.
+         */
+        examples?: Array<string>;
+      }
+
+      export interface EnumAnalysisData {
+        /**
+         * The possible values of the variable, must be non empty array.
+         */
+        choices: Array<string>;
+
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'enum';
+      }
+
+      export interface BooleanAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'boolean';
+      }
+
+      export interface NumberAnalysisData {
+        /**
+         * Description of the variable.
+         */
+        description: string;
+
+        /**
+         * Name of the variable.
+         */
+        name: string;
+
+        /**
+         * Type of the variable to extract.
+         */
+        type: 'number';
       }
     }
   }
