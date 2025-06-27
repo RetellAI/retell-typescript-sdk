@@ -150,6 +150,7 @@ export interface LlmResponse {
     | LlmResponse.BookAppointmentCalTool
     | LlmResponse.PressDigitTool
     | LlmResponse.CustomTool
+    | unknown
   > | null;
 
   /**
@@ -597,6 +598,7 @@ export namespace LlmResponse {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
+      | unknown
     >;
   }
 
@@ -1034,6 +1036,7 @@ export interface LlmCreateParams {
     | LlmCreateParams.BookAppointmentCalTool
     | LlmCreateParams.PressDigitTool
     | LlmCreateParams.CustomTool
+    | unknown
   > | null;
 
   /**
@@ -1476,6 +1479,7 @@ export namespace LlmCreateParams {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
+      | unknown
     >;
   }
 
@@ -1927,6 +1931,7 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.BookAppointmentCalTool
     | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.CustomTool
+    | unknown
   > | null;
 
   /**
@@ -2369,6 +2374,7 @@ export namespace LlmUpdateParams {
       | State.BookAppointmentCalTool
       | State.PressDigitTool
       | State.CustomTool
+      | unknown
     >;
   }
 
