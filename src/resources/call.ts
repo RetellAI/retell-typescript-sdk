@@ -159,7 +159,7 @@ export interface PhoneCallResponse {
    *
    * - `error`: Call encountered error.
    */
-  call_status: 'registered' | 'ongoing' | 'ended' | 'error';
+  call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
 
   /**
    * Type of the call. Used to distinguish between web call and phone call.
@@ -222,6 +222,12 @@ export interface PhoneCallResponse {
     | 'dial_busy'
     | 'dial_failed'
     | 'dial_no_answer'
+    | 'invalid_destination'
+    | 'telephony_provider_permission_denied'
+    | 'telephony_provider_unavailable'
+    | 'sip_routing_error'
+    | 'marked_as_spam'
+    | 'user_declined'
     | 'error_llm_websocket_open'
     | 'error_llm_websocket_lost_connection'
     | 'error_llm_websocket_runtime'
@@ -953,7 +959,7 @@ export interface WebCallResponse {
    *
    * - `error`: Call encountered error.
    */
-  call_status: 'registered' | 'ongoing' | 'ended' | 'error';
+  call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
 
   /**
    * Type of the call. Used to distinguish between web call and phone call.
@@ -1001,6 +1007,12 @@ export interface WebCallResponse {
     | 'dial_busy'
     | 'dial_failed'
     | 'dial_no_answer'
+    | 'invalid_destination'
+    | 'telephony_provider_permission_denied'
+    | 'telephony_provider_unavailable'
+    | 'sip_routing_error'
+    | 'marked_as_spam'
+    | 'user_declined'
     | 'error_llm_websocket_open'
     | 'error_llm_websocket_lost_connection'
     | 'error_llm_websocket_runtime'
@@ -1737,7 +1749,7 @@ export namespace CallListParams {
     /**
      * Only retrieve calls with specific call status(es).
      */
-    call_status?: Array<'registered' | 'ongoing' | 'ended' | 'error'>;
+    call_status?: Array<'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'>;
 
     /**
      * Only retrieve calls with specific call successful(s).
