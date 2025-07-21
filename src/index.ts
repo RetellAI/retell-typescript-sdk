@@ -37,6 +37,15 @@ import {
 } from './resources/chat';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
+  ConversationFlow,
+  ConversationFlowCreateParams,
+  ConversationFlowListParams,
+  ConversationFlowListResponse,
+  ConversationFlowResponse,
+  ConversationFlowRetrieveParams,
+  ConversationFlowUpdateParams,
+} from './resources/conversation-flow';
+import {
   KnowledgeBase,
   KnowledgeBaseAddSourcesParams,
   KnowledgeBaseCreateParams,
@@ -78,6 +87,8 @@ export interface ClientOptions {
    *
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
+   *
+   * @unit milliseconds
    */
   timeout?: number | undefined;
 
@@ -174,6 +185,7 @@ export class Retell extends Core.APIClient {
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
   llm: API.Llm = new API.Llm(this);
+  conversationFlow: API.ConversationFlow = new API.ConversationFlow(this);
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
@@ -230,6 +242,7 @@ Retell.Chat = Chat;
 Retell.PhoneNumber = PhoneNumber;
 Retell.Agent = AgentAPIAgent;
 Retell.Llm = Llm;
+Retell.ConversationFlow = ConversationFlow;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
@@ -285,6 +298,16 @@ export declare namespace Retell {
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
+  };
+
+  export {
+    ConversationFlow as ConversationFlow,
+    type ConversationFlowResponse as ConversationFlowResponse,
+    type ConversationFlowListResponse as ConversationFlowListResponse,
+    type ConversationFlowCreateParams as ConversationFlowCreateParams,
+    type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
+    type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
+    type ConversationFlowListParams as ConversationFlowListParams,
   };
 
   export {

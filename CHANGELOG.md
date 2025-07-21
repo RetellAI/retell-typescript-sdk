@@ -1,5 +1,25 @@
 # Changelog
 
+## 4.40.0 (2025-07-21)
+
+Full Changelog: [v4.39.0...v4.40.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.39.0...v4.40.0)
+
+### Features
+
+* **api:** api update ([2ac2e1c](https://github.com/RetellAI/retell-typescript-sdk/commit/2ac2e1cc86fcd9eb6961f7df8a298ff1dac1e4df))
+* **api:** api update ([de72d25](https://github.com/RetellAI/retell-typescript-sdk/commit/de72d257d1637e7d8b89f455041594276b826ddd))
+
+
+### Bug Fixes
+
+* **client:** don't send `Content-Type` for bodyless methods ([86aa850](https://github.com/RetellAI/retell-typescript-sdk/commit/86aa850130f91a16283d9dfc1c5e7cfc1e8682c4))
+
+
+### Chores
+
+* make some internal functions async ([6a01ac6](https://github.com/RetellAI/retell-typescript-sdk/commit/6a01ac612f855e1c5489631c63667c716cb4692a))
+* mention unit type in timeout docs ([cdbafef](https://github.com/RetellAI/retell-typescript-sdk/commit/cdbafef4a2b97417116dea9ff3416ac9df3a0712))
+
 ## 4.39.0 (2025-07-02)
 
 Full Changelog: [v4.38.0...v4.39.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.38.0...v4.39.0)

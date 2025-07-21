@@ -151,6 +151,9 @@ export interface LlmResponse {
     | LlmResponse.PressDigitTool
     | LlmResponse.CustomTool
     | LlmResponse.ExtractDynamicVariableTool
+    | LlmResponse.AgentSwapTool
+    | LlmResponse.McpTool
+    | LlmResponse.SendSMSTool
   > | null;
 
   /**
@@ -180,9 +183,9 @@ export interface LlmResponse {
     | null;
 
   /**
-   * If set to true, will use high priority pool with more dedicated resource to
-   * ensure lower and more consistent latency, default to false. This feature usually
-   * comes with a higher cost.
+   * If set to true, will enable fast tier, which uses high priority pool with more
+   * dedicated resource to ensure lower and more consistent latency, default to
+   * false. This feature usually comes with a higher cost.
    */
   model_high_priority?: boolean;
 
@@ -326,6 +329,37 @@ export namespace LlmResponse {
       type: 'warm_transfer';
 
       /**
+       * The time to wait before considering transfer fails.
+       */
+      agent_detection_timeout_ms?: number;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set to true, will not perform human detection for the transfer. Default to
+       * false.
+       */
+      opt_out_human_detection?: boolean;
+
+      /**
+       * If set to true, AI will not say "Hello" after connecting the call. Default to
+       * false.
+       */
+      opt_out_initial_message?: boolean;
+
+      /**
+       * If set, when transfer is connected, will say the handoff message only to the
+       * agent receiving the transfer. Can leave either a static message or a dynamic one
+       * based on prompt. Set to null to disable warm handoff.
+       */
+      private_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -336,6 +370,24 @@ export namespace LlmResponse {
     }
 
     export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -676,6 +728,106 @@ export namespace LlmResponse {
     }
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+    speak_during_execution?: boolean;
+  }
+
+  export interface McpTool {
+    /**
+     * Description of the MCP tool.
+     */
+    description: string;
+
+    /**
+     * Name of the MCP tool.
+     */
+    name: string;
+
+    type: 'mcp';
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
+
+    /**
+     * Unique id of the MCP.
+     */
+    mcp_id?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -712,6 +864,9 @@ export namespace LlmResponse {
       | State.PressDigitTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
+      | State.AgentSwapTool
+      | State.McpTool
+      | State.SendSMSTool
     >;
   }
 
@@ -869,6 +1024,37 @@ export namespace LlmResponse {
         type: 'warm_transfer';
 
         /**
+         * The time to wait before considering transfer fails.
+         */
+        agent_detection_timeout_ms?: number;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set to true, will not perform human detection for the transfer. Default to
+         * false.
+         */
+        opt_out_human_detection?: boolean;
+
+        /**
+         * If set to true, AI will not say "Hello" after connecting the call. Default to
+         * false.
+         */
+        opt_out_initial_message?: boolean;
+
+        /**
+         * If set, when transfer is connected, will say the handoff message only to the
+         * agent receiving the transfer. Can leave either a static message or a dynamic one
+         * based on prompt. Set to null to disable warm handoff.
+         */
+        private_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -879,6 +1065,24 @@ export namespace LlmResponse {
       }
 
       export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1218,6 +1422,106 @@ export namespace LlmResponse {
         type: 'number';
       }
     }
+
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+      speak_during_execution?: boolean;
+    }
+
+    export interface McpTool {
+      /**
+       * Description of the MCP tool.
+       */
+      description: string;
+
+      /**
+       * Name of the MCP tool.
+       */
+      name: string;
+
+      type: 'mcp';
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
+
+      /**
+       * Unique id of the MCP.
+       */
+      mcp_id?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
+      }
+    }
   }
 }
 
@@ -1263,6 +1567,9 @@ export interface LlmCreateParams {
     | LlmCreateParams.PressDigitTool
     | LlmCreateParams.CustomTool
     | LlmCreateParams.ExtractDynamicVariableTool
+    | LlmCreateParams.AgentSwapTool
+    | LlmCreateParams.McpTool
+    | LlmCreateParams.SendSMSTool
   > | null;
 
   /**
@@ -1287,9 +1594,9 @@ export interface LlmCreateParams {
     | null;
 
   /**
-   * If set to true, will use high priority pool with more dedicated resource to
-   * ensure lower and more consistent latency, default to false. This feature usually
-   * comes with a higher cost.
+   * If set to true, will enable fast tier, which uses high priority pool with more
+   * dedicated resource to ensure lower and more consistent latency, default to
+   * false. This feature usually comes with a higher cost.
    */
   model_high_priority?: boolean;
 
@@ -1433,6 +1740,37 @@ export namespace LlmCreateParams {
       type: 'warm_transfer';
 
       /**
+       * The time to wait before considering transfer fails.
+       */
+      agent_detection_timeout_ms?: number;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set to true, will not perform human detection for the transfer. Default to
+       * false.
+       */
+      opt_out_human_detection?: boolean;
+
+      /**
+       * If set to true, AI will not say "Hello" after connecting the call. Default to
+       * false.
+       */
+      opt_out_initial_message?: boolean;
+
+      /**
+       * If set, when transfer is connected, will say the handoff message only to the
+       * agent receiving the transfer. Can leave either a static message or a dynamic one
+       * based on prompt. Set to null to disable warm handoff.
+       */
+      private_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -1443,6 +1781,24 @@ export namespace LlmCreateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1783,6 +2139,106 @@ export namespace LlmCreateParams {
     }
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+    speak_during_execution?: boolean;
+  }
+
+  export interface McpTool {
+    /**
+     * Description of the MCP tool.
+     */
+    description: string;
+
+    /**
+     * Name of the MCP tool.
+     */
+    name: string;
+
+    type: 'mcp';
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
+
+    /**
+     * Unique id of the MCP.
+     */
+    mcp_id?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -1819,6 +2275,9 @@ export namespace LlmCreateParams {
       | State.PressDigitTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
+      | State.AgentSwapTool
+      | State.McpTool
+      | State.SendSMSTool
     >;
   }
 
@@ -1976,6 +2435,37 @@ export namespace LlmCreateParams {
         type: 'warm_transfer';
 
         /**
+         * The time to wait before considering transfer fails.
+         */
+        agent_detection_timeout_ms?: number;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set to true, will not perform human detection for the transfer. Default to
+         * false.
+         */
+        opt_out_human_detection?: boolean;
+
+        /**
+         * If set to true, AI will not say "Hello" after connecting the call. Default to
+         * false.
+         */
+        opt_out_initial_message?: boolean;
+
+        /**
+         * If set, when transfer is connected, will say the handoff message only to the
+         * agent receiving the transfer. Can leave either a static message or a dynamic one
+         * based on prompt. Set to null to disable warm handoff.
+         */
+        private_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -1986,6 +2476,24 @@ export namespace LlmCreateParams {
       }
 
       export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -2325,6 +2833,106 @@ export namespace LlmCreateParams {
         type: 'number';
       }
     }
+
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+      speak_during_execution?: boolean;
+    }
+
+    export interface McpTool {
+      /**
+       * Description of the MCP tool.
+       */
+      description: string;
+
+      /**
+       * Name of the MCP tool.
+       */
+      name: string;
+
+      type: 'mcp';
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
+
+      /**
+       * Unique id of the MCP.
+       */
+      mcp_id?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
+      }
+    }
   }
 }
 
@@ -2384,6 +2992,9 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.CustomTool
     | LlmUpdateParams.ExtractDynamicVariableTool
+    | LlmUpdateParams.AgentSwapTool
+    | LlmUpdateParams.McpTool
+    | LlmUpdateParams.SendSMSTool
   > | null;
 
   /**
@@ -2408,9 +3019,9 @@ export interface LlmUpdateParams {
     | null;
 
   /**
-   * Body param: If set to true, will use high priority pool with more dedicated
-   * resource to ensure lower and more consistent latency, default to false. This
-   * feature usually comes with a higher cost.
+   * Body param: If set to true, will enable fast tier, which uses high priority pool
+   * with more dedicated resource to ensure lower and more consistent latency,
+   * default to false. This feature usually comes with a higher cost.
    */
   model_high_priority?: boolean;
 
@@ -2554,6 +3165,37 @@ export namespace LlmUpdateParams {
       type: 'warm_transfer';
 
       /**
+       * The time to wait before considering transfer fails.
+       */
+      agent_detection_timeout_ms?: number;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set to true, will not perform human detection for the transfer. Default to
+       * false.
+       */
+      opt_out_human_detection?: boolean;
+
+      /**
+       * If set to true, AI will not say "Hello" after connecting the call. Default to
+       * false.
+       */
+      opt_out_initial_message?: boolean;
+
+      /**
+       * If set, when transfer is connected, will say the handoff message only to the
+       * agent receiving the transfer. Can leave either a static message or a dynamic one
+       * based on prompt. Set to null to disable warm handoff.
+       */
+      private_handoff_option?:
+        | TransferOptionWarmTransfer.WarmTransferPrompt
+        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -2564,6 +3206,24 @@ export namespace LlmUpdateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -2904,6 +3564,106 @@ export namespace LlmUpdateParams {
     }
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+    speak_during_execution?: boolean;
+  }
+
+  export interface McpTool {
+    /**
+     * Description of the MCP tool.
+     */
+    description: string;
+
+    /**
+     * Name of the MCP tool.
+     */
+    name: string;
+
+    type: 'mcp';
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
+
+    /**
+     * Unique id of the MCP.
+     */
+    mcp_id?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+  }
+
   export interface State {
     /**
      * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
@@ -2940,6 +3700,9 @@ export namespace LlmUpdateParams {
       | State.PressDigitTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
+      | State.AgentSwapTool
+      | State.McpTool
+      | State.SendSMSTool
     >;
   }
 
@@ -3097,6 +3860,37 @@ export namespace LlmUpdateParams {
         type: 'warm_transfer';
 
         /**
+         * The time to wait before considering transfer fails.
+         */
+        agent_detection_timeout_ms?: number;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set to true, will not perform human detection for the transfer. Default to
+         * false.
+         */
+        opt_out_human_detection?: boolean;
+
+        /**
+         * If set to true, AI will not say "Hello" after connecting the call. Default to
+         * false.
+         */
+        opt_out_initial_message?: boolean;
+
+        /**
+         * If set, when transfer is connected, will say the handoff message only to the
+         * agent receiving the transfer. Can leave either a static message or a dynamic one
+         * based on prompt. Set to null to disable warm handoff.
+         */
+        private_handoff_option?:
+          | TransferOptionWarmTransfer.WarmTransferPrompt
+          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
@@ -3107,6 +3901,24 @@ export namespace LlmUpdateParams {
       }
 
       export namespace TransferOptionWarmTransfer {
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -3444,6 +4256,106 @@ export namespace LlmUpdateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+      }
+    }
+
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
+
+      speak_during_execution?: boolean;
+    }
+
+    export interface McpTool {
+      /**
+       * Description of the MCP tool.
+       */
+      description: string;
+
+      /**
+       * Name of the MCP tool.
+       */
+      name: string;
+
+      type: 'mcp';
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
+
+      /**
+       * Unique id of the MCP.
+       */
+      mcp_id?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
       }
     }
   }
