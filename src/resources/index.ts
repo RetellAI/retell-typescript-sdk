@@ -32,6 +32,15 @@ export {
 } from './chat';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
+  ConversationFlow,
+  type ConversationFlowResponse,
+  type ConversationFlowListResponse,
+  type ConversationFlowCreateParams,
+  type ConversationFlowRetrieveParams,
+  type ConversationFlowUpdateParams,
+  type ConversationFlowListParams,
+} from './conversation-flow';
+export {
   KnowledgeBase,
   type KnowledgeBaseResponse,
   type KnowledgeBaseListResponse,

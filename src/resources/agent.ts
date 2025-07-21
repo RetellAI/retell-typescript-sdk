@@ -1232,7 +1232,8 @@ export namespace AgentCreateParams {
 
 export interface AgentRetrieveParams {
   /**
-   * Optional version of the API to use for this request. Default to latest version.
+   * Optional version of the API to use for this request. If not provided, will
+   * default to latest version.
    */
   version?: number;
 }
