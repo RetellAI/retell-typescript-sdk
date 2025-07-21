@@ -81,6 +81,21 @@ Methods:
 - <code title="get /list-retell-llms">client.llm.<a href="./src/resources/llm.ts">list</a>() -> LlmListResponse</code>
 - <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmId) -> void</code>
 
+# ConversationFlow
+
+Types:
+
+- <code><a href="./src/resources/conversation-flow.ts">ConversationFlowResponse</a></code>
+- <code><a href="./src/resources/conversation-flow.ts">ConversationFlowListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-conversation-flow">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">create</a>({ ...params }) -> ConversationFlowResponse</code>
+- <code title="get /get-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">retrieve</a>(conversationFlowId, { ...params }) -> ConversationFlowResponse</code>
+- <code title="patch /update-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">update</a>(conversationFlowId, { ...params }) -> ConversationFlowResponse</code>
+- <code title="get /list-conversation-flows">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">list</a>({ ...params }) -> ConversationFlowListResponse</code>
+- <code title="delete /delete-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">delete</a>(conversationFlowId) -> void</code>
+
 # KnowledgeBase
 
 Types:
