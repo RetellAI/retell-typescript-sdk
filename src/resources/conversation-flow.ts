@@ -817,11 +817,6 @@ export namespace ConversationFlowResponse {
     id: string;
 
     /**
-     * Whether to speak during tool execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Tool ID for function nodes
      */
     tool_id: string;
@@ -862,6 +857,11 @@ export namespace ConversationFlowResponse {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Whether to speak during tool execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace FunctionNode {
@@ -2906,11 +2906,6 @@ export namespace ConversationFlowResponse {
     mcp_tool_name: string;
 
     /**
-     * If true, will speak during execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Type of the node
      */
     type: 'mcp';
@@ -2948,6 +2943,11 @@ export namespace ConversationFlowResponse {
      * is the path to the variable in the response
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace McpNode {
@@ -3986,11 +3986,6 @@ export namespace ConversationFlowCreateParams {
     id: string;
 
     /**
-     * Whether to speak during tool execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Tool ID for function nodes
      */
     tool_id: string;
@@ -4031,6 +4026,11 @@ export namespace ConversationFlowCreateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Whether to speak during tool execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace FunctionNode {
@@ -6075,11 +6075,6 @@ export namespace ConversationFlowCreateParams {
     mcp_tool_name: string;
 
     /**
-     * If true, will speak during execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Type of the node
      */
     type: 'mcp';
@@ -6117,6 +6112,11 @@ export namespace ConversationFlowCreateParams {
      * is the path to the variable in the response
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace McpNode {
@@ -7231,11 +7231,6 @@ export namespace ConversationFlowUpdateParams {
     id: string;
 
     /**
-     * Whether to speak during tool execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Tool ID for function nodes
      */
     tool_id: string;
@@ -7276,6 +7271,11 @@ export namespace ConversationFlowUpdateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Whether to speak during tool execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace FunctionNode {
@@ -9320,11 +9320,6 @@ export namespace ConversationFlowUpdateParams {
     mcp_tool_name: string;
 
     /**
-     * If true, will speak during execution
-     */
-    speak_during_execution: boolean;
-
-    /**
      * Type of the node
      */
     type: 'mcp';
@@ -9362,6 +9357,11 @@ export namespace ConversationFlowUpdateParams {
      * is the path to the variable in the response
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace McpNode {

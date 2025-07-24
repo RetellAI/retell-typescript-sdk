@@ -537,14 +537,6 @@ export namespace LlmResponse {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -590,6 +582,14 @@ export namespace LlmResponse {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -1232,14 +1232,6 @@ export namespace LlmResponse {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -1285,6 +1277,14 @@ export namespace LlmResponse {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -1948,14 +1948,6 @@ export namespace LlmCreateParams {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -2001,6 +1993,14 @@ export namespace LlmCreateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -2643,14 +2643,6 @@ export namespace LlmCreateParams {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -2696,6 +2688,14 @@ export namespace LlmCreateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -3373,14 +3373,6 @@ export namespace LlmUpdateParams {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -3426,6 +3418,14 @@ export namespace LlmUpdateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -4068,14 +4068,6 @@ export namespace LlmUpdateParams {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -4121,6 +4113,14 @@ export namespace LlmUpdateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
