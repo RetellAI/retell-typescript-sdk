@@ -4384,7 +4384,9 @@ export interface LlmListParams {
   pagination_key?: string;
 
   /**
-   * The version of the llm to continue fetching the next page of llms.
+   * Specifies the version of the llm associated with the pagination_key. When
+   * paginating, both the pagination_key and its version must be provided to ensure
+   * consistent ordering and to fetch the next page correctly.
    */
   pagination_key_version?: number;
 }
