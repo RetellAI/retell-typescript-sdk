@@ -1821,7 +1821,9 @@ export interface AgentListParams {
   pagination_key?: string;
 
   /**
-   * The agent version to continue fetching the next page of agents.
+   * Specifies the version of the agent associated with the pagination_key. When
+   * paginating, both the pagination_key and its version must be provided to ensure
+   * consistent ordering and to fetch the next page correctly.
    */
   pagination_key_version?: number;
 }
