@@ -1814,14 +1814,14 @@ export interface AgentListParams {
   limit?: number;
 
   /**
-   * The pagination key to continue fetching the next page of Agents. Pagination key
-   * is represented by a call id, pagination key and version pair is exclusive (not
+   * The pagination key to continue fetching the next page of agents. Pagination key
+   * is represented by a agent id, pagination key and version pair is exclusive (not
    * included in the fetched page). If not set, will start from the beginning.
    */
   pagination_key?: string;
 
   /**
-   * The pagination key version to continue fetching the next page of Agents.
+   * The agent version to continue fetching the next page of agents.
    */
   pagination_key_version?: number;
 }
