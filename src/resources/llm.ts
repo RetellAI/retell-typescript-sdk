@@ -80,8 +80,16 @@ export class Llm extends APIResource {
    * const llmResponses = await client.llm.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
-    return this._client.get('/list-retell-llms', options);
+  list(query?: LlmListParams, options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
+  list(
+    query: LlmListParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmListResponse> {
+    if (isRequestOptions(query)) {
+      return this.list({}, query);
+    }
+    return this._client.get('/list-retell-llms', { query, ...options });
   }
 
   /**
@@ -4361,6 +4369,26 @@ export namespace LlmUpdateParams {
   }
 }
 
+export interface LlmListParams {
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and
+   * 1000, and the default is 1000.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of LLMs. Pagination key is
+   * represented by a llm id, pagination key and version pair is exclusive (not
+   * included in the fetched page). If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * The pagination key to continue fetching the next page of LLMs.
+   */
+  pagination_key_version?: number;
+}
+
 export declare namespace Llm {
   export {
     type LlmResponse as LlmResponse,
@@ -4368,5 +4396,6 @@ export declare namespace Llm {
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
+    type LlmListParams as LlmListParams,
   };
 }

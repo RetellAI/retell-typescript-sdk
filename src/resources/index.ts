@@ -8,6 +8,7 @@ export {
   type AgentCreateParams,
   type AgentRetrieveParams,
   type AgentUpdateParams,
+  type AgentListParams,
 } from './agent';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
@@ -54,6 +55,7 @@ export {
   type LlmCreateParams,
   type LlmRetrieveParams,
   type LlmUpdateParams,
+  type LlmListParams,
 } from './llm';
 export {
   PhoneNumber,

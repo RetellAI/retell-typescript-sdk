@@ -82,8 +82,16 @@ export class Agent extends APIResource {
    * const agentResponses = await client.agent.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<AgentListResponse> {
-    return this._client.get('/list-agents', options);
+  list(query?: AgentListParams, options?: Core.RequestOptions): Core.APIPromise<AgentListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<AgentListResponse>;
+  list(
+    query: AgentListParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<AgentListResponse> {
+    if (isRequestOptions(query)) {
+      return this.list({}, query);
+    }
+    return this._client.get('/list-agents', { query, ...options });
   }
 
   /**
@@ -1798,6 +1806,26 @@ export namespace AgentUpdateParams {
   }
 }
 
+export interface AgentListParams {
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and
+   * 1000, and the default is 1000.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of Agents. Pagination key
+   * is represented by a call id, pagination key and version pair is exclusive (not
+   * included in the fetched page). If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * The pagination key version to continue fetching the next page of Agents.
+   */
+  pagination_key_version?: number;
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -1806,5 +1834,6 @@ export declare namespace Agent {
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
+    type AgentListParams as AgentListParams,
   };
 }

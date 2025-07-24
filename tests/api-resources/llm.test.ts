@@ -76,6 +76,16 @@ describe('resource llm', () => {
     await expect(client.llm.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(Retell.NotFoundError);
   });
 
+  test('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.llm.list(
+        { limit: 50, pagination_key: 'llm_1ffdb9717444d0e77346838911', pagination_key_version: 0 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
   test('delete', async () => {
     const responsePromise = client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
