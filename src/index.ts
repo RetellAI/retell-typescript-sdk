@@ -9,6 +9,7 @@ import {
   Agent as AgentAPIAgent,
   AgentCreateParams,
   AgentGetVersionsResponse,
+  AgentListParams,
   AgentListResponse,
   AgentResponse,
   AgentRetrieveParams,
@@ -55,6 +56,7 @@ import {
 import {
   Llm,
   LlmCreateParams,
+  LlmListParams,
   LlmListResponse,
   LlmResponse,
   LlmRetrieveParams,
@@ -289,6 +291,7 @@ export declare namespace Retell {
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
+    type AgentListParams as AgentListParams,
   };
 
   export {
@@ -298,6 +301,7 @@ export declare namespace Retell {
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
+    type LlmListParams as LlmListParams,
   };
 
   export {
