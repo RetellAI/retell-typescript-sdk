@@ -9774,8 +9774,8 @@ export interface ConversationFlowListParams {
   pagination_key?: string;
 
   /**
-   * The pagination key version to continue fetching the next page of conversation
-   * flows.
+   * The version of the conversation flow to continue fetching the next page of
+   * conversation flows.
    */
   pagination_key_version?: number;
 }

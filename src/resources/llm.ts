@@ -4384,7 +4384,7 @@ export interface LlmListParams {
   pagination_key?: string;
 
   /**
-   * The pagination key to continue fetching the next page of LLMs.
+   * The version of the llm to continue fetching the next page of llms.
    */
   pagination_key_version?: number;
 }
