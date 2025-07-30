@@ -214,7 +214,7 @@ export namespace ChatResponse {
       /**
        * Unit price of the product in cents per second.
        */
-      unitPrice: number;
+      unit_price: number;
     }
   }
 
