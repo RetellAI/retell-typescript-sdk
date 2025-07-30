@@ -402,11 +402,6 @@ export namespace PhoneCallResponse {
      * Total unit duration price of all products in cents per second
      */
     total_duration_unit_price: number;
-
-    /**
-     * Total one time price of all products in cents per call
-     */
-    total_one_time_price: number;
   }
 
   export namespace CallCost {
@@ -424,7 +419,7 @@ export namespace PhoneCallResponse {
       /**
        * Unit price of the product in cents per second.
        */
-      unitPrice: number;
+      unit_price: number;
     }
   }
 
@@ -799,7 +794,7 @@ export namespace PhoneCallResponse {
     /**
      * Documents whether this utterance is spoken by agent or user.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Array of words in the utterance with the word timestamp. Useful for
@@ -839,7 +834,7 @@ export namespace PhoneCallResponse {
     /**
      * Documents whether this utterance is spoken by agent or user.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Array of words in the utterance with the word timestamp. Useful for
@@ -1180,11 +1175,6 @@ export namespace WebCallResponse {
      * Total unit duration price of all products in cents per second
      */
     total_duration_unit_price: number;
-
-    /**
-     * Total one time price of all products in cents per call
-     */
-    total_one_time_price: number;
   }
 
   export namespace CallCost {
@@ -1202,7 +1192,7 @@ export namespace WebCallResponse {
       /**
        * Unit price of the product in cents per second.
        */
-      unitPrice: number;
+      unit_price: number;
     }
   }
 
@@ -1566,7 +1556,7 @@ export namespace WebCallResponse {
     /**
      * Documents whether this utterance is spoken by agent or user.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Array of words in the utterance with the word timestamp. Useful for
@@ -1606,7 +1596,7 @@ export namespace WebCallResponse {
     /**
      * Documents whether this utterance is spoken by agent or user.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Array of words in the utterance with the word timestamp. Useful for

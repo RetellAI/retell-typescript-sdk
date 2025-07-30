@@ -80,8 +80,16 @@ export class Llm extends APIResource {
    * const llmResponses = await client.llm.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse> {
-    return this._client.get('/list-retell-llms', options);
+  list(query?: LlmListParams, options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
+  list(
+    query: LlmListParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<LlmListResponse> {
+    if (isRequestOptions(query)) {
+      return this.list({}, query);
+    }
+    return this._client.get('/list-retell-llms', { query, ...options });
   }
 
   /**
@@ -529,14 +537,6 @@ export namespace LlmResponse {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -582,6 +582,14 @@ export namespace LlmResponse {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -1224,14 +1232,6 @@ export namespace LlmResponse {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -1277,6 +1277,14 @@ export namespace LlmResponse {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -1940,14 +1948,6 @@ export namespace LlmCreateParams {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -1993,6 +1993,14 @@ export namespace LlmCreateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -2635,14 +2643,6 @@ export namespace LlmCreateParams {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -2688,6 +2688,14 @@ export namespace LlmCreateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -3365,14 +3373,6 @@ export namespace LlmUpdateParams {
      */
     speak_after_execution: boolean;
 
-    /**
-     * Determines whether the agent would say sentence like "One moment, let me check
-     * that." when executing the function. Recommend to turn on if your function call
-     * takes over 1s (including network) to complete, so that your agent remains
-     * responsive.
-     */
-    speak_during_execution: boolean;
-
     type: 'custom';
 
     /**
@@ -3418,6 +3418,14 @@ export namespace LlmUpdateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
 
     /**
      * The maximum time in milliseconds the tool can run before it's considered
@@ -4060,14 +4068,6 @@ export namespace LlmUpdateParams {
        */
       speak_after_execution: boolean;
 
-      /**
-       * Determines whether the agent would say sentence like "One moment, let me check
-       * that." when executing the function. Recommend to turn on if your function call
-       * takes over 1s (including network) to complete, so that your agent remains
-       * responsive.
-       */
-      speak_during_execution: boolean;
-
       type: 'custom';
 
       /**
@@ -4113,6 +4113,14 @@ export namespace LlmUpdateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
 
       /**
        * The maximum time in milliseconds the tool can run before it's considered
@@ -4361,6 +4369,28 @@ export namespace LlmUpdateParams {
   }
 }
 
+export interface LlmListParams {
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and
+   * 1000, and the default is 1000.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of LLMs. Pagination key is
+   * represented by a llm id, pagination key and version pair is exclusive (not
+   * included in the fetched page). If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * Specifies the version of the llm associated with the pagination_key. When
+   * paginating, both the pagination_key and its version must be provided to ensure
+   * consistent ordering and to fetch the next page correctly.
+   */
+  pagination_key_version?: number;
+}
+
 export declare namespace Llm {
   export {
     type LlmResponse as LlmResponse,
@@ -4368,5 +4398,6 @@ export declare namespace Llm {
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
+    type LlmListParams as LlmListParams,
   };
 }
