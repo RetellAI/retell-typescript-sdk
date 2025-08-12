@@ -176,6 +176,12 @@ export interface PhoneNumberCreateParams {
   area_code?: number;
 
   /**
+   * The ISO 3166-1 alpha-2 country code of the number you are trying to purchase. If
+   * left empty, will default to "US".
+   */
+  country_code?: 'US' | 'CA';
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
@@ -216,6 +222,17 @@ export interface PhoneNumberCreateParams {
    * default to latest version.
    */
   outbound_agent_version?: number | null;
+
+  /**
+   * The number you are trying to purchase in E.164 format of the number (+country
+   * code then number with no space and no special characters).
+   */
+  phone_number?: string;
+
+  /**
+   * Whether to purchase a toll-free number. Toll-free numbers incur higher costs.
+   */
+  toll_free?: boolean;
 }
 
 export interface PhoneNumberUpdateParams {
