@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.42.0 (2025-08-12)
+
+Full Changelog: [v4.41.0...v4.42.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.41.0...v4.42.0)
+
+### Features
+
+* **api:** api update ([8b16279](https://github.com/RetellAI/retell-typescript-sdk/commit/8b162792e7178d7929fb717eceb50b66d3ba21e7))
+
+
+### Chores
+
+* **internal:** move publish config ([9e4f257](https://github.com/RetellAI/retell-typescript-sdk/commit/9e4f25739c62bd58b6ebf23a591740fc00f463dd))
+* **internal:** update comment in script ([8843d03](https://github.com/RetellAI/retell-typescript-sdk/commit/8843d03acfa578f94d6413422e216abd5b583140))
+* update @stainless-api/prism-cli to v5.15.0 ([4305fa0](https://github.com/RetellAI/retell-typescript-sdk/commit/4305fa07ac5a9ccb84314d60c1999bcc454138a0))
+
 ## 4.41.0 (2025-07-30)
 
 Full Changelog: [v4.40.0...v4.41.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.40.0...v4.41.0)
