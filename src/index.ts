@@ -249,6 +249,7 @@ Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
 Retell.BatchCall = BatchCall;
+
 export declare namespace Retell {
   export type RequestOptions = Core.RequestOptions;
 
