@@ -1695,6 +1695,12 @@ export interface CallUpdateParams {
    * logging. Can only be changed from false to true.
    */
   opt_out_sensitive_data_storage?: boolean;
+
+  /**
+   * Override dynamic varaibles represented as key-value pairs of strings. These are
+   * provided during call-updates and have the highest priorty.
+   */
+  override_dynamic_variables?: { [key: string]: string } | null;
 }
 
 export interface CallListParams {
