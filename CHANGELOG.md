@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.43.0 (2025-08-17)
+
+Full Changelog: [v4.42.0...v4.43.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.42.0...v4.43.0)
+
+### Features
+
+* **api:** api update ([07fe7d2](https://github.com/RetellAI/retell-typescript-sdk/commit/07fe7d2354a93ea8dc4fca8186e935fc8f5ea95a))
+
+
+### Chores
+
+* **deps:** update dependency node-fetch to v2.6.13 ([5fd4292](https://github.com/RetellAI/retell-typescript-sdk/commit/5fd4292f057355fe2971677c81b9e80f8175c774))
+* **internal:** formatting change ([5f6c667](https://github.com/RetellAI/retell-typescript-sdk/commit/5f6c667d3717341484f03464c40e1617d7927b59))
+
 ## 4.42.0 (2025-08-12)
 
 Full Changelog: [v4.41.0...v4.42.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.41.0...v4.42.0)
