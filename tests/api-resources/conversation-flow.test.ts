@@ -11,7 +11,7 @@ const client = new Retell({
 describe('resource conversationFlow', () => {
   test('create: only required params', async () => {
     const responsePromise = client.conversationFlow.create({
-      model_choice: { model: 'gpt-4o', type: 'cascading' },
+      model_choice: { model: 'gpt-5', type: 'cascading' },
       nodes: [
         {
           id: 'start',
@@ -32,7 +32,7 @@ describe('resource conversationFlow', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.conversationFlow.create({
-      model_choice: { model: 'gpt-4o', type: 'cascading', high_priority: true },
+      model_choice: { model: 'gpt-5', type: 'cascading', high_priority: true },
       nodes: [
         {
           id: 'start',
@@ -60,7 +60,7 @@ describe('resource conversationFlow', () => {
             positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
           },
           interruption_sensitivity: 0,
-          model_choice: { model: 'gpt-4o', type: 'cascading', high_priority: true },
+          model_choice: { model: 'gpt-5', type: 'cascading', high_priority: true },
           name: 'name',
           skip_response_edge: {
             id: 'id',

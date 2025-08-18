@@ -179,6 +179,9 @@ export interface LlmResponse {
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?:
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-4o'
     | 'gpt-4o-mini'
     | 'gpt-4.1'
@@ -188,6 +191,8 @@ export interface LlmResponse {
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
     | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
     | null;
 
   /**
@@ -1590,6 +1595,9 @@ export interface LlmCreateParams {
    * Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?:
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-4o'
     | 'gpt-4o-mini'
     | 'gpt-4.1'
@@ -1599,6 +1607,8 @@ export interface LlmCreateParams {
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
     | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
     | null;
 
   /**
@@ -3015,6 +3025,9 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying text LLM. If not set, would default to gpt-4o.
    */
   model?:
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-4o'
     | 'gpt-4o-mini'
     | 'gpt-4.1'
@@ -3024,6 +3037,8 @@ export interface LlmUpdateParams {
     | 'claude-3.5-haiku'
     | 'gemini-2.0-flash'
     | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
     | null;
 
   /**
