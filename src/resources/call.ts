@@ -1697,8 +1697,10 @@ export interface CallUpdateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
-   * Override dynamic varaibles represented as key-value pairs of strings. These are
-   * provided during call-updates and have the highest priorty.
+   * Override dynamic varaibles represented as key-value pairs of strings. Setting
+   * this will override or add the dynamic variables set in the agent during the
+   * call. Only need to set the delta where you want to override, no need to set the
+   * entire dynamic variables object.
    */
   override_dynamic_variables?: { [key: string]: string } | null;
 }
