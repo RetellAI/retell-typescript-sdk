@@ -397,12 +397,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -662,12 +673,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -913,12 +935,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -1200,12 +1233,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -1573,12 +1617,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -1825,12 +1880,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -1892,12 +1958,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -2121,12 +2198,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2211,12 +2299,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2497,12 +2596,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -2767,12 +2877,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2999,12 +3120,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -3566,12 +3698,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -3831,12 +3974,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -4082,12 +4236,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -4369,12 +4534,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -4742,12 +4918,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -4994,12 +5181,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5061,12 +5259,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -5290,12 +5499,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5380,12 +5600,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5666,12 +5897,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -5936,12 +6178,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -6168,12 +6421,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -6811,12 +7075,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -7076,12 +7351,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -7327,12 +7613,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -7614,12 +7911,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -7987,12 +8295,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -8239,12 +8558,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8306,12 +8636,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -8535,12 +8876,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8625,12 +8977,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8911,12 +9274,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -9181,12 +9555,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -9413,12 +9798,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
