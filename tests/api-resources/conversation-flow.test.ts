@@ -64,7 +64,7 @@ describe('resource conversationFlow', () => {
           name: 'name',
           skip_response_edge: {
             id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
+            transition_condition: { prompt: 'Skip response', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
         },
