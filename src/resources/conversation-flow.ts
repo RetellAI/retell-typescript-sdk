@@ -13,7 +13,7 @@ export class ConversationFlow extends APIResource {
    * ```ts
    * const conversationFlowResponse =
    *   await client.conversationFlow.create({
-   *     model_choice: { model: 'gpt-4o', type: 'cascading' },
+   *     model_choice: { model: 'gpt-5', type: 'cascading' },
    *     nodes: [
    *       {
    *         id: 'start',
@@ -265,6 +265,9 @@ export namespace ConversationFlowResponse {
      * The LLM model to use
      */
     model:
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
       | 'gpt-4o'
       | 'gpt-4o-mini'
       | 'gpt-4.1'
@@ -273,7 +276,9 @@ export namespace ConversationFlowResponse {
       | 'claude-3.7-sonnet'
       | 'claude-3.5-haiku'
       | 'gemini-2.0-flash'
-      | 'gemini-2.0-flash-lite';
+      | 'gemini-2.0-flash-lite'
+      | 'gemini-2.5-flash'
+      | 'gemini-2.5-flash-lite';
 
     /**
      * Type of model choice
@@ -397,12 +402,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -594,6 +610,9 @@ export namespace ConversationFlowResponse {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -602,7 +621,9 @@ export namespace ConversationFlowResponse {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -662,12 +683,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -913,12 +945,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -1092,6 +1135,9 @@ export namespace ConversationFlowResponse {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -1100,7 +1146,9 @@ export namespace ConversationFlowResponse {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -1200,12 +1248,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -1453,6 +1512,9 @@ export namespace ConversationFlowResponse {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -1461,7 +1523,9 @@ export namespace ConversationFlowResponse {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -1573,12 +1637,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -1728,6 +1803,9 @@ export namespace ConversationFlowResponse {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -1736,7 +1814,9 @@ export namespace ConversationFlowResponse {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -1825,12 +1905,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -1892,12 +1983,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -2121,12 +2223,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2211,12 +2324,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2497,12 +2621,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -2652,6 +2787,9 @@ export namespace ConversationFlowResponse {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -2660,7 +2798,9 @@ export namespace ConversationFlowResponse {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -2767,12 +2907,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -2999,12 +3150,23 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -3434,6 +3596,9 @@ export namespace ConversationFlowCreateParams {
      * The LLM model to use
      */
     model:
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
       | 'gpt-4o'
       | 'gpt-4o-mini'
       | 'gpt-4.1'
@@ -3442,7 +3607,9 @@ export namespace ConversationFlowCreateParams {
       | 'claude-3.7-sonnet'
       | 'claude-3.5-haiku'
       | 'gemini-2.0-flash'
-      | 'gemini-2.0-flash-lite';
+      | 'gemini-2.0-flash-lite'
+      | 'gemini-2.5-flash'
+      | 'gemini-2.5-flash-lite';
 
     /**
      * Type of model choice
@@ -3566,12 +3733,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -3763,6 +3941,9 @@ export namespace ConversationFlowCreateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -3771,7 +3952,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -3831,12 +4014,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -4082,12 +4276,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -4261,6 +4466,9 @@ export namespace ConversationFlowCreateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -4269,7 +4477,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -4369,12 +4579,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -4622,6 +4843,9 @@ export namespace ConversationFlowCreateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -4630,7 +4854,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -4742,12 +4968,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -4897,6 +5134,9 @@ export namespace ConversationFlowCreateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -4905,7 +5145,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -4994,12 +5236,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5061,12 +5314,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -5290,12 +5554,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5380,12 +5655,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -5666,12 +5952,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -5821,6 +6118,9 @@ export namespace ConversationFlowCreateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -5829,7 +6129,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -5936,12 +6238,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -6168,12 +6481,23 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -6679,6 +7003,9 @@ export namespace ConversationFlowUpdateParams {
      * The LLM model to use
      */
     model:
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
       | 'gpt-4o'
       | 'gpt-4o-mini'
       | 'gpt-4.1'
@@ -6687,7 +7014,9 @@ export namespace ConversationFlowUpdateParams {
       | 'claude-3.7-sonnet'
       | 'claude-3.5-haiku'
       | 'gemini-2.0-flash'
-      | 'gemini-2.0-flash-lite';
+      | 'gemini-2.0-flash-lite'
+      | 'gemini-2.5-flash'
+      | 'gemini-2.5-flash-lite';
 
     /**
      * Type of model choice
@@ -6811,12 +7140,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -7008,6 +7348,9 @@ export namespace ConversationFlowUpdateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -7016,7 +7359,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -7076,12 +7421,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -7327,12 +7683,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -7506,6 +7873,9 @@ export namespace ConversationFlowUpdateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -7514,7 +7884,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -7614,12 +7986,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -7867,6 +8250,9 @@ export namespace ConversationFlowUpdateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -7875,7 +8261,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -7987,12 +8375,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -8142,6 +8541,9 @@ export namespace ConversationFlowUpdateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -8150,7 +8552,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -8239,12 +8643,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8306,12 +8721,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -8535,12 +8961,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8625,12 +9062,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -8911,12 +9359,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
@@ -9066,6 +9525,9 @@ export namespace ConversationFlowUpdateParams {
        * The LLM model to use
        */
       model:
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-4o'
         | 'gpt-4o-mini'
         | 'gpt-4.1'
@@ -9074,7 +9536,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-3.7-sonnet'
         | 'claude-3.5-haiku'
         | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite';
+        | 'gemini-2.0-flash-lite'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite';
 
       /**
        * Type of model choice
@@ -9181,12 +9645,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
 
@@ -9413,12 +9888,23 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains';
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
 
           /**
-           * Right side of the equation
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
            */
-          right: string;
+          right?: string;
         }
       }
     }
