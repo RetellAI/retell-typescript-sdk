@@ -385,10 +385,24 @@ export interface AgentResponse {
   > | null;
 
   /**
-   * The model to use for post call analysis. Currently only supports gpt-4o-mini and
-   * gpt-4o. Default to gpt-4o-mini.
+   * The model to use for post call analysis. Default to gpt-4o-mini.
    */
-  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
+  post_call_analysis_model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.0-sonnet'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite';
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -950,10 +964,24 @@ export interface AgentCreateParams {
   > | null;
 
   /**
-   * The model to use for post call analysis. Currently only supports gpt-4o-mini and
-   * gpt-4o. Default to gpt-4o-mini.
+   * The model to use for post call analysis. Default to gpt-4o-mini.
    */
-  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
+  post_call_analysis_model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.0-sonnet'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite';
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -1511,10 +1539,24 @@ export interface AgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for post call analysis. Currently only supports
-   * gpt-4o-mini and gpt-4o. Default to gpt-4o-mini.
+   * Body param: The model to use for post call analysis. Default to gpt-4o-mini.
    */
-  post_call_analysis_model?: 'gpt-4o-mini' | 'gpt-4o';
+  post_call_analysis_model?:
+    | 'gpt-4o'
+    | 'gpt-4o-mini'
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.0-sonnet'
+    | 'claude-3.7-sonnet'
+    | 'claude-3.5-haiku'
+    | 'gemini-2.0-flash'
+    | 'gemini-2.0-flash-lite'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite';
 
   /**
    * Body param: A list of words / phrases and their pronunciation to be used to

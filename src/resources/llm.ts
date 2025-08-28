@@ -181,7 +181,7 @@ export interface LlmResponse {
   knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-4o.
+   * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
   model?:
     | 'gpt-5'
@@ -219,7 +219,7 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -1617,7 +1617,7 @@ export interface LlmCreateParams {
   knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-4o.
+   * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
   model?:
     | 'gpt-5'
@@ -1655,7 +1655,7 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -3067,7 +3067,8 @@ export interface LlmUpdateParams {
   knowledge_base_ids?: Array<string> | null;
 
   /**
-   * Body param: Select the underlying text LLM. If not set, would default to gpt-4o.
+   * Body param: Select the underlying text LLM. If not set, would default to
+   * gpt-4.1.
    */
   model?:
     | 'gpt-5'
@@ -3105,7 +3106,7 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying speech to speech model. Can only set this or
    * model, not both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
    * Body param: Name of the starting state. Required if states is not empty.
