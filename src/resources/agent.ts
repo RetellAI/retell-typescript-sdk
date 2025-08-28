@@ -240,6 +240,19 @@ export interface AgentResponse {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Granular setting to manage how Retell stores sensitive data (transcripts,
+   * recordings, logs, etc.). This replaces the deprecated
+   * `opt_out_sensitive_data_storage` field.
+   *
+   * - `everything`: Store all data including transcripts, recordings, and logs.
+   * - `everything_except_pii`: Store data without PII when PII is detected.
+   * - `basic_attributes_only`: Store only basic attributes; no
+   *   transcripts/recordings/logs. If not set, default value of "everything" will
+   *   apply.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
+
+  /**
    * If set, determines what denoising mode to use. Default to noise-cancellation.
    */
   denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
@@ -351,9 +364,11 @@ export interface AgentResponse {
   opt_in_signed_url?: boolean;
 
   /**
-   * Whether this agent opts out of sensitive data storage like transcript,
-   * recording, logging, inbound/outbound phone numbers, etc. These data can still be
-   * accessed securely via webhooks. If not set, default value of false will apply.
+   * @deprecated DEPRECATED: This field is deprecated and will be removed on
+   * 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
@@ -795,6 +810,19 @@ export interface AgentCreateParams {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Granular setting to manage how Retell stores sensitive data (transcripts,
+   * recordings, logs, etc.). This replaces the deprecated
+   * `opt_out_sensitive_data_storage` field.
+   *
+   * - `everything`: Store all data including transcripts, recordings, and logs.
+   * - `everything_except_pii`: Store data without PII when PII is detected.
+   * - `basic_attributes_only`: Store only basic attributes; no
+   *   transcripts/recordings/logs. If not set, default value of "everything" will
+   *   apply.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
+
+  /**
    * If set, determines what denoising mode to use. Default to noise-cancellation.
    */
   denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
@@ -901,9 +929,11 @@ export interface AgentCreateParams {
   opt_in_signed_url?: boolean;
 
   /**
-   * Whether this agent opts out of sensitive data storage like transcript,
-   * recording, logging, inbound/outbound phone numbers, etc. These data can still be
-   * accessed securely via webhooks. If not set, default value of false will apply.
+   * @deprecated DEPRECATED: This field is deprecated and will be removed on
+   * 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
@@ -1339,6 +1369,19 @@ export interface AgentUpdateParams {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Body param: Granular setting to manage how Retell stores sensitive data
+   * (transcripts, recordings, logs, etc.). This replaces the deprecated
+   * `opt_out_sensitive_data_storage` field.
+   *
+   * - `everything`: Store all data including transcripts, recordings, and logs.
+   * - `everything_except_pii`: Store data without PII when PII is detected.
+   * - `basic_attributes_only`: Store only basic attributes; no
+   *   transcripts/recordings/logs. If not set, default value of "everything" will
+   *   apply.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
+
+  /**
    * Body param: If set, determines what denoising mode to use. Default to
    * noise-cancellation.
    */
@@ -1447,10 +1490,11 @@ export interface AgentUpdateParams {
   opt_in_signed_url?: boolean;
 
   /**
-   * Body param: Whether this agent opts out of sensitive data storage like
-   * transcript, recording, logging, inbound/outbound phone numbers, etc. These data
-   * can still be accessed securely via webhooks. If not set, default value of false
-   * will apply.
+   * @deprecated Body param: DEPRECATED: This field is deprecated and will be removed
+   * on 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
    */
   opt_out_sensitive_data_storage?: boolean;
 
