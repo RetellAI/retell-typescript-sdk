@@ -160,6 +160,11 @@ export interface ConversationFlowResponse {
   global_prompt?: string | null;
 
   /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: ConversationFlowResponse.KBConfig;
+
+  /**
    * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
    */
   knowledge_base_ids?: Array<string> | null;
@@ -230,6 +235,21 @@ export namespace ConversationFlowResponse {
     x?: number;
 
     y?: number;
+  }
+
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
   }
 
   export interface Mcp {
@@ -3551,6 +3571,11 @@ export interface ConversationFlowCreateParams {
   global_prompt?: string | null;
 
   /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: ConversationFlowCreateParams.KBConfig;
+
+  /**
    * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
    */
   knowledge_base_ids?: Array<string> | null;
@@ -6676,6 +6701,21 @@ export namespace ConversationFlowCreateParams {
     y?: number;
   }
 
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
+  }
+
   export interface Mcp {
     name: string;
 
@@ -6897,6 +6937,11 @@ export interface ConversationFlowUpdateParams {
   global_prompt?: string | null;
 
   /**
+   * Body param: Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: ConversationFlowUpdateParams.KBConfig;
+
+  /**
    * Body param: Knowledge base IDs for RAG (Retrieval-Augmented Generation).
    */
   knowledge_base_ids?: Array<string> | null;
@@ -6968,6 +7013,21 @@ export namespace ConversationFlowUpdateParams {
     x?: number;
 
     y?: number;
+  }
+
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
   }
 
   export interface Mcp {

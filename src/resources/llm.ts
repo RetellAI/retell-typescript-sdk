@@ -170,6 +170,11 @@ export interface LlmResponse {
   is_published?: boolean;
 
   /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: LlmResponse.KBConfig | null;
+
+  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -839,6 +844,21 @@ export namespace LlmResponse {
 
       type?: 'inferred';
     }
+  }
+
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
   }
 
   export interface State {
@@ -1586,6 +1606,11 @@ export interface LlmCreateParams {
   > | null;
 
   /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: LlmCreateParams.KBConfig | null;
+
+  /**
    * A list of knowledge base ids to use for this resource. Set to null to remove all
    * knowledge bases.
    */
@@ -2255,6 +2280,21 @@ export namespace LlmCreateParams {
 
       type?: 'inferred';
     }
+  }
+
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
   }
 
   export interface State {
@@ -3016,6 +3056,11 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
+   * Body param: Knowledge base configuration for RAG retrieval.
+   */
+  kb_config?: LlmUpdateParams.KBConfig | null;
+
+  /**
    * Body param: A list of knowledge base ids to use for this resource. Set to null
    * to remove all knowledge bases.
    */
@@ -3685,6 +3730,21 @@ export namespace LlmUpdateParams {
 
       type?: 'inferred';
     }
+  }
+
+  /**
+   * Knowledge base configuration for RAG retrieval.
+   */
+  export interface KBConfig {
+    /**
+     * Similarity threshold for filtering search results
+     */
+    filter_score?: number;
+
+    /**
+     * Number of top knowledge base chunks to retrieve
+     */
+    top_k?: number;
   }
 
   export interface State {
