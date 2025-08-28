@@ -1743,6 +1743,11 @@ export namespace CallListParams {
     agent_id?: Array<string>;
 
     /**
+     * Only retrieve calls with specific batch call id(s).
+     */
+    batch_call_id?: Array<string>;
+
+    /**
      * Only retrieve calls with specific call status(es).
      */
     call_status?: Array<'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'>;
