@@ -364,6 +364,15 @@ export interface AgentResponse {
   opt_in_signed_url?: boolean;
 
   /**
+   * @deprecated DEPRECATED: This field is deprecated and will be removed on
+   * 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
+   */
+  opt_out_sensitive_data_storage?: boolean;
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   pii_config?: AgentResponse.PiiConfig;
@@ -968,6 +977,15 @@ export interface AgentCreateParams {
   opt_in_signed_url?: boolean;
 
   /**
+   * @deprecated DEPRECATED: This field is deprecated and will be removed on
+   * 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
+   */
+  opt_out_sensitive_data_storage?: boolean;
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   pii_config?: AgentCreateParams.PiiConfig;
@@ -1566,6 +1584,15 @@ export interface AgentUpdateParams {
    * that restrict access and automatically expire after 24 hours.
    */
   opt_in_signed_url?: boolean;
+
+  /**
+   * @deprecated Body param: DEPRECATED: This field is deprecated and will be removed
+   * on 9/30/2025. Use data_storage_setting instead. Whether this agent opts out of
+   * sensitive data storage like transcript, recording, logging, inbound/outbound
+   * phone numbers, etc. These data can still be accessed securely via webhooks. If
+   * not set, default value of false will apply.
+   */
+  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Body param: Configuration for PII scrubbing from transcripts and recordings.
