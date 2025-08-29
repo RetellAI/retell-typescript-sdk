@@ -26,11 +26,11 @@ export class Call extends APIResource {
    * const callResponse = await client.call.update(
    *   'call_a4441234567890777c4a4a123e6',
    *   {
+   *     data_storage_setting: 'everything_except_pii',
    *     metadata: {
    *       customer_id: 'cust_123',
    *       notes: 'Follow-up required',
    *     },
-   *     opt_out_sensitive_data_storage: true,
    *   },
    * );
    * ```
@@ -204,6 +204,13 @@ export interface PhoneCallResponse {
   custom_sip_headers?: { [key: string]: string };
 
   /**
+   * Data storage setting for this call's agent. "everything" stores all data,
+   * "everything_except_pii" excludes PII when possible, "basic_attributes_only"
+   * stores only metadata.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -282,12 +289,6 @@ export interface PhoneCallResponse {
    * access and automatically expire after 24 hours.
    */
   opt_in_signed_url?: boolean;
-
-  /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging.
-   */
-  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Public log of the call, containing details about all the requests and responses
@@ -983,6 +984,13 @@ export interface WebCallResponse {
   custom_sip_headers?: { [key: string]: string };
 
   /**
+   * Data storage setting for this call's agent. "everything" stores all data,
+   * "everything_except_pii" excludes PII when possible, "basic_attributes_only"
+   * stores only metadata.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
+
+  /**
    * The reason for the disconnection of the call. Read details desciption about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
@@ -1061,12 +1069,6 @@ export interface WebCallResponse {
    * access and automatically expire after 24 hours.
    */
   opt_in_signed_url?: boolean;
-
-  /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging.
-   */
-  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Public log of the call, containing details about all the requests and responses
@@ -1684,17 +1686,19 @@ export type CallListResponse = Array<CallResponse>;
 
 export interface CallUpdateParams {
   /**
+   * Data storage setting for this call. Overrides the agent's default setting.
+   * "everything" stores all data, "everything_except_pii" excludes PII when
+   * possible, "basic_attributes_only" stores only metadata. Cannot be downgraded
+   * from more restrictive to less restrictive settings.
+   */
+  data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
+
+  /**
    * An arbitrary object for storage purpose only. You can put anything here like
    * your internal customer id associated with the call. Not used for processing. You
    * can later get this field from the call object. Size limited to 50kB max.
    */
   metadata?: unknown;
-
-  /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging. Can only be changed from false to true.
-   */
-  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Override dynamic varaibles represented as key-value pairs of strings. Setting
