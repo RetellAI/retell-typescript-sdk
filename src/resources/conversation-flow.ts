@@ -247,7 +247,7 @@ export namespace ConversationFlowResponse {
     filter_score?: number;
 
     /**
-     * Number of top knowledge base chunks to retrieve
+     * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
   }
@@ -6711,7 +6711,7 @@ export namespace ConversationFlowCreateParams {
     filter_score?: number;
 
     /**
-     * Number of top knowledge base chunks to retrieve
+     * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
   }
@@ -7025,7 +7025,7 @@ export namespace ConversationFlowUpdateParams {
     filter_score?: number;
 
     /**
-     * Number of top knowledge base chunks to retrieve
+     * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
   }
