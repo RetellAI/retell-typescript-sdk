@@ -373,6 +373,11 @@ export interface AgentResponse {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Configuration for PII scrubbing from transcripts and recordings.
+   */
+  pii_config?: AgentResponse.PiiConfig;
+
+  /**
    * Post call analysis data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
@@ -560,6 +565,35 @@ export namespace AgentResponse {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  /**
+   * Configuration for PII scrubbing from transcripts and recordings.
+   */
+  export interface PiiConfig {
+    /**
+     * List of PII categories to scrub from transcripts and recordings.
+     */
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+    >;
+
+    /**
+     * The processing mode for PII scrubbing. Currently only post-call is supported.
+     */
+    mode: 'post_call';
   }
 
   export interface StringAnalysisData {
@@ -952,6 +986,11 @@ export interface AgentCreateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Configuration for PII scrubbing from transcripts and recordings.
+   */
+  pii_config?: AgentCreateParams.PiiConfig;
+
+  /**
    * Post call analysis data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
@@ -1139,6 +1178,35 @@ export namespace AgentCreateParams {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  /**
+   * Configuration for PII scrubbing from transcripts and recordings.
+   */
+  export interface PiiConfig {
+    /**
+     * List of PII categories to scrub from transcripts and recordings.
+     */
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+    >;
+
+    /**
+     * The processing mode for PII scrubbing. Currently only post-call is supported.
+     */
+    mode: 'post_call';
   }
 
   export interface StringAnalysisData {
@@ -1527,6 +1595,11 @@ export interface AgentUpdateParams {
   opt_out_sensitive_data_storage?: boolean;
 
   /**
+   * Body param: Configuration for PII scrubbing from transcripts and recordings.
+   */
+  pii_config?: AgentUpdateParams.PiiConfig;
+
+  /**
    * Body param: Post call analysis data to extract from the call. This data will
    * augment the pre-defined variables extracted in the call analysis. This will be
    * available after the call ends.
@@ -1691,6 +1764,35 @@ export interface AgentUpdateParams {
 }
 
 export namespace AgentUpdateParams {
+  /**
+   * Configuration for PII scrubbing from transcripts and recordings.
+   */
+  export interface PiiConfig {
+    /**
+     * List of PII categories to scrub from transcripts and recordings.
+     */
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+    >;
+
+    /**
+     * The processing mode for PII scrubbing. Currently only post-call is supported.
+     */
+    mode: 'post_call';
+  }
+
   export interface StringAnalysisData {
     /**
      * Description of the variable.
