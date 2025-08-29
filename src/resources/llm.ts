@@ -796,14 +796,38 @@ export namespace LlmResponse {
     type: 'mcp';
 
     /**
-     * The input schema of the MCP tool.
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
      */
-    input_schema?: { [key: string]: string };
+    execution_message_description?: string;
 
     /**
      * Unique id of the MCP.
      */
     mcp_id?: string;
+
+    /**
+     * Response variables to add to dynamic variables, key is the variable name, value
+     * is the path to the variable in the response
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface SendSMSTool {
@@ -1506,14 +1530,38 @@ export namespace LlmResponse {
       type: 'mcp';
 
       /**
-       * The input schema of the MCP tool.
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true. Can write what to say or even provide
+       * examples. The default is "The message you will say to callee when calling this
+       * tool. Make sure it fits into the conversation smoothly.".
        */
-      input_schema?: { [key: string]: string };
+      execution_message_description?: string;
 
       /**
        * Unique id of the MCP.
        */
       mcp_id?: string;
+
+      /**
+       * Response variables to add to dynamic variables, key is the variable name, value
+       * is the path to the variable in the response
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface SendSMSTool {
@@ -2232,14 +2280,38 @@ export namespace LlmCreateParams {
     type: 'mcp';
 
     /**
-     * The input schema of the MCP tool.
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
      */
-    input_schema?: { [key: string]: string };
+    execution_message_description?: string;
 
     /**
      * Unique id of the MCP.
      */
     mcp_id?: string;
+
+    /**
+     * Response variables to add to dynamic variables, key is the variable name, value
+     * is the path to the variable in the response
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface SendSMSTool {
@@ -2942,14 +3014,38 @@ export namespace LlmCreateParams {
       type: 'mcp';
 
       /**
-       * The input schema of the MCP tool.
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true. Can write what to say or even provide
+       * examples. The default is "The message you will say to callee when calling this
+       * tool. Make sure it fits into the conversation smoothly.".
        */
-      input_schema?: { [key: string]: string };
+      execution_message_description?: string;
 
       /**
        * Unique id of the MCP.
        */
       mcp_id?: string;
+
+      /**
+       * Response variables to add to dynamic variables, key is the variable name, value
+       * is the path to the variable in the response
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface SendSMSTool {
@@ -3683,14 +3779,38 @@ export namespace LlmUpdateParams {
     type: 'mcp';
 
     /**
-     * The input schema of the MCP tool.
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
      */
-    input_schema?: { [key: string]: string };
+    execution_message_description?: string;
 
     /**
      * Unique id of the MCP.
      */
     mcp_id?: string;
+
+    /**
+     * Response variables to add to dynamic variables, key is the variable name, value
+     * is the path to the variable in the response
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface SendSMSTool {
@@ -4393,14 +4513,38 @@ export namespace LlmUpdateParams {
       type: 'mcp';
 
       /**
-       * The input schema of the MCP tool.
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true. Can write what to say or even provide
+       * examples. The default is "The message you will say to callee when calling this
+       * tool. Make sure it fits into the conversation smoothly.".
        */
-      input_schema?: { [key: string]: string };
+      execution_message_description?: string;
 
       /**
        * Unique id of the MCP.
        */
       mcp_id?: string;
+
+      /**
+       * Response variables to add to dynamic variables, key is the variable name, value
+       * is the path to the variable in the response
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the function. Recommend to turn on if your function call
+       * takes over 1s (including network) to complete, so that your agent remains
+       * responsive.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface SendSMSTool {
