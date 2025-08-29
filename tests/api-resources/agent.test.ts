@@ -46,6 +46,7 @@ describe('resource agent', () => {
       normalize_for_speech: true,
       opt_in_signed_url: true,
       opt_out_sensitive_data_storage: true,
+      pii_config: { categories: ['person_name'], mode: 'post_call' },
       post_call_analysis_data: [
         {
           description: 'The name of the customer.',
