@@ -339,6 +339,11 @@ export namespace ConversationFlowResponse {
 
     interruption_sensitivity?: number;
 
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
+
     model_choice?: ConversationNode.ModelChoice;
 
     /**
@@ -3674,6 +3679,11 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number;
+
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
 
     model_choice?: ConversationNode.ModelChoice;
 
@@ -7116,6 +7126,11 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number;
+
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
 
     model_choice?: ConversationNode.ModelChoice;
 
