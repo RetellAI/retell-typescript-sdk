@@ -291,12 +291,6 @@ export interface PhoneCallResponse {
   opt_in_signed_url?: boolean;
 
   /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging.
-   */
-  opt_out_sensitive_data_storage?: boolean;
-
-  /**
    * Public log of the call, containing details about all the requests and responses
    * received in LLM WebSocket, latency tracking for each turntaking, helpful for
    * debugging and tracing. Available after call ends.
@@ -1077,12 +1071,6 @@ export interface WebCallResponse {
   opt_in_signed_url?: boolean;
 
   /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging.
-   */
-  opt_out_sensitive_data_storage?: boolean;
-
-  /**
    * Public log of the call, containing details about all the requests and responses
    * received in LLM WebSocket, latency tracking for each turntaking, helpful for
    * debugging and tracing. Available after call ends.
@@ -1711,12 +1699,6 @@ export interface CallUpdateParams {
    * can later get this field from the call object. Size limited to 50kB max.
    */
   metadata?: unknown;
-
-  /**
-   * Whether this call opts out of sensitive data storage like transcript, recording,
-   * logging. Can only be changed from false to true.
-   */
-  opt_out_sensitive_data_storage?: boolean;
 
   /**
    * Override dynamic varaibles represented as key-value pairs of strings. Setting
