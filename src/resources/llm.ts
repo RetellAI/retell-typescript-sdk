@@ -309,6 +309,12 @@ export namespace LlmResponse {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
@@ -1043,6 +1049,12 @@ export namespace LlmResponse {
          * The type of transfer destination.
          */
         type: 'predefined';
+
+        /**
+         * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+         * digits, '\*', '#'.
+         */
+        extension?: string;
       }
 
       export interface TransferDestinationInferred {
@@ -1793,6 +1805,12 @@ export namespace LlmCreateParams {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
@@ -2527,6 +2545,12 @@ export namespace LlmCreateParams {
          * The type of transfer destination.
          */
         type: 'predefined';
+
+        /**
+         * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+         * digits, '\*', '#'.
+         */
+        extension?: string;
       }
 
       export interface TransferDestinationInferred {
@@ -3292,6 +3316,12 @@ export namespace LlmUpdateParams {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
@@ -4026,6 +4056,12 @@ export namespace LlmUpdateParams {
          * The type of transfer destination.
          */
         type: 'predefined';
+
+        /**
+         * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+         * digits, '\*', '#'.
+         */
+        extension?: string;
       }
 
       export interface TransferDestinationInferred {
