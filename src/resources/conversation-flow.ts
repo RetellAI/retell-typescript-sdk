@@ -1314,6 +1314,12 @@ export namespace ConversationFlowResponse {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
@@ -4655,6 +4661,12 @@ export namespace ConversationFlowCreateParams {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
@@ -8102,6 +8114,12 @@ export namespace ConversationFlowUpdateParams {
        * The type of transfer destination.
        */
       type: 'predefined';
+
+      /**
+       * Extension digits to dial after the main number connects. Sent via DTMF. Allow
+       * digits, '\*', '#'.
+       */
+      extension?: string;
     }
 
     export interface TransferDestinationInferred {
