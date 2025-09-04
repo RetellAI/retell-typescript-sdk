@@ -71,6 +71,7 @@ describe('resource agent', () => {
         action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
       },
       volume: 1,
+      webhook_timeout_ms: 10000,
       webhook_url: 'https://webhook-url-here',
     });
   });

@@ -503,6 +503,12 @@ export interface AgentResponse {
   volume?: number;
 
   /**
+   * The timeout for the webhook in milliseconds. If not set, default value of 10000
+   * will apply.
+   */
+  webhook_timeout_ms?: number;
+
+  /**
    * The webhook for agent to listen to call events. See what events it would get at
    * [webhook doc](/features/webhook). If set, will binds webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
@@ -1105,6 +1111,12 @@ export interface AgentCreateParams {
    * If unset, default value 1 will apply.
    */
   volume?: number;
+
+  /**
+   * The timeout for the webhook in milliseconds. If not set, default value of 10000
+   * will apply.
+   */
+  webhook_timeout_ms?: number;
 
   /**
    * The webhook for agent to listen to call events. See what events it would get at
@@ -1726,6 +1738,12 @@ export interface AgentUpdateParams {
    * agent speech. If unset, default value 1 will apply.
    */
   volume?: number;
+
+  /**
+   * Body param: The timeout for the webhook in milliseconds. If not set, default
+   * value of 10000 will apply.
+   */
+  webhook_timeout_ms?: number;
 
   /**
    * Body param: The webhook for agent to listen to call events. See what events it
