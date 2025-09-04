@@ -298,6 +298,12 @@ export interface PhoneCallResponse {
   public_log_url?: string;
 
   /**
+   * Recording of the call, with each party’s audio stored in a separate channel.
+   * Available after the call ends.
+   */
+  recording_multi_channel_url?: string;
+
+  /**
    * Recording of the call. Available after call ends.
    */
   recording_url?: string;
@@ -308,6 +314,29 @@ export interface PhoneCallResponse {
    * Engine.
    */
   retell_llm_dynamic_variables?: { [key: string]: unknown };
+
+  /**
+   * Recording of the call without PII, with each party’s audio stored in a separate
+   * channel. Available after the call ends.
+   */
+  scrubbed_recording_multi_channel_url?: string;
+
+  /**
+   * Recording of the call without PII. Available after call ends.
+   */
+  scrubbed_recording_url?: string;
+
+  /**
+   * Transcript of the call weaved with tool call invocation and results, without
+   * PII. It precisely captures when (at what utterance, which word) the tool was
+   * invoked and what was the result. Available after call ends.
+   */
+  scrubbed_transcript_with_tool_calls?: Array<
+    | PhoneCallResponse.Utterance
+    | PhoneCallResponse.ToolCallInvocationUtterance
+    | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.DtmfUtterance
+  >;
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -775,6 +804,98 @@ export namespace PhoneCallResponse {
     values: Array<number>;
   }
 
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * This is user pressed digit from their phone keypad.
+     */
+    role: 'dtmf';
+  }
+
   /**
    * Telephony identifier of the call, populated when available. Tracking purposes
    * only.
@@ -1078,6 +1199,12 @@ export interface WebCallResponse {
   public_log_url?: string;
 
   /**
+   * Recording of the call, with each party’s audio stored in a separate channel.
+   * Available after the call ends.
+   */
+  recording_multi_channel_url?: string;
+
+  /**
    * Recording of the call. Available after call ends.
    */
   recording_url?: string;
@@ -1088,6 +1215,29 @@ export interface WebCallResponse {
    * Engine.
    */
   retell_llm_dynamic_variables?: { [key: string]: unknown };
+
+  /**
+   * Recording of the call without PII, with each party’s audio stored in a separate
+   * channel. Available after the call ends.
+   */
+  scrubbed_recording_multi_channel_url?: string;
+
+  /**
+   * Recording of the call without PII. Available after call ends.
+   */
+  scrubbed_recording_url?: string;
+
+  /**
+   * Transcript of the call weaved with tool call invocation and results, without
+   * PII. It precisely captures when (at what utterance, which word) the tool was
+   * invoked and what was the result. Available after call ends.
+   */
+  scrubbed_transcript_with_tool_calls?: Array<
+    | WebCallResponse.Utterance
+    | WebCallResponse.ToolCallInvocationUtterance
+    | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.DtmfUtterance
+  >;
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -1547,6 +1697,98 @@ export namespace WebCallResponse {
      * All the token count values in the call.
      */
     values: Array<number>;
+  }
+
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * This is user pressed digit from their phone keypad.
+     */
+    role: 'dtmf';
   }
 
   export interface TranscriptObject {
