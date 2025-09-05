@@ -66,12 +66,8 @@ export class Agent extends APIResource {
     params: AgentUpdateParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<AgentResponse> {
-    const { query_version, ...body } = params;
-    return this._client.patch(`/update-agent/${agentId}`, {
-      query: { version: query_version },
-      body,
-      ...options,
-    });
+    const { version, ...body } = params;
+    return this._client.patch(`/update-agent/${agentId}`, { query: { version }, body, ...options });
   }
 
   /**
@@ -447,7 +443,7 @@ export interface AgentResponse {
   /**
    * Version of the agent.
    */
-  version?: unknown;
+  version?: number;
 
   /**
    * If set, determines the vocabulary set to use for transcription. This setting
@@ -1055,11 +1051,6 @@ export interface AgentCreateParams {
   user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
 
   /**
-   * Version of the agent.
-   */
-  version?: number | null;
-
-  /**
    * If set, determines the vocabulary set to use for transcription. This setting
    * only applies for English agents, for non English agent, this setting is a no-op.
    * Default to general.
@@ -1371,7 +1362,7 @@ export interface AgentUpdateParams {
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
-  query_version?: number;
+  version?: number;
 
   /**
    * Body param: The name of the agent. Only used for your own reference.
@@ -1674,11 +1665,6 @@ export interface AgentUpdateParams {
    * Body param:
    */
   user_dtmf_options?: AgentUpdateParams.UserDtmfOptions | null;
-
-  /**
-   * Body param: Version of the agent.
-   */
-  body_version?: number | null;
 
   /**
    * Body param: If set, determines the vocabulary set to use for transcription. This
