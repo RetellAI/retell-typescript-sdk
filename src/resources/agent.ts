@@ -51,7 +51,7 @@ export class Agent extends APIResource {
   }
 
   /**
-   * Update an existing agent
+   * Update an existing agent's latest draft version
    *
    * @example
    * ```ts
