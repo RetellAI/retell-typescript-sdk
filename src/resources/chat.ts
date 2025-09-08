@@ -69,13 +69,13 @@ export class Chat extends APIResource {
    *
    * @example
    * ```ts
-   * const chatResponse = await client.chat.createSMS({
+   * const chatResponse = await client.chat.createSMSChat({
    *   from_number: '+12137771234',
    *   to_number: '+14155551234',
    * });
    * ```
    */
-  createSMS(body: ChatCreateSMSParams, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
+  createSMSChat(body: ChatCreateSMSChatParams, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
     return this._client.post('/create-sms-chat', { body, ...options });
   }
 
@@ -584,7 +584,7 @@ export interface ChatCreateChatCompletionParams {
   content: string;
 }
 
-export interface ChatCreateSMSParams {
+export interface ChatCreateSMSChatParams {
   /**
    * The phone number to send SMS from in E.164 format. Must be a number purchased
    * from Retell or imported to Retell with SMS capability.
@@ -631,6 +631,6 @@ export declare namespace Chat {
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
-    type ChatCreateSMSParams as ChatCreateSMSParams,
+    type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
   };
 }
