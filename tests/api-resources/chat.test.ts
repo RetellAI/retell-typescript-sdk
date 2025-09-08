@@ -86,8 +86,11 @@ describe('resource chat', () => {
     });
   });
 
-  test('createSMS: only required params', async () => {
-    const responsePromise = client.chat.createSMS({ from_number: '+12137771234', to_number: '+14155551234' });
+  test('createSMSChat: only required params', async () => {
+    const responsePromise = client.chat.createSMSChat({
+      from_number: '+12137771234',
+      to_number: '+14155551234',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -97,8 +100,8 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('createSMS: required and optional params', async () => {
-    const response = await client.chat.createSMS({
+  test('createSMSChat: required and optional params', async () => {
+    const response = await client.chat.createSMSChat({
       from_number: '+12137771234',
       to_number: '+14155551234',
       metadata: {},
