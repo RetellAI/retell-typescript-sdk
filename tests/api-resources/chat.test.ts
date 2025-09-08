@@ -86,6 +86,31 @@ describe('resource chat', () => {
     });
   });
 
+  test('createSMSChat: only required params', async () => {
+    const responsePromise = client.chat.createSMSChat({
+      from_number: '+12137771234',
+      to_number: '+14155551234',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('createSMSChat: required and optional params', async () => {
+    const response = await client.chat.createSMSChat({
+      from_number: '+12137771234',
+      to_number: '+14155551234',
+      metadata: {},
+      override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      override_agent_version: 1,
+      retell_llm_dynamic_variables: { customer_name: 'bar' },
+    });
+  });
+
   test('end', async () => {
     const responsePromise = client.chat.end('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();

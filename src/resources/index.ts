@@ -30,6 +30,7 @@ export {
   type ChatCreateChatCompletionResponse,
   type ChatCreateParams,
   type ChatCreateChatCompletionParams,
+  type ChatCreateSMSChatParams,
 } from './chat';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
