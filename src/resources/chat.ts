@@ -63,6 +63,23 @@ export class Chat extends APIResource {
   }
 
   /**
+   * Start an outbound SMS chat conversation with a phone number using the specified
+   * agent. The agent must be configured for chat mode. The initial SMS message will
+   * be automatically generated and sent based on the agent's configuration.
+   *
+   * @example
+   * ```ts
+   * const chatResponse = await client.chat.createSMS({
+   *   from_number: '+12137771234',
+   *   to_number: '+14155551234',
+   * });
+   * ```
+   */
+  createSMS(body: ChatCreateSMSParams, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
+    return this._client.post('/create-sms-chat', { body, ...options });
+  }
+
+  /**
    * End an ongoing chat
    *
    * @example
@@ -567,6 +584,46 @@ export interface ChatCreateChatCompletionParams {
   content: string;
 }
 
+export interface ChatCreateSMSParams {
+  /**
+   * The phone number to send SMS from in E.164 format. Must be a number purchased
+   * from Retell or imported to Retell with SMS capability.
+   */
+  from_number: string;
+
+  /**
+   * The phone number to send SMS to in E.164 format
+   */
+  to_number: string;
+
+  /**
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the chat. Not used for processing. You
+   * can later get this field from the chat object.
+   */
+  metadata?: unknown;
+
+  /**
+   * For this particular chat, override the agent used with this agent id. This does
+   * not bind the agent to this number, this is for one time override.
+   */
+  override_agent_id?: string;
+
+  /**
+   * For this particular chat, override the agent version used with this version.
+   * This does not bind the agent version to this number, this is for one time
+   * override.
+   */
+  override_agent_version?: number;
+
+  /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Response Engine prompt and tool description. Only applicable for Response
+   * Engine.
+   */
+  retell_llm_dynamic_variables?: { [key: string]: unknown };
+}
+
 export declare namespace Chat {
   export {
     type ChatResponse as ChatResponse,
@@ -574,5 +631,6 @@ export declare namespace Chat {
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
+    type ChatCreateSMSParams as ChatCreateSMSParams,
   };
 }

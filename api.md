@@ -31,6 +31,7 @@ Methods:
 - <code title="get /get-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">retrieve</a>(chatId) -> ChatResponse</code>
 - <code title="get /list-chat">client.chat.<a href="./src/resources/chat.ts">list</a>() -> ChatListResponse</code>
 - <code title="post /create-chat-completion">client.chat.<a href="./src/resources/chat.ts">createChatCompletion</a>({ ...params }) -> ChatCreateChatCompletionResponse</code>
+- <code title="post /create-sms-chat">client.chat.<a href="./src/resources/chat.ts">createSMS</a>({ ...params }) -> ChatResponse</code>
 - <code title="patch /end-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">end</a>(chatId) -> void</code>
 
 # PhoneNumber
