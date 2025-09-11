@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.47.1 (2025-09-11)
+
+Full Changelog: [v4.47.0...v4.47.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.47.0...v4.47.1)
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([89f8c50](https://github.com/RetellAI/retell-typescript-sdk/commit/89f8c503f4a5e4efa64af9321b8865157cbae804))
+
+
+### Chores
+
+* ci build action ([65e6f62](https://github.com/RetellAI/retell-typescript-sdk/commit/65e6f627dc34bbd063242aaeb0df93531c25b083))
+
 ## 4.47.0 (2025-09-08)
 
 Full Changelog: [v4.46.0...v4.47.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.46.0...v4.47.0)
