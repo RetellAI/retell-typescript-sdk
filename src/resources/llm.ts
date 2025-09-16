@@ -764,6 +764,11 @@ export namespace LlmResponse {
      */
     name: string;
 
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
     type: 'agent_swap';
 
     /**
@@ -783,9 +788,12 @@ export namespace LlmResponse {
      */
     execution_message_description?: string;
 
-    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
     speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export interface McpTool {
@@ -1504,6 +1512,11 @@ export namespace LlmResponse {
        */
       name: string;
 
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
       type: 'agent_swap';
 
       /**
@@ -1523,9 +1536,12 @@ export namespace LlmResponse {
        */
       execution_message_description?: string;
 
-      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
       speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
     }
 
     export interface McpTool {
@@ -2260,6 +2276,11 @@ export namespace LlmCreateParams {
      */
     name: string;
 
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
     type: 'agent_swap';
 
     /**
@@ -2279,9 +2300,12 @@ export namespace LlmCreateParams {
      */
     execution_message_description?: string;
 
-    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
     speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export interface McpTool {
@@ -3000,6 +3024,11 @@ export namespace LlmCreateParams {
        */
       name: string;
 
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
       type: 'agent_swap';
 
       /**
@@ -3019,9 +3048,12 @@ export namespace LlmCreateParams {
        */
       execution_message_description?: string;
 
-      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
       speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
     }
 
     export interface McpTool {
@@ -3771,6 +3803,11 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
     type: 'agent_swap';
 
     /**
@@ -3790,9 +3827,12 @@ export namespace LlmUpdateParams {
      */
     execution_message_description?: string;
 
-    post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
     speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export interface McpTool {
@@ -4511,6 +4551,11 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
       type: 'agent_swap';
 
       /**
@@ -4530,9 +4575,12 @@ export namespace LlmUpdateParams {
        */
       execution_message_description?: string;
 
-      post_call_analysis_setting?: 'both_agents' | 'only_destination_agent';
-
       speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
     }
 
     export interface McpTool {
