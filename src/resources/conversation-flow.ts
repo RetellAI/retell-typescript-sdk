@@ -2888,6 +2888,11 @@ export namespace ConversationFlowResponse {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export namespace AgentSwapNode {
@@ -6235,6 +6240,11 @@ export namespace ConversationFlowCreateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export namespace AgentSwapNode {
@@ -9688,6 +9698,11 @@ export namespace ConversationFlowUpdateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
   }
 
   export namespace AgentSwapNode {
