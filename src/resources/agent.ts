@@ -120,6 +120,24 @@ export class Agent extends APIResource {
   getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentGetVersionsResponse> {
     return this._client.get(`/get-agent-versions/${agentId}`, options);
   }
+
+  /**
+   * Publish the latest version of the agent and create a new draft agent with newer
+   * version.
+   *
+   * @example
+   * ```ts
+   * await client.agent.publish(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  publish(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.post(`/publish-agent/${agentId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
+  }
 }
 
 export interface AgentResponse {
