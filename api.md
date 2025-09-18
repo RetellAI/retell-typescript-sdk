@@ -66,6 +66,7 @@ Methods:
 - <code title="get /list-agents">client.agent.<a href="./src/resources/agent.ts">list</a>({ ...params }) -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentId) -> void</code>
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentId) -> AgentGetVersionsResponse</code>
+- <code title="post /publish-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentId) -> void</code>
 
 # Llm
 
