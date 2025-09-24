@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.49.0 (2025-09-24)
+
+Full Changelog: [v4.48.0...v4.49.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.48.0...v4.49.0)
+
+### Features
+
+* **api:** api update ([7abc1b2](https://github.com/RetellAI/retell-typescript-sdk/commit/7abc1b2183f9712918750b2aa301d813c5d0176b))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([9475f5d](https://github.com/RetellAI/retell-typescript-sdk/commit/9475f5d33ff68c03c2d2e972893122c40bf0937b))
+
 ## 4.48.0 (2025-09-18)
 
 Full Changelog: [v4.47.0...v4.48.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.47.0...v4.48.0)
