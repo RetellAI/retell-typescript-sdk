@@ -64,6 +64,12 @@ import {
   LlmUpdateParams,
 } from './resources/llm';
 import {
+  McpTool,
+  McpToolDefinition,
+  McpToolGetMcpToolsParams,
+  McpToolGetMcpToolsResponse,
+} from './resources/mcp-tool';
+import {
   PhoneNumber,
   PhoneNumberCreateParams,
   PhoneNumberImportParams,
@@ -193,6 +199,7 @@ export class Retell extends Core.APIClient {
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
   batchCall: API.BatchCall = new API.BatchCall(this);
+  mcpTool: API.McpTool = new API.McpTool(this);
 
   /**
    * Check whether the base URL is set to its default.
@@ -250,6 +257,7 @@ Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
 Retell.BatchCall = BatchCall;
+Retell.McpTool = McpTool;
 
 export declare namespace Retell {
   export type RequestOptions = Core.RequestOptions;
@@ -333,6 +341,13 @@ export declare namespace Retell {
     BatchCall as BatchCall,
     type BatchCallResponse as BatchCallResponse,
     type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
+  };
+
+  export {
+    McpTool as McpTool,
+    type McpToolDefinition as McpToolDefinition,
+    type McpToolGetMcpToolsResponse as McpToolGetMcpToolsResponse,
+    type McpToolGetMcpToolsParams as McpToolGetMcpToolsParams,
   };
 }
 
