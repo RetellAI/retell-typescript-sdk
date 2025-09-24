@@ -59,6 +59,12 @@ export {
   type LlmListParams,
 } from './llm';
 export {
+  McpTool,
+  type McpToolDefinition,
+  type McpToolGetMcpToolsResponse,
+  type McpToolGetMcpToolsParams,
+} from './mcp-tool';
+export {
   PhoneNumber,
   type PhoneNumberResponse,
   type PhoneNumberListResponse,
