@@ -222,6 +222,12 @@ export interface LlmResponse {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -1732,6 +1738,12 @@ export interface LlmCreateParams {
    * both.
    */
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+
+  /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
 
   /**
    * Name of the starting state. Required if states is not empty.
@@ -3259,6 +3271,12 @@ export interface LlmUpdateParams {
    * model, not both.
    */
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+
+  /**
+   * Body param: The speaker who starts the conversation. Required. Must be either
+   * 'user' or 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
 
   /**
    * Body param: Name of the starting state. Required if states is not empty.

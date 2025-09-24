@@ -145,3 +145,14 @@ Types:
 Methods:
 
 - <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> BatchCallResponse</code>
+
+# McpTool
+
+Types:
+
+- <code><a href="./src/resources/mcp-tool.ts">McpToolDefinition</a></code>
+- <code><a href="./src/resources/mcp-tool.ts">McpToolGetMcpToolsResponse</a></code>
+
+Methods:
+
+- <code title="get /get-mcp-tools/{agent_id}">client.mcpTool.<a href="./src/resources/mcp-tool.ts">getMcpTools</a>(agentId, { ...params }) -> McpToolGetMcpToolsResponse</code>
