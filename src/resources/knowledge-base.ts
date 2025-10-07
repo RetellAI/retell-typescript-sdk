@@ -145,8 +145,7 @@ export interface KnowledgeBaseResponse {
   >;
 
   /**
-   * Last refreshed timestamp (milliseconds since epoch). Only applicable when
-   * enable_auto_refresh is true.
+   * Last refreshed timestamp (milliseconds since epoch).
    */
   last_refreshed_timestamp?: number;
 }
