@@ -11,7 +11,9 @@ export class Llm extends APIResource {
    *
    * @example
    * ```ts
-   * const llmResponse = await client.llm.create();
+   * const llmResponse = await client.llm.create({
+   *   start_speaker: 'user',
+   * });
    * ```
    */
   create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
@@ -53,6 +55,7 @@ export class Llm extends APIResource {
    * const llmResponse = await client.llm.update(
    *   '16b980523634a6dc504898cda492e939',
    *   {
+   *     start_speaker: 'user',
    *     begin_message:
    *       'Hey I am a virtual assistant calling from Retell Hospital.',
    *   },
@@ -119,6 +122,12 @@ export interface LlmResponse {
    * Unique id of Retell LLM Response Engine.
    */
   llm_id: string;
+
+  /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker: 'user' | 'agent';
 
   /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
@@ -222,12 +231,6 @@ export interface LlmResponse {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
-   * The speaker who starts the conversation. Required. Must be either 'user' or
-   * 'agent'.
-   */
-  start_speaker?: 'user' | 'agent';
-
-  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -318,7 +321,7 @@ export namespace LlmResponse {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -364,6 +367,12 @@ export namespace LlmResponse {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -400,6 +409,19 @@ export namespace LlmResponse {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1066,7 +1088,7 @@ export namespace LlmResponse {
 
         /**
          * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-         * digits, '\*', '#'.
+         * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
       }
@@ -1112,6 +1134,12 @@ export namespace LlmResponse {
         agent_detection_timeout_ms?: number;
 
         /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+        /**
          * The music to play while the caller is being transferred.
          */
         on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -1148,6 +1176,19 @@ export namespace LlmResponse {
       }
 
       export namespace TransferOptionWarmTransfer {
+        /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        export interface IvrOption {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -1644,6 +1685,12 @@ export type LlmListResponse = Array<LlmResponse>;
 
 export interface LlmCreateParams {
   /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker: 'user' | 'agent';
+
+  /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
@@ -1740,12 +1787,6 @@ export interface LlmCreateParams {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
-   * The speaker who starts the conversation. Required. Must be either 'user' or
-   * 'agent'.
-   */
-  start_speaker?: 'user' | 'agent';
-
-  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -1836,7 +1877,7 @@ export namespace LlmCreateParams {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -1882,6 +1923,12 @@ export namespace LlmCreateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -1918,6 +1965,19 @@ export namespace LlmCreateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -2584,7 +2644,7 @@ export namespace LlmCreateParams {
 
         /**
          * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-         * digits, '\*', '#'.
+         * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
       }
@@ -2630,6 +2690,12 @@ export namespace LlmCreateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+        /**
          * The music to play while the caller is being transferred.
          */
         on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -2666,6 +2732,19 @@ export namespace LlmCreateParams {
       }
 
       export namespace TransferOptionWarmTransfer {
+        /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        export interface IvrOption {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -3167,6 +3246,12 @@ export interface LlmRetrieveParams {
 
 export interface LlmUpdateParams {
   /**
+   * Body param: The speaker who starts the conversation. Required. Must be either
+   * 'user' or 'agent'.
+   */
+  start_speaker: 'user' | 'agent';
+
+  /**
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
@@ -3273,12 +3358,6 @@ export interface LlmUpdateParams {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
-   * Body param: The speaker who starts the conversation. Required. Must be either
-   * 'user' or 'agent'.
-   */
-  start_speaker?: 'user' | 'agent';
-
-  /**
    * Body param: Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -3369,7 +3448,7 @@ export namespace LlmUpdateParams {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -3415,6 +3494,12 @@ export namespace LlmUpdateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -3451,6 +3536,19 @@ export namespace LlmUpdateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -4117,7 +4215,7 @@ export namespace LlmUpdateParams {
 
         /**
          * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-         * digits, '\*', '#'.
+         * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
       }
@@ -4163,6 +4261,12 @@ export namespace LlmUpdateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+        /**
          * The music to play while the caller is being transferred.
          */
         on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -4199,6 +4303,19 @@ export namespace LlmUpdateParams {
       }
 
       export namespace TransferOptionWarmTransfer {
+        /**
+         * IVR navigation option to run when doing human detection. This prompt will guide
+         * the AI on how to navigate the IVR system.
+         */
+        export interface IvrOption {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
         export interface WarmTransferPrompt {
           /**
            * The prompt to be used for warm handoff. Can contain dynamic variables.

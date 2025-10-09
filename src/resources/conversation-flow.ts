@@ -1317,7 +1317,7 @@ export namespace ConversationFlowResponse {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -1363,6 +1363,12 @@ export namespace ConversationFlowResponse {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -1399,6 +1405,19 @@ export namespace ConversationFlowResponse {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -4669,7 +4688,7 @@ export namespace ConversationFlowCreateParams {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -4715,6 +4734,12 @@ export namespace ConversationFlowCreateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -4751,6 +4776,19 @@ export namespace ConversationFlowCreateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
@@ -8127,7 +8165,7 @@ export namespace ConversationFlowUpdateParams {
 
       /**
        * Extension digits to dial after the main number connects. Sent via DTMF. Allow
-       * digits, '\*', '#'.
+       * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
     }
@@ -8173,6 +8211,12 @@ export namespace ConversationFlowUpdateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      ivr_option?: TransferOptionWarmTransfer.IvrOption;
+
+      /**
        * The music to play while the caller is being transferred.
        */
       on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
@@ -8209,6 +8253,19 @@ export namespace ConversationFlowUpdateParams {
     }
 
     export namespace TransferOptionWarmTransfer {
+      /**
+       * IVR navigation option to run when doing human detection. This prompt will guide
+       * the AI on how to navigate the IVR system.
+       */
+      export interface IvrOption {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
       export interface WarmTransferPrompt {
         /**
          * The prompt to be used for warm handoff. Can contain dynamic variables.
