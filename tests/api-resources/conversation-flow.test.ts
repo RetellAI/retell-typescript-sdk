@@ -72,6 +72,70 @@ describe('resource conversationFlow', () => {
       ],
       start_speaker: 'agent',
       begin_tag_display_position: { x: 100, y: 200 },
+      components: [
+        {
+          name: 'Customer Information Collector',
+          nodes: [
+            {
+              id: 'collect_info',
+              instruction: {
+                text: 'Ask the customer for their name and contact information.',
+                type: 'prompt',
+              },
+              type: 'conversation',
+              display_position: { x: 0, y: 0 },
+              edges: [
+                {
+                  id: 'id',
+                  transition_condition: { prompt: 'prompt', type: 'prompt' },
+                  destination_node_id: 'destination_node_id',
+                },
+              ],
+              finetune_conversation_examples: [
+                { id: 'id', transcript: [{ content: 'content', role: 'agent' }] },
+              ],
+              finetune_transition_examples: [
+                {
+                  id: 'id',
+                  transcript: [{ content: 'content', role: 'agent' }],
+                  destination_node_id: 'destination_node_id',
+                },
+              ],
+              global_node_setting: {
+                condition: 'condition',
+                negative_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
+                positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
+              },
+              interruption_sensitivity: 0,
+              knowledge_base_ids: ['kb_001', 'kb_002'],
+              model_choice: { model: 'gpt-5', type: 'cascading', high_priority: true },
+              name: 'name',
+              skip_response_edge: {
+                id: 'id',
+                transition_condition: { prompt: 'prompt', type: 'prompt' },
+                destination_node_id: 'destination_node_id',
+              },
+            },
+          ],
+          begin_tag_display_position: { x: 100, y: 200 },
+          start_node_id: 'collect_info',
+          tools: [
+            {
+              name: 'get_customer_info',
+              type: 'custom',
+              url: 'https://api.example.com/customer',
+              description: 'Get customer information from database',
+              headers: { foo: 'string' },
+              method: 'GET',
+              parameters: { properties: { foo: 'bar' }, type: 'object', required: ['string'] },
+              query_params: { foo: 'string' },
+              response_variables: { foo: 'string' },
+              timeout_ms: 1000,
+              tool_id: 'tool_001',
+            },
+          ],
+        },
+      ],
       default_dynamic_variables: { company_name: 'Retell Inc', support_hours: '9 AM - 5 PM' },
       global_prompt: 'You are a helpful customer service agent.',
       kb_config: { filter_score: 0.6, top_k: 3 },
