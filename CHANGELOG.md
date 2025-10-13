@@ -1,5 +1,33 @@
 # Changelog
 
+## 4.50.0 (2025-10-13)
+
+Full Changelog: [v4.49.0...v4.50.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.49.0...v4.50.0)
+
+### Features
+
+* **api:** api update ([8989832](https://github.com/RetellAI/retell-typescript-sdk/commit/898983213f4f7e0d90e47a663de22eb52a7b09f3))
+* **api:** api update ([51a3d02](https://github.com/RetellAI/retell-typescript-sdk/commit/51a3d020f1591f8c44d94841d725c7c10fa34942))
+* **api:** api update ([0b46faa](https://github.com/RetellAI/retell-typescript-sdk/commit/0b46faaa5a52b244a3c571313d357644417b3157))
+* **api:** api update ([365cbec](https://github.com/RetellAI/retell-typescript-sdk/commit/365cbec1e5514a23bd91f64c92a7c5ecf89bca6e))
+* **api:** api update ([624c79c](https://github.com/RetellAI/retell-typescript-sdk/commit/624c79c89036d588399a4afadd9e61ca82d4cd23))
+
+
+### Performance Improvements
+
+* faster formatting ([b719dd8](https://github.com/RetellAI/retell-typescript-sdk/commit/b719dd8dfe9315a09104a4e4b6282e3bca522625))
+
+
+### Chores
+
+* **internal:** codegen related update ([5f24457](https://github.com/RetellAI/retell-typescript-sdk/commit/5f2445765caaf36ecb08d19093ae939f9fa50a2e))
+* **internal:** fix incremental formatting in some cases ([c32aca7](https://github.com/RetellAI/retell-typescript-sdk/commit/c32aca702d5807e8dcb8933e665c0544a855b68b))
+* **internal:** ignore .eslintcache ([683b130](https://github.com/RetellAI/retell-typescript-sdk/commit/683b130c62d6e83ff578486289ab85d1349185d5))
+* **internal:** remove .eslintcache ([adc1f24](https://github.com/RetellAI/retell-typescript-sdk/commit/adc1f24d7670cb0b1e97bae9adecec24e412b4bd))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([751dd50](https://github.com/RetellAI/retell-typescript-sdk/commit/751dd50445ab8fcd5abcb112e500c8b57684d834))
+* **internal:** use npm pack for build uploads ([2de8f44](https://github.com/RetellAI/retell-typescript-sdk/commit/2de8f44f9c6db9515d0c09dfaf11529888ea0f3c))
+* **tests:** disable tests with false negative ([3299eb0](https://github.com/RetellAI/retell-typescript-sdk/commit/3299eb054dbc6d797bc94ade5d20a1358ca8eb97))
+
 ## 4.49.0 (2025-09-24)
 
 Full Changelog: [v4.48.0...v4.49.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.48.0...v4.49.0)
