@@ -182,6 +182,11 @@ export interface PhoneCallResponse {
   to_number: string;
 
   /**
+   * Name of the agent.
+   */
+  agent_name?: string;
+
+  /**
    * Post call analysis that includes information such as sentiment, status, summary,
    * and custom defined data to extract. Available after call ends. Subscribe to
    * `call_analyzed` webhook event type to receive it once ready.
@@ -1081,6 +1086,11 @@ export interface WebCallResponse {
    * Type of the call. Used to distinguish between web call and phone call.
    */
   call_type: 'web_call';
+
+  /**
+   * Name of the agent.
+   */
+  agent_name?: string;
 
   /**
    * Post call analysis that includes information such as sentiment, status, summary,
