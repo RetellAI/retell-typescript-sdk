@@ -324,6 +324,14 @@ export namespace LlmResponse {
        * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
+
+      /**
+       * If true, the e.164 validation will be ignored for the from_number. This can be
+       * useful when you want to dial to internal pseudo numbers. This only applies when
+       * you are using custom telephony and does not apply when you are using Retell
+       * Telephony. If omitted, the default value is false.
+       */
+      ignore_e164_validation?: boolean;
     }
 
     export interface TransferDestinationInferred {
@@ -1097,6 +1105,14 @@ export namespace LlmResponse {
          * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
+
+        /**
+         * If true, the e.164 validation will be ignored for the from_number. This can be
+         * useful when you want to dial to internal pseudo numbers. This only applies when
+         * you are using custom telephony and does not apply when you are using Retell
+         * Telephony. If omitted, the default value is false.
+         */
+        ignore_e164_validation?: boolean;
       }
 
       export interface TransferDestinationInferred {
@@ -1892,6 +1908,14 @@ export namespace LlmCreateParams {
        * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
+
+      /**
+       * If true, the e.164 validation will be ignored for the from_number. This can be
+       * useful when you want to dial to internal pseudo numbers. This only applies when
+       * you are using custom telephony and does not apply when you are using Retell
+       * Telephony. If omitted, the default value is false.
+       */
+      ignore_e164_validation?: boolean;
     }
 
     export interface TransferDestinationInferred {
@@ -2665,6 +2689,14 @@ export namespace LlmCreateParams {
          * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
+
+        /**
+         * If true, the e.164 validation will be ignored for the from_number. This can be
+         * useful when you want to dial to internal pseudo numbers. This only applies when
+         * you are using custom telephony and does not apply when you are using Retell
+         * Telephony. If omitted, the default value is false.
+         */
+        ignore_e164_validation?: boolean;
       }
 
       export interface TransferDestinationInferred {
@@ -3475,6 +3507,14 @@ export namespace LlmUpdateParams {
        * digits, '\*', '#', or a dynamic variable like {{extension}}.
        */
       extension?: string;
+
+      /**
+       * If true, the e.164 validation will be ignored for the from_number. This can be
+       * useful when you want to dial to internal pseudo numbers. This only applies when
+       * you are using custom telephony and does not apply when you are using Retell
+       * Telephony. If omitted, the default value is false.
+       */
+      ignore_e164_validation?: boolean;
     }
 
     export interface TransferDestinationInferred {
@@ -4248,6 +4288,14 @@ export namespace LlmUpdateParams {
          * digits, '\*', '#', or a dynamic variable like {{extension}}.
          */
         extension?: string;
+
+        /**
+         * If true, the e.164 validation will be ignored for the from_number. This can be
+         * useful when you want to dial to internal pseudo numbers. This only applies when
+         * you are using custom telephony and does not apply when you are using Retell
+         * Telephony. If omitted, the default value is false.
+         */
+        ignore_e164_validation?: boolean;
       }
 
       export interface TransferDestinationInferred {

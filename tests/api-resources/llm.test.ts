@@ -48,7 +48,12 @@ describe('resource llm', () => {
           tools: [
             {
               name: 'transfer_to_support',
-              transfer_destination: { number: '16175551212', type: 'predefined', extension: '123*456#' },
+              transfer_destination: {
+                number: '16175551212',
+                type: 'predefined',
+                extension: '123*456#',
+                ignore_e164_validation: false,
+              },
               transfer_option: { type: 'cold_transfer', show_transferee_as_caller: false },
               type: 'transfer_call',
               custom_sip_headers: { 'X-Custom-Header': 'Custom Value' },
@@ -152,7 +157,12 @@ describe('resource llm', () => {
           tools: [
             {
               name: 'transfer_to_support',
-              transfer_destination: { number: '16175551212', type: 'predefined', extension: '123*456#' },
+              transfer_destination: {
+                number: '16175551212',
+                type: 'predefined',
+                extension: '123*456#',
+                ignore_e164_validation: false,
+              },
               transfer_option: { type: 'cold_transfer', show_transferee_as_caller: false },
               type: 'transfer_call',
               custom_sip_headers: { 'X-Custom-Header': 'Custom Value' },
