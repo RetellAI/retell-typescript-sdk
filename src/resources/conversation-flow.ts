@@ -1320,9 +1320,8 @@ export namespace ConversationFlowResponse {
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
-         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-         * only applicable for cold transfer, so if warm transfer option is specified, this
-         * field will be ignored. Default to false (default to show AI agent as caller).
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
       }
@@ -1378,6 +1377,13 @@ export namespace ConversationFlowResponse {
         public_handoff_option?:
           | TransferOptionWarmTransfer.WarmTransferPrompt
           | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -4940,9 +4946,8 @@ export namespace ConversationFlowResponse {
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
     }
@@ -4998,6 +5003,13 @@ export namespace ConversationFlowResponse {
       public_handoff_option?:
         | TransferOptionWarmTransfer.WarmTransferPrompt
         | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
     }
 
     export namespace TransferOptionWarmTransfer {
@@ -8605,9 +8617,8 @@ export namespace ConversationFlowCreateParams {
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
     }
@@ -8663,6 +8674,13 @@ export namespace ConversationFlowCreateParams {
       public_handoff_option?:
         | TransferOptionWarmTransfer.WarmTransferPrompt
         | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
     }
 
     export namespace TransferOptionWarmTransfer {
@@ -12026,9 +12044,8 @@ export namespace ConversationFlowCreateParams {
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
-         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-         * only applicable for cold transfer, so if warm transfer option is specified, this
-         * field will be ignored. Default to false (default to show AI agent as caller).
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
       }
@@ -12084,6 +12101,13 @@ export namespace ConversationFlowCreateParams {
         public_handoff_option?:
           | TransferOptionWarmTransfer.WarmTransferPrompt
           | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -15936,9 +15960,8 @@ export namespace ConversationFlowUpdateParams {
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
-         * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-         * only applicable for cold transfer, so if warm transfer option is specified, this
-         * field will be ignored. Default to false (default to show AI agent as caller).
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
       }
@@ -15994,6 +16017,13 @@ export namespace ConversationFlowUpdateParams {
         public_handoff_option?:
           | TransferOptionWarmTransfer.WarmTransferPrompt
           | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -19556,9 +19586,8 @@ export namespace ConversationFlowUpdateParams {
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
-       * transferring, requires the telephony side to support SIP REFER to PSTN. This is
-       * only applicable for cold transfer, so if warm transfer option is specified, this
-       * field will be ignored. Default to false (default to show AI agent as caller).
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
     }
@@ -19614,6 +19643,13 @@ export namespace ConversationFlowUpdateParams {
       public_handoff_option?:
         | TransferOptionWarmTransfer.WarmTransferPrompt
         | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
     }
 
     export namespace TransferOptionWarmTransfer {

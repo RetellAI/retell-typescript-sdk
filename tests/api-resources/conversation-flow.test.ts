@@ -9,8 +9,7 @@ const client = new Retell({
 });
 
 describe('resource conversationFlow', () => {
-  // Prism reporting false negative
-  test.skip('create: only required params', async () => {
+  test('create: only required params', async () => {
     const responsePromise = client.conversationFlow.create({
       model_choice: { model: 'gpt-5', type: 'cascading' },
       nodes: [
@@ -31,8 +30,7 @@ describe('resource conversationFlow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism reporting false negative
-  test.skip('create: required and optional params', async () => {
+  test('create: required and optional params', async () => {
     const response = await client.conversationFlow.create({
       model_choice: { model: 'gpt-5', type: 'cascading', high_priority: true },
       nodes: [
@@ -172,8 +170,7 @@ describe('resource conversationFlow', () => {
     });
   });
 
-  // Prism reporting false negative
-  test.skip('retrieve', async () => {
+  test('retrieve', async () => {
     const responsePromise = client.conversationFlow.retrieve('conversation_flow_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -184,16 +181,14 @@ describe('resource conversationFlow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism reporting false negative
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
+  test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.conversationFlow.retrieve('conversation_flow_id', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism reporting false negative
-  test.skip('retrieve: request options and params are passed correctly', async () => {
+  test('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.conversationFlow.retrieve(
@@ -204,8 +199,7 @@ describe('resource conversationFlow', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism reporting false negative
-  test.skip('update', async () => {
+  test('update', async () => {
     const responsePromise = client.conversationFlow.update('conversation_flow_id', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -216,8 +210,7 @@ describe('resource conversationFlow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism reporting false negative
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.conversationFlow.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -228,16 +221,14 @@ describe('resource conversationFlow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism reporting false negative
-  test.skip('list: request options instead of params are passed correctly', async () => {
+  test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.conversationFlow.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
 
-  // Prism reporting false negative
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.conversationFlow.list(
@@ -247,8 +238,7 @@ describe('resource conversationFlow', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism reporting false negative
-  test.skip('delete', async () => {
+  test('delete', async () => {
     const responsePromise = client.conversationFlow.delete('conversation_flow_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -259,8 +249,7 @@ describe('resource conversationFlow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism reporting false negative
-  test.skip('delete: request options instead of params are passed correctly', async () => {
+  test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.conversationFlow.delete('conversation_flow_id', { path: '/_stainless_unknown_path' }),
