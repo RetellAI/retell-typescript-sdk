@@ -27,6 +27,7 @@ describe('resource batchCall', () => {
     const response = await client.batchCall.createBatchCall({
       from_number: '+14157774444',
       tasks: [{ to_number: '+12137774445', retell_llm_dynamic_variables: { customer_name: 'bar' } }],
+      ignore_e164_validation: true,
       name: 'First batch call',
       trigger_timestamp: 1735718400000,
     });
