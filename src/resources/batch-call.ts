@@ -86,6 +86,26 @@ export namespace BatchCallCreateBatchCallParams {
     to_number: string;
 
     /**
+     * If true, the e.164 validation will be ignored for the from_number. This can be
+     * useful when you want to dial to internal pseudo numbers. This only applies when
+     * you are using custom telephony and does not apply when you are using Retell
+     * Telephony. If omitted, the default value is false.
+     */
+    ignore_e164_validation?: boolean;
+
+    /**
+     * For this particular call, override the agent used with this agent id. This does
+     * not bind the agent to this number, this is for one time override.
+     */
+    override_agent_id?: string;
+
+    /**
+     * For this particular call, override the agent version used with this version.
+     * This does not bind the agent to this number, this is for one time override.
+     */
+    override_agent_version?: number;
+
+    /**
      * Add optional dynamic variables in key value pairs of string that injects into
      * your Response Engine prompt and tool description. Only applicable for Response
      * Engine.
