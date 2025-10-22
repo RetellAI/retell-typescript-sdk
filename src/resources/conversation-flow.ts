@@ -144,6 +144,14 @@ export interface ConversationFlowResponse {
   version: number;
 
   /**
+   * If set, the AI will begin the conversation after waiting for the user for the
+   * duration (in milliseconds) specified by this attribute. This only applies if the
+   * agent is configured to wait for the user to speak first. If not set, the agent
+   * will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
+
+  /**
    * Display position for the begin tag in the frontend.
    */
   begin_tag_display_position?: ConversationFlowResponse.BeginTagDisplayPosition | null;
@@ -7503,6 +7511,14 @@ export interface ConversationFlowCreateParams {
   start_speaker: 'user' | 'agent';
 
   /**
+   * If set, the AI will begin the conversation after waiting for the user for the
+   * duration (in milliseconds) specified by this attribute. This only applies if the
+   * agent is configured to wait for the user to speak first. If not set, the agent
+   * will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
+
+  /**
    * Display position for the begin tag in the frontend.
    */
   begin_tag_display_position?: ConversationFlowCreateParams.BeginTagDisplayPosition | null;
@@ -14813,6 +14829,14 @@ export interface ConversationFlowUpdateParams {
    * Query param: Version of the conversation flow to update
    */
   version?: string;
+
+  /**
+   * Body param: If set, the AI will begin the conversation after waiting for the
+   * user for the duration (in milliseconds) specified by this attribute. This only
+   * applies if the agent is configured to wait for the user to speak first. If not
+   * set, the agent will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
 
   /**
    * Body param: Display position for the begin tag in the frontend.

@@ -130,6 +130,14 @@ export interface LlmResponse {
   start_speaker: 'user' | 'agent';
 
   /**
+   * If set, the AI will begin the conversation after waiting for the user for the
+   * duration (in milliseconds) specified by this attribute. This only applies if the
+   * agent is configured to wait for the user to speak first. If not set, the agent
+   * will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
+
+  /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
    * generate a message. If set to "", agent will wait for user to speak first.
    */
@@ -1717,6 +1725,14 @@ export interface LlmCreateParams {
    * 'agent'.
    */
   start_speaker: 'user' | 'agent';
+
+  /**
+   * If set, the AI will begin the conversation after waiting for the user for the
+   * duration (in milliseconds) specified by this attribute. This only applies if the
+   * agent is configured to wait for the user to speak first. If not set, the agent
+   * will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
 
   /**
    * First utterance said by the agent in the call. If not set, LLM will dynamically
@@ -3312,6 +3328,14 @@ export interface LlmUpdateParams {
    * latest version.
    */
   query_version?: number;
+
+  /**
+   * Body param: If set, the AI will begin the conversation after waiting for the
+   * user for the duration (in milliseconds) specified by this attribute. This only
+   * applies if the agent is configured to wait for the user to speak first. If not
+   * set, the agent will wait indefinitely for the user to speak.
+   */
+  begin_after_user_silence_ms?: number | null;
 
   /**
    * Body param: First utterance said by the agent in the call. If not set, LLM will
