@@ -71,6 +71,7 @@ describe('resource conversationFlow', () => {
         },
       ],
       start_speaker: 'agent',
+      begin_after_user_silence_ms: 2000,
       begin_tag_display_position: { x: 100, y: 200 },
       components: [
         {

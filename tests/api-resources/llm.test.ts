@@ -23,6 +23,7 @@ describe('resource llm', () => {
   test('create: required and optional params', async () => {
     const response = await client.llm.create({
       start_speaker: 'user',
+      begin_after_user_silence_ms: 2000,
       begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',
       default_dynamic_variables: { customer_name: 'John Doe' },
       general_prompt: 'You are ...',
@@ -128,6 +129,7 @@ describe('resource llm', () => {
     const response = await client.llm.update('16b980523634a6dc504898cda492e939', {
       start_speaker: 'user',
       query_version: 1,
+      begin_after_user_silence_ms: 2000,
       begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',
       default_dynamic_variables: { customer_name: 'John Doe' },
       general_prompt: 'You are ...',
