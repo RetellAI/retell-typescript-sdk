@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.55.0 (2025-10-23)
+
+Full Changelog: [v4.54.0...v4.55.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.54.0...v4.55.0)
+
+### Features
+
+* **api:** api update ([ecc1ee5](https://github.com/RetellAI/retell-typescript-sdk/commit/ecc1ee5c0be1435eb91c05077d7a7f8355a06f7d))
+
 ## 4.54.0 (2025-10-22)
 
 Full Changelog: [v4.53.0...v4.54.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.53.0...v4.54.0)
