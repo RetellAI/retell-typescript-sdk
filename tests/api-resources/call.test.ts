@@ -86,7 +86,7 @@ describe('resource call', () => {
       from_number: '+14157774444',
       to_number: '+12137774445',
       custom_sip_headers: { 'X-Custom-Header': 'Custom Value' },
-      ignore_e164_validation: false,
+      ignore_e164_validation: true,
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       override_agent_version: 1,
