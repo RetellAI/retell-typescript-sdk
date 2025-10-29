@@ -454,7 +454,7 @@ export namespace PhoneCallResponse {
       /**
        * Unit price of the product in cents per second.
        */
-      unit_price: number;
+      unit_price?: number;
     }
   }
 
@@ -1354,7 +1354,7 @@ export namespace WebCallResponse {
       /**
        * Unit price of the product in cents per second.
        */
-      unit_price: number;
+      unit_price?: number;
     }
   }
 
