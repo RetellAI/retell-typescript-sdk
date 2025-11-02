@@ -216,7 +216,7 @@ export interface PhoneCallResponse {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
 
   /**
-   * The reason for the disconnection of the call. Read details desciption about
+   * The reason for the disconnection of the call. Read detailed description about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
@@ -1122,7 +1122,7 @@ export interface WebCallResponse {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
 
   /**
-   * The reason for the disconnection of the call. Read details desciption about
+   * The reason for the disconnection of the call. Read detailed description about
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
