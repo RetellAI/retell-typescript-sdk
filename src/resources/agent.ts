@@ -234,7 +234,7 @@ export interface AgentResponse {
    * Check out
    * [backchannel default words](/agent/interaction-configuration#backchannel) for
    * more details. Note that certain voices do not work too well with certain words,
-   * so it's recommended to expeirment before adding any words.
+   * so it's recommended to experiment before adding any words.
    */
   backchannel_words?: Array<string> | null;
 
@@ -850,7 +850,7 @@ export interface AgentCreateParams {
    * Check out
    * [backchannel default words](/agent/interaction-configuration#backchannel) for
    * more details. Note that certain voices do not work too well with certain words,
-   * so it's recommended to expeirment before adding any words.
+   * so it's recommended to experiment before adding any words.
    */
   backchannel_words?: Array<string> | null;
 
@@ -1450,7 +1450,7 @@ export interface AgentUpdateParams {
    * will apply. Check out
    * [backchannel default words](/agent/interaction-configuration#backchannel) for
    * more details. Note that certain voices do not work too well with certain words,
-   * so it's recommended to expeirment before adding any words.
+   * so it's recommended to experiment before adding any words.
    */
   backchannel_words?: Array<string> | null;
 
