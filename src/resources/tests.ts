@@ -1,8 +1,19 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as Core from '../core';
 
-export class Tests extends APIResource {}
+export class Tests extends APIResource {
+  /**
+   * Create a batch test to run multiple test cases
+   */
+  createBatchTest(
+    body: TestCreateBatchTestParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<BatchTestResponse> {
+    return this._client.post('/create-batch-test', { body, ...options });
+  }
+}
 
 export interface BatchTestResponse {
   /**
@@ -99,6 +110,59 @@ export namespace BatchTestResponse {
   }
 }
 
+export interface TestCreateBatchTestParams {
+  /**
+   * Response engine to use for the test cases. Custom LLM is not supported.
+   */
+  response_engine:
+    | TestCreateBatchTestParams.ResponseEngineRetellLm
+    | TestCreateBatchTestParams.ResponseEngineConversationFlow;
+
+  /**
+   * Array of test case definition IDs to run
+   */
+  test_case_definition_ids: Array<string>;
+}
+
+export namespace TestCreateBatchTestParams {
+  export interface ResponseEngineRetellLm {
+    /**
+     * id of the Retell LLM Response Engine.
+     */
+    llm_id: string;
+
+    /**
+     * type of the Response Engine.
+     */
+    type: 'retell-llm';
+
+    /**
+     * Version of the Retell LLM Response Engine.
+     */
+    version?: number | null;
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the Conversation Flow Response Engine.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the Response Engine.
+     */
+    type: 'conversation-flow';
+
+    /**
+     * Version of the Conversation Flow Response Engine.
+     */
+    version?: number | null;
+  }
+}
+
 export declare namespace Tests {
-  export { type BatchTestResponse as BatchTestResponse };
+  export {
+    type BatchTestResponse as BatchTestResponse,
+    type TestCreateBatchTestParams as TestCreateBatchTestParams,
+  };
 }

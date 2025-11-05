@@ -77,7 +77,7 @@ import {
   PhoneNumberResponse,
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
-import { BatchTestResponse, Tests } from './resources/tests';
+import { BatchTestResponse, TestCreateBatchTestParams, Tests } from './resources/tests';
 import { Voice, VoiceListResponse, VoiceResponse } from './resources/voice';
 import * as Webhooks from 'retell-sdk/lib/webhook_auth';
 
@@ -346,7 +346,11 @@ export declare namespace Retell {
     type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
   };
 
-  export { Tests as Tests, type BatchTestResponse as BatchTestResponse };
+  export {
+    Tests as Tests,
+    type BatchTestResponse as BatchTestResponse,
+    type TestCreateBatchTestParams as TestCreateBatchTestParams,
+  };
 
   export {
     McpTool as McpTool,
