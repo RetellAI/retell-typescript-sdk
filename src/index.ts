@@ -77,6 +77,7 @@ import {
   PhoneNumberResponse,
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
+import { BatchTestResponse, Tests } from './resources/tests';
 import { Voice, VoiceListResponse, VoiceResponse } from './resources/voice';
 
 export interface ClientOptions {
@@ -198,6 +199,7 @@ export class Retell extends Core.APIClient {
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
   batchCall: API.BatchCall = new API.BatchCall(this);
+  tests: API.Tests = new API.Tests(this);
   mcpTool: API.McpTool = new API.McpTool(this);
 
   /**
@@ -253,6 +255,7 @@ Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
 Retell.BatchCall = BatchCall;
+Retell.Tests = Tests;
 Retell.McpTool = McpTool;
 
 export declare namespace Retell {
@@ -338,6 +341,8 @@ export declare namespace Retell {
     type BatchCallResponse as BatchCallResponse,
     type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
   };
+
+  export { Tests as Tests, type BatchTestResponse as BatchTestResponse };
 
   export {
     McpTool as McpTool,
