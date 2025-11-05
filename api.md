@@ -152,6 +152,10 @@ Types:
 
 - <code><a href="./src/resources/tests.ts">BatchTestResponse</a></code>
 
+Methods:
+
+- <code title="post /create-batch-test">client.tests.<a href="./src/resources/tests.ts">createBatchTest</a>({ ...params }) -> BatchTestResponse</code>
+
 # McpTool
 
 Types:
