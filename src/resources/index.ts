@@ -72,4 +72,5 @@ export {
   type PhoneNumberUpdateParams,
   type PhoneNumberImportParams,
 } from './phone-number';
+export { Tests, type BatchTestResponse, type TestCreateBatchTestParams } from './tests';
 export { Voice, type VoiceResponse, type VoiceListResponse } from './voice';
