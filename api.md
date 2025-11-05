@@ -146,6 +146,12 @@ Methods:
 
 - <code title="post /create-batch-call">client.batchCall.<a href="./src/resources/batch-call.ts">createBatchCall</a>({ ...params }) -> BatchCallResponse</code>
 
+# Tests
+
+Types:
+
+- <code><a href="./src/resources/tests.ts">BatchTestResponse</a></code>
+
 # McpTool
 
 Types:
