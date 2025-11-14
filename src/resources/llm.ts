@@ -11,9 +11,7 @@ export class Llm extends APIResource {
    *
    * @example
    * ```ts
-   * const llmResponse = await client.llm.create({
-   *   start_speaker: 'user',
-   * });
+   * const llmResponse = await client.llm.create();
    * ```
    */
   create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
@@ -55,7 +53,6 @@ export class Llm extends APIResource {
    * const llmResponse = await client.llm.update(
    *   '16b980523634a6dc504898cda492e939',
    *   {
-   *     start_speaker: 'user',
    *     begin_message:
    *       'Hey I am a virtual assistant calling from Retell Hospital.',
    *   },
@@ -124,12 +121,6 @@ export interface LlmResponse {
   llm_id: string;
 
   /**
-   * The speaker who starts the conversation. Required. Must be either 'user' or
-   * 'agent'.
-   */
-  start_speaker: 'user' | 'agent';
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -192,10 +183,14 @@ export interface LlmResponse {
   kb_config?: LlmResponse.KBConfig | null;
 
   /**
-   * A list of knowledge base ids to use for this resource. Set to null to remove all
-   * knowledge bases.
+   * A list of knowledge base ids to use for this resource.
    */
   knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * A list of MCPs to use for this LLM.
+   */
+  mcps?: Array<LlmResponse.Mcp> | null;
 
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
@@ -239,6 +234,12 @@ export interface LlmResponse {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -261,9 +262,9 @@ export interface LlmResponse {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Version of the Retell LLM.
+   * The version of the LLM.
    */
-  version?: unknown;
+  version?: number | null;
 }
 
 export namespace LlmResponse {
@@ -947,6 +948,31 @@ export namespace LlmResponse {
      * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
+  }
+
+  export interface Mcp {
+    name: string;
+
+    /**
+     * The URL of the MCP server.
+     */
+    url: string;
+
+    /**
+     * Headers to add to the MCP connection request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Query parameters to append to the MCP connection request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * Maximum time to wait for a connection to be established (in milliseconds).
+     * Default to 120,000 ms (2 minutes).
+     */
+    timeout_ms?: number;
   }
 
   export interface State {
@@ -1721,12 +1747,6 @@ export type LlmListResponse = Array<LlmResponse>;
 
 export interface LlmCreateParams {
   /**
-   * The speaker who starts the conversation. Required. Must be either 'user' or
-   * 'agent'.
-   */
-  start_speaker: 'user' | 'agent';
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -1784,10 +1804,14 @@ export interface LlmCreateParams {
   kb_config?: LlmCreateParams.KBConfig | null;
 
   /**
-   * A list of knowledge base ids to use for this resource. Set to null to remove all
-   * knowledge bases.
+   * A list of knowledge base ids to use for this resource.
    */
   knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * A list of MCPs to use for this LLM.
+   */
+  mcps?: Array<LlmCreateParams.Mcp> | null;
 
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
@@ -1831,6 +1855,12 @@ export interface LlmCreateParams {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
+   * The speaker who starts the conversation. Required. Must be either 'user' or
+   * 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
+
+  /**
    * Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -1853,7 +1883,7 @@ export interface LlmCreateParams {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Version of the Retell LLM.
+   * The version of the LLM.
    */
   version?: number | null;
 }
@@ -2539,6 +2569,31 @@ export namespace LlmCreateParams {
      * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
+  }
+
+  export interface Mcp {
+    name: string;
+
+    /**
+     * The URL of the MCP server.
+     */
+    url: string;
+
+    /**
+     * Headers to add to the MCP connection request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Query parameters to append to the MCP connection request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * Maximum time to wait for a connection to be established (in milliseconds).
+     * Default to 120,000 ms (2 minutes).
+     */
+    timeout_ms?: number;
   }
 
   export interface State {
@@ -3318,12 +3373,6 @@ export interface LlmRetrieveParams {
 
 export interface LlmUpdateParams {
   /**
-   * Body param: The speaker who starts the conversation. Required. Must be either
-   * 'user' or 'agent'.
-   */
-  start_speaker: 'user' | 'agent';
-
-  /**
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
@@ -3390,10 +3439,14 @@ export interface LlmUpdateParams {
   kb_config?: LlmUpdateParams.KBConfig | null;
 
   /**
-   * Body param: A list of knowledge base ids to use for this resource. Set to null
-   * to remove all knowledge bases.
+   * Body param: A list of knowledge base ids to use for this resource.
    */
   knowledge_base_ids?: Array<string> | null;
+
+  /**
+   * Body param: A list of MCPs to use for this LLM.
+   */
+  mcps?: Array<LlmUpdateParams.Mcp> | null;
 
   /**
    * Body param: Select the underlying text LLM. If not set, would default to
@@ -3438,6 +3491,12 @@ export interface LlmUpdateParams {
   s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
 
   /**
+   * Body param: The speaker who starts the conversation. Required. Must be either
+   * 'user' or 'agent'.
+   */
+  start_speaker?: 'user' | 'agent';
+
+  /**
    * Body param: Name of the starting state. Required if states is not empty.
    */
   starting_state?: string | null;
@@ -3460,7 +3519,7 @@ export interface LlmUpdateParams {
   tool_call_strict_mode?: boolean;
 
   /**
-   * Body param: Version of the Retell LLM.
+   * Body param: The version of the LLM.
    */
   body_version?: number | null;
 }
@@ -4146,6 +4205,31 @@ export namespace LlmUpdateParams {
      * Max number of knowledge base chunks to retrieve
      */
     top_k?: number;
+  }
+
+  export interface Mcp {
+    name: string;
+
+    /**
+     * The URL of the MCP server.
+     */
+    url: string;
+
+    /**
+     * Headers to add to the MCP connection request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Query parameters to append to the MCP connection request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * Maximum time to wait for a connection to be established (in milliseconds).
+     * Default to 120,000 ms (2 minutes).
+     */
+    timeout_ms?: number;
   }
 
   export interface State {
