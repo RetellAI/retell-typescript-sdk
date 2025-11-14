@@ -377,6 +377,15 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.ToolCallResultUtterance
     | PhoneCallResponse.DtmfUtterance
   >;
+
+  /**
+   * The destination number or identifier where the call was transferred to. Only
+   * populated when the disconnection reason was `call_transfer`. Can be a phone
+   * number or a SIP URI. SIP URIs are prefixed with "sip:" and may include a
+   * ";transport=..." portion (if transport is known) where the transport type can be
+   * "tls", "tcp", "udp", or "auto".
+   */
+  transfer_destination?: string | null;
 }
 
 export namespace PhoneCallResponse {
@@ -1277,6 +1286,15 @@ export interface WebCallResponse {
     | WebCallResponse.ToolCallResultUtterance
     | WebCallResponse.DtmfUtterance
   >;
+
+  /**
+   * The destination number or identifier where the call was transferred to. Only
+   * populated when the disconnection reason was `call_transfer`. Can be a phone
+   * number or a SIP URI. SIP URIs are prefixed with "sip:" and may include a
+   * ";transport=..." portion (if transport is known) where the transport type can be
+   * "tls", "tcp", "udp", or "auto".
+   */
+  transfer_destination?: string | null;
 }
 
 export namespace WebCallResponse {
