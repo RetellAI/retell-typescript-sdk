@@ -173,6 +173,11 @@ export interface ConversationFlowResponse {
   global_prompt?: string | null;
 
   /**
+   * Whether this conversation flow is used for transfer LLM.
+   */
+  is_transfer_llm?: boolean | null;
+
+  /**
    * Knowledge base configuration for RAG retrieval.
    */
   kb_config?: ConversationFlowResponse.KBConfig;
@@ -7540,6 +7545,11 @@ export interface ConversationFlowCreateParams {
   global_prompt?: string | null;
 
   /**
+   * Whether this conversation flow is used for transfer LLM.
+   */
+  is_transfer_llm?: boolean | null;
+
+  /**
    * Knowledge base configuration for RAG retrieval.
    */
   kb_config?: ConversationFlowCreateParams.KBConfig;
@@ -14858,6 +14868,11 @@ export interface ConversationFlowUpdateParams {
    * Body param: Global prompt used in every node of the conversation flow.
    */
   global_prompt?: string | null;
+
+  /**
+   * Body param: Whether this conversation flow is used for transfer LLM.
+   */
+  is_transfer_llm?: boolean | null;
 
   /**
    * Body param: Knowledge base configuration for RAG retrieval.
