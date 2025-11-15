@@ -231,8 +231,8 @@ export interface ConversationFlowResponse {
   start_speaker?: 'user' | 'agent';
 
   /**
-   * Whether to use strict mode for tool calls. Only applicable when using structured
-   * output models.
+   * Whether to use strict mode for tool calls. Only applicable when using certain
+   * supported models.
    */
   tool_call_strict_mode?: boolean | null;
 
@@ -7576,8 +7576,8 @@ export interface ConversationFlowCreateParams {
   start_node_id?: string | null;
 
   /**
-   * Whether to use strict mode for tool calls. Only applicable when using structured
-   * output models.
+   * Whether to use strict mode for tool calls. Only applicable when using certain
+   * supported models.
    */
   tool_call_strict_mode?: boolean | null;
 
@@ -14930,7 +14930,7 @@ export interface ConversationFlowUpdateParams {
 
   /**
    * Body param: Whether to use strict mode for tool calls. Only applicable when
-   * using structured output models.
+   * using certain supported models.
    */
   tool_call_strict_mode?: boolean | null;
 
