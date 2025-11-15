@@ -2154,8 +2154,9 @@ export interface CallCreatePhoneCallParams {
   to_number: string;
 
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   agent_override?: CallCreatePhoneCallParams.AgentOverride;
 
@@ -2202,8 +2203,9 @@ export interface CallCreatePhoneCallParams {
 
 export namespace CallCreatePhoneCallParams {
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   export interface AgentOverride {
     /**
@@ -2215,16 +2217,17 @@ export namespace CallCreatePhoneCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -2839,8 +2842,8 @@ export namespace CallCreatePhoneCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     export interface ConversationFlow {
       /**
@@ -2876,6 +2879,12 @@ export namespace CallCreatePhoneCallParams {
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace ConversationFlow {
@@ -2932,8 +2941,9 @@ export namespace CallCreatePhoneCallParams {
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     export interface RetellLlm {
       /**
@@ -2981,6 +2991,13 @@ export namespace CallCreatePhoneCallParams {
         | null;
 
       /**
+       * If set to true, will use high priority pool with more dedicated resource to
+       * ensure lower and more consistent latency, default to false. This feature usually
+       * comes with a higher cost.
+       */
+      model_high_priority?: boolean | null;
+
+      /**
        * If set, will control the randomness of the response. Value ranging from [0,1].
        * Lower value means more deterministic, while higher value means more random. If
        * unset, default value 0 will apply. Note that for tool calling, a lower value is
@@ -2999,6 +3016,12 @@ export namespace CallCreatePhoneCallParams {
        * 'agent'.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace RetellLlm {
@@ -3028,8 +3051,9 @@ export interface CallCreateWebCallParams {
   agent_id: string;
 
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   agent_override?: CallCreateWebCallParams.AgentOverride;
 
@@ -3055,8 +3079,9 @@ export interface CallCreateWebCallParams {
 
 export namespace CallCreateWebCallParams {
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   export interface AgentOverride {
     /**
@@ -3068,16 +3093,17 @@ export namespace CallCreateWebCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -3692,8 +3718,8 @@ export namespace CallCreateWebCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     export interface ConversationFlow {
       /**
@@ -3729,6 +3755,12 @@ export namespace CallCreateWebCallParams {
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace ConversationFlow {
@@ -3785,8 +3817,9 @@ export namespace CallCreateWebCallParams {
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     export interface RetellLlm {
       /**
@@ -3834,6 +3867,13 @@ export namespace CallCreateWebCallParams {
         | null;
 
       /**
+       * If set to true, will use high priority pool with more dedicated resource to
+       * ensure lower and more consistent latency, default to false. This feature usually
+       * comes with a higher cost.
+       */
+      model_high_priority?: boolean | null;
+
+      /**
        * If set, will control the randomness of the response. Value ranging from [0,1].
        * Lower value means more deterministic, while higher value means more random. If
        * unset, default value 0 will apply. Note that for tool calling, a lower value is
@@ -3852,6 +3892,12 @@ export namespace CallCreateWebCallParams {
        * 'agent'.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace RetellLlm {
@@ -3880,8 +3926,9 @@ export interface CallRegisterPhoneCallParams {
   agent_id: string;
 
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   agent_override?: CallRegisterPhoneCallParams.AgentOverride;
 
@@ -3922,8 +3969,9 @@ export interface CallRegisterPhoneCallParams {
 
 export namespace CallRegisterPhoneCallParams {
   /**
-   * Override configuration for agent, retell LLM, or conversation flow settings for
-   * a specific call.
+   * For this particular call, override agent configuration with these settings. This
+   * allows you to customize agent behavior for individual calls without modifying
+   * the base agent.
    */
   export interface AgentOverride {
     /**
@@ -3935,16 +3983,17 @@ export namespace CallRegisterPhoneCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -4559,8 +4608,8 @@ export namespace CallRegisterPhoneCallParams {
     /**
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_choice,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms.
+     * model_temperature, tool_call_strict_mode, knowledge_base_ids, kb_config,
+     * start_speaker, begin_after_user_silence_ms.
      */
     export interface ConversationFlow {
       /**
@@ -4596,6 +4645,12 @@ export namespace CallRegisterPhoneCallParams {
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace ConversationFlow {
@@ -4652,8 +4707,9 @@ export namespace CallRegisterPhoneCallParams {
     /**
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model, s2s_model,
-     * model_temperature, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message.
+     * model_temperature, model_high_priority, tool_call_strict_mode,
+     * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+     * begin_message.
      */
     export interface RetellLlm {
       /**
@@ -4701,6 +4757,13 @@ export namespace CallRegisterPhoneCallParams {
         | null;
 
       /**
+       * If set to true, will use high priority pool with more dedicated resource to
+       * ensure lower and more consistent latency, default to false. This feature usually
+       * comes with a higher cost.
+       */
+      model_high_priority?: boolean | null;
+
+      /**
        * If set, will control the randomness of the response. Value ranging from [0,1].
        * Lower value means more deterministic, while higher value means more random. If
        * unset, default value 0 will apply. Note that for tool calling, a lower value is
@@ -4719,6 +4782,12 @@ export namespace CallRegisterPhoneCallParams {
        * 'agent'.
        */
       start_speaker?: 'user' | 'agent';
+
+      /**
+       * Whether to use strict mode for tool calls. Only applicable when using certain
+       * supported models.
+       */
+      tool_call_strict_mode?: boolean | null;
     }
 
     export namespace RetellLlm {

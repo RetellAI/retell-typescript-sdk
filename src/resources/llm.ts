@@ -213,11 +213,11 @@ export interface LlmResponse {
     | null;
 
   /**
-   * If set to true, will enable fast tier, which uses high priority pool with more
-   * dedicated resource to ensure lower and more consistent latency, default to
-   * false. This feature usually comes with a higher cost.
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
    */
-  model_high_priority?: boolean;
+  model_high_priority?: boolean | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -254,12 +254,10 @@ export interface LlmResponse {
   states?: Array<LlmResponse.State> | null;
 
   /**
-   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
-   * structured output to make sure tool call arguments follow the json schema. The
-   * time to save a new tool or change to a tool will be longer as additional
-   * processing is needed. Default to false.
+   * Whether to use strict mode for tool calls. Only applicable when using certain
+   * supported models.
    */
-  tool_call_strict_mode?: boolean;
+  tool_call_strict_mode?: boolean | null;
 
   /**
    * The version of the LLM.
@@ -1834,11 +1832,11 @@ export interface LlmCreateParams {
     | null;
 
   /**
-   * If set to true, will enable fast tier, which uses high priority pool with more
-   * dedicated resource to ensure lower and more consistent latency, default to
-   * false. This feature usually comes with a higher cost.
+   * If set to true, will use high priority pool with more dedicated resource to
+   * ensure lower and more consistent latency, default to false. This feature usually
+   * comes with a higher cost.
    */
-  model_high_priority?: boolean;
+  model_high_priority?: boolean | null;
 
   /**
    * If set, will control the randomness of the response. Value ranging from [0,1].
@@ -1875,12 +1873,10 @@ export interface LlmCreateParams {
   states?: Array<LlmCreateParams.State> | null;
 
   /**
-   * Only applicable when model is gpt-4o or gpt-4o mini. If set to true, will use
-   * structured output to make sure tool call arguments follow the json schema. The
-   * time to save a new tool or change to a tool will be longer as additional
-   * processing is needed. Default to false.
+   * Whether to use strict mode for tool calls. Only applicable when using certain
+   * supported models.
    */
-  tool_call_strict_mode?: boolean;
+  tool_call_strict_mode?: boolean | null;
 
   /**
    * The version of the LLM.
@@ -3470,11 +3466,11 @@ export interface LlmUpdateParams {
     | null;
 
   /**
-   * Body param: If set to true, will enable fast tier, which uses high priority pool
-   * with more dedicated resource to ensure lower and more consistent latency,
-   * default to false. This feature usually comes with a higher cost.
+   * Body param: If set to true, will use high priority pool with more dedicated
+   * resource to ensure lower and more consistent latency, default to false. This
+   * feature usually comes with a higher cost.
    */
-  model_high_priority?: boolean;
+  model_high_priority?: boolean | null;
 
   /**
    * Body param: If set, will control the randomness of the response. Value ranging
@@ -3511,12 +3507,10 @@ export interface LlmUpdateParams {
   states?: Array<LlmUpdateParams.State> | null;
 
   /**
-   * Body param: Only applicable when model is gpt-4o or gpt-4o mini. If set to true,
-   * will use structured output to make sure tool call arguments follow the json
-   * schema. The time to save a new tool or change to a tool will be longer as
-   * additional processing is needed. Default to false.
+   * Body param: Whether to use strict mode for tool calls. Only applicable when
+   * using certain supported models.
    */
-  tool_call_strict_mode?: boolean;
+  tool_call_strict_mode?: boolean | null;
 
   /**
    * Body param: The version of the LLM.
