@@ -1974,7 +1974,8 @@ export interface CallUpdateParams {
    * Override dynamic varaibles represented as key-value pairs of strings. Setting
    * this will override or add the dynamic variables set in the agent during the
    * call. Only need to set the delta where you want to override, no need to set the
-   * entire dynamic variables object.
+   * entire dynamic variables object. Setting this to null will remove any existing
+   * override.
    */
   override_dynamic_variables?: { [key: string]: string } | null;
 }
