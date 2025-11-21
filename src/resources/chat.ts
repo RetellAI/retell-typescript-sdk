@@ -33,6 +33,34 @@ export class Chat extends APIResource {
   }
 
   /**
+   * Update metadata and sensitive data storage settings for an existing chat.
+   *
+   * @example
+   * ```ts
+   * const chatResponse = await client.chat.update(
+   *   'chat_98c1a2157aa0559144d67bb0729',
+   *   {
+   *     data_storage_setting: 'everything',
+   *     metadata: {
+   *       customer_id: 'cust_123',
+   *       notes: 'Follow-up required',
+   *     },
+   *     override_dynamic_variables: {
+   *       additional_discount: '15%',
+   *     },
+   *   },
+   * );
+   * ```
+   */
+  update(
+    chatId: string,
+    body: ChatUpdateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ChatResponse> {
+    return this._client.patch(`/update-chat/${chatId}`, { body, ...options });
+  }
+
+  /**
    * List all chats
    *
    * @example
@@ -572,6 +600,31 @@ export interface ChatCreateParams {
   retell_llm_dynamic_variables?: { [key: string]: unknown };
 }
 
+export interface ChatUpdateParams {
+  /**
+   * Data storage setting for this chat. Overrides the agent's default setting.
+   * "everything" stores all data, "basic_attributes_only" stores only metadata.
+   * Cannot be downgraded from more restrictive to less restrictive settings.
+   */
+  data_storage_setting?: 'everything' | 'basic_attributes_only';
+
+  /**
+   * An arbitrary object for storage purpose only. You can put anything here like
+   * your internal customer id associated with the chat. Not used for processing. You
+   * can later get this field from the chat object. Size limited to 50kB max.
+   */
+  metadata?: unknown;
+
+  /**
+   * Override dynamic varaibles represented as key-value pairs of strings. Setting
+   * this will override or add the dynamic variables set in the agent during the
+   * call. Only need to set the delta where you want to override, no need to set the
+   * entire dynamic variables object. Setting this to null will remove any existing
+   * override.
+   */
+  override_dynamic_variables?: { [key: string]: string } | null;
+}
+
 export interface ChatCreateChatCompletionParams {
   /**
    * Unique id of the chat to create completion.
@@ -630,6 +683,7 @@ export declare namespace Chat {
     type ChatListResponse as ChatListResponse,
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
+    type ChatUpdateParams as ChatUpdateParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
   };

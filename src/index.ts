@@ -36,6 +36,7 @@ import {
   ChatCreateSMSChatParams,
   ChatListResponse,
   ChatResponse,
+  ChatUpdateParams,
 } from './resources/chat';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
@@ -284,6 +285,7 @@ export declare namespace Retell {
     type ChatListResponse as ChatListResponse,
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
+    type ChatUpdateParams as ChatUpdateParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
   };

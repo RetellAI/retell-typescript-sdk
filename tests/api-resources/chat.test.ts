@@ -47,6 +47,17 @@ describe('resource chat', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
+  test('update', async () => {
+    const responsePromise = client.chat.update('chat_98c1a2157aa0559144d67bb0729', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
   test('list', async () => {
     const responsePromise = client.chat.list();
     const rawResponse = await responsePromise.asResponse();
