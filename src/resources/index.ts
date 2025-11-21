@@ -29,6 +29,7 @@ export {
   type ChatListResponse,
   type ChatCreateChatCompletionResponse,
   type ChatCreateParams,
+  type ChatUpdateParams,
   type ChatCreateChatCompletionParams,
   type ChatCreateSMSChatParams,
 } from './chat';
