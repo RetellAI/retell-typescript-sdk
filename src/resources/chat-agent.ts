@@ -4,7 +4,7 @@ import { APIResource } from '../resource';
 
 export class ChatAgent extends APIResource {}
 
-export interface AgentResponse {
+export interface ChatAgentResponse {
   /**
    * Unique id of chat agent.
    */
@@ -22,9 +22,9 @@ export interface AgentResponse {
    * agent.
    */
   response_engine:
-    | AgentResponse.ResponseEngineRetellLm
-    | AgentResponse.ResponseEngineCustomLm
-    | AgentResponse.ResponseEngineConversationFlow;
+    | ChatAgentResponse.ResponseEngineRetellLm
+    | ChatAgentResponse.ResponseEngineCustomLm
+    | ChatAgentResponse.ResponseEngineConversationFlow;
 
   /**
    * The name of the chat agent. Only used for your own reference.
@@ -109,7 +109,7 @@ export interface AgentResponse {
   /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
-  pii_config?: AgentResponse.PiiConfig;
+  pii_config?: ChatAgentResponse.PiiConfig;
 
   /**
    * Post chat analysis data to extract from the chat. This data will augment the
@@ -117,10 +117,10 @@ export interface AgentResponse {
    * after the chat ends.
    */
   post_chat_analysis_data?: Array<
-    | AgentResponse.StringAnalysisData
-    | AgentResponse.EnumAnalysisData
-    | AgentResponse.BooleanAnalysisData
-    | AgentResponse.NumberAnalysisData
+    | ChatAgentResponse.StringAnalysisData
+    | ChatAgentResponse.EnumAnalysisData
+    | ChatAgentResponse.BooleanAnalysisData
+    | ChatAgentResponse.NumberAnalysisData
   > | null;
 
   /**
@@ -165,7 +165,7 @@ export interface AgentResponse {
   webhook_url?: string | null;
 }
 
-export namespace AgentResponse {
+export namespace ChatAgentResponse {
   export interface ResponseEngineRetellLm {
     /**
      * id of the Retell LLM Response Engine.
@@ -321,5 +321,5 @@ export namespace AgentResponse {
 }
 
 export declare namespace ChatAgent {
-  export { type AgentResponse as AgentResponse };
+  export { type ChatAgentResponse as ChatAgentResponse };
 }
