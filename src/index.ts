@@ -38,6 +38,7 @@ import {
   ChatResponse,
   ChatUpdateParams,
 } from './resources/chat';
+import { AgentResponse as ChatAgentAPIAgentResponse, ChatAgent } from './resources/chat-agent';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
   ConversationFlow,
@@ -194,6 +195,7 @@ export class Retell extends Core.APIClient {
   chat: API.Chat = new API.Chat(this);
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
   agent: API.Agent = new API.Agent(this);
+  chatAgent: API.ChatAgent = new API.ChatAgent(this);
   llm: API.Llm = new API.Llm(this);
   conversationFlow: API.ConversationFlow = new API.ConversationFlow(this);
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
@@ -250,6 +252,7 @@ Retell.Call = Call;
 Retell.Chat = Chat;
 Retell.PhoneNumber = PhoneNumber;
 Retell.Agent = AgentAPIAgent;
+Retell.ChatAgent = ChatAgent;
 Retell.Llm = Llm;
 Retell.ConversationFlow = ConversationFlow;
 Retell.KnowledgeBase = KnowledgeBase;
@@ -305,6 +308,8 @@ export declare namespace Retell {
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
   };
+
+  export { ChatAgent as ChatAgent, type ChatAgentAPIAgentResponse as AgentResponse };
 
   export {
     Llm as Llm,
