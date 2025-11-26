@@ -89,6 +89,23 @@ export class ChatAgent extends APIResource {
   }
 
   /**
+   * Delete an existing chat agent
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.delete(
+   *   'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   * );
+   * ```
+   */
+  delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.delete(`/delete-chat-agent/${agentId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
+  }
+
+  /**
    * Get all versions of a chat agent
    *
    * @example
@@ -101,6 +118,24 @@ export class ChatAgent extends APIResource {
    */
   getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<ChatAgentGetVersionsResponse> {
     return this._client.get(`/get-chat-agent-versions/${agentId}`, options);
+  }
+
+  /**
+   * Publish the latest version of the chat agent and create a new draft chat agent
+   * with newer version.
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.publish(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  publish(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.post(`/publish-chat-agent/${agentId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
 }
 
