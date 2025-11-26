@@ -73,7 +73,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/chat-agent.ts">AgentResponse</a></code>
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentResponse</a></code>
 
 # Llm
 
