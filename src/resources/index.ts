@@ -33,6 +33,16 @@ export {
   type ChatCreateChatCompletionParams,
   type ChatCreateSMSChatParams,
 } from './chat';
+export {
+  ChatAgent,
+  type ChatAgentResponse,
+  type ChatAgentListResponse,
+  type ChatAgentGetVersionsResponse,
+  type ChatAgentCreateParams,
+  type ChatAgentRetrieveParams,
+  type ChatAgentUpdateParams,
+  type ChatAgentListParams,
+} from './chat-agent';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
   ConversationFlow,

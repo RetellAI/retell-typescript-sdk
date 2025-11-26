@@ -69,6 +69,22 @@ Methods:
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentId) -> AgentGetVersionsResponse</code>
 - <code title="post /publish-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentId) -> void</code>
 
+# ChatAgent
+
+Types:
+
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentResponse</a></code>
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentListResponse</a></code>
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentGetVersionsResponse</a></code>
+
+Methods:
+
+- <code title="post /create-chat-agent">client.chatAgent.<a href="./src/resources/chat-agent.ts">create</a>({ ...params }) -> ChatAgentResponse</code>
+- <code title="get /get-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">retrieve</a>(agentId, { ...params }) -> ChatAgentResponse</code>
+- <code title="patch /update-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">update</a>(agentId, { ...params }) -> ChatAgentResponse</code>
+- <code title="get /list-chat-agents">client.chatAgent.<a href="./src/resources/chat-agent.ts">list</a>({ ...params }) -> ChatAgentListResponse</code>
+- <code title="get /get-chat-agent-versions/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">getVersions</a>(agentId) -> ChatAgentGetVersionsResponse</code>
+
 # Llm
 
 Types:
