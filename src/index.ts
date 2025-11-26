@@ -38,7 +38,15 @@ import {
   ChatResponse,
   ChatUpdateParams,
 } from './resources/chat';
-import { ChatAgent, ChatAgentResponse } from './resources/chat-agent';
+import {
+  ChatAgent,
+  ChatAgentCreateParams,
+  ChatAgentListParams,
+  ChatAgentListResponse,
+  ChatAgentResponse,
+  ChatAgentRetrieveParams,
+  ChatAgentUpdateParams,
+} from './resources/chat-agent';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
   ConversationFlow,
@@ -313,7 +321,15 @@ export declare namespace Retell {
     type AgentListParams as AgentListParams,
   };
 
-  export { ChatAgent as ChatAgent, type ChatAgentResponse as ChatAgentResponse };
+  export {
+    ChatAgent as ChatAgent,
+    type ChatAgentResponse as ChatAgentResponse,
+    type ChatAgentListResponse as ChatAgentListResponse,
+    type ChatAgentCreateParams as ChatAgentCreateParams,
+    type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
+    type ChatAgentUpdateParams as ChatAgentUpdateParams,
+    type ChatAgentListParams as ChatAgentListParams,
+  };
 
   export {
     Llm as Llm,
