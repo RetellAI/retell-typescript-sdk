@@ -74,6 +74,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/chat-agent.ts">ChatAgentResponse</a></code>
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-chat-agent">client.chatAgent.<a href="./src/resources/chat-agent.ts">create</a>({ ...params }) -> ChatAgentResponse</code>
+- <code title="get /get-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">retrieve</a>(agentId, { ...params }) -> ChatAgentResponse</code>
+- <code title="patch /update-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">update</a>(agentId, { ...params }) -> ChatAgentResponse</code>
+- <code title="get /list-chat-agents">client.chatAgent.<a href="./src/resources/chat-agent.ts">list</a>({ ...params }) -> ChatAgentListResponse</code>
 
 # Llm
 
