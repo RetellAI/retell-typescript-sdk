@@ -37,6 +37,7 @@ export {
   ChatAgent,
   type ChatAgentResponse,
   type ChatAgentListResponse,
+  type ChatAgentGetVersionsResponse,
   type ChatAgentCreateParams,
   type ChatAgentRetrieveParams,
   type ChatAgentUpdateParams,
