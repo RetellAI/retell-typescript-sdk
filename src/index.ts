@@ -41,6 +41,7 @@ import {
 import {
   ChatAgent,
   ChatAgentCreateParams,
+  ChatAgentGetVersionsResponse,
   ChatAgentListParams,
   ChatAgentListResponse,
   ChatAgentResponse,
@@ -325,6 +326,7 @@ export declare namespace Retell {
     ChatAgent as ChatAgent,
     type ChatAgentResponse as ChatAgentResponse,
     type ChatAgentListResponse as ChatAgentListResponse,
+    type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,

@@ -87,6 +87,21 @@ export class ChatAgent extends APIResource {
     }
     return this._client.get('/list-chat-agents', { query, ...options });
   }
+
+  /**
+   * Get all versions of a chat agent
+   *
+   * @example
+   * ```ts
+   * const chatAgentResponses =
+   *   await client.chatAgent.getVersions(
+   *     '16b980523634a6dc504898cda492e939',
+   *   );
+   * ```
+   */
+  getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<ChatAgentGetVersionsResponse> {
+    return this._client.get(`/get-chat-agent-versions/${agentId}`, options);
+  }
 }
 
 export interface ChatAgentResponse {
@@ -406,6 +421,8 @@ export namespace ChatAgentResponse {
 }
 
 export type ChatAgentListResponse = Array<ChatAgentResponse>;
+
+export type ChatAgentGetVersionsResponse = Array<ChatAgentResponse>;
 
 export interface ChatAgentCreateParams {
   /**
@@ -1038,6 +1055,7 @@ export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
     type ChatAgentListResponse as ChatAgentListResponse,
+    type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
