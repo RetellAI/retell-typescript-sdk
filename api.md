@@ -69,6 +69,12 @@ Methods:
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentId) -> AgentGetVersionsResponse</code>
 - <code title="post /publish-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentId) -> void</code>
 
+# ChatAgent
+
+Types:
+
+- <code><a href="./src/resources/chat-agent.ts">AgentResponse</a></code>
+
 # Llm
 
 Types:
