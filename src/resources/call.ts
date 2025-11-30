@@ -303,7 +303,7 @@ export interface PhoneCallResponse {
   public_log_url?: string;
 
   /**
-   * Recording of the call, with each party’s audio stored in a separate channel.
+   * Recording of the call, with each party's audio stored in a separate channel.
    * Available after the call ends.
    */
   recording_multi_channel_url?: string;
@@ -321,7 +321,7 @@ export interface PhoneCallResponse {
   retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
-   * Recording of the call without PII, with each party’s audio stored in a separate
+   * Recording of the call without PII, with each party's audio stored in a separate
    * channel. Available after the call ends.
    */
   scrubbed_recording_multi_channel_url?: string;
@@ -1218,7 +1218,7 @@ export interface WebCallResponse {
   public_log_url?: string;
 
   /**
-   * Recording of the call, with each party’s audio stored in a separate channel.
+   * Recording of the call, with each party's audio stored in a separate channel.
    * Available after the call ends.
    */
   recording_multi_channel_url?: string;
@@ -1236,7 +1236,7 @@ export interface WebCallResponse {
   retell_llm_dynamic_variables?: { [key: string]: unknown };
 
   /**
-   * Recording of the call without PII, with each party’s audio stored in a separate
+   * Recording of the call without PII, with each party's audio stored in a separate
    * channel. Available after the call ends.
    */
   scrubbed_recording_multi_channel_url?: string;
