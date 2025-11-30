@@ -1190,7 +1190,8 @@ export namespace ConversationFlowResponse {
 
       transfer_option:
         | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer;
+        | TransferCallNode.TransferOptionWarmTransfer
+        | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -1437,6 +1438,105 @@ export namespace ConversationFlowResponse {
           message?: string;
 
           type?: 'static_message';
+        }
+
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
+
+      export interface TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+        /**
+         * The type of the transfer.
+         */
+        type: 'agentic_warm_transfer';
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export namespace TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        export interface AgenticTransferConfig {
+          /**
+           * The action to take when the transfer agent times out without making a decision.
+           * Defaults to cancel_transfer.
+           */
+          action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+          /**
+           * The maximum time to wait for the transfer agent to make a decision, in
+           * milliseconds. Defaults to 30000 (30 seconds).
+           */
+          transfer_timeout_ms?: number;
+        }
+
+        export namespace AgenticTransferConfig {
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          export interface TransferAgent {
+            /**
+             * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+             * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+             * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+             */
+            agent_id: string;
+
+            /**
+             * The version of the transfer agent to use.
+             */
+            agent_version: number;
+          }
         }
 
         export interface WarmTransferPrompt {
@@ -4824,7 +4924,8 @@ export namespace ConversationFlowResponse {
 
     transfer_option:
       | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer;
+      | TransferCallNode.TransferOptionWarmTransfer
+      | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -5071,6 +5172,105 @@ export namespace ConversationFlowResponse {
         message?: string;
 
         type?: 'static_message';
+      }
+
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
+
+    export interface TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+      /**
+       * The type of the transfer.
+       */
+      type: 'agentic_warm_transfer';
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export namespace TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      export interface AgenticTransferConfig {
+        /**
+         * The action to take when the transfer agent times out without making a decision.
+         * Defaults to cancel_transfer.
+         */
+        action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+        /**
+         * The maximum time to wait for the transfer agent to make a decision, in
+         * milliseconds. Defaults to 30000 (30 seconds).
+         */
+        transfer_timeout_ms?: number;
+      }
+
+      export namespace AgenticTransferConfig {
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        export interface TransferAgent {
+          /**
+           * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+           * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+           * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+           */
+          agent_id: string;
+
+          /**
+           * The version of the transfer agent to use.
+           */
+          agent_version: number;
+        }
       }
 
       export interface WarmTransferPrompt {
@@ -8516,7 +8716,8 @@ export namespace ConversationFlowCreateParams {
 
     transfer_option:
       | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer;
+      | TransferCallNode.TransferOptionWarmTransfer
+      | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -8763,6 +8964,105 @@ export namespace ConversationFlowCreateParams {
         message?: string;
 
         type?: 'static_message';
+      }
+
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
+
+    export interface TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+      /**
+       * The type of the transfer.
+       */
+      type: 'agentic_warm_transfer';
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export namespace TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      export interface AgenticTransferConfig {
+        /**
+         * The action to take when the transfer agent times out without making a decision.
+         * Defaults to cancel_transfer.
+         */
+        action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+        /**
+         * The maximum time to wait for the transfer agent to make a decision, in
+         * milliseconds. Defaults to 30000 (30 seconds).
+         */
+        transfer_timeout_ms?: number;
+      }
+
+      export namespace AgenticTransferConfig {
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        export interface TransferAgent {
+          /**
+           * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+           * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+           * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+           */
+          agent_id: string;
+
+          /**
+           * The version of the transfer agent to use.
+           */
+          agent_version: number;
+        }
       }
 
       export interface WarmTransferPrompt {
@@ -11951,7 +12251,8 @@ export namespace ConversationFlowCreateParams {
 
       transfer_option:
         | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer;
+        | TransferCallNode.TransferOptionWarmTransfer
+        | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -12198,6 +12499,105 @@ export namespace ConversationFlowCreateParams {
           message?: string;
 
           type?: 'static_message';
+        }
+
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
+
+      export interface TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+        /**
+         * The type of the transfer.
+         */
+        type: 'agentic_warm_transfer';
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export namespace TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        export interface AgenticTransferConfig {
+          /**
+           * The action to take when the transfer agent times out without making a decision.
+           * Defaults to cancel_transfer.
+           */
+          action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+          /**
+           * The maximum time to wait for the transfer agent to make a decision, in
+           * milliseconds. Defaults to 30000 (30 seconds).
+           */
+          transfer_timeout_ms?: number;
+        }
+
+        export namespace AgenticTransferConfig {
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          export interface TransferAgent {
+            /**
+             * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+             * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+             * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+             */
+            agent_id: string;
+
+            /**
+             * The version of the transfer agent to use.
+             */
+            agent_version: number;
+          }
         }
 
         export interface WarmTransferPrompt {
@@ -15888,7 +16288,8 @@ export namespace ConversationFlowUpdateParams {
 
       transfer_option:
         | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer;
+        | TransferCallNode.TransferOptionWarmTransfer
+        | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -16135,6 +16536,105 @@ export namespace ConversationFlowUpdateParams {
           message?: string;
 
           type?: 'static_message';
+        }
+
+        export interface WarmTransferPrompt {
+          /**
+           * The prompt to be used for warm handoff. Can contain dynamic variables.
+           */
+          prompt?: string;
+
+          type?: 'prompt';
+        }
+
+        export interface WarmTransferStaticMessage {
+          /**
+           * The static message to be used for warm handoff. Can contain dynamic variables.
+           */
+          message?: string;
+
+          type?: 'static_message';
+        }
+      }
+
+      export interface TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+        /**
+         * The type of the transfer.
+         */
+        type: 'agentic_warm_transfer';
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
+
+        /**
+         * The music to play while the caller is being transferred.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+        /**
+         * If set, when transfer is successful, will say the handoff message to both the
+         * transferee and the agent receiving the transfer. Can leave either a static
+         * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+         */
+        public_handoff_option?:
+          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+        /**
+         * If set to true, will show transferee (the user, not the AI agent) as caller when
+         * transferring, requires the telephony side to support caller id override. Retell
+         * Twilio numbers support this option.
+         */
+        show_transferee_as_caller?: boolean;
+      }
+
+      export namespace TransferOptionAgenticWarmTransfer {
+        /**
+         * Configuration for agentic warm transfer. Required for agentic warm transfer.
+         */
+        export interface AgenticTransferConfig {
+          /**
+           * The action to take when the transfer agent times out without making a decision.
+           * Defaults to cancel_transfer.
+           */
+          action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+          /**
+           * The maximum time to wait for the transfer agent to make a decision, in
+           * milliseconds. Defaults to 30000 (30 seconds).
+           */
+          transfer_timeout_ms?: number;
+        }
+
+        export namespace AgenticTransferConfig {
+          /**
+           * The agent that will mediate the transfer decision.
+           */
+          export interface TransferAgent {
+            /**
+             * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+             * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+             * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+             */
+            agent_id: string;
+
+            /**
+             * The version of the transfer agent to use.
+             */
+            agent_version: number;
+          }
         }
 
         export interface WarmTransferPrompt {
@@ -19522,7 +20022,8 @@ export namespace ConversationFlowUpdateParams {
 
     transfer_option:
       | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer;
+      | TransferCallNode.TransferOptionWarmTransfer
+      | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -19769,6 +20270,105 @@ export namespace ConversationFlowUpdateParams {
         message?: string;
 
         type?: 'static_message';
+      }
+
+      export interface WarmTransferPrompt {
+        /**
+         * The prompt to be used for warm handoff. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'prompt';
+      }
+
+      export interface WarmTransferStaticMessage {
+        /**
+         * The static message to be used for warm handoff. Can contain dynamic variables.
+         */
+        message?: string;
+
+        type?: 'static_message';
+      }
+    }
+
+    export interface TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      agentic_transfer_config: TransferOptionAgenticWarmTransfer.AgenticTransferConfig;
+
+      /**
+       * The type of the transfer.
+       */
+      type: 'agentic_warm_transfer';
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
+
+      /**
+       * The music to play while the caller is being transferred.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+
+      /**
+       * If set, when transfer is successful, will say the handoff message to both the
+       * transferee and the agent receiving the transfer. Can leave either a static
+       * message or a dynamic one based on prompt. Set to null to disable warm handoff.
+       */
+      public_handoff_option?:
+        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
+        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+
+      /**
+       * If set to true, will show transferee (the user, not the AI agent) as caller when
+       * transferring, requires the telephony side to support caller id override. Retell
+       * Twilio numbers support this option.
+       */
+      show_transferee_as_caller?: boolean;
+    }
+
+    export namespace TransferOptionAgenticWarmTransfer {
+      /**
+       * Configuration for agentic warm transfer. Required for agentic warm transfer.
+       */
+      export interface AgenticTransferConfig {
+        /**
+         * The action to take when the transfer agent times out without making a decision.
+         * Defaults to cancel_transfer.
+         */
+        action_on_timeout?: 'bridge_transfer' | 'cancel_transfer';
+
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        transfer_agent?: AgenticTransferConfig.TransferAgent;
+
+        /**
+         * The maximum time to wait for the transfer agent to make a decision, in
+         * milliseconds. Defaults to 30000 (30 seconds).
+         */
+        transfer_timeout_ms?: number;
+      }
+
+      export namespace AgenticTransferConfig {
+        /**
+         * The agent that will mediate the transfer decision.
+         */
+        export interface TransferAgent {
+          /**
+           * The agent ID of the transfer agent. This agent must have isTransferAgent set to
+           * true and should use bridge_transfer and cancel_transfer tools (for Retell LLM)
+           * or BridgeTransferNode and CancelTransferNode (for Conversation Flow).
+           */
+          agent_id: string;
+
+          /**
+           * The version of the transfer agent to use.
+           */
+          agent_version: number;
+        }
       }
 
       export interface WarmTransferPrompt {
