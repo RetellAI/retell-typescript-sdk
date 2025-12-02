@@ -26,6 +26,9 @@ describe('resource chatAgent', () => {
     const response = await client.chatAgent.create({
       response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm', version: 0 },
       agent_name: 'Jarvis',
+      analysis_successful_prompt:
+        'The agent finished the task and the call was complete without being cutoff.',
+      analysis_summary_prompt: 'Summarize the call in a few sentences.',
       auto_close_message: 'Thank you for chatting. The conversation has ended.',
       data_storage_setting: 'everything',
       end_chat_after_silence_ms: 3600000,
@@ -41,6 +44,7 @@ describe('resource chatAgent', () => {
         },
       ],
       post_chat_analysis_model: 'gpt-4.1-mini',
+      signed_url_expiration_ms: 86400000,
       webhook_timeout_ms: 10000,
       webhook_url: 'https://webhook-url-here',
     });

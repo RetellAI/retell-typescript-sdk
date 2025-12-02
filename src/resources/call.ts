@@ -473,6 +473,12 @@ export namespace PhoneCallResponse {
    */
   export interface Latency {
     /**
+     * Transcription latency (diff between the duration of the chunks streamed and the
+     * durations of the transcribed part) tracking of the call.
+     */
+    asr?: Latency.Asr;
+
+    /**
      * End to end latency (from user stops talking to agent start talking) tracking of
      * the call. This latency does not account for the network trip time from Retell
      * server to user frontend. The latency is tracked every time turn change between
@@ -515,6 +521,52 @@ export namespace PhoneCallResponse {
   }
 
   export namespace Latency {
+    /**
+     * Transcription latency (diff between the duration of the chunks streamed and the
+     * durations of the transcribed part) tracking of the call.
+     */
+    export interface Asr {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
+
     /**
      * End to end latency (from user stops talking to agent start talking) tracking of
      * the call. This latency does not account for the network trip time from Retell
@@ -1382,6 +1434,12 @@ export namespace WebCallResponse {
    */
   export interface Latency {
     /**
+     * Transcription latency (diff between the duration of the chunks streamed and the
+     * durations of the transcribed part) tracking of the call.
+     */
+    asr?: Latency.Asr;
+
+    /**
      * End to end latency (from user stops talking to agent start talking) tracking of
      * the call. This latency does not account for the network trip time from Retell
      * server to user frontend. The latency is tracked every time turn change between
@@ -1424,6 +1482,52 @@ export namespace WebCallResponse {
   }
 
   export namespace Latency {
+    /**
+     * Transcription latency (diff between the duration of the chunks streamed and the
+     * durations of the transcribed part) tracking of the call.
+     */
+    export interface Asr {
+      /**
+       * Maximum latency in the call, measured in milliseconds.
+       */
+      max?: number;
+
+      /**
+       * Minimum latency in the call, measured in milliseconds.
+       */
+      min?: number;
+
+      /**
+       * Number of data points (number of times latency is tracked).
+       */
+      num?: number;
+
+      /**
+       * 50 percentile of latency, measured in milliseconds.
+       */
+      p50?: number;
+
+      /**
+       * 90 percentile of latency, measured in milliseconds.
+       */
+      p90?: number;
+
+      /**
+       * 95 percentile of latency, measured in milliseconds.
+       */
+      p95?: number;
+
+      /**
+       * 99 percentile of latency, measured in milliseconds.
+       */
+      p99?: number;
+
+      /**
+       * All the latency data points in the call, measured in milliseconds.
+       */
+      values?: Array<number>;
+    }
+
     /**
      * End to end latency (from user stops talking to agent start talking) tracking of
      * the call. This latency does not account for the network trip time from Retell
@@ -2292,6 +2396,19 @@ export namespace CallCreatePhoneCallParams {
       ambient_sound_volume?: number;
 
       /**
+       * Prompt to determine whether the post call or chat analysis should mark the
+       * interaction as successful. Set to null to use the default prompt.
+       */
+      analysis_successful_prompt?: string | null;
+
+      /**
+       * Prompt to guide how the post call or chat analysis summary should be generated.
+       * When unset, the default system prompt is used. Set to null to use the default
+       * prompt.
+       */
+      analysis_summary_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -2461,11 +2578,9 @@ export namespace CallCreatePhoneCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4o-mini.
+       * The model to use for post call analysis. Default to gpt-4.1-mini.
        */
       post_call_analysis_model?:
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
@@ -2473,13 +2588,10 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
-        | 'claude-4.0-sonnet'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -2526,6 +2638,13 @@ export namespace CallCreatePhoneCallParams {
        * Default to 30000 (30 s). Valid range is [5000, 90000].
        */
       ring_duration_ms?: number;
+
+      /**
+       * The expiration time for the signed url in milliseconds. Only applicable when
+       * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+       * apply.
+       */
+      signed_url_expiration_ms?: number | null;
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
@@ -2912,18 +3031,14 @@ export namespace CallCreatePhoneCallParams {
          * The LLM model to use
          */
         model:
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-4o'
-          | 'gpt-4o-mini'
           | 'gpt-4.1'
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
-          | 'claude-3.7-sonnet'
-          | 'claude-3.5-haiku'
-          | 'gemini-2.0-flash'
-          | 'gemini-2.0-flash-lite'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite';
 
@@ -2975,18 +3090,14 @@ export namespace CallCreatePhoneCallParams {
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
       model?:
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | null;
@@ -3168,6 +3279,19 @@ export namespace CallCreateWebCallParams {
       ambient_sound_volume?: number;
 
       /**
+       * Prompt to determine whether the post call or chat analysis should mark the
+       * interaction as successful. Set to null to use the default prompt.
+       */
+      analysis_successful_prompt?: string | null;
+
+      /**
+       * Prompt to guide how the post call or chat analysis summary should be generated.
+       * When unset, the default system prompt is used. Set to null to use the default
+       * prompt.
+       */
+      analysis_summary_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -3337,11 +3461,9 @@ export namespace CallCreateWebCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4o-mini.
+       * The model to use for post call analysis. Default to gpt-4.1-mini.
        */
       post_call_analysis_model?:
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
@@ -3349,13 +3471,10 @@ export namespace CallCreateWebCallParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
-        | 'claude-4.0-sonnet'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -3402,6 +3521,13 @@ export namespace CallCreateWebCallParams {
        * Default to 30000 (30 s). Valid range is [5000, 90000].
        */
       ring_duration_ms?: number;
+
+      /**
+       * The expiration time for the signed url in milliseconds. Only applicable when
+       * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+       * apply.
+       */
+      signed_url_expiration_ms?: number | null;
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
@@ -3788,18 +3914,14 @@ export namespace CallCreateWebCallParams {
          * The LLM model to use
          */
         model:
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-4o'
-          | 'gpt-4o-mini'
           | 'gpt-4.1'
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
-          | 'claude-3.7-sonnet'
-          | 'claude-3.5-haiku'
-          | 'gemini-2.0-flash'
-          | 'gemini-2.0-flash-lite'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite';
 
@@ -3851,18 +3973,14 @@ export namespace CallCreateWebCallParams {
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
       model?:
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | null;
@@ -4058,6 +4176,19 @@ export namespace CallRegisterPhoneCallParams {
       ambient_sound_volume?: number;
 
       /**
+       * Prompt to determine whether the post call or chat analysis should mark the
+       * interaction as successful. Set to null to use the default prompt.
+       */
+      analysis_successful_prompt?: string | null;
+
+      /**
+       * Prompt to guide how the post call or chat analysis summary should be generated.
+       * When unset, the default system prompt is used. Set to null to use the default
+       * prompt.
+       */
+      analysis_summary_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -4227,11 +4358,9 @@ export namespace CallRegisterPhoneCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4o-mini.
+       * The model to use for post call analysis. Default to gpt-4.1-mini.
        */
       post_call_analysis_model?:
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
@@ -4239,13 +4368,10 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
-        | 'claude-4.0-sonnet'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -4292,6 +4418,13 @@ export namespace CallRegisterPhoneCallParams {
        * Default to 30000 (30 s). Valid range is [5000, 90000].
        */
       ring_duration_ms?: number;
+
+      /**
+       * The expiration time for the signed url in milliseconds. Only applicable when
+       * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+       * apply.
+       */
+      signed_url_expiration_ms?: number | null;
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
@@ -4678,18 +4811,14 @@ export namespace CallRegisterPhoneCallParams {
          * The LLM model to use
          */
         model:
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-4o'
-          | 'gpt-4o-mini'
           | 'gpt-4.1'
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
-          | 'claude-3.7-sonnet'
-          | 'claude-3.5-haiku'
-          | 'gemini-2.0-flash'
-          | 'gemini-2.0-flash-lite'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite';
 
@@ -4741,18 +4870,14 @@ export namespace CallRegisterPhoneCallParams {
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
       model?:
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-4o'
-        | 'gpt-4o-mini'
         | 'gpt-4.1'
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
-        | 'claude-3.7-sonnet'
-        | 'claude-3.5-haiku'
-        | 'gemini-2.0-flash'
-        | 'gemini-2.0-flash-lite'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | null;

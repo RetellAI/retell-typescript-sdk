@@ -196,18 +196,14 @@ export interface LlmResponse {
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
   model?:
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | null;
@@ -2015,18 +2011,14 @@ export interface LlmCreateParams {
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
   model?:
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | null;
@@ -3849,18 +3841,14 @@ export interface LlmUpdateParams {
    * gpt-4.1.
    */
   model?:
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | null;
