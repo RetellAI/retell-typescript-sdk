@@ -42,7 +42,8 @@ export interface McpToolGetMcpToolsParams {
   mcp_id: string;
 
   /**
-   * Optional version of the API to use for this request.
+   * Optional version of the agent to use for this request. Default to latest
+   * version.
    */
   version?: number;
 }

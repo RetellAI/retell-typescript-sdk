@@ -59,6 +59,13 @@ import {
   ConversationFlowUpdateParams,
 } from './resources/conversation-flow';
 import {
+  ConversationFlowComponent,
+  ConversationFlowComponentCreateParams,
+  ConversationFlowComponentListResponse,
+  ConversationFlowComponentResponse,
+  ConversationFlowComponentUpdateParams,
+} from './resources/conversation-flow-component';
+import {
   KnowledgeBase,
   KnowledgeBaseAddSourcesParams,
   KnowledgeBaseCreateParams,
@@ -208,6 +215,7 @@ export class Retell extends Core.APIClient {
   chatAgent: API.ChatAgent = new API.ChatAgent(this);
   llm: API.Llm = new API.Llm(this);
   conversationFlow: API.ConversationFlow = new API.ConversationFlow(this);
+  conversationFlowComponent: API.ConversationFlowComponent = new API.ConversationFlowComponent(this);
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
@@ -268,6 +276,7 @@ Retell.Agent = AgentAPIAgent;
 Retell.ChatAgent = ChatAgent;
 Retell.Llm = Llm;
 Retell.ConversationFlow = ConversationFlow;
+Retell.ConversationFlowComponent = ConversationFlowComponent;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
@@ -351,6 +360,14 @@ export declare namespace Retell {
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
     type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
     type ConversationFlowListParams as ConversationFlowListParams,
+  };
+
+  export {
+    ConversationFlowComponent as ConversationFlowComponent,
+    type ConversationFlowComponentResponse as ConversationFlowComponentResponse,
+    type ConversationFlowComponentListResponse as ConversationFlowComponentListResponse,
+    type ConversationFlowComponentCreateParams as ConversationFlowComponentCreateParams,
+    type ConversationFlowComponentUpdateParams as ConversationFlowComponentUpdateParams,
   };
 
   export {

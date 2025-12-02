@@ -117,6 +117,21 @@ Methods:
 - <code title="get /list-conversation-flows">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">list</a>({ ...params }) -> ConversationFlowListResponse</code>
 - <code title="delete /delete-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">delete</a>(conversationFlowId) -> void</code>
 
+# ConversationFlowComponent
+
+Types:
+
+- <code><a href="./src/resources/conversation-flow-component.ts">ConversationFlowComponentResponse</a></code>
+- <code><a href="./src/resources/conversation-flow-component.ts">ConversationFlowComponentListResponse</a></code>
+
+Methods:
+
+- <code title="post /create-conversation-flow-component">client.conversationFlowComponent.<a href="./src/resources/conversation-flow-component.ts">create</a>({ ...params }) -> ConversationFlowComponentResponse</code>
+- <code title="get /get-conversation-flow-component/{conversation_flow_component_id}">client.conversationFlowComponent.<a href="./src/resources/conversation-flow-component.ts">retrieve</a>(conversationFlowComponentId) -> ConversationFlowComponentResponse</code>
+- <code title="patch /update-conversation-flow-component/{conversation_flow_component_id}">client.conversationFlowComponent.<a href="./src/resources/conversation-flow-component.ts">update</a>(conversationFlowComponentId, { ...params }) -> ConversationFlowComponentResponse</code>
+- <code title="get /list-conversation-flow-components">client.conversationFlowComponent.<a href="./src/resources/conversation-flow-component.ts">list</a>() -> ConversationFlowComponentListResponse</code>
+- <code title="delete /delete-conversation-flow-component/{conversation_flow_component_id}">client.conversationFlowComponent.<a href="./src/resources/conversation-flow-component.ts">delete</a>(conversationFlowComponentId) -> void</code>
+
 # KnowledgeBase
 
 Types:

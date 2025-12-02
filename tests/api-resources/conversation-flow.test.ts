@@ -195,7 +195,7 @@ describe('resource conversationFlow', () => {
     await expect(
       client.conversationFlow.retrieve(
         'conversation_flow_id',
-        { version: 'version' },
+        { version: 1 },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);
