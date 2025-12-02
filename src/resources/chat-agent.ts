@@ -167,6 +167,18 @@ export interface ChatAgentResponse {
   agent_name?: string | null;
 
   /**
+   * The prompt to use for post call analysis to evaluate whether the call is
+   * successful. Set to null to use the default prompt.
+   */
+  analysis_successful_prompt?: string | null;
+
+  /**
+   * The prompt to use for post call analysis to summarize the call. Set to null to
+   * use the default prompt.
+   */
+  analysis_summary_prompt?: string | null;
+
+  /**
    * Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
@@ -262,23 +274,24 @@ export interface ChatAgentResponse {
    * The model to use for post chat analysis. Default to gpt-4.1-mini.
    */
   post_chat_analysis_model?:
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
-    | 'gpt-5.1'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
-    | 'claude-4.0-sonnet'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite';
+    | 'gemini-2.5-flash-lite'
+    | null;
+
+  /**
+   * The expiration time for the signed url in milliseconds. Only applicable when
+   * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+   * apply.
+   */
+  signed_url_expiration_ms?: number | null;
 
   /**
    * The version of the chat agent.
@@ -476,6 +489,18 @@ export interface ChatAgentCreateParams {
   agent_name?: string | null;
 
   /**
+   * The prompt to use for post call analysis to evaluate whether the call is
+   * successful. Set to null to use the default prompt.
+   */
+  analysis_successful_prompt?: string | null;
+
+  /**
+   * The prompt to use for post call analysis to summarize the call. Set to null to
+   * use the default prompt.
+   */
+  analysis_summary_prompt?: string | null;
+
+  /**
    * Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
@@ -566,23 +591,24 @@ export interface ChatAgentCreateParams {
    * The model to use for post chat analysis. Default to gpt-4.1-mini.
    */
   post_chat_analysis_model?:
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
-    | 'gpt-5.1'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
-    | 'claude-4.0-sonnet'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite';
+    | 'gemini-2.5-flash-lite'
+    | null;
+
+  /**
+   * The expiration time for the signed url in milliseconds. Only applicable when
+   * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+   * apply.
+   */
+  signed_url_expiration_ms?: number | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -775,6 +801,18 @@ export interface ChatAgentUpdateParams {
   agent_name?: string | null;
 
   /**
+   * Body param: The prompt to use for post call analysis to evaluate whether the
+   * call is successful. Set to null to use the default prompt.
+   */
+  analysis_successful_prompt?: string | null;
+
+  /**
+   * Body param: The prompt to use for post call analysis to summarize the call. Set
+   * to null to use the default prompt.
+   */
+  analysis_summary_prompt?: string | null;
+
+  /**
    * Body param: Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
@@ -866,23 +904,17 @@ export interface ChatAgentUpdateParams {
    * Body param: The model to use for post chat analysis. Default to gpt-4.1-mini.
    */
   post_chat_analysis_model?:
-    | 'gpt-4o'
-    | 'gpt-4o-mini'
     | 'gpt-4.1'
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
-    | 'gpt-5.1'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
-    | 'claude-4.0-sonnet'
-    | 'claude-3.7-sonnet'
-    | 'claude-3.5-haiku'
-    | 'gemini-2.0-flash'
-    | 'gemini-2.0-flash-lite'
+    | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite';
+    | 'gemini-2.5-flash-lite'
+    | null;
 
   /**
    * Body param: The Response Engine to attach to the agent. It is used to generate
@@ -893,6 +925,13 @@ export interface ChatAgentUpdateParams {
     | ChatAgentUpdateParams.ResponseEngineRetellLm
     | ChatAgentUpdateParams.ResponseEngineCustomLm
     | ChatAgentUpdateParams.ResponseEngineConversationFlow;
+
+  /**
+   * Body param: The expiration time for the signed url in milliseconds. Only
+   * applicable when opt_in_signed_url is true. If not set, default value of 86400000
+   * (24 hours) will apply.
+   */
+  signed_url_expiration_ms?: number | null;
 
   /**
    * Body param: The timeout for the webhook in milliseconds. If not set, default
