@@ -54,6 +54,13 @@ export {
   type ConversationFlowListParams,
 } from './conversation-flow';
 export {
+  ConversationFlowComponent,
+  type ConversationFlowComponentResponse,
+  type ConversationFlowComponentListResponse,
+  type ConversationFlowComponentCreateParams,
+  type ConversationFlowComponentUpdateParams,
+} from './conversation-flow-component';
+export {
   KnowledgeBase,
   type KnowledgeBaseResponse,
   type KnowledgeBaseListResponse,

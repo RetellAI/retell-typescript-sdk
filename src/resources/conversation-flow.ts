@@ -15143,14 +15143,19 @@ export namespace ConversationFlowCreateParams {
 }
 
 export interface ConversationFlowRetrieveParams {
-  version?: string;
+  /**
+   * Optional version of the conversation flow to retrieve. Default to latest
+   * version.
+   */
+  version?: number;
 }
 
 export interface ConversationFlowUpdateParams {
   /**
-   * Query param: Version of the conversation flow to update
+   * Query param: Optional version of the conversation flow to update. Default to
+   * latest version.
    */
-  version?: string;
+  version?: number;
 
   /**
    * Body param: If set, the AI will begin the conversation after waiting for the
