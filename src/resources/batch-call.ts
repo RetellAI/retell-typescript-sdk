@@ -202,6 +202,19 @@ export namespace BatchCallCreateBatchCallParams {
         ambient_sound_volume?: number;
 
         /**
+         * Prompt to determine whether the post call or chat analysis should mark the
+         * interaction as successful. Set to null to use the default prompt.
+         */
+        analysis_successful_prompt?: string | null;
+
+        /**
+         * Prompt to guide how the post call or chat analysis summary should be generated.
+         * When unset, the default system prompt is used. Set to null to use the default
+         * prompt.
+         */
+        analysis_summary_prompt?: string | null;
+
+        /**
          * Only applicable when enable_backchannel is true. Controls how often the agent
          * would backchannel when a backchannel is possible. Value ranging from [0,1].
          * Lower value means less frequent backchannel, while higher value means more
@@ -371,11 +384,9 @@ export namespace BatchCallCreateBatchCallParams {
         > | null;
 
         /**
-         * The model to use for post call analysis. Default to gpt-4o-mini.
+         * The model to use for post call analysis. Default to gpt-4.1-mini.
          */
         post_call_analysis_model?:
-          | 'gpt-4o'
-          | 'gpt-4o-mini'
           | 'gpt-4.1'
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
@@ -383,13 +394,10 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
-          | 'claude-4.0-sonnet'
-          | 'claude-3.7-sonnet'
-          | 'claude-3.5-haiku'
-          | 'gemini-2.0-flash'
-          | 'gemini-2.0-flash-lite'
+          | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | null;
 
         /**
          * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -436,6 +444,13 @@ export namespace BatchCallCreateBatchCallParams {
          * Default to 30000 (30 s). Valid range is [5000, 90000].
          */
         ring_duration_ms?: number;
+
+        /**
+         * The expiration time for the signed url in milliseconds. Only applicable when
+         * opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will
+         * apply.
+         */
+        signed_url_expiration_ms?: number | null;
 
         /**
          * If set, determines whether speech to text should focus on latency or accuracy.
@@ -822,18 +837,14 @@ export namespace BatchCallCreateBatchCallParams {
            * The LLM model to use
            */
           model:
-            | 'gpt-5'
-            | 'gpt-5-mini'
-            | 'gpt-5-nano'
-            | 'gpt-4o'
-            | 'gpt-4o-mini'
             | 'gpt-4.1'
             | 'gpt-4.1-mini'
             | 'gpt-4.1-nano'
-            | 'claude-3.7-sonnet'
-            | 'claude-3.5-haiku'
-            | 'gemini-2.0-flash'
-            | 'gemini-2.0-flash-lite'
+            | 'gpt-5'
+            | 'gpt-5-mini'
+            | 'gpt-5-nano'
+            | 'claude-4.5-sonnet'
+            | 'claude-4.5-haiku'
             | 'gemini-2.5-flash'
             | 'gemini-2.5-flash-lite';
 
@@ -885,18 +896,14 @@ export namespace BatchCallCreateBatchCallParams {
          * Select the underlying text LLM. If not set, would default to gpt-4.1.
          */
         model?:
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-4o'
-          | 'gpt-4o-mini'
           | 'gpt-4.1'
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
-          | 'claude-3.7-sonnet'
-          | 'claude-3.5-haiku'
-          | 'gemini-2.0-flash'
-          | 'gemini-2.0-flash-lite'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | null;
