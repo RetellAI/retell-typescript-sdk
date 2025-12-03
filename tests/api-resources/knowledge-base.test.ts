@@ -32,7 +32,8 @@ describe('resource knowledgeBase', () => {
     });
   });
 
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.knowledgeBase.retrieve('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -43,14 +44,16 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.knowledgeBase.retrieve('kb_1234567890', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('list', async () => {
+  // Prism tests are disabled
+  test.skip('list', async () => {
     const responsePromise = client.knowledgeBase.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -61,14 +64,16 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.knowledgeBase.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
 
-  test('delete', async () => {
+  // Prism tests are disabled
+  test.skip('delete', async () => {
     const responsePromise = client.knowledgeBase.delete('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -79,7 +84,8 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.knowledgeBase.delete('kb_1234567890', { path: '/_stainless_unknown_path' }),
@@ -98,7 +104,8 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('deleteSource', async () => {
+  // Prism tests are disabled
+  test.skip('deleteSource', async () => {
     const responsePromise = client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -109,7 +116,8 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('deleteSource: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('deleteSource: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.knowledgeBase.deleteSource('kb_1234567890', 'source_1234567890', {
