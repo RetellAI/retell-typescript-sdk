@@ -9,7 +9,8 @@ const client = new Retell({
 });
 
 describe('resource phoneNumber', () => {
-  test('create', async () => {
+  // Prism tests are disabled
+  test.skip('create', async () => {
     const responsePromise = client.phoneNumber.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,7 +21,8 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.phoneNumber.retrieve('+14157774444');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -31,14 +33,16 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.phoneNumber.retrieve('+14157774444', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('update', async () => {
+  // Prism tests are disabled
+  test.skip('update', async () => {
     const responsePromise = client.phoneNumber.update('+14157774444', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -49,7 +53,8 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list', async () => {
+  // Prism tests are disabled
+  test.skip('list', async () => {
     const responsePromise = client.phoneNumber.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -60,14 +65,16 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.phoneNumber.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
   });
 
-  test('delete', async () => {
+  // Prism tests are disabled
+  test.skip('delete', async () => {
     const responsePromise = client.phoneNumber.delete('+14157774444');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -78,14 +85,16 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.phoneNumber.delete('+14157774444', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('import: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('import: only required params', async () => {
     const responsePromise = client.phoneNumber.import({
       phone_number: '+14157774444',
       termination_uri: 'someuri.pstn.twilio.com',
@@ -99,7 +108,8 @@ describe('resource phoneNumber', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('import: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('import: required and optional params', async () => {
     const response = await client.phoneNumber.import({
       phone_number: '+14157774444',
       termination_uri: 'someuri.pstn.twilio.com',

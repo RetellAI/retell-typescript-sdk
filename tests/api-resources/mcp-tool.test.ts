@@ -9,7 +9,8 @@ const client = new Retell({
 });
 
 describe('resource mcpTool', () => {
-  test('getMcpTools: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('getMcpTools: only required params', async () => {
     const responsePromise = client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {
       mcp_id: 'mcp-server-1',
     });
@@ -22,7 +23,8 @@ describe('resource mcpTool', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('getMcpTools: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('getMcpTools: required and optional params', async () => {
     const response = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {
       mcp_id: 'mcp-server-1',
       version: 1,
