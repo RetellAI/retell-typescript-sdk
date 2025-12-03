@@ -9,7 +9,8 @@ const client = new Retell({
 });
 
 describe('resource tests', () => {
-  test('createBatchTest: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('createBatchTest: only required params', async () => {
     const responsePromise = client.tests.createBatchTest({
       response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
       test_case_definition_ids: ['string'],
@@ -23,7 +24,8 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('createBatchTest: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('createBatchTest: required and optional params', async () => {
     const response = await client.tests.createBatchTest({
       response_engine: { llm_id: 'llm_id', type: 'retell-llm', version: 0 },
       test_case_definition_ids: ['string'],

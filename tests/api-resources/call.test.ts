@@ -9,7 +9,8 @@ const client = new Retell({
 });
 
 describe('resource call', () => {
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,14 +21,16 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('update', async () => {
+  // Prism tests are disabled
+  test.skip('update', async () => {
     const responsePromise = client.call.update('call_a4441234567890777c4a4a123e6', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -38,7 +41,8 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list', async () => {
+  // Prism tests are disabled
+  test.skip('list', async () => {
     const responsePromise = client.call.list({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -49,7 +53,8 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete', async () => {
+  // Prism tests are disabled
+  test.skip('delete', async () => {
     const responsePromise = client.call.delete('119c3f8e47135a29e65947eeb34cf12d');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -60,14 +65,16 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: request options instead of params are passed correctly', async () => {
+  // Prism tests are disabled
+  test.skip('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.call.delete('119c3f8e47135a29e65947eeb34cf12d', { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  test('createPhoneCall: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('createPhoneCall: only required params', async () => {
     const responsePromise = client.call.createPhoneCall({
       from_number: '+14157774444',
       to_number: '+12137774445',
@@ -81,7 +88,8 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('createPhoneCall: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('createPhoneCall: required and optional params', async () => {
     const response = await client.call.createPhoneCall({
       from_number: '+14157774444',
       to_number: '+12137774445',
@@ -170,7 +178,8 @@ describe('resource call', () => {
     });
   });
 
-  test('createWebCall: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('createWebCall: only required params', async () => {
     const responsePromise = client.call.createWebCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -181,7 +190,8 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('createWebCall: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('createWebCall: required and optional params', async () => {
     const response = await client.call.createWebCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       agent_override: {
@@ -266,7 +276,8 @@ describe('resource call', () => {
     });
   });
 
-  test('registerPhoneCall: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('registerPhoneCall: only required params', async () => {
     const responsePromise = client.call.registerPhoneCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -277,7 +288,8 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('registerPhoneCall: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('registerPhoneCall: required and optional params', async () => {
     const response = await client.call.registerPhoneCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       agent_override: {
