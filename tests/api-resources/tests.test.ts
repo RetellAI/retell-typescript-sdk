@@ -29,6 +29,7 @@ describe('resource tests', () => {
     const response = await client.tests.createBatchTest({
       response_engine: { llm_id: 'llm_id', type: 'retell-llm', version: 0 },
       test_case_definition_ids: ['string'],
+      reserved_concurrency: 0,
     });
   });
 });
