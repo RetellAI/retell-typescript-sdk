@@ -2495,7 +2495,7 @@ export namespace CallCreatePhoneCallParams {
        * Specifies what language (and dialect) the speech recognition will operate in.
        * For instance, selecting `en-GB` optimizes speech recognition for British
        * English. If unset, will use default value `en-US`. Select `multi` for
-       * multilingual support, currently this supports Spanish and English.
+       * multilingual support.
        */
       language?:
         | 'en-US'
@@ -2520,11 +2520,11 @@ export namespace CallCreatePhoneCallParams {
         | 'nl-BE'
         | 'pl-PL'
         | 'tr-TR'
-        | 'th-TH'
         | 'vi-VN'
         | 'ro-RO'
         | 'bg-BG'
         | 'ca-ES'
+        | 'th-TH'
         | 'da-DK'
         | 'fi-FI'
         | 'el-GR'
@@ -2533,6 +2533,31 @@ export namespace CallCreatePhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
         | 'multi';
 
       /**
@@ -3378,7 +3403,7 @@ export namespace CallCreateWebCallParams {
        * Specifies what language (and dialect) the speech recognition will operate in.
        * For instance, selecting `en-GB` optimizes speech recognition for British
        * English. If unset, will use default value `en-US`. Select `multi` for
-       * multilingual support, currently this supports Spanish and English.
+       * multilingual support.
        */
       language?:
         | 'en-US'
@@ -3403,11 +3428,11 @@ export namespace CallCreateWebCallParams {
         | 'nl-BE'
         | 'pl-PL'
         | 'tr-TR'
-        | 'th-TH'
         | 'vi-VN'
         | 'ro-RO'
         | 'bg-BG'
         | 'ca-ES'
+        | 'th-TH'
         | 'da-DK'
         | 'fi-FI'
         | 'el-GR'
@@ -3416,6 +3441,31 @@ export namespace CallCreateWebCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
         | 'multi';
 
       /**
@@ -4275,7 +4325,7 @@ export namespace CallRegisterPhoneCallParams {
        * Specifies what language (and dialect) the speech recognition will operate in.
        * For instance, selecting `en-GB` optimizes speech recognition for British
        * English. If unset, will use default value `en-US`. Select `multi` for
-       * multilingual support, currently this supports Spanish and English.
+       * multilingual support.
        */
       language?:
         | 'en-US'
@@ -4300,11 +4350,11 @@ export namespace CallRegisterPhoneCallParams {
         | 'nl-BE'
         | 'pl-PL'
         | 'tr-TR'
-        | 'th-TH'
         | 'vi-VN'
         | 'ro-RO'
         | 'bg-BG'
         | 'ca-ES'
+        | 'th-TH'
         | 'da-DK'
         | 'fi-FI'
         | 'el-GR'
@@ -4313,6 +4363,31 @@ export namespace CallRegisterPhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
         | 'multi';
 
       /**
