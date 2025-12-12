@@ -115,10 +115,12 @@ describe('resource phoneNumber', () => {
       termination_uri: 'someuri.pstn.twilio.com',
       inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       inbound_agent_version: 1,
+      inbound_allowed_countries: ['US', 'CA', 'GB'],
       inbound_webhook_url: 'https://example.com/inbound-webhook',
       nickname: 'Frontdesk Number',
       outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       outbound_agent_version: 1,
+      outbound_allowed_countries: ['US', 'CA'],
       sip_trunk_auth_password: '123456',
       sip_trunk_auth_username: 'username',
     });

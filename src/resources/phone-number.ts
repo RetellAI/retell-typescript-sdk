@@ -113,6 +113,11 @@ export interface PhoneNumberResponse {
   phone_number: string;
 
   /**
+   * Type of the phone number.
+   */
+  phone_number_type: 'retell-twilio' | 'retell-telnyx' | 'custom';
+
+  /**
    * Area code of the number to obtain. Format is a 3 digit integer. Currently only
    * supports US area code.
    */
@@ -130,6 +135,12 @@ export interface PhoneNumberResponse {
    * default to latest version.
    */
   inbound_agent_version?: number | null;
+
+  /**
+   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
+   * If not set or empty, calls from all countries are allowed.
+   */
+  inbound_allowed_countries?: Array<string> | null;
 
   /**
    * If set, will send a webhook for inbound calls, where you can to override agent
@@ -156,14 +167,15 @@ export interface PhoneNumberResponse {
   outbound_agent_version?: number | null;
 
   /**
+   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
+   * not set or empty, calls to all countries are allowed.
+   */
+  outbound_allowed_countries?: Array<string> | null;
+
+  /**
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty?: string;
-
-  /**
-   * Type of the phone number.
-   */
-  phone_number_type?: 'retell-twilio' | 'retell-telnyx' | 'custom';
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
@@ -195,6 +207,12 @@ export interface PhoneNumberCreateParams {
   inbound_agent_version?: number | null;
 
   /**
+   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
+   * If not set or empty, calls from all countries are allowed.
+   */
+  inbound_allowed_countries?: Array<string> | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -224,6 +242,12 @@ export interface PhoneNumberCreateParams {
   outbound_agent_version?: number | null;
 
   /**
+   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
+   * not set or empty, calls to all countries are allowed.
+   */
+  outbound_allowed_countries?: Array<string> | null;
+
+  /**
    * The number you are trying to purchase in E.164 format of the number (+country
    * code then number with no space and no special characters).
    */
@@ -250,6 +274,12 @@ export interface PhoneNumberUpdateParams {
   inbound_agent_version?: number | null;
 
   /**
+   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
+   * If not set or empty, calls from all countries are allowed.
+   */
+  inbound_allowed_countries?: Array<string> | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -272,6 +302,12 @@ export interface PhoneNumberUpdateParams {
    * default to latest version.
    */
   outbound_agent_version?: number | null;
+
+  /**
+   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
+   * not set or empty, calls to all countries are allowed.
+   */
+  outbound_allowed_countries?: Array<string> | null;
 }
 
 export interface PhoneNumberImportParams {
@@ -303,6 +339,12 @@ export interface PhoneNumberImportParams {
   inbound_agent_version?: number | null;
 
   /**
+   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
+   * If not set or empty, calls from all countries are allowed.
+   */
+  inbound_allowed_countries?: Array<string> | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -318,13 +360,19 @@ export interface PhoneNumberImportParams {
    * agent when conducting outbound calls. If null, this number would not be able to
    * initiate outbound call without agent id override.
    */
-  outbound_agent_id?: string;
+  outbound_agent_id?: string | null;
 
   /**
    * Version of the outbound agent to bind to the number. If not provided, will
    * default to latest version.
    */
   outbound_agent_version?: number | null;
+
+  /**
+   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
+   * not set or empty, calls to all countries are allowed.
+   */
+  outbound_allowed_countries?: Array<string> | null;
 
   /**
    * The password used for authentication for the SIP trunk.

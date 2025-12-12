@@ -218,6 +218,8 @@ export interface ConversationFlowResponse {
     | ConversationFlowResponse.AgentSwapNode
     | ConversationFlowResponse.McpNode
     | ConversationFlowResponse.ComponentNode
+    | ConversationFlowResponse.BridgeTransferNode
+    | ConversationFlowResponse.CancelTransferNode
   >;
 
   /**
@@ -277,12 +279,19 @@ export namespace ConversationFlowResponse {
       | Component.AgentSwapNode
       | Component.McpNode
       | Component.ComponentNode
+      | Component.BridgeTransferNode
+      | Component.CancelTransferNode
     >;
 
     /**
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * A list of MCP server configurations to use for this component
+     */
+    mcps?: Array<Component.Mcp> | null;
 
     /**
      * ID of the starting node
@@ -326,7 +335,7 @@ export namespace ConversationFlowResponse {
 
       global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -628,6 +637,8 @@ export namespace ConversationFlowResponse {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -743,9 +754,19 @@ export namespace ConversationFlowResponse {
       global_node_setting?: EndNode.GlobalNodeSetting;
 
       /**
+       * What to say when ending the call, only used when speak during execution
+       */
+      instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace EndNode {
@@ -850,6 +871,30 @@ export namespace ConversationFlowResponse {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface FunctionNode {
@@ -891,7 +936,7 @@ export namespace ConversationFlowResponse {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       model_choice?: FunctionNode.ModelChoice;
 
@@ -1149,6 +1194,8 @@ export namespace ConversationFlowResponse {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -1210,12 +1257,22 @@ export namespace ConversationFlowResponse {
        */
       ignore_e164_validation?: boolean;
 
+      /**
+       * What to say when transferring the call, only used when speak during execution
+       */
+      instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
       model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallNode {
@@ -1350,6 +1407,11 @@ export namespace ConversationFlowResponse {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -1652,6 +1714,30 @@ export namespace ConversationFlowResponse {
         }
       }
 
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
       export interface ModelChoice {
         /**
          * The LLM model to use
@@ -1661,6 +1747,8 @@ export namespace ConversationFlowResponse {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -1948,6 +2036,8 @@ export namespace ConversationFlowResponse {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -2928,6 +3018,8 @@ export namespace ConversationFlowResponse {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -2987,9 +3079,19 @@ export namespace ConversationFlowResponse {
       global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
       /**
+       * What to say when swapping agents, only used when speak during execution
+       */
+      instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -3176,6 +3278,30 @@ export namespace ConversationFlowResponse {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface McpNode {
@@ -3220,7 +3346,7 @@ export namespace ConversationFlowResponse {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Optional name for display purposes
@@ -3762,6 +3888,262 @@ export namespace ConversationFlowResponse {
       }
     }
 
+    export interface BridgeTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - initiates a warm transfer by bridging the call
+       */
+      type: 'bridge_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: BridgeTransferNode.DisplayPosition;
+
+      global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace BridgeTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
+    export interface CancelTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - cancels the warm transfer and ends the transfer agent call
+       */
+      type: 'cancel_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CancelTransferNode.DisplayPosition;
+
+      global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace CancelTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
     /**
      * Display position for the begin tag in the frontend
      */
@@ -3769,6 +4151,31 @@ export namespace ConversationFlowResponse {
       x?: number;
 
       y?: number;
+    }
+
+    export interface Mcp {
+      name: string;
+
+      /**
+       * The URL of the MCP server.
+       */
+      url: string;
+
+      /**
+       * Headers to add to the MCP connection request.
+       */
+      headers?: { [key: string]: string };
+
+      /**
+       * Query parameters to append to the MCP connection request URL.
+       */
+      query_params?: { [key: string]: string };
+
+      /**
+       * Maximum time to wait for a connection to be established (in milliseconds).
+       * Default to 120,000 ms (2 minutes).
+       */
+      timeout_ms?: number;
     }
 
     export interface ConversationFlowCustomTool {
@@ -3786,6 +4193,12 @@ export namespace ConversationFlowResponse {
        * Server URL to call the tool. Dynamic variables can be used in the URL.
        */
       url: string;
+
+      /**
+       * If true, the tool arguments will be passed at the root level of the request
+       * body. If false, they will be nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * Description of the tool
@@ -3992,6 +4405,8 @@ export namespace ConversationFlowResponse {
       | 'gpt-4.1-mini'
       | 'gpt-4.1-nano'
       | 'gpt-5'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -4036,7 +4451,7 @@ export namespace ConversationFlowResponse {
 
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -4338,6 +4753,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4453,9 +4870,19 @@ export namespace ConversationFlowResponse {
     global_node_setting?: EndNode.GlobalNodeSetting;
 
     /**
+     * What to say when ending the call, only used when speak during execution
+     */
+    instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace EndNode {
@@ -4560,6 +4987,30 @@ export namespace ConversationFlowResponse {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface FunctionNode {
@@ -4601,7 +5052,7 @@ export namespace ConversationFlowResponse {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     model_choice?: FunctionNode.ModelChoice;
 
@@ -4859,6 +5310,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4920,12 +5373,22 @@ export namespace ConversationFlowResponse {
      */
     ignore_e164_validation?: boolean;
 
+    /**
+     * What to say when transferring the call, only used when speak during execution
+     */
+    instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
     model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallNode {
@@ -5060,6 +5523,11 @@ export namespace ConversationFlowResponse {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -5362,6 +5830,30 @@ export namespace ConversationFlowResponse {
       }
     }
 
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -5371,6 +5863,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -5658,6 +6152,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -6638,6 +7134,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -6697,9 +7195,19 @@ export namespace ConversationFlowResponse {
     global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
     /**
+     * What to say when swapping agents, only used when speak during execution
+     */
+    instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -6886,6 +7394,30 @@ export namespace ConversationFlowResponse {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface McpNode {
@@ -6930,7 +7462,7 @@ export namespace ConversationFlowResponse {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Optional name for display purposes
@@ -7472,6 +8004,262 @@ export namespace ConversationFlowResponse {
     }
   }
 
+  export interface BridgeTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - initiates a warm transfer by bridging the call
+     */
+    type: 'bridge_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: BridgeTransferNode.DisplayPosition;
+
+    global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace BridgeTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
+  export interface CancelTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - cancels the warm transfer and ends the transfer agent call
+     */
+    type: 'cancel_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CancelTransferNode.DisplayPosition;
+
+    global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace CancelTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
   export interface ConversationFlowCustomTool {
     /**
      * Name of the tool
@@ -7487,6 +8275,12 @@ export namespace ConversationFlowResponse {
      * Server URL to call the tool. Dynamic variables can be used in the URL.
      */
     url: string;
+
+    /**
+     * If true, the tool arguments will be passed at the root level of the request
+     * body. If false, they will be nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * Description of the tool
@@ -7664,6 +8458,8 @@ export interface ConversationFlowCreateParams {
     | ConversationFlowCreateParams.AgentSwapNode
     | ConversationFlowCreateParams.McpNode
     | ConversationFlowCreateParams.ComponentNode
+    | ConversationFlowCreateParams.BridgeTransferNode
+    | ConversationFlowCreateParams.CancelTransferNode
   >;
 
   /**
@@ -7760,6 +8556,8 @@ export namespace ConversationFlowCreateParams {
       | 'gpt-4.1-mini'
       | 'gpt-4.1-nano'
       | 'gpt-5'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -7804,7 +8602,7 @@ export namespace ConversationFlowCreateParams {
 
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -8106,6 +8904,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -8221,9 +9021,19 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: EndNode.GlobalNodeSetting;
 
     /**
+     * What to say when ending the call, only used when speak during execution
+     */
+    instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace EndNode {
@@ -8328,6 +9138,30 @@ export namespace ConversationFlowCreateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface FunctionNode {
@@ -8369,7 +9203,7 @@ export namespace ConversationFlowCreateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     model_choice?: FunctionNode.ModelChoice;
 
@@ -8627,6 +9461,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -8688,12 +9524,22 @@ export namespace ConversationFlowCreateParams {
      */
     ignore_e164_validation?: boolean;
 
+    /**
+     * What to say when transferring the call, only used when speak during execution
+     */
+    instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
     model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallNode {
@@ -8828,6 +9674,11 @@ export namespace ConversationFlowCreateParams {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -9130,6 +9981,30 @@ export namespace ConversationFlowCreateParams {
       }
     }
 
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -9139,6 +10014,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -9426,6 +10303,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -10406,6 +11285,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -10465,9 +11346,19 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
     /**
+     * What to say when swapping agents, only used when speak during execution
+     */
+    instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -10654,6 +11545,30 @@ export namespace ConversationFlowCreateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface McpNode {
@@ -10698,7 +11613,7 @@ export namespace ConversationFlowCreateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Optional name for display purposes
@@ -11240,6 +12155,262 @@ export namespace ConversationFlowCreateParams {
     }
   }
 
+  export interface BridgeTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - initiates a warm transfer by bridging the call
+     */
+    type: 'bridge_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: BridgeTransferNode.DisplayPosition;
+
+    global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace BridgeTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
+  export interface CancelTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - cancels the warm transfer and ends the transfer agent call
+     */
+    type: 'cancel_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CancelTransferNode.DisplayPosition;
+
+    global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace CancelTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
   /**
    * Display position for the begin tag in the frontend.
    */
@@ -11270,12 +12441,19 @@ export namespace ConversationFlowCreateParams {
       | Component.AgentSwapNode
       | Component.McpNode
       | Component.ComponentNode
+      | Component.BridgeTransferNode
+      | Component.CancelTransferNode
     >;
 
     /**
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * A list of MCP server configurations to use for this component
+     */
+    mcps?: Array<Component.Mcp> | null;
 
     /**
      * ID of the starting node
@@ -11319,7 +12497,7 @@ export namespace ConversationFlowCreateParams {
 
       global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -11621,6 +12799,8 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -11736,9 +12916,19 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: EndNode.GlobalNodeSetting;
 
       /**
+       * What to say when ending the call, only used when speak during execution
+       */
+      instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace EndNode {
@@ -11843,6 +13033,30 @@ export namespace ConversationFlowCreateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface FunctionNode {
@@ -11884,7 +13098,7 @@ export namespace ConversationFlowCreateParams {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       model_choice?: FunctionNode.ModelChoice;
 
@@ -12142,6 +13356,8 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -12203,12 +13419,22 @@ export namespace ConversationFlowCreateParams {
        */
       ignore_e164_validation?: boolean;
 
+      /**
+       * What to say when transferring the call, only used when speak during execution
+       */
+      instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
       model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallNode {
@@ -12343,6 +13569,11 @@ export namespace ConversationFlowCreateParams {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -12645,6 +13876,30 @@ export namespace ConversationFlowCreateParams {
         }
       }
 
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
       export interface ModelChoice {
         /**
          * The LLM model to use
@@ -12654,6 +13909,8 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -12941,6 +14198,8 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -13921,6 +15180,8 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -13980,9 +15241,19 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
       /**
+       * What to say when swapping agents, only used when speak during execution
+       */
+      instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -14169,6 +15440,30 @@ export namespace ConversationFlowCreateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface McpNode {
@@ -14213,7 +15508,7 @@ export namespace ConversationFlowCreateParams {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Optional name for display purposes
@@ -14755,6 +16050,262 @@ export namespace ConversationFlowCreateParams {
       }
     }
 
+    export interface BridgeTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - initiates a warm transfer by bridging the call
+       */
+      type: 'bridge_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: BridgeTransferNode.DisplayPosition;
+
+      global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace BridgeTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
+    export interface CancelTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - cancels the warm transfer and ends the transfer agent call
+       */
+      type: 'cancel_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CancelTransferNode.DisplayPosition;
+
+      global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace CancelTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
     /**
      * Display position for the begin tag in the frontend
      */
@@ -14762,6 +16313,31 @@ export namespace ConversationFlowCreateParams {
       x?: number;
 
       y?: number;
+    }
+
+    export interface Mcp {
+      name: string;
+
+      /**
+       * The URL of the MCP server.
+       */
+      url: string;
+
+      /**
+       * Headers to add to the MCP connection request.
+       */
+      headers?: { [key: string]: string };
+
+      /**
+       * Query parameters to append to the MCP connection request URL.
+       */
+      query_params?: { [key: string]: string };
+
+      /**
+       * Maximum time to wait for a connection to be established (in milliseconds).
+       * Default to 120,000 ms (2 minutes).
+       */
+      timeout_ms?: number;
     }
 
     export interface ConversationFlowCustomTool {
@@ -14779,6 +16355,12 @@ export namespace ConversationFlowCreateParams {
        * Server URL to call the tool. Dynamic variables can be used in the URL.
        */
       url: string;
+
+      /**
+       * If true, the tool arguments will be passed at the root level of the request
+       * body. If false, they will be nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * Description of the tool
@@ -14988,6 +16570,12 @@ export namespace ConversationFlowCreateParams {
      * Server URL to call the tool. Dynamic variables can be used in the URL.
      */
     url: string;
+
+    /**
+     * If true, the tool arguments will be passed at the root level of the request
+     * body. If false, they will be nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * Description of the tool
@@ -15233,6 +16821,8 @@ export interface ConversationFlowUpdateParams {
     | ConversationFlowUpdateParams.AgentSwapNode
     | ConversationFlowUpdateParams.McpNode
     | ConversationFlowUpdateParams.ComponentNode
+    | ConversationFlowUpdateParams.BridgeTransferNode
+    | ConversationFlowUpdateParams.CancelTransferNode
   >;
 
   /**
@@ -15292,12 +16882,19 @@ export namespace ConversationFlowUpdateParams {
       | Component.AgentSwapNode
       | Component.McpNode
       | Component.ComponentNode
+      | Component.BridgeTransferNode
+      | Component.CancelTransferNode
     >;
 
     /**
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * A list of MCP server configurations to use for this component
+     */
+    mcps?: Array<Component.Mcp> | null;
 
     /**
      * ID of the starting node
@@ -15341,7 +16938,7 @@ export namespace ConversationFlowUpdateParams {
 
       global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -15643,6 +17240,8 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -15758,9 +17357,19 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: EndNode.GlobalNodeSetting;
 
       /**
+       * What to say when ending the call, only used when speak during execution
+       */
+      instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace EndNode {
@@ -15865,6 +17474,30 @@ export namespace ConversationFlowUpdateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface FunctionNode {
@@ -15906,7 +17539,7 @@ export namespace ConversationFlowUpdateParams {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       model_choice?: FunctionNode.ModelChoice;
 
@@ -16164,6 +17797,8 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -16225,12 +17860,22 @@ export namespace ConversationFlowUpdateParams {
        */
       ignore_e164_validation?: boolean;
 
+      /**
+       * What to say when transferring the call, only used when speak during execution
+       */
+      instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
       model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallNode {
@@ -16365,6 +18010,11 @@ export namespace ConversationFlowUpdateParams {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -16667,6 +18317,30 @@ export namespace ConversationFlowUpdateParams {
         }
       }
 
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
       export interface ModelChoice {
         /**
          * The LLM model to use
@@ -16676,6 +18350,8 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -16963,6 +18639,8 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -17943,6 +19621,8 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -18002,9 +19682,19 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
       /**
+       * What to say when swapping agents, only used when speak during execution
+       */
+      instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -18191,6 +19881,30 @@ export namespace ConversationFlowUpdateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
     }
 
     export interface McpNode {
@@ -18235,7 +19949,7 @@ export namespace ConversationFlowUpdateParams {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number;
+      interruption_sensitivity?: number | null;
 
       /**
        * Optional name for display purposes
@@ -18777,6 +20491,262 @@ export namespace ConversationFlowUpdateParams {
       }
     }
 
+    export interface BridgeTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - initiates a warm transfer by bridging the call
+       */
+      type: 'bridge_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: BridgeTransferNode.DisplayPosition;
+
+      global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace BridgeTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
+    export interface CancelTransferNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * Type of the node - cancels the warm transfer and ends the transfer agent call
+       */
+      type: 'cancel_transfer';
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CancelTransferNode.DisplayPosition;
+
+      global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+    }
+
+    export namespace CancelTransferNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+    }
+
     /**
      * Display position for the begin tag in the frontend
      */
@@ -18784,6 +20754,31 @@ export namespace ConversationFlowUpdateParams {
       x?: number;
 
       y?: number;
+    }
+
+    export interface Mcp {
+      name: string;
+
+      /**
+       * The URL of the MCP server.
+       */
+      url: string;
+
+      /**
+       * Headers to add to the MCP connection request.
+       */
+      headers?: { [key: string]: string };
+
+      /**
+       * Query parameters to append to the MCP connection request URL.
+       */
+      query_params?: { [key: string]: string };
+
+      /**
+       * Maximum time to wait for a connection to be established (in milliseconds).
+       * Default to 120,000 ms (2 minutes).
+       */
+      timeout_ms?: number;
     }
 
     export interface ConversationFlowCustomTool {
@@ -18801,6 +20796,12 @@ export namespace ConversationFlowUpdateParams {
        * Server URL to call the tool. Dynamic variables can be used in the URL.
        */
       url: string;
+
+      /**
+       * If true, the tool arguments will be passed at the root level of the request
+       * body. If false, they will be nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * Description of the tool
@@ -19007,6 +21008,8 @@ export namespace ConversationFlowUpdateParams {
       | 'gpt-4.1-mini'
       | 'gpt-4.1-nano'
       | 'gpt-5'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -19051,7 +21054,7 @@ export namespace ConversationFlowUpdateParams {
 
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -19353,6 +21356,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -19468,9 +21473,19 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: EndNode.GlobalNodeSetting;
 
     /**
+     * What to say when ending the call, only used when speak during execution
+     */
+    instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace EndNode {
@@ -19575,6 +21590,30 @@ export namespace ConversationFlowUpdateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface FunctionNode {
@@ -19616,7 +21655,7 @@ export namespace ConversationFlowUpdateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     model_choice?: FunctionNode.ModelChoice;
 
@@ -19874,6 +21913,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -19935,12 +21976,22 @@ export namespace ConversationFlowUpdateParams {
      */
     ignore_e164_validation?: boolean;
 
+    /**
+     * What to say when transferring the call, only used when speak during execution
+     */
+    instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
+
     model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallNode {
@@ -20075,6 +22126,11 @@ export namespace ConversationFlowUpdateParams {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -20377,6 +22433,30 @@ export namespace ConversationFlowUpdateParams {
       }
     }
 
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -20386,6 +22466,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -20673,6 +22755,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -21653,6 +23737,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -21712,9 +23798,19 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: AgentSwapNode.GlobalNodeSetting;
 
     /**
+     * What to say when swapping agents, only used when speak during execution
+     */
+    instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -21901,6 +23997,30 @@ export namespace ConversationFlowUpdateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
   }
 
   export interface McpNode {
@@ -21945,7 +24065,7 @@ export namespace ConversationFlowUpdateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number;
+    interruption_sensitivity?: number | null;
 
     /**
      * Optional name for display purposes
@@ -22487,6 +24607,262 @@ export namespace ConversationFlowUpdateParams {
     }
   }
 
+  export interface BridgeTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - initiates a warm transfer by bridging the call
+     */
+    type: 'bridge_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: BridgeTransferNode.DisplayPosition;
+
+    global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace BridgeTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
+  export interface CancelTransferNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * Type of the node - cancels the warm transfer and ends the transfer agent call
+     */
+    type: 'cancel_transfer';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CancelTransferNode.DisplayPosition;
+
+    global_node_setting?: CancelTransferNode.GlobalNodeSetting;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace CancelTransferNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+  }
+
   export interface ConversationFlowCustomTool {
     /**
      * Name of the tool
@@ -22502,6 +24878,12 @@ export namespace ConversationFlowUpdateParams {
      * Server URL to call the tool. Dynamic variables can be used in the URL.
      */
     url: string;
+
+    /**
+     * If true, the tool arguments will be passed at the root level of the request
+     * body. If false, they will be nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * Description of the tool
