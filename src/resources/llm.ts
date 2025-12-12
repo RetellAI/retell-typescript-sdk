@@ -164,12 +164,14 @@ export interface LlmResponse {
     | LlmResponse.TransferCallTool
     | LlmResponse.CheckAvailabilityCalTool
     | LlmResponse.BookAppointmentCalTool
+    | LlmResponse.AgentSwapTool
     | LlmResponse.PressDigitTool
+    | LlmResponse.SendSMSTool
     | LlmResponse.CustomTool
     | LlmResponse.ExtractDynamicVariableTool
-    | LlmResponse.AgentSwapTool
+    | LlmResponse.BridgeTransferTool
+    | LlmResponse.CancelTransferTool
     | LlmResponse.McpTool
-    | LlmResponse.SendSMSTool
   > | null;
 
   /**
@@ -200,6 +202,8 @@ export interface LlmResponse {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -227,7 +231,7 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -278,6 +282,17 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when ending the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface TransferCallTool {
@@ -310,12 +325,23 @@ export namespace LlmResponse {
     description?: string;
 
     /**
+     * Describes what to say to user when transferring the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
      * useful when you want to dial to internal pseudo numbers. This only applies when
      * you are using custom telephony and does not apply when you are using Retell
      * Telephony. If omitted, the default value is false.
      */
     ignore_e164_validation?: boolean;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallTool {
@@ -376,6 +402,11 @@ export namespace LlmResponse {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -652,6 +683,50 @@ export namespace LlmResponse {
     timezone?: string;
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+  }
+
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -675,6 +750,46 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
   }
 
   export interface CustomTool {
@@ -705,6 +820,12 @@ export namespace LlmResponse {
      * to call the tool.
      */
     url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -897,48 +1018,44 @@ export namespace LlmResponse {
     }
   }
 
-  export interface AgentSwapTool {
-    /**
-     * The id of the agent to swap to.
-     */
-    agent_id: string;
-
+  export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
-    /**
-     * Post call analysis setting for the agent swap.
-     */
-    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-    type: 'agent_swap';
+    type: 'bridge_transfer';
 
     /**
-     * The version of the agent to swap to. If not specified, will use the latest
-     * version.
-     */
-    agent_version?: number;
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it bridges the original caller to the transfer target and ends the
+     * transfer agent call.
      */
     description?: string;
+  }
+
+  export interface CancelTransferTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'cancel_transfer';
 
     /**
-     * The message for the agent to speak when executing agent swap.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it cancels the transfer, returns the original caller to the main agent,
+     * and ends the transfer agent call.
      */
-    execution_message_description?: string;
-
-    speak_during_execution?: boolean;
-
-    /**
-     * Webhook setting for the agent swap, defaults to only source.
-     */
-    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    description?: string;
   }
 
   export interface McpTool {
@@ -961,6 +1078,11 @@ export namespace LlmResponse {
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
 
     /**
      * Unique id of the MCP.
@@ -987,46 +1109,6 @@ export namespace LlmResponse {
      * responsive.
      */
     speak_during_execution?: boolean;
-  }
-
-  export interface SendSMSTool {
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
-     */
-    name: string;
-
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-    type: 'send_sms';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-  }
-
-  export namespace SendSMSTool {
-    export interface SMSContentPredefined {
-      /**
-       * The static message to be sent in the SMS. Can contain dynamic variables.
-       */
-      content?: string;
-
-      type?: 'predefined';
-    }
-
-    export interface SMSContentInferred {
-      /**
-       * The prompt to be used to help infer the SMS content. The model will take the
-       * global prompt, the call transcript, and this prompt together to deduce the right
-       * message to send. Can contain dynamic variables.
-       */
-      prompt?: string;
-
-      type?: 'inferred';
-    }
   }
 
   /**
@@ -1102,12 +1184,14 @@ export namespace LlmResponse {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.AgentSwapTool
       | State.PressDigitTool
+      | State.SendSMSTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
-      | State.AgentSwapTool
+      | State.BridgeTransferTool
+      | State.CancelTransferTool
       | State.McpTool
-      | State.SendSMSTool
     >;
   }
 
@@ -1184,6 +1268,17 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when ending the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface TransferCallTool {
@@ -1216,12 +1311,23 @@ export namespace LlmResponse {
       description?: string;
 
       /**
+       * Describes what to say to user when transferring the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
        * useful when you want to dial to internal pseudo numbers. This only applies when
        * you are using custom telephony and does not apply when you are using Retell
        * Telephony. If omitted, the default value is false.
        */
       ignore_e164_validation?: boolean;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallTool {
@@ -1282,6 +1388,11 @@ export namespace LlmResponse {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -1558,6 +1669,50 @@ export namespace LlmResponse {
       timezone?: string;
     }
 
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    }
+
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -1581,6 +1736,46 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
+      }
     }
 
     export interface CustomTool {
@@ -1611,6 +1806,12 @@ export namespace LlmResponse {
        * to call the tool.
        */
       url: string;
+
+      /**
+       * If set to true, the parameters will be passed as root level JSON object instead
+       * of nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -1803,48 +2004,44 @@ export namespace LlmResponse {
       }
     }
 
-    export interface AgentSwapTool {
-      /**
-       * The id of the agent to swap to.
-       */
-      agent_id: string;
-
+    export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
-      /**
-       * Post call analysis setting for the agent swap.
-       */
-      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-      type: 'agent_swap';
+      type: 'bridge_transfer';
 
       /**
-       * The version of the agent to swap to. If not specified, will use the latest
-       * version.
-       */
-      agent_version?: number;
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it bridges the original caller to the transfer target and ends the
+       * transfer agent call.
        */
       description?: string;
+    }
+
+    export interface CancelTransferTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'cancel_transfer';
 
       /**
-       * The message for the agent to speak when executing agent swap.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it cancels the transfer, returns the original caller to the main agent,
+       * and ends the transfer agent call.
        */
-      execution_message_description?: string;
-
-      speak_during_execution?: boolean;
-
-      /**
-       * Webhook setting for the agent swap, defaults to only source.
-       */
-      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+      description?: string;
     }
 
     export interface McpTool {
@@ -1867,6 +2064,11 @@ export namespace LlmResponse {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
 
       /**
        * Unique id of the MCP.
@@ -1893,46 +2095,6 @@ export namespace LlmResponse {
        * responsive.
        */
       speak_during_execution?: boolean;
-    }
-
-    export interface SendSMSTool {
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
-       */
-      name: string;
-
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-      type: 'send_sms';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-    }
-
-    export namespace SendSMSTool {
-      export interface SMSContentPredefined {
-        /**
-         * The static message to be sent in the SMS. Can contain dynamic variables.
-         */
-        content?: string;
-
-        type?: 'predefined';
-      }
-
-      export interface SMSContentInferred {
-        /**
-         * The prompt to be used to help infer the SMS content. The model will take the
-         * global prompt, the call transcript, and this prompt together to deduce the right
-         * message to send. Can contain dynamic variables.
-         */
-        prompt?: string;
-
-        type?: 'inferred';
-      }
     }
   }
 }
@@ -1984,12 +2146,14 @@ export interface LlmCreateParams {
     | LlmCreateParams.TransferCallTool
     | LlmCreateParams.CheckAvailabilityCalTool
     | LlmCreateParams.BookAppointmentCalTool
+    | LlmCreateParams.AgentSwapTool
     | LlmCreateParams.PressDigitTool
+    | LlmCreateParams.SendSMSTool
     | LlmCreateParams.CustomTool
     | LlmCreateParams.ExtractDynamicVariableTool
-    | LlmCreateParams.AgentSwapTool
+    | LlmCreateParams.BridgeTransferTool
+    | LlmCreateParams.CancelTransferTool
     | LlmCreateParams.McpTool
-    | LlmCreateParams.SendSMSTool
   > | null;
 
   /**
@@ -2015,6 +2179,8 @@ export interface LlmCreateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -2042,7 +2208,7 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -2093,6 +2259,17 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when ending the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface TransferCallTool {
@@ -2125,12 +2302,23 @@ export namespace LlmCreateParams {
     description?: string;
 
     /**
+     * Describes what to say to user when transferring the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
      * useful when you want to dial to internal pseudo numbers. This only applies when
      * you are using custom telephony and does not apply when you are using Retell
      * Telephony. If omitted, the default value is false.
      */
     ignore_e164_validation?: boolean;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallTool {
@@ -2191,6 +2379,11 @@ export namespace LlmCreateParams {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -2467,6 +2660,50 @@ export namespace LlmCreateParams {
     timezone?: string;
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+  }
+
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -2490,6 +2727,46 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
   }
 
   export interface CustomTool {
@@ -2520,6 +2797,12 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -2712,48 +2995,44 @@ export namespace LlmCreateParams {
     }
   }
 
-  export interface AgentSwapTool {
-    /**
-     * The id of the agent to swap to.
-     */
-    agent_id: string;
-
+  export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
-    /**
-     * Post call analysis setting for the agent swap.
-     */
-    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-    type: 'agent_swap';
+    type: 'bridge_transfer';
 
     /**
-     * The version of the agent to swap to. If not specified, will use the latest
-     * version.
-     */
-    agent_version?: number;
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it bridges the original caller to the transfer target and ends the
+     * transfer agent call.
      */
     description?: string;
+  }
+
+  export interface CancelTransferTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'cancel_transfer';
 
     /**
-     * The message for the agent to speak when executing agent swap.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it cancels the transfer, returns the original caller to the main agent,
+     * and ends the transfer agent call.
      */
-    execution_message_description?: string;
-
-    speak_during_execution?: boolean;
-
-    /**
-     * Webhook setting for the agent swap, defaults to only source.
-     */
-    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    description?: string;
   }
 
   export interface McpTool {
@@ -2776,6 +3055,11 @@ export namespace LlmCreateParams {
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
 
     /**
      * Unique id of the MCP.
@@ -2802,46 +3086,6 @@ export namespace LlmCreateParams {
      * responsive.
      */
     speak_during_execution?: boolean;
-  }
-
-  export interface SendSMSTool {
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
-     */
-    name: string;
-
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-    type: 'send_sms';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-  }
-
-  export namespace SendSMSTool {
-    export interface SMSContentPredefined {
-      /**
-       * The static message to be sent in the SMS. Can contain dynamic variables.
-       */
-      content?: string;
-
-      type?: 'predefined';
-    }
-
-    export interface SMSContentInferred {
-      /**
-       * The prompt to be used to help infer the SMS content. The model will take the
-       * global prompt, the call transcript, and this prompt together to deduce the right
-       * message to send. Can contain dynamic variables.
-       */
-      prompt?: string;
-
-      type?: 'inferred';
-    }
   }
 
   /**
@@ -2917,12 +3161,14 @@ export namespace LlmCreateParams {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.AgentSwapTool
       | State.PressDigitTool
+      | State.SendSMSTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
-      | State.AgentSwapTool
+      | State.BridgeTransferTool
+      | State.CancelTransferTool
       | State.McpTool
-      | State.SendSMSTool
     >;
   }
 
@@ -2999,6 +3245,17 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when ending the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface TransferCallTool {
@@ -3031,12 +3288,23 @@ export namespace LlmCreateParams {
       description?: string;
 
       /**
+       * Describes what to say to user when transferring the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
        * useful when you want to dial to internal pseudo numbers. This only applies when
        * you are using custom telephony and does not apply when you are using Retell
        * Telephony. If omitted, the default value is false.
        */
       ignore_e164_validation?: boolean;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallTool {
@@ -3097,6 +3365,11 @@ export namespace LlmCreateParams {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -3373,6 +3646,50 @@ export namespace LlmCreateParams {
       timezone?: string;
     }
 
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    }
+
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -3396,6 +3713,46 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
+      }
     }
 
     export interface CustomTool {
@@ -3426,6 +3783,12 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       url: string;
+
+      /**
+       * If set to true, the parameters will be passed as root level JSON object instead
+       * of nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -3618,48 +3981,44 @@ export namespace LlmCreateParams {
       }
     }
 
-    export interface AgentSwapTool {
-      /**
-       * The id of the agent to swap to.
-       */
-      agent_id: string;
-
+    export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
-      /**
-       * Post call analysis setting for the agent swap.
-       */
-      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-      type: 'agent_swap';
+      type: 'bridge_transfer';
 
       /**
-       * The version of the agent to swap to. If not specified, will use the latest
-       * version.
-       */
-      agent_version?: number;
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it bridges the original caller to the transfer target and ends the
+       * transfer agent call.
        */
       description?: string;
+    }
+
+    export interface CancelTransferTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'cancel_transfer';
 
       /**
-       * The message for the agent to speak when executing agent swap.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it cancels the transfer, returns the original caller to the main agent,
+       * and ends the transfer agent call.
        */
-      execution_message_description?: string;
-
-      speak_during_execution?: boolean;
-
-      /**
-       * Webhook setting for the agent swap, defaults to only source.
-       */
-      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+      description?: string;
     }
 
     export interface McpTool {
@@ -3682,6 +4041,11 @@ export namespace LlmCreateParams {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
 
       /**
        * Unique id of the MCP.
@@ -3708,46 +4072,6 @@ export namespace LlmCreateParams {
        * responsive.
        */
       speak_during_execution?: boolean;
-    }
-
-    export interface SendSMSTool {
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
-       */
-      name: string;
-
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-      type: 'send_sms';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-    }
-
-    export namespace SendSMSTool {
-      export interface SMSContentPredefined {
-        /**
-         * The static message to be sent in the SMS. Can contain dynamic variables.
-         */
-        content?: string;
-
-        type?: 'predefined';
-      }
-
-      export interface SMSContentInferred {
-        /**
-         * The prompt to be used to help infer the SMS content. The model will take the
-         * global prompt, the call transcript, and this prompt together to deduce the right
-         * message to send. Can contain dynamic variables.
-         */
-        prompt?: string;
-
-        type?: 'inferred';
-      }
     }
   }
 }
@@ -3813,12 +4137,14 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.TransferCallTool
     | LlmUpdateParams.CheckAvailabilityCalTool
     | LlmUpdateParams.BookAppointmentCalTool
+    | LlmUpdateParams.AgentSwapTool
     | LlmUpdateParams.PressDigitTool
+    | LlmUpdateParams.SendSMSTool
     | LlmUpdateParams.CustomTool
     | LlmUpdateParams.ExtractDynamicVariableTool
-    | LlmUpdateParams.AgentSwapTool
+    | LlmUpdateParams.BridgeTransferTool
+    | LlmUpdateParams.CancelTransferTool
     | LlmUpdateParams.McpTool
-    | LlmUpdateParams.SendSMSTool
   > | null;
 
   /**
@@ -3845,6 +4171,8 @@ export interface LlmUpdateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -3872,7 +4200,7 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying speech to speech model. Can only set this or
    * model, not both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * Body param: The speaker who starts the conversation. Required. Must be either
@@ -3923,6 +4251,17 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when ending the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface TransferCallTool {
@@ -3955,12 +4294,23 @@ export namespace LlmUpdateParams {
     description?: string;
 
     /**
+     * Describes what to say to user when transferring the call. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
      * useful when you want to dial to internal pseudo numbers. This only applies when
      * you are using custom telephony and does not apply when you are using Retell
      * Telephony. If omitted, the default value is false.
      */
     ignore_e164_validation?: boolean;
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace TransferCallTool {
@@ -4021,6 +4371,11 @@ export namespace LlmUpdateParams {
        * The time to wait before considering transfer fails.
        */
       agent_detection_timeout_ms?: number;
+
+      /**
+       * Whether to play an audio cue when bridging the call. Defaults to true.
+       */
+      enable_bridge_audio_cue?: boolean;
 
       /**
        * IVR navigation option to run when doing human detection. This prompt will guide
@@ -4297,6 +4652,50 @@ export namespace LlmUpdateParams {
     timezone?: string;
   }
 
+  export interface AgentSwapTool {
+    /**
+     * The id of the agent to swap to.
+     */
+    agent_id: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    /**
+     * Post call analysis setting for the agent swap.
+     */
+    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+    type: 'agent_swap';
+
+    /**
+     * The version of the agent to swap to. If not specified, will use the latest
+     * version.
+     */
+    agent_version?: number;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * The message for the agent to speak when executing agent swap.
+     */
+    execution_message_description?: string;
+
+    speak_during_execution?: boolean;
+
+    /**
+     * Webhook setting for the agent swap, defaults to only source.
+     */
+    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+  }
+
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -4320,6 +4719,46 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+    type: 'send_sms';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      content?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
   }
 
   export interface CustomTool {
@@ -4350,6 +4789,12 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -4542,48 +4987,44 @@ export namespace LlmUpdateParams {
     }
   }
 
-  export interface AgentSwapTool {
-    /**
-     * The id of the agent to swap to.
-     */
-    agent_id: string;
-
+  export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
-    /**
-     * Post call analysis setting for the agent swap.
-     */
-    post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-    type: 'agent_swap';
+    type: 'bridge_transfer';
 
     /**
-     * The version of the agent to swap to. If not specified, will use the latest
-     * version.
-     */
-    agent_version?: number;
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it bridges the original caller to the transfer target and ends the
+     * transfer agent call.
      */
     description?: string;
+  }
+
+  export interface CancelTransferTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
+     */
+    name: string;
+
+    type: 'cancel_transfer';
 
     /**
-     * The message for the agent to speak when executing agent swap.
+     * Describes what the tool does. This tool is only available to transfer agents
+     * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+     * invoked, it cancels the transfer, returns the original caller to the main agent,
+     * and ends the transfer agent call.
      */
-    execution_message_description?: string;
-
-    speak_during_execution?: boolean;
-
-    /**
-     * Webhook setting for the agent swap, defaults to only source.
-     */
-    webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    description?: string;
   }
 
   export interface McpTool {
@@ -4606,6 +5047,11 @@ export namespace LlmUpdateParams {
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * The input schema of the MCP tool.
+     */
+    input_schema?: { [key: string]: string };
 
     /**
      * Unique id of the MCP.
@@ -4632,46 +5078,6 @@ export namespace LlmUpdateParams {
      * responsive.
      */
     speak_during_execution?: boolean;
-  }
-
-  export interface SendSMSTool {
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges).
-     */
-    name: string;
-
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-    type: 'send_sms';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-  }
-
-  export namespace SendSMSTool {
-    export interface SMSContentPredefined {
-      /**
-       * The static message to be sent in the SMS. Can contain dynamic variables.
-       */
-      content?: string;
-
-      type?: 'predefined';
-    }
-
-    export interface SMSContentInferred {
-      /**
-       * The prompt to be used to help infer the SMS content. The model will take the
-       * global prompt, the call transcript, and this prompt together to deduce the right
-       * message to send. Can contain dynamic variables.
-       */
-      prompt?: string;
-
-      type?: 'inferred';
-    }
   }
 
   /**
@@ -4747,12 +5153,14 @@ export namespace LlmUpdateParams {
       | State.TransferCallTool
       | State.CheckAvailabilityCalTool
       | State.BookAppointmentCalTool
+      | State.AgentSwapTool
       | State.PressDigitTool
+      | State.SendSMSTool
       | State.CustomTool
       | State.ExtractDynamicVariableTool
-      | State.AgentSwapTool
+      | State.BridgeTransferTool
+      | State.CancelTransferTool
       | State.McpTool
-      | State.SendSMSTool
     >;
   }
 
@@ -4829,6 +5237,17 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when ending the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface TransferCallTool {
@@ -4861,12 +5280,23 @@ export namespace LlmUpdateParams {
       description?: string;
 
       /**
+       * Describes what to say to user when transferring the call. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
        * useful when you want to dial to internal pseudo numbers. This only applies when
        * you are using custom telephony and does not apply when you are using Retell
        * Telephony. If omitted, the default value is false.
        */
       ignore_e164_validation?: boolean;
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace TransferCallTool {
@@ -4927,6 +5357,11 @@ export namespace LlmUpdateParams {
          * The time to wait before considering transfer fails.
          */
         agent_detection_timeout_ms?: number;
+
+        /**
+         * Whether to play an audio cue when bridging the call. Defaults to true.
+         */
+        enable_bridge_audio_cue?: boolean;
 
         /**
          * IVR navigation option to run when doing human detection. This prompt will guide
@@ -5203,6 +5638,50 @@ export namespace LlmUpdateParams {
       timezone?: string;
     }
 
+    export interface AgentSwapTool {
+      /**
+       * The id of the agent to swap to.
+       */
+      agent_id: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      /**
+       * Post call analysis setting for the agent swap.
+       */
+      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
+
+      type: 'agent_swap';
+
+      /**
+       * The version of the agent to swap to. If not specified, will use the latest
+       * version.
+       */
+      agent_version?: number;
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+
+      /**
+       * The message for the agent to speak when executing agent swap.
+       */
+      execution_message_description?: string;
+
+      speak_during_execution?: boolean;
+
+      /**
+       * Webhook setting for the agent swap, defaults to only source.
+       */
+      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+    }
+
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -5226,6 +5705,46 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+    }
+
+    export interface SendSMSTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges).
+       */
+      name: string;
+
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+
+      type: 'send_sms';
+
+      /**
+       * Describes what the tool does, sometimes can also include information about when
+       * to call the tool.
+       */
+      description?: string;
+    }
+
+    export namespace SendSMSTool {
+      export interface SMSContentPredefined {
+        /**
+         * The static message to be sent in the SMS. Can contain dynamic variables.
+         */
+        content?: string;
+
+        type?: 'predefined';
+      }
+
+      export interface SMSContentInferred {
+        /**
+         * The prompt to be used to help infer the SMS content. The model will take the
+         * global prompt, the call transcript, and this prompt together to deduce the right
+         * message to send. Can contain dynamic variables.
+         */
+        prompt?: string;
+
+        type?: 'inferred';
+      }
     }
 
     export interface CustomTool {
@@ -5256,6 +5775,12 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       url: string;
+
+      /**
+       * If set to true, the parameters will be passed as root level JSON object instead
+       * of nested under "args".
+       */
+      args_at_root?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -5448,48 +5973,44 @@ export namespace LlmUpdateParams {
       }
     }
 
-    export interface AgentSwapTool {
-      /**
-       * The id of the agent to swap to.
-       */
-      agent_id: string;
-
+    export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
-      /**
-       * Post call analysis setting for the agent swap.
-       */
-      post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
-
-      type: 'agent_swap';
+      type: 'bridge_transfer';
 
       /**
-       * The version of the agent to swap to. If not specified, will use the latest
-       * version.
-       */
-      agent_version?: number;
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it bridges the original caller to the transfer target and ends the
+       * transfer agent call.
        */
       description?: string;
+    }
+
+    export interface CancelTransferTool {
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
+       */
+      name: string;
+
+      type: 'cancel_transfer';
 
       /**
-       * The message for the agent to speak when executing agent swap.
+       * Describes what the tool does. This tool is only available to transfer agents
+       * (agents with isTransferAgent set to true) in agentic warm transfer mode. When
+       * invoked, it cancels the transfer, returns the original caller to the main agent,
+       * and ends the transfer agent call.
        */
-      execution_message_description?: string;
-
-      speak_during_execution?: boolean;
-
-      /**
-       * Webhook setting for the agent swap, defaults to only source.
-       */
-      webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent';
+      description?: string;
     }
 
     export interface McpTool {
@@ -5512,6 +6033,11 @@ export namespace LlmUpdateParams {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * The input schema of the MCP tool.
+       */
+      input_schema?: { [key: string]: string };
 
       /**
        * Unique id of the MCP.
@@ -5538,46 +6064,6 @@ export namespace LlmUpdateParams {
        * responsive.
        */
       speak_during_execution?: boolean;
-    }
-
-    export interface SendSMSTool {
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges).
-       */
-      name: string;
-
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
-
-      type: 'send_sms';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-    }
-
-    export namespace SendSMSTool {
-      export interface SMSContentPredefined {
-        /**
-         * The static message to be sent in the SMS. Can contain dynamic variables.
-         */
-        content?: string;
-
-        type?: 'predefined';
-      }
-
-      export interface SMSContentInferred {
-        /**
-         * The prompt to be used to help infer the SMS content. The model will take the
-         * global prompt, the call transcript, and this prompt together to deduce the right
-         * message to send. Can contain dynamic variables.
-         */
-        prompt?: string;
-
-        type?: 'inferred';
-      }
     }
   }
 }

@@ -28,7 +28,7 @@ export interface VoiceResponse {
   /**
    * Indicates the provider of voice.
    */
-  provider: 'elevenlabs' | 'openai' | 'deepgram';
+  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax';
 
   /**
    * Unique id for the voice.

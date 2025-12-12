@@ -124,9 +124,10 @@ export interface KnowledgeBaseResponse {
   /**
    * Status of the knowledge base. When it's created and being processed, it's
    * "in_progress". When the processing is done, it's "complete". When there's an
-   * error in processing, it's "error".
+   * error in processing, it's "error". When it is during kb updating, it's
+   * "refreshing_in_progress".
    */
-  status: 'in_progress' | 'complete' | 'error';
+  status: 'in_progress' | 'complete' | 'error' | 'refreshing_in_progress';
 
   /**
    * Whether to enable auto refresh for the knowledge base urls. If set to true, will

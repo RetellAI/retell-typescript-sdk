@@ -121,12 +121,22 @@ describe('resource conversationFlow', () => {
             },
           ],
           begin_tag_display_position: { x: 100, y: 200 },
+          mcps: [
+            {
+              name: 'name',
+              url: 'url',
+              headers: { Authorization: 'Bearer 1234567890' },
+              query_params: { index: '1', key: 'value' },
+              timeout_ms: 0,
+            },
+          ],
           start_node_id: 'collect_info',
           tools: [
             {
               name: 'get_customer_info',
               type: 'custom',
               url: 'https://api.example.com/customer',
+              args_at_root: true,
               description: 'Get customer information from database',
               headers: { foo: 'string' },
               method: 'GET',
@@ -161,6 +171,7 @@ describe('resource conversationFlow', () => {
           name: 'get_customer_info',
           type: 'custom',
           url: 'https://api.example.com/customer',
+          args_at_root: true,
           description: 'Get customer information from database',
           headers: { foo: 'string' },
           method: 'GET',
