@@ -163,6 +163,11 @@ export interface AgentResponse {
     | AgentResponse.ResponseEngineConversationFlow;
 
   /**
+   * Version of the agent.
+   */
+  version: number;
+
+  /**
    * Unique voice id used for the agent. Find list of available voices and their
    * preview in Dashboard.
    */
@@ -291,6 +296,12 @@ export interface AgentResponse {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will detect whether the call enters a voicemail. Note that this
+   * feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
 
   /**
    * If users stay silent for a period after agent speech, end the call. The minimum
@@ -440,6 +451,8 @@ export interface AgentResponse {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -500,9 +513,10 @@ export interface AgentResponse {
   user_dtmf_options?: AgentResponse.UserDtmfOptions | null;
 
   /**
-   * Version of the agent.
+   * Optional description of the agent version. Used for your own reference and
+   * documentation.
    */
-  version?: number;
+  version_description?: string | null;
 
   /**
    * If set, determines the vocabulary set to use for transcription. This setting
@@ -512,10 +526,9 @@ export interface AgentResponse {
   vocab_specialization?: 'general' | 'medical';
 
   /**
-   * Optionally set the voice model used for the selected voice. Currently only
-   * elevenlab voices have voice model selections. Set to null to remove voice model
-   * selection, and default ones will apply. Check out the dashboard for details on
-   * each voice model.
+   * Select the voice model used for the selected voice. Each provider has a set of
+   * available voice models. Set to null to remove voice model selection, and default
+   * ones will apply. Check out dashboard for more details of each voice model.
    */
   voice_model?:
     | 'eleven_turbo_v2'
@@ -523,8 +536,12 @@ export interface AgentResponse {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'sonic-2'
+    | 'sonic-3'
+    | 'sonic-turbo'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
     | null;
 
   /**
@@ -541,6 +558,21 @@ export interface AgentResponse {
    * apply.
    */
   voice_temperature?: number;
+
+  /**
+   * Configures when to stop running voicemail detection, as it becomes unlikely to
+   * hit voicemail after a couple minutes, and keep running it will only have
+   * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+   * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   */
+  voicemail_detection_timeout_ms?: number;
+
+  /**
+   * The message to be played when the call enters a voicemail. Note that this
+   * feature is only available for phone calls. If you want to hangup after hitting
+   * voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
 
   /**
    * If this option is set, the call will try to detect voicemail in the first 3
@@ -640,6 +672,7 @@ export namespace AgentResponse {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
@@ -774,7 +807,8 @@ export namespace AgentResponse {
     action:
       | VoicemailOption.VoicemailActionPrompt
       | VoicemailOption.VoicemailActionStaticText
-      | VoicemailOption.VoicemailActionHangup;
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -799,6 +833,10 @@ export namespace AgentResponse {
 
     export interface VoicemailActionHangup {
       type: 'hangup';
+    }
+
+    export interface VoicemailActionBridgeTransfer {
+      type: 'bridge_transfer';
     }
   }
 }
@@ -949,6 +987,12 @@ export interface AgentCreateParams {
   enable_backchannel?: boolean;
 
   /**
+   * If set to true, will detect whether the call enters a voicemail. Note that this
+   * feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
+
+  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
@@ -1091,6 +1135,8 @@ export interface AgentCreateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -1151,6 +1197,12 @@ export interface AgentCreateParams {
   user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
 
   /**
+   * Optional description of the agent version. Used for your own reference and
+   * documentation.
+   */
+  version_description?: string | null;
+
+  /**
    * If set, determines the vocabulary set to use for transcription. This setting
    * only applies for English agents, for non English agent, this setting is a no-op.
    * Default to general.
@@ -1158,10 +1210,9 @@ export interface AgentCreateParams {
   vocab_specialization?: 'general' | 'medical';
 
   /**
-   * Optionally set the voice model used for the selected voice. Currently only
-   * elevenlab voices have voice model selections. Set to null to remove voice model
-   * selection, and default ones will apply. Check out the dashboard for details on
-   * each voice model.
+   * Select the voice model used for the selected voice. Each provider has a set of
+   * available voice models. Set to null to remove voice model selection, and default
+   * ones will apply. Check out dashboard for more details of each voice model.
    */
   voice_model?:
     | 'eleven_turbo_v2'
@@ -1169,8 +1220,12 @@ export interface AgentCreateParams {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'sonic-2'
+    | 'sonic-3'
+    | 'sonic-turbo'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
     | null;
 
   /**
@@ -1187,6 +1242,21 @@ export interface AgentCreateParams {
    * apply.
    */
   voice_temperature?: number;
+
+  /**
+   * Configures when to stop running voicemail detection, as it becomes unlikely to
+   * hit voicemail after a couple minutes, and keep running it will only have
+   * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+   * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   */
+  voicemail_detection_timeout_ms?: number;
+
+  /**
+   * The message to be played when the call enters a voicemail. Note that this
+   * feature is only available for phone calls. If you want to hangup after hitting
+   * voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
 
   /**
    * If this option is set, the call will try to detect voicemail in the first 3
@@ -1286,6 +1356,7 @@ export namespace AgentCreateParams {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
@@ -1420,7 +1491,8 @@ export namespace AgentCreateParams {
     action:
       | VoicemailOption.VoicemailActionPrompt
       | VoicemailOption.VoicemailActionStaticText
-      | VoicemailOption.VoicemailActionHangup;
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -1445,6 +1517,10 @@ export namespace AgentCreateParams {
 
     export interface VoicemailActionHangup {
       type: 'hangup';
+    }
+
+    export interface VoicemailActionBridgeTransfer {
+      type: 'bridge_transfer';
     }
   }
 }
@@ -1590,6 +1666,12 @@ export interface AgentUpdateParams {
   enable_backchannel?: boolean;
 
   /**
+   * Body param: If set to true, will detect whether the call enters a voicemail.
+   * Note that this feature is only available for phone calls.
+   */
+  enable_voicemail_detection?: boolean;
+
+  /**
    * Body param: If users stay silent for a period after agent speech, end the call.
    * The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000
    * (10 min).
@@ -1733,6 +1815,8 @@ export interface AgentUpdateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -1808,6 +1892,12 @@ export interface AgentUpdateParams {
   user_dtmf_options?: AgentUpdateParams.UserDtmfOptions | null;
 
   /**
+   * Body param: Optional description of the agent version. Used for your own
+   * reference and documentation.
+   */
+  version_description?: string | null;
+
+  /**
    * Body param: If set, determines the vocabulary set to use for transcription. This
    * setting only applies for English agents, for non English agent, this setting is
    * a no-op. Default to general.
@@ -1821,10 +1911,10 @@ export interface AgentUpdateParams {
   voice_id?: string;
 
   /**
-   * Body param: Optionally set the voice model used for the selected voice.
-   * Currently only elevenlab voices have voice model selections. Set to null to
-   * remove voice model selection, and default ones will apply. Check out the
-   * dashboard for details on each voice model.
+   * Body param: Select the voice model used for the selected voice. Each provider
+   * has a set of available voice models. Set to null to remove voice model
+   * selection, and default ones will apply. Check out dashboard for more details of
+   * each voice model.
    */
   voice_model?:
     | 'eleven_turbo_v2'
@@ -1832,8 +1922,12 @@ export interface AgentUpdateParams {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'sonic-2'
+    | 'sonic-3'
+    | 'sonic-turbo'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
     | null;
 
   /**
@@ -1850,6 +1944,21 @@ export interface AgentUpdateParams {
    * 1 will apply.
    */
   voice_temperature?: number;
+
+  /**
+   * Body param: Configures when to stop running voicemail detection, as it becomes
+   * unlikely to hit voicemail after a couple minutes, and keep running it will only
+   * have negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum
+   * value allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+   */
+  voicemail_detection_timeout_ms?: number;
+
+  /**
+   * Body param: The message to be played when the call enters a voicemail. Note that
+   * this feature is only available for phone calls. If you want to hangup after
+   * hitting voicemail, set this to empty string.
+   */
+  voicemail_message?: string;
 
   /**
    * Body param: If this option is set, the call will try to detect voicemail in the
@@ -1903,6 +2012,7 @@ export namespace AgentUpdateParams {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
@@ -2083,7 +2193,8 @@ export namespace AgentUpdateParams {
     action:
       | VoicemailOption.VoicemailActionPrompt
       | VoicemailOption.VoicemailActionStaticText
-      | VoicemailOption.VoicemailActionHangup;
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -2108,6 +2219,10 @@ export namespace AgentUpdateParams {
 
     export interface VoicemailActionHangup {
       type: 'hangup';
+    }
+
+    export interface VoicemailActionBridgeTransfer {
+      type: 'bridge_transfer';
     }
   }
 }

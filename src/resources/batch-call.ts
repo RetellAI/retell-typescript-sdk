@@ -40,6 +40,53 @@ export interface BatchCallResponse {
    * Number of tasks within the batch call
    */
   total_task_count: number;
+
+  /**
+   * Canonicalized minutes-based time windows. Present only if specified when the
+   * batch call was created or updated. See CallTimeWindow for format details
+   * ([startMin, endMin) in local minutes; no cross-midnight).
+   */
+  call_time_window?: BatchCallResponse.CallTimeWindow;
+}
+
+export namespace BatchCallResponse {
+  /**
+   * Canonicalized minutes-based time windows. Present only if specified when the
+   * batch call was created or updated. See CallTimeWindow for format details
+   * ([startMin, endMin) in local minutes; no cross-midnight).
+   */
+  export interface CallTimeWindow {
+    /**
+     * List of TimeWindow (start/end in minutes since local midnight).
+     */
+    windows: Array<CallTimeWindow.Window>;
+
+    /**
+     * Optional list of days to which the windows apply. If omitted or empty, windows
+     * apply to every day.
+     */
+    day?: Array<'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday'>;
+
+    /**
+     * IANA timezone (e.g. America/Los_Angeles). Defaults to America/Los_Angeles if
+     * omitted.
+     */
+    timezone?: string;
+  }
+
+  export namespace CallTimeWindow {
+    export interface Window {
+      /**
+       * End time in minutes since local midnight.
+       */
+      end: number;
+
+      /**
+       * Start time in minutes since local midnight.
+       */
+      start: number;
+    }
+  }
 }
 
 export interface BatchCallCreateBatchCallParams {
@@ -58,9 +105,22 @@ export interface BatchCallCreateBatchCallParams {
   tasks: Array<BatchCallCreateBatchCallParams.Task>;
 
   /**
+   * Allowed calling windows in a specific timezone. Each window is a half-open
+   * interval [startMin, endMin) in minutes since 00:00 local time. Cross-midnight
+   * windows are NOT allowed (must satisfy startMin < endMin). `endMin = 1440`
+   * (24:00) is valid.
+   */
+  call_time_window?: BatchCallCreateBatchCallParams.CallTimeWindow;
+
+  /**
    * The name of the batch call. Only used for your own reference.
    */
   name?: string;
+
+  /**
+   * Reserve a portion of your org concurrency for batch processing.
+   */
+  reserved_concurrency?: number;
 
   /**
    * The scheduled time for sending the batch call, represented as a Unix timestamp
@@ -274,6 +334,12 @@ export namespace BatchCallCreateBatchCallParams {
         enable_backchannel?: boolean;
 
         /**
+         * If set to true, will detect whether the call enters a voicemail. Note that this
+         * feature is only available for phone calls.
+         */
+        enable_voicemail_detection?: boolean;
+
+        /**
          * If users stay silent for a period after agent speech, end the call. The minimum
          * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
          */
@@ -416,6 +482,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -486,6 +554,12 @@ export namespace BatchCallCreateBatchCallParams {
         user_dtmf_options?: Agent.UserDtmfOptions | null;
 
         /**
+         * Optional description of the agent version. Used for your own reference and
+         * documentation.
+         */
+        version_description?: string | null;
+
+        /**
          * If set, determines the vocabulary set to use for transcription. This setting
          * only applies for English agents, for non English agent, this setting is a no-op.
          * Default to general.
@@ -499,10 +573,9 @@ export namespace BatchCallCreateBatchCallParams {
         voice_id?: string;
 
         /**
-         * Optionally set the voice model used for the selected voice. Currently only
-         * elevenlab voices have voice model selections. Set to null to remove voice model
-         * selection, and default ones will apply. Check out the dashboard for details on
-         * each voice model.
+         * Select the voice model used for the selected voice. Each provider has a set of
+         * available voice models. Set to null to remove voice model selection, and default
+         * ones will apply. Check out dashboard for more details of each voice model.
          */
         voice_model?:
           | 'eleven_turbo_v2'
@@ -510,8 +583,12 @@ export namespace BatchCallCreateBatchCallParams {
           | 'eleven_turbo_v2_5'
           | 'eleven_flash_v2_5'
           | 'eleven_multilingual_v2'
+          | 'sonic-2'
+          | 'sonic-3'
+          | 'sonic-turbo'
           | 'tts-1'
           | 'gpt-4o-mini-tts'
+          | 'speech-02-turbo'
           | null;
 
         /**
@@ -528,6 +605,21 @@ export namespace BatchCallCreateBatchCallParams {
          * apply.
          */
         voice_temperature?: number;
+
+        /**
+         * Configures when to stop running voicemail detection, as it becomes unlikely to
+         * hit voicemail after a couple minutes, and keep running it will only have
+         * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+         * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+         */
+        voicemail_detection_timeout_ms?: number;
+
+        /**
+         * The message to be played when the call enters a voicemail. Note that this
+         * feature is only available for phone calls. If you want to hangup after hitting
+         * voicemail, set this to empty string.
+         */
+        voicemail_message?: string;
 
         /**
          * If this option is set, the call will try to detect voicemail in the first 3
@@ -581,6 +673,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'pin'
             | 'medical_id'
             | 'date_of_birth'
+            | 'customer_account_number'
           >;
 
           /**
@@ -761,7 +854,8 @@ export namespace BatchCallCreateBatchCallParams {
           action:
             | VoicemailOption.VoicemailActionPrompt
             | VoicemailOption.VoicemailActionStaticText
-            | VoicemailOption.VoicemailActionHangup;
+            | VoicemailOption.VoicemailActionHangup
+            | VoicemailOption.VoicemailActionBridgeTransfer;
         }
 
         export namespace VoicemailOption {
@@ -786,6 +880,10 @@ export namespace BatchCallCreateBatchCallParams {
 
           export interface VoicemailActionHangup {
             type: 'hangup';
+          }
+
+          export interface VoicemailActionBridgeTransfer {
+            type: 'bridge_transfer';
           }
         }
       }
@@ -866,6 +964,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gpt-4.1-mini'
             | 'gpt-4.1-nano'
             | 'gpt-5'
+            | 'gpt-5.1'
+            | 'gpt-5.2'
             | 'gpt-5-mini'
             | 'gpt-5-nano'
             | 'claude-4.5-sonnet'
@@ -925,6 +1025,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -952,7 +1054,7 @@ export namespace BatchCallCreateBatchCallParams {
          * Select the underlying speech to speech model. Can only set this or model, not
          * both.
          */
-        s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+        s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
         /**
          * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -983,6 +1085,45 @@ export namespace BatchCallCreateBatchCallParams {
           top_k?: number;
         }
       }
+    }
+  }
+
+  /**
+   * Allowed calling windows in a specific timezone. Each window is a half-open
+   * interval [startMin, endMin) in minutes since 00:00 local time. Cross-midnight
+   * windows are NOT allowed (must satisfy startMin < endMin). `endMin = 1440`
+   * (24:00) is valid.
+   */
+  export interface CallTimeWindow {
+    /**
+     * List of TimeWindow (start/end in minutes since local midnight).
+     */
+    windows: Array<CallTimeWindow.Window>;
+
+    /**
+     * Optional list of days to which the windows apply. If omitted or empty, windows
+     * apply to every day.
+     */
+    day?: Array<'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday'>;
+
+    /**
+     * IANA timezone (e.g. America/Los_Angeles). Defaults to America/Los_Angeles if
+     * omitted.
+     */
+    timezone?: string;
+  }
+
+  export namespace CallTimeWindow {
+    export interface Window {
+      /**
+       * End time in minutes since local midnight.
+       */
+      end: number;
+
+      /**
+       * Start time in minutes since local midnight.
+       */
+      start: number;
     }
   }
 }

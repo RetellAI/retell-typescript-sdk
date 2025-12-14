@@ -156,14 +156,24 @@ export interface ChatResponse {
   chat_cost?: ChatResponse.ChatCost;
 
   /**
+   * Type of the chat
+   */
+  chat_type?: 'api_chat' | 'sms_chat';
+
+  /**
    * Dynamic variables collected from the chat. Only available after the chat ends.
    */
   collected_dynamic_variables?: { [key: string]: unknown };
 
   /**
+   * Custom attributes for the chat
+   */
+  custom_attributes?: { [key: string]: string | number | boolean };
+
+  /**
    * End timestamp (milliseconds since epoch) of the chat. Available after chat ends.
    */
-  end_timestamp?: number;
+  end_timestamp?: number | null;
 
   /**
    * Transcript of the chat weaved with tool call invocation and results.
@@ -200,6 +210,11 @@ export interface ChatResponse {
    * Transcription of the chat.
    */
   transcript?: string;
+
+  /**
+   * The version of the agent
+   */
+  version?: number | null;
 }
 
 export namespace ChatResponse {
@@ -601,6 +616,11 @@ export interface ChatCreateParams {
 }
 
 export interface ChatUpdateParams {
+  /**
+   * Custom attributes for the chat
+   */
+  custom_attributes?: { [key: string]: string | number | boolean };
+
   /**
    * Data storage setting for this chat. Overrides the agent's default setting.
    * "everything" stores all data, "basic_attributes_only" stores only metadata.

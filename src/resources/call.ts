@@ -340,6 +340,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.Utterance
     | PhoneCallResponse.ToolCallInvocationUtterance
     | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
   >;
 
@@ -375,6 +376,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.Utterance
     | PhoneCallResponse.ToolCallInvocationUtterance
     | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
   >;
 
@@ -949,6 +951,33 @@ export namespace PhoneCallResponse {
     tool_call_id: string;
   }
 
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+  }
+
   export interface DtmfUtterance {
     /**
      * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
@@ -1090,6 +1119,33 @@ export namespace PhoneCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+  }
+
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
   }
 
   export interface DtmfUtterance {
@@ -1307,6 +1363,7 @@ export interface WebCallResponse {
     | WebCallResponse.Utterance
     | WebCallResponse.ToolCallInvocationUtterance
     | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
   >;
 
@@ -1336,6 +1393,7 @@ export interface WebCallResponse {
     | WebCallResponse.Utterance
     | WebCallResponse.ToolCallInvocationUtterance
     | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
   >;
 
@@ -1910,6 +1968,33 @@ export namespace WebCallResponse {
     tool_call_id: string;
   }
 
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+  }
+
   export interface DtmfUtterance {
     /**
      * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
@@ -2042,6 +2127,33 @@ export namespace WebCallResponse {
     tool_call_id: string;
   }
 
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+  }
+
   export interface DtmfUtterance {
     /**
      * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
@@ -2059,6 +2171,11 @@ export namespace WebCallResponse {
 export type CallListResponse = Array<CallResponse>;
 
 export interface CallUpdateParams {
+  /**
+   * Custom attributes for the call
+   */
+  custom_attributes?: { [key: string]: string | number | boolean };
+
   /**
    * Data storage setting for this call. Overrides the agent's default setting.
    * "everything" stores all data, "everything_except_pii" excludes PII when
@@ -2188,6 +2305,11 @@ export namespace CallListParams {
     e2e_latency_p50?: FilterCriteria.E2ELatencyP50;
 
     /**
+     * Only retrieve calls with specific range of end timestamp(s).
+     */
+    end_timestamp?: FilterCriteria.EndTimestamp;
+
+    /**
      * Only retrieve calls with specific from number(s).
      */
     from_number?: Array<string>;
@@ -2229,6 +2351,15 @@ export namespace CallListParams {
     }
 
     export interface E2ELatencyP50 {
+      lower_threshold?: number;
+
+      upper_threshold?: number;
+    }
+
+    /**
+     * Only retrieve calls with specific range of end timestamp(s).
+     */
+    export interface EndTimestamp {
       lower_threshold?: number;
 
       upper_threshold?: number;
@@ -2468,6 +2599,12 @@ export namespace CallCreatePhoneCallParams {
       enable_backchannel?: boolean;
 
       /**
+       * If set to true, will detect whether the call enters a voicemail. Note that this
+       * feature is only available for phone calls.
+       */
+      enable_voicemail_detection?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -2610,6 +2747,8 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -2680,6 +2819,12 @@ export namespace CallCreatePhoneCallParams {
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
       /**
+       * Optional description of the agent version. Used for your own reference and
+       * documentation.
+       */
+      version_description?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -2693,10 +2838,9 @@ export namespace CallCreatePhoneCallParams {
       voice_id?: string;
 
       /**
-       * Optionally set the voice model used for the selected voice. Currently only
-       * elevenlab voices have voice model selections. Set to null to remove voice model
-       * selection, and default ones will apply. Check out the dashboard for details on
-       * each voice model.
+       * Select the voice model used for the selected voice. Each provider has a set of
+       * available voice models. Set to null to remove voice model selection, and default
+       * ones will apply. Check out dashboard for more details of each voice model.
        */
       voice_model?:
         | 'eleven_turbo_v2'
@@ -2704,8 +2848,12 @@ export namespace CallCreatePhoneCallParams {
         | 'eleven_turbo_v2_5'
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
+        | 'sonic-2'
+        | 'sonic-3'
+        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
         | null;
 
       /**
@@ -2722,6 +2870,21 @@ export namespace CallCreatePhoneCallParams {
        * apply.
        */
       voice_temperature?: number;
+
+      /**
+       * Configures when to stop running voicemail detection, as it becomes unlikely to
+       * hit voicemail after a couple minutes, and keep running it will only have
+       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+       */
+      voicemail_detection_timeout_ms?: number;
+
+      /**
+       * The message to be played when the call enters a voicemail. Note that this
+       * feature is only available for phone calls. If you want to hangup after hitting
+       * voicemail, set this to empty string.
+       */
+      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -2775,6 +2938,7 @@ export namespace CallCreatePhoneCallParams {
           | 'pin'
           | 'medical_id'
           | 'date_of_birth'
+          | 'customer_account_number'
         >;
 
         /**
@@ -2955,7 +3119,8 @@ export namespace CallCreatePhoneCallParams {
         action:
           | VoicemailOption.VoicemailActionPrompt
           | VoicemailOption.VoicemailActionStaticText
-          | VoicemailOption.VoicemailActionHangup;
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -2980,6 +3145,10 @@ export namespace CallCreatePhoneCallParams {
 
         export interface VoicemailActionHangup {
           type: 'hangup';
+        }
+
+        export interface VoicemailActionBridgeTransfer {
+          type: 'bridge_transfer';
         }
       }
     }
@@ -3060,6 +3229,8 @@ export namespace CallCreatePhoneCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -3119,6 +3290,8 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -3146,7 +3319,7 @@ export namespace CallCreatePhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -3376,6 +3549,12 @@ export namespace CallCreateWebCallParams {
       enable_backchannel?: boolean;
 
       /**
+       * If set to true, will detect whether the call enters a voicemail. Note that this
+       * feature is only available for phone calls.
+       */
+      enable_voicemail_detection?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -3518,6 +3697,8 @@ export namespace CallCreateWebCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -3588,6 +3769,12 @@ export namespace CallCreateWebCallParams {
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
       /**
+       * Optional description of the agent version. Used for your own reference and
+       * documentation.
+       */
+      version_description?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -3601,10 +3788,9 @@ export namespace CallCreateWebCallParams {
       voice_id?: string;
 
       /**
-       * Optionally set the voice model used for the selected voice. Currently only
-       * elevenlab voices have voice model selections. Set to null to remove voice model
-       * selection, and default ones will apply. Check out the dashboard for details on
-       * each voice model.
+       * Select the voice model used for the selected voice. Each provider has a set of
+       * available voice models. Set to null to remove voice model selection, and default
+       * ones will apply. Check out dashboard for more details of each voice model.
        */
       voice_model?:
         | 'eleven_turbo_v2'
@@ -3612,8 +3798,12 @@ export namespace CallCreateWebCallParams {
         | 'eleven_turbo_v2_5'
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
+        | 'sonic-2'
+        | 'sonic-3'
+        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
         | null;
 
       /**
@@ -3630,6 +3820,21 @@ export namespace CallCreateWebCallParams {
        * apply.
        */
       voice_temperature?: number;
+
+      /**
+       * Configures when to stop running voicemail detection, as it becomes unlikely to
+       * hit voicemail after a couple minutes, and keep running it will only have
+       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+       */
+      voicemail_detection_timeout_ms?: number;
+
+      /**
+       * The message to be played when the call enters a voicemail. Note that this
+       * feature is only available for phone calls. If you want to hangup after hitting
+       * voicemail, set this to empty string.
+       */
+      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -3683,6 +3888,7 @@ export namespace CallCreateWebCallParams {
           | 'pin'
           | 'medical_id'
           | 'date_of_birth'
+          | 'customer_account_number'
         >;
 
         /**
@@ -3863,7 +4069,8 @@ export namespace CallCreateWebCallParams {
         action:
           | VoicemailOption.VoicemailActionPrompt
           | VoicemailOption.VoicemailActionStaticText
-          | VoicemailOption.VoicemailActionHangup;
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -3888,6 +4095,10 @@ export namespace CallCreateWebCallParams {
 
         export interface VoicemailActionHangup {
           type: 'hangup';
+        }
+
+        export interface VoicemailActionBridgeTransfer {
+          type: 'bridge_transfer';
         }
       }
     }
@@ -3968,6 +4179,8 @@ export namespace CallCreateWebCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -4027,6 +4240,8 @@ export namespace CallCreateWebCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4054,7 +4269,7 @@ export namespace CallCreateWebCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -4298,6 +4513,12 @@ export namespace CallRegisterPhoneCallParams {
       enable_backchannel?: boolean;
 
       /**
+       * If set to true, will detect whether the call enters a voicemail. Note that this
+       * feature is only available for phone calls.
+       */
+      enable_voicemail_detection?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -4440,6 +4661,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4510,6 +4733,12 @@ export namespace CallRegisterPhoneCallParams {
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
       /**
+       * Optional description of the agent version. Used for your own reference and
+       * documentation.
+       */
+      version_description?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -4523,10 +4752,9 @@ export namespace CallRegisterPhoneCallParams {
       voice_id?: string;
 
       /**
-       * Optionally set the voice model used for the selected voice. Currently only
-       * elevenlab voices have voice model selections. Set to null to remove voice model
-       * selection, and default ones will apply. Check out the dashboard for details on
-       * each voice model.
+       * Select the voice model used for the selected voice. Each provider has a set of
+       * available voice models. Set to null to remove voice model selection, and default
+       * ones will apply. Check out dashboard for more details of each voice model.
        */
       voice_model?:
         | 'eleven_turbo_v2'
@@ -4534,8 +4762,12 @@ export namespace CallRegisterPhoneCallParams {
         | 'eleven_turbo_v2_5'
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
+        | 'sonic-2'
+        | 'sonic-3'
+        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
         | null;
 
       /**
@@ -4552,6 +4784,21 @@ export namespace CallRegisterPhoneCallParams {
        * apply.
        */
       voice_temperature?: number;
+
+      /**
+       * Configures when to stop running voicemail detection, as it becomes unlikely to
+       * hit voicemail after a couple minutes, and keep running it will only have
+       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
+       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
+       */
+      voicemail_detection_timeout_ms?: number;
+
+      /**
+       * The message to be played when the call enters a voicemail. Note that this
+       * feature is only available for phone calls. If you want to hangup after hitting
+       * voicemail, set this to empty string.
+       */
+      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -4605,6 +4852,7 @@ export namespace CallRegisterPhoneCallParams {
           | 'pin'
           | 'medical_id'
           | 'date_of_birth'
+          | 'customer_account_number'
         >;
 
         /**
@@ -4785,7 +5033,8 @@ export namespace CallRegisterPhoneCallParams {
         action:
           | VoicemailOption.VoicemailActionPrompt
           | VoicemailOption.VoicemailActionStaticText
-          | VoicemailOption.VoicemailActionHangup;
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -4810,6 +5059,10 @@ export namespace CallRegisterPhoneCallParams {
 
         export interface VoicemailActionHangup {
           type: 'hangup';
+        }
+
+        export interface VoicemailActionBridgeTransfer {
+          type: 'bridge_transfer';
         }
       }
     }
@@ -4890,6 +5143,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -4949,6 +5204,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4976,7 +5233,7 @@ export namespace CallRegisterPhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | null;
+      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or

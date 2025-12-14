@@ -278,6 +278,8 @@ export interface ChatAgentResponse {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -381,6 +383,7 @@ export namespace ChatAgentResponse {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
@@ -595,6 +598,8 @@ export interface ChatAgentCreateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -693,6 +698,7 @@ export namespace ChatAgentCreateParams {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
@@ -908,6 +914,8 @@ export interface ChatAgentUpdateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -970,6 +978,7 @@ export namespace ChatAgentUpdateParams {
       | 'pin'
       | 'medical_id'
       | 'date_of_birth'
+      | 'customer_account_number'
     >;
 
     /**
