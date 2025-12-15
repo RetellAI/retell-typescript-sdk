@@ -123,6 +123,7 @@ describe('resource phoneNumber', () => {
       outbound_allowed_countries: ['US', 'CA'],
       sip_trunk_auth_password: '123456',
       sip_trunk_auth_username: 'username',
+      transport: 'TCP',
     });
   });
 });
