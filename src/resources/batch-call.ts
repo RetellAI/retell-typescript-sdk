@@ -308,6 +308,11 @@ export namespace BatchCallCreateBatchCallParams {
         boosted_keywords?: Array<string> | null;
 
         /**
+         * Custom STT configuration. Only used when stt_mode is set to custom.
+         */
+        custom_stt_config?: Agent.CustomSttConfig;
+
+        /**
          * Granular setting to manage how Retell stores sensitive data (transcripts,
          * recordings, logs, etc.). This replaces the deprecated
          * `opt_out_sensitive_data_storage` field.
@@ -547,9 +552,9 @@ export namespace BatchCallCreateBatchCallParams {
 
         /**
          * If set, determines whether speech to text should focus on latency or accuracy.
-         * Default to fast mode.
+         * Default to fast mode. When set to custom, custom_stt_config must be provided.
          */
-        stt_mode?: 'fast' | 'accurate';
+        stt_mode?: 'fast' | 'accurate' | 'custom';
 
         user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -652,6 +657,21 @@ export namespace BatchCallCreateBatchCallParams {
       }
 
       export namespace Agent {
+        /**
+         * Custom STT configuration. Only used when stt_mode is set to custom.
+         */
+        export interface CustomSttConfig {
+          /**
+           * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+           */
+          endpointing_ms: number;
+
+          /**
+           * The STT provider to use.
+           */
+          provider: 'azure' | 'deepgram';
+        }
+
         /**
          * Configuration for PII scrubbing from transcripts and recordings.
          */

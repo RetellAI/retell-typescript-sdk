@@ -272,6 +272,11 @@ export interface AgentResponse {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentResponse.CustomSttConfig;
+
+  /**
    * Granular setting to manage how Retell stores sensitive data (transcripts,
    * recordings, logs, etc.). This replaces the deprecated
    * `opt_out_sensitive_data_storage` field.
@@ -506,9 +511,9 @@ export interface AgentResponse {
 
   /**
    * If set, determines whether speech to text should focus on latency or accuracy.
-   * Default to fast mode.
+   * Default to fast mode. When set to custom, custom_stt_config must be provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   user_dtmf_options?: AgentResponse.UserDtmfOptions | null;
 
@@ -649,6 +654,21 @@ export namespace AgentResponse {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
   }
 
   /**
@@ -961,6 +981,11 @@ export interface AgentCreateParams {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentCreateParams.CustomSttConfig;
+
+  /**
    * Granular setting to manage how Retell stores sensitive data (transcripts,
    * recordings, logs, etc.). This replaces the deprecated
    * `opt_out_sensitive_data_storage` field.
@@ -1190,9 +1215,9 @@ export interface AgentCreateParams {
 
   /**
    * If set, determines whether speech to text should focus on latency or accuracy.
-   * Default to fast mode.
+   * Default to fast mode. When set to custom, custom_stt_config must be provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
 
@@ -1333,6 +1358,21 @@ export namespace AgentCreateParams {
      * Version of the Conversation Flow Response Engine.
      */
     version?: number | null;
+  }
+
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
   }
 
   /**
@@ -1639,6 +1679,11 @@ export interface AgentUpdateParams {
   boosted_keywords?: Array<string> | null;
 
   /**
+   * Body param: Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentUpdateParams.CustomSttConfig;
+
+  /**
    * Body param: Granular setting to manage how Retell stores sensitive data
    * (transcripts, recordings, logs, etc.). This replaces the deprecated
    * `opt_out_sensitive_data_storage` field.
@@ -1882,9 +1927,10 @@ export interface AgentUpdateParams {
 
   /**
    * Body param: If set, determines whether speech to text should focus on latency or
-   * accuracy. Default to fast mode.
+   * accuracy. Default to fast mode. When set to custom, custom_stt_config must be
+   * provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   /**
    * Body param:
@@ -1991,6 +2037,21 @@ export interface AgentUpdateParams {
 }
 
 export namespace AgentUpdateParams {
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
+  }
+
   /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
