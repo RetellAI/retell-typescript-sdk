@@ -42,6 +42,11 @@ export interface McpToolGetMcpToolsParams {
   mcp_id: string;
 
   /**
+   * The ID of the component if the MCP server is configured under a component.
+   */
+  component_id?: string;
+
+  /**
    * Optional version of the agent to use for this request. Default to latest
    * version.
    */
