@@ -176,6 +176,30 @@ export interface PhoneNumberResponse {
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty?: string;
+
+  sip_outbound_trunk_config?: PhoneNumberResponse.SipOutboundTrunkConfig | null;
+}
+
+export namespace PhoneNumberResponse {
+  export interface SipOutboundTrunkConfig {
+    /**
+     * The username used for authentication for the SIP trunk to update for the phone
+     * number.
+     */
+    auth_username?: string | null;
+
+    /**
+     * The termination uri to update for the phone number. This is used for outbound
+     * calls.
+     */
+    termination_uri?: string | null;
+
+    /**
+     * Outbound transport protocol to update for the phone number. Valid values are
+     * "TLS", "TCP" and "UDP". Default is "TCP".
+     */
+    transport?: string | null;
+  }
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
