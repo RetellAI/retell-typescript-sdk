@@ -176,6 +176,30 @@ export interface PhoneNumberResponse {
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty?: string;
+
+  sip_outbound_trunk_config?: PhoneNumberResponse.SipOutboundTrunkConfig | null;
+}
+
+export namespace PhoneNumberResponse {
+  export interface SipOutboundTrunkConfig {
+    /**
+     * The username used for authentication for the SIP trunk to update for the phone
+     * number.
+     */
+    auth_username?: string | null;
+
+    /**
+     * The termination uri to update for the phone number. This is used for outbound
+     * calls.
+     */
+    termination_uri?: string | null;
+
+    /**
+     * Outbound transport protocol to update for the phone number. Valid values are
+     * "TLS", "TCP" and "UDP". Default is "TCP".
+     */
+    transport?: string | null;
+  }
 }
 
 export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
@@ -257,9 +281,27 @@ export interface PhoneNumberCreateParams {
    * Whether to purchase a toll-free number. Toll-free numbers incur higher costs.
    */
   toll_free?: boolean;
+
+  /**
+   * Outbound transport protocol to use for the phone number. Valid values are "TLS",
+   * "TCP" and "UDP". Default is "TCP".
+   */
+  transport?: string | null;
 }
 
 export interface PhoneNumberUpdateParams {
+  /**
+   * The password used for authentication for the SIP trunk to update for the phone
+   * number.
+   */
+  auth_password?: string;
+
+  /**
+   * The username used for authentication for the SIP trunk to update for the phone
+   * number.
+   */
+  auth_username?: string;
+
   /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If set to null, this number would not accept
@@ -308,6 +350,18 @@ export interface PhoneNumberUpdateParams {
    * not set or empty, calls to all countries are allowed.
    */
   outbound_allowed_countries?: Array<string> | null;
+
+  /**
+   * The termination uri to update for the phone number. This is used for outbound
+   * calls.
+   */
+  termination_uri?: string;
+
+  /**
+   * Outbound transport protocol to update for the phone number. Valid values are
+   * "TLS", "TCP" and "UDP". Default is "TCP".
+   */
+  transport?: string | null;
 }
 
 export interface PhoneNumberImportParams {
@@ -383,6 +437,12 @@ export interface PhoneNumberImportParams {
    * The username used for authentication for the SIP trunk.
    */
   sip_trunk_auth_username?: string;
+
+  /**
+   * Outbound transport protocol to update for the phone number. Valid values are
+   * "TLS", "TCP" and "UDP". Default is "TCP".
+   */
+  transport?: string | null;
 }
 
 export declare namespace PhoneNumber {

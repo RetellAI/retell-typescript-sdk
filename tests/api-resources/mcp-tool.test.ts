@@ -27,6 +27,7 @@ describe('resource mcpTool', () => {
   test.skip('getMcpTools: required and optional params', async () => {
     const response = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {
       mcp_id: 'mcp-server-1',
+      component_id: 'component-123',
       version: 1,
     });
   });
