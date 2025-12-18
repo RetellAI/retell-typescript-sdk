@@ -245,6 +245,8 @@ export interface ChatAgentResponse {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'multi';
 
   /**
@@ -286,6 +288,7 @@ export interface ChatAgentResponse {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -565,6 +568,8 @@ export interface ChatAgentCreateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'multi';
 
   /**
@@ -606,6 +611,7 @@ export interface ChatAgentCreateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -881,6 +887,8 @@ export interface ChatAgentUpdateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'multi';
 
   /**
@@ -922,6 +930,7 @@ export interface ChatAgentUpdateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**

@@ -210,6 +210,7 @@ export interface LlmResponse {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -2187,6 +2188,7 @@ export interface LlmCreateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -4179,6 +4181,7 @@ export interface LlmUpdateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**

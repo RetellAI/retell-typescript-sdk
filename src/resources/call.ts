@@ -2675,6 +2675,8 @@ export namespace CallCreatePhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -2760,6 +2762,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -3256,7 +3259,8 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -3318,6 +3322,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -3645,6 +3650,8 @@ export namespace CallCreateWebCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -3730,6 +3737,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -4226,7 +4234,8 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -4288,6 +4297,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -4629,6 +4639,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -4714,6 +4726,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -5210,7 +5223,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -5272,6 +5286,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
