@@ -183,20 +183,18 @@ export interface PhoneNumberResponse {
 export namespace PhoneNumberResponse {
   export interface SipOutboundTrunkConfig {
     /**
-     * The username used for authentication for the SIP trunk to update for the phone
-     * number.
+     * The username used for authenticating the SIP trunk for the phone number.
      */
     auth_username?: string | null;
 
     /**
-     * The termination uri to update for the phone number. This is used for outbound
-     * calls.
+     * The termination URI for the SIP trunk for the phone number.
      */
     termination_uri?: string | null;
 
     /**
-     * Outbound transport protocol to update for the phone number. Valid values are
-     * "TLS", "TCP" and "UDP". Default is "TCP".
+     * Outbound transport protocol for the SIP trunk for the phone number. Valid values
+     * are "TLS", "TCP" and "UDP". Default is "TCP".
      */
     transport?: string | null;
   }

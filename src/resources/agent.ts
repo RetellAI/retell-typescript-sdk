@@ -379,6 +379,8 @@ export interface AgentResponse {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -464,6 +466,7 @@ export interface AgentResponse {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -1083,6 +1086,8 @@ export interface AgentCreateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1168,6 +1173,7 @@ export interface AgentCreateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -1783,6 +1789,8 @@ export interface AgentUpdateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1868,6 +1876,7 @@ export interface AgentUpdateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**

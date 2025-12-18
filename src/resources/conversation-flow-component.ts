@@ -505,7 +505,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -1062,7 +1063,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -1615,7 +1617,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -1904,7 +1907,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -2886,7 +2890,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -4602,7 +4607,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -5159,7 +5165,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -5712,7 +5719,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -6001,7 +6009,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -6983,7 +6992,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -8731,7 +8741,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -9288,7 +9299,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -9841,7 +9853,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -10130,7 +10143,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice
@@ -11112,7 +11126,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite';
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
 
       /**
        * Type of model choice

@@ -410,6 +410,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'no-NO'
           | 'sk-SK'
           | 'sv-SE'
+          | 'lt-LT'
+          | 'lv-LV'
           | 'ms-MY'
           | 'af-ZA'
           | 'ar-SA'
@@ -495,6 +497,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
           | null;
 
         /**
@@ -991,7 +994,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'claude-4.5-sonnet'
             | 'claude-4.5-haiku'
             | 'gemini-2.5-flash'
-            | 'gemini-2.5-flash-lite';
+            | 'gemini-2.5-flash-lite'
+            | 'gemini-3.0-flash';
 
           /**
            * Type of model choice
@@ -1053,6 +1057,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
           | null;
 
         /**
