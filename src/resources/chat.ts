@@ -139,9 +139,7 @@ export interface ChatResponse {
    *
    * - `ongoing`: Chat session is ongoing, chat agent can receive new message and
    *   generate response.
-   *
-   * - `ended`: Chat session has ended can not generate new response.
-   *
+   * - `ended`: Chat session has ended, and no longer can generate new response.
    * - `error`: Chat encountered error.
    */
   chat_status: 'ongoing' | 'ended' | 'error';
@@ -290,7 +288,7 @@ export namespace ChatResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
@@ -307,7 +305,7 @@ export namespace ChatResponse {
     arguments: string;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
@@ -344,12 +342,12 @@ export namespace ChatResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -366,12 +364,12 @@ export namespace ChatResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is node transition.
+     * This is a node transition.
      */
     role: 'node_transition';
 
@@ -403,12 +401,12 @@ export namespace ChatResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is state transition for .
+     * This is a state transition.
      */
     role: 'state_transition';
 
@@ -454,7 +452,7 @@ export namespace ChatCreateChatCompletionResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
@@ -471,7 +469,7 @@ export namespace ChatCreateChatCompletionResponse {
     arguments: string;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
@@ -508,12 +506,12 @@ export namespace ChatCreateChatCompletionResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -530,12 +528,12 @@ export namespace ChatCreateChatCompletionResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is node transition.
+     * This is a node transition.
      */
     role: 'node_transition';
 
@@ -567,12 +565,12 @@ export namespace ChatCreateChatCompletionResponse {
     created_timestamp: number;
 
     /**
-     * Unique id ot the message
+     * Unique id of the message
      */
     message_id: string;
 
     /**
-     * This is state transition for .
+     * This is a state transition.
      */
     role: 'state_transition';
 

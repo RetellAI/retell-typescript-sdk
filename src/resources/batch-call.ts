@@ -118,7 +118,8 @@ export interface BatchCallCreateBatchCallParams {
   name?: string;
 
   /**
-   * Reserve a portion of your org concurrency for batch processing.
+   * Number of concurrency reserved for all other calls that are not triggered by
+   * batch calls, such as inbound calls.
    */
   reserved_concurrency?: number;
 
@@ -226,24 +227,18 @@ export namespace BatchCallCreateBatchCallParams {
          *
          * - `coffee-shop`: Coffee shop ambience with people chatting in background.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-         *
          * - `convention-hall`: Convention hall ambience, with some echo and people
          *   chatting in background.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-         *
          * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-         *
          * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-         *
          * - `static-noise`: Constant static noise.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-         *
          * - `call-center`: Call center work noise.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-         *
-         * Set to `null` to remove ambient sound from this agent.
+         *   Set to `null` to remove ambient sound from this agent.
          */
         ambient_sound?:
           | 'coffee-shop'
@@ -856,7 +851,7 @@ export namespace BatchCallCreateBatchCallParams {
 
           /**
            * A single key that signals the end of DTMF input. Acceptable values include any
-           * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+           * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
            */
           termination_key?: string | null;
 
