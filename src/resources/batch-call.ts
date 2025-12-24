@@ -118,7 +118,8 @@ export interface BatchCallCreateBatchCallParams {
   name?: string;
 
   /**
-   * Reserve a portion of your org concurrency for batch processing.
+   * Number of concurrency reserved for all other calls that are not triggered by
+   * batch calls, such as inbound calls.
    */
   reserved_concurrency?: number;
 
@@ -226,24 +227,18 @@ export namespace BatchCallCreateBatchCallParams {
          *
          * - `coffee-shop`: Coffee shop ambience with people chatting in background.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-         *
          * - `convention-hall`: Convention hall ambience, with some echo and people
          *   chatting in background.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-         *
          * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-         *
          * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-         *
          * - `static-noise`: Constant static noise.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-         *
          * - `call-center`: Call center work noise.
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-         *
-         * Set to `null` to remove ambient sound from this agent.
+         *   Set to `null` to remove ambient sound from this agent.
          */
         ambient_sound?:
           | 'coffee-shop'
@@ -306,6 +301,11 @@ export namespace BatchCallCreateBatchCallParams {
          * street, etc.
          */
         boosted_keywords?: Array<string> | null;
+
+        /**
+         * Custom STT configuration. Only used when stt_mode is set to custom.
+         */
+        custom_stt_config?: Agent.CustomSttConfig;
 
         /**
          * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -405,6 +405,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'no-NO'
           | 'sk-SK'
           | 'sv-SE'
+          | 'lt-LT'
+          | 'lv-LV'
           | 'ms-MY'
           | 'af-ZA'
           | 'ar-SA'
@@ -490,6 +492,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
           | null;
 
         /**
@@ -547,9 +550,9 @@ export namespace BatchCallCreateBatchCallParams {
 
         /**
          * If set, determines whether speech to text should focus on latency or accuracy.
-         * Default to fast mode.
+         * Default to fast mode. When set to custom, custom_stt_config must be provided.
          */
-        stt_mode?: 'fast' | 'accurate';
+        stt_mode?: 'fast' | 'accurate' | 'custom';
 
         user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -652,6 +655,21 @@ export namespace BatchCallCreateBatchCallParams {
       }
 
       export namespace Agent {
+        /**
+         * Custom STT configuration. Only used when stt_mode is set to custom.
+         */
+        export interface CustomSttConfig {
+          /**
+           * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+           */
+          endpointing_ms: number;
+
+          /**
+           * The STT provider to use.
+           */
+          provider: 'azure' | 'deepgram';
+        }
+
         /**
          * Configuration for PII scrubbing from transcripts and recordings.
          */
@@ -833,7 +851,7 @@ export namespace BatchCallCreateBatchCallParams {
 
           /**
            * A single key that signals the end of DTMF input. Acceptable values include any
-           * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+           * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
            */
           termination_key?: string | null;
 
@@ -971,7 +989,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'claude-4.5-sonnet'
             | 'claude-4.5-haiku'
             | 'gemini-2.5-flash'
-            | 'gemini-2.5-flash-lite';
+            | 'gemini-2.5-flash-lite'
+            | 'gemini-3.0-flash';
 
           /**
            * Type of model choice
@@ -1033,6 +1052,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
           | null;
 
         /**

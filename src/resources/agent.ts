@@ -190,24 +190,18 @@ export interface AgentResponse {
    *
    * - `coffee-shop`: Coffee shop ambience with people chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-   *
    * - `convention-hall`: Convention hall ambience, with some echo and people
    *   chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-   *
    * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-   *
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-   *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *
    * - `call-center`: Call center work noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-   *
-   * Set to `null` to remove ambient sound from this agent.
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
@@ -270,6 +264,11 @@ export interface AgentResponse {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentResponse.CustomSttConfig;
 
   /**
    * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -374,6 +373,8 @@ export interface AgentResponse {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -459,6 +460,7 @@ export interface AgentResponse {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -506,9 +508,9 @@ export interface AgentResponse {
 
   /**
    * If set, determines whether speech to text should focus on latency or accuracy.
-   * Default to fast mode.
+   * Default to fast mode. When set to custom, custom_stt_config must be provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   user_dtmf_options?: AgentResponse.UserDtmfOptions | null;
 
@@ -652,6 +654,21 @@ export namespace AgentResponse {
   }
 
   /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -786,7 +803,7 @@ export namespace AgentResponse {
 
     /**
      * A single key that signals the end of DTMF input. Acceptable values include any
-     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
      */
     termination_key?: string | null;
 
@@ -879,24 +896,18 @@ export interface AgentCreateParams {
    *
    * - `coffee-shop`: Coffee shop ambience with people chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-   *
    * - `convention-hall`: Convention hall ambience, with some echo and people
    *   chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-   *
    * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-   *
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-   *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *
    * - `call-center`: Call center work noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-   *
-   * Set to `null` to remove ambient sound from this agent.
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
@@ -959,6 +970,11 @@ export interface AgentCreateParams {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentCreateParams.CustomSttConfig;
 
   /**
    * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -1058,6 +1074,8 @@ export interface AgentCreateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1143,6 +1161,7 @@ export interface AgentCreateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -1190,9 +1209,9 @@ export interface AgentCreateParams {
 
   /**
    * If set, determines whether speech to text should focus on latency or accuracy.
-   * Default to fast mode.
+   * Default to fast mode. When set to custom, custom_stt_config must be provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   user_dtmf_options?: AgentCreateParams.UserDtmfOptions | null;
 
@@ -1336,6 +1355,21 @@ export namespace AgentCreateParams {
   }
 
   /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -1470,7 +1504,7 @@ export namespace AgentCreateParams {
 
     /**
      * A single key that signals the end of DTMF input. Acceptable values include any
-     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
      */
     termination_key?: string | null;
 
@@ -1557,24 +1591,18 @@ export interface AgentUpdateParams {
    *
    * - `coffee-shop`: Coffee shop ambience with people chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-   *
    * - `convention-hall`: Convention hall ambience, with some echo and people
    *   chatting in background.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-   *
    * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-   *
    * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-   *
    * - `static-noise`: Constant static noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-   *
    * - `call-center`: Call center work noise.
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-   *
-   * Set to `null` to remove ambient sound from this agent.
+   *   Set to `null` to remove ambient sound from this agent.
    */
   ambient_sound?:
     | 'coffee-shop'
@@ -1637,6 +1665,11 @@ export interface AgentUpdateParams {
    * brands, street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Body param: Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  custom_stt_config?: AgentUpdateParams.CustomSttConfig;
 
   /**
    * Body param: Granular setting to manage how Retell stores sensitive data
@@ -1738,6 +1771,8 @@ export interface AgentUpdateParams {
     | 'no-NO'
     | 'sk-SK'
     | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1823,6 +1858,7 @@ export interface AgentUpdateParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
     | null;
 
   /**
@@ -1882,9 +1918,10 @@ export interface AgentUpdateParams {
 
   /**
    * Body param: If set, determines whether speech to text should focus on latency or
-   * accuracy. Default to fast mode.
+   * accuracy. Default to fast mode. When set to custom, custom_stt_config must be
+   * provided.
    */
-  stt_mode?: 'fast' | 'accurate';
+  stt_mode?: 'fast' | 'accurate' | 'custom';
 
   /**
    * Body param:
@@ -1991,6 +2028,21 @@ export interface AgentUpdateParams {
 }
 
 export namespace AgentUpdateParams {
+  /**
+   * Custom STT configuration. Only used when stt_mode is set to custom.
+   */
+  export interface CustomSttConfig {
+    /**
+     * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+     */
+    endpointing_ms: number;
+
+    /**
+     * The STT provider to use.
+     */
+    provider: 'azure' | 'deepgram';
+  }
+
   /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
@@ -2172,7 +2224,7 @@ export namespace AgentUpdateParams {
 
     /**
      * A single key that signals the end of DTMF input. Acceptable values include any
-     * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+     * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
      */
     termination_key?: string | null;
 

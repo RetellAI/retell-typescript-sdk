@@ -142,8 +142,8 @@ export interface PhoneCallResponse {
   agent_version: number;
 
   /**
-   * Unique id of the call. Used to identify in LLM websocket and used to
-   * authenticate in audio websocket.
+   * Unique id of the call. Used to identify the call in the LLM websocket and used
+   * to authenticate in the audio websocket.
    */
   call_id: string;
 
@@ -151,12 +151,9 @@ export interface PhoneCallResponse {
    * Status of call.
    *
    * - `registered`: Call id issued, starting to make a call using this id.
-   *
    * - `ongoing`: Call connected and ongoing.
-   *
    * - `ended`: The underlying websocket has ended for the call. Either user or agent
-   *   hanged up, or call transferred.
-   *
+   *   hung up, or call transferred.
    * - `error`: Call encountered error.
    */
   call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
@@ -941,7 +938,7 @@ export namespace PhoneCallResponse {
     content: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -986,7 +983,7 @@ export namespace PhoneCallResponse {
     digit: string;
 
     /**
-     * This is user pressed digit from their phone keypad.
+     * Digit pressed by the user from their phone keypad.
      */
     role: 'dtmf';
   }
@@ -1111,7 +1108,7 @@ export namespace PhoneCallResponse {
     content: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -1156,7 +1153,7 @@ export namespace PhoneCallResponse {
     digit: string;
 
     /**
-     * This is user pressed digit from their phone keypad.
+     * Digit pressed by the user from their phone keypad.
      */
     role: 'dtmf';
   }
@@ -1180,8 +1177,8 @@ export interface WebCallResponse {
   agent_version: number;
 
   /**
-   * Unique id of the call. Used to identify in LLM websocket and used to
-   * authenticate in audio websocket.
+   * Unique id of the call. Used to identify the call in the LLM websocket and used
+   * to authenticate in the audio websocket.
    */
   call_id: string;
 
@@ -1189,12 +1186,9 @@ export interface WebCallResponse {
    * Status of call.
    *
    * - `registered`: Call id issued, starting to make a call using this id.
-   *
    * - `ongoing`: Call connected and ongoing.
-   *
    * - `ended`: The underlying websocket has ended for the call. Either user or agent
-   *   hanged up, or call transferred.
-   *
+   *   hung up, or call transferred.
    * - `error`: Call encountered error.
    */
   call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
@@ -1958,7 +1952,7 @@ export namespace WebCallResponse {
     content: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -2003,7 +1997,7 @@ export namespace WebCallResponse {
     digit: string;
 
     /**
-     * This is user pressed digit from their phone keypad.
+     * Digit pressed by the user from their phone keypad.
      */
     role: 'dtmf';
   }
@@ -2117,7 +2111,7 @@ export namespace WebCallResponse {
     content: string;
 
     /**
-     * This is result of a tool call.
+     * This is the result of a tool call.
      */
     role: 'tool_call_result';
 
@@ -2162,7 +2156,7 @@ export namespace WebCallResponse {
     digit: string;
 
     /**
-     * This is user pressed digit from their phone keypad.
+     * Digit pressed by the user from their phone keypad.
      */
     role: 'dtmf';
   }
@@ -2491,24 +2485,18 @@ export namespace CallCreatePhoneCallParams {
        *
        * - `coffee-shop`: Coffee shop ambience with people chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-       *
        * - `convention-hall`: Convention hall ambience, with some echo and people
        *   chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-       *
        * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-       *
        * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-       *
        * - `static-noise`: Constant static noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-       *
        * - `call-center`: Call center work noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-       *
-       * Set to `null` to remove ambient sound from this agent.
+       *   Set to `null` to remove ambient sound from this agent.
        */
       ambient_sound?:
         | 'coffee-shop'
@@ -2571,6 +2559,11 @@ export namespace CallCreatePhoneCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      custom_stt_config?: Agent.CustomSttConfig;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -2670,6 +2663,8 @@ export namespace CallCreatePhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -2755,6 +2750,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -2812,9 +2808,9 @@ export namespace CallCreatePhoneCallParams {
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
-       * Default to fast mode.
+       * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
-      stt_mode?: 'fast' | 'accurate';
+      stt_mode?: 'fast' | 'accurate' | 'custom';
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -2917,6 +2913,21 @@ export namespace CallCreatePhoneCallParams {
     }
 
     export namespace Agent {
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         */
+        endpointing_ms: number;
+
+        /**
+         * The STT provider to use.
+         */
+        provider: 'azure' | 'deepgram';
+      }
+
       /**
        * Configuration for PII scrubbing from transcripts and recordings.
        */
@@ -3098,7 +3109,7 @@ export namespace CallCreatePhoneCallParams {
 
         /**
          * A single key that signals the end of DTMF input. Acceptable values include any
-         * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+         * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
          */
         termination_key?: string | null;
 
@@ -3236,7 +3247,8 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -3298,6 +3310,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -3441,24 +3454,18 @@ export namespace CallCreateWebCallParams {
        *
        * - `coffee-shop`: Coffee shop ambience with people chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-       *
        * - `convention-hall`: Convention hall ambience, with some echo and people
        *   chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-       *
        * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-       *
        * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-       *
        * - `static-noise`: Constant static noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-       *
        * - `call-center`: Call center work noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-       *
-       * Set to `null` to remove ambient sound from this agent.
+       *   Set to `null` to remove ambient sound from this agent.
        */
       ambient_sound?:
         | 'coffee-shop'
@@ -3521,6 +3528,11 @@ export namespace CallCreateWebCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      custom_stt_config?: Agent.CustomSttConfig;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -3620,6 +3632,8 @@ export namespace CallCreateWebCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -3705,6 +3719,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -3762,9 +3777,9 @@ export namespace CallCreateWebCallParams {
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
-       * Default to fast mode.
+       * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
-      stt_mode?: 'fast' | 'accurate';
+      stt_mode?: 'fast' | 'accurate' | 'custom';
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -3867,6 +3882,21 @@ export namespace CallCreateWebCallParams {
     }
 
     export namespace Agent {
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         */
+        endpointing_ms: number;
+
+        /**
+         * The STT provider to use.
+         */
+        provider: 'azure' | 'deepgram';
+      }
+
       /**
        * Configuration for PII scrubbing from transcripts and recordings.
        */
@@ -4048,7 +4078,7 @@ export namespace CallCreateWebCallParams {
 
         /**
          * A single key that signals the end of DTMF input. Acceptable values include any
-         * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+         * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
          */
         termination_key?: string | null;
 
@@ -4186,7 +4216,8 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -4248,6 +4279,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -4405,24 +4437,18 @@ export namespace CallRegisterPhoneCallParams {
        *
        * - `coffee-shop`: Coffee shop ambience with people chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)
-       *
        * - `convention-hall`: Convention hall ambience, with some echo and people
        *   chatting in background.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)
-       *
        * - `summer-outdoor`: Summer outdoor ambience with cicada chirping.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)
-       *
        * - `mountain-outdoor`: Mountain outdoor ambience with birds singing.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)
-       *
        * - `static-noise`: Constant static noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)
-       *
        * - `call-center`: Call center work noise.
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
-       *
-       * Set to `null` to remove ambient sound from this agent.
+       *   Set to `null` to remove ambient sound from this agent.
        */
       ambient_sound?:
         | 'coffee-shop'
@@ -4485,6 +4511,11 @@ export namespace CallRegisterPhoneCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      custom_stt_config?: Agent.CustomSttConfig;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -4584,6 +4615,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'no-NO'
         | 'sk-SK'
         | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -4669,6 +4702,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
@@ -4726,9 +4760,9 @@ export namespace CallRegisterPhoneCallParams {
 
       /**
        * If set, determines whether speech to text should focus on latency or accuracy.
-       * Default to fast mode.
+       * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
-      stt_mode?: 'fast' | 'accurate';
+      stt_mode?: 'fast' | 'accurate' | 'custom';
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -4831,6 +4865,21 @@ export namespace CallRegisterPhoneCallParams {
     }
 
     export namespace Agent {
+      /**
+       * Custom STT configuration. Only used when stt_mode is set to custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         */
+        endpointing_ms: number;
+
+        /**
+         * The STT provider to use.
+         */
+        provider: 'azure' | 'deepgram';
+      }
+
       /**
        * Configuration for PII scrubbing from transcripts and recordings.
        */
@@ -5012,7 +5061,7 @@ export namespace CallRegisterPhoneCallParams {
 
         /**
          * A single key that signals the end of DTMF input. Acceptable values include any
-         * digit (0–9), the pound/hash symbol (#), or the asterisk (\*).
+         * digit (0-9), the pound/hash symbol (#), or the asterisk (\*).
          */
         termination_key?: string | null;
 
@@ -5150,7 +5199,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite';
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
 
         /**
          * Type of model choice
@@ -5212,6 +5262,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
         | null;
 
       /**
