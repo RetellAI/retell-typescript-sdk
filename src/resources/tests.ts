@@ -124,7 +124,8 @@ export interface TestCreateBatchTestParams {
   test_case_definition_ids: Array<string>;
 
   /**
-   * Reserve a portion of your org concurrency for batch processing.
+   * Number of concurrency reserved for all other calls that are not triggered by
+   * batch calls, such as inbound calls.
    */
   reserved_concurrency?: number;
 }
