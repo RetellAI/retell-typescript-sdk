@@ -114,11 +114,7 @@ export class Call extends APIResource {
     body: CallCreateWebCallParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<WebCallResponse> {
-    return this._client.post('/v2/create-web-call', {
-      body,
-      timeout: (this._client as any)._options.timeout ?? 120000,
-      ...options,
-    });
+    return this._client.post('/v2/create-web-call', { body, ...options });
   }
 
   /**
