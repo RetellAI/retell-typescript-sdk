@@ -17,6 +17,20 @@ export class Voice extends APIResource {
   list(options?: Core.RequestOptions): Core.APIPromise<VoiceListResponse> {
     return this._client.get('/list-voices', options);
   }
+
+  /**
+   * Clone a voice from audio files
+   */
+  addSources(body: VoiceAddSourcesParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
+    return this._client.post('/clone-voice', Core.multipartFormRequestOptions({ body, ...options }));
+  }
+
+  /**
+   * Search for community voices from voice providers
+   */
+  search(body: VoiceSearchParams, options?: Core.RequestOptions): Core.APIPromise<VoiceSearchResponse> {
+    return this._client.post('/search-community-voice', { body, ...options });
+  }
 }
 
 export interface VoiceResponse {
@@ -58,6 +72,73 @@ export interface VoiceResponse {
 
 export type VoiceListResponse = Array<VoiceResponse>;
 
+export interface VoiceSearchResponse {
+  voices: Array<VoiceSearchResponse.Voice>;
+}
+
+export namespace VoiceSearchResponse {
+  /**
+   * Voices retrieved from the provider.
+   */
+  export interface Voice {
+    /**
+     * Description of the voice.
+     */
+    description?: string;
+
+    /**
+     * Name of the voice.
+     */
+    name?: string;
+
+    /**
+     * id of the voice from the provider.
+     */
+    provider_voice_id?: string;
+
+    /**
+     * For elevenlabs only. User id of the voice owner.
+     */
+    public_user_id?: string;
+  }
+}
+
+export interface VoiceAddSourcesParams {
+  /**
+   * Audio files to use for voice cloning. Up to 25 files allowed. For Cartesia and
+   * MiniMax, only 1 file is supported.
+   */
+  files: Array<Core.Uploadable>;
+
+  /**
+   * Name for the cloned voice
+   */
+  voice_name: string;
+
+  /**
+   * Voice provider to use for cloning. Defaults to elevenlabs.
+   */
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+}
+
+export interface VoiceSearchParams {
+  /**
+   * Search query to find voices by name, description, or ID.
+   */
+  search_query: string;
+
+  /**
+   * Voice provider to search.
+   */
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+}
+
 export declare namespace Voice {
-  export { type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
+  export {
+    type VoiceResponse as VoiceResponse,
+    type VoiceListResponse as VoiceListResponse,
+    type VoiceSearchResponse as VoiceSearchResponse,
+    type VoiceAddSourcesParams as VoiceAddSourcesParams,
+    type VoiceSearchParams as VoiceSearchParams,
+  };
 }

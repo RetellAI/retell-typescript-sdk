@@ -96,7 +96,14 @@ import {
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
 import { BatchTestResponse, TestCreateBatchTestParams, Tests } from './resources/tests';
-import { Voice, VoiceListResponse, VoiceResponse } from './resources/voice';
+import {
+  Voice,
+  VoiceAddSourcesParams,
+  VoiceListResponse,
+  VoiceResponse,
+  VoiceSearchParams,
+  VoiceSearchResponse,
+} from './resources/voice';
 import * as Webhooks from 'retell-sdk/lib/webhook_auth';
 
 export interface ClientOptions {
@@ -378,7 +385,14 @@ export declare namespace Retell {
     type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
   };
 
-  export { Voice as Voice, type VoiceResponse as VoiceResponse, type VoiceListResponse as VoiceListResponse };
+  export {
+    Voice as Voice,
+    type VoiceResponse as VoiceResponse,
+    type VoiceListResponse as VoiceListResponse,
+    type VoiceSearchResponse as VoiceSearchResponse,
+    type VoiceAddSourcesParams as VoiceAddSourcesParams,
+    type VoiceSearchParams as VoiceSearchParams,
+  };
 
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 
