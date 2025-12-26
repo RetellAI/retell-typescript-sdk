@@ -19,9 +19,16 @@ export class Voice extends APIResource {
   }
 
   /**
+   * Add a community voice to the voice library
+   */
+  addResource(body: VoiceAddResourceParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
+    return this._client.post('/add-community-voice', { body, ...options });
+  }
+
+  /**
    * Clone a voice from audio files
    */
-  addSources(body: VoiceAddSourcesParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
+  clone(body: VoiceCloneParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
     return this._client.post('/clone-voice', Core.multipartFormRequestOptions({ body, ...options }));
   }
 
@@ -103,7 +110,29 @@ export namespace VoiceSearchResponse {
   }
 }
 
-export interface VoiceAddSourcesParams {
+export interface VoiceAddResourceParams {
+  /**
+   * Voice id assigned by the provider.
+   */
+  provider_voice_id: string;
+
+  /**
+   * A custom name for the voice.
+   */
+  voice_name: string;
+
+  /**
+   * Required for ElevenLabs only. User id of the voice owner.
+   */
+  public_user_id?: string;
+
+  /**
+   * Voice provider to add the voice from.
+   */
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+}
+
+export interface VoiceCloneParams {
   /**
    * Audio files to use for voice cloning. Up to 25 files allowed. For Cartesia and
    * MiniMax, only 1 file is supported.
@@ -138,7 +167,8 @@ export declare namespace Voice {
     type VoiceResponse as VoiceResponse,
     type VoiceListResponse as VoiceListResponse,
     type VoiceSearchResponse as VoiceSearchResponse,
-    type VoiceAddSourcesParams as VoiceAddSourcesParams,
+    type VoiceAddResourceParams as VoiceAddResourceParams,
+    type VoiceCloneParams as VoiceCloneParams,
     type VoiceSearchParams as VoiceSearchParams,
   };
 }
