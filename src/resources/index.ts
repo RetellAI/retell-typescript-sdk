@@ -96,6 +96,7 @@ export {
   type VoiceResponse,
   type VoiceListResponse,
   type VoiceSearchResponse,
-  type VoiceAddSourcesParams,
+  type VoiceAddResourceParams,
+  type VoiceCloneParams,
   type VoiceSearchParams,
 } from './voice';

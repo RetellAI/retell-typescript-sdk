@@ -98,7 +98,8 @@ import {
 import { BatchTestResponse, TestCreateBatchTestParams, Tests } from './resources/tests';
 import {
   Voice,
-  VoiceAddSourcesParams,
+  VoiceAddResourceParams,
+  VoiceCloneParams,
   VoiceListResponse,
   VoiceResponse,
   VoiceSearchParams,
@@ -390,7 +391,8 @@ export declare namespace Retell {
     type VoiceResponse as VoiceResponse,
     type VoiceListResponse as VoiceListResponse,
     type VoiceSearchResponse as VoiceSearchResponse,
-    type VoiceAddSourcesParams as VoiceAddSourcesParams,
+    type VoiceAddResourceParams as VoiceAddResourceParams,
+    type VoiceCloneParams as VoiceCloneParams,
     type VoiceSearchParams as VoiceSearchParams,
   };
 
