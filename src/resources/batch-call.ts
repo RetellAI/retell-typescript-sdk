@@ -20,7 +20,11 @@ export class BatchCall extends APIResource {
     body: BatchCallCreateBatchCallParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<BatchCallResponse> {
-    return this._client.post('/create-batch-call', { body, ...options });
+    return this._client.post('/create-batch-call', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 }
 
