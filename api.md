@@ -154,11 +154,14 @@ Types:
 
 - <code><a href="./src/resources/voice.ts">VoiceResponse</a></code>
 - <code><a href="./src/resources/voice.ts">VoiceListResponse</a></code>
+- <code><a href="./src/resources/voice.ts">VoiceSearchResponse</a></code>
 
 Methods:
 
 - <code title="get /get-voice/{voice_id}">client.voice.<a href="./src/resources/voice.ts">retrieve</a>(voiceId) -> VoiceResponse</code>
 - <code title="get /list-voices">client.voice.<a href="./src/resources/voice.ts">list</a>() -> VoiceListResponse</code>
+- <code title="post /clone-voice">client.voice.<a href="./src/resources/voice.ts">addSources</a>({ ...params }) -> VoiceResponse</code>
+- <code title="post /search-community-voice">client.voice.<a href="./src/resources/voice.ts">search</a>({ ...params }) -> VoiceSearchResponse</code>
 
 # Concurrency
 
