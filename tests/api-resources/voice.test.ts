@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Retell from 'retell-sdk';
+import Retell, { toFile } from 'retell-sdk';
 import { Response } from 'node-fetch';
 
 const client = new Retell({
@@ -47,5 +47,49 @@ describe('resource voice', () => {
     await expect(client.voice.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Retell.NotFoundError,
     );
+  });
+
+  // Prism tests are disabled
+  test.skip('addSources: only required params', async () => {
+    const responsePromise = client.voice.addSources({
+      files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      voice_name: 'x',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('addSources: required and optional params', async () => {
+    const response = await client.voice.addSources({
+      files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      voice_name: 'x',
+      voice_provider: 'elevenlabs',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('search: only required params', async () => {
+    const responsePromise = client.voice.search({ search_query: 'search_query' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('search: required and optional params', async () => {
+    const response = await client.voice.search({
+      search_query: 'search_query',
+      voice_provider: 'elevenlabs',
+    });
   });
 });
