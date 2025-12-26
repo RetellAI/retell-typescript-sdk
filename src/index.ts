@@ -174,7 +174,7 @@ export class Retell extends Core.APIClient {
    *
    * @param {string} opts.apiKey
    * @param {string} [opts.baseURL=process.env['RETELL_BASE_URL'] ?? https://api.retellai.com] - Override the default base URL for the API.
-   * @param {number} [opts.timeout=2 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
    * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
@@ -197,7 +197,7 @@ export class Retell extends Core.APIClient {
     super({
       baseURL: options.baseURL!,
       baseURLOverridden: baseURL ? baseURL !== 'https://api.retellai.com' : false,
-      timeout: options.timeout ?? 120000 /* 2 minutes */,
+      timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
       fetch: options.fetch,
@@ -246,7 +246,7 @@ export class Retell extends Core.APIClient {
   }
 
   static Retell = this;
-  static DEFAULT_TIMEOUT = 120000; // 2 minutes
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
   static RetellError = Errors.RetellError;
   static APIError = Errors.APIError;

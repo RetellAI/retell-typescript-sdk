@@ -52,7 +52,11 @@ export class Call extends APIResource {
    * ```
    */
   list(body: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
-    return this._client.post('/v2/list-calls', { body, ...options });
+    return this._client.post('/v2/list-calls', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 
   /**
@@ -89,7 +93,11 @@ export class Call extends APIResource {
     body: CallCreatePhoneCallParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<PhoneCallResponse> {
-    return this._client.post('/v2/create-phone-call', { body, ...options });
+    return this._client.post('/v2/create-phone-call', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 120000,
+      ...options,
+    });
   }
 
   /**
@@ -106,7 +114,11 @@ export class Call extends APIResource {
     body: CallCreateWebCallParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<WebCallResponse> {
-    return this._client.post('/v2/create-web-call', { body, ...options });
+    return this._client.post('/v2/create-web-call', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 120000,
+      ...options,
+    });
   }
 
   /**

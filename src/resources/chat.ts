@@ -69,7 +69,10 @@ export class Chat extends APIResource {
    * ```
    */
   list(options?: Core.RequestOptions): Core.APIPromise<ChatListResponse> {
-    return this._client.get('/list-chat', options);
+    return this._client.get('/list-chat', {
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 
   /**
@@ -87,7 +90,11 @@ export class Chat extends APIResource {
     body: ChatCreateChatCompletionParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<ChatCreateChatCompletionResponse> {
-    return this._client.post('/create-chat-completion', { body, ...options });
+    return this._client.post('/create-chat-completion', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 
   /**
