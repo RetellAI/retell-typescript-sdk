@@ -34,6 +34,7 @@ import {
   ChatCreateChatCompletionResponse,
   ChatCreateParams,
   ChatCreateSMSChatParams,
+  ChatListParams,
   ChatListResponse,
   ChatResponse,
   ChatUpdateParams,
@@ -315,6 +316,7 @@ export declare namespace Retell {
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
     type ChatUpdateParams as ChatUpdateParams,
+    type ChatListParams as ChatListParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
   };
