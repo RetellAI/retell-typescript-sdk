@@ -84,6 +84,17 @@ describe('resource chat', () => {
   });
 
   // Prism tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.chat.list(
+        { limit: 1000, pagination_key: 'pagination_key', sort_order: 'ascending' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('createChatCompletion: only required params', async () => {
     const responsePromise = client.chat.createChatCompletion({
       chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
