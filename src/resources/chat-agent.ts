@@ -199,6 +199,12 @@ export interface ChatAgentResponse {
   end_chat_after_silence_ms?: number;
 
   /**
+   * Whether the agent is public. When set to true, the agent is available for public
+   * agent preview link.
+   */
+  is_public?: boolean | null;
+
+  /**
    * Whether the chat agent is published.
    */
   is_published?: boolean;
@@ -527,6 +533,12 @@ export interface ChatAgentCreateParams {
   end_chat_after_silence_ms?: number;
 
   /**
+   * Whether the agent is public. When set to true, the agent is available for public
+   * agent preview link.
+   */
+  is_public?: boolean | null;
+
+  /**
    * Specifies what language (and dialect) the chat will operate in. For instance,
    * selecting `en-GB` optimizes for British English. If unset, will use default
    * value `en-US`. Select `multi` for multilingual support, currently this supports
@@ -844,6 +856,12 @@ export interface ChatAgentUpdateParams {
    * is 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
   end_chat_after_silence_ms?: number;
+
+  /**
+   * Body param: Whether the agent is public. When set to true, the agent is
+   * available for public agent preview link.
+   */
+  is_public?: boolean | null;
 
   /**
    * Body param: Specifies what language (and dialect) the chat will operate in. For

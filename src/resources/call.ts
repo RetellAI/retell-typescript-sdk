@@ -937,6 +937,12 @@ export namespace PhoneCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1107,6 +1113,12 @@ export namespace PhoneCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1951,6 +1963,12 @@ export namespace WebCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -2110,6 +2128,12 @@ export namespace WebCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -2628,6 +2652,12 @@ export namespace CallCreatePhoneCallParams {
        * interrupted.
        */
       interruption_sensitivity?: number;
+
+      /**
+       * Whether the agent is public. When set to true, the agent is available for public
+       * agent preview link.
+       */
+      is_public?: boolean | null;
 
       /**
        * Specifies what language (and dialect) the speech recognition will operate in.
@@ -3597,6 +3627,12 @@ export namespace CallCreateWebCallParams {
        * interrupted.
        */
       interruption_sensitivity?: number;
+
+      /**
+       * Whether the agent is public. When set to true, the agent is available for public
+       * agent preview link.
+       */
+      is_public?: boolean | null;
 
       /**
        * Specifies what language (and dialect) the speech recognition will operate in.
@@ -4580,6 +4616,12 @@ export namespace CallRegisterPhoneCallParams {
        * interrupted.
        */
       interruption_sensitivity?: number;
+
+      /**
+       * Whether the agent is public. When set to true, the agent is available for public
+       * agent preview link.
+       */
+      is_public?: boolean | null;
 
       /**
        * Specifies what language (and dialect) the speech recognition will operate in.

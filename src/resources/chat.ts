@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import { isRequestOptions } from '../core';
 import * as Core from '../core';
 
 export class Chat extends APIResource {
@@ -68,8 +69,17 @@ export class Chat extends APIResource {
    * const chatResponses = await client.chat.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<ChatListResponse> {
+  list(query?: ChatListParams, options?: Core.RequestOptions): Core.APIPromise<ChatListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<ChatListResponse>;
+  list(
+    query: ChatListParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ChatListResponse> {
+    if (isRequestOptions(query)) {
+      return this.list({}, query);
+    }
     return this._client.get('/list-chat', {
+      query,
       timeout: (this._client as any)._options.timeout ?? 300000,
       ...options,
     });
@@ -335,6 +345,12 @@ export namespace ChatResponse {
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultMessage {
@@ -499,6 +515,12 @@ export namespace ChatCreateChatCompletionResponse {
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
   }
 
   export interface ToolCallResultMessage {
@@ -650,6 +672,28 @@ export interface ChatUpdateParams {
   override_dynamic_variables?: { [key: string]: string } | null;
 }
 
+export interface ChatListParams {
+  /**
+   * Limit the number of chats returned. Default 50, Max 1000. To retrieve more than
+   * 1000, use pagination_key to continue fetching the next page.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of chats. Pagination key
+   * is represented by a chat id here, and it's exclusive (not included in the
+   * fetched chats). The last chat id from the list chats is usually used as
+   * pagination key here. If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * The chats will be sorted by `start_timestamp`, whether to return the chats in
+   * ascending or descending order.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export interface ChatCreateChatCompletionParams {
   /**
    * Unique id of the chat to create completion.
@@ -709,6 +753,7 @@ export declare namespace Chat {
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
     type ChatUpdateParams as ChatUpdateParams,
+    type ChatListParams as ChatListParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
   };

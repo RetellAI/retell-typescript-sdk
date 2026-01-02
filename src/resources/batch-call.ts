@@ -368,6 +368,12 @@ export namespace BatchCallCreateBatchCallParams {
         interruption_sensitivity?: number;
 
         /**
+         * Whether the agent is public. When set to true, the agent is available for public
+         * agent preview link.
+         */
+        is_public?: boolean | null;
+
+        /**
          * Specifies what language (and dialect) the speech recognition will operate in.
          * For instance, selecting `en-GB` optimizes speech recognition for British
          * English. If unset, will use default value `en-US`. Select `multi` for
