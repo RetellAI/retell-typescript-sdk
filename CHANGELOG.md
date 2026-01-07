@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.73.0 (2026-01-07)
+
+Full Changelog: [v4.72.0...v4.73.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.72.0...v4.73.0)
+
+### Features
+
+* **api:** api update ([b79d975](https://github.com/RetellAI/retell-typescript-sdk/commit/b79d9756a14a3e96ad34424235678dd027e440c3))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([7b3fb89](https://github.com/RetellAI/retell-typescript-sdk/commit/7b3fb895144e2ab9764d002ef4fccbddaec3d28f))
+
 ## 4.72.0 (2026-01-02)
 
 Full Changelog: [v4.71.0...v4.72.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.71.0...v4.72.0)
