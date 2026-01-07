@@ -158,6 +158,13 @@ export namespace BatchCallCreateBatchCallParams {
     ignore_e164_validation?: boolean;
 
     /**
+     * An arbitrary object for storage purpose only. You can put anything here like
+     * your internal customer id associated with the chat. Not used for processing. You
+     * can later get this field from the call object.
+     */
+    metadata?: unknown;
+
+    /**
      * For this particular call, override the agent used with this agent id. This does
      * not bind the agent to this number, this is for one time override.
      */
@@ -598,6 +605,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'eleven_multilingual_v2'
           | 'sonic-2'
           | 'sonic-3'
+          | 'sonic-3-latest'
           | 'sonic-turbo'
           | 'tts-1'
           | 'gpt-4o-mini-tts'

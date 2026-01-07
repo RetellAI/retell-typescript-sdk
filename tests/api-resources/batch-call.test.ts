@@ -132,6 +132,7 @@ describe('resource batchCall', () => {
             },
           },
           ignore_e164_validation: false,
+          metadata: {},
           override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
           override_agent_version: 1,
           retell_llm_dynamic_variables: { customer_name: 'bar' },
