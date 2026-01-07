@@ -106,7 +106,10 @@ const client = new Retell({
 });
 
 // Or, configure per-request:
-await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
+await client.agent.create({
+  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+  voice_id: '11labs-Adrian',
+}, {
   maxRetries: 5,
 });
 ```
@@ -123,7 +126,10 @@ const client = new Retell({
 });
 
 // Override per-request:
-await client.agent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' }, {
+await client.agent.create({
+  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+  voice_id: '11labs-Adrian',
+}, {
   timeout: 5 * 1000,
 });
 ```
@@ -265,7 +271,10 @@ const client = new Retell({
 
 // Override per-request:
 await client.agent.create(
-  { response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' }, voice_id: '11labs-Adrian' },
+  {
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: '11labs-Adrian',
+  },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
