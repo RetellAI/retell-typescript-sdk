@@ -62,7 +62,11 @@ describe('resource conversationFlowComponent', () => {
           },
           interruption_sensitivity: 0,
           knowledge_base_ids: ['kb_001', 'kb_002'],
-          model_choice: { model: 'gpt-4.1', type: 'cascading', high_priority: true },
+          model_choice: {
+            model: 'gpt-4.1',
+            type: 'cascading',
+            high_priority: true,
+          },
           name: 'name',
           skip_response_edge: {
             id: 'id',
@@ -91,7 +95,11 @@ describe('resource conversationFlowComponent', () => {
           description: 'Get customer information from database',
           headers: { foo: 'string' },
           method: 'GET',
-          parameters: { properties: { foo: 'bar' }, type: 'object', required: ['string'] },
+          parameters: {
+            properties: { foo: 'bar' },
+            type: 'object',
+            required: ['string'],
+          },
           query_params: { foo: 'string' },
           response_variables: { foo: 'string' },
           timeout_ms: 1000,

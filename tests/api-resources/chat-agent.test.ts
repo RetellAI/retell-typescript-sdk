@@ -26,7 +26,11 @@ describe('resource chatAgent', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.chatAgent.create({
-      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm', version: 0 },
+      response_engine: {
+        llm_id: 'llm_234sdertfsdsfsdf',
+        type: 'retell-llm',
+        version: 0,
+      },
       agent_name: 'Jarvis',
       analysis_successful_prompt:
         'The agent finished the task and the call was complete without being cutoff.',
@@ -122,7 +126,11 @@ describe('resource chatAgent', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.chatAgent.list(
-        { limit: 50, pagination_key: '16b980523634a6dc504898cda492e939', pagination_key_version: 0 },
+        {
+          limit: 50,
+          pagination_key: '16b980523634a6dc504898cda492e939',
+          pagination_key_version: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);

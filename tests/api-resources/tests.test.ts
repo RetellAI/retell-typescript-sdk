@@ -27,7 +27,11 @@ describe('resource tests', () => {
   // Prism tests are disabled
   test.skip('createBatchTest: required and optional params', async () => {
     const response = await client.tests.createBatchTest({
-      response_engine: { llm_id: 'llm_id', type: 'retell-llm', version: 0 },
+      response_engine: {
+        llm_id: 'llm_id',
+        type: 'retell-llm',
+        version: 0,
+      },
       test_case_definition_ids: ['string'],
       reserved_concurrency: 0,
     });

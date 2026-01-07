@@ -88,7 +88,11 @@ describe('resource chat', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.chat.list(
-        { limit: 1000, pagination_key: 'pagination_key', sort_order: 'ascending' },
+        {
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          sort_order: 'ascending',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);

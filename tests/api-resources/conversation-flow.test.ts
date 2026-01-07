@@ -34,7 +34,11 @@ describe('resource conversationFlow', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.conversationFlow.create({
-      model_choice: { model: 'gpt-4.1', type: 'cascading', high_priority: true },
+      model_choice: {
+        model: 'gpt-4.1',
+        type: 'cascading',
+        high_priority: true,
+      },
       nodes: [
         {
           id: 'start',
@@ -63,7 +67,11 @@ describe('resource conversationFlow', () => {
           },
           interruption_sensitivity: 0,
           knowledge_base_ids: ['kb_001', 'kb_002'],
-          model_choice: { model: 'gpt-4.1', type: 'cascading', high_priority: true },
+          model_choice: {
+            model: 'gpt-4.1',
+            type: 'cascading',
+            high_priority: true,
+          },
           name: 'name',
           skip_response_edge: {
             id: 'id',
@@ -111,7 +119,11 @@ describe('resource conversationFlow', () => {
               },
               interruption_sensitivity: 0,
               knowledge_base_ids: ['kb_001', 'kb_002'],
-              model_choice: { model: 'gpt-4.1', type: 'cascading', high_priority: true },
+              model_choice: {
+                model: 'gpt-4.1',
+                type: 'cascading',
+                high_priority: true,
+              },
               name: 'name',
               skip_response_edge: {
                 id: 'id',
@@ -140,7 +152,11 @@ describe('resource conversationFlow', () => {
               description: 'Get customer information from database',
               headers: { foo: 'string' },
               method: 'GET',
-              parameters: { properties: { foo: 'bar' }, type: 'object', required: ['string'] },
+              parameters: {
+                properties: { foo: 'bar' },
+                type: 'object',
+                required: ['string'],
+              },
               query_params: { foo: 'string' },
               response_variables: { foo: 'string' },
               timeout_ms: 1000,
@@ -175,7 +191,11 @@ describe('resource conversationFlow', () => {
           description: 'Get customer information from database',
           headers: { foo: 'string' },
           method: 'GET',
-          parameters: { properties: { foo: 'bar' }, type: 'object', required: ['string'] },
+          parameters: {
+            properties: { foo: 'bar' },
+            type: 'object',
+            required: ['string'],
+          },
           query_params: { foo: 'string' },
           response_variables: { foo: 'string' },
           timeout_ms: 1000,
@@ -254,7 +274,11 @@ describe('resource conversationFlow', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.conversationFlow.list(
-        { limit: 1000, pagination_key: 'pagination_key', pagination_key_version: 0 },
+        {
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          pagination_key_version: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);

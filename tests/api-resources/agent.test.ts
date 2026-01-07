@@ -27,7 +27,11 @@ describe('resource agent', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.agent.create({
-      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm', version: 0 },
+      response_engine: {
+        llm_id: 'llm_234sdertfsdsfsdf',
+        type: 'retell-llm',
+        version: 0,
+      },
       voice_id: '11labs-Adrian',
       agent_name: 'Jarvis',
       allow_user_dtmf: true,
@@ -63,14 +67,24 @@ describe('resource agent', () => {
         },
       ],
       post_call_analysis_model: 'gpt-4.1-mini',
-      pronunciation_dictionary: [{ alphabet: 'ipa', phoneme: 'ˈæktʃuəli', word: 'actually' }],
+      pronunciation_dictionary: [
+        {
+          alphabet: 'ipa',
+          phoneme: 'ˈæktʃuəli',
+          word: 'actually',
+        },
+      ],
       reminder_max_count: 2,
       reminder_trigger_ms: 10000,
       responsiveness: 1,
       ring_duration_ms: 30000,
       signed_url_expiration_ms: 86400000,
       stt_mode: 'fast',
-      user_dtmf_options: { digit_limit: 1, termination_key: '#', timeout_ms: 1000 },
+      user_dtmf_options: {
+        digit_limit: 1,
+        termination_key: '#',
+        timeout_ms: 1000,
+      },
       version_description: 'Customer support agent for handling product inquiries',
       vocab_specialization: 'general',
       voice_model: 'eleven_turbo_v2',
@@ -156,7 +170,11 @@ describe('resource agent', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.agent.list(
-        { limit: 50, pagination_key: 'agent_1ffdb9717444d0e77346838911', pagination_key_version: 0 },
+        {
+          limit: 50,
+          pagination_key: 'agent_1ffdb9717444d0e77346838911',
+          pagination_key_version: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);
