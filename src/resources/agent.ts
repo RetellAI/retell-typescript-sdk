@@ -1944,7 +1944,7 @@ export interface AgentUpdateParams {
   stt_mode?: 'fast' | 'accurate' | 'custom';
 
   /**
-   * Body param:
+   * Body param
    */
   user_dtmf_options?: AgentUpdateParams.UserDtmfOptions | null;
 
