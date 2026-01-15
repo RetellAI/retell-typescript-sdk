@@ -338,6 +338,13 @@ export interface AgentResponse {
   is_published?: boolean;
 
   /**
+   * If this option is set, the call will try to detect IVR in the first 3 minutes of
+   * the call. Actions defined will be applied when the IVR is detected. Set this to
+   * null to disable IVR detection.
+   */
+  ivr_option?: AgentResponse.IvrOption | null;
+
+  /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English. If unset, will use default value `en-US`. Select `multi` for
@@ -673,6 +680,21 @@ export namespace AgentResponse {
      * The STT provider to use.
      */
     provider: 'azure' | 'deepgram';
+  }
+
+  /**
+   * If this option is set, the call will try to detect IVR in the first 3 minutes of
+   * the call. Actions defined will be applied when the IVR is detected. Set this to
+   * null to disable IVR detection.
+   */
+  export interface IvrOption {
+    action: IvrOption.Action;
+  }
+
+  export namespace IvrOption {
+    export interface Action {
+      type: 'hangup';
+    }
   }
 
   /**
@@ -1046,6 +1068,13 @@ export interface AgentCreateParams {
   is_public?: boolean | null;
 
   /**
+   * If this option is set, the call will try to detect IVR in the first 3 minutes of
+   * the call. Actions defined will be applied when the IVR is detected. Set this to
+   * null to disable IVR detection.
+   */
+  ivr_option?: AgentCreateParams.IvrOption | null;
+
+  /**
    * Specifies what language (and dialect) the speech recognition will operate in.
    * For instance, selecting `en-GB` optimizes speech recognition for British
    * English. If unset, will use default value `en-US`. Select `multi` for
@@ -1381,6 +1410,21 @@ export namespace AgentCreateParams {
      * The STT provider to use.
      */
     provider: 'azure' | 'deepgram';
+  }
+
+  /**
+   * If this option is set, the call will try to detect IVR in the first 3 minutes of
+   * the call. Actions defined will be applied when the IVR is detected. Set this to
+   * null to disable IVR detection.
+   */
+  export interface IvrOption {
+    action: IvrOption.Action;
+  }
+
+  export namespace IvrOption {
+    export interface Action {
+      type: 'hangup';
+    }
   }
 
   /**
@@ -1750,6 +1794,13 @@ export interface AgentUpdateParams {
   is_public?: boolean | null;
 
   /**
+   * Body param: If this option is set, the call will try to detect IVR in the first
+   * 3 minutes of the call. Actions defined will be applied when the IVR is detected.
+   * Set this to null to disable IVR detection.
+   */
+  ivr_option?: AgentUpdateParams.IvrOption | null;
+
+  /**
    * Body param: Specifies what language (and dialect) the speech recognition will
    * operate in. For instance, selecting `en-GB` optimizes speech recognition for
    * British English. If unset, will use default value `en-US`. Select `multi` for
@@ -2062,6 +2113,21 @@ export namespace AgentUpdateParams {
      * The STT provider to use.
      */
     provider: 'azure' | 'deepgram';
+  }
+
+  /**
+   * If this option is set, the call will try to detect IVR in the first 3 minutes of
+   * the call. Actions defined will be applied when the IVR is detected. Set this to
+   * null to disable IVR detection.
+   */
+  export interface IvrOption {
+    action: IvrOption.Action;
+  }
+
+  export namespace IvrOption {
+    export interface Action {
+      type: 'hangup';
+    }
   }
 
   /**
