@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.74.0 (2026-01-15)
+
+Full Changelog: [v4.73.0...v4.74.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.73.0...v4.74.0)
+
+### Features
+
+* **api:** api update ([73eddde](https://github.com/RetellAI/retell-typescript-sdk/commit/73eddde7fe6bac6056b12f55914f32aa905c24f0))
+
+
+### Chores
+
+* fix typo in descriptions ([7bf3176](https://github.com/RetellAI/retell-typescript-sdk/commit/7bf3176753b0ba8c12fcf1ac0fbee3cce3b086dd))
+* **internal:** upgrade babel, qs, js-yaml ([3657e5f](https://github.com/RetellAI/retell-typescript-sdk/commit/3657e5f3dfceee0c44c76a3e67db3fc6d20ff231))
+
 ## 4.73.0 (2026-01-07)
 
 Full Changelog: [v4.72.0...v4.73.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.72.0...v4.73.0)

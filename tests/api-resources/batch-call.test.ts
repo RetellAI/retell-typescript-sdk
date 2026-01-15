@@ -53,6 +53,7 @@ describe('resource batchCall', () => {
               fallback_voice_ids: ['openai-Alloy', 'deepgram-Angus'],
               interruption_sensitivity: 1,
               is_public: false,
+              ivr_option: { action: { type: 'hangup' } },
               language: 'en-US',
               max_call_duration_ms: 3600000,
               normalize_for_speech: true,

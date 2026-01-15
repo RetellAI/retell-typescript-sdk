@@ -159,7 +159,7 @@ export namespace BatchCallCreateBatchCallParams {
 
     /**
      * An arbitrary object for storage purpose only. You can put anything here like
-     * your internal customer id associated with the chat. Not used for processing. You
+     * your internal customer id associated with the call. Not used for processing. You
      * can later get this field from the call object.
      */
     metadata?: unknown;
@@ -379,6 +379,13 @@ export namespace BatchCallCreateBatchCallParams {
          * agent preview link.
          */
         is_public?: boolean | null;
+
+        /**
+         * If this option is set, the call will try to detect IVR in the first 3 minutes of
+         * the call. Actions defined will be applied when the IVR is detected. Set this to
+         * null to disable IVR detection.
+         */
+        ivr_option?: Agent.IvrOption | null;
 
         /**
          * Specifies what language (and dialect) the speech recognition will operate in.
@@ -686,6 +693,21 @@ export namespace BatchCallCreateBatchCallParams {
            * The STT provider to use.
            */
           provider: 'azure' | 'deepgram';
+        }
+
+        /**
+         * If this option is set, the call will try to detect IVR in the first 3 minutes of
+         * the call. Actions defined will be applied when the IVR is detected. Set this to
+         * null to disable IVR detection.
+         */
+        export interface IvrOption {
+          action: IvrOption.Action;
+        }
+
+        export namespace IvrOption {
+          export interface Action {
+            type: 'hangup';
+          }
         }
 
         /**
