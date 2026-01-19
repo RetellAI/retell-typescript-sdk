@@ -93,6 +93,7 @@ describe('resource batchCall', () => {
               },
               version_description: 'Customer support agent for handling product inquiries',
               vocab_specialization: 'general',
+              voice_emotion: 'calm',
               voice_id: '11labs-Adrian',
               voice_model: 'eleven_turbo_v2',
               voice_speed: 1,

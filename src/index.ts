@@ -96,7 +96,20 @@ import {
   PhoneNumberResponse,
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
-import { BatchTestResponse, TestCreateBatchTestParams, Tests } from './resources/tests';
+import {
+  BatchTestResponse,
+  TestCaseDefinitionResponse,
+  TestCaseJobResponse,
+  TestCreateBatchTestParams,
+  TestCreateTestCaseDefinitionParams,
+  TestListBatchTestsParams,
+  TestListBatchTestsResponse,
+  TestListTestCaseDefinitionsParams,
+  TestListTestCaseDefinitionsResponse,
+  TestListTestRunsResponse,
+  TestUpdateTestCaseDefinitionParams,
+  Tests,
+} from './resources/tests';
 import {
   Voice,
   VoiceAddResourceParams,
@@ -409,7 +422,16 @@ export declare namespace Retell {
   export {
     Tests as Tests,
     type BatchTestResponse as BatchTestResponse,
+    type TestCaseDefinitionResponse as TestCaseDefinitionResponse,
+    type TestCaseJobResponse as TestCaseJobResponse,
+    type TestListBatchTestsResponse as TestListBatchTestsResponse,
+    type TestListTestCaseDefinitionsResponse as TestListTestCaseDefinitionsResponse,
+    type TestListTestRunsResponse as TestListTestRunsResponse,
     type TestCreateBatchTestParams as TestCreateBatchTestParams,
+    type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
+    type TestListBatchTestsParams as TestListBatchTestsParams,
+    type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
+    type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
   };
 
   export {
