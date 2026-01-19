@@ -189,10 +189,24 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/tests.ts">BatchTestResponse</a></code>
+- <code><a href="./src/resources/tests.ts">TestCaseDefinitionResponse</a></code>
+- <code><a href="./src/resources/tests.ts">TestCaseJobResponse</a></code>
+- <code><a href="./src/resources/tests.ts">TestListBatchTestsResponse</a></code>
+- <code><a href="./src/resources/tests.ts">TestListTestCaseDefinitionsResponse</a></code>
+- <code><a href="./src/resources/tests.ts">TestListTestRunsResponse</a></code>
 
 Methods:
 
 - <code title="post /create-batch-test">client.tests.<a href="./src/resources/tests.ts">createBatchTest</a>({ ...params }) -> BatchTestResponse</code>
+- <code title="post /create-test-case-definition">client.tests.<a href="./src/resources/tests.ts">createTestCaseDefinition</a>({ ...params }) -> TestCaseDefinitionResponse</code>
+- <code title="delete /delete-test-case-definition/{test_case_definition_id}">client.tests.<a href="./src/resources/tests.ts">deleteTestCaseDefinition</a>(testCaseDefinitionId) -> void</code>
+- <code title="get /get-batch-test/{test_case_batch_job_id}">client.tests.<a href="./src/resources/tests.ts">getBatchTest</a>(testCaseBatchJobId) -> BatchTestResponse</code>
+- <code title="get /get-test-case-definition/{test_case_definition_id}">client.tests.<a href="./src/resources/tests.ts">getTestCaseDefinition</a>(testCaseDefinitionId) -> TestCaseDefinitionResponse</code>
+- <code title="get /get-test-run/{test_case_job_id}">client.tests.<a href="./src/resources/tests.ts">getTestRun</a>(testCaseJobId) -> TestCaseJobResponse</code>
+- <code title="get /list-batch-tests">client.tests.<a href="./src/resources/tests.ts">listBatchTests</a>({ ...params }) -> TestListBatchTestsResponse</code>
+- <code title="get /list-test-case-definitions">client.tests.<a href="./src/resources/tests.ts">listTestCaseDefinitions</a>({ ...params }) -> TestListTestCaseDefinitionsResponse</code>
+- <code title="get /list-test-runs/{test_case_batch_job_id}">client.tests.<a href="./src/resources/tests.ts">listTestRuns</a>(testCaseBatchJobId) -> TestListTestRunsResponse</code>
+- <code title="put /update-test-case-definition/{test_case_definition_id}">client.tests.<a href="./src/resources/tests.ts">updateTestCaseDefinition</a>(testCaseDefinitionId, { ...params }) -> TestCaseDefinitionResponse</code>
 
 # McpTool
 
