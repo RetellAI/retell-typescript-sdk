@@ -122,12 +122,6 @@ export interface TestCreateBatchTestParams {
    * Array of test case definition IDs to run
    */
   test_case_definition_ids: Array<string>;
-
-  /**
-   * Number of concurrency reserved for all other calls that are not triggered by
-   * batch calls, such as inbound calls.
-   */
-  reserved_concurrency?: number;
 }
 
 export namespace TestCreateBatchTestParams {

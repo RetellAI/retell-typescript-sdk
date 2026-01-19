@@ -541,6 +541,12 @@ export interface AgentResponse {
   vocab_specialization?: 'general' | 'medical';
 
   /**
+   * Controls the emotional tone of the agent's voice. Currently supported for
+   * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+   */
+  voice_emotion?: string | null;
+
+  /**
    * Select the voice model used for the selected voice. Each provider has a set of
    * available voice models. Set to null to remove voice model selection, and default
    * ones will apply. Check out dashboard for more details of each voice model.
@@ -1269,6 +1275,12 @@ export interface AgentCreateParams {
    * Default to general.
    */
   vocab_specialization?: 'general' | 'medical';
+
+  /**
+   * Controls the emotional tone of the agent's voice. Currently supported for
+   * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+   */
+  voice_emotion?: string | null;
 
   /**
    * Select the voice model used for the selected voice. Each provider has a set of
@@ -2011,6 +2023,13 @@ export interface AgentUpdateParams {
    * a no-op. Default to general.
    */
   vocab_specialization?: 'general' | 'medical';
+
+  /**
+   * Body param: Controls the emotional tone of the agent's voice. Currently
+   * supported for Cartesia and Minimax TTS providers. If unset, no emotion will be
+   * used.
+   */
+  voice_emotion?: string | null;
 
   /**
    * Body param: Unique voice id used for the agent. Find list of available voices
