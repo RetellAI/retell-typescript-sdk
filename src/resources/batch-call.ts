@@ -594,6 +594,12 @@ export namespace BatchCallCreateBatchCallParams {
         vocab_specialization?: 'general' | 'medical';
 
         /**
+         * Controls the emotional tone of the agent's voice. Currently supported for
+         * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+         */
+        voice_emotion?: string | null;
+
+        /**
          * Unique voice id used for the agent. Find list of available voices and their
          * preview in Dashboard.
          */

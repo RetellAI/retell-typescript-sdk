@@ -2328,6 +2328,12 @@ export namespace CallListParams {
      */
     duration_ms?: FilterCriteria.DurationMs;
 
+    /**
+     * Filter by dynamic variables using dot notation (e.g., `dynamic_variables.name`).
+     * Values are matched exactly as strings.
+     */
+    dynamic_variables?: { [key: string]: Array<string> };
+
     e2e_latency_p50?: FilterCriteria.E2ELatencyP50;
 
     /**
@@ -2344,6 +2350,12 @@ export namespace CallListParams {
      * Only retrieve calls that are in voicemail or not in voicemail.
      */
     in_voicemail?: Array<boolean>;
+
+    /**
+     * Filter by metadata fields using dot notation (e.g., `metadata.customer_id`).
+     * Values are matched exactly as strings.
+     */
+    metadata?: { [key: string]: Array<string> };
 
     /**
      * Only retrieve calls with specific range of start timestamp(s).
@@ -2871,6 +2883,12 @@ export namespace CallCreatePhoneCallParams {
        * Default to general.
        */
       vocab_specialization?: 'general' | 'medical';
+
+      /**
+       * Controls the emotional tone of the agent's voice. Currently supported for
+       * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+       */
+      voice_emotion?: string | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
@@ -3869,6 +3887,12 @@ export namespace CallCreateWebCallParams {
        * Default to general.
        */
       vocab_specialization?: 'general' | 'medical';
+
+      /**
+       * Controls the emotional tone of the agent's voice. Currently supported for
+       * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+       */
+      voice_emotion?: string | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
@@ -4881,6 +4905,12 @@ export namespace CallRegisterPhoneCallParams {
        * Default to general.
        */
       vocab_specialization?: 'general' | 'medical';
+
+      /**
+       * Controls the emotional tone of the agent's voice. Currently supported for
+       * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
+       */
+      voice_emotion?: string | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
