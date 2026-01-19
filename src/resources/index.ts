@@ -91,7 +91,20 @@ export {
   type PhoneNumberUpdateParams,
   type PhoneNumberImportParams,
 } from './phone-number';
-export { Tests, type BatchTestResponse, type TestCreateBatchTestParams } from './tests';
+export {
+  Tests,
+  type BatchTestResponse,
+  type TestCaseDefinitionResponse,
+  type TestCaseJobResponse,
+  type TestListBatchTestsResponse,
+  type TestListTestCaseDefinitionsResponse,
+  type TestListTestRunsResponse,
+  type TestCreateBatchTestParams,
+  type TestCreateTestCaseDefinitionParams,
+  type TestListBatchTestsParams,
+  type TestListTestCaseDefinitionsParams,
+  type TestUpdateTestCaseDefinitionParams,
+} from './tests';
 export {
   Voice,
   type VoiceResponse,
