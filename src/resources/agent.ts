@@ -284,9 +284,10 @@ export interface AgentResponse {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   * If set, determines what denoising mode to use. Use "none" to bypass all audio
+   * denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -544,7 +545,7 @@ export interface AgentResponse {
    * Controls the emotional tone of the agent's voice. Currently supported for
    * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
    */
-  voice_emotion?: string | null;
+  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
   /**
    * Select the voice model used for the selected voice. Each provider has a set of
@@ -1025,9 +1026,10 @@ export interface AgentCreateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * If set, determines what denoising mode to use. Default to noise-cancellation.
+   * If set, determines what denoising mode to use. Use "none" to bypass all audio
+   * denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -1280,7 +1282,7 @@ export interface AgentCreateParams {
    * Controls the emotional tone of the agent's voice. Currently supported for
    * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
    */
-  voice_emotion?: string | null;
+  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
   /**
    * Select the voice model used for the selected voice. Each provider has a set of
@@ -1755,10 +1757,10 @@ export interface AgentUpdateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * Body param: If set, determines what denoising mode to use. Default to
-   * noise-cancellation.
+   * Body param: If set, determines what denoising mode to use. Use "none" to bypass
+   * all audio denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Body param: Controls whether the agent would backchannel (agent interjects the
@@ -2029,7 +2031,7 @@ export interface AgentUpdateParams {
    * supported for Cartesia and Minimax TTS providers. If unset, no emotion will be
    * used.
    */
-  voice_emotion?: string | null;
+  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
   /**
    * Body param: Unique voice id used for the agent. Find list of available voices
