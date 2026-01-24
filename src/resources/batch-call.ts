@@ -332,9 +332,10 @@ export namespace BatchCallCreateBatchCallParams {
         data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
         /**
-         * If set, determines what denoising mode to use. Default to noise-cancellation.
+         * If set, determines what denoising mode to use. Use "none" to bypass all audio
+         * denoising. Default to noise-cancellation.
          */
-        denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+        denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
         /**
          * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -597,7 +598,7 @@ export namespace BatchCallCreateBatchCallParams {
          * Controls the emotional tone of the agent's voice. Currently supported for
          * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
          */
-        voice_emotion?: string | null;
+        voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
         /**
          * Unique voice id used for the agent. Find list of available voices and their

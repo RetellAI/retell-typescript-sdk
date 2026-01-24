@@ -393,6 +393,12 @@ export interface PhoneCallResponse {
    * "tls", "tcp" or "udp".
    */
   transfer_destination?: string | null;
+
+  /**
+   * Transfer end timestamp (milliseconds since epoch) of the call. Available after
+   * transfer call ends.
+   */
+  transfer_end_timestamp?: number;
 }
 
 export namespace PhoneCallResponse {
@@ -1419,6 +1425,12 @@ export interface WebCallResponse {
    * "tls", "tcp" or "udp".
    */
   transfer_destination?: string | null;
+
+  /**
+   * Transfer end timestamp (milliseconds since epoch) of the call. Available after
+   * transfer call ends.
+   */
+  transfer_end_timestamp?: number;
 }
 
 export namespace WebCallResponse {
@@ -2623,9 +2635,10 @@ export namespace CallCreatePhoneCallParams {
       data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
       /**
-       * If set, determines what denoising mode to use. Default to noise-cancellation.
+       * If set, determines what denoising mode to use. Use "none" to bypass all audio
+       * denoising. Default to noise-cancellation.
        */
-      denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+      denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
       /**
        * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -2888,7 +2901,7 @@ export namespace CallCreatePhoneCallParams {
        * Controls the emotional tone of the agent's voice. Currently supported for
        * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
        */
-      voice_emotion?: string | null;
+      voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
@@ -3627,9 +3640,10 @@ export namespace CallCreateWebCallParams {
       data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
       /**
-       * If set, determines what denoising mode to use. Default to noise-cancellation.
+       * If set, determines what denoising mode to use. Use "none" to bypass all audio
+       * denoising. Default to noise-cancellation.
        */
-      denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+      denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
       /**
        * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -3892,7 +3906,7 @@ export namespace CallCreateWebCallParams {
        * Controls the emotional tone of the agent's voice. Currently supported for
        * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
        */
-      voice_emotion?: string | null;
+      voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
@@ -4645,9 +4659,10 @@ export namespace CallRegisterPhoneCallParams {
       data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
       /**
-       * If set, determines what denoising mode to use. Default to noise-cancellation.
+       * If set, determines what denoising mode to use. Use "none" to bypass all audio
+       * denoising. Default to noise-cancellation.
        */
-      denoising_mode?: 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+      denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
       /**
        * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -4910,7 +4925,7 @@ export namespace CallRegisterPhoneCallParams {
        * Controls the emotional tone of the agent's voice. Currently supported for
        * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
        */
-      voice_emotion?: string | null;
+      voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
 
       /**
        * Unique voice id used for the agent. Find list of available voices and their
