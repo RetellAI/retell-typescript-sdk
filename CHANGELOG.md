@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.77.0 (2026-02-06)
+
+Full Changelog: [v4.76.0...v4.77.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.76.0...v4.77.0)
+
+### Features
+
+* **api:** api update ([70e3707](https://github.com/RetellAI/retell-typescript-sdk/commit/70e370778d203a379b7a4b2d21d5733079a9e739))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([8d4c4ef](https://github.com/RetellAI/retell-typescript-sdk/commit/8d4c4ef3c0b9ed126d3792e59062bcaac435dea3))
+
 ## 4.76.0 (2026-01-24)
 
 Full Changelog: [v4.75.0...v4.76.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.75.0...v4.76.0)
