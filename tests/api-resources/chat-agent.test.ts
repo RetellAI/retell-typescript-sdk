@@ -38,6 +38,7 @@ describe('resource chatAgent', () => {
       auto_close_message: 'Thank you for chatting. The conversation has ended.',
       data_storage_setting: 'everything',
       end_chat_after_silence_ms: 3600000,
+      guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
       is_public: false,
       language: 'en-US',
       opt_in_signed_url: true,

@@ -136,6 +136,14 @@ export interface PhoneNumberResponse {
   area_code?: number;
 
   /**
+   * Enterprise only. Phone number to transfer inbound calls to when organization is
+   * in outage mode. Can be either a Retell phone number or an external number.
+   * Cannot be the same as this phone number, and cannot be a number that already has
+   * its own fallback configured (prevents nested forwarding).
+   */
+  fallback_number?: string | null;
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
@@ -147,6 +155,28 @@ export interface PhoneNumberResponse {
    * default to latest version.
    */
   inbound_agent_version?: number | null;
+
+  /**
+   * Inbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_agent_id.
+   */
+  inbound_agents?: Array<PhoneNumberResponse.InboundAgent> | null;
+
+  /**
+   * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound SMS, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_sms_agent_id.
+   */
+  inbound_sms_agents?: Array<PhoneNumberResponse.InboundSMSAgent> | null;
+
+  /**
+   * If set, will send a webhook for inbound SMS, where you can override agent id,
+   * set dynamic variables and other fields specific to that chat.
+   */
+  inbound_sms_webhook_url?: string | null;
 
   /**
    * If set, will send a webhook for inbound calls, where you can to override agent
@@ -173,6 +203,22 @@ export interface PhoneNumberResponse {
   outbound_agent_version?: number | null;
 
   /**
+   * Outbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each outbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_agent_id.
+   */
+  outbound_agents?: Array<PhoneNumberResponse.OutboundAgent> | null;
+
+  /**
+   * Outbound SMS agents to bind to the number with weights. If set and non-empty,
+   * one agent will be picked randomly for each outbound SMS, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_sms_agent_id.
+   */
+  outbound_sms_agents?: Array<PhoneNumberResponse.OutboundSMSAgent> | null;
+
+  /**
    * Pretty printed phone number, provided for your reference.
    */
   phone_number_pretty?: string;
@@ -181,6 +227,54 @@ export interface PhoneNumberResponse {
 }
 
 export namespace PhoneNumberResponse {
+  export interface InboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface InboundSMSAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundSMSAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
   export interface SipOutboundTrunkConfig {
     /**
      * The username used for authenticating the SIP trunk for the phone number.
@@ -228,6 +322,14 @@ export interface PhoneNumberCreateParams {
   country_code?: 'US' | 'CA';
 
   /**
+   * Enterprise only. Phone number to transfer inbound calls to when organization is
+   * in outage mode. Can be either a Retell phone number or an external number.
+   * Cannot be the same as this phone number, and cannot be a number that already has
+   * its own fallback configured (prevents nested forwarding).
+   */
+  fallback_number?: string | null;
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If null, this number would not accept
    * inbound call.
@@ -239,6 +341,14 @@ export interface PhoneNumberCreateParams {
    * default to latest version.
    */
   inbound_agent_version?: number | null;
+
+  /**
+   * Inbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_agent_id.
+   */
+  inbound_agents?: Array<PhoneNumberCreateParams.InboundAgent> | null;
 
   /**
    * If set, will send a webhook for inbound calls, where you can to override agent
@@ -270,6 +380,14 @@ export interface PhoneNumberCreateParams {
   outbound_agent_version?: number | null;
 
   /**
+   * Outbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each outbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_agent_id.
+   */
+  outbound_agents?: Array<PhoneNumberCreateParams.OutboundAgent> | null;
+
+  /**
    * The number you are trying to purchase in E.164 format of the number (+country
    * code then number with no space and no special characters).
    */
@@ -285,6 +403,32 @@ export interface PhoneNumberCreateParams {
    * "TCP" and "UDP". Default is "TCP".
    */
   transport?: string | null;
+}
+
+export namespace PhoneNumberCreateParams {
+  export interface InboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
 }
 
 export interface PhoneNumberUpdateParams {
@@ -313,6 +457,15 @@ export interface PhoneNumberUpdateParams {
   auth_username?: string;
 
   /**
+   * Enterprise only. Phone number to transfer inbound calls to when organization is
+   * in outage mode. Can be either a Retell phone number or an external number. Set
+   * to null to remove. Cannot be the same as this phone number, and cannot be a
+   * number that already has its own fallback configured (prevents nested
+   * forwarding).
+   */
+  fallback_number?: string | null;
+
+  /**
    * Unique id of agent to bind to the number. The number will automatically use the
    * agent when receiving inbound calls. If set to null, this number would not accept
    * inbound call.
@@ -324,6 +477,28 @@ export interface PhoneNumberUpdateParams {
    * default to latest version.
    */
   inbound_agent_version?: number | null;
+
+  /**
+   * Inbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_agent_id.
+   */
+  inbound_agents?: Array<PhoneNumberUpdateParams.InboundAgent> | null;
+
+  /**
+   * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound SMS, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_sms_agent_id.
+   */
+  inbound_sms_agents?: Array<PhoneNumberUpdateParams.InboundSMSAgent> | null;
+
+  /**
+   * If set, will send a webhook for inbound SMS, where you can override agent id,
+   * set dynamic variables and other fields specific to that chat.
+   */
+  inbound_sms_webhook_url?: string | null;
 
   /**
    * If set, will send a webhook for inbound calls, where you can to override agent
@@ -350,6 +525,22 @@ export interface PhoneNumberUpdateParams {
   outbound_agent_version?: number | null;
 
   /**
+   * Outbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each outbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_agent_id.
+   */
+  outbound_agents?: Array<PhoneNumberUpdateParams.OutboundAgent> | null;
+
+  /**
+   * Outbound SMS agents to bind to the number with weights. If set and non-empty,
+   * one agent will be picked randomly for each outbound SMS, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_sms_agent_id.
+   */
+  outbound_sms_agents?: Array<PhoneNumberUpdateParams.OutboundSMSAgent> | null;
+
+  /**
    * The termination uri to update for the phone number. This is used for outbound
    * calls.
    */
@@ -360,6 +551,56 @@ export interface PhoneNumberUpdateParams {
    * "TLS", "TCP" and "UDP". Default is "TCP".
    */
   transport?: string | null;
+}
+
+export namespace PhoneNumberUpdateParams {
+  export interface InboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface InboundSMSAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundSMSAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
 }
 
 export interface PhoneNumberImportParams {
@@ -403,6 +644,14 @@ export interface PhoneNumberImportParams {
   inbound_agent_version?: number | null;
 
   /**
+   * Inbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to inbound_agent_id.
+   */
+  inbound_agents?: Array<PhoneNumberImportParams.InboundAgent> | null;
+
+  /**
    * If set, will send a webhook for inbound calls, where you can to override agent
    * id, set dynamic variables and other fields specific to that call.
    */
@@ -427,6 +676,14 @@ export interface PhoneNumberImportParams {
   outbound_agent_version?: number | null;
 
   /**
+   * Outbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each outbound call, with probability
+   * proportional to the weight. Total weights must add up to 1. If not set or empty,
+   * fallback to outbound_agent_id.
+   */
+  outbound_agents?: Array<PhoneNumberImportParams.OutboundAgent> | null;
+
+  /**
    * The password used for authentication for the SIP trunk.
    */
   sip_trunk_auth_password?: string;
@@ -441,6 +698,32 @@ export interface PhoneNumberImportParams {
    * "TLS", "TCP" and "UDP". Default is "TCP".
    */
   transport?: string | null;
+}
+
+export namespace PhoneNumberImportParams {
+  export interface InboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
+
+  export interface OutboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    agent_version?: number;
+  }
 }
 
 export declare namespace PhoneNumber {
