@@ -284,10 +284,10 @@ export interface AgentResponse {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * If set, determines what denoising mode to use. Use "none" to bypass all audio
-   * denoising. Default to noise-cancellation.
+   * If set, determines what denoising mode to use. Use "no-denoise" to bypass all
+   * audio denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -296,6 +296,12 @@ export interface AgentResponse {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will enable dynamic voice speed adjustment based on the user's
+   * speech rate and conversation context. If unset, default value false will apply.
+   */
+  enable_dynamic_voice_speed?: boolean;
 
   /**
    * If set to true, will detect whether the call enters a voicemail. Note that this
@@ -317,6 +323,12 @@ export interface AgentResponse {
    * one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
+
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  guardrail_config?: AgentResponse.GuardrailConfig;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
@@ -690,6 +702,35 @@ export namespace AgentResponse {
   }
 
   /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
+  }
+
+  /**
    * If this option is set, the call will try to detect IVR in the first 3 minutes of
    * the call. Actions defined will be applied when the IVR is detected. Set this to
    * null to disable IVR detection.
@@ -1026,10 +1067,10 @@ export interface AgentCreateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * If set, determines what denoising mode to use. Use "none" to bypass all audio
-   * denoising. Default to noise-cancellation.
+   * If set, determines what denoising mode to use. Use "no-denoise" to bypass all
+   * audio denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Controls whether the agent would backchannel (agent interjects the speaker with
@@ -1038,6 +1079,12 @@ export interface AgentCreateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, will enable dynamic voice speed adjustment based on the user's
+   * speech rate and conversation context. If unset, default value false will apply.
+   */
+  enable_dynamic_voice_speed?: boolean;
 
   /**
    * If set to true, will detect whether the call enters a voicemail. Note that this
@@ -1059,6 +1106,12 @@ export interface AgentCreateParams {
    * one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
+
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  guardrail_config?: AgentCreateParams.GuardrailConfig;
 
   /**
    * Controls how sensitive the agent is to user interruptions. Value ranging from
@@ -1427,6 +1480,35 @@ export namespace AgentCreateParams {
   }
 
   /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
+  }
+
+  /**
    * If this option is set, the call will try to detect IVR in the first 3 minutes of
    * the call. Actions defined will be applied when the IVR is detected. Set this to
    * null to disable IVR detection.
@@ -1757,10 +1839,10 @@ export interface AgentUpdateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
-   * Body param: If set, determines what denoising mode to use. Use "none" to bypass
-   * all audio denoising. Default to noise-cancellation.
+   * Body param: If set, determines what denoising mode to use. Use "no-denoise" to
+   * bypass all audio denoising. Default to noise-cancellation.
    */
-  denoising_mode?: 'none' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
+  denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation';
 
   /**
    * Body param: Controls whether the agent would backchannel (agent interjects the
@@ -1769,6 +1851,13 @@ export interface AgentUpdateParams {
    * set, agent will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Body param: If set to true, will enable dynamic voice speed adjustment based on
+   * the user's speech rate and conversation context. If unset, default value false
+   * will apply.
+   */
+  enable_dynamic_voice_speed?: boolean;
 
   /**
    * Body param: If set to true, will detect whether the call enters a voicemail.
@@ -1791,6 +1880,12 @@ export interface AgentUpdateParams {
    * the next one. Set to null to remove voice fallback for the agent.
    */
   fallback_voice_ids?: Array<string> | null;
+
+  /**
+   * Body param: Configuration for guardrail checks to detect and prevent prohibited
+   * topics in agent output and user input.
+   */
+  guardrail_config?: AgentUpdateParams.GuardrailConfig;
 
   /**
    * Body param: Controls how sensitive the agent is to user interruptions. Value
@@ -2134,6 +2229,35 @@ export namespace AgentUpdateParams {
      * The STT provider to use.
      */
     provider: 'azure' | 'deepgram';
+  }
+
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
   }
 
   /**

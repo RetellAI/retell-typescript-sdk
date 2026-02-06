@@ -289,6 +289,14 @@ export namespace LlmResponse {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * If true, will speak during execution.
      */
     speak_during_execution?: boolean;
@@ -328,6 +336,14 @@ export namespace LlmResponse {
      * speak_during_execution is true.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -626,9 +642,10 @@ export namespace LlmResponse {
 
     /**
      * Cal.com event type id number for the cal.com event you want to check
-     * availability for.
+     * availability for. Can be a number or a dynamic variable in the format
+     * `{{variable_name}}` that will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -649,8 +666,9 @@ export namespace LlmResponse {
     /**
      * Timezone to be used when checking availability, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -664,8 +682,10 @@ export namespace LlmResponse {
 
     /**
      * Cal.com event type id number for the cal.com event you want to book appointment.
+     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+     * will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -686,8 +706,9 @@ export namespace LlmResponse {
     /**
      * Timezone to be used when booking appointment, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -727,6 +748,14 @@ export namespace LlmResponse {
      * The message for the agent to speak when executing agent swap.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     speak_during_execution?: boolean;
 
@@ -803,24 +832,12 @@ export namespace LlmResponse {
 
   export interface CustomTool {
     /**
-     * Describes what this tool does and when to call this tool.
-     */
-    description: string;
-
-    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
-
-    /**
-     * Determines whether the agent would call LLM another time and speak when the
-     * result of function is obtained. Usually this needs to get turned on so user can
-     * get update for the function call.
-     */
-    speak_after_execution: boolean;
 
     type: 'custom';
 
@@ -837,12 +854,25 @@ export namespace LlmResponse {
     args_at_root?: boolean;
 
     /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
      * The description for the sentence agent say during execution. Only applicable
      * when speak_during_execution is true. Can write what to say or even provide
      * examples. The default is "The message you will say to callee when calling this
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * Headers to add to the request.
@@ -873,6 +903,13 @@ export namespace LlmResponse {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
 
     /**
      * Determines whether the agent would say sentence like "One moment, let me check
@@ -1089,6 +1126,14 @@ export namespace LlmResponse {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * The input schema of the MCP tool.
      */
     input_schema?: { [key: string]: string };
@@ -1285,6 +1330,14 @@ export namespace LlmResponse {
       execution_message_description?: string;
 
       /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
        * If true, will speak during execution.
        */
       speak_during_execution?: boolean;
@@ -1324,6 +1377,14 @@ export namespace LlmResponse {
        * speak_during_execution is true.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -1622,9 +1683,10 @@ export namespace LlmResponse {
 
       /**
        * Cal.com event type id number for the cal.com event you want to check
-       * availability for.
+       * availability for. Can be a number or a dynamic variable in the format
+       * `{{variable_name}}` that will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -1645,8 +1707,9 @@ export namespace LlmResponse {
       /**
        * Timezone to be used when checking availability, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -1660,8 +1723,10 @@ export namespace LlmResponse {
 
       /**
        * Cal.com event type id number for the cal.com event you want to book appointment.
+       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+       * will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -1682,8 +1747,9 @@ export namespace LlmResponse {
       /**
        * Timezone to be used when booking appointment, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -1723,6 +1789,14 @@ export namespace LlmResponse {
        * The message for the agent to speak when executing agent swap.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       speak_during_execution?: boolean;
 
@@ -1799,24 +1873,12 @@ export namespace LlmResponse {
 
     export interface CustomTool {
       /**
-       * Describes what this tool does and when to call this tool.
-       */
-      description: string;
-
-      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
-
-      /**
-       * Determines whether the agent would call LLM another time and speak when the
-       * result of function is obtained. Usually this needs to get turned on so user can
-       * get update for the function call.
-       */
-      speak_after_execution: boolean;
 
       type: 'custom';
 
@@ -1833,12 +1895,25 @@ export namespace LlmResponse {
       args_at_root?: boolean;
 
       /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
        * The description for the sentence agent say during execution. Only applicable
        * when speak_during_execution is true. Can write what to say or even provide
        * examples. The default is "The message you will say to callee when calling this
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * Headers to add to the request.
@@ -1869,6 +1944,13 @@ export namespace LlmResponse {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
 
       /**
        * Determines whether the agent would say sentence like "One moment, let me check
@@ -2083,6 +2165,14 @@ export namespace LlmResponse {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * The input schema of the MCP tool.
@@ -2285,6 +2375,14 @@ export namespace LlmCreateParams {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * If true, will speak during execution.
      */
     speak_during_execution?: boolean;
@@ -2324,6 +2422,14 @@ export namespace LlmCreateParams {
      * speak_during_execution is true.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -2622,9 +2728,10 @@ export namespace LlmCreateParams {
 
     /**
      * Cal.com event type id number for the cal.com event you want to check
-     * availability for.
+     * availability for. Can be a number or a dynamic variable in the format
+     * `{{variable_name}}` that will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -2645,8 +2752,9 @@ export namespace LlmCreateParams {
     /**
      * Timezone to be used when checking availability, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -2660,8 +2768,10 @@ export namespace LlmCreateParams {
 
     /**
      * Cal.com event type id number for the cal.com event you want to book appointment.
+     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+     * will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -2682,8 +2792,9 @@ export namespace LlmCreateParams {
     /**
      * Timezone to be used when booking appointment, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -2723,6 +2834,14 @@ export namespace LlmCreateParams {
      * The message for the agent to speak when executing agent swap.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     speak_during_execution?: boolean;
 
@@ -2799,24 +2918,12 @@ export namespace LlmCreateParams {
 
   export interface CustomTool {
     /**
-     * Describes what this tool does and when to call this tool.
-     */
-    description: string;
-
-    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
-
-    /**
-     * Determines whether the agent would call LLM another time and speak when the
-     * result of function is obtained. Usually this needs to get turned on so user can
-     * get update for the function call.
-     */
-    speak_after_execution: boolean;
 
     type: 'custom';
 
@@ -2833,12 +2940,25 @@ export namespace LlmCreateParams {
     args_at_root?: boolean;
 
     /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
      * The description for the sentence agent say during execution. Only applicable
      * when speak_during_execution is true. Can write what to say or even provide
      * examples. The default is "The message you will say to callee when calling this
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * Headers to add to the request.
@@ -2869,6 +2989,13 @@ export namespace LlmCreateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
 
     /**
      * Determines whether the agent would say sentence like "One moment, let me check
@@ -3085,6 +3212,14 @@ export namespace LlmCreateParams {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * The input schema of the MCP tool.
      */
     input_schema?: { [key: string]: string };
@@ -3281,6 +3416,14 @@ export namespace LlmCreateParams {
       execution_message_description?: string;
 
       /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
        * If true, will speak during execution.
        */
       speak_during_execution?: boolean;
@@ -3320,6 +3463,14 @@ export namespace LlmCreateParams {
        * speak_during_execution is true.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -3618,9 +3769,10 @@ export namespace LlmCreateParams {
 
       /**
        * Cal.com event type id number for the cal.com event you want to check
-       * availability for.
+       * availability for. Can be a number or a dynamic variable in the format
+       * `{{variable_name}}` that will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -3641,8 +3793,9 @@ export namespace LlmCreateParams {
       /**
        * Timezone to be used when checking availability, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -3656,8 +3809,10 @@ export namespace LlmCreateParams {
 
       /**
        * Cal.com event type id number for the cal.com event you want to book appointment.
+       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+       * will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -3678,8 +3833,9 @@ export namespace LlmCreateParams {
       /**
        * Timezone to be used when booking appointment, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -3719,6 +3875,14 @@ export namespace LlmCreateParams {
        * The message for the agent to speak when executing agent swap.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       speak_during_execution?: boolean;
 
@@ -3795,24 +3959,12 @@ export namespace LlmCreateParams {
 
     export interface CustomTool {
       /**
-       * Describes what this tool does and when to call this tool.
-       */
-      description: string;
-
-      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
-
-      /**
-       * Determines whether the agent would call LLM another time and speak when the
-       * result of function is obtained. Usually this needs to get turned on so user can
-       * get update for the function call.
-       */
-      speak_after_execution: boolean;
 
       type: 'custom';
 
@@ -3829,12 +3981,25 @@ export namespace LlmCreateParams {
       args_at_root?: boolean;
 
       /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
        * The description for the sentence agent say during execution. Only applicable
        * when speak_during_execution is true. Can write what to say or even provide
        * examples. The default is "The message you will say to callee when calling this
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * Headers to add to the request.
@@ -3865,6 +4030,13 @@ export namespace LlmCreateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
 
       /**
        * Determines whether the agent would say sentence like "One moment, let me check
@@ -4079,6 +4251,14 @@ export namespace LlmCreateParams {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * The input schema of the MCP tool.
@@ -4295,6 +4475,14 @@ export namespace LlmUpdateParams {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * If true, will speak during execution.
      */
     speak_during_execution?: boolean;
@@ -4334,6 +4522,14 @@ export namespace LlmUpdateParams {
      * speak_during_execution is true.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -4632,9 +4828,10 @@ export namespace LlmUpdateParams {
 
     /**
      * Cal.com event type id number for the cal.com event you want to check
-     * availability for.
+     * availability for. Can be a number or a dynamic variable in the format
+     * `{{variable_name}}` that will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -4655,8 +4852,9 @@ export namespace LlmUpdateParams {
     /**
      * Timezone to be used when checking availability, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -4670,8 +4868,10 @@ export namespace LlmUpdateParams {
 
     /**
      * Cal.com event type id number for the cal.com event you want to book appointment.
+     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+     * will be resolved at runtime.
      */
-    event_type_id: number;
+    event_type_id: number | string;
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -4692,8 +4892,9 @@ export namespace LlmUpdateParams {
     /**
      * Timezone to be used when booking appointment, must be in
      * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * If not specified, will check if user specified timezone in call, and if not,
-     * will use the timezone of the Retell servers.
+     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+     * resolved at runtime. If not specified, will check if user specified timezone in
+     * call, and if not, will use the timezone of the Retell servers.
      */
     timezone?: string;
   }
@@ -4733,6 +4934,14 @@ export namespace LlmUpdateParams {
      * The message for the agent to speak when executing agent swap.
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     speak_during_execution?: boolean;
 
@@ -4809,24 +5018,12 @@ export namespace LlmUpdateParams {
 
   export interface CustomTool {
     /**
-     * Describes what this tool does and when to call this tool.
-     */
-    description: string;
-
-    /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
      * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
-
-    /**
-     * Determines whether the agent would call LLM another time and speak when the
-     * result of function is obtained. Usually this needs to get turned on so user can
-     * get update for the function call.
-     */
-    speak_after_execution: boolean;
 
     type: 'custom';
 
@@ -4843,12 +5040,25 @@ export namespace LlmUpdateParams {
     args_at_root?: boolean;
 
     /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
      * The description for the sentence agent say during execution. Only applicable
      * when speak_during_execution is true. Can write what to say or even provide
      * examples. The default is "The message you will say to callee when calling this
      * tool. Make sure it fits into the conversation smoothly.".
      */
     execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
 
     /**
      * Headers to add to the request.
@@ -4879,6 +5089,13 @@ export namespace LlmUpdateParams {
      * use.
      */
     response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
 
     /**
      * Determines whether the agent would say sentence like "One moment, let me check
@@ -5095,6 +5312,14 @@ export namespace LlmUpdateParams {
     execution_message_description?: string;
 
     /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
      * The input schema of the MCP tool.
      */
     input_schema?: { [key: string]: string };
@@ -5291,6 +5516,14 @@ export namespace LlmUpdateParams {
       execution_message_description?: string;
 
       /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
        * If true, will speak during execution.
        */
       speak_during_execution?: boolean;
@@ -5330,6 +5563,14 @@ export namespace LlmUpdateParams {
        * speak_during_execution is true.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * If true, the e.164 validation will be ignored for the from_number. This can be
@@ -5628,9 +5869,10 @@ export namespace LlmUpdateParams {
 
       /**
        * Cal.com event type id number for the cal.com event you want to check
-       * availability for.
+       * availability for. Can be a number or a dynamic variable in the format
+       * `{{variable_name}}` that will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -5651,8 +5893,9 @@ export namespace LlmUpdateParams {
       /**
        * Timezone to be used when checking availability, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -5666,8 +5909,10 @@ export namespace LlmUpdateParams {
 
       /**
        * Cal.com event type id number for the cal.com event you want to book appointment.
+       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
+       * will be resolved at runtime.
        */
-      event_type_id: number;
+      event_type_id: number | string;
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -5688,8 +5933,9 @@ export namespace LlmUpdateParams {
       /**
        * Timezone to be used when booking appointment, must be in
        * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * If not specified, will check if user specified timezone in call, and if not,
-       * will use the timezone of the Retell servers.
+       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
+       * resolved at runtime. If not specified, will check if user specified timezone in
+       * call, and if not, will use the timezone of the Retell servers.
        */
       timezone?: string;
     }
@@ -5729,6 +5975,14 @@ export namespace LlmUpdateParams {
        * The message for the agent to speak when executing agent swap.
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       speak_during_execution?: boolean;
 
@@ -5805,24 +6059,12 @@ export namespace LlmUpdateParams {
 
     export interface CustomTool {
       /**
-       * Describes what this tool does and when to call this tool.
-       */
-      description: string;
-
-      /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
        * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
        * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
-
-      /**
-       * Determines whether the agent would call LLM another time and speak when the
-       * result of function is obtained. Usually this needs to get turned on so user can
-       * get update for the function call.
-       */
-      speak_after_execution: boolean;
 
       type: 'custom';
 
@@ -5839,12 +6081,25 @@ export namespace LlmUpdateParams {
       args_at_root?: boolean;
 
       /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
        * The description for the sentence agent say during execution. Only applicable
        * when speak_during_execution is true. Can write what to say or even provide
        * examples. The default is "The message you will say to callee when calling this
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * Headers to add to the request.
@@ -5875,6 +6130,13 @@ export namespace LlmUpdateParams {
        * use.
        */
       response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained. Usually this needs to get turned on so user can
+       * get update for the function call.
+       */
+      speak_after_execution?: boolean;
 
       /**
        * Determines whether the agent would say sentence like "One moment, let me check
@@ -6089,6 +6351,14 @@ export namespace LlmUpdateParams {
        * tool. Make sure it fits into the conversation smoothly.".
        */
       execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
 
       /**
        * The input schema of the MCP tool.

@@ -193,10 +193,16 @@ export interface ChatAgentResponse {
 
   /**
    * If users stay silent for a period after agent speech, end the chat. The minimum
-   * value allowed is 360,000 ms (0.1 hours). The maximum value allowed is
+   * value allowed is 120,000 ms (2 minutes). The maximum value allowed is
    * 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
   end_chat_after_silence_ms?: number;
+
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  guardrail_config?: ChatAgentResponse.GuardrailConfig;
 
   /**
    * Whether the agent is public. When set to true, the agent is available for public
@@ -372,6 +378,35 @@ export namespace ChatAgentResponse {
   }
 
   /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -527,10 +562,16 @@ export interface ChatAgentCreateParams {
 
   /**
    * If users stay silent for a period after agent speech, end the chat. The minimum
-   * value allowed is 360,000 ms (0.1 hours). The maximum value allowed is
+   * value allowed is 120,000 ms (2 minutes). The maximum value allowed is
    * 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
   end_chat_after_silence_ms?: number;
+
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  guardrail_config?: ChatAgentCreateParams.GuardrailConfig;
 
   /**
    * Whether the agent is public. When set to true, the agent is available for public
@@ -696,6 +737,35 @@ export namespace ChatAgentCreateParams {
   }
 
   /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -852,10 +922,16 @@ export interface ChatAgentUpdateParams {
 
   /**
    * Body param: If users stay silent for a period after agent speech, end the chat.
-   * The minimum value allowed is 360,000 ms (0.1 hours). The maximum value allowed
+   * The minimum value allowed is 120,000 ms (2 minutes). The maximum value allowed
    * is 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
   end_chat_after_silence_ms?: number;
+
+  /**
+   * Body param: Configuration for guardrail checks to detect and prevent prohibited
+   * topics in agent output and user input.
+   */
+  guardrail_config?: ChatAgentUpdateParams.GuardrailConfig;
 
   /**
    * Body param: Whether the agent is public. When set to true, the agent is
@@ -984,6 +1060,35 @@ export interface ChatAgentUpdateParams {
 }
 
 export namespace ChatAgentUpdateParams {
+  /**
+   * Configuration for guardrail checks to detect and prevent prohibited topics in
+   * agent output and user input.
+   */
+  export interface GuardrailConfig {
+    /**
+     * Selected prohibited user topic categories to check. When user messages contain
+     * these topics, the agent will respond with a placeholder message instead of
+     * processing the request.
+     */
+    input_topics?: Array<'platform_integrity_jailbreaking'> | null;
+
+    /**
+     * Selected prohibited agent topic categories to check. When agent messages contain
+     * these topics, they will be replaced with a placeholder message.
+     */
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
+  }
+
   /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
