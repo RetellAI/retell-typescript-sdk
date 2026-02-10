@@ -316,6 +316,12 @@ export interface ChatAgentResponse {
   version?: number;
 
   /**
+   * Which webhook events this agent should receive. If not set, defaults to
+   * chat_started, chat_ended, chat_analyzed.
+   */
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
+
+  /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
    * will apply.
    */
@@ -673,6 +679,12 @@ export interface ChatAgentCreateParams {
    * apply.
    */
   signed_url_expiration_ms?: number | null;
+
+  /**
+   * Which webhook events this agent should receive. If not set, defaults to
+   * chat_started, chat_ended, chat_analyzed.
+   */
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1043,6 +1055,12 @@ export interface ChatAgentUpdateParams {
    * (24 hours) will apply.
    */
   signed_url_expiration_ms?: number | null;
+
+  /**
+   * Body param: Which webhook events this agent should receive. If not set, defaults
+   * to chat_started, chat_ended, chat_analyzed.
+   */
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
 
   /**
    * Body param: The timeout for the webhook in milliseconds. If not set, default

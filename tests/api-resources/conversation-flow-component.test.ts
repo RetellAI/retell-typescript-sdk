@@ -73,6 +73,7 @@ describe('resource conversationFlowComponent', () => {
             high_priority: true,
           },
           name: 'name',
+          responsiveness: 0,
           skip_response_edge: {
             id: 'id',
             transition_condition: { prompt: 'prompt', type: 'prompt' },
@@ -89,6 +90,7 @@ describe('resource conversationFlowComponent', () => {
               speak_during_execution: true,
             },
           ],
+          voice_speed: 0.5,
         },
       ],
       begin_tag_display_position: { x: 100, y: 200 },

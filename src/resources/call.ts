@@ -474,6 +474,11 @@ export namespace PhoneCallResponse {
       product: string;
 
       /**
+       * True if this cost item is for a transfer segment.
+       */
+      is_transfer_leg_cost?: boolean;
+
+      /**
        * Unit price of the product in cents per second.
        */
       unit_price?: number;
@@ -1504,6 +1509,11 @@ export namespace WebCallResponse {
        * Product name that has a cost associated with it.
        */
       product: string;
+
+      /**
+       * True if this cost item is for a transfer segment.
+       */
+      is_transfer_leg_cost?: boolean;
 
       /**
        * Unit price of the product in cents per second.
@@ -2987,6 +2997,21 @@ export namespace CallCreatePhoneCallParams {
       volume?: number;
 
       /**
+       * Which webhook events this agent should receive. If not set, defaults to
+       * call_started, call_ended, call_analyzed.
+       */
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
+
+      /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000
        * will apply.
        */
@@ -4031,6 +4056,21 @@ export namespace CallCreateWebCallParams {
        * If unset, default value 1 will apply.
        */
       volume?: number;
+
+      /**
+       * Which webhook events this agent should receive. If not set, defaults to
+       * call_started, call_ended, call_analyzed.
+       */
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
 
       /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -5091,6 +5131,21 @@ export namespace CallRegisterPhoneCallParams {
        * If unset, default value 1 will apply.
        */
       volume?: number;
+
+      /**
+       * Which webhook events this agent should receive. If not set, defaults to
+       * call_started, call_ended, call_analyzed.
+       */
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
 
       /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000

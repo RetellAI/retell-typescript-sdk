@@ -349,6 +349,8 @@ export namespace ConversationFlowResponse {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       skip_response_edge?: ConversationNode.SkipResponseEdge;
 
       /**
@@ -375,6 +377,8 @@ export namespace ConversationFlowResponse {
         | ConversationNode.CancelTransferTool
         | ConversationNode.McpTool
       > | null;
+
+      voice_speed?: number | null;
     }
 
     export namespace ConversationNode {
@@ -1329,6 +1333,11 @@ export namespace ConversationFlowResponse {
          */
         execution_message_type?: 'prompt' | 'static_text';
 
+        /**
+         * If true, keep the current voice when swapping agents. Defaults to false.
+         */
+        keep_current_voice?: boolean;
+
         speak_during_execution?: boolean;
 
         /**
@@ -1950,10 +1959,14 @@ export namespace ConversationFlowResponse {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -4253,6 +4266,11 @@ export namespace ConversationFlowResponse {
       instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
       /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
@@ -4506,6 +4524,8 @@ export namespace ConversationFlowResponse {
 
       edges?: Array<McpNode.Edge>;
 
+      else_edge?: McpNode.ElseEdge;
+
       finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
       global_node_setting?: McpNode.GlobalNodeSetting;
@@ -4528,10 +4548,14 @@ export namespace ConversationFlowResponse {
        */
       response_variables?: { [key: string]: string };
 
+      responsiveness?: number | null;
+
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -4601,6 +4625,80 @@ export namespace ConversationFlowResponse {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -5684,6 +5782,8 @@ export namespace ConversationFlowResponse {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
     /**
@@ -5710,6 +5810,8 @@ export namespace ConversationFlowResponse {
       | ConversationNode.CancelTransferTool
       | ConversationNode.McpTool
     > | null;
+
+    voice_speed?: number | null;
   }
 
   export namespace ConversationNode {
@@ -6664,6 +6766,11 @@ export namespace ConversationFlowResponse {
        */
       execution_message_type?: 'prompt' | 'static_text';
 
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
       speak_during_execution?: boolean;
 
       /**
@@ -7285,10 +7392,14 @@ export namespace ConversationFlowResponse {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -9588,6 +9699,11 @@ export namespace ConversationFlowResponse {
     instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
     /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
@@ -9841,6 +9957,8 @@ export namespace ConversationFlowResponse {
 
     edges?: Array<McpNode.Edge>;
 
+    else_edge?: McpNode.ElseEdge;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -9863,10 +9981,14 @@ export namespace ConversationFlowResponse {
      */
     response_variables?: { [key: string]: string };
 
+    responsiveness?: number | null;
+
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -9936,6 +10058,80 @@ export namespace ConversationFlowResponse {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -11054,6 +11250,8 @@ export namespace ConversationFlowCreateParams {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
     /**
@@ -11080,6 +11278,8 @@ export namespace ConversationFlowCreateParams {
       | ConversationNode.CancelTransferTool
       | ConversationNode.McpTool
     > | null;
+
+    voice_speed?: number | null;
   }
 
   export namespace ConversationNode {
@@ -12034,6 +12234,11 @@ export namespace ConversationFlowCreateParams {
        */
       execution_message_type?: 'prompt' | 'static_text';
 
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
       speak_during_execution?: boolean;
 
       /**
@@ -12655,10 +12860,14 @@ export namespace ConversationFlowCreateParams {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -14958,6 +15167,11 @@ export namespace ConversationFlowCreateParams {
     instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
     /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
@@ -15211,6 +15425,8 @@ export namespace ConversationFlowCreateParams {
 
     edges?: Array<McpNode.Edge>;
 
+    else_edge?: McpNode.ElseEdge;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -15233,10 +15449,14 @@ export namespace ConversationFlowCreateParams {
      */
     response_variables?: { [key: string]: string };
 
+    responsiveness?: number | null;
+
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -15306,6 +15526,80 @@ export namespace ConversationFlowCreateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -16118,6 +16412,8 @@ export namespace ConversationFlowCreateParams {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       skip_response_edge?: ConversationNode.SkipResponseEdge;
 
       /**
@@ -16144,6 +16440,8 @@ export namespace ConversationFlowCreateParams {
         | ConversationNode.CancelTransferTool
         | ConversationNode.McpTool
       > | null;
+
+      voice_speed?: number | null;
     }
 
     export namespace ConversationNode {
@@ -17098,6 +17396,11 @@ export namespace ConversationFlowCreateParams {
          */
         execution_message_type?: 'prompt' | 'static_text';
 
+        /**
+         * If true, keep the current voice when swapping agents. Defaults to false.
+         */
+        keep_current_voice?: boolean;
+
         speak_during_execution?: boolean;
 
         /**
@@ -17719,10 +18022,14 @@ export namespace ConversationFlowCreateParams {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -20022,6 +20329,11 @@ export namespace ConversationFlowCreateParams {
       instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
       /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
@@ -20275,6 +20587,8 @@ export namespace ConversationFlowCreateParams {
 
       edges?: Array<McpNode.Edge>;
 
+      else_edge?: McpNode.ElseEdge;
+
       finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
       global_node_setting?: McpNode.GlobalNodeSetting;
@@ -20297,10 +20611,14 @@ export namespace ConversationFlowCreateParams {
        */
       response_variables?: { [key: string]: string };
 
+      responsiveness?: number | null;
+
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -20370,6 +20688,80 @@ export namespace ConversationFlowCreateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -21822,6 +22214,8 @@ export namespace ConversationFlowUpdateParams {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       skip_response_edge?: ConversationNode.SkipResponseEdge;
 
       /**
@@ -21848,6 +22242,8 @@ export namespace ConversationFlowUpdateParams {
         | ConversationNode.CancelTransferTool
         | ConversationNode.McpTool
       > | null;
+
+      voice_speed?: number | null;
     }
 
     export namespace ConversationNode {
@@ -22802,6 +23198,11 @@ export namespace ConversationFlowUpdateParams {
          */
         execution_message_type?: 'prompt' | 'static_text';
 
+        /**
+         * If true, keep the current voice when swapping agents. Defaults to false.
+         */
+        keep_current_voice?: boolean;
+
         speak_during_execution?: boolean;
 
         /**
@@ -23423,10 +23824,14 @@ export namespace ConversationFlowUpdateParams {
        */
       name?: string;
 
+      responsiveness?: number | null;
+
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -25726,6 +26131,11 @@ export namespace ConversationFlowUpdateParams {
       instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
       /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
@@ -25979,6 +26389,8 @@ export namespace ConversationFlowUpdateParams {
 
       edges?: Array<McpNode.Edge>;
 
+      else_edge?: McpNode.ElseEdge;
+
       finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
       global_node_setting?: McpNode.GlobalNodeSetting;
@@ -26001,10 +26413,14 @@ export namespace ConversationFlowUpdateParams {
        */
       response_variables?: { [key: string]: string };
 
+      responsiveness?: number | null;
+
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
+
+      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -26074,6 +26490,80 @@ export namespace ConversationFlowUpdateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -27157,6 +27647,8 @@ export namespace ConversationFlowUpdateParams {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
     /**
@@ -27183,6 +27675,8 @@ export namespace ConversationFlowUpdateParams {
       | ConversationNode.CancelTransferTool
       | ConversationNode.McpTool
     > | null;
+
+    voice_speed?: number | null;
   }
 
   export namespace ConversationNode {
@@ -28137,6 +28631,11 @@ export namespace ConversationFlowUpdateParams {
        */
       execution_message_type?: 'prompt' | 'static_text';
 
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
+
       speak_during_execution?: boolean;
 
       /**
@@ -28758,10 +29257,14 @@ export namespace ConversationFlowUpdateParams {
      */
     name?: string;
 
+    responsiveness?: number | null;
+
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -31061,6 +31564,11 @@ export namespace ConversationFlowUpdateParams {
     instruction?: AgentSwapNode.NodeInstructionPrompt | AgentSwapNode.NodeInstructionStaticText;
 
     /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
@@ -31314,6 +31822,8 @@ export namespace ConversationFlowUpdateParams {
 
     edges?: Array<McpNode.Edge>;
 
+    else_edge?: McpNode.ElseEdge;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -31336,10 +31846,14 @@ export namespace ConversationFlowUpdateParams {
      */
     response_variables?: { [key: string]: string };
 
+    responsiveness?: number | null;
+
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -31409,6 +31923,80 @@ export namespace ConversationFlowUpdateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 

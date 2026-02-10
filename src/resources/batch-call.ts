@@ -684,6 +684,21 @@ export namespace BatchCallCreateBatchCallParams {
         volume?: number;
 
         /**
+         * Which webhook events this agent should receive. If not set, defaults to
+         * call_started, call_ended, call_analyzed.
+         */
+        webhook_events?: Array<
+          | 'call_started'
+          | 'call_ended'
+          | 'call_analyzed'
+          | 'transcript_updated'
+          | 'transfer_started'
+          | 'transfer_bridged'
+          | 'transfer_cancelled'
+          | 'transfer_ended'
+        > | null;
+
+        /**
          * The timeout for the webhook in milliseconds. If not set, default value of 10000
          * will apply.
          */

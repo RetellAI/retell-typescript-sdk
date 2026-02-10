@@ -287,6 +287,11 @@ export namespace ChatResponse {
       product: string;
 
       /**
+       * True if this cost item is for a transfer segment.
+       */
+      is_transfer_leg_cost?: boolean;
+
+      /**
        * Unit price of the product in cents per second.
        */
       unit_price?: number;
