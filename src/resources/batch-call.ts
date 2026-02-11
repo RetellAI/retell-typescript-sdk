@@ -444,6 +444,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'sv-SE'
           | 'lt-LT'
           | 'lv-LV'
+          | 'cs-CZ'
           | 'ms-MY'
           | 'af-ZA'
           | 'ar-SA'
@@ -636,6 +637,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'tts-1'
           | 'gpt-4o-mini-tts'
           | 'speech-02-turbo'
+          | 'speech-2.8-turbo'
           | null;
 
         /**

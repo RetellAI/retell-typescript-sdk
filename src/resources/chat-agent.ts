@@ -259,6 +259,7 @@ export interface ChatAgentResponse {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'multi';
 
   /**
@@ -629,6 +630,7 @@ export interface ChatAgentCreateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'multi';
 
   /**
@@ -995,6 +997,7 @@ export interface ChatAgentUpdateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'multi';
 
   /**

@@ -2757,6 +2757,7 @@ export namespace CallCreatePhoneCallParams {
         | 'sv-SE'
         | 'lt-LT'
         | 'lv-LV'
+        | 'cs-CZ'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -2949,6 +2950,7 @@ export namespace CallCreatePhoneCallParams {
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
         | null;
 
       /**
@@ -3818,6 +3820,7 @@ export namespace CallCreateWebCallParams {
         | 'sv-SE'
         | 'lt-LT'
         | 'lv-LV'
+        | 'cs-CZ'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -4010,6 +4013,7 @@ export namespace CallCreateWebCallParams {
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
         | null;
 
       /**
@@ -4893,6 +4897,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'sv-SE'
         | 'lt-LT'
         | 'lv-LV'
+        | 'cs-CZ'
         | 'ms-MY'
         | 'af-ZA'
         | 'ar-SA'
@@ -5085,6 +5090,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
         | null;
 
       /**

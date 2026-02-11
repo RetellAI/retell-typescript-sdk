@@ -401,6 +401,7 @@ export interface AgentResponse {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -577,6 +578,7 @@ export interface AgentResponse {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
@@ -1194,6 +1196,7 @@ export interface AgentCreateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1370,6 +1373,7 @@ export interface AgentCreateParams {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
@@ -1983,6 +1987,7 @@ export interface AgentUpdateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -2183,6 +2188,7 @@ export interface AgentUpdateParams {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
