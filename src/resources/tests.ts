@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Tests extends APIResource {
   /**
    * Create a batch test to run multiple test cases
    */
-  createBatchTest(
-    body: TestCreateBatchTestParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<BatchTestResponse> {
+  createBatchTest(body: TestCreateBatchTestParams, options?: RequestOptions): APIPromise<BatchTestResponse> {
     return this._client.post('/create-batch-test', { body, ...options });
   }
 
@@ -19,49 +19,43 @@ export class Tests extends APIResource {
    */
   createTestCaseDefinition(
     body: TestCreateTestCaseDefinitionParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestCaseDefinitionResponse> {
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
     return this._client.post('/create-test-case-definition', { body, ...options });
   }
 
   /**
    * Delete a test case definition
    */
-  deleteTestCaseDefinition(
-    testCaseDefinitionId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<void> {
-    return this._client.delete(`/delete-test-case-definition/${testCaseDefinitionId}`, {
+  deleteTestCaseDefinition(testCaseDefinitionID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-test-case-definition/${testCaseDefinitionID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
   /**
    * Get a batch test job by ID
    */
-  getBatchTest(
-    testCaseBatchJobId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<BatchTestResponse> {
-    return this._client.get(`/get-batch-test/${testCaseBatchJobId}`, options);
+  getBatchTest(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<BatchTestResponse> {
+    return this._client.get(path`/get-batch-test/${testCaseBatchJobID}`, options);
   }
 
   /**
    * Get a test case definition by ID
    */
   getTestCaseDefinition(
-    testCaseDefinitionId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestCaseDefinitionResponse> {
-    return this._client.get(`/get-test-case-definition/${testCaseDefinitionId}`, options);
+    testCaseDefinitionID: string,
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
+    return this._client.get(path`/get-test-case-definition/${testCaseDefinitionID}`, options);
   }
 
   /**
    * Get a test case job (test run) by ID
    */
-  getTestRun(testCaseJobId: string, options?: Core.RequestOptions): Core.APIPromise<TestCaseJobResponse> {
-    return this._client.get(`/get-test-run/${testCaseJobId}`, options);
+  getTestRun(testCaseJobID: string, options?: RequestOptions): APIPromise<TestCaseJobResponse> {
+    return this._client.get(path`/get-test-run/${testCaseJobID}`, options);
   }
 
   /**
@@ -69,8 +63,8 @@ export class Tests extends APIResource {
    */
   listBatchTests(
     query: TestListBatchTestsParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestListBatchTestsResponse> {
+    options?: RequestOptions,
+  ): APIPromise<TestListBatchTestsResponse> {
     return this._client.get('/list-batch-tests', { query, ...options });
   }
 
@@ -79,30 +73,27 @@ export class Tests extends APIResource {
    */
   listTestCaseDefinitions(
     query: TestListTestCaseDefinitionsParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestListTestCaseDefinitionsResponse> {
+    options?: RequestOptions,
+  ): APIPromise<TestListTestCaseDefinitionsResponse> {
     return this._client.get('/list-test-case-definitions', { query, ...options });
   }
 
   /**
    * List all test case jobs (test runs) for a batch test job
    */
-  listTestRuns(
-    testCaseBatchJobId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestListTestRunsResponse> {
-    return this._client.get(`/list-test-runs/${testCaseBatchJobId}`, options);
+  listTestRuns(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<TestListTestRunsResponse> {
+    return this._client.get(path`/list-test-runs/${testCaseBatchJobID}`, options);
   }
 
   /**
    * Update a test case definition
    */
   updateTestCaseDefinition(
-    testCaseDefinitionId: string,
+    testCaseDefinitionID: string,
     body: TestUpdateTestCaseDefinitionParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TestCaseDefinitionResponse> {
-    return this._client.put(`/update-test-case-definition/${testCaseDefinitionId}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
+    return this._client.put(path`/update-test-case-definition/${testCaseDefinitionID}`, { body, ...options });
   }
 }
 

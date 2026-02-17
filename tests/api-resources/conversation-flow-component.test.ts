@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import Retell from 'retell-sdk';
-import { Response } from 'node-fetch';
 
 const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
@@ -144,16 +143,6 @@ describe('resource conversationFlowComponent', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.conversationFlowComponent.retrieve('conversation_flow_component_id', {
-        path: '/_stainless_unknown_path',
-      }),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.conversationFlowComponent.update('conversation_flow_component_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -178,14 +167,6 @@ describe('resource conversationFlowComponent', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.conversationFlowComponent.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
-  });
-
-  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.conversationFlowComponent.delete('conversation_flow_component_id');
     const rawResponse = await responsePromise.asResponse();
@@ -195,15 +176,5 @@ describe('resource conversationFlowComponent', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('delete: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.conversationFlowComponent.delete('conversation_flow_component_id', {
-        path: '/_stainless_unknown_path',
-      }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 });

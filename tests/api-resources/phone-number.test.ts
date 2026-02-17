@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import Retell from 'retell-sdk';
-import { Response } from 'node-fetch';
 
 const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
@@ -34,14 +33,6 @@ describe('resource phoneNumber', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.phoneNumber.retrieve('+14157774444', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.phoneNumber.update('+14157774444', {});
     const rawResponse = await responsePromise.asResponse();
@@ -66,14 +57,6 @@ describe('resource phoneNumber', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.phoneNumber.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
-  });
-
-  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.phoneNumber.delete('+14157774444');
     const rawResponse = await responsePromise.asResponse();
@@ -83,14 +66,6 @@ describe('resource phoneNumber', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('delete: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.phoneNumber.delete('+14157774444', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Prism tests are disabled

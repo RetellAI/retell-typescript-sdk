@@ -1,18 +1,20 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class McpTool extends APIResource {
   /**
    * Get MCP tools for a specific agent
    */
   getMcpTools(
-    agentId: string,
+    agentID: string,
     query: McpToolGetMcpToolsParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<McpToolGetMcpToolsResponse> {
-    return this._client.get(`/get-mcp-tools/${agentId}`, { query, ...options });
+    options?: RequestOptions,
+  ): APIPromise<McpToolGetMcpToolsResponse> {
+    return this._client.get(path`/get-mcp-tools/${agentID}`, { query, ...options });
   }
 }
 

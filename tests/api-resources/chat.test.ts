@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import Retell from 'retell-sdk';
-import { Response } from 'node-fetch';
 
 const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
@@ -44,14 +43,6 @@ describe('resource chat', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.chat.retrieve('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.chat.update('chat_98c1a2157aa0559144d67bb0729', {});
     const rawResponse = await responsePromise.asResponse();
@@ -73,14 +64,6 @@ describe('resource chat', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('list: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.chat.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Retell.NotFoundError,
-    );
   });
 
   // Prism tests are disabled
@@ -158,13 +141,5 @@ describe('resource chat', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('end: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.chat.end('16b980523634a6dc504898cda492e939', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 });

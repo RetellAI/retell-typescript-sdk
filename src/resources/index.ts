@@ -67,6 +67,7 @@ export {
   type KnowledgeBaseListResponse,
   type KnowledgeBaseCreateParams,
   type KnowledgeBaseAddSourcesParams,
+  type KnowledgeBaseDeleteSourceParams,
 } from './knowledge-base';
 export {
   Llm,

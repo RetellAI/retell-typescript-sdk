@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class ChatAgent extends APIResource {
   /**
@@ -18,7 +20,7 @@ export class ChatAgent extends APIResource {
    * });
    * ```
    */
-  create(body: ChatAgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<ChatAgentResponse> {
+  create(body: ChatAgentCreateParams, options?: RequestOptions): APIPromise<ChatAgentResponse> {
     return this._client.post('/create-chat-agent', { body, ...options });
   }
 
@@ -33,20 +35,11 @@ export class ChatAgent extends APIResource {
    * ```
    */
   retrieve(
-    agentId: string,
-    query?: ChatAgentRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatAgentResponse>;
-  retrieve(agentId: string, options?: Core.RequestOptions): Core.APIPromise<ChatAgentResponse>;
-  retrieve(
-    agentId: string,
-    query: ChatAgentRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatAgentResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(agentId, {}, query);
-    }
-    return this._client.get(`/get-chat-agent/${agentId}`, { query, ...options });
+    agentID: string,
+    query: ChatAgentRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentResponse> {
+    return this._client.get(path`/get-chat-agent/${agentID}`, { query, ...options });
   }
 
   /**
@@ -60,12 +53,12 @@ export class ChatAgent extends APIResource {
    * ```
    */
   update(
-    agentId: string,
+    agentID: string,
     params: ChatAgentUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatAgentResponse> {
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentResponse> {
     const { version, ...body } = params;
-    return this._client.patch(`/update-chat-agent/${agentId}`, { query: { version }, body, ...options });
+    return this._client.patch(path`/update-chat-agent/${agentID}`, { query: { version }, body, ...options });
   }
 
   /**
@@ -76,15 +69,10 @@ export class ChatAgent extends APIResource {
    * const chatAgentResponses = await client.chatAgent.list();
    * ```
    */
-  list(query?: ChatAgentListParams, options?: Core.RequestOptions): Core.APIPromise<ChatAgentListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ChatAgentListResponse>;
   list(
-    query: ChatAgentListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatAgentListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
+    query: ChatAgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentListResponse> {
     return this._client.get('/list-chat-agents', { query, ...options });
   }
 
@@ -98,10 +86,10 @@ export class ChatAgent extends APIResource {
    * );
    * ```
    */
-  delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-chat-agent/${agentId}`, {
+  delete(agentID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-chat-agent/${agentID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
@@ -116,8 +104,8 @@ export class ChatAgent extends APIResource {
    *   );
    * ```
    */
-  getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<ChatAgentGetVersionsResponse> {
-    return this._client.get(`/get-chat-agent-versions/${agentId}`, options);
+  getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
+    return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
   }
 
   /**
@@ -131,10 +119,10 @@ export class ChatAgent extends APIResource {
    * );
    * ```
    */
-  publish(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.post(`/publish-chat-agent/${agentId}`, {
+  publish(agentID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-chat-agent/${agentID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

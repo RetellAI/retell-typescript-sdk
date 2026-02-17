@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Llm extends APIResource {
   /**
@@ -14,7 +16,7 @@ export class Llm extends APIResource {
    * const llmResponse = await client.llm.create();
    * ```
    */
-  create(body: LlmCreateParams, options?: Core.RequestOptions): Core.APIPromise<LlmResponse> {
+  create(body: LlmCreateParams, options?: RequestOptions): APIPromise<LlmResponse> {
     return this._client.post('/create-retell-llm', { body, ...options });
   }
 
@@ -29,20 +31,11 @@ export class Llm extends APIResource {
    * ```
    */
   retrieve(
-    llmId: string,
-    query?: LlmRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LlmResponse>;
-  retrieve(llmId: string, options?: Core.RequestOptions): Core.APIPromise<LlmResponse>;
-  retrieve(
-    llmId: string,
-    query: LlmRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LlmResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(llmId, {}, query);
-    }
-    return this._client.get(`/get-retell-llm/${llmId}`, { query, ...options });
+    llmID: string,
+    query: LlmRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<LlmResponse> {
+    return this._client.get(path`/get-retell-llm/${llmID}`, { query, ...options });
   }
 
   /**
@@ -59,13 +52,9 @@ export class Llm extends APIResource {
    * );
    * ```
    */
-  update(
-    llmId: string,
-    params: LlmUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LlmResponse> {
+  update(llmID: string, params: LlmUpdateParams, options?: RequestOptions): APIPromise<LlmResponse> {
     const { query_version, ...body } = params;
-    return this._client.patch(`/update-retell-llm/${llmId}`, {
+    return this._client.patch(path`/update-retell-llm/${llmID}`, {
       query: { version: query_version },
       body,
       ...options,
@@ -80,15 +69,7 @@ export class Llm extends APIResource {
    * const llmResponses = await client.llm.list();
    * ```
    */
-  list(query?: LlmListParams, options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<LlmListResponse>;
-  list(
-    query: LlmListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LlmListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
+  list(query: LlmListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llms', { query, ...options });
   }
 
@@ -100,10 +81,10 @@ export class Llm extends APIResource {
    * await client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
    * ```
    */
-  delete(llmId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-retell-llm/${llmId}`, {
+  delete(llmID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-retell-llm/${llmID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

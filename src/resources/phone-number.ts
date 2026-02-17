@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class PhoneNumber extends APIResource {
   /**
@@ -13,7 +16,7 @@ export class PhoneNumber extends APIResource {
    *   await client.phoneNumber.create();
    * ```
    */
-  create(body: PhoneNumberCreateParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
+  create(body: PhoneNumberCreateParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
     return this._client.post('/create-phone-number', { body, ...options });
   }
 
@@ -26,8 +29,8 @@ export class PhoneNumber extends APIResource {
    *   await client.phoneNumber.retrieve('+14157774444');
    * ```
    */
-  retrieve(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
-    return this._client.get(`/get-phone-number/${phoneNumber}`, options);
+  retrieve(phoneNumber: string, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
+    return this._client.get(path`/get-phone-number/${phoneNumber}`, options);
   }
 
   /**
@@ -48,9 +51,9 @@ export class PhoneNumber extends APIResource {
   update(
     phoneNumber: string,
     body: PhoneNumberUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneNumberResponse> {
-    return this._client.patch(`/update-phone-number/${phoneNumber}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberResponse> {
+    return this._client.patch(path`/update-phone-number/${phoneNumber}`, { body, ...options });
   }
 
   /**
@@ -62,7 +65,7 @@ export class PhoneNumber extends APIResource {
    *   await client.phoneNumber.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<PhoneNumberListResponse> {
+  list(options?: RequestOptions): APIPromise<PhoneNumberListResponse> {
     return this._client.get('/list-phone-numbers', options);
   }
 
@@ -74,10 +77,10 @@ export class PhoneNumber extends APIResource {
    * await client.phoneNumber.delete('+14157774444');
    * ```
    */
-  delete(phoneNumber: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-phone-number/${phoneNumber}`, {
+  delete(phoneNumber: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-phone-number/${phoneNumber}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
@@ -94,7 +97,7 @@ export class PhoneNumber extends APIResource {
    * );
    * ```
    */
-  import(body: PhoneNumberImportParams, options?: Core.RequestOptions): Core.APIPromise<PhoneNumberResponse> {
+  import(body: PhoneNumberImportParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
     return this._client.post('/import-phone-number', { body, ...options });
   }
 }

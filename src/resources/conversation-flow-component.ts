@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class ConversationFlowComponent extends APIResource {
   /**
@@ -27,8 +30,8 @@ export class ConversationFlowComponent extends APIResource {
    */
   create(
     body: ConversationFlowComponentCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowComponentResponse> {
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowComponentResponse> {
     return this._client.post('/create-conversation-flow-component', { body, ...options });
   }
 
@@ -44,10 +47,10 @@ export class ConversationFlowComponent extends APIResource {
    * ```
    */
   retrieve(
-    conversationFlowComponentId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowComponentResponse> {
-    return this._client.get(`/get-conversation-flow-component/${conversationFlowComponentId}`, options);
+    conversationFlowComponentID: string,
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowComponentResponse> {
+    return this._client.get(path`/get-conversation-flow-component/${conversationFlowComponentID}`, options);
   }
 
   /**
@@ -62,11 +65,11 @@ export class ConversationFlowComponent extends APIResource {
    * ```
    */
   update(
-    conversationFlowComponentId: string,
+    conversationFlowComponentID: string,
     body: ConversationFlowComponentUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowComponentResponse> {
-    return this._client.patch(`/update-conversation-flow-component/${conversationFlowComponentId}`, {
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowComponentResponse> {
+    return this._client.patch(path`/update-conversation-flow-component/${conversationFlowComponentID}`, {
       body,
       ...options,
     });
@@ -81,7 +84,7 @@ export class ConversationFlowComponent extends APIResource {
    *   await client.conversationFlowComponent.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<ConversationFlowComponentListResponse> {
+  list(options?: RequestOptions): APIPromise<ConversationFlowComponentListResponse> {
     return this._client.get('/list-conversation-flow-components', options);
   }
 
@@ -96,10 +99,10 @@ export class ConversationFlowComponent extends APIResource {
    * );
    * ```
    */
-  delete(conversationFlowComponentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-conversation-flow-component/${conversationFlowComponentId}`, {
+  delete(conversationFlowComponentID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-conversation-flow-component/${conversationFlowComponentID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

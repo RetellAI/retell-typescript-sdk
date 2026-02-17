@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Chat extends APIResource {
   /**
@@ -15,7 +17,7 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  create(body: ChatCreateParams, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
+  create(body: ChatCreateParams, options?: RequestOptions): APIPromise<ChatResponse> {
     return this._client.post('/create-chat', { body, ...options });
   }
 
@@ -29,8 +31,8 @@ export class Chat extends APIResource {
    * );
    * ```
    */
-  retrieve(chatId: string, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
-    return this._client.get(`/get-chat/${chatId}`, options);
+  retrieve(chatID: string, options?: RequestOptions): APIPromise<ChatResponse> {
+    return this._client.get(path`/get-chat/${chatID}`, options);
   }
 
   /**
@@ -53,12 +55,8 @@ export class Chat extends APIResource {
    * );
    * ```
    */
-  update(
-    chatId: string,
-    body: ChatUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatResponse> {
-    return this._client.patch(`/update-chat/${chatId}`, { body, ...options });
+  update(chatID: string, body: ChatUpdateParams, options?: RequestOptions): APIPromise<ChatResponse> {
+    return this._client.patch(path`/update-chat/${chatID}`, { body, ...options });
   }
 
   /**
@@ -69,15 +67,10 @@ export class Chat extends APIResource {
    * const chatResponses = await client.chat.list();
    * ```
    */
-  list(query?: ChatListParams, options?: Core.RequestOptions): Core.APIPromise<ChatListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ChatListResponse>;
   list(
-    query: ChatListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
+    query: ChatListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChatListResponse> {
     return this._client.get('/list-chat', {
       query,
       timeout: (this._client as any)._options.timeout ?? 300000,
@@ -98,8 +91,8 @@ export class Chat extends APIResource {
    */
   createChatCompletion(
     body: ChatCreateChatCompletionParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChatCreateChatCompletionResponse> {
+    options?: RequestOptions,
+  ): APIPromise<ChatCreateChatCompletionResponse> {
     return this._client.post('/create-chat-completion', {
       body,
       timeout: (this._client as any)._options.timeout ?? 300000,
@@ -120,7 +113,7 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  createSMSChat(body: ChatCreateSMSChatParams, options?: Core.RequestOptions): Core.APIPromise<ChatResponse> {
+  createSMSChat(body: ChatCreateSMSChatParams, options?: RequestOptions): APIPromise<ChatResponse> {
     return this._client.post('/create-sms-chat', { body, ...options });
   }
 
@@ -132,10 +125,10 @@ export class Chat extends APIResource {
    * await client.chat.end('16b980523634a6dc504898cda492e939');
    * ```
    */
-  end(chatId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.patch(`/end-chat/${chatId}`, {
+  end(chatID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/end-chat/${chatID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Call extends APIResource {
   /**
@@ -14,8 +17,8 @@ export class Call extends APIResource {
    * );
    * ```
    */
-  retrieve(callId: string, options?: Core.RequestOptions): Core.APIPromise<CallResponse> {
-    return this._client.get(`/v2/get-call/${callId}`, options);
+  retrieve(callID: string, options?: RequestOptions): APIPromise<CallResponse> {
+    return this._client.get(path`/v2/get-call/${callID}`, options);
   }
 
   /**
@@ -35,12 +38,8 @@ export class Call extends APIResource {
    * );
    * ```
    */
-  update(
-    callId: string,
-    body: CallUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CallResponse> {
-    return this._client.patch(`/v2/update-call/${callId}`, { body, ...options });
+  update(callID: string, body: CallUpdateParams, options?: RequestOptions): APIPromise<CallResponse> {
+    return this._client.patch(path`/v2/update-call/${callID}`, { body, ...options });
   }
 
   /**
@@ -51,7 +50,7 @@ export class Call extends APIResource {
    * const callResponses = await client.call.list();
    * ```
    */
-  list(body: CallListParams, options?: Core.RequestOptions): Core.APIPromise<CallListResponse> {
+  list(body: CallListParams, options?: RequestOptions): APIPromise<CallListResponse> {
     return this._client.post('/v2/list-calls', {
       body,
       timeout: (this._client as any)._options.timeout ?? 300000,
@@ -69,10 +68,10 @@ export class Call extends APIResource {
    * );
    * ```
    */
-  delete(callId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/v2/delete-call/${callId}`, {
+  delete(callID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/v2/delete-call/${callID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
@@ -89,10 +88,7 @@ export class Call extends APIResource {
    * );
    * ```
    */
-  createPhoneCall(
-    body: CallCreatePhoneCallParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneCallResponse> {
+  createPhoneCall(body: CallCreatePhoneCallParams, options?: RequestOptions): APIPromise<PhoneCallResponse> {
     return this._client.post('/v2/create-phone-call', {
       body,
       timeout: (this._client as any)._options.timeout ?? 120000,
@@ -110,10 +106,7 @@ export class Call extends APIResource {
    * });
    * ```
    */
-  createWebCall(
-    body: CallCreateWebCallParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<WebCallResponse> {
+  createWebCall(body: CallCreateWebCallParams, options?: RequestOptions): APIPromise<WebCallResponse> {
     return this._client.post('/v2/create-web-call', { body, ...options });
   }
 
@@ -130,8 +123,8 @@ export class Call extends APIResource {
    */
   registerPhoneCall(
     body: CallRegisterPhoneCallParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PhoneCallResponse> {
+    options?: RequestOptions,
+  ): APIPromise<PhoneCallResponse> {
     return this._client.post('/v2/register-phone-call', { body, ...options });
   }
 }

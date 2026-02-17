@@ -1,13 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
 
 export class Concurrency extends APIResource {
   /**
    * Get the current concurrency and concurrency limit of the org
    */
-  retrieve(options?: Core.RequestOptions): Core.APIPromise<ConcurrencyRetrieveResponse> {
+  retrieve(options?: RequestOptions): APIPromise<ConcurrencyRetrieveResponse> {
     return this._client.get('/get-concurrency', options);
   }
 }

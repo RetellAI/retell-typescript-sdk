@@ -1,41 +1,45 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { type Uploadable } from '../core/uploads';
+import { RequestOptions } from '../internal/request-options';
+import { multipartFormRequestOptions } from '../internal/uploads';
+import { path } from '../internal/utils/path';
 
 export class Voice extends APIResource {
   /**
    * Retrieve details of a specific voice
    */
-  retrieve(voiceId: string, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
-    return this._client.get(`/get-voice/${voiceId}`, options);
+  retrieve(voiceID: string, options?: RequestOptions): APIPromise<VoiceResponse> {
+    return this._client.get(path`/get-voice/${voiceID}`, options);
   }
 
   /**
    * List all voices available to the user
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<VoiceListResponse> {
+  list(options?: RequestOptions): APIPromise<VoiceListResponse> {
     return this._client.get('/list-voices', options);
   }
 
   /**
    * Add a community voice to the voice library
    */
-  addResource(body: VoiceAddResourceParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
+  addResource(body: VoiceAddResourceParams, options?: RequestOptions): APIPromise<VoiceResponse> {
     return this._client.post('/add-community-voice', { body, ...options });
   }
 
   /**
    * Clone a voice from audio files
    */
-  clone(body: VoiceCloneParams, options?: Core.RequestOptions): Core.APIPromise<VoiceResponse> {
-    return this._client.post('/clone-voice', Core.multipartFormRequestOptions({ body, ...options }));
+  clone(body: VoiceCloneParams, options?: RequestOptions): APIPromise<VoiceResponse> {
+    return this._client.post('/clone-voice', multipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
    * Search for community voices from voice providers
    */
-  search(body: VoiceSearchParams, options?: Core.RequestOptions): Core.APIPromise<VoiceSearchResponse> {
+  search(body: VoiceSearchParams, options?: RequestOptions): APIPromise<VoiceSearchResponse> {
     return this._client.post('/search-community-voice', { body, ...options });
   }
 }
@@ -137,7 +141,7 @@ export interface VoiceCloneParams {
    * Audio files to use for voice cloning. Up to 25 files allowed. For Cartesia and
    * MiniMax, only 1 file is supported.
    */
-  files: Array<Core.Uploadable>;
+  files: Array<Uploadable>;
 
   /**
    * Name for the cloned voice

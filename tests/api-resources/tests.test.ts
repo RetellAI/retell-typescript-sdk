@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import Retell from 'retell-sdk';
-import { Response } from 'node-fetch';
 
 const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
@@ -90,14 +89,6 @@ describe('resource tests', () => {
   });
 
   // Prism tests are disabled
-  test.skip('deleteTestCaseDefinition: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tests.deleteTestCaseDefinition('test_case_definition_id', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('getBatchTest', async () => {
     const responsePromise = client.tests.getBatchTest('test_case_batch_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -107,14 +98,6 @@ describe('resource tests', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('getBatchTest: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tests.getBatchTest('test_case_batch_job_id', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Prism tests are disabled
@@ -130,14 +113,6 @@ describe('resource tests', () => {
   });
 
   // Prism tests are disabled
-  test.skip('getTestCaseDefinition: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tests.getTestCaseDefinition('test_case_definition_id', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('getTestRun', async () => {
     const responsePromise = client.tests.getTestRun('test_case_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -147,14 +122,6 @@ describe('resource tests', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('getTestRun: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tests.getTestRun('test_case_job_id', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Prism tests are disabled
@@ -211,14 +178,6 @@ describe('resource tests', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('listTestRuns: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tests.listTestRuns('test_case_batch_job_id', { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Prism tests are disabled

@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class ConversationFlow extends APIResource {
   /**
@@ -28,10 +30,7 @@ export class ConversationFlow extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: ConversationFlowCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowResponse> {
+  create(body: ConversationFlowCreateParams, options?: RequestOptions): APIPromise<ConversationFlowResponse> {
     return this._client.post('/create-conversation-flow', { body, ...options });
   }
 
@@ -47,23 +46,11 @@ export class ConversationFlow extends APIResource {
    * ```
    */
   retrieve(
-    conversationFlowId: string,
-    query?: ConversationFlowRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowResponse>;
-  retrieve(
-    conversationFlowId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowResponse>;
-  retrieve(
-    conversationFlowId: string,
-    query: ConversationFlowRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(conversationFlowId, {}, query);
-    }
-    return this._client.get(`/get-conversation-flow/${conversationFlowId}`, { query, ...options });
+    conversationFlowID: string,
+    query: ConversationFlowRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowResponse> {
+    return this._client.get(path`/get-conversation-flow/${conversationFlowID}`, { query, ...options });
   }
 
   /**
@@ -78,12 +65,12 @@ export class ConversationFlow extends APIResource {
    * ```
    */
   update(
-    conversationFlowId: string,
+    conversationFlowID: string,
     params: ConversationFlowUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowResponse> {
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowResponse> {
     const { version, ...body } = params;
-    return this._client.patch(`/update-conversation-flow/${conversationFlowId}`, {
+    return this._client.patch(path`/update-conversation-flow/${conversationFlowID}`, {
       query: { version },
       body,
       ...options,
@@ -100,17 +87,9 @@ export class ConversationFlow extends APIResource {
    * ```
    */
   list(
-    query?: ConversationFlowListParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ConversationFlowListResponse>;
-  list(
-    query: ConversationFlowListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationFlowListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
+    query: ConversationFlowListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowListResponse> {
     return this._client.get('/list-conversation-flows', { query, ...options });
   }
 
@@ -124,10 +103,10 @@ export class ConversationFlow extends APIResource {
    * );
    * ```
    */
-  delete(conversationFlowId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-conversation-flow/${conversationFlowId}`, {
+  delete(conversationFlowID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-conversation-flow/${conversationFlowID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

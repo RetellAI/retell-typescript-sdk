@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Agent extends APIResource {
   /**
@@ -19,7 +21,7 @@ export class Agent extends APIResource {
    * });
    * ```
    */
-  create(body: AgentCreateParams, options?: Core.RequestOptions): Core.APIPromise<AgentResponse> {
+  create(body: AgentCreateParams, options?: RequestOptions): APIPromise<AgentResponse> {
     return this._client.post('/create-agent', { body, ...options });
   }
 
@@ -34,20 +36,11 @@ export class Agent extends APIResource {
    * ```
    */
   retrieve(
-    agentId: string,
-    query?: AgentRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentResponse>;
-  retrieve(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentResponse>;
-  retrieve(
-    agentId: string,
-    query: AgentRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(agentId, {}, query);
-    }
-    return this._client.get(`/get-agent/${agentId}`, { query, ...options });
+    agentID: string,
+    query: AgentRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentResponse> {
+    return this._client.get(path`/get-agent/${agentID}`, { query, ...options });
   }
 
   /**
@@ -61,13 +54,9 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  update(
-    agentId: string,
-    params: AgentUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentResponse> {
+  update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
     const { version, ...body } = params;
-    return this._client.patch(`/update-agent/${agentId}`, { query: { version }, body, ...options });
+    return this._client.patch(path`/update-agent/${agentID}`, { query: { version }, body, ...options });
   }
 
   /**
@@ -78,15 +67,10 @@ export class Agent extends APIResource {
    * const agentResponses = await client.agent.list();
    * ```
    */
-  list(query?: AgentListParams, options?: Core.RequestOptions): Core.APIPromise<AgentListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<AgentListResponse>;
   list(
-    query: AgentListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<AgentListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
+    query: AgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentListResponse> {
     return this._client.get('/list-agents', { query, ...options });
   }
 
@@ -100,10 +84,10 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  delete(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/delete-agent/${agentId}`, {
+  delete(agentID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-agent/${agentID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
@@ -117,8 +101,8 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  getVersions(agentId: string, options?: Core.RequestOptions): Core.APIPromise<AgentGetVersionsResponse> {
-    return this._client.get(`/get-agent-versions/${agentId}`, options);
+  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
+    return this._client.get(path`/get-agent-versions/${agentID}`, options);
   }
 
   /**
@@ -132,10 +116,10 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  publish(agentId: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.post(`/publish-agent/${agentId}`, {
+  publish(agentID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent/${agentID}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

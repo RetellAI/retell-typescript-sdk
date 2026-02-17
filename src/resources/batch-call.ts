@@ -1,7 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
 
 export class BatchCall extends APIResource {
   /**
@@ -18,8 +19,8 @@ export class BatchCall extends APIResource {
    */
   createBatchCall(
     body: BatchCallCreateBatchCallParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<BatchCallResponse> {
+    options?: RequestOptions,
+  ): APIPromise<BatchCallResponse> {
     return this._client.post('/create-batch-call', {
       body,
       timeout: (this._client as any)._options.timeout ?? 300000,
