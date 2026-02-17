@@ -119,6 +119,7 @@ import {
   VoiceSearchParams,
   VoiceSearchResponse,
 } from './resources/voice';
+import * as Webhooks from 'retell-sdk/lib/webhook_auth';
 
 export interface ClientOptions {
   apiKey: string;
@@ -285,6 +286,9 @@ export class Retell extends Core.APIClient {
 
   static toFile = Uploads.toFile;
   static fileFromPath = Uploads.fileFromPath;
+
+  static verify = Webhooks.verify;
+  static sign = Webhooks.sign;
 }
 
 Retell.Call = Call;

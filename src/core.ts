@@ -242,23 +242,23 @@ export abstract class APIClient {
   }
 
   get<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('get', path, opts);
+    return this.methodRequest('GET', path, opts);
   }
 
   post<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('post', path, opts);
+    return this.methodRequest('POST', path, opts);
   }
 
   patch<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('patch', path, opts);
+    return this.methodRequest('PATCH', path, opts);
   }
 
   put<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('put', path, opts);
+    return this.methodRequest('PUT', path, opts);
   }
 
   delete<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('delete', path, opts);
+    return this.methodRequest('DELETE', path, opts);
   }
 
   private methodRequest<Req, Rsp>(
@@ -284,7 +284,7 @@ export abstract class APIClient {
     Page: new (...args: any[]) => PageClass,
     opts?: RequestOptions<any>,
   ): PagePromise<PageClass, Item> {
-    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+    return this.requestAPIList(Page, { method: 'GET', path, ...opts });
   }
 
   private calculateContentLength(body: unknown): string | null {
@@ -336,7 +336,7 @@ export abstract class APIClient {
       (httpAgent as any).options.timeout = minAgentTimeout;
     }
 
-    if (this.idempotencyHeader && method !== 'get') {
+    if (this.idempotencyHeader && method !== 'GET') {
       if (!inputOptions.idempotencyKey) inputOptions.idempotencyKey = this.defaultIdempotencyKey();
       headers[this.idempotencyHeader] = inputOptions.idempotencyKey;
     }
@@ -790,7 +790,7 @@ export const createResponseHeaders = (
   );
 };
 
-type HTTPMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export type RequestClient = { fetch: Fetch };
 export type Headers = Record<string, string | null | undefined>;
