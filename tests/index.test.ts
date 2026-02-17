@@ -27,14 +27,14 @@ describe('instantiate client', () => {
     });
 
     test('they are used in the request', async () => {
-      const { req } = await client.buildRequest({ path: '/foo', method: 'POST' });
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post' });
       expect((req.headers as Headers)['x-my-default-header']).toEqual('2');
     });
 
     test('can ignore `undefined` and leave the default', async () => {
       const { req } = await client.buildRequest({
         path: '/foo',
-        method: 'POST',
+        method: 'post',
         headers: { 'X-My-Default-Header': undefined },
       });
       expect((req.headers as Headers)['x-my-default-header']).toEqual('2');
@@ -43,7 +43,7 @@ describe('instantiate client', () => {
     test('can be removed with `null`', async () => {
       const { req } = await client.buildRequest({
         path: '/foo',
-        method: 'POST',
+        method: 'post',
         headers: { 'X-My-Default-Header': null },
       });
       expect(req.headers as Headers).not.toHaveProperty('x-my-default-header');
@@ -230,12 +230,12 @@ describe('request building', () => {
 
   describe('Content-Length', () => {
     test('handles multi-byte characters', async () => {
-      const { req } = await client.buildRequest({ path: '/foo', method: 'POST', body: { value: '—' } });
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post', body: { value: '—' } });
       expect((req.headers as Record<string, string>)['content-length']).toEqual('20');
     });
 
     test('handles standard characters', async () => {
-      const { req } = await client.buildRequest({ path: '/foo', method: 'POST', body: { value: 'hello' } });
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post', body: { value: 'hello' } });
       expect((req.headers as Record<string, string>)['content-length']).toEqual('22');
     });
   });
@@ -244,7 +244,7 @@ describe('request building', () => {
     test('handles undefined', async () => {
       const { req } = await client.buildRequest({
         path: '/foo',
-        method: 'POST',
+        method: 'post',
         body: { value: 'hello' },
         headers: { 'X-Foo': 'baz', 'x-foo': 'bar', 'x-Foo': undefined, 'x-baz': 'bam', 'X-Baz': null },
       });
@@ -274,11 +274,11 @@ describe('retries', () => {
       fetch: testFetch,
     });
 
-    expect(await client.request({ path: '/foo', method: 'GET' })).toEqual({ a: 1 });
+    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
-        .request({ path: '/foo', method: 'GET' })
+        .request({ path: '/foo', method: 'get' })
         .asResponse()
         .then((r) => r.text()),
     ).toEqual(JSON.stringify({ a: 1 }));
@@ -308,7 +308,7 @@ describe('retries', () => {
       maxRetries: 4,
     });
 
-    expect(await client.request({ path: '/foo', method: 'GET' })).toEqual({ a: 1 });
+    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
     expect((capturedRequest!.headers as Headers)['x-stainless-retry-count']).toEqual('2');
     expect(count).toEqual(3);
@@ -339,7 +339,7 @@ describe('retries', () => {
     expect(
       await client.request({
         path: '/foo',
-        method: 'GET',
+        method: 'get',
         headers: { 'X-Stainless-Retry-Count': null },
       }),
     ).toEqual({ a: 1 });
@@ -373,7 +373,7 @@ describe('retries', () => {
     expect(
       await client.request({
         path: '/foo',
-        method: 'GET',
+        method: 'get',
       }),
     ).toEqual({ a: 1 });
 
@@ -405,7 +405,7 @@ describe('retries', () => {
     expect(
       await client.request({
         path: '/foo',
-        method: 'GET',
+        method: 'get',
         headers: { 'X-Stainless-Retry-Count': '42' },
       }),
     ).toEqual({ a: 1 });
@@ -429,11 +429,11 @@ describe('retries', () => {
 
     const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'GET' })).toEqual({ a: 1 });
+    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
-        .request({ path: '/foo', method: 'GET' })
+        .request({ path: '/foo', method: 'get' })
         .asResponse()
         .then((r) => r.text()),
     ).toEqual(JSON.stringify({ a: 1 }));
@@ -456,11 +456,11 @@ describe('retries', () => {
 
     const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'GET' })).toEqual({ a: 1 });
+    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
-        .request({ path: '/foo', method: 'GET' })
+        .request({ path: '/foo', method: 'get' })
         .asResponse()
         .then((r) => r.text()),
     ).toEqual(JSON.stringify({ a: 1 }));
