@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.78.1 (2026-02-17)
+
+Full Changelog: [v4.78.0...v4.78.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.78.0...v4.78.1)
+
+### Chores
+
+* remove custom code ([1fe755c](https://github.com/RetellAI/retell-typescript-sdk/commit/1fe755c2da1cc60eefeb74795d233605683180ed))
+
 ## 4.78.0 (2026-02-11)
 
 Full Changelog: [v4.77.0...v4.78.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v4.77.0...v4.78.0)
