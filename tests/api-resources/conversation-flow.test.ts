@@ -78,6 +78,7 @@ describe('resource conversationFlow', () => {
             high_priority: true,
           },
           name: 'name',
+          responsiveness: 0,
           skip_response_edge: {
             id: 'id',
             transition_condition: { prompt: 'Skip response', type: 'prompt' },
@@ -94,6 +95,7 @@ describe('resource conversationFlow', () => {
               speak_during_execution: true,
             },
           ],
+          voice_speed: 0.5,
         },
       ],
       start_speaker: 'agent',
@@ -146,6 +148,7 @@ describe('resource conversationFlow', () => {
                 high_priority: true,
               },
               name: 'name',
+              responsiveness: 0,
               skip_response_edge: {
                 id: 'id',
                 transition_condition: { prompt: 'prompt', type: 'prompt' },
@@ -162,6 +165,7 @@ describe('resource conversationFlow', () => {
                   speak_during_execution: true,
                 },
               ],
+              voice_speed: 0.5,
             },
           ],
           begin_tag_display_position: { x: 100, y: 200 },

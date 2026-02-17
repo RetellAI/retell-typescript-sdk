@@ -53,6 +53,7 @@ describe('resource chatAgent', () => {
       ],
       post_chat_analysis_model: 'gpt-4.1-mini',
       signed_url_expiration_ms: 86400000,
+      webhook_events: ['chat_started'],
       webhook_timeout_ms: 10000,
       webhook_url: 'https://webhook-url-here',
     });

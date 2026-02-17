@@ -401,6 +401,7 @@ export interface AgentResponse {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -577,6 +578,7 @@ export interface AgentResponse {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
@@ -623,6 +625,21 @@ export interface AgentResponse {
    * If unset, default value 1 will apply.
    */
   volume?: number;
+
+  /**
+   * Which webhook events this agent should receive. If not set, defaults to
+   * call_started, call_ended, call_analyzed.
+   */
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1179,6 +1196,7 @@ export interface AgentCreateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -1355,6 +1373,7 @@ export interface AgentCreateParams {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
@@ -1401,6 +1420,21 @@ export interface AgentCreateParams {
    * If unset, default value 1 will apply.
    */
   volume?: number;
+
+  /**
+   * Which webhook events this agent should receive. If not set, defaults to
+   * call_started, call_ended, call_analyzed.
+   */
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1953,6 +1987,7 @@ export interface AgentUpdateParams {
     | 'sv-SE'
     | 'lt-LT'
     | 'lv-LV'
+    | 'cs-CZ'
     | 'ms-MY'
     | 'af-ZA'
     | 'ar-SA'
@@ -2153,6 +2188,7 @@ export interface AgentUpdateParams {
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
     | null;
 
   /**
@@ -2199,6 +2235,21 @@ export interface AgentUpdateParams {
    * agent speech. If unset, default value 1 will apply.
    */
   volume?: number;
+
+  /**
+   * Body param: Which webhook events this agent should receive. If not set, defaults
+   * to call_started, call_ended, call_analyzed.
+   */
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * Body param: The timeout for the webhook in milliseconds. If not set, default

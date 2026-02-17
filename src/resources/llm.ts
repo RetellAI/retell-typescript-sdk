@@ -757,6 +757,11 @@ export namespace LlmResponse {
      */
     execution_message_type?: 'prompt' | 'static_text';
 
+    /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
     speak_during_execution?: boolean;
 
     /**
@@ -1797,6 +1802,11 @@ export namespace LlmResponse {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
 
@@ -2843,6 +2853,11 @@ export namespace LlmCreateParams {
      */
     execution_message_type?: 'prompt' | 'static_text';
 
+    /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
     speak_during_execution?: boolean;
 
     /**
@@ -3883,6 +3898,11 @@ export namespace LlmCreateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
 
@@ -4943,6 +4963,11 @@ export namespace LlmUpdateParams {
      */
     execution_message_type?: 'prompt' | 'static_text';
 
+    /**
+     * If true, keep the current voice when swapping agents. Defaults to false.
+     */
+    keep_current_voice?: boolean;
+
     speak_during_execution?: boolean;
 
     /**
@@ -5983,6 +6008,11 @@ export namespace LlmUpdateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current voice when swapping agents. Defaults to false.
+       */
+      keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
 
