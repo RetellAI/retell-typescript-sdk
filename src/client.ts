@@ -14,6 +14,7 @@ import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
+import * as Webhooks from './lib/webhook_auth';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
@@ -835,6 +836,9 @@ export class Retell {
   static UnprocessableEntityError = Errors.UnprocessableEntityError;
 
   static toFile = Uploads.toFile;
+
+  static verify = Webhooks.verify;
+  static sign = Webhooks.sign;
 
   call: API.Call = new API.Call(this);
   chat: API.Chat = new API.Chat(this);
