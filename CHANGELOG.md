@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.2.0 (2026-02-19)
+
+Full Changelog: [v5.1.0...v5.2.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.1.0...v5.2.0)
+
+### Features
+
+* **webhooks:** add client-level verify and sign functions. ([3b709b2](https://github.com/RetellAI/retell-typescript-sdk/commit/3b709b2e4980d75060b0d10a103c2f8d5ec9016c))
+
 ## 5.1.0 (2026-02-18)
 
 Full Changelog: [v5.0.0...v5.1.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.0.0...v5.1.0)

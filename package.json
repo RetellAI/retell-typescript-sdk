@@ -1,6 +1,6 @@
 {
   "name": "retell-sdk",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "The official TypeScript library for the Retell API",
   "author": "Retell <support@retellai.com>",
   "types": "dist/index.d.ts",
