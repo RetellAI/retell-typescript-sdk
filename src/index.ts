@@ -3,6 +3,7 @@
 export { Retell as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
+export { verify, sign, type SecureWebhooks } from './lib/webhook_auth';
 export { APIPromise } from './core/api-promise';
 export { Retell, type ClientOptions } from './client';
 export {
