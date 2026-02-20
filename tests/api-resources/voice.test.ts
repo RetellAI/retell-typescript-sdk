@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource voice', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.voice.retrieve('11labs-Adrian');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.voice.list();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addResource: only required params', async () => {
     const responsePromise = client.voice.addResource({
       provider_voice_id: 'provider_voice_id',
@@ -47,7 +47,7 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addResource: required and optional params', async () => {
     const response = await client.voice.addResource({
       provider_voice_id: 'provider_voice_id',
@@ -57,7 +57,7 @@ describe('resource voice', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('clone: only required params', async () => {
     const responsePromise = client.voice.clone({
       files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
@@ -72,7 +72,7 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('clone: required and optional params', async () => {
     const response = await client.voice.clone({
       files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
@@ -81,7 +81,7 @@ describe('resource voice', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.voice.search({ search_query: 'search_query' });
     const rawResponse = await responsePromise.asResponse();
@@ -93,7 +93,7 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.voice.search({
       search_query: 'search_query',

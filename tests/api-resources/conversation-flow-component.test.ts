@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource conversationFlowComponent', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.conversationFlowComponent.create({
       name: 'Customer Information Collector',
@@ -29,7 +29,7 @@ describe('resource conversationFlowComponent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.conversationFlowComponent.create({
       name: 'Customer Information Collector',
@@ -130,7 +130,7 @@ describe('resource conversationFlowComponent', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.conversationFlowComponent.retrieve('conversation_flow_component_id');
     const rawResponse = await responsePromise.asResponse();
@@ -142,7 +142,7 @@ describe('resource conversationFlowComponent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.conversationFlowComponent.update('conversation_flow_component_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -154,7 +154,7 @@ describe('resource conversationFlowComponent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.conversationFlowComponent.list();
     const rawResponse = await responsePromise.asResponse();
@@ -166,7 +166,7 @@ describe('resource conversationFlowComponent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.conversationFlowComponent.delete('conversation_flow_component_id');
     const rawResponse = await responsePromise.asResponse();
