@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource call', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.call.update('call_a4441234567890777c4a4a123e6', {});
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.call.list({});
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.call.delete('119c3f8e47135a29e65947eeb34cf12d');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createPhoneCall: only required params', async () => {
     const responsePromise = client.call.createPhoneCall({
       from_number: '+14157774444',
@@ -71,7 +71,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createPhoneCall: required and optional params', async () => {
     const response = await client.call.createPhoneCall({
       from_number: '+14157774444',
@@ -193,7 +193,7 @@ describe('resource call', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createWebCall: only required params', async () => {
     const responsePromise = client.call.createWebCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
@@ -205,7 +205,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createWebCall: required and optional params', async () => {
     const response = await client.call.createWebCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
@@ -323,7 +323,7 @@ describe('resource call', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('registerPhoneCall: only required params', async () => {
     const responsePromise = client.call.registerPhoneCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
@@ -335,7 +335,7 @@ describe('resource call', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('registerPhoneCall: required and optional params', async () => {
     const response = await client.call.registerPhoneCall({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',

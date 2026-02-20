@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource tests', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createBatchTest: only required params', async () => {
     const responsePromise = client.tests.createBatchTest({
       response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
@@ -23,7 +23,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createBatchTest: required and optional params', async () => {
     const response = await client.tests.createBatchTest({
       response_engine: {
@@ -35,7 +35,7 @@ describe('resource tests', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createTestCaseDefinition: only required params', async () => {
     const responsePromise = client.tests.createTestCaseDefinition({
       metrics: ['string'],
@@ -52,7 +52,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createTestCaseDefinition: required and optional params', async () => {
     const response = await client.tests.createTestCaseDefinition({
       metrics: ['string'],
@@ -76,7 +76,7 @@ describe('resource tests', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteTestCaseDefinition', async () => {
     const responsePromise = client.tests.deleteTestCaseDefinition('test_case_definition_id');
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +88,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getBatchTest', async () => {
     const responsePromise = client.tests.getBatchTest('test_case_batch_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -100,7 +100,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getTestCaseDefinition', async () => {
     const responsePromise = client.tests.getTestCaseDefinition('test_case_definition_id');
     const rawResponse = await responsePromise.asResponse();
@@ -112,7 +112,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getTestRun', async () => {
     const responsePromise = client.tests.getTestRun('test_case_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -124,7 +124,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listBatchTests: only required params', async () => {
     const responsePromise = client.tests.listBatchTests({ type: 'retell-llm' });
     const rawResponse = await responsePromise.asResponse();
@@ -136,7 +136,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listBatchTests: required and optional params', async () => {
     const response = await client.tests.listBatchTests({
       type: 'retell-llm',
@@ -146,7 +146,7 @@ describe('resource tests', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listTestCaseDefinitions: only required params', async () => {
     const responsePromise = client.tests.listTestCaseDefinitions({ type: 'retell-llm' });
     const rawResponse = await responsePromise.asResponse();
@@ -158,7 +158,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listTestCaseDefinitions: required and optional params', async () => {
     const response = await client.tests.listTestCaseDefinitions({
       type: 'retell-llm',
@@ -168,7 +168,7 @@ describe('resource tests', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listTestRuns', async () => {
     const responsePromise = client.tests.listTestRuns('test_case_batch_job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -180,7 +180,7 @@ describe('resource tests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('updateTestCaseDefinition', async () => {
     const responsePromise = client.tests.updateTestCaseDefinition('test_case_definition_id', {});
     const rawResponse = await responsePromise.asResponse();
