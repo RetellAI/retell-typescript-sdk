@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.2.1 (2026-02-20)
+
+Full Changelog: [v5.2.0...v5.2.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.2.0...v5.2.1)
+
+### Chores
+
+* **internal:** remove mock server code ([40ff158](https://github.com/RetellAI/retell-typescript-sdk/commit/40ff158cf648dc61496c31d6ba4a1ca3370287f8))
+* update mock server docs ([ecc9884](https://github.com/RetellAI/retell-typescript-sdk/commit/ecc98843c0cb84305f2fdf947ce2ca490b6aebda))
+
 ## 5.2.0 (2026-02-19)
 
 Full Changelog: [v5.1.0...v5.2.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.1.0...v5.2.0)

@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource batchCall', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createBatchCall: only required params', async () => {
     const responsePromise = client.batchCall.createBatchCall({
       from_number: '+14157774444',
@@ -23,7 +23,7 @@ describe('resource batchCall', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createBatchCall: required and optional params', async () => {
     const response = await client.batchCall.createBatchCall({
       from_number: '+14157774444',
