@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource chat', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.chat.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.chat.create({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
@@ -30,7 +30,7 @@ describe('resource chat', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.chat.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.chat.update('chat_98c1a2157aa0559144d67bb0729', {});
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.chat.list();
     const rawResponse = await responsePromise.asResponse();
@@ -66,7 +66,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -81,7 +81,7 @@ describe('resource chat', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createChatCompletion: only required params', async () => {
     const responsePromise = client.chat.createChatCompletion({
       chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
@@ -96,7 +96,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createChatCompletion: required and optional params', async () => {
     const response = await client.chat.createChatCompletion({
       chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
@@ -104,7 +104,7 @@ describe('resource chat', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createSMSChat: only required params', async () => {
     const responsePromise = client.chat.createSMSChat({
       from_number: '+12137771234',
@@ -119,7 +119,7 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createSMSChat: required and optional params', async () => {
     const response = await client.chat.createSMSChat({
       from_number: '+12137771234',
@@ -131,7 +131,7 @@ describe('resource chat', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('end', async () => {
     const responsePromise = client.chat.end('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();

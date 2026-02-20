@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource concurrency', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.concurrency.retrieve();
     const rawResponse = await responsePromise.asResponse();

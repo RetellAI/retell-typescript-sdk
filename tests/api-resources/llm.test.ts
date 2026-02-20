@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource llm', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.llm.create({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource llm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.llm.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource llm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -44,7 +44,7 @@ describe('resource llm', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.llm.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource llm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.llm.list();
     const rawResponse = await responsePromise.asResponse();
@@ -68,7 +68,7 @@ describe('resource llm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -83,7 +83,7 @@ describe('resource llm', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();

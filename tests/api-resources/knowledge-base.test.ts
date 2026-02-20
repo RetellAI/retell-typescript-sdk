@@ -31,7 +31,7 @@ describe('resource knowledgeBase', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.knowledgeBase.retrieve('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
@@ -43,7 +43,7 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.knowledgeBase.list();
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.knowledgeBase.delete('kb_1234567890');
     const rawResponse = await responsePromise.asResponse();
@@ -79,7 +79,7 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteSource: only required params', async () => {
     const responsePromise = client.knowledgeBase.deleteSource('source_1234567890', {
       knowledge_base_id: 'kb_1234567890',
@@ -93,7 +93,7 @@ describe('resource knowledgeBase', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteSource: required and optional params', async () => {
     const response = await client.knowledgeBase.deleteSource('source_1234567890', {
       knowledge_base_id: 'kb_1234567890',

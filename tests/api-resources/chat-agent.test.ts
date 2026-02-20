@@ -8,7 +8,7 @@ const client = new Retell({
 });
 
 describe('resource chatAgent', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.chatAgent.create({
       response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
@@ -22,7 +22,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.chatAgent.create({
       response_engine: {
@@ -58,7 +58,7 @@ describe('resource chatAgent', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.chatAgent.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
@@ -70,7 +70,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -82,7 +82,7 @@ describe('resource chatAgent', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.chatAgent.update('16b980523634a6dc504898cda492e939', {});
     const rawResponse = await responsePromise.asResponse();
@@ -94,7 +94,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.chatAgent.list();
     const rawResponse = await responsePromise.asResponse();
@@ -106,7 +106,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -121,7 +121,7 @@ describe('resource chatAgent', () => {
     ).rejects.toThrow(Retell.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.chatAgent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
@@ -133,7 +133,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getVersions', async () => {
     const responsePromise = client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
@@ -145,7 +145,7 @@ describe('resource chatAgent', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('publish', async () => {
     const responsePromise = client.chatAgent.publish('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
