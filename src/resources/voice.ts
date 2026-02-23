@@ -53,7 +53,7 @@ export interface VoiceResponse {
   /**
    * Indicates the provider of voice.
    */
-  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax';
+  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax' | 'fish_audio';
 
   /**
    * Unique id for the voice.
@@ -133,13 +133,13 @@ export interface VoiceAddResourceParams {
   /**
    * Voice provider to add the voice from.
    */
-  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
 }
 
 export interface VoiceCloneParams {
   /**
    * Audio files to use for voice cloning. Up to 25 files allowed. For Cartesia and
-   * MiniMax, only 1 file is supported.
+   * MiniMax, only 1 file is supported. For Inworld, up to 3 files are supported.
    */
   files: Array<Uploadable>;
 
@@ -149,9 +149,9 @@ export interface VoiceCloneParams {
   voice_name: string;
 
   /**
-   * Voice provider to use for cloning. Defaults to elevenlabs.
+   * Voice provider to use for cloning.
    */
-  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+  voice_provider: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
 }
 
 export interface VoiceSearchParams {
@@ -163,7 +163,7 @@ export interface VoiceSearchParams {
   /**
    * Voice provider to search.
    */
-  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax';
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
 }
 
 export declare namespace Voice {

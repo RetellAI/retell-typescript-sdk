@@ -34,7 +34,10 @@ describe('resource chatAgent', () => {
       analysis_successful_prompt:
         'The agent finished the task and the call was complete without being cutoff.',
       analysis_summary_prompt: 'Summarize the call in a few sentences.',
+      analysis_user_sentiment_prompt:
+        "Evaluate the user's sentiment based on their tone and satisfaction level.",
       auto_close_message: 'Thank you for chatting. The conversation has ended.',
+      data_storage_retention_days: 30,
       data_storage_setting: 'everything',
       end_chat_after_silence_ms: 3600000,
       guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },

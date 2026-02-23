@@ -223,7 +223,6 @@ export interface PhoneCallResponse {
     | 'agent_hangup'
     | 'call_transfer'
     | 'voicemail_reached'
-    | 'ivr_reached'
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
@@ -965,6 +964,11 @@ export namespace PhoneCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionUtterance {
@@ -1141,6 +1145,11 @@ export namespace PhoneCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionUtterance {
@@ -1267,7 +1276,6 @@ export interface WebCallResponse {
     | 'agent_hangup'
     | 'call_transfer'
     | 'voicemail_reached'
-    | 'ivr_reached'
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
@@ -2003,6 +2011,11 @@ export namespace WebCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionUtterance {
@@ -2168,6 +2181,11 @@ export namespace WebCallResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionUtterance {
@@ -2314,7 +2332,6 @@ export namespace CallListParams {
       | 'agent_hangup'
       | 'call_transfer'
       | 'voicemail_reached'
-      | 'ivr_reached'
       | 'inactivity'
       | 'max_duration_reached'
       | 'concurrency_limit_reached'
@@ -2590,6 +2607,13 @@ export namespace CallCreatePhoneCallParams {
       analysis_summary_prompt?: string | null;
 
       /**
+       * Prompt to guide how the post call or chat analysis should evaluate user
+       * sentiment. When unset, the default system prompt is used. Set to null to use the
+       * default prompt.
+       */
+      analysis_user_sentiment_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -2626,6 +2650,13 @@ export namespace CallCreatePhoneCallParams {
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       custom_stt_config?: Agent.CustomSttConfig;
+
+      /**
+       * Number of days to retain call/chat data before automatic deletion. Must be
+       * between 1 and 730 days. If not set, data is retained forever (no automatic
+       * deletion).
+       */
+      data_storage_retention_days?: number | null;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -2947,6 +2978,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
+        | 's1'
         | null;
 
       /**
@@ -3653,6 +3685,13 @@ export namespace CallCreateWebCallParams {
       analysis_summary_prompt?: string | null;
 
       /**
+       * Prompt to guide how the post call or chat analysis should evaluate user
+       * sentiment. When unset, the default system prompt is used. Set to null to use the
+       * default prompt.
+       */
+      analysis_user_sentiment_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -3689,6 +3728,13 @@ export namespace CallCreateWebCallParams {
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       custom_stt_config?: Agent.CustomSttConfig;
+
+      /**
+       * Number of days to retain call/chat data before automatic deletion. Must be
+       * between 1 and 730 days. If not set, data is retained forever (no automatic
+       * deletion).
+       */
+      data_storage_retention_days?: number | null;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -4010,6 +4056,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
+        | 's1'
         | null;
 
       /**
@@ -4730,6 +4777,13 @@ export namespace CallRegisterPhoneCallParams {
       analysis_summary_prompt?: string | null;
 
       /**
+       * Prompt to guide how the post call or chat analysis should evaluate user
+       * sentiment. When unset, the default system prompt is used. Set to null to use the
+       * default prompt.
+       */
+      analysis_user_sentiment_prompt?: string | null;
+
+      /**
        * Only applicable when enable_backchannel is true. Controls how often the agent
        * would backchannel when a backchannel is possible. Value ranging from [0,1].
        * Lower value means less frequent backchannel, while higher value means more
@@ -4766,6 +4820,13 @@ export namespace CallRegisterPhoneCallParams {
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       custom_stt_config?: Agent.CustomSttConfig;
+
+      /**
+       * Number of days to retain call/chat data before automatic deletion. Must be
+       * between 1 and 730 days. If not set, data is retained forever (no automatic
+       * deletion).
+       */
+      data_storage_retention_days?: number | null;
 
       /**
        * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -5087,6 +5148,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
+        | 's1'
         | null;
 
       /**

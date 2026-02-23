@@ -147,15 +147,17 @@ export interface PhoneNumberResponse {
   fallback_number?: string | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If null, this number would not accept
-   * inbound call.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when receiving inbound calls. If null, this number
+   * would not accept inbound call. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_id?: string | null;
 
   /**
-   * Version of the inbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the inbound agent to bind to the number. If not provided,
+   * will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_version?: number | null;
 
@@ -193,15 +195,18 @@ export interface PhoneNumberResponse {
   nickname?: string | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If null, this number would not be able to
-   * initiate outbound call without agent id override.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when conducting outbound calls. If null, this number
+   * would not be able to initiate outbound call without agent id override.
+   * Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_id?: string | null;
 
   /**
-   * Version of the outbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the outbound agent to bind to the number. If not
+   * provided, will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_version?: number | null;
 
@@ -333,15 +338,17 @@ export interface PhoneNumberCreateParams {
   fallback_number?: string | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If null, this number would not accept
-   * inbound call.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when receiving inbound calls. If null, this number
+   * would not accept inbound call. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_id?: string | null;
 
   /**
-   * Version of the inbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the inbound agent to bind to the number. If not provided,
+   * will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_version?: number | null;
 
@@ -370,15 +377,18 @@ export interface PhoneNumberCreateParams {
   number_provider?: 'twilio' | 'telnyx';
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If null, this number would not be able to
-   * initiate outbound call without agent id override.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when conducting outbound calls. If null, this number
+   * would not be able to initiate outbound call without agent id override.
+   * Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_id?: string | null;
 
   /**
-   * Version of the outbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the outbound agent to bind to the number. If not
+   * provided, will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_version?: number | null;
 
@@ -469,15 +479,17 @@ export interface PhoneNumberUpdateParams {
   fallback_number?: string | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If set to null, this number would not accept
-   * inbound call.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when receiving inbound calls. If set to null, this
+   * number would not accept inbound call. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_id?: string | null;
 
   /**
-   * Version of the inbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the inbound agent to bind to the number. If not provided,
+   * will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_version?: number | null;
 
@@ -515,9 +527,11 @@ export interface PhoneNumberUpdateParams {
   nickname?: string | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If set to null, this number would not be
-   * able to initiate outbound call without agent id override.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when conducting outbound calls. If set to null, this
+   * number would not be able to initiate outbound call without agent id override.
+   * Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_id?: string | null;
 
@@ -634,15 +648,17 @@ export interface PhoneNumberImportParams {
   allowed_outbound_country_list?: Array<string> | null;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when receiving inbound calls. If null, this number would not accept
-   * inbound call.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when receiving inbound calls. If null, this number
+   * would not accept inbound call. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_id?: string | null;
 
   /**
-   * Version of the inbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the inbound agent to bind to the number. If not provided,
+   * will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   inbound_agent_version?: number | null;
 
@@ -666,15 +682,18 @@ export interface PhoneNumberImportParams {
   nickname?: string;
 
   /**
-   * Unique id of agent to bind to the number. The number will automatically use the
-   * agent when conducting outbound calls. If null, this number would not be able to
-   * initiate outbound call without agent id override.
+   * @deprecated Unique id of agent to bind to the number. The number will
+   * automatically use the agent when conducting outbound calls. If null, this number
+   * would not be able to initiate outbound call without agent id override.
+   * Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_id?: string | null;
 
   /**
-   * Version of the outbound agent to bind to the number. If not provided, will
-   * default to latest version.
+   * @deprecated Version of the outbound agent to bind to the number. If not
+   * provided, will default to latest version. Deprecated. See
+   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
    */
   outbound_agent_version?: number | null;
 

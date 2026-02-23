@@ -282,6 +282,13 @@ export namespace BatchCallCreateBatchCallParams {
         analysis_summary_prompt?: string | null;
 
         /**
+         * Prompt to guide how the post call or chat analysis should evaluate user
+         * sentiment. When unset, the default system prompt is used. Set to null to use the
+         * default prompt.
+         */
+        analysis_user_sentiment_prompt?: string | null;
+
+        /**
          * Only applicable when enable_backchannel is true. Controls how often the agent
          * would backchannel when a backchannel is possible. Value ranging from [0,1].
          * Lower value means less frequent backchannel, while higher value means more
@@ -318,6 +325,13 @@ export namespace BatchCallCreateBatchCallParams {
          * Custom STT configuration. Only used when stt_mode is set to custom.
          */
         custom_stt_config?: Agent.CustomSttConfig;
+
+        /**
+         * Number of days to retain call/chat data before automatic deletion. Must be
+         * between 1 and 730 days. If not set, data is retained forever (no automatic
+         * deletion).
+         */
+        data_storage_retention_days?: number | null;
 
         /**
          * Granular setting to manage how Retell stores sensitive data (transcripts,
@@ -639,6 +653,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-4o-mini-tts'
           | 'speech-02-turbo'
           | 'speech-2.8-turbo'
+          | 's1'
           | null;
 
         /**
