@@ -376,6 +376,11 @@ export namespace ChatResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionMessage {
@@ -546,6 +551,11 @@ export namespace ChatCreateChatCompletionResponse {
      * Tool call id, globally unique.
      */
     tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
   }
 
   export interface NodeTransitionMessage {
