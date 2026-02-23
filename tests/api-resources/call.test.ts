@@ -85,11 +85,14 @@ describe('resource call', () => {
           analysis_successful_prompt:
             'The agent finished the task and the call was complete without being cutoff.',
           analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
+          analysis_user_sentiment_prompt:
+            "Evaluate the user's sentiment based on their tone and satisfaction level.",
           backchannel_frequency: 0.9,
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+          data_storage_retention_days: 30,
           data_storage_setting: 'everything',
           denoising_mode: 'noise-cancellation',
           enable_backchannel: true,
@@ -218,11 +221,14 @@ describe('resource call', () => {
           analysis_successful_prompt:
             'The agent finished the task and the call was complete without being cutoff.',
           analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
+          analysis_user_sentiment_prompt:
+            "Evaluate the user's sentiment based on their tone and satisfaction level.",
           backchannel_frequency: 0.9,
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+          data_storage_retention_days: 30,
           data_storage_setting: 'everything',
           denoising_mode: 'noise-cancellation',
           enable_backchannel: true,
@@ -348,11 +354,14 @@ describe('resource call', () => {
           analysis_successful_prompt:
             'The agent finished the task and the call was complete without being cutoff.',
           analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
+          analysis_user_sentiment_prompt:
+            "Evaluate the user's sentiment based on their tone and satisfaction level.",
           backchannel_frequency: 0.9,
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+          data_storage_retention_days: 30,
           data_storage_setting: 'everything',
           denoising_mode: 'noise-cancellation',
           enable_backchannel: true,

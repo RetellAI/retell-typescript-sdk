@@ -167,9 +167,22 @@ export interface ChatAgentResponse {
   analysis_summary_prompt?: string | null;
 
   /**
+   * Prompt to guide how the post chat analysis should evaluate user sentiment. When
+   * unset, the default system prompt is used. Set to null to use the default prompt.
+   */
+  analysis_user_sentiment_prompt?: string | null;
+
+  /**
    * Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
+
+  /**
+   * Number of days to retain call/chat data before automatic deletion. Must be
+   * between 1 and 730 days. If not set, data is retained forever (no automatic
+   * deletion).
+   */
+  data_storage_retention_days?: number | null;
 
   /**
    * Controls what data is stored for this agent. "everything" stores all data
@@ -543,9 +556,22 @@ export interface ChatAgentCreateParams {
   analysis_summary_prompt?: string | null;
 
   /**
+   * Prompt to guide how the post chat analysis should evaluate user sentiment. When
+   * unset, the default system prompt is used. Set to null to use the default prompt.
+   */
+  analysis_user_sentiment_prompt?: string | null;
+
+  /**
    * Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
+
+  /**
+   * Number of days to retain call/chat data before automatic deletion. Must be
+   * between 1 and 730 days. If not set, data is retained forever (no automatic
+   * deletion).
+   */
+  data_storage_retention_days?: number | null;
 
   /**
    * Controls what data is stored for this agent. "everything" stores all data
@@ -909,9 +935,23 @@ export interface ChatAgentUpdateParams {
   analysis_summary_prompt?: string | null;
 
   /**
+   * Body param: Prompt to guide how the post chat analysis should evaluate user
+   * sentiment. When unset, the default system prompt is used. Set to null to use the
+   * default prompt.
+   */
+  analysis_user_sentiment_prompt?: string | null;
+
+  /**
    * Body param: Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
+
+  /**
+   * Body param: Number of days to retain call/chat data before automatic deletion.
+   * Must be between 1 and 730 days. If not set, data is retained forever (no
+   * automatic deletion).
+   */
+  data_storage_retention_days?: number | null;
 
   /**
    * Body param: Controls what data is stored for this agent. "everything" stores all

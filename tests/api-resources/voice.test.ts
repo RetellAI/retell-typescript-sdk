@@ -62,6 +62,7 @@ describe('resource voice', () => {
     const responsePromise = client.voice.clone({
       files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
       voice_name: 'x',
+      voice_provider: 'elevenlabs',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

@@ -514,6 +514,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -525,6 +537,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -1664,6 +1736,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -1675,6 +1759,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -2033,6 +2177,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -2044,6 +2200,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -2597,6 +2813,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -2608,6 +2836,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -2911,6 +3199,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -2922,6 +3222,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -3256,6 +3616,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -3267,6 +3639,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -3568,6 +4000,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -3579,6 +4023,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -3970,6 +4474,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -3981,6 +4497,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -4246,6 +4822,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -4257,6 +4845,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -4622,6 +5270,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -4633,6 +5293,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -4934,6 +5654,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -4945,6 +5677,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -5062,6 +5854,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -5073,6 +5877,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -5190,6 +6054,18 @@ export namespace ConversationFlowComponentResponse {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -5201,6 +6077,66 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -5927,6 +6863,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -5938,6 +6886,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -7077,6 +8085,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -7088,6 +8108,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -7446,6 +8526,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -7457,6 +8549,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -8010,6 +9162,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -8021,6 +9185,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -8324,6 +9548,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -8335,6 +9571,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -8669,6 +9965,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -8680,6 +9988,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -8981,6 +10349,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -8992,6 +10372,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -9383,6 +10823,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -9394,6 +10846,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -9659,6 +11171,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -9670,6 +11194,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -10035,6 +11619,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -10046,6 +11642,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -10347,6 +12003,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -10358,6 +12026,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -10475,6 +12203,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -10486,6 +12226,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -10603,6 +12403,18 @@ export namespace ConversationFlowComponentCreateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -10614,6 +12426,66 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -11372,6 +13244,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -11383,6 +13267,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -12522,6 +14466,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -12533,6 +14489,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -12891,6 +14907,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -12902,6 +14930,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -13455,6 +15543,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -13466,6 +15566,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -13769,6 +15929,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -13780,6 +15952,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -14114,6 +16346,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -14125,6 +16369,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -14426,6 +16730,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -14437,6 +16753,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -14828,6 +17204,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -14839,6 +17227,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -15104,6 +17552,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -15115,6 +17575,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -15480,6 +18000,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -15491,6 +18023,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -15792,6 +18384,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -15803,6 +18407,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -15920,6 +18584,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -15931,6 +18607,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node
@@ -16048,6 +18784,18 @@ export namespace ConversationFlowComponentUpdateParams {
       condition: string;
 
       /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
        * Don't transition to this node
        */
       negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
@@ -16059,6 +18807,66 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
       export interface NegativeFinetuneExample {
         /**
          * Find tune the transition condition to this global node

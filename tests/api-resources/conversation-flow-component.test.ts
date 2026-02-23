@@ -61,6 +61,14 @@ describe('resource conversationFlowComponent', () => {
           ],
           global_node_setting: {
             condition: 'condition',
+            cool_down: 1,
+            go_back_conditions: [
+              {
+                id: 'id',
+                transition_condition: { prompt: 'prompt', type: 'prompt' },
+                destination_node_id: 'destination_node_id',
+              },
+            ],
             negative_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
             positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
           },
