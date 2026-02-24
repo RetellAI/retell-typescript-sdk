@@ -17,7 +17,7 @@ export class Agent extends APIResource {
    *     llm_id: 'llm_234sdertfsdsfsdf',
    *     type: 'retell-llm',
    *   },
-   *   voice_id: '11labs-Adrian',
+   *   voice_id: 'retell-Cimo',
    * });
    * ```
    */
@@ -490,8 +490,9 @@ export interface AgentResponse {
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
-   * synthesize for consistent pronunciation. Currently only supported for English &
-   * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+   * synthesize for consistent pronunciation. Check the dashboard to see what
+   * provider supports this feature. Set to null to remove pronunciation dictionary
+   * from this agent.
    */
   pronunciation_dictionary?: Array<AgentResponse.PronunciationDictionary> | null;
 
@@ -589,9 +590,9 @@ export interface AgentResponse {
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
-   * more stable, and higher value means more variant speech generation. Currently
-   * this setting only applies to `11labs` voices. If unset, default value 1 will
-   * apply.
+   * more stable, and higher value means more variant speech generation. Check the
+   * dashboard to see what provider supports this feature. If unset, default value 1
+   * will apply.
    */
   voice_temperature?: number;
 
@@ -1300,8 +1301,9 @@ export interface AgentCreateParams {
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
-   * synthesize for consistent pronunciation. Currently only supported for English &
-   * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+   * synthesize for consistent pronunciation. Check the dashboard to see what
+   * provider supports this feature. Set to null to remove pronunciation dictionary
+   * from this agent.
    */
   pronunciation_dictionary?: Array<AgentCreateParams.PronunciationDictionary> | null;
 
@@ -1399,9 +1401,9 @@ export interface AgentCreateParams {
 
   /**
    * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
-   * more stable, and higher value means more variant speech generation. Currently
-   * this setting only applies to `11labs` voices. If unset, default value 1 will
-   * apply.
+   * more stable, and higher value means more variant speech generation. Check the
+   * dashboard to see what provider supports this feature. If unset, default value 1
+   * will apply.
    */
   voice_temperature?: number;
 
@@ -2106,8 +2108,8 @@ export interface AgentUpdateParams {
 
   /**
    * Body param: A list of words / phrases and their pronunciation to be used to
-   * guide the audio synthesize for consistent pronunciation. Currently only
-   * supported for English & 11labs voices. Set to null to remove pronunciation
+   * guide the audio synthesize for consistent pronunciation. Check the dashboard to
+   * see what provider supports this feature. Set to null to remove pronunciation
    * dictionary from this agent.
    */
   pronunciation_dictionary?: Array<AgentUpdateParams.PronunciationDictionary> | null;
@@ -2230,8 +2232,8 @@ export interface AgentUpdateParams {
   /**
    * Body param: Controls how stable the voice is. Value ranging from [0,2]. Lower
    * value means more stable, and higher value means more variant speech generation.
-   * Currently this setting only applies to `11labs` voices. If unset, default value
-   * 1 will apply.
+   * Check the dashboard to see what provider supports this feature. If unset,
+   * default value 1 will apply.
    */
   voice_temperature?: number;
 
