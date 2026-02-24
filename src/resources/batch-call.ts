@@ -550,8 +550,9 @@ export namespace BatchCallCreateBatchCallParams {
 
         /**
          * A list of words / phrases and their pronunciation to be used to guide the audio
-         * synthesize for consistent pronunciation. Currently only supported for English &
-         * 11labs voices. Set to null to remove pronunciation dictionary from this agent.
+         * synthesize for consistent pronunciation. Check the dashboard to see what
+         * provider supports this feature. Set to null to remove pronunciation dictionary
+         * from this agent.
          */
         pronunciation_dictionary?: Array<Agent.PronunciationDictionary> | null;
 
@@ -665,9 +666,9 @@ export namespace BatchCallCreateBatchCallParams {
 
         /**
          * Controls how stable the voice is. Value ranging from [0,2]. Lower value means
-         * more stable, and higher value means more variant speech generation. Currently
-         * this setting only applies to `11labs` voices. If unset, default value 1 will
-         * apply.
+         * more stable, and higher value means more variant speech generation. Check the
+         * dashboard to see what provider supports this feature. If unset, default value 1
+         * will apply.
          */
         voice_temperature?: number;
 

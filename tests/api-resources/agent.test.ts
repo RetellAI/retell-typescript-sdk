@@ -12,7 +12,7 @@ describe('resource agent', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.agent.create({
       response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
-      voice_id: '11labs-Adrian',
+      voice_id: 'retell-Cimo',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -31,7 +31,7 @@ describe('resource agent', () => {
         type: 'retell-llm',
         version: 0,
       },
-      voice_id: '11labs-Adrian',
+      voice_id: 'retell-Cimo',
       agent_name: 'Jarvis',
       allow_user_dtmf: true,
       ambient_sound: 'coffee-shop',
