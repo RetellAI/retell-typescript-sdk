@@ -60,7 +60,7 @@ $ yarn link retell-sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global retell-sdk
+$ pnpm link --global retell-sdk
 ```
 
 ## Running tests
