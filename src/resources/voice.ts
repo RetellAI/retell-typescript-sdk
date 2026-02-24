@@ -53,7 +53,7 @@ export interface VoiceResponse {
   /**
    * Indicates the provider of voice.
    */
-  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax' | 'fish_audio';
+  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
 
   /**
    * Unique id for the voice.
@@ -151,7 +151,7 @@ export interface VoiceCloneParams {
   /**
    * Voice provider to use for cloning.
    */
-  voice_provider: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
+  voice_provider: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
 }
 
 export interface VoiceSearchParams {
