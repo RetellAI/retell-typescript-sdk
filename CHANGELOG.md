@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.3.1 (2026-02-24)
+
+Full Changelog: [v5.3.0...v5.3.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.3.0...v5.3.1)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([9a47cf7](https://github.com/RetellAI/retell-typescript-sdk/commit/9a47cf7aadb60aa0b73710ba14b7707043ff5c39))
+
 ## 5.3.0 (2026-02-23)
 
 Full Changelog: [v5.2.0...v5.3.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.2.0...v5.3.0)
