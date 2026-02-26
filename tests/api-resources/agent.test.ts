@@ -50,6 +50,7 @@ describe('resource agent', () => {
       data_storage_setting: 'everything',
       denoising_mode: 'noise-cancellation',
       enable_backchannel: true,
+      enable_dynamic_responsiveness: true,
       enable_dynamic_voice_speed: true,
       enable_voicemail_detection: true,
       end_call_after_silence_ms: 600000,

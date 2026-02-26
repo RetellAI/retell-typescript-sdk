@@ -28,6 +28,8 @@ describe('resource knowledgeBase', () => {
       knowledge_base_files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
       knowledge_base_texts: [{ text: 'text', title: 'title' }],
       knowledge_base_urls: ['https://www.example.com', 'https://www.retellai.com'],
+      max_chunk_size: 2000,
+      min_chunk_size: 400,
     });
   });
 

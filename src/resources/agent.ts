@@ -296,6 +296,13 @@ export interface AgentResponse {
   enable_backchannel?: boolean;
 
   /**
+   * If set to true, the agent will dynamically adjust how quickly it responds based
+   * on the user's speech rate and past turn-taking behavior in the call. If unset,
+   * default value false will apply.
+   */
+  enable_dynamic_responsiveness?: boolean;
+
+  /**
    * If set to true, will enable dynamic voice speed adjustment based on the user's
    * speech rate and conversation context. If unset, default value false will apply.
    */
@@ -1112,6 +1119,13 @@ export interface AgentCreateParams {
   enable_backchannel?: boolean;
 
   /**
+   * If set to true, the agent will dynamically adjust how quickly it responds based
+   * on the user's speech rate and past turn-taking behavior in the call. If unset,
+   * default value false will apply.
+   */
+  enable_dynamic_responsiveness?: boolean;
+
+  /**
    * If set to true, will enable dynamic voice speed adjustment based on the user's
    * speech rate and conversation context. If unset, default value false will apply.
    */
@@ -1915,6 +1929,13 @@ export interface AgentUpdateParams {
    * set, agent will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Body param: If set to true, the agent will dynamically adjust how quickly it
+   * responds based on the user's speech rate and past turn-taking behavior in the
+   * call. If unset, default value false will apply.
+   */
+  enable_dynamic_responsiveness?: boolean;
 
   /**
    * Body param: If set to true, will enable dynamic voice speed adjustment based on

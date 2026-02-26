@@ -153,6 +153,17 @@ export interface KnowledgeBaseResponse {
    * enable_auto_refresh is true.
    */
   last_refreshed_timestamp?: number;
+
+  /**
+   * Maximum number of characters per chunk when splitting knowledge base content.
+   */
+  max_chunk_size?: number;
+
+  /**
+   * Minimum number of characters per chunk. Chunks smaller than this are merged with
+   * adjacent chunks.
+   */
+  min_chunk_size?: number;
 }
 
 export namespace KnowledgeBaseResponse {
@@ -247,6 +258,19 @@ export interface KnowledgeBaseCreateParams {
    * URLs to be scraped and added to the knowledge base. Must be valid urls.
    */
   knowledge_base_urls?: Array<string>;
+
+  /**
+   * Maximum number of characters per chunk when splitting knowledge base. Default
+   * is 2000. content. Immutable after creation.
+   */
+  max_chunk_size?: number;
+
+  /**
+   * Minimum number of characters per chunk. Chunks smaller than this will be merged
+   * with adjacent chunks. Must be less than max_chunk_size. Immutable after
+   * creation. Default is 400.
+   */
+  min_chunk_size?: number;
 }
 
 export namespace KnowledgeBaseCreateParams {
