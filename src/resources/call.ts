@@ -223,6 +223,7 @@ export interface PhoneCallResponse {
     | 'agent_hangup'
     | 'call_transfer'
     | 'voicemail_reached'
+    | 'ivr_reached'
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
@@ -246,7 +247,9 @@ export interface PhoneCallResponse {
     | 'error_retell'
     | 'error_unknown'
     | 'error_user_not_joined'
-    | 'registered_call_timeout';
+    | 'registered_call_timeout'
+    | 'transfer_bridged'
+    | 'transfer_cancelled';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -1276,6 +1279,7 @@ export interface WebCallResponse {
     | 'agent_hangup'
     | 'call_transfer'
     | 'voicemail_reached'
+    | 'ivr_reached'
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
@@ -1299,7 +1303,9 @@ export interface WebCallResponse {
     | 'error_retell'
     | 'error_unknown'
     | 'error_user_not_joined'
-    | 'registered_call_timeout';
+    | 'registered_call_timeout'
+    | 'transfer_bridged'
+    | 'transfer_cancelled';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -2307,7 +2313,7 @@ export namespace CallListParams {
     /**
      * Only retrieve calls with specific call status(es).
      */
-    call_status?: Array<'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'>;
+    call_status?: Array<'not_connected' | 'ongoing' | 'ended' | 'error'>;
 
     /**
      * Only retrieve calls with specific call successful(s).
@@ -2332,6 +2338,7 @@ export namespace CallListParams {
       | 'agent_hangup'
       | 'call_transfer'
       | 'voicemail_reached'
+      | 'ivr_reached'
       | 'inactivity'
       | 'max_duration_reached'
       | 'concurrency_limit_reached'
@@ -2356,6 +2363,8 @@ export namespace CallListParams {
       | 'error_unknown'
       | 'error_user_not_joined'
       | 'registered_call_timeout'
+      | 'transfer_bridged'
+      | 'transfer_cancelled'
     >;
 
     /**
@@ -2684,6 +2693,13 @@ export namespace CallCreatePhoneCallParams {
        * will not backchannel.
        */
       enable_backchannel?: boolean;
+
+      /**
+       * If set to true, the agent will dynamically adjust how quickly it responds based
+       * on the user's speech rate and past turn-taking behavior in the call. If unset,
+       * default value false will apply.
+       */
+      enable_dynamic_responsiveness?: boolean;
 
       /**
        * If set to true, will enable dynamic voice speed adjustment based on the user's
@@ -3763,6 +3779,13 @@ export namespace CallCreateWebCallParams {
        * will not backchannel.
        */
       enable_backchannel?: boolean;
+
+      /**
+       * If set to true, the agent will dynamically adjust how quickly it responds based
+       * on the user's speech rate and past turn-taking behavior in the call. If unset,
+       * default value false will apply.
+       */
+      enable_dynamic_responsiveness?: boolean;
 
       /**
        * If set to true, will enable dynamic voice speed adjustment based on the user's
@@ -4856,6 +4879,13 @@ export namespace CallRegisterPhoneCallParams {
        * will not backchannel.
        */
       enable_backchannel?: boolean;
+
+      /**
+       * If set to true, the agent will dynamically adjust how quickly it responds based
+       * on the user's speech rate and past turn-taking behavior in the call. If unset,
+       * default value false will apply.
+       */
+      enable_dynamic_responsiveness?: boolean;
 
       /**
        * If set to true, will enable dynamic voice speed adjustment based on the user's
