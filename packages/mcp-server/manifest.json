@@ -1,0 +1,43 @@
+{
+  "dxt_version": "0.2",
+  "name": "retell-sdk-mcp",
+  "version": "5.5.0",
+  "description": "The official MCP Server for the Retell API",
+  "author": {
+    "name": "Retell",
+    "email": "support@retellai.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RetellAI/retell-typescript-sdk.git"
+  },
+  "homepage": "https://github.com/RetellAI/retell-typescript-sdk/tree/main/packages/mcp-server#readme",
+  "documentation": "https://docs.retellai.com/",
+  "server": {
+    "type": "node",
+    "entry_point": "index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/index.js"],
+      "env": {
+        "RETELL_API_KEY": "${user_config.RETELL_API_KEY}"
+      }
+    }
+  },
+  "user_config": {
+    "RETELL_API_KEY": {
+      "title": "api_key",
+      "description": "",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "tools": [],
+  "tools_generated": true,
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "keywords": ["api"]
+}
