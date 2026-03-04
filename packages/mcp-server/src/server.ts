@@ -8,6 +8,7 @@ import {
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'retell-sdk';
+import { readEnvOrError } from './util';
 import Retell from 'retell-sdk';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
