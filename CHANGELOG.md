@@ -1,5 +1,24 @@
 # Changelog
 
+## 5.6.0 (2026-03-04)
+
+Full Changelog: [v5.5.0...v5.6.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.5.0...v5.6.0)
+
+### Features
+
+* **api:** api update ([bcbd7b7](https://github.com/RetellAI/retell-typescript-sdk/commit/bcbd7b7db9f4ea6e9032b214dd0d29ffe7387d0d))
+
+
+### Bug Fixes
+
+* **mcp:** add missing import in server.ts ([496b041](https://github.com/RetellAI/retell-typescript-sdk/commit/496b041723be88eb49834918b462ab6ae0f5421d))
+
+
+### Chores
+
+* configure new SDK language ([7a0e14e](https://github.com/RetellAI/retell-typescript-sdk/commit/7a0e14e53d23ab047baefc79bb705daab5b2a640))
+* **internal:** move stringifyQuery implementation to internal function ([4e06ab7](https://github.com/RetellAI/retell-typescript-sdk/commit/4e06ab798482641573bc97cf3844244c7f992c1f))
+
 ## 5.5.0 (2026-02-26)
 
 Full Changelog: [v5.4.0...v5.5.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.4.0...v5.5.0)
