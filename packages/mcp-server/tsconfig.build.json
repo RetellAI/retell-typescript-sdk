@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "retell-sdk-mcp/*": ["./dist/src/*"],
-      "retell-sdk-mcp": ["./dist/src/index.ts"]
+      "@retellai/mcp-server/*": ["./dist/src/*"],
+      "@retellai/mcp-server": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
