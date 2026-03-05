@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^@retellai/mcp-server$': '<rootDir>/src/index.ts',
-    '^@retellai/mcp-server/(.*)$': '<rootDir>/src/$1',
+    '^@retell-ai/mcp-server$': '<rootDir>/src/index.ts',
+    '^@retell-ai/mcp-server/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testPathIgnorePatterns: ['scripts'],

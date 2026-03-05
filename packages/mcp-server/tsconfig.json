@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "@retellai/mcp-server/*": ["./src/*"],
-      "@retellai/mcp-server": ["./src/index.ts"]
+      "@retell-ai/mcp-server/*": ["./src/*"],
+      "@retell-ai/mcp-server": ["./src/index.ts"]
     },
     "noEmit": true,
 
