@@ -1,5 +1,5 @@
 {
-  "name": "@retellai/mcp-server",
+  "name": "@retell-ai/mcp-server",
   "version": "5.6.0",
   "description": "The official MCP Server for the Retell API",
   "author": "Retell <support@retellai.com>",
@@ -74,8 +74,8 @@
     "tsconfig-paths": "^4.0.0"
   },
   "imports": {
-    "@retellai/mcp-server": ".",
-    "@retellai/mcp-server/*": "./src/*"
+    "@retell-ai/mcp-server": ".",
+    "@retell-ai/mcp-server/*": "./src/*"
   },
   "exports": {
     ".": {
