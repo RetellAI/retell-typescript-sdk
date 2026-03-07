@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.7.1 (2026-03-07)
+
+Full Changelog: [v5.7.0...v5.7.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.7.0...v5.7.1)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([e18ae2f](https://github.com/RetellAI/retell-typescript-sdk/commit/e18ae2f3cae23dc9452a69a0b8ae6c57b196b5e1))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([ed05dfc](https://github.com/RetellAI/retell-typescript-sdk/commit/ed05dfc0b06be01fe715c4428f0c19923dace6fa))
+* **internal:** codegen related update ([63f6b0b](https://github.com/RetellAI/retell-typescript-sdk/commit/63f6b0bf0a1aec6a57ba46543b91455dbd8a8e19))
+* update placeholder string ([a92fc9e](https://github.com/RetellAI/retell-typescript-sdk/commit/a92fc9ecdce486dd2e83342e30e370a2093fbbdc))
+
 ## 5.7.0 (2026-03-05)
 
 Full Changelog: [v5.6.0...v5.7.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.6.0...v5.7.0)
