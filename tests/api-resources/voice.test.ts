@@ -60,7 +60,7 @@ describe('resource voice', () => {
   // Mock server tests are disabled
   test.skip('clone: only required params', async () => {
     const responsePromise = client.voice.clone({
-      files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      files: [await toFile(Buffer.from('Example data'), 'README.md')],
       voice_name: 'x',
       voice_provider: 'elevenlabs',
     });
@@ -76,7 +76,7 @@ describe('resource voice', () => {
   // Mock server tests are disabled
   test.skip('clone: required and optional params', async () => {
     const response = await client.voice.clone({
-      files: [await toFile(Buffer.from('# my file contents'), 'README.md')],
+      files: [await toFile(Buffer.from('Example data'), 'README.md')],
       voice_name: 'x',
       voice_provider: 'elevenlabs',
     });
