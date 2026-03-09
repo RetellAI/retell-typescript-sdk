@@ -51,6 +51,7 @@ describe('resource chatAgent', () => {
           name: 'customer_name',
           type: 'string',
           examples: ['John Doe', 'Jane Smith'],
+          required: true,
         },
       ],
       post_chat_analysis_model: 'gpt-4.1-mini',
