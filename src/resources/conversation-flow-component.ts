@@ -686,6 +686,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -929,6 +930,12 @@ export namespace ConversationFlowComponentResponse {
          * id when using `sip refer` cold transfer mode.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export interface TransferOptionWarmTransfer {
@@ -994,6 +1001,12 @@ export namespace ConversationFlowComponentResponse {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -1083,6 +1096,12 @@ export namespace ConversationFlowComponentResponse {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionAgenticWarmTransfer {
@@ -1524,6 +1543,12 @@ export namespace ConversationFlowComponentResponse {
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface EnumAnalysisData {
@@ -1546,6 +1571,12 @@ export namespace ConversationFlowComponentResponse {
          * Type of the variable to extract.
          */
         type: 'enum';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface BooleanAnalysisData {
@@ -1563,6 +1594,12 @@ export namespace ConversationFlowComponentResponse {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface NumberAnalysisData {
@@ -1580,6 +1617,12 @@ export namespace ConversationFlowComponentResponse {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
     }
 
@@ -2373,6 +2416,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -2580,6 +2624,12 @@ export namespace ConversationFlowComponentResponse {
        * id when using `sip refer` cold transfer mode.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -2645,6 +2695,12 @@ export namespace ConversationFlowComponentResponse {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionWarmTransfer {
@@ -2734,6 +2790,12 @@ export namespace ConversationFlowComponentResponse {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionAgenticWarmTransfer {
@@ -3009,6 +3071,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -3371,6 +3434,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -4219,6 +4283,12 @@ export namespace ConversationFlowComponentResponse {
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface EnumAnalysisData {
@@ -4241,6 +4311,12 @@ export namespace ConversationFlowComponentResponse {
        * Type of the variable to extract.
        */
       type: 'enum';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface BooleanAnalysisData {
@@ -4258,6 +4334,12 @@ export namespace ConversationFlowComponentResponse {
        * Type of the variable to extract.
        */
       type: 'boolean';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface NumberAnalysisData {
@@ -4275,6 +4357,12 @@ export namespace ConversationFlowComponentResponse {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     /**
@@ -4646,6 +4734,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -7035,6 +7124,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -7278,6 +7368,12 @@ export namespace ConversationFlowComponentCreateParams {
          * id when using `sip refer` cold transfer mode.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export interface TransferOptionWarmTransfer {
@@ -7343,6 +7439,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -7432,6 +7534,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionAgenticWarmTransfer {
@@ -7873,6 +7981,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface EnumAnalysisData {
@@ -7895,6 +8009,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Type of the variable to extract.
          */
         type: 'enum';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface BooleanAnalysisData {
@@ -7912,6 +8032,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface NumberAnalysisData {
@@ -7929,6 +8055,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
     }
 
@@ -8722,6 +8854,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -8929,6 +9062,12 @@ export namespace ConversationFlowComponentCreateParams {
        * id when using `sip refer` cold transfer mode.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -8994,6 +9133,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionWarmTransfer {
@@ -9083,6 +9228,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionAgenticWarmTransfer {
@@ -9358,6 +9509,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -9720,6 +9872,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -10568,6 +10721,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface EnumAnalysisData {
@@ -10590,6 +10749,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of the variable to extract.
        */
       type: 'enum';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface BooleanAnalysisData {
@@ -10607,6 +10772,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of the variable to extract.
        */
       type: 'boolean';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface NumberAnalysisData {
@@ -10624,6 +10795,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     /**
@@ -10995,6 +11172,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -13416,6 +13594,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -13659,6 +13838,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * id when using `sip refer` cold transfer mode.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export interface TransferOptionWarmTransfer {
@@ -13724,6 +13909,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionWarmTransfer {
@@ -13813,6 +14004,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Twilio numbers support this option.
          */
         show_transferee_as_caller?: boolean;
+
+        /**
+         * Override the ring duration for this specific transfer, in milliseconds. If not
+         * set, falls back to the agent-level `ring_duration_ms`.
+         */
+        transfer_ring_duration_ms?: number;
       }
 
       export namespace TransferOptionAgenticWarmTransfer {
@@ -14254,6 +14451,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface EnumAnalysisData {
@@ -14276,6 +14479,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Type of the variable to extract.
          */
         type: 'enum';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface BooleanAnalysisData {
@@ -14293,6 +14502,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
 
       export interface NumberAnalysisData {
@@ -14310,6 +14525,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Whether this data is required. If true and the data is not extracted, the call
+         * will be marked as unsuccessful.
+         */
+        required?: boolean;
       }
     }
 
@@ -15103,6 +15324,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -15310,6 +15532,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * id when using `sip refer` cold transfer mode.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export interface TransferOptionWarmTransfer {
@@ -15375,6 +15603,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionWarmTransfer {
@@ -15464,6 +15698,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Twilio numbers support this option.
        */
       show_transferee_as_caller?: boolean;
+
+      /**
+       * Override the ring duration for this specific transfer, in milliseconds. If not
+       * set, falls back to the agent-level `ring_duration_ms`.
+       */
+      transfer_ring_duration_ms?: number;
     }
 
     export namespace TransferOptionAgenticWarmTransfer {
@@ -15739,6 +15979,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -16101,6 +16342,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
@@ -16949,6 +17191,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface EnumAnalysisData {
@@ -16971,6 +17219,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of the variable to extract.
        */
       type: 'enum';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface BooleanAnalysisData {
@@ -16988,6 +17242,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of the variable to extract.
        */
       type: 'boolean';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     export interface NumberAnalysisData {
@@ -17005,6 +17265,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Whether this data is required. If true and the data is not extracted, the call
+       * will be marked as unsuccessful.
+       */
+      required?: boolean;
     }
 
     /**
@@ -17376,6 +17642,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'

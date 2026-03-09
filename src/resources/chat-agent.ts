@@ -197,7 +197,7 @@ export interface ChatAgentResponse {
    * value allowed is 120,000 ms (2 minutes). The maximum value allowed is
    * 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
-  end_chat_after_silence_ms?: number;
+  end_chat_after_silence_ms?: number | null;
 
   /**
    * Configuration for guardrail checks to detect and prevent prohibited topics in
@@ -299,6 +299,7 @@ export interface ChatAgentResponse {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -464,6 +465,12 @@ export namespace ChatAgentResponse {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -486,6 +493,12 @@ export namespace ChatAgentResponse {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -503,6 +516,12 @@ export namespace ChatAgentResponse {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -520,6 +539,12 @@ export namespace ChatAgentResponse {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 }
 
@@ -586,7 +611,7 @@ export interface ChatAgentCreateParams {
    * value allowed is 120,000 ms (2 minutes). The maximum value allowed is
    * 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
-  end_chat_after_silence_ms?: number;
+  end_chat_after_silence_ms?: number | null;
 
   /**
    * Configuration for guardrail checks to detect and prevent prohibited topics in
@@ -683,6 +708,7 @@ export interface ChatAgentCreateParams {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -843,6 +869,12 @@ export namespace ChatAgentCreateParams {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -865,6 +897,12 @@ export namespace ChatAgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -882,6 +920,12 @@ export namespace ChatAgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -899,6 +943,12 @@ export namespace ChatAgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 }
 
@@ -967,7 +1017,7 @@ export interface ChatAgentUpdateParams {
    * The minimum value allowed is 120,000 ms (2 minutes). The maximum value allowed
    * is 259,200,000 ms (72 hours). By default, this is set to 3,600,000 (1 hour).
    */
-  end_chat_after_silence_ms?: number;
+  end_chat_after_silence_ms?: number | null;
 
   /**
    * Body param: Configuration for guardrail checks to detect and prevent prohibited
@@ -1064,6 +1114,7 @@ export interface ChatAgentUpdateParams {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -1188,6 +1239,12 @@ export namespace ChatAgentUpdateParams {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -1210,6 +1267,12 @@ export namespace ChatAgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -1227,6 +1290,12 @@ export namespace ChatAgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -1244,6 +1313,12 @@ export namespace ChatAgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface ResponseEngineRetellLm {
