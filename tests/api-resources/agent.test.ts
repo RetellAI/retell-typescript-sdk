@@ -70,6 +70,7 @@ describe('resource agent', () => {
           name: 'customer_name',
           type: 'string',
           examples: ['John Doe', 'Jane Smith'],
+          required: true,
         },
       ],
       post_call_analysis_model: 'gpt-4.1-mini',

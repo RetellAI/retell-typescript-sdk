@@ -259,7 +259,7 @@ export interface AgentResponse {
   /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
-  custom_stt_config?: AgentResponse.CustomSttConfig;
+  custom_stt_config?: AgentResponse.CustomSttConfig | null;
 
   /**
    * Number of days to retain call/chat data before automatic deletion. Must be
@@ -489,6 +489,7 @@ export interface AgentResponse {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -528,7 +529,7 @@ export interface AgentResponse {
   /**
    * If set, the phone ringing will last for the specified amount of milliseconds.
    * This applies for both outbound call ringtime, and call transfer ringtime.
-   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   * Default to 30000 (30 s). Valid range is [5000, 300000].
    */
   ring_duration_ms?: number;
 
@@ -577,6 +578,7 @@ export interface AgentResponse {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'eleven_v3'
     | 'sonic-2'
     | 'sonic-3'
     | 'sonic-3-latest'
@@ -819,6 +821,12 @@ export namespace AgentResponse {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -841,6 +849,12 @@ export namespace AgentResponse {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -858,6 +872,12 @@ export namespace AgentResponse {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -875,6 +895,12 @@ export namespace AgentResponse {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface PronunciationDictionary {
@@ -1082,7 +1108,7 @@ export interface AgentCreateParams {
   /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
-  custom_stt_config?: AgentCreateParams.CustomSttConfig;
+  custom_stt_config?: AgentCreateParams.CustomSttConfig | null;
 
   /**
    * Number of days to retain call/chat data before automatic deletion. Must be
@@ -1307,6 +1333,7 @@ export interface AgentCreateParams {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -1346,7 +1373,7 @@ export interface AgentCreateParams {
   /**
    * If set, the phone ringing will last for the specified amount of milliseconds.
    * This applies for both outbound call ringtime, and call transfer ringtime.
-   * Default to 30000 (30 s). Valid range is [5000, 90000].
+   * Default to 30000 (30 s). Valid range is [5000, 300000].
    */
   ring_duration_ms?: number;
 
@@ -1395,6 +1422,7 @@ export interface AgentCreateParams {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'eleven_v3'
     | 'sonic-2'
     | 'sonic-3'
     | 'sonic-3-latest'
@@ -1637,6 +1665,12 @@ export namespace AgentCreateParams {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -1659,6 +1693,12 @@ export namespace AgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -1676,6 +1716,12 @@ export namespace AgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -1693,6 +1739,12 @@ export namespace AgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface PronunciationDictionary {
@@ -1894,7 +1946,7 @@ export interface AgentUpdateParams {
   /**
    * Body param: Custom STT configuration. Only used when stt_mode is set to custom.
    */
-  custom_stt_config?: AgentUpdateParams.CustomSttConfig;
+  custom_stt_config?: AgentUpdateParams.CustomSttConfig | null;
 
   /**
    * Body param: Number of days to retain call/chat data before automatic deletion.
@@ -2121,6 +2173,7 @@ export interface AgentUpdateParams {
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
@@ -2171,7 +2224,7 @@ export interface AgentUpdateParams {
   /**
    * Body param: If set, the phone ringing will last for the specified amount of
    * milliseconds. This applies for both outbound call ringtime, and call transfer
-   * ringtime. Default to 30000 (30 s). Valid range is [5000, 90000].
+   * ringtime. Default to 30000 (30 s). Valid range is [5000, 300000].
    */
   ring_duration_ms?: number;
 
@@ -2232,6 +2285,7 @@ export interface AgentUpdateParams {
     | 'eleven_turbo_v2_5'
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
+    | 'eleven_v3'
     | 'sonic-2'
     | 'sonic-3'
     | 'sonic-3-latest'
@@ -2428,6 +2482,12 @@ export namespace AgentUpdateParams {
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface EnumAnalysisData {
@@ -2450,6 +2510,12 @@ export namespace AgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'enum';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface BooleanAnalysisData {
@@ -2467,6 +2533,12 @@ export namespace AgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface NumberAnalysisData {
@@ -2484,6 +2556,12 @@ export namespace AgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'number';
+
+    /**
+     * Whether this data is required. If true and the data is not extracted, the call
+     * will be marked as unsuccessful.
+     */
+    required?: boolean;
   }
 
   export interface PronunciationDictionary {
