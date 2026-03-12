@@ -163,7 +163,7 @@ const remoteStainlessHandler = async ({
       }),
     },
     body: JSON.stringify({
-      project_name: 'toddlzt',
+      project_name: 'retell',
       code,
       intent,
       client_opts: { apiKey: readEnvOrError('RETELL_API_KEY') },
