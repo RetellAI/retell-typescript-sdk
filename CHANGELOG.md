@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.8.1 (2026-03-12)
+
+Full Changelog: [v5.8.0...v5.8.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.8.0...v5.8.1)
+
+### Chores
+
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([2365185](https://github.com/RetellAI/retell-typescript-sdk/commit/2365185039625e654c002c34f21e61ea875cc3fb))
+* **internal:** configure MCP Server hosting ([b56cb80](https://github.com/RetellAI/retell-typescript-sdk/commit/b56cb80fbc44f96062f58378b5fc421608bb29a6))
+* **internal:** update dependencies to address dependabot vulnerabilities ([d752a7b](https://github.com/RetellAI/retell-typescript-sdk/commit/d752a7b6f72c4f1f0bf53c985c118ac2deda6c74))
+
 ## 5.8.0 (2026-03-09)
 
 Full Changelog: [v5.7.1...v5.8.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.7.1...v5.8.0)
