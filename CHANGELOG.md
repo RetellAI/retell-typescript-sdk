@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.9.1 (2026-03-14)
+
+Full Changelog: [v5.9.0...v5.9.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.9.0...v5.9.1)
+
+### Chores
+
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([a0d9c30](https://github.com/RetellAI/retell-typescript-sdk/commit/a0d9c3060e1d87111237b62534d0bd802c6a1c43))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([c0dde38](https://github.com/RetellAI/retell-typescript-sdk/commit/c0dde38a5e2f0f1390788e38ac2de0fbe55724ad))
+
 ## 5.9.0 (2026-03-13)
 
 Full Changelog: [v5.8.1...v5.9.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.8.1...v5.9.0)
