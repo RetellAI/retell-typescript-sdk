@@ -21,7 +21,7 @@ export const newMcpServer = async (stainlessApiKey: string | undefined) =>
   new McpServer(
     {
       name: 'retell_sdk_api',
-      version: '5.9.0',
+      version: '5.9.1',
     },
     {
       instructions: await getInstructions(stainlessApiKey),
@@ -38,6 +38,7 @@ export async function initMcpServer(params: {
   clientOptions?: ClientOptions;
   mcpOptions?: McpOptions;
   stainlessApiKey?: string | undefined;
+  upstreamClientEnvs?: Record<string, string> | undefined;
 }) {
   const server = params.server instanceof McpServer ? params.server.server : params.server;
 
@@ -120,6 +121,7 @@ export async function initMcpServer(params: {
       reqContext: {
         client,
         stainlessApiKey: params.stainlessApiKey ?? params.mcpOptions?.stainlessApiKey,
+        upstreamClientEnvs: params.upstreamClientEnvs,
       },
       args,
     });
