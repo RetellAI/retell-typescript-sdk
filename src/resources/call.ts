@@ -2708,12 +2708,6 @@ export namespace CallCreatePhoneCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
-       * If set to true, will detect whether the call enters a voicemail. Note that this
-       * feature is only available for phone calls.
-       */
-      enable_voicemail_detection?: boolean;
-
-      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -2880,6 +2874,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -3473,6 +3468,7 @@ export namespace CallCreatePhoneCallParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -3536,6 +3532,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -3565,7 +3562,13 @@ export namespace CallCreatePhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?:
+        | 'gpt-4o-realtime'
+        | 'gpt-4o-mini-realtime'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini'
+        | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -3617,6 +3620,20 @@ export interface CallCreateWebCallParams {
    * The version of the agent to use for the call.
    */
   agent_version?: number;
+
+  /**
+   * Start the call at this conversation flow node (stage). Must be a valid node id
+   * in the agent's conversation flow. Only applicable when the agent uses
+   * conversation flow as the response engine. Ignored for retell-llm agents.
+   */
+  current_node_id?: string | null;
+
+  /**
+   * Start the conversation in this state (stage). Must be a valid state name in the
+   * agent's Retell LLM. Only applicable when the agent uses Retell LLM with states.
+   * Ignored for conversation-flow agents.
+   */
+  current_state?: string | null;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -3822,12 +3839,6 @@ export namespace CallCreateWebCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
-       * If set to true, will detect whether the call enters a voicemail. Note that this
-       * feature is only available for phone calls.
-       */
-      enable_voicemail_detection?: boolean;
-
-      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -3994,6 +4005,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4587,6 +4599,7 @@ export namespace CallCreateWebCallParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -4650,6 +4663,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -4679,7 +4693,13 @@ export namespace CallCreateWebCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?:
+        | 'gpt-4o-realtime'
+        | 'gpt-4o-mini-realtime'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini'
+        | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -4950,12 +4970,6 @@ export namespace CallRegisterPhoneCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
-       * If set to true, will detect whether the call enters a voicemail. Note that this
-       * feature is only available for phone calls.
-       */
-      enable_voicemail_detection?: boolean;
-
-      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
@@ -5122,6 +5136,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -5715,6 +5730,7 @@ export namespace CallRegisterPhoneCallParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -5778,6 +5794,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -5807,7 +5824,13 @@ export namespace CallRegisterPhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?:
+        | 'gpt-4o-realtime'
+        | 'gpt-4o-mini-realtime'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini'
+        | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
