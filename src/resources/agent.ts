@@ -309,12 +309,6 @@ export interface AgentResponse {
   enable_dynamic_voice_speed?: boolean;
 
   /**
-   * If set to true, will detect whether the call enters a voicemail. Note that this
-   * feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
@@ -486,6 +480,7 @@ export interface AgentResponse {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -1158,12 +1153,6 @@ export interface AgentCreateParams {
   enable_dynamic_voice_speed?: boolean;
 
   /**
-   * If set to true, will detect whether the call enters a voicemail. Note that this
-   * feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * If users stay silent for a period after agent speech, end the call. The minimum
    * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
    */
@@ -1330,6 +1319,7 @@ export interface AgentCreateParams {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -1997,12 +1987,6 @@ export interface AgentUpdateParams {
   enable_dynamic_voice_speed?: boolean;
 
   /**
-   * Body param: If set to true, will detect whether the call enters a voicemail.
-   * Note that this feature is only available for phone calls.
-   */
-  enable_voicemail_detection?: boolean;
-
-  /**
    * Body param: If users stay silent for a period after agent speech, end the call.
    * The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000
    * (10 min).
@@ -2170,6 +2154,7 @@ export interface AgentUpdateParams {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'

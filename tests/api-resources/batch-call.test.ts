@@ -52,7 +52,6 @@ describe('resource batchCall', () => {
               enable_backchannel: true,
               enable_dynamic_responsiveness: true,
               enable_dynamic_voice_speed: true,
-              enable_voicemail_detection: true,
               end_call_after_silence_ms: 600000,
               fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
               guardrail_config: {
