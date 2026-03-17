@@ -147,6 +147,7 @@ export interface LlmResponse {
     | LlmResponse.PressDigitTool
     | LlmResponse.SendSMSTool
     | LlmResponse.CustomTool
+    | LlmResponse.CodeTool
     | LlmResponse.ExtractDynamicVariableTool
     | LlmResponse.BridgeTransferTool
     | LlmResponse.CancelTransferTool
@@ -183,6 +184,7 @@ export interface LlmResponse {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -212,7 +214,13 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?:
+    | 'gpt-4o-realtime'
+    | 'gpt-4o-mini-realtime'
+    | 'gpt-realtime-1.5'
+    | 'gpt-realtime'
+    | 'gpt-realtime-mini'
+    | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -439,12 +447,6 @@ export namespace LlmResponse {
       opt_out_human_detection?: boolean;
 
       /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
-
-      /**
        * If set, when transfer is connected, will say the handoff message only to the
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
@@ -961,6 +963,66 @@ export namespace LlmResponse {
     }
   }
 
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
   export interface ExtractDynamicVariableTool {
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1111,6 +1173,25 @@ export namespace LlmResponse {
      * transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface CancelTransferTool {
@@ -1131,6 +1212,25 @@ export namespace LlmResponse {
      * and ends the transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface McpTool {
@@ -1271,6 +1371,7 @@ export namespace LlmResponse {
       | State.PressDigitTool
       | State.SendSMSTool
       | State.CustomTool
+      | State.CodeTool
       | State.ExtractDynamicVariableTool
       | State.BridgeTransferTool
       | State.CancelTransferTool
@@ -1525,12 +1626,6 @@ export namespace LlmResponse {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -2049,6 +2144,66 @@ export namespace LlmResponse {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2199,6 +2354,25 @@ export namespace LlmResponse {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -2219,6 +2393,25 @@ export namespace LlmResponse {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {
@@ -2333,6 +2526,7 @@ export interface LlmCreateParams {
     | LlmCreateParams.PressDigitTool
     | LlmCreateParams.SendSMSTool
     | LlmCreateParams.CustomTool
+    | LlmCreateParams.CodeTool
     | LlmCreateParams.ExtractDynamicVariableTool
     | LlmCreateParams.BridgeTransferTool
     | LlmCreateParams.CancelTransferTool
@@ -2364,6 +2558,7 @@ export interface LlmCreateParams {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -2393,7 +2588,13 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?:
+    | 'gpt-4o-realtime'
+    | 'gpt-4o-mini-realtime'
+    | 'gpt-realtime-1.5'
+    | 'gpt-realtime'
+    | 'gpt-realtime-mini'
+    | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -2620,12 +2821,6 @@ export namespace LlmCreateParams {
       opt_out_human_detection?: boolean;
 
       /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
-
-      /**
        * If set, when transfer is connected, will say the handoff message only to the
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
@@ -3142,6 +3337,66 @@ export namespace LlmCreateParams {
     }
   }
 
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
   export interface ExtractDynamicVariableTool {
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -3292,6 +3547,25 @@ export namespace LlmCreateParams {
      * transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface CancelTransferTool {
@@ -3312,6 +3586,25 @@ export namespace LlmCreateParams {
      * and ends the transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface McpTool {
@@ -3452,6 +3745,7 @@ export namespace LlmCreateParams {
       | State.PressDigitTool
       | State.SendSMSTool
       | State.CustomTool
+      | State.CodeTool
       | State.ExtractDynamicVariableTool
       | State.BridgeTransferTool
       | State.CancelTransferTool
@@ -3706,12 +4000,6 @@ export namespace LlmCreateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -4230,6 +4518,66 @@ export namespace LlmCreateParams {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -4380,6 +4728,25 @@ export namespace LlmCreateParams {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -4400,6 +4767,25 @@ export namespace LlmCreateParams {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {
@@ -4527,6 +4913,7 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.SendSMSTool
     | LlmUpdateParams.CustomTool
+    | LlmUpdateParams.CodeTool
     | LlmUpdateParams.ExtractDynamicVariableTool
     | LlmUpdateParams.BridgeTransferTool
     | LlmUpdateParams.CancelTransferTool
@@ -4559,6 +4946,7 @@ export interface LlmUpdateParams {
     | 'gpt-5'
     | 'gpt-5.1'
     | 'gpt-5.2'
+    | 'gpt-5.4'
     | 'gpt-5-mini'
     | 'gpt-5-nano'
     | 'claude-4.5-sonnet'
@@ -4588,7 +4976,13 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying speech to speech model. Can only set this or
    * model, not both.
    */
-  s2s_model?: 'gpt-4o-realtime' | 'gpt-4o-mini-realtime' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?:
+    | 'gpt-4o-realtime'
+    | 'gpt-4o-mini-realtime'
+    | 'gpt-realtime-1.5'
+    | 'gpt-realtime'
+    | 'gpt-realtime-mini'
+    | null;
 
   /**
    * Body param: The speaker who starts the conversation. Required. Must be either
@@ -4815,12 +5209,6 @@ export namespace LlmUpdateParams {
       opt_out_human_detection?: boolean;
 
       /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
-
-      /**
        * If set, when transfer is connected, will say the handoff message only to the
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
@@ -5337,6 +5725,66 @@ export namespace LlmUpdateParams {
     }
   }
 
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
   export interface ExtractDynamicVariableTool {
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -5487,6 +5935,25 @@ export namespace LlmUpdateParams {
      * transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface CancelTransferTool {
@@ -5507,6 +5974,25 @@ export namespace LlmUpdateParams {
      * and ends the transfer agent call.
      */
     description?: string;
+
+    /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
   }
 
   export interface McpTool {
@@ -5647,6 +6133,7 @@ export namespace LlmUpdateParams {
       | State.PressDigitTool
       | State.SendSMSTool
       | State.CustomTool
+      | State.CodeTool
       | State.ExtractDynamicVariableTool
       | State.BridgeTransferTool
       | State.CancelTransferTool
@@ -5901,12 +6388,6 @@ export namespace LlmUpdateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -6425,6 +6906,66 @@ export namespace LlmUpdateParams {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -6575,6 +7116,25 @@ export namespace LlmUpdateParams {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -6595,6 +7155,25 @@ export namespace LlmUpdateParams {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {

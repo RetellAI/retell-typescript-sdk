@@ -98,7 +98,6 @@ describe('resource call', () => {
           enable_backchannel: true,
           enable_dynamic_responsiveness: true,
           enable_dynamic_voice_speed: true,
-          enable_voicemail_detection: true,
           end_call_after_silence_ms: 600000,
           fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
           guardrail_config: {
@@ -236,7 +235,6 @@ describe('resource call', () => {
           enable_backchannel: true,
           enable_dynamic_responsiveness: true,
           enable_dynamic_voice_speed: true,
-          enable_voicemail_detection: true,
           end_call_after_silence_ms: 600000,
           fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
           guardrail_config: {
@@ -328,6 +326,8 @@ describe('resource call', () => {
         },
       },
       agent_version: 1,
+      current_node_id: 'collect_info',
+      current_state: 'information_collection',
       metadata: {},
       retell_llm_dynamic_variables: { customer_name: 'bar' },
     });
@@ -371,7 +371,6 @@ describe('resource call', () => {
           enable_backchannel: true,
           enable_dynamic_responsiveness: true,
           enable_dynamic_voice_speed: true,
-          enable_voicemail_detection: true,
           end_call_after_silence_ms: 600000,
           fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
           guardrail_config: {

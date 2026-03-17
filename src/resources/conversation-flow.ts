@@ -189,6 +189,7 @@ export interface ConversationFlowResponse {
     | ConversationFlowResponse.ConversationNode
     | ConversationFlowResponse.EndNode
     | ConversationFlowResponse.FunctionNode
+    | ConversationFlowResponse.CodeNode
     | ConversationFlowResponse.TransferCallNode
     | ConversationFlowResponse.PressDigitNode
     | ConversationFlowResponse.BranchNode
@@ -250,6 +251,7 @@ export namespace ConversationFlowResponse {
       | Component.ConversationNode
       | Component.EndNode
       | Component.FunctionNode
+      | Component.CodeNode
       | Component.TransferCallNode
       | Component.PressDigitNode
       | Component.BranchNode
@@ -351,6 +353,7 @@ export namespace ConversationFlowResponse {
         | ConversationNode.PressDigitTool
         | ConversationNode.SendSMSTool
         | ConversationNode.CustomTool
+        | ConversationNode.CodeTool
         | ConversationNode.ExtractDynamicVariableTool
         | ConversationNode.BridgeTransferTool
         | ConversationNode.CancelTransferTool
@@ -796,6 +799,7 @@ export namespace ConversationFlowResponse {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -1083,12 +1087,6 @@ export namespace ConversationFlowResponse {
            * false.
            */
           opt_out_human_detection?: boolean;
-
-          /**
-           * If set to true, AI will not say "Hello" after connecting the call. Default to
-           * false.
-           */
-          opt_out_initial_message?: boolean;
 
           /**
            * If set, when transfer is connected, will say the handoff message only to the
@@ -1607,6 +1605,66 @@ export namespace ConversationFlowResponse {
         }
       }
 
+      export interface CodeTool {
+        /**
+         * JavaScript code to execute in the sandbox.
+         */
+        code: string;
+
+        /**
+         * Name of the tool. Must be unique within all tools available to LLM at any given
+         * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+         * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+         * allowed).
+         */
+        name: string;
+
+        type: 'code';
+
+        /**
+         * Describes what this tool does and when to call this tool.
+         */
+        description?: string;
+
+        /**
+         * The description for the sentence agent say during execution. Only applicable
+         * when speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * A mapping of variable names to JSON paths in the code execution result. These
+         * mapped values will be extracted and added as dynamic variables.
+         */
+        response_variables?: { [key: string]: string };
+
+        /**
+         * Determines whether the agent would call LLM another time and speak when the
+         * result of function is obtained.
+         */
+        speak_after_execution?: boolean;
+
+        /**
+         * Determines whether the agent would say sentence like "One moment, let me check
+         * that." when executing the tool.
+         */
+        speak_during_execution?: boolean;
+
+        /**
+         * The maximum time in milliseconds the code can run before it's considered
+         * timeout. Defaults to 30,000 ms (30 s).
+         */
+        timeout_ms?: number;
+      }
+
       export interface ExtractDynamicVariableTool {
         /**
          * Describes what the tool does, sometimes can also include information about when
@@ -1757,6 +1815,25 @@ export namespace ConversationFlowResponse {
          * transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when bridging the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface CancelTransferTool {
@@ -1777,6 +1854,25 @@ export namespace ConversationFlowResponse {
          * and ends the transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when cancelling the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface McpTool {
@@ -1863,6 +1959,8 @@ export namespace ConversationFlowResponse {
        * What to say when ending the call, only used when speak during execution
        */
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      model_choice?: EndNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -2073,6 +2171,38 @@ export namespace ConversationFlowResponse {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface FunctionNode {
@@ -2116,8 +2246,6 @@ export namespace ConversationFlowResponse {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
-
       model_choice?: FunctionNode.ModelChoice;
 
       /**
@@ -2125,14 +2253,10 @@ export namespace ConversationFlowResponse {
        */
       name?: string;
 
-      responsiveness?: number | null;
-
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -2526,6 +2650,481 @@ export namespace ConversationFlowResponse {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
+    }
+
+    export interface CodeNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Type of the node
+       */
+      type: 'code';
+
+      /**
+       * Whether to wait for code execution result
+       */
+      wait_for_result: boolean;
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CodeNode.DisplayPosition;
+
+      edges?: Array<CodeNode.Edge>;
+
+      else_edge?: CodeNode.ElseEdge;
+
+      finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+      global_node_setting?: CodeNode.GlobalNodeSetting;
+
+      instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+      model_choice?: CodeNode.ModelChoice;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Whether to speak during code execution
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
+    export namespace CodeNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface Edge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace Edge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * The same global node won't be triggered again within the next N node
+         * transitions.
+         */
+        cool_down?: number;
+
+        /**
+         * The conditions for global node go back. There would be no destination_node_id
+         * for these edges.
+         */
+        go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface GoBackCondition {
+          /**
+           * Unique identifier for the edge
+           */
+          id: string;
+
+          transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+          /**
+           * ID of the destination node
+           */
+          destination_node_id?: string;
+        }
+
+        export namespace GoBackCondition {
+          export interface PromptCondition {
+            /**
+             * Prompt condition text
+             */
+            prompt: string;
+
+            type: 'prompt';
+          }
+
+          export interface EquationCondition {
+            equations: Array<EquationCondition.Equation>;
+
+            operator: '||' | '&&';
+
+            type: 'equation';
+          }
+
+          export namespace EquationCondition {
+            export interface Equation {
+              /**
+               * Left side of the equation
+               */
+              left: string;
+
+              operator:
+                | '=='
+                | '!='
+                | '>'
+                | '>='
+                | '<'
+                | '<='
+                | 'contains'
+                | 'not_contains'
+                | 'exists'
+                | 'not_exist';
+
+              /**
+               * Right side of the equation. The right side of the equation not required when
+               * "exists" or "not_exist" are selected.
+               */
+              right?: string;
+            }
+          }
+        }
+
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -2777,12 +3376,6 @@ export namespace ConversationFlowResponse {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -3181,6 +3774,7 @@ export namespace ConversationFlowResponse {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -3544,6 +4138,7 @@ export namespace ConversationFlowResponse {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -3588,6 +4183,8 @@ export namespace ConversationFlowResponse {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
+
+      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -3950,6 +4547,38 @@ export namespace ConversationFlowResponse {
           }
         }
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface SMSNode {
@@ -3975,6 +4604,8 @@ export namespace ConversationFlowResponse {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
+
+      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -4333,6 +4964,38 @@ export namespace ConversationFlowResponse {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -4844,6 +5507,7 @@ export namespace ConversationFlowResponse {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -4913,6 +5577,8 @@ export namespace ConversationFlowResponse {
        * If true, keep the current voice when swapping agents. Defaults to false.
        */
       keep_current_voice?: boolean;
+
+      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -5205,6 +5871,38 @@ export namespace ConversationFlowResponse {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface McpNode {
@@ -5251,7 +5949,7 @@ export namespace ConversationFlowResponse {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
+      model_choice?: McpNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -5264,14 +5962,10 @@ export namespace ConversationFlowResponse {
        */
       response_variables?: { [key: string]: string };
 
-      responsiveness?: number | null;
-
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -5653,6 +6347,38 @@ export namespace ConversationFlowResponse {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface ComponentNode {
@@ -5693,6 +6419,8 @@ export namespace ConversationFlowResponse {
        * Array of edges for conditional transitions
        */
       edges?: Array<ComponentNode.Edge>;
+
+      finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
       global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -5846,6 +6574,53 @@ export namespace ConversationFlowResponse {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
         }
       }
 
@@ -6034,9 +6809,22 @@ export namespace ConversationFlowResponse {
       global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+      model_choice?: BridgeTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace BridgeTransferNode {
@@ -6213,6 +7001,62 @@ export namespace ConversationFlowResponse {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface CancelTransferNode {
@@ -6234,9 +7078,22 @@ export namespace ConversationFlowResponse {
       global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+      model_choice?: CancelTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace CancelTransferNode {
@@ -6412,6 +7269,62 @@ export namespace ConversationFlowResponse {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -6725,6 +7638,7 @@ export namespace ConversationFlowResponse {
       | 'gpt-5'
       | 'gpt-5.1'
       | 'gpt-5.2'
+      | 'gpt-5.4'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -6810,6 +7724,7 @@ export namespace ConversationFlowResponse {
       | ConversationNode.PressDigitTool
       | ConversationNode.SendSMSTool
       | ConversationNode.CustomTool
+      | ConversationNode.CodeTool
       | ConversationNode.ExtractDynamicVariableTool
       | ConversationNode.BridgeTransferTool
       | ConversationNode.CancelTransferTool
@@ -7255,6 +8170,7 @@ export namespace ConversationFlowResponse {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -7542,12 +8458,6 @@ export namespace ConversationFlowResponse {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -8066,6 +8976,66 @@ export namespace ConversationFlowResponse {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -8216,6 +9186,25 @@ export namespace ConversationFlowResponse {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -8236,6 +9225,25 @@ export namespace ConversationFlowResponse {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {
@@ -8322,6 +9330,8 @@ export namespace ConversationFlowResponse {
      * What to say when ending the call, only used when speak during execution
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    model_choice?: EndNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -8532,6 +9542,38 @@ export namespace ConversationFlowResponse {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface FunctionNode {
@@ -8575,8 +9617,6 @@ export namespace ConversationFlowResponse {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
-
     model_choice?: FunctionNode.ModelChoice;
 
     /**
@@ -8584,14 +9624,10 @@ export namespace ConversationFlowResponse {
      */
     name?: string;
 
-    responsiveness?: number | null;
-
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -8985,6 +10021,481 @@ export namespace ConversationFlowResponse {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+  }
+
+  export interface CodeNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Type of the node
+     */
+    type: 'code';
+
+    /**
+     * Whether to wait for code execution result
+     */
+    wait_for_result: boolean;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CodeNode.DisplayPosition;
+
+    edges?: Array<CodeNode.Edge>;
+
+    else_edge?: CodeNode.ElseEdge;
+
+    finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+    global_node_setting?: CodeNode.GlobalNodeSetting;
+
+    instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+    model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Whether to speak during code execution
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -9236,12 +10747,6 @@ export namespace ConversationFlowResponse {
        * false.
        */
       opt_out_human_detection?: boolean;
-
-      /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
 
       /**
        * If set, when transfer is connected, will say the handoff message only to the
@@ -9640,6 +11145,7 @@ export namespace ConversationFlowResponse {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -10003,6 +11509,7 @@ export namespace ConversationFlowResponse {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -10047,6 +11554,8 @@ export namespace ConversationFlowResponse {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
+
+    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -10409,6 +11918,38 @@ export namespace ConversationFlowResponse {
         }
       }
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface SMSNode {
@@ -10434,6 +11975,8 @@ export namespace ConversationFlowResponse {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
+
+    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -10792,6 +12335,38 @@ export namespace ConversationFlowResponse {
           tool_call_id: string;
         }
       }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
     }
   }
 
@@ -11303,6 +12878,7 @@ export namespace ConversationFlowResponse {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -11372,6 +12948,8 @@ export namespace ConversationFlowResponse {
      * If true, keep the current voice when swapping agents. Defaults to false.
      */
     keep_current_voice?: boolean;
+
+    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -11664,6 +13242,38 @@ export namespace ConversationFlowResponse {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface McpNode {
@@ -11710,7 +13320,7 @@ export namespace ConversationFlowResponse {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
+    model_choice?: McpNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -11723,14 +13333,10 @@ export namespace ConversationFlowResponse {
      */
     response_variables?: { [key: string]: string };
 
-    responsiveness?: number | null;
-
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -12112,6 +13718,38 @@ export namespace ConversationFlowResponse {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface ComponentNode {
@@ -12152,6 +13790,8 @@ export namespace ConversationFlowResponse {
      * Array of edges for conditional transitions
      */
     edges?: Array<ComponentNode.Edge>;
+
+    finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
     global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -12305,6 +13945,53 @@ export namespace ConversationFlowResponse {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
       }
     }
 
@@ -12493,9 +14180,22 @@ export namespace ConversationFlowResponse {
     global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+    model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace BridgeTransferNode {
@@ -12672,6 +14372,62 @@ export namespace ConversationFlowResponse {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface CancelTransferNode {
@@ -12693,9 +14449,22 @@ export namespace ConversationFlowResponse {
     global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+    model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace CancelTransferNode {
@@ -12871,6 +14640,62 @@ export namespace ConversationFlowResponse {
           tool_call_id: string;
         }
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
     }
   }
 
@@ -13111,6 +14936,7 @@ export interface ConversationFlowCreateParams {
     | ConversationFlowCreateParams.ConversationNode
     | ConversationFlowCreateParams.EndNode
     | ConversationFlowCreateParams.FunctionNode
+    | ConversationFlowCreateParams.CodeNode
     | ConversationFlowCreateParams.TransferCallNode
     | ConversationFlowCreateParams.PressDigitNode
     | ConversationFlowCreateParams.BranchNode
@@ -13219,6 +15045,7 @@ export namespace ConversationFlowCreateParams {
       | 'gpt-5'
       | 'gpt-5.1'
       | 'gpt-5.2'
+      | 'gpt-5.4'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -13304,6 +15131,7 @@ export namespace ConversationFlowCreateParams {
       | ConversationNode.PressDigitTool
       | ConversationNode.SendSMSTool
       | ConversationNode.CustomTool
+      | ConversationNode.CodeTool
       | ConversationNode.ExtractDynamicVariableTool
       | ConversationNode.BridgeTransferTool
       | ConversationNode.CancelTransferTool
@@ -13749,6 +15577,7 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -14036,12 +15865,6 @@ export namespace ConversationFlowCreateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -14560,6 +16383,66 @@ export namespace ConversationFlowCreateParams {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -14710,6 +16593,25 @@ export namespace ConversationFlowCreateParams {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -14730,6 +16632,25 @@ export namespace ConversationFlowCreateParams {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {
@@ -14816,6 +16737,8 @@ export namespace ConversationFlowCreateParams {
      * What to say when ending the call, only used when speak during execution
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    model_choice?: EndNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -15026,6 +16949,38 @@ export namespace ConversationFlowCreateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface FunctionNode {
@@ -15069,8 +17024,6 @@ export namespace ConversationFlowCreateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
-
     model_choice?: FunctionNode.ModelChoice;
 
     /**
@@ -15078,14 +17031,10 @@ export namespace ConversationFlowCreateParams {
      */
     name?: string;
 
-    responsiveness?: number | null;
-
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -15479,6 +17428,481 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+  }
+
+  export interface CodeNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Type of the node
+     */
+    type: 'code';
+
+    /**
+     * Whether to wait for code execution result
+     */
+    wait_for_result: boolean;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CodeNode.DisplayPosition;
+
+    edges?: Array<CodeNode.Edge>;
+
+    else_edge?: CodeNode.ElseEdge;
+
+    finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+    global_node_setting?: CodeNode.GlobalNodeSetting;
+
+    instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+    model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Whether to speak during code execution
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -15730,12 +18154,6 @@ export namespace ConversationFlowCreateParams {
        * false.
        */
       opt_out_human_detection?: boolean;
-
-      /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
 
       /**
        * If set, when transfer is connected, will say the handoff message only to the
@@ -16134,6 +18552,7 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -16497,6 +18916,7 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -16541,6 +18961,8 @@ export namespace ConversationFlowCreateParams {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
+
+    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -16903,6 +19325,38 @@ export namespace ConversationFlowCreateParams {
         }
       }
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface SMSNode {
@@ -16928,6 +19382,8 @@ export namespace ConversationFlowCreateParams {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
+
+    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -17286,6 +19742,38 @@ export namespace ConversationFlowCreateParams {
           tool_call_id: string;
         }
       }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
     }
   }
 
@@ -17797,6 +20285,7 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -17866,6 +20355,8 @@ export namespace ConversationFlowCreateParams {
      * If true, keep the current voice when swapping agents. Defaults to false.
      */
     keep_current_voice?: boolean;
+
+    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -18158,6 +20649,38 @@ export namespace ConversationFlowCreateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface McpNode {
@@ -18204,7 +20727,7 @@ export namespace ConversationFlowCreateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
+    model_choice?: McpNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -18217,14 +20740,10 @@ export namespace ConversationFlowCreateParams {
      */
     response_variables?: { [key: string]: string };
 
-    responsiveness?: number | null;
-
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -18606,6 +21125,38 @@ export namespace ConversationFlowCreateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface ComponentNode {
@@ -18646,6 +21197,8 @@ export namespace ConversationFlowCreateParams {
      * Array of edges for conditional transitions
      */
     edges?: Array<ComponentNode.Edge>;
+
+    finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
     global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -18799,6 +21352,53 @@ export namespace ConversationFlowCreateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
       }
     }
 
@@ -18987,9 +21587,22 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+    model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace BridgeTransferNode {
@@ -19166,6 +21779,62 @@ export namespace ConversationFlowCreateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface CancelTransferNode {
@@ -19187,9 +21856,22 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+    model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace CancelTransferNode {
@@ -19366,6 +22048,62 @@ export namespace ConversationFlowCreateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   /**
@@ -19390,6 +22128,7 @@ export namespace ConversationFlowCreateParams {
       | Component.ConversationNode
       | Component.EndNode
       | Component.FunctionNode
+      | Component.CodeNode
       | Component.TransferCallNode
       | Component.PressDigitNode
       | Component.BranchNode
@@ -19491,6 +22230,7 @@ export namespace ConversationFlowCreateParams {
         | ConversationNode.PressDigitTool
         | ConversationNode.SendSMSTool
         | ConversationNode.CustomTool
+        | ConversationNode.CodeTool
         | ConversationNode.ExtractDynamicVariableTool
         | ConversationNode.BridgeTransferTool
         | ConversationNode.CancelTransferTool
@@ -19936,6 +22676,7 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -20223,12 +22964,6 @@ export namespace ConversationFlowCreateParams {
            * false.
            */
           opt_out_human_detection?: boolean;
-
-          /**
-           * If set to true, AI will not say "Hello" after connecting the call. Default to
-           * false.
-           */
-          opt_out_initial_message?: boolean;
 
           /**
            * If set, when transfer is connected, will say the handoff message only to the
@@ -20747,6 +23482,66 @@ export namespace ConversationFlowCreateParams {
         }
       }
 
+      export interface CodeTool {
+        /**
+         * JavaScript code to execute in the sandbox.
+         */
+        code: string;
+
+        /**
+         * Name of the tool. Must be unique within all tools available to LLM at any given
+         * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+         * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+         * allowed).
+         */
+        name: string;
+
+        type: 'code';
+
+        /**
+         * Describes what this tool does and when to call this tool.
+         */
+        description?: string;
+
+        /**
+         * The description for the sentence agent say during execution. Only applicable
+         * when speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * A mapping of variable names to JSON paths in the code execution result. These
+         * mapped values will be extracted and added as dynamic variables.
+         */
+        response_variables?: { [key: string]: string };
+
+        /**
+         * Determines whether the agent would call LLM another time and speak when the
+         * result of function is obtained.
+         */
+        speak_after_execution?: boolean;
+
+        /**
+         * Determines whether the agent would say sentence like "One moment, let me check
+         * that." when executing the tool.
+         */
+        speak_during_execution?: boolean;
+
+        /**
+         * The maximum time in milliseconds the code can run before it's considered
+         * timeout. Defaults to 30,000 ms (30 s).
+         */
+        timeout_ms?: number;
+      }
+
       export interface ExtractDynamicVariableTool {
         /**
          * Describes what the tool does, sometimes can also include information about when
@@ -20897,6 +23692,25 @@ export namespace ConversationFlowCreateParams {
          * transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when bridging the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface CancelTransferTool {
@@ -20917,6 +23731,25 @@ export namespace ConversationFlowCreateParams {
          * and ends the transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when cancelling the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface McpTool {
@@ -21003,6 +23836,8 @@ export namespace ConversationFlowCreateParams {
        * What to say when ending the call, only used when speak during execution
        */
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      model_choice?: EndNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -21213,6 +24048,38 @@ export namespace ConversationFlowCreateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface FunctionNode {
@@ -21256,8 +24123,6 @@ export namespace ConversationFlowCreateParams {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
-
       model_choice?: FunctionNode.ModelChoice;
 
       /**
@@ -21265,14 +24130,10 @@ export namespace ConversationFlowCreateParams {
        */
       name?: string;
 
-      responsiveness?: number | null;
-
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -21666,6 +24527,481 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
+    }
+
+    export interface CodeNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Type of the node
+       */
+      type: 'code';
+
+      /**
+       * Whether to wait for code execution result
+       */
+      wait_for_result: boolean;
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CodeNode.DisplayPosition;
+
+      edges?: Array<CodeNode.Edge>;
+
+      else_edge?: CodeNode.ElseEdge;
+
+      finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+      global_node_setting?: CodeNode.GlobalNodeSetting;
+
+      instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+      model_choice?: CodeNode.ModelChoice;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Whether to speak during code execution
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
+    export namespace CodeNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface Edge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace Edge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * The same global node won't be triggered again within the next N node
+         * transitions.
+         */
+        cool_down?: number;
+
+        /**
+         * The conditions for global node go back. There would be no destination_node_id
+         * for these edges.
+         */
+        go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface GoBackCondition {
+          /**
+           * Unique identifier for the edge
+           */
+          id: string;
+
+          transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+          /**
+           * ID of the destination node
+           */
+          destination_node_id?: string;
+        }
+
+        export namespace GoBackCondition {
+          export interface PromptCondition {
+            /**
+             * Prompt condition text
+             */
+            prompt: string;
+
+            type: 'prompt';
+          }
+
+          export interface EquationCondition {
+            equations: Array<EquationCondition.Equation>;
+
+            operator: '||' | '&&';
+
+            type: 'equation';
+          }
+
+          export namespace EquationCondition {
+            export interface Equation {
+              /**
+               * Left side of the equation
+               */
+              left: string;
+
+              operator:
+                | '=='
+                | '!='
+                | '>'
+                | '>='
+                | '<'
+                | '<='
+                | 'contains'
+                | 'not_contains'
+                | 'exists'
+                | 'not_exist';
+
+              /**
+               * Right side of the equation. The right side of the equation not required when
+               * "exists" or "not_exist" are selected.
+               */
+              right?: string;
+            }
+          }
+        }
+
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -21917,12 +25253,6 @@ export namespace ConversationFlowCreateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -22321,6 +25651,7 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -22684,6 +26015,7 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -22728,6 +26060,8 @@ export namespace ConversationFlowCreateParams {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
+
+      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -23090,6 +26424,38 @@ export namespace ConversationFlowCreateParams {
           }
         }
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface SMSNode {
@@ -23115,6 +26481,8 @@ export namespace ConversationFlowCreateParams {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
+
+      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -23473,6 +26841,38 @@ export namespace ConversationFlowCreateParams {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -23984,6 +27384,7 @@ export namespace ConversationFlowCreateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -24053,6 +27454,8 @@ export namespace ConversationFlowCreateParams {
        * If true, keep the current voice when swapping agents. Defaults to false.
        */
       keep_current_voice?: boolean;
+
+      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -24345,6 +27748,38 @@ export namespace ConversationFlowCreateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface McpNode {
@@ -24391,7 +27826,7 @@ export namespace ConversationFlowCreateParams {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
+      model_choice?: McpNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -24404,14 +27839,10 @@ export namespace ConversationFlowCreateParams {
        */
       response_variables?: { [key: string]: string };
 
-      responsiveness?: number | null;
-
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -24793,6 +28224,38 @@ export namespace ConversationFlowCreateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface ComponentNode {
@@ -24833,6 +28296,8 @@ export namespace ConversationFlowCreateParams {
        * Array of edges for conditional transitions
        */
       edges?: Array<ComponentNode.Edge>;
+
+      finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
       global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -24986,6 +28451,53 @@ export namespace ConversationFlowCreateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
         }
       }
 
@@ -25174,9 +28686,22 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+      model_choice?: BridgeTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace BridgeTransferNode {
@@ -25353,6 +28878,62 @@ export namespace ConversationFlowCreateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface CancelTransferNode {
@@ -25374,9 +28955,22 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+      model_choice?: CancelTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace CancelTransferNode {
@@ -25552,6 +29146,62 @@ export namespace ConversationFlowCreateParams {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -26156,6 +29806,7 @@ export interface ConversationFlowUpdateParams {
     | ConversationFlowUpdateParams.ConversationNode
     | ConversationFlowUpdateParams.EndNode
     | ConversationFlowUpdateParams.FunctionNode
+    | ConversationFlowUpdateParams.CodeNode
     | ConversationFlowUpdateParams.TransferCallNode
     | ConversationFlowUpdateParams.PressDigitNode
     | ConversationFlowUpdateParams.BranchNode
@@ -26217,6 +29868,7 @@ export namespace ConversationFlowUpdateParams {
       | Component.ConversationNode
       | Component.EndNode
       | Component.FunctionNode
+      | Component.CodeNode
       | Component.TransferCallNode
       | Component.PressDigitNode
       | Component.BranchNode
@@ -26318,6 +29970,7 @@ export namespace ConversationFlowUpdateParams {
         | ConversationNode.PressDigitTool
         | ConversationNode.SendSMSTool
         | ConversationNode.CustomTool
+        | ConversationNode.CodeTool
         | ConversationNode.ExtractDynamicVariableTool
         | ConversationNode.BridgeTransferTool
         | ConversationNode.CancelTransferTool
@@ -26763,6 +30416,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -27050,12 +30704,6 @@ export namespace ConversationFlowUpdateParams {
            * false.
            */
           opt_out_human_detection?: boolean;
-
-          /**
-           * If set to true, AI will not say "Hello" after connecting the call. Default to
-           * false.
-           */
-          opt_out_initial_message?: boolean;
 
           /**
            * If set, when transfer is connected, will say the handoff message only to the
@@ -27574,6 +31222,66 @@ export namespace ConversationFlowUpdateParams {
         }
       }
 
+      export interface CodeTool {
+        /**
+         * JavaScript code to execute in the sandbox.
+         */
+        code: string;
+
+        /**
+         * Name of the tool. Must be unique within all tools available to LLM at any given
+         * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+         * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+         * allowed).
+         */
+        name: string;
+
+        type: 'code';
+
+        /**
+         * Describes what this tool does and when to call this tool.
+         */
+        description?: string;
+
+        /**
+         * The description for the sentence agent say during execution. Only applicable
+         * when speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * A mapping of variable names to JSON paths in the code execution result. These
+         * mapped values will be extracted and added as dynamic variables.
+         */
+        response_variables?: { [key: string]: string };
+
+        /**
+         * Determines whether the agent would call LLM another time and speak when the
+         * result of function is obtained.
+         */
+        speak_after_execution?: boolean;
+
+        /**
+         * Determines whether the agent would say sentence like "One moment, let me check
+         * that." when executing the tool.
+         */
+        speak_during_execution?: boolean;
+
+        /**
+         * The maximum time in milliseconds the code can run before it's considered
+         * timeout. Defaults to 30,000 ms (30 s).
+         */
+        timeout_ms?: number;
+      }
+
       export interface ExtractDynamicVariableTool {
         /**
          * Describes what the tool does, sometimes can also include information about when
@@ -27724,6 +31432,25 @@ export namespace ConversationFlowUpdateParams {
          * transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when bridging the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface CancelTransferTool {
@@ -27744,6 +31471,25 @@ export namespace ConversationFlowUpdateParams {
          * and ends the transfer agent call.
          */
         description?: string;
+
+        /**
+         * Describes what to say to user when cancelling the transfer. Only applicable when
+         * speak_during_execution is true.
+         */
+        execution_message_description?: string;
+
+        /**
+         * Type of execution message. "prompt" means the agent will use
+         * execution_message_description as a prompt to generate the message. "static_text"
+         * means the agent will speak the execution_message_description directly. Defaults
+         * to "prompt".
+         */
+        execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * If true, will speak during execution.
+         */
+        speak_during_execution?: boolean;
       }
 
       export interface McpTool {
@@ -27830,6 +31576,8 @@ export namespace ConversationFlowUpdateParams {
        * What to say when ending the call, only used when speak during execution
        */
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+      model_choice?: EndNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -28040,6 +31788,38 @@ export namespace ConversationFlowUpdateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface FunctionNode {
@@ -28083,8 +31863,6 @@ export namespace ConversationFlowUpdateParams {
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
-
       model_choice?: FunctionNode.ModelChoice;
 
       /**
@@ -28092,14 +31870,10 @@ export namespace ConversationFlowUpdateParams {
        */
       name?: string;
 
-      responsiveness?: number | null;
-
       /**
        * Whether to speak during tool execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace FunctionNode {
@@ -28493,6 +32267,481 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
+    }
+
+    export interface CodeNode {
+      /**
+       * Unique identifier for the node
+       */
+      id: string;
+
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Type of the node
+       */
+      type: 'code';
+
+      /**
+       * Whether to wait for code execution result
+       */
+      wait_for_result: boolean;
+
+      /**
+       * Position for frontend display
+       */
+      display_position?: CodeNode.DisplayPosition;
+
+      edges?: Array<CodeNode.Edge>;
+
+      else_edge?: CodeNode.ElseEdge;
+
+      finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+      global_node_setting?: CodeNode.GlobalNodeSetting;
+
+      instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+      model_choice?: CodeNode.ModelChoice;
+
+      /**
+       * Optional name for display purposes
+       */
+      name?: string;
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Whether to speak during code execution
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
+    export namespace CodeNode {
+      /**
+       * Position for frontend display
+       */
+      export interface DisplayPosition {
+        x?: number;
+
+        y?: number;
+      }
+
+      export interface Edge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace Edge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface GlobalNodeSetting {
+        /**
+         * Condition for global node activation, cannot be empty
+         */
+        condition: string;
+
+        /**
+         * The same global node won't be triggered again within the next N node
+         * transitions.
+         */
+        cool_down?: number;
+
+        /**
+         * The conditions for global node go back. There would be no destination_node_id
+         * for these edges.
+         */
+        go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+        /**
+         * Don't transition to this node
+         */
+        negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+        /**
+         * Transition to this node
+         */
+        positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+      }
+
+      export namespace GlobalNodeSetting {
+        export interface GoBackCondition {
+          /**
+           * Unique identifier for the edge
+           */
+          id: string;
+
+          transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+          /**
+           * ID of the destination node
+           */
+          destination_node_id?: string;
+        }
+
+        export namespace GoBackCondition {
+          export interface PromptCondition {
+            /**
+             * Prompt condition text
+             */
+            prompt: string;
+
+            type: 'prompt';
+          }
+
+          export interface EquationCondition {
+            equations: Array<EquationCondition.Equation>;
+
+            operator: '||' | '&&';
+
+            type: 'equation';
+          }
+
+          export namespace EquationCondition {
+            export interface Equation {
+              /**
+               * Left side of the equation
+               */
+              left: string;
+
+              operator:
+                | '=='
+                | '!='
+                | '>'
+                | '>='
+                | '<'
+                | '<='
+                | 'contains'
+                | 'not_contains'
+                | 'exists'
+                | 'not_exist';
+
+              /**
+               * Right side of the equation. The right side of the equation not required when
+               * "exists" or "not_exist" are selected.
+               */
+              right?: string;
+            }
+          }
+        }
+
+        export interface NegativeFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | NegativeFinetuneExample.UnionMember0
+            | NegativeFinetuneExample.UnionMember1
+            | NegativeFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace NegativeFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+
+        export interface PositiveFinetuneExample {
+          /**
+           * Find tune the transition condition to this global node
+           */
+          transcript: Array<
+            | PositiveFinetuneExample.UnionMember0
+            | PositiveFinetuneExample.UnionMember1
+            | PositiveFinetuneExample.UnionMember2
+          >;
+        }
+
+        export namespace PositiveFinetuneExample {
+          export interface UnionMember0 {
+            content: string;
+
+            role: 'agent' | 'user';
+          }
+
+          export interface UnionMember1 {
+            arguments: string;
+
+            name: string;
+
+            role: 'tool_call_invocation';
+
+            tool_call_id: string;
+          }
+
+          export interface UnionMember2 {
+            content: string;
+
+            role: 'tool_call_result';
+
+            tool_call_id: string;
+          }
+        }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -28744,12 +32993,6 @@ export namespace ConversationFlowUpdateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -29148,6 +33391,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -29511,6 +33755,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -29555,6 +33800,8 @@ export namespace ConversationFlowUpdateParams {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
+
+      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -29917,6 +34164,38 @@ export namespace ConversationFlowUpdateParams {
           }
         }
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface SMSNode {
@@ -29942,6 +34221,8 @@ export namespace ConversationFlowUpdateParams {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
+
+      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -30300,6 +34581,38 @@ export namespace ConversationFlowUpdateParams {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -30811,6 +35124,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gpt-5'
           | 'gpt-5.1'
           | 'gpt-5.2'
+          | 'gpt-5.4'
           | 'gpt-5-mini'
           | 'gpt-5-nano'
           | 'claude-4.5-sonnet'
@@ -30880,6 +35194,8 @@ export namespace ConversationFlowUpdateParams {
        * If true, keep the current voice when swapping agents. Defaults to false.
        */
       keep_current_voice?: boolean;
+
+      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -31172,6 +35488,38 @@ export namespace ConversationFlowUpdateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface McpNode {
@@ -31218,7 +35566,7 @@ export namespace ConversationFlowUpdateParams {
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-      interruption_sensitivity?: number | null;
+      model_choice?: McpNode.ModelChoice;
 
       /**
        * Optional name for display purposes
@@ -31231,14 +35579,10 @@ export namespace ConversationFlowUpdateParams {
        */
       response_variables?: { [key: string]: string };
 
-      responsiveness?: number | null;
-
       /**
        * If true, will speak during execution
        */
       speak_during_execution?: boolean;
-
-      voice_speed?: number | null;
     }
 
     export namespace McpNode {
@@ -31620,6 +35964,38 @@ export namespace ConversationFlowUpdateParams {
          */
         type: 'static_text';
       }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface ComponentNode {
@@ -31660,6 +36036,8 @@ export namespace ConversationFlowUpdateParams {
        * Array of edges for conditional transitions
        */
       edges?: Array<ComponentNode.Edge>;
+
+      finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
       global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -31813,6 +36191,53 @@ export namespace ConversationFlowUpdateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface FinetuneTransitionExample {
+        /**
+         * Unique identifier for the example
+         */
+        id: string;
+
+        /**
+         * The example transcript to finetune how the node should transition.
+         */
+        transcript: Array<
+          | FinetuneTransitionExample.UnionMember0
+          | FinetuneTransitionExample.UnionMember1
+          | FinetuneTransitionExample.UnionMember2
+        >;
+
+        /**
+         * Optional destination node ID
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace FinetuneTransitionExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
         }
       }
 
@@ -32001,9 +36426,22 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+      model_choice?: BridgeTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace BridgeTransferNode {
@@ -32180,6 +36618,62 @@ export namespace ConversationFlowUpdateParams {
           }
         }
       }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+      }
     }
 
     export interface CancelTransferNode {
@@ -32201,9 +36695,22 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
       /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+      model_choice?: CancelTransferNode.ModelChoice;
+
+      /**
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * If true, will speak during execution
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace CancelTransferNode {
@@ -32379,6 +36886,62 @@ export namespace ConversationFlowUpdateParams {
             tool_call_id: string;
           }
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
+      }
+
+      export interface ModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
       }
     }
 
@@ -32692,6 +37255,7 @@ export namespace ConversationFlowUpdateParams {
       | 'gpt-5'
       | 'gpt-5.1'
       | 'gpt-5.2'
+      | 'gpt-5.4'
       | 'gpt-5-mini'
       | 'gpt-5-nano'
       | 'claude-4.5-sonnet'
@@ -32777,6 +37341,7 @@ export namespace ConversationFlowUpdateParams {
       | ConversationNode.PressDigitTool
       | ConversationNode.SendSMSTool
       | ConversationNode.CustomTool
+      | ConversationNode.CodeTool
       | ConversationNode.ExtractDynamicVariableTool
       | ConversationNode.BridgeTransferTool
       | ConversationNode.CancelTransferTool
@@ -33222,6 +37787,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -33509,12 +38075,6 @@ export namespace ConversationFlowUpdateParams {
          * false.
          */
         opt_out_human_detection?: boolean;
-
-        /**
-         * If set to true, AI will not say "Hello" after connecting the call. Default to
-         * false.
-         */
-        opt_out_initial_message?: boolean;
 
         /**
          * If set, when transfer is connected, will say the handoff message only to the
@@ -34033,6 +38593,66 @@ export namespace ConversationFlowUpdateParams {
       }
     }
 
+    export interface CodeTool {
+      /**
+       * JavaScript code to execute in the sandbox.
+       */
+      code: string;
+
+      /**
+       * Name of the tool. Must be unique within all tools available to LLM at any given
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * allowed).
+       */
+      name: string;
+
+      type: 'code';
+
+      /**
+       * Describes what this tool does and when to call this tool.
+       */
+      description?: string;
+
+      /**
+       * The description for the sentence agent say during execution. Only applicable
+       * when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * A mapping of variable names to JSON paths in the code execution result. These
+       * mapped values will be extracted and added as dynamic variables.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Determines whether the agent would call LLM another time and speak when the
+       * result of function is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Determines whether the agent would say sentence like "One moment, let me check
+       * that." when executing the tool.
+       */
+      speak_during_execution?: boolean;
+
+      /**
+       * The maximum time in milliseconds the code can run before it's considered
+       * timeout. Defaults to 30,000 ms (30 s).
+       */
+      timeout_ms?: number;
+    }
+
     export interface ExtractDynamicVariableTool {
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -34183,6 +38803,25 @@ export namespace ConversationFlowUpdateParams {
        * transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when bridging the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface CancelTransferTool {
@@ -34203,6 +38842,25 @@ export namespace ConversationFlowUpdateParams {
        * and ends the transfer agent call.
        */
       description?: string;
+
+      /**
+       * Describes what to say to user when cancelling the transfer. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
     }
 
     export interface McpTool {
@@ -34289,6 +38947,8 @@ export namespace ConversationFlowUpdateParams {
      * What to say when ending the call, only used when speak during execution
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
+
+    model_choice?: EndNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -34499,6 +39159,38 @@ export namespace ConversationFlowUpdateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface FunctionNode {
@@ -34542,8 +39234,6 @@ export namespace ConversationFlowUpdateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
-
     model_choice?: FunctionNode.ModelChoice;
 
     /**
@@ -34551,14 +39241,10 @@ export namespace ConversationFlowUpdateParams {
      */
     name?: string;
 
-    responsiveness?: number | null;
-
     /**
      * Whether to speak during tool execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace FunctionNode {
@@ -34952,6 +39638,481 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+  }
+
+  export interface CodeNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Type of the node
+     */
+    type: 'code';
+
+    /**
+     * Whether to wait for code execution result
+     */
+    wait_for_result: boolean;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: CodeNode.DisplayPosition;
+
+    edges?: Array<CodeNode.Edge>;
+
+    else_edge?: CodeNode.ElseEdge;
+
+    finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
+
+    global_node_setting?: CodeNode.GlobalNodeSetting;
+
+    instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
+
+    model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Whether to speak during code execution
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeNode {
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -35203,12 +40364,6 @@ export namespace ConversationFlowUpdateParams {
        * false.
        */
       opt_out_human_detection?: boolean;
-
-      /**
-       * If set to true, AI will not say "Hello" after connecting the call. Default to
-       * false.
-       */
-      opt_out_initial_message?: boolean;
 
       /**
        * If set, when transfer is connected, will say the handoff message only to the
@@ -35607,6 +40762,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -35970,6 +41126,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -36014,6 +41171,8 @@ export namespace ConversationFlowUpdateParams {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
+
+    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -36376,6 +41535,38 @@ export namespace ConversationFlowUpdateParams {
         }
       }
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface SMSNode {
@@ -36401,6 +41592,8 @@ export namespace ConversationFlowUpdateParams {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
+
+    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -36759,6 +41952,38 @@ export namespace ConversationFlowUpdateParams {
           tool_call_id: string;
         }
       }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
     }
   }
 
@@ -37270,6 +42495,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-5'
         | 'gpt-5.1'
         | 'gpt-5.2'
+        | 'gpt-5.4'
         | 'gpt-5-mini'
         | 'gpt-5-nano'
         | 'claude-4.5-sonnet'
@@ -37339,6 +42565,8 @@ export namespace ConversationFlowUpdateParams {
      * If true, keep the current voice when swapping agents. Defaults to false.
      */
     keep_current_voice?: boolean;
+
+    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -37631,6 +42859,38 @@ export namespace ConversationFlowUpdateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface McpNode {
@@ -37677,7 +42937,7 @@ export namespace ConversationFlowUpdateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
-    interruption_sensitivity?: number | null;
+    model_choice?: McpNode.ModelChoice;
 
     /**
      * Optional name for display purposes
@@ -37690,14 +42950,10 @@ export namespace ConversationFlowUpdateParams {
      */
     response_variables?: { [key: string]: string };
 
-    responsiveness?: number | null;
-
     /**
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
-
-    voice_speed?: number | null;
   }
 
   export namespace McpNode {
@@ -38079,6 +43335,38 @@ export namespace ConversationFlowUpdateParams {
        */
       type: 'static_text';
     }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface ComponentNode {
@@ -38119,6 +43407,8 @@ export namespace ConversationFlowUpdateParams {
      * Array of edges for conditional transitions
      */
     edges?: Array<ComponentNode.Edge>;
+
+    finetune_transition_examples?: Array<ComponentNode.FinetuneTransitionExample>;
 
     global_node_setting?: ComponentNode.GlobalNodeSetting;
 
@@ -38272,6 +43562,53 @@ export namespace ConversationFlowUpdateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
       }
     }
 
@@ -38460,9 +43797,22 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: BridgeTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when bridging the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
+
+    model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace BridgeTransferNode {
@@ -38639,6 +43989,62 @@ export namespace ConversationFlowUpdateParams {
         }
       }
     }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
   }
 
   export interface CancelTransferNode {
@@ -38660,9 +44066,22 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: CancelTransferNode.GlobalNodeSetting;
 
     /**
+     * Describes what to say to user when cancelling the transfer. Only applicable when
+     * speak_during_execution is true.
+     */
+    instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
+
+    model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If true, will speak during execution
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace CancelTransferNode {
@@ -38838,6 +44257,62 @@ export namespace ConversationFlowUpdateParams {
           tool_call_id: string;
         }
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
     }
   }
 
