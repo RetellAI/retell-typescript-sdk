@@ -90,6 +90,7 @@ describe('resource phoneNumber', () => {
       termination_uri: 'someuri.pstn.twilio.com',
       allowed_inbound_country_list: ['US', 'CA', 'GB'],
       allowed_outbound_country_list: ['US', 'CA'],
+      ignore_e164_validation: true,
       inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       inbound_agent_version: 1,
       inbound_agents: [
