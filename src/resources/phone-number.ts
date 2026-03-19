@@ -648,6 +648,14 @@ export interface PhoneNumberImportParams {
   allowed_outbound_country_list?: Array<string> | null;
 
   /**
+   * If true, E.164 validation for phone_number is skipped. This is useful for
+   * internal pseudo numbers when using custom telephony. If omitted, default is
+   * true. Must be a boolean literal; string values like "true" or "false" are
+   * invalid.
+   */
+  ignore_e164_validation?: boolean;
+
+  /**
    * @deprecated Unique id of agent to bind to the number. The number will
    * automatically use the agent when receiving inbound calls. If null, this number
    * would not accept inbound call. Deprecated. See

@@ -52,7 +52,6 @@ describe('resource batchCall', () => {
               enable_backchannel: true,
               enable_dynamic_responsiveness: true,
               enable_dynamic_voice_speed: true,
-              enable_voicemail_detection: true,
               end_call_after_silence_ms: 600000,
               fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
               guardrail_config: {
@@ -138,7 +137,7 @@ describe('resource batchCall', () => {
               model: 'gpt-4.1',
               model_high_priority: true,
               model_temperature: 0,
-              s2s_model: 'gpt-4o-realtime',
+              s2s_model: 'gpt-realtime-1.5',
               start_speaker: 'user',
               tool_call_strict_mode: true,
             },
