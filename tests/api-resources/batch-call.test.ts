@@ -137,7 +137,7 @@ describe('resource batchCall', () => {
               model: 'gpt-4.1',
               model_high_priority: true,
               model_temperature: 0,
-              s2s_model: 'gpt-4o-realtime',
+              s2s_model: 'gpt-realtime-1.5',
               start_speaker: 'user',
               tool_call_strict_mode: true,
             },

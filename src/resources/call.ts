@@ -2311,6 +2311,11 @@ export namespace CallListParams {
     batch_call_id?: Array<string>;
 
     /**
+     * Only retrieve calls with specific call id(s).
+     */
+    call_id?: Array<string>;
+
+    /**
      * Only retrieve calls with specific call status(es).
      */
     call_status?: Array<'not_connected' | 'ongoing' | 'ended' | 'error'>;
@@ -2872,11 +2877,13 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -2984,10 +2991,8 @@ export namespace CallCreatePhoneCallParams {
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
         | 'eleven_v3'
-        | 'sonic-2'
         | 'sonic-3'
         | 'sonic-3-latest'
-        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -3466,11 +3471,13 @@ export namespace CallCreatePhoneCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
           | 'gpt-5.1'
           | 'gpt-5.2'
           | 'gpt-5.4'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -3530,11 +3537,13 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -3562,13 +3571,7 @@ export namespace CallCreatePhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?:
-        | 'gpt-4o-realtime'
-        | 'gpt-4o-mini-realtime'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | null;
+      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -4003,11 +4006,13 @@ export namespace CallCreateWebCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -4115,10 +4120,8 @@ export namespace CallCreateWebCallParams {
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
         | 'eleven_v3'
-        | 'sonic-2'
         | 'sonic-3'
         | 'sonic-3-latest'
-        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -4597,11 +4600,13 @@ export namespace CallCreateWebCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
           | 'gpt-5.1'
           | 'gpt-5.2'
           | 'gpt-5.4'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -4661,11 +4666,13 @@ export namespace CallCreateWebCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -4693,13 +4700,7 @@ export namespace CallCreateWebCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?:
-        | 'gpt-4o-realtime'
-        | 'gpt-4o-mini-realtime'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | null;
+      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -5134,11 +5135,13 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -5246,10 +5249,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'eleven_flash_v2_5'
         | 'eleven_multilingual_v2'
         | 'eleven_v3'
-        | 'sonic-2'
         | 'sonic-3'
         | 'sonic-3-latest'
-        | 'sonic-turbo'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -5728,11 +5729,13 @@ export namespace CallRegisterPhoneCallParams {
           | 'gpt-4.1-mini'
           | 'gpt-4.1-nano'
           | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
           | 'gpt-5.1'
           | 'gpt-5.2'
           | 'gpt-5.4'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -5792,11 +5795,13 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-4.1-mini'
         | 'gpt-4.1-nano'
         | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
         | 'gpt-5.1'
         | 'gpt-5.2'
         | 'gpt-5.4'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -5824,13 +5829,7 @@ export namespace CallRegisterPhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?:
-        | 'gpt-4o-realtime'
-        | 'gpt-4o-mini-realtime'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | null;
+      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or

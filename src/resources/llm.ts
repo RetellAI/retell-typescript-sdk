@@ -182,11 +182,13 @@ export interface LlmResponse {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-5.1'
     | 'gpt-5.2'
     | 'gpt-5.4'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -214,13 +216,7 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?:
-    | 'gpt-4o-realtime'
-    | 'gpt-4o-mini-realtime'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | null;
+  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -758,6 +754,11 @@ export namespace LlmResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, keep the current language when swapping agents. Defaults to false.
+     */
+    keep_current_language?: boolean;
 
     /**
      * If true, keep the current voice when swapping agents. Defaults to false.
@@ -1939,6 +1940,11 @@ export namespace LlmResponse {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current language when swapping agents. Defaults to false.
+       */
+      keep_current_language?: boolean;
 
       /**
        * If true, keep the current voice when swapping agents. Defaults to false.
@@ -2556,11 +2562,13 @@ export interface LlmCreateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-5.1'
     | 'gpt-5.2'
     | 'gpt-5.4'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -2588,13 +2596,7 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?:
-    | 'gpt-4o-realtime'
-    | 'gpt-4o-mini-realtime'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | null;
+  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -3132,6 +3134,11 @@ export namespace LlmCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, keep the current language when swapping agents. Defaults to false.
+     */
+    keep_current_language?: boolean;
 
     /**
      * If true, keep the current voice when swapping agents. Defaults to false.
@@ -4313,6 +4320,11 @@ export namespace LlmCreateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current language when swapping agents. Defaults to false.
+       */
+      keep_current_language?: boolean;
 
       /**
        * If true, keep the current voice when swapping agents. Defaults to false.
@@ -4944,11 +4956,13 @@ export interface LlmUpdateParams {
     | 'gpt-4.1-mini'
     | 'gpt-4.1-nano'
     | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
     | 'gpt-5.1'
     | 'gpt-5.2'
     | 'gpt-5.4'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -4976,13 +4990,7 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying speech to speech model. Can only set this or
    * model, not both.
    */
-  s2s_model?:
-    | 'gpt-4o-realtime'
-    | 'gpt-4o-mini-realtime'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | null;
+  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * Body param: The speaker who starts the conversation. Required. Must be either
@@ -5520,6 +5528,11 @@ export namespace LlmUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, keep the current language when swapping agents. Defaults to false.
+     */
+    keep_current_language?: boolean;
 
     /**
      * If true, keep the current voice when swapping agents. Defaults to false.
@@ -6701,6 +6714,11 @@ export namespace LlmUpdateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, keep the current language when swapping agents. Defaults to false.
+       */
+      keep_current_language?: boolean;
 
       /**
        * If true, keep the current voice when swapping agents. Defaults to false.
