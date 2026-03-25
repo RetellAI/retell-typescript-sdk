@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.10.1 (2026-03-25)
+
+Full Changelog: [v5.10.0...v5.10.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.0...v5.10.1)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([961d5c2](https://github.com/RetellAI/retell-typescript-sdk/commit/961d5c20b0435d05f03b90b779f8e9cddf38f257))
+
 ## 5.10.0 (2026-03-24)
 
 Full Changelog: [v5.9.0...v5.10.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.9.0...v5.10.0)
