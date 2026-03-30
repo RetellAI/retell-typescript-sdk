@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.10.2 (2026-03-28)
+
+Full Changelog: [v5.10.1...v5.10.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.1...v5.10.2)
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([abdd2ae](https://github.com/RetellAI/retell-typescript-sdk/commit/abdd2ae5179f4d23dad00b84b7d3bb776da6442d))
+* **internal:** codegen related update ([4e32f7e](https://github.com/RetellAI/retell-typescript-sdk/commit/4e32f7ea1df2c25c39b70108df7ef954f6847fc1))
+* **internal:** support custom-instructions-path flag in MCP servers ([e12cd19](https://github.com/RetellAI/retell-typescript-sdk/commit/e12cd1903bb941d172576b649d4777bf04f2cc47))
+* **internal:** support local docs search in MCP servers ([7a5b687](https://github.com/RetellAI/retell-typescript-sdk/commit/7a5b68721df2c285702763026f1e7891fd7ff534))
+
 ## 5.10.1 (2026-03-25)
 
 Full Changelog: [v5.10.0...v5.10.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.0...v5.10.1)

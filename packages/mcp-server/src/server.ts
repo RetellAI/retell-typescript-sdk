@@ -12,19 +12,27 @@ import { readEnvOrError } from './util';
 import Retell from 'retell-sdk';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
+import { setLocalSearch } from './docs-search-tool';
+import { LocalDocsSearch } from './local-docs-search';
 import { getInstructions } from './instructions';
 import { McpOptions } from './options';
 import { blockedMethodsForCodeTool } from './methods';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
 
-export const newMcpServer = async (stainlessApiKey: string | undefined) =>
+export const newMcpServer = async ({
+  stainlessApiKey,
+  customInstructionsPath,
+}: {
+  stainlessApiKey?: string | undefined;
+  customInstructionsPath?: string | undefined;
+}) =>
   new McpServer(
     {
       name: 'retell_sdk_api',
-      version: '5.10.1',
+      version: '5.10.2',
     },
     {
-      instructions: await getInstructions(stainlessApiKey),
+      instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
       capabilities: { tools: {}, logging: {} },
     },
   );
@@ -56,6 +64,12 @@ export async function initMcpServer(params: {
     warn: logAtLevel('warning'),
     error: logAtLevel('error'),
   };
+
+  if (params.mcpOptions?.docsSearchMode === 'local') {
+    const docsDir = params.mcpOptions?.docsDir;
+    const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
+    setLocalSearch(localSearch);
+  }
 
   let _client: Retell | undefined;
   let _clientError: Error | undefined;
