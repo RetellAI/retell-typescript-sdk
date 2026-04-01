@@ -123,6 +123,7 @@ export interface ConversationFlowComponentResponse {
    */
   nodes: Array<
     | ConversationFlowComponentResponse.ConversationNode
+    | ConversationFlowComponentResponse.SubagentNode
     | ConversationFlowComponentResponse.EndNode
     | ConversationFlowComponentResponse.FunctionNode
     | ConversationFlowComponentResponse.CodeNode
@@ -157,6 +158,11 @@ export interface ConversationFlowComponentResponse {
    * A list of MCP server configurations to use for this component
    */
   mcps?: Array<ConversationFlowComponentResponse.Mcp> | null;
+
+  /**
+   * Visual annotations displayed on the flow canvas.
+   */
+  notes?: Array<ConversationFlowComponentResponse.Note> | null;
 
   /**
    * ID of the starting node
@@ -220,32 +226,6 @@ export namespace ConversationFlowComponentResponse {
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
-    /**
-     * The tool ids of the tools defined in main conversation flow or component that
-     * can be used in this conversation node.
-     */
-    tool_ids?: Array<string> | null;
-
-    /**
-     * The tools owned by this conversation node. This includes other tool types like
-     * transfer_call, agent_swap, etc.
-     */
-    tools?: Array<
-      | ConversationNode.EndCallTool
-      | ConversationNode.TransferCallTool
-      | ConversationNode.CheckAvailabilityCalTool
-      | ConversationNode.BookAppointmentCalTool
-      | ConversationNode.AgentSwapTool
-      | ConversationNode.PressDigitTool
-      | ConversationNode.SendSMSTool
-      | ConversationNode.CustomTool
-      | ConversationNode.CodeTool
-      | ConversationNode.ExtractDynamicVariableTool
-      | ConversationNode.BridgeTransferTool
-      | ConversationNode.CancelTransferTool
-      | ConversationNode.McpTool
-    > | null;
-
     voice_speed?: number | null;
   }
 
@@ -272,6 +252,606 @@ export namespace ConversationFlowComponentResponse {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface AlwaysEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | AlwaysEdge.PromptCondition
+        | AlwaysEdge.EquationCondition
+        | AlwaysEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace AlwaysEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt?: 'Always';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt: 'Always';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface FinetuneConversationExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the conversation should be.
+       */
+      transcript: Array<
+        | FinetuneConversationExample.UnionMember0
+        | FinetuneConversationExample.UnionMember1
+        | FinetuneConversationExample.UnionMember2
+      >;
+    }
+
+    export namespace FinetuneConversationExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+
+    export interface SkipResponseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | SkipResponseEdge.PromptCondition
+        | SkipResponseEdge.EquationCondition
+        | SkipResponseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace SkipResponseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt?: 'Skip response';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt: 'Skip response';
+
+        type: 'prompt';
+      }
+    }
+  }
+
+  export interface SubagentNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    instruction: SubagentNode.Instruction;
+
+    /**
+     * Type of the node
+     */
+    type: 'subagent';
+
+    always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: SubagentNode.DisplayPosition;
+
+    edges?: Array<SubagentNode.Edge>;
+
+    finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
+
+    finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
+
+    global_node_setting?: SubagentNode.GlobalNodeSetting;
+
+    interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
+
+    model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    responsiveness?: number | null;
+
+    skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * The tool ids of the tools defined in main conversation flow or component that
+     * can be used in this subagent node.
+     */
+    tool_ids?: Array<string> | null;
+
+    /**
+     * The tools owned by this subagent node. This includes other tool types like
+     * transfer_call, agent_swap, etc.
+     */
+    tools?: Array<
+      | SubagentNode.EndCallTool
+      | SubagentNode.TransferCallTool
+      | SubagentNode.CheckAvailabilityCalTool
+      | SubagentNode.BookAppointmentCalTool
+      | SubagentNode.AgentSwapTool
+      | SubagentNode.PressDigitTool
+      | SubagentNode.SendSMSTool
+      | SubagentNode.CustomTool
+      | SubagentNode.CodeTool
+      | SubagentNode.ExtractDynamicVariableTool
+      | SubagentNode.BridgeTransferTool
+      | SubagentNode.CancelTransferTool
+      | SubagentNode.McpTool
+    > | null;
+
+    voice_speed?: number | null;
+  }
+
+  export namespace SubagentNode {
+    export interface Instruction {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
     }
 
     export interface AlwaysEdge {
@@ -1348,6 +1928,26 @@ export namespace ConversationFlowComponentResponse {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -1604,6 +2204,13 @@ export namespace ConversationFlowComponentResponse {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -1637,6 +2244,13 @@ export namespace ConversationFlowComponentResponse {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -1660,6 +2274,13 @@ export namespace ConversationFlowComponentResponse {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -1681,6 +2302,13 @@ export namespace ConversationFlowComponentResponse {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -4963,6 +5591,13 @@ export namespace ConversationFlowComponentResponse {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -4996,6 +5631,13 @@ export namespace ConversationFlowComponentResponse {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -5019,6 +5661,13 @@ export namespace ConversationFlowComponentResponse {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -5040,6 +5689,13 @@ export namespace ConversationFlowComponentResponse {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -7282,6 +7938,49 @@ export namespace ConversationFlowComponentResponse {
      * Default to 120,000 ms (2 minutes).
      */
     timeout_ms?: number;
+  }
+
+  export interface Note {
+    /**
+     * Unique identifier for the note.
+     */
+    id: string;
+
+    /**
+     * Text content of the note, can contain refs to images in the format
+     * "<image:asset_id>"
+     */
+    content: string;
+
+    /**
+     * Position of the note on the canvas.
+     */
+    display_position: Note.DisplayPosition;
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    size: Note.Size;
+  }
+
+  export namespace Note {
+    /**
+     * Position of the note on the canvas.
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    export interface Size {
+      height?: number;
+
+      width?: number;
+    }
   }
 
   export interface CustomTool {
@@ -7519,6 +8218,7 @@ export interface ConversationFlowComponentCreateParams {
    */
   nodes: Array<
     | ConversationFlowComponentCreateParams.ConversationNode
+    | ConversationFlowComponentCreateParams.SubagentNode
     | ConversationFlowComponentCreateParams.EndNode
     | ConversationFlowComponentCreateParams.FunctionNode
     | ConversationFlowComponentCreateParams.CodeNode
@@ -7543,6 +8243,11 @@ export interface ConversationFlowComponentCreateParams {
    * A list of MCP server configurations to use for this component
    */
   mcps?: Array<ConversationFlowComponentCreateParams.Mcp> | null;
+
+  /**
+   * Visual annotations displayed on the flow canvas.
+   */
+  notes?: Array<ConversationFlowComponentCreateParams.Note> | null;
 
   /**
    * ID of the starting node
@@ -7606,32 +8311,6 @@ export namespace ConversationFlowComponentCreateParams {
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
-    /**
-     * The tool ids of the tools defined in main conversation flow or component that
-     * can be used in this conversation node.
-     */
-    tool_ids?: Array<string> | null;
-
-    /**
-     * The tools owned by this conversation node. This includes other tool types like
-     * transfer_call, agent_swap, etc.
-     */
-    tools?: Array<
-      | ConversationNode.EndCallTool
-      | ConversationNode.TransferCallTool
-      | ConversationNode.CheckAvailabilityCalTool
-      | ConversationNode.BookAppointmentCalTool
-      | ConversationNode.AgentSwapTool
-      | ConversationNode.PressDigitTool
-      | ConversationNode.SendSMSTool
-      | ConversationNode.CustomTool
-      | ConversationNode.CodeTool
-      | ConversationNode.ExtractDynamicVariableTool
-      | ConversationNode.BridgeTransferTool
-      | ConversationNode.CancelTransferTool
-      | ConversationNode.McpTool
-    > | null;
-
     voice_speed?: number | null;
   }
 
@@ -7658,6 +8337,606 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface AlwaysEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | AlwaysEdge.PromptCondition
+        | AlwaysEdge.EquationCondition
+        | AlwaysEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace AlwaysEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt?: 'Always';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt: 'Always';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface FinetuneConversationExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the conversation should be.
+       */
+      transcript: Array<
+        | FinetuneConversationExample.UnionMember0
+        | FinetuneConversationExample.UnionMember1
+        | FinetuneConversationExample.UnionMember2
+      >;
+    }
+
+    export namespace FinetuneConversationExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+
+    export interface SkipResponseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | SkipResponseEdge.PromptCondition
+        | SkipResponseEdge.EquationCondition
+        | SkipResponseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace SkipResponseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt?: 'Skip response';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt: 'Skip response';
+
+        type: 'prompt';
+      }
+    }
+  }
+
+  export interface SubagentNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    instruction: SubagentNode.Instruction;
+
+    /**
+     * Type of the node
+     */
+    type: 'subagent';
+
+    always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: SubagentNode.DisplayPosition;
+
+    edges?: Array<SubagentNode.Edge>;
+
+    finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
+
+    finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
+
+    global_node_setting?: SubagentNode.GlobalNodeSetting;
+
+    interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
+
+    model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    responsiveness?: number | null;
+
+    skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * The tool ids of the tools defined in main conversation flow or component that
+     * can be used in this subagent node.
+     */
+    tool_ids?: Array<string> | null;
+
+    /**
+     * The tools owned by this subagent node. This includes other tool types like
+     * transfer_call, agent_swap, etc.
+     */
+    tools?: Array<
+      | SubagentNode.EndCallTool
+      | SubagentNode.TransferCallTool
+      | SubagentNode.CheckAvailabilityCalTool
+      | SubagentNode.BookAppointmentCalTool
+      | SubagentNode.AgentSwapTool
+      | SubagentNode.PressDigitTool
+      | SubagentNode.SendSMSTool
+      | SubagentNode.CustomTool
+      | SubagentNode.CodeTool
+      | SubagentNode.ExtractDynamicVariableTool
+      | SubagentNode.BridgeTransferTool
+      | SubagentNode.CancelTransferTool
+      | SubagentNode.McpTool
+    > | null;
+
+    voice_speed?: number | null;
+  }
+
+  export namespace SubagentNode {
+    export interface Instruction {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
     }
 
     export interface AlwaysEdge {
@@ -8734,6 +10013,26 @@ export namespace ConversationFlowComponentCreateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -8990,6 +10289,13 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -9023,6 +10329,13 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -9046,6 +10359,13 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -9067,6 +10387,13 @@ export namespace ConversationFlowComponentCreateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -12349,6 +13676,13 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -12382,6 +13716,13 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -12405,6 +13746,13 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -12426,6 +13774,13 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -14668,6 +16023,49 @@ export namespace ConversationFlowComponentCreateParams {
      * Default to 120,000 ms (2 minutes).
      */
     timeout_ms?: number;
+  }
+
+  export interface Note {
+    /**
+     * Unique identifier for the note.
+     */
+    id: string;
+
+    /**
+     * Text content of the note, can contain refs to images in the format
+     * "<image:asset_id>"
+     */
+    content: string;
+
+    /**
+     * Position of the note on the canvas.
+     */
+    display_position: Note.DisplayPosition;
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    size: Note.Size;
+  }
+
+  export namespace Note {
+    /**
+     * Position of the note on the canvas.
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    export interface Size {
+      height?: number;
+
+      width?: number;
+    }
   }
 
   export interface CustomTool {
@@ -14913,6 +16311,7 @@ export interface ConversationFlowComponentUpdateParams {
    */
   nodes?: Array<
     | ConversationFlowComponentUpdateParams.ConversationNode
+    | ConversationFlowComponentUpdateParams.SubagentNode
     | ConversationFlowComponentUpdateParams.EndNode
     | ConversationFlowComponentUpdateParams.FunctionNode
     | ConversationFlowComponentUpdateParams.CodeNode
@@ -14927,6 +16326,11 @@ export interface ConversationFlowComponentUpdateParams {
     | ConversationFlowComponentUpdateParams.BridgeTransferNode
     | ConversationFlowComponentUpdateParams.CancelTransferNode
   >;
+
+  /**
+   * Visual annotations displayed on the flow canvas.
+   */
+  notes?: Array<ConversationFlowComponentUpdateParams.Note> | null;
 
   /**
    * ID of the starting node
@@ -15024,32 +16428,6 @@ export namespace ConversationFlowComponentUpdateParams {
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
 
-    /**
-     * The tool ids of the tools defined in main conversation flow or component that
-     * can be used in this conversation node.
-     */
-    tool_ids?: Array<string> | null;
-
-    /**
-     * The tools owned by this conversation node. This includes other tool types like
-     * transfer_call, agent_swap, etc.
-     */
-    tools?: Array<
-      | ConversationNode.EndCallTool
-      | ConversationNode.TransferCallTool
-      | ConversationNode.CheckAvailabilityCalTool
-      | ConversationNode.BookAppointmentCalTool
-      | ConversationNode.AgentSwapTool
-      | ConversationNode.PressDigitTool
-      | ConversationNode.SendSMSTool
-      | ConversationNode.CustomTool
-      | ConversationNode.CodeTool
-      | ConversationNode.ExtractDynamicVariableTool
-      | ConversationNode.BridgeTransferTool
-      | ConversationNode.CancelTransferTool
-      | ConversationNode.McpTool
-    > | null;
-
     voice_speed?: number | null;
   }
 
@@ -15076,6 +16454,606 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface AlwaysEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | AlwaysEdge.PromptCondition
+        | AlwaysEdge.EquationCondition
+        | AlwaysEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace AlwaysEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt?: 'Always';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Always" for always edge
+         */
+        prompt: 'Always';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+    }
+
+    export interface FinetuneConversationExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the conversation should be.
+       */
+      transcript: Array<
+        | FinetuneConversationExample.UnionMember0
+        | FinetuneConversationExample.UnionMember1
+        | FinetuneConversationExample.UnionMember2
+      >;
+    }
+
+    export namespace FinetuneConversationExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface FinetuneTransitionExample {
+      /**
+       * Unique identifier for the example
+       */
+      id: string;
+
+      /**
+       * The example transcript to finetune how the node should transition.
+       */
+      transcript: Array<
+        | FinetuneTransitionExample.UnionMember0
+        | FinetuneTransitionExample.UnionMember1
+        | FinetuneTransitionExample.UnionMember2
+      >;
+
+      /**
+       * Optional destination node ID
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace FinetuneTransitionExample {
+      export interface UnionMember0 {
+        content: string;
+
+        role: 'agent' | 'user';
+      }
+
+      export interface UnionMember1 {
+        arguments: string;
+
+        name: string;
+
+        role: 'tool_call_invocation';
+
+        tool_call_id: string;
+      }
+
+      export interface UnionMember2 {
+        content: string;
+
+        role: 'tool_call_result';
+
+        tool_call_id: string;
+      }
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation, cannot be empty
+       */
+      condition: string;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+    }
+
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+    }
+
+    export interface SkipResponseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition:
+        | SkipResponseEdge.PromptCondition
+        | SkipResponseEdge.EquationCondition
+        | SkipResponseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace SkipResponseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt?: 'Skip response';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Skip response" for skip response edge
+         */
+        prompt: 'Skip response';
+
+        type: 'prompt';
+      }
+    }
+  }
+
+  export interface SubagentNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    instruction: SubagentNode.Instruction;
+
+    /**
+     * Type of the node
+     */
+    type: 'subagent';
+
+    always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: SubagentNode.DisplayPosition;
+
+    edges?: Array<SubagentNode.Edge>;
+
+    finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
+
+    finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
+
+    global_node_setting?: SubagentNode.GlobalNodeSetting;
+
+    interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
+     */
+    knowledge_base_ids?: Array<string> | null;
+
+    model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+
+    responsiveness?: number | null;
+
+    skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * The tool ids of the tools defined in main conversation flow or component that
+     * can be used in this subagent node.
+     */
+    tool_ids?: Array<string> | null;
+
+    /**
+     * The tools owned by this subagent node. This includes other tool types like
+     * transfer_call, agent_swap, etc.
+     */
+    tools?: Array<
+      | SubagentNode.EndCallTool
+      | SubagentNode.TransferCallTool
+      | SubagentNode.CheckAvailabilityCalTool
+      | SubagentNode.BookAppointmentCalTool
+      | SubagentNode.AgentSwapTool
+      | SubagentNode.PressDigitTool
+      | SubagentNode.SendSMSTool
+      | SubagentNode.CustomTool
+      | SubagentNode.CodeTool
+      | SubagentNode.ExtractDynamicVariableTool
+      | SubagentNode.BridgeTransferTool
+      | SubagentNode.CancelTransferTool
+      | SubagentNode.McpTool
+    > | null;
+
+    voice_speed?: number | null;
+  }
+
+  export namespace SubagentNode {
+    export interface Instruction {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
     }
 
     export interface AlwaysEdge {
@@ -16152,6 +18130,26 @@ export namespace ConversationFlowComponentUpdateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -16408,6 +18406,13 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -16441,6 +18446,13 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -16464,6 +18476,13 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -16485,6 +18504,13 @@ export namespace ConversationFlowComponentUpdateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -19767,6 +21793,13 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -19800,6 +21833,13 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -19823,6 +21863,13 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -19844,6 +21891,13 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -22051,6 +24105,49 @@ export namespace ConversationFlowComponentUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+    }
+  }
+
+  export interface Note {
+    /**
+     * Unique identifier for the note.
+     */
+    id: string;
+
+    /**
+     * Text content of the note, can contain refs to images in the format
+     * "<image:asset_id>"
+     */
+    content: string;
+
+    /**
+     * Position of the note on the canvas.
+     */
+    display_position: Note.DisplayPosition;
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    size: Note.Size;
+  }
+
+  export namespace Note {
+    /**
+     * Position of the note on the canvas.
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    /**
+     * Dimensions of the note on the canvas.
+     */
+    export interface Size {
+      height?: number;
+
+      width?: number;
     }
   }
 
