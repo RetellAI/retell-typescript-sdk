@@ -814,6 +814,26 @@ export namespace LlmResponse {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace SendSMSTool {
@@ -1070,6 +1090,13 @@ export namespace LlmResponse {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -1103,6 +1130,13 @@ export namespace LlmResponse {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -1126,6 +1160,13 @@ export namespace LlmResponse {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -1147,6 +1188,13 @@ export namespace LlmResponse {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -2000,6 +2048,26 @@ export namespace LlmResponse {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -2256,6 +2324,13 @@ export namespace LlmResponse {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -2289,6 +2364,13 @@ export namespace LlmResponse {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -2312,6 +2394,13 @@ export namespace LlmResponse {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -2333,6 +2422,13 @@ export namespace LlmResponse {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -3194,6 +3290,26 @@ export namespace LlmCreateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace SendSMSTool {
@@ -3450,6 +3566,13 @@ export namespace LlmCreateParams {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -3483,6 +3606,13 @@ export namespace LlmCreateParams {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -3506,6 +3636,13 @@ export namespace LlmCreateParams {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -3527,6 +3664,13 @@ export namespace LlmCreateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -4380,6 +4524,26 @@ export namespace LlmCreateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -4636,6 +4800,13 @@ export namespace LlmCreateParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -4669,6 +4840,13 @@ export namespace LlmCreateParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -4692,6 +4870,13 @@ export namespace LlmCreateParams {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -4713,6 +4898,13 @@ export namespace LlmCreateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -5588,6 +5780,26 @@ export namespace LlmUpdateParams {
      * to call the tool.
      */
     description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
   }
 
   export namespace SendSMSTool {
@@ -5844,6 +6056,13 @@ export namespace LlmUpdateParams {
       type: 'string';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Examples of the variable value to teach model the style and syntax.
        */
       examples?: Array<string>;
@@ -5877,6 +6096,13 @@ export namespace LlmUpdateParams {
       type: 'enum';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -5900,6 +6126,13 @@ export namespace LlmUpdateParams {
       type: 'boolean';
 
       /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
+
+      /**
        * Whether this data is required. If true and the data is not extracted, the call
        * will be marked as unsuccessful.
        */
@@ -5921,6 +6154,13 @@ export namespace LlmUpdateParams {
        * Type of the variable to extract.
        */
       type: 'number';
+
+      /**
+       * Optional instruction to help decide whether this field needs to be populated in
+       * the analysis. If not set, the field is always included. If required is true,
+       * this is ignored.
+       */
+      conditional_prompt?: string;
 
       /**
        * Whether this data is required. If true and the data is not extracted, the call
@@ -6774,6 +7014,26 @@ export namespace LlmUpdateParams {
        * to call the tool.
        */
       description?: string;
+
+      /**
+       * Describes what to say before sending the SMS. Only applicable when
+       * speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * If true, the agent will speak a short line before sending the SMS. If omitted,
+       * defaults to true (same as end_call / transfer_call tools).
+       */
+      speak_during_execution?: boolean;
     }
 
     export namespace SendSMSTool {
@@ -7030,6 +7290,13 @@ export namespace LlmUpdateParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -7063,6 +7330,13 @@ export namespace LlmUpdateParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -7086,6 +7360,13 @@ export namespace LlmUpdateParams {
         type: 'boolean';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -7107,6 +7388,13 @@ export namespace LlmUpdateParams {
          * Type of the variable to extract.
          */
         type: 'number';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call

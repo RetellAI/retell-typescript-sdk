@@ -206,6 +206,12 @@ export interface ChatAgentResponse {
   guardrail_config?: ChatAgentResponse.GuardrailConfig;
 
   /**
+   * Toggle behavior presets on/off to influence agent response style and behaviors.
+   * Voice-only presets are not available for chat agents.
+   */
+  handbook_config?: ChatAgentResponse.HandbookConfig;
+
+  /**
    * Whether the agent is public. When set to true, the agent is available for public
    * agent preview link.
    */
@@ -284,6 +290,7 @@ export interface ChatAgentResponse {
     | ChatAgentResponse.EnumAnalysisData
     | ChatAgentResponse.BooleanAnalysisData
     | ChatAgentResponse.NumberAnalysisData
+    | ChatAgentResponse.ChatPresetAnalysisData
   > | null;
 
   /**
@@ -315,6 +322,12 @@ export interface ChatAgentResponse {
    * apply.
    */
   signed_url_expiration_ms?: number | null;
+
+  /**
+   * IANA timezone for the agent (e.g. America/New_York). Defaults to
+   * America/Los_Angeles if not set.
+   */
+  timezone?: string | null;
 
   /**
    * The version of the chat agent.
@@ -419,6 +432,32 @@ export namespace ChatAgentResponse {
   }
 
   /**
+   * Toggle behavior presets on/off to influence agent response style and behaviors.
+   * Voice-only presets are not available for chat agents.
+   */
+  export interface HandbookConfig {
+    /**
+     * When asked, acknowledge being a virtual assistant.
+     */
+    ai_disclosure?: boolean;
+
+    /**
+     * Professional call center rep baseline.
+     */
+    default_personality?: boolean;
+
+    /**
+     * Warm acknowledgment of caller concerns.
+     */
+    high_empathy?: boolean;
+
+    /**
+     * Stay within prompt/context scope, don't invent details.
+     */
+    scope_boundaries?: boolean;
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -465,6 +504,13 @@ export namespace ChatAgentResponse {
     type: 'string';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
@@ -498,6 +544,13 @@ export namespace ChatAgentResponse {
     type: 'enum';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
      */
@@ -519,6 +572,13 @@ export namespace ChatAgentResponse {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
 
     /**
      * Whether this data is required. If true and the data is not extracted, the call
@@ -544,8 +604,48 @@ export namespace ChatAgentResponse {
     type: 'number';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
+     */
+    required?: boolean;
+  }
+
+  /**
+   * System preset for post-chat analysis (chat agents). Use in
+   * post_chat_analysis_data to override prompts or mark fields optional.
+   */
+  export interface ChatPresetAnalysisData {
+    /**
+     * Preset identifier for chat agent analysis.
+     */
+    name: 'chat_summary' | 'chat_successful' | 'user_sentiment';
+
+    /**
+     * Identifies this item as a system preset.
+     */
+    type: 'system-presets';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated. If
+     * not set, the field is always included.
+     */
+    conditional_prompt?: string;
+
+    /**
+     * Prompt or description for this preset.
+     */
+    description?: string;
+
+    /**
+     * If false, this field is optional in the analysis. If true or unset, the field is
+     * required.
      */
     required?: boolean;
   }
@@ -623,6 +723,12 @@ export interface ChatAgentCreateParams {
   guardrail_config?: ChatAgentCreateParams.GuardrailConfig;
 
   /**
+   * Toggle behavior presets on/off to influence agent response style and behaviors.
+   * Voice-only presets are not available for chat agents.
+   */
+  handbook_config?: ChatAgentCreateParams.HandbookConfig;
+
+  /**
    * Whether the agent is public. When set to true, the agent is available for public
    * agent preview link.
    */
@@ -696,6 +802,7 @@ export interface ChatAgentCreateParams {
     | ChatAgentCreateParams.EnumAnalysisData
     | ChatAgentCreateParams.BooleanAnalysisData
     | ChatAgentCreateParams.NumberAnalysisData
+    | ChatAgentCreateParams.ChatPresetAnalysisData
   > | null;
 
   /**
@@ -727,6 +834,12 @@ export interface ChatAgentCreateParams {
    * apply.
    */
   signed_url_expiration_ms?: number | null;
+
+  /**
+   * IANA timezone for the agent (e.g. America/New_York). Defaults to
+   * America/Los_Angeles if not set.
+   */
+  timezone?: string | null;
 
   /**
    * Which webhook events this agent should receive. If not set, defaults to
@@ -826,6 +939,32 @@ export namespace ChatAgentCreateParams {
   }
 
   /**
+   * Toggle behavior presets on/off to influence agent response style and behaviors.
+   * Voice-only presets are not available for chat agents.
+   */
+  export interface HandbookConfig {
+    /**
+     * When asked, acknowledge being a virtual assistant.
+     */
+    ai_disclosure?: boolean;
+
+    /**
+     * Professional call center rep baseline.
+     */
+    default_personality?: boolean;
+
+    /**
+     * Warm acknowledgment of caller concerns.
+     */
+    high_empathy?: boolean;
+
+    /**
+     * Stay within prompt/context scope, don't invent details.
+     */
+    scope_boundaries?: boolean;
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -872,6 +1011,13 @@ export namespace ChatAgentCreateParams {
     type: 'string';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
@@ -905,6 +1051,13 @@ export namespace ChatAgentCreateParams {
     type: 'enum';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
      */
@@ -926,6 +1079,13 @@ export namespace ChatAgentCreateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
 
     /**
      * Whether this data is required. If true and the data is not extracted, the call
@@ -951,8 +1111,48 @@ export namespace ChatAgentCreateParams {
     type: 'number';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
+     */
+    required?: boolean;
+  }
+
+  /**
+   * System preset for post-chat analysis (chat agents). Use in
+   * post_chat_analysis_data to override prompts or mark fields optional.
+   */
+  export interface ChatPresetAnalysisData {
+    /**
+     * Preset identifier for chat agent analysis.
+     */
+    name: 'chat_summary' | 'chat_successful' | 'user_sentiment';
+
+    /**
+     * Identifies this item as a system preset.
+     */
+    type: 'system-presets';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated. If
+     * not set, the field is always included.
+     */
+    conditional_prompt?: string;
+
+    /**
+     * Prompt or description for this preset.
+     */
+    description?: string;
+
+    /**
+     * If false, this field is optional in the analysis. If true or unset, the field is
+     * required.
      */
     required?: boolean;
   }
@@ -1032,6 +1232,12 @@ export interface ChatAgentUpdateParams {
   guardrail_config?: ChatAgentUpdateParams.GuardrailConfig;
 
   /**
+   * Body param: Toggle behavior presets on/off to influence agent response style and
+   * behaviors. Voice-only presets are not available for chat agents.
+   */
+  handbook_config?: ChatAgentUpdateParams.HandbookConfig;
+
+  /**
    * Body param: Whether the agent is public. When set to true, the agent is
    * available for public agent preview link.
    */
@@ -1105,6 +1311,7 @@ export interface ChatAgentUpdateParams {
     | ChatAgentUpdateParams.EnumAnalysisData
     | ChatAgentUpdateParams.BooleanAnalysisData
     | ChatAgentUpdateParams.NumberAnalysisData
+    | ChatAgentUpdateParams.ChatPresetAnalysisData
   > | null;
 
   /**
@@ -1146,6 +1353,12 @@ export interface ChatAgentUpdateParams {
    * (24 hours) will apply.
    */
   signed_url_expiration_ms?: number | null;
+
+  /**
+   * Body param: IANA timezone for the agent (e.g. America/New_York). Defaults to
+   * America/Los_Angeles if not set.
+   */
+  timezone?: string | null;
 
   /**
    * Body param: Which webhook events this agent should receive. If not set, defaults
@@ -1199,6 +1412,32 @@ export namespace ChatAgentUpdateParams {
   }
 
   /**
+   * Toggle behavior presets on/off to influence agent response style and behaviors.
+   * Voice-only presets are not available for chat agents.
+   */
+  export interface HandbookConfig {
+    /**
+     * When asked, acknowledge being a virtual assistant.
+     */
+    ai_disclosure?: boolean;
+
+    /**
+     * Professional call center rep baseline.
+     */
+    default_personality?: boolean;
+
+    /**
+     * Warm acknowledgment of caller concerns.
+     */
+    high_empathy?: boolean;
+
+    /**
+     * Stay within prompt/context scope, don't invent details.
+     */
+    scope_boundaries?: boolean;
+  }
+
+  /**
    * Configuration for PII scrubbing from transcripts and recordings.
    */
   export interface PiiConfig {
@@ -1245,6 +1484,13 @@ export namespace ChatAgentUpdateParams {
     type: 'string';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Examples of the variable value to teach model the style and syntax.
      */
     examples?: Array<string>;
@@ -1278,6 +1524,13 @@ export namespace ChatAgentUpdateParams {
     type: 'enum';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
      */
@@ -1299,6 +1552,13 @@ export namespace ChatAgentUpdateParams {
      * Type of the variable to extract.
      */
     type: 'boolean';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
 
     /**
      * Whether this data is required. If true and the data is not extracted, the call
@@ -1324,8 +1584,48 @@ export namespace ChatAgentUpdateParams {
     type: 'number';
 
     /**
+     * Optional instruction to help decide whether this field needs to be populated in
+     * the analysis. If not set, the field is always included. If required is true,
+     * this is ignored.
+     */
+    conditional_prompt?: string;
+
+    /**
      * Whether this data is required. If true and the data is not extracted, the call
      * will be marked as unsuccessful.
+     */
+    required?: boolean;
+  }
+
+  /**
+   * System preset for post-chat analysis (chat agents). Use in
+   * post_chat_analysis_data to override prompts or mark fields optional.
+   */
+  export interface ChatPresetAnalysisData {
+    /**
+     * Preset identifier for chat agent analysis.
+     */
+    name: 'chat_summary' | 'chat_successful' | 'user_sentiment';
+
+    /**
+     * Identifies this item as a system preset.
+     */
+    type: 'system-presets';
+
+    /**
+     * Optional instruction to help decide whether this field needs to be populated. If
+     * not set, the field is always included.
+     */
+    conditional_prompt?: string;
+
+    /**
+     * Prompt or description for this preset.
+     */
+    description?: string;
+
+    /**
+     * If false, this field is optional in the analysis. If true or unset, the field is
+     * required.
      */
     required?: boolean;
   }
