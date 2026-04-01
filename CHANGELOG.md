@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.10.3 (2026-04-01)
+
+Full Changelog: [v5.10.2...v5.10.3](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.2...v5.10.3)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([be4f1d6](https://github.com/RetellAI/retell-typescript-sdk/commit/be4f1d69a342fdcb926f4968ef35af32ee17f9dc))
+
+
+### Chores
+
+* **internal:** improve local docs search for MCP servers ([5ed1de8](https://github.com/RetellAI/retell-typescript-sdk/commit/5ed1de8fb5ef000409d731fc95a68e5ee00c2419))
+* **internal:** improve local docs search for MCP servers ([7055f15](https://github.com/RetellAI/retell-typescript-sdk/commit/7055f152321b10705aab7195b6b5d5a1417c5003))
+* **mcp-server:** add support for session id, forward client info ([947c1d7](https://github.com/RetellAI/retell-typescript-sdk/commit/947c1d7e7c6cb8c8ccfe6b4dac1d879931276c6b))
+
 ## 5.10.2 (2026-03-28)
 
 Full Changelog: [v5.10.1...v5.10.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.1...v5.10.2)
