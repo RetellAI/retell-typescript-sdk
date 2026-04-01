@@ -2734,6 +2734,11 @@ export namespace CallCreatePhoneCallParams {
       guardrail_config?: Agent.GuardrailConfig;
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      handbook_config?: Agent.HandbookConfig;
+
+      /**
        * Controls how sensitive the agent is to user interruptions. Value ranging from
        * [0,1]. Lower value means it will take longer / more words for user to interrupt
        * agent, while higher value means it's easier for user to interrupt agent. If
@@ -2867,6 +2872,7 @@ export namespace CallCreatePhoneCallParams {
         | Agent.EnumAnalysisData
         | Agent.BooleanAnalysisData
         | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
       > | null;
 
       /**
@@ -2951,6 +2957,12 @@ export namespace CallCreatePhoneCallParams {
        * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
       stt_mode?: 'fast' | 'accurate' | 'custom';
+
+      /**
+       * IANA timezone for the agent (e.g. America/New_York). Defaults to
+       * America/Los_Angeles if not set.
+       */
+      timezone?: string | null;
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -3121,6 +3133,58 @@ export namespace CallCreatePhoneCallParams {
       }
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      export interface HandbookConfig {
+        /**
+         * When asked, acknowledge being a virtual assistant.
+         */
+        ai_disclosure?: boolean;
+
+        /**
+         * Professional call center rep baseline.
+         */
+        default_personality?: boolean;
+
+        /**
+         * Repeat back and confirm important details (voice only).
+         */
+        echo_verification?: boolean;
+
+        /**
+         * Warm acknowledgment of caller concerns.
+         */
+        high_empathy?: boolean;
+
+        /**
+         * Spell using NATO phonetic alphabet style (voice only).
+         */
+        nato_phonetic_alphabet?: boolean;
+
+        /**
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
+         */
+        natural_filler_words?: boolean;
+
+        /**
+         * Stay within prompt/context scope, don't invent details.
+         */
+        scope_boundaries?: boolean;
+
+        /**
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
+         */
+        smart_matching?: boolean;
+
+        /**
+         * Convert numbers/dates/currency to spoken forms (voice only).
+         */
+        speech_normalization?: boolean;
+      }
+
+      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -3182,6 +3246,13 @@ export namespace CallCreatePhoneCallParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -3215,6 +3286,13 @@ export namespace CallCreatePhoneCallParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -3236,6 +3314,13 @@ export namespace CallCreatePhoneCallParams {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -3261,8 +3346,48 @@ export namespace CallCreatePhoneCallParams {
         type: 'number';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
+         */
+        required?: boolean;
+      }
+
+      /**
+       * System preset for post-call analysis (voice agents). Use in
+       * post_call_analysis_data to override prompts or mark fields optional.
+       */
+      export interface CallPresetAnalysisData {
+        /**
+         * Preset identifier for voice agent analysis.
+         */
+        name: 'call_summary' | 'call_successful' | 'user_sentiment';
+
+        /**
+         * Identifies this item as a system preset.
+         */
+        type: 'system-presets';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated. If
+         * not set, the field is always included.
+         */
+        conditional_prompt?: string;
+
+        /**
+         * Prompt or description for this preset.
+         */
+        description?: string;
+
+        /**
+         * If false, this field is optional in the analysis. If true or unset, the field is
+         * required.
          */
         required?: boolean;
       }
@@ -3863,6 +3988,11 @@ export namespace CallCreateWebCallParams {
       guardrail_config?: Agent.GuardrailConfig;
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      handbook_config?: Agent.HandbookConfig;
+
+      /**
        * Controls how sensitive the agent is to user interruptions. Value ranging from
        * [0,1]. Lower value means it will take longer / more words for user to interrupt
        * agent, while higher value means it's easier for user to interrupt agent. If
@@ -3996,6 +4126,7 @@ export namespace CallCreateWebCallParams {
         | Agent.EnumAnalysisData
         | Agent.BooleanAnalysisData
         | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
       > | null;
 
       /**
@@ -4080,6 +4211,12 @@ export namespace CallCreateWebCallParams {
        * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
       stt_mode?: 'fast' | 'accurate' | 'custom';
+
+      /**
+       * IANA timezone for the agent (e.g. America/New_York). Defaults to
+       * America/Los_Angeles if not set.
+       */
+      timezone?: string | null;
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -4250,6 +4387,58 @@ export namespace CallCreateWebCallParams {
       }
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      export interface HandbookConfig {
+        /**
+         * When asked, acknowledge being a virtual assistant.
+         */
+        ai_disclosure?: boolean;
+
+        /**
+         * Professional call center rep baseline.
+         */
+        default_personality?: boolean;
+
+        /**
+         * Repeat back and confirm important details (voice only).
+         */
+        echo_verification?: boolean;
+
+        /**
+         * Warm acknowledgment of caller concerns.
+         */
+        high_empathy?: boolean;
+
+        /**
+         * Spell using NATO phonetic alphabet style (voice only).
+         */
+        nato_phonetic_alphabet?: boolean;
+
+        /**
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
+         */
+        natural_filler_words?: boolean;
+
+        /**
+         * Stay within prompt/context scope, don't invent details.
+         */
+        scope_boundaries?: boolean;
+
+        /**
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
+         */
+        smart_matching?: boolean;
+
+        /**
+         * Convert numbers/dates/currency to spoken forms (voice only).
+         */
+        speech_normalization?: boolean;
+      }
+
+      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -4311,6 +4500,13 @@ export namespace CallCreateWebCallParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -4344,6 +4540,13 @@ export namespace CallCreateWebCallParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -4365,6 +4568,13 @@ export namespace CallCreateWebCallParams {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -4390,8 +4600,48 @@ export namespace CallCreateWebCallParams {
         type: 'number';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
+         */
+        required?: boolean;
+      }
+
+      /**
+       * System preset for post-call analysis (voice agents). Use in
+       * post_call_analysis_data to override prompts or mark fields optional.
+       */
+      export interface CallPresetAnalysisData {
+        /**
+         * Preset identifier for voice agent analysis.
+         */
+        name: 'call_summary' | 'call_successful' | 'user_sentiment';
+
+        /**
+         * Identifies this item as a system preset.
+         */
+        type: 'system-presets';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated. If
+         * not set, the field is always included.
+         */
+        conditional_prompt?: string;
+
+        /**
+         * Prompt or description for this preset.
+         */
+        description?: string;
+
+        /**
+         * If false, this field is optional in the analysis. If true or unset, the field is
+         * required.
          */
         required?: boolean;
       }
@@ -4992,6 +5242,11 @@ export namespace CallRegisterPhoneCallParams {
       guardrail_config?: Agent.GuardrailConfig;
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      handbook_config?: Agent.HandbookConfig;
+
+      /**
        * Controls how sensitive the agent is to user interruptions. Value ranging from
        * [0,1]. Lower value means it will take longer / more words for user to interrupt
        * agent, while higher value means it's easier for user to interrupt agent. If
@@ -5125,6 +5380,7 @@ export namespace CallRegisterPhoneCallParams {
         | Agent.EnumAnalysisData
         | Agent.BooleanAnalysisData
         | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
       > | null;
 
       /**
@@ -5209,6 +5465,12 @@ export namespace CallRegisterPhoneCallParams {
        * Default to fast mode. When set to custom, custom_stt_config must be provided.
        */
       stt_mode?: 'fast' | 'accurate' | 'custom';
+
+      /**
+       * IANA timezone for the agent (e.g. America/New_York). Defaults to
+       * America/Los_Angeles if not set.
+       */
+      timezone?: string | null;
 
       user_dtmf_options?: Agent.UserDtmfOptions | null;
 
@@ -5379,6 +5641,58 @@ export namespace CallRegisterPhoneCallParams {
       }
 
       /**
+       * Toggle behavior presets on/off to influence agent response style and behaviors.
+       */
+      export interface HandbookConfig {
+        /**
+         * When asked, acknowledge being a virtual assistant.
+         */
+        ai_disclosure?: boolean;
+
+        /**
+         * Professional call center rep baseline.
+         */
+        default_personality?: boolean;
+
+        /**
+         * Repeat back and confirm important details (voice only).
+         */
+        echo_verification?: boolean;
+
+        /**
+         * Warm acknowledgment of caller concerns.
+         */
+        high_empathy?: boolean;
+
+        /**
+         * Spell using NATO phonetic alphabet style (voice only).
+         */
+        nato_phonetic_alphabet?: boolean;
+
+        /**
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
+         */
+        natural_filler_words?: boolean;
+
+        /**
+         * Stay within prompt/context scope, don't invent details.
+         */
+        scope_boundaries?: boolean;
+
+        /**
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
+         */
+        smart_matching?: boolean;
+
+        /**
+         * Convert numbers/dates/currency to spoken forms (voice only).
+         */
+        speech_normalization?: boolean;
+      }
+
+      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -5440,6 +5754,13 @@ export namespace CallRegisterPhoneCallParams {
         type: 'string';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Examples of the variable value to teach model the style and syntax.
          */
         examples?: Array<string>;
@@ -5473,6 +5794,13 @@ export namespace CallRegisterPhoneCallParams {
         type: 'enum';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
          */
@@ -5494,6 +5822,13 @@ export namespace CallRegisterPhoneCallParams {
          * Type of the variable to extract.
          */
         type: 'boolean';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
 
         /**
          * Whether this data is required. If true and the data is not extracted, the call
@@ -5519,8 +5854,48 @@ export namespace CallRegisterPhoneCallParams {
         type: 'number';
 
         /**
+         * Optional instruction to help decide whether this field needs to be populated in
+         * the analysis. If not set, the field is always included. If required is true,
+         * this is ignored.
+         */
+        conditional_prompt?: string;
+
+        /**
          * Whether this data is required. If true and the data is not extracted, the call
          * will be marked as unsuccessful.
+         */
+        required?: boolean;
+      }
+
+      /**
+       * System preset for post-call analysis (voice agents). Use in
+       * post_call_analysis_data to override prompts or mark fields optional.
+       */
+      export interface CallPresetAnalysisData {
+        /**
+         * Preset identifier for voice agent analysis.
+         */
+        name: 'call_summary' | 'call_successful' | 'user_sentiment';
+
+        /**
+         * Identifies this item as a system preset.
+         */
+        type: 'system-presets';
+
+        /**
+         * Optional instruction to help decide whether this field needs to be populated. If
+         * not set, the field is always included.
+         */
+        conditional_prompt?: string;
+
+        /**
+         * Prompt or description for this preset.
+         */
+        description?: string;
+
+        /**
+         * If false, this field is optional in the analysis. If true or unset, the field is
+         * required.
          */
         required?: boolean;
       }
