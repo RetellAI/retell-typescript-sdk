@@ -82,7 +82,6 @@ export async function initMcpServer(params: {
     if (!_client) {
       try {
         _client = new Retell({
-          ...{ apiKey: readEnvOrError('RETELL_API_KEY') },
           logger,
           ...params.clientOptions,
           defaultHeaders: {

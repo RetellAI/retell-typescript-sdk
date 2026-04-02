@@ -444,6 +444,20 @@ describe('instantiate client', () => {
       expect(newClient.buildURL('/bar', null)).toEqual('http://localhost:6000/bar');
     });
   });
+
+  test('with environment variable arguments', () => {
+    // set options via env var
+    process.env['RETELL_API_KEY'] = 'YOUR_RETELL_API_KEY';
+    const client = new Retell();
+    expect(client.apiKey).toBe('YOUR_RETELL_API_KEY');
+  });
+
+  test('with overridden environment variable arguments', () => {
+    // set options via env var
+    process.env['RETELL_API_KEY'] = 'another YOUR_RETELL_API_KEY';
+    const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY' });
+    expect(client.apiKey).toBe('YOUR_RETELL_API_KEY');
+  });
 });
 
 describe('request building', () => {
