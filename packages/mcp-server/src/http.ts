@@ -131,7 +131,7 @@ const redactHeaders = (headers: Record<string, any>) => {
 };
 
 export const streamableHTTPApp = ({
-  clientOptions = {} as ClientOptions,
+  clientOptions = {},
   mcpOptions,
 }: {
   clientOptions?: ClientOptions;

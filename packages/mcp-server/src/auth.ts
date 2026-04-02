@@ -20,7 +20,11 @@ export const parseClientAuthHeaders = (req: IncomingMessage, required?: boolean)
     throw new Error('Missing required Authorization header; see WWW-Authenticate header for details.');
   }
 
-  return {};
+  const apiKey =
+    Array.isArray(req.headers['x-retell-api-key']) ?
+      req.headers['x-retell-api-key'][0]
+    : req.headers['x-retell-api-key'];
+  return { apiKey };
 };
 
 export const getStainlessApiKey = (req: IncomingMessage, mcpOptions: McpOptions): string | undefined => {

@@ -30,7 +30,7 @@ The full API of this library can be found in [api.md](api.md).
 import Retell from 'retell-sdk';
 
 const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
+  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted
 });
 
 const agentResponse = await client.agent.create({
@@ -50,7 +50,7 @@ This library includes TypeScript definitions for all request params and response
 import Retell from 'retell-sdk';
 
 const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
+  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted
 });
 
 const params: Retell.AgentCreateParams = {
