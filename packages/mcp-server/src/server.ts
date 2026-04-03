@@ -29,7 +29,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'retell_sdk_api',
-      version: '5.11.0',
+      version: '5.12.0',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
@@ -82,7 +82,6 @@ export async function initMcpServer(params: {
     if (!_client) {
       try {
         _client = new Retell({
-          ...{ apiKey: readEnvOrError('RETELL_API_KEY') },
           logger,
           ...params.clientOptions,
           defaultHeaders: {

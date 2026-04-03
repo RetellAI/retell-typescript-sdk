@@ -1,6 +1,6 @@
 {
   "name": "@retell-ai/mcp-server",
-  "version": "5.11.0",
+  "version": "5.12.0",
   "description": "The official MCP Server for the Retell API",
   "author": "Retell <support@retellai.com>",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "fix": "eslint --fix ."
   },
   "dependencies": {
-    "retell-sdk": "file:../../dist/",
+    "retell-sdk": "link:../../dist/",
     "ajv": "^8.18.0",
     "@cloudflare/cabidela": "^0.2.4",
     "@hono/node-server": "^1.19.10",

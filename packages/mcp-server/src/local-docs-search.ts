@@ -75,17 +75,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "override_agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "override_agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
       },
       python: {
         method: 'call.create_phone_call',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_call_response = client.call.create_phone_call(\n    from_number="+14157774444",\n    to_number="+12137774445",\n)\nprint(phone_call_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_call_response = client.call.create_phone_call(\n    from_number="+14157774444",\n    to_number="+12137774445",\n)\nprint(phone_call_response.agent_id)',
       },
       typescript: {
         method: 'client.call.createPhoneCall',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneCallResponse = await client.call.createPhoneCall({\n  from_number: '+14157774444',\n  to_number: '+12137774445',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneCallResponse = await client.call.createPhoneCall({\n  from_number: '+14157774444',\n  to_number: '+12137774445',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
       },
     },
   },
@@ -113,17 +113,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          },\n          "to_number": "+12137774445"\n        }\'',
+          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          },\n          "to_number": "+12137774445"\n        }\'',
       },
       python: {
         method: 'call.register_phone_call',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_call_response = client.call.register_phone_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(phone_call_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_call_response = client.call.register_phone_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(phone_call_response.agent_id)',
       },
       typescript: {
         method: 'client.call.registerPhoneCall',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneCallResponse = await client.call.registerPhoneCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneCallResponse = await client.call.registerPhoneCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
       },
     },
   },
@@ -151,17 +151,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
       },
       python: {
         method: 'call.create_web_call',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nweb_call_response = client.call.create_web_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(web_call_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nweb_call_response = client.call.create_web_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(web_call_response.agent_id)',
       },
       typescript: {
         method: 'client.call.createWebCall',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst webCallResponse = await client.call.createWebCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(webCallResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst webCallResponse = await client.call.createWebCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(webCallResponse.agent_id);",
       },
     },
   },
@@ -180,17 +180,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/get-call/$CALL_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/v2/get-call/$CALL_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'call.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ncall_response = client.call.retrieve(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)\nprint(call_response)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_response = client.call.retrieve(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)\nprint(call_response)',
       },
       typescript: {
         method: 'client.call.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst callResponse = await client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d');\n\nconsole.log(callResponse);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponse = await client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d');\n\nconsole.log(callResponse);",
       },
     },
   },
@@ -214,17 +214,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/list-calls \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "filter_criteria": {\n            "agent_id": [\n              "agent_oBeDLoLOeuAbiuaMFXRtDOLriT12345"\n            ],\n            "call_id": [\n              "call_5a82f0a43ea0977566b1104fcfc"\n            ],\n            "call_status": [\n              "ended"\n            ],\n            "call_successful": [\n              true\n            ],\n            "call_type": [\n              "phone_call"\n            ],\n            "direction": [\n              "inbound"\n            ],\n            "start_timestamp": {\n              "lower_threshold": 1738475411000,\n              "upper_threshold": 1738475421000\n            },\n            "user_sentiment": [\n              "Positive"\n            ]\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/list-calls \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "filter_criteria": {\n            "agent_id": [\n              "agent_oBeDLoLOeuAbiuaMFXRtDOLriT12345"\n            ],\n            "call_id": [\n              "call_5a82f0a43ea0977566b1104fcfc"\n            ],\n            "call_status": [\n              "ended"\n            ],\n            "call_successful": [\n              true\n            ],\n            "call_type": [\n              "phone_call"\n            ],\n            "direction": [\n              "inbound"\n            ],\n            "start_timestamp": {\n              "lower_threshold": 1738475411000,\n              "upper_threshold": 1738475421000\n            },\n            "user_sentiment": [\n              "Positive"\n            ]\n          }\n        }\'',
       },
       python: {
         method: 'call.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ncall_responses = client.call.list()\nprint(call_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_responses = client.call.list()\nprint(call_responses)',
       },
       typescript: {
         method: 'client.call.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst callResponses = await client.call.list();\n\nconsole.log(callResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponses = await client.call.list();\n\nconsole.log(callResponses);",
       },
     },
   },
@@ -249,17 +249,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/update-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything_except_pii",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          },\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/update-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything_except_pii",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          },\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
       },
       python: {
         method: 'call.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ncall_response = client.call.update(\n    call_id="call_a4441234567890777c4a4a123e6",\n    data_storage_setting="everything_except_pii",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n)\nprint(call_response)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_response = client.call.update(\n    call_id="call_a4441234567890777c4a4a123e6",\n    data_storage_setting="everything_except_pii",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n)\nprint(call_response)',
       },
       typescript: {
         method: 'client.call.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst callResponse = await client.call.update('call_a4441234567890777c4a4a123e6', {\n  data_storage_setting: 'everything_except_pii',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n});\n\nconsole.log(callResponse);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponse = await client.call.update('call_a4441234567890777c4a4a123e6', {\n  data_storage_setting: 'everything_except_pii',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n});\n\nconsole.log(callResponse);",
       },
     },
   },
@@ -277,17 +277,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/v2/delete-call/$CALL_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/v2/delete-call/$CALL_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'call.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.call.delete(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.call.delete(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)',
       },
       typescript: {
         method: 'client.call.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.call.delete('119c3f8e47135a29e65947eeb34cf12d');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.call.delete('119c3f8e47135a29e65947eeb34cf12d');",
       },
     },
   },
@@ -312,17 +312,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
       },
       python: {
         method: 'chat.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_response = client.chat.create(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(chat_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.create(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(chat_response.agent_id)',
       },
       typescript: {
         method: 'client.chat.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatResponse = await client.chat.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });\n\nconsole.log(chatResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });\n\nconsole.log(chatResponse.agent_id);",
       },
     },
   },
@@ -350,17 +350,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "override_agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "override_agent_version": 1,\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
       },
       python: {
         method: 'chat.create_sms_chat',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_response = client.chat.create_sms_chat(\n    from_number="+12137771234",\n    to_number="+14155551234",\n)\nprint(chat_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.create_sms_chat(\n    from_number="+12137771234",\n    to_number="+14155551234",\n)\nprint(chat_response.agent_id)',
       },
       typescript: {
         method: 'client.chat.createSMSChat',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatResponse = await client.chat.createSMSChat({\n  from_number: '+12137771234',\n  to_number: '+14155551234',\n});\n\nconsole.log(chatResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.createSMSChat({\n  from_number: '+12137771234',\n  to_number: '+14155551234',\n});\n\nconsole.log(chatResponse.agent_id);",
       },
     },
   },
@@ -378,17 +378,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/end-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/end-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat.end',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.chat.end(\n    "16b980523634a6dc504898cda492e939",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat.end(\n    "16b980523634a6dc504898cda492e939",\n)',
       },
       typescript: {
         method: 'client.chat.end',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.chat.end('16b980523634a6dc504898cda492e939');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chat.end('16b980523634a6dc504898cda492e939');",
       },
     },
   },
@@ -408,17 +408,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-chat/$CHAT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-chat/$CHAT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_response = client.chat.retrieve(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.retrieve(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_response.agent_id)',
       },
       typescript: {
         method: 'client.chat.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatResponse = await client.chat.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatResponse.agent_id);",
       },
     },
   },
@@ -438,17 +438,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-chat-completion \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "chat_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "content": "hi how are you doing?"\n        }\'',
+          'curl https://api.retellai.com/create-chat-completion \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "chat_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "content": "hi how are you doing?"\n        }\'',
       },
       python: {
         method: 'chat.create_chat_completion',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nresponse = client.chat.create_chat_completion(\n    chat_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    content="hi how are you doing?",\n)\nprint(response.messages)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.chat.create_chat_completion(\n    chat_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    content="hi how are you doing?",\n)\nprint(response.messages)',
       },
       typescript: {
         method: 'client.chat.createChatCompletion',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst response = await client.chat.createChatCompletion({\n  chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n  content: 'hi how are you doing?',\n});\n\nconsole.log(response.messages);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.chat.createChatCompletion({\n  chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n  content: 'hi how are you doing?',\n});\n\nconsole.log(response.messages);",
       },
     },
   },
@@ -468,17 +468,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-chat \\\n    -H "Authorization: Bearer $API_KEY" \\\n    --max-time 300',
+          'curl https://api.retellai.com/list-chat \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300',
       },
       python: {
         method: 'chat.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_responses = client.chat.list()\nprint(chat_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_responses = client.chat.list()\nprint(chat_responses)',
       },
       typescript: {
         method: 'client.chat.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatResponses = await client.chat.list();\n\nconsole.log(chatResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponses = await client.chat.list();\n\nconsole.log(chatResponses);",
       },
     },
   },
@@ -504,17 +504,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything",\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
+          'curl https://api.retellai.com/update-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything",\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
       },
       python: {
         method: 'chat.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_response = client.chat.update(\n    chat_id="chat_98c1a2157aa0559144d67bb0729",\n    data_storage_setting="everything",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n    override_dynamic_variables={\n        "additional_discount": "15%"\n    },\n)\nprint(chat_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.update(\n    chat_id="chat_98c1a2157aa0559144d67bb0729",\n    data_storage_setting="everything",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n    override_dynamic_variables={\n        "additional_discount": "15%"\n    },\n)\nprint(chat_response.agent_id)',
       },
       typescript: {
         method: 'client.chat.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatResponse = await client.chat.update('chat_98c1a2157aa0559144d67bb0729', {\n  data_storage_setting: 'everything',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n  override_dynamic_variables: { additional_discount: '15%' },\n});\n\nconsole.log(chatResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.update('chat_98c1a2157aa0559144d67bb0729', {\n  data_storage_setting: 'everything',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n  override_dynamic_variables: { additional_discount: '15%' },\n});\n\nconsole.log(chatResponse.agent_id);",
       },
     },
   },
@@ -552,17 +552,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "area_code": 415,\n          "country_code": "US",\n          "fallback_number": "+14155551234",\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "number_provider": "twilio",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "phone_number": "+14157774444",\n          "transport": "TCP"\n        }\'',
+          'curl https://api.retellai.com/create-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "area_code": 415,\n          "country_code": "US",\n          "fallback_number": "+14155551234",\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "number_provider": "twilio",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "phone_number": "+14157774444",\n          "transport": "TCP"\n        }\'',
       },
       python: {
         method: 'phone_number.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_number_response = client.phone_number.create()\nprint(phone_number_response.inbound_agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.create()\nprint(phone_number_response.inbound_agent_id)',
       },
       typescript: {
         method: 'client.phoneNumber.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneNumberResponse = await client.phoneNumber.create();\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.create();\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
       },
     },
   },
@@ -599,17 +599,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/import-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "phone_number": "+14157774444",\n          "termination_uri": "someuri.pstn.twilio.com",\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "ignore_e164_validation": true,\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "sip_trunk_auth_password": "123456",\n          "sip_trunk_auth_username": "username",\n          "transport": "TCP"\n        }\'',
+          'curl https://api.retellai.com/import-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "phone_number": "+14157774444",\n          "termination_uri": "someuri.pstn.twilio.com",\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "ignore_e164_validation": true,\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "sip_trunk_auth_password": "123456",\n          "sip_trunk_auth_username": "username",\n          "transport": "TCP"\n        }\'',
       },
       python: {
         method: 'phone_number.import_',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_number_response = client.phone_number.import_(\n    phone_number="+14157774444",\n    termination_uri="someuri.pstn.twilio.com",\n)\nprint(phone_number_response.inbound_agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.import_(\n    phone_number="+14157774444",\n    termination_uri="someuri.pstn.twilio.com",\n)\nprint(phone_number_response.inbound_agent_id)',
       },
       typescript: {
         method: 'client.phoneNumber.import',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneNumberResponse = await client.phoneNumber.import({\n  phone_number: '+14157774444',\n  termination_uri: 'someuri.pstn.twilio.com',\n});\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.import({\n  phone_number: '+14157774444',\n  termination_uri: 'someuri.pstn.twilio.com',\n});\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
       },
     },
   },
@@ -629,17 +629,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-phone-number/$PHONE_NUMBER \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-phone-number/$PHONE_NUMBER \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'phone_number.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_number_response = client.phone_number.retrieve(\n    "+14157774444",\n)\nprint(phone_number_response.inbound_agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.retrieve(\n    "+14157774444",\n)\nprint(phone_number_response.inbound_agent_id)',
       },
       typescript: {
         method: 'client.phoneNumber.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneNumberResponse = await client.phoneNumber.retrieve('+14157774444');\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.retrieve('+14157774444');\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
       },
     },
   },
@@ -658,17 +658,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-phone-numbers \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-phone-numbers \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'phone_number.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_number_responses = client.phone_number.list()\nprint(phone_number_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_responses = client.phone_number.list()\nprint(phone_number_responses)',
       },
       typescript: {
         method: 'client.phoneNumber.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneNumberResponses = await client.phoneNumber.list();\n\nconsole.log(phoneNumberResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponses = await client.phoneNumber.list();\n\nconsole.log(phoneNumberResponses);",
       },
     },
   },
@@ -708,17 +708,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-phone-number/$PHONE_NUMBER \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "auth_password": "123456",\n          "auth_username": "username",\n          "fallback_number": "+14155551234",\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_sms_webhook_url": "https://example.com/inbound-sms-webhook",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "termination_uri": "someuri.pstn.twilio.com",\n          "transport": "TCP"\n        }\'',
+          'curl https://api.retellai.com/update-phone-number/$PHONE_NUMBER \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "auth_password": "123456",\n          "auth_username": "username",\n          "fallback_number": "+14155551234",\n          "inbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "inbound_agent_version": 1,\n          "inbound_sms_webhook_url": "https://example.com/inbound-sms-webhook",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "outbound_agent_version": 1,\n          "termination_uri": "someuri.pstn.twilio.com",\n          "transport": "TCP"\n        }\'',
       },
       python: {
         method: 'phone_number.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nphone_number_response = client.phone_number.update(\n    phone_number="+14157774444",\n    inbound_agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    nickname="Frontdesk Number",\n    outbound_agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(phone_number_response.inbound_agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.update(\n    phone_number="+14157774444",\n    inbound_agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    nickname="Frontdesk Number",\n    outbound_agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(phone_number_response.inbound_agent_id)',
       },
       typescript: {
         method: 'client.phoneNumber.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst phoneNumberResponse = await client.phoneNumber.update('+14157774444', {\n  inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n  nickname: 'Frontdesk Number',\n  outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.update('+14157774444', {\n  inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n  nickname: 'Frontdesk Number',\n  outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(phoneNumberResponse.inbound_agent_id);",
       },
     },
   },
@@ -736,17 +736,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-phone-number/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-phone-number/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'phone_number.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.phone_number.delete(\n    "+14157774444",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.phone_number.delete(\n    "+14157774444",\n)',
       },
       typescript: {
         method: 'client.phoneNumber.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.phoneNumber.delete('+14157774444');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.phoneNumber.delete('+14157774444');",
       },
     },
   },
@@ -822,17 +822,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d "{\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"voice_id\\": \\"retell-Cimo\\",\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"allow_user_dtmf\\": true,\n          \\"ambient_sound_volume\\": 1,\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the outcome of the conversation in two sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"backchannel_frequency\\": 0.9,\n          \\"backchannel_words\\": [\n            \\"yeah\\",\n            \\"uh-huh\\"\n          ],\n          \\"begin_message_delay_ms\\": 1000,\n          \\"boosted_keywords\\": [\n            \\"retell\\",\n            \\"kroger\\"\n          ],\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"denoising_mode\\": \\"noise-cancellation\\",\n          \\"enable_backchannel\\": true,\n          \\"enable_dynamic_responsiveness\\": true,\n          \\"enable_dynamic_voice_speed\\": true,\n          \\"end_call_after_silence_ms\\": 600000,\n          \\"fallback_voice_ids\\": [\n            \\"cartesia-Cimo\\",\n            \\"minimax-Cimo\\"\n          ],\n          \\"interruption_sensitivity\\": 1,\n          \\"ivr_option\\": {\n            \\"action\\": {\n              \\"type\\": \\"hangup\\"\n            }\n          },\n          \\"language\\": \\"en-US\\",\n          \\"max_call_duration_ms\\": 3600000,\n          \\"normalize_for_speech\\": true,\n          \\"opt_in_signed_url\\": true,\n          \\"post_call_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"reminder_max_count\\": 2,\n          \\"reminder_trigger_ms\\": 10000,\n          \\"responsiveness\\": 1,\n          \\"ring_duration_ms\\": 30000,\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"stt_mode\\": \\"fast\\",\n          \\"timezone\\": \\"America/New_York\\",\n          \\"version_description\\": \\"Customer support agent for handling product inquiries\\",\n          \\"vocab_specialization\\": \\"general\\",\n          \\"voice_emotion\\": \\"calm\\",\n          \\"voice_speed\\": 1,\n          \\"voice_temperature\\": 1,\n          \\"voicemail_detection_timeout_ms\\": 30000,\n          \\"voicemail_message\\": \\"Hi, please give us a callback.\\",\n          \\"voicemail_option\\": {\n            \\"action\\": {\n              \\"text\\": \\"Please give us a callback tomorrow at 10am.\\",\n              \\"type\\": \\"static_text\\"\n            }\n          },\n          \\"volume\\": 1,\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
+          'curl https://api.retellai.com/create-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d "{\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"voice_id\\": \\"retell-Cimo\\",\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"allow_user_dtmf\\": true,\n          \\"ambient_sound_volume\\": 1,\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the outcome of the conversation in two sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"backchannel_frequency\\": 0.9,\n          \\"backchannel_words\\": [\n            \\"yeah\\",\n            \\"uh-huh\\"\n          ],\n          \\"begin_message_delay_ms\\": 1000,\n          \\"boosted_keywords\\": [\n            \\"retell\\",\n            \\"kroger\\"\n          ],\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"denoising_mode\\": \\"noise-cancellation\\",\n          \\"enable_backchannel\\": true,\n          \\"enable_dynamic_responsiveness\\": true,\n          \\"enable_dynamic_voice_speed\\": true,\n          \\"end_call_after_silence_ms\\": 600000,\n          \\"fallback_voice_ids\\": [\n            \\"cartesia-Cimo\\",\n            \\"minimax-Cimo\\"\n          ],\n          \\"interruption_sensitivity\\": 1,\n          \\"ivr_option\\": {\n            \\"action\\": {\n              \\"type\\": \\"hangup\\"\n            }\n          },\n          \\"language\\": \\"en-US\\",\n          \\"max_call_duration_ms\\": 3600000,\n          \\"normalize_for_speech\\": true,\n          \\"opt_in_signed_url\\": true,\n          \\"post_call_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"reminder_max_count\\": 2,\n          \\"reminder_trigger_ms\\": 10000,\n          \\"responsiveness\\": 1,\n          \\"ring_duration_ms\\": 30000,\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"stt_mode\\": \\"fast\\",\n          \\"timezone\\": \\"America/New_York\\",\n          \\"version_description\\": \\"Customer support agent for handling product inquiries\\",\n          \\"vocab_specialization\\": \\"general\\",\n          \\"voice_emotion\\": \\"calm\\",\n          \\"voice_speed\\": 1,\n          \\"voice_temperature\\": 1,\n          \\"voicemail_detection_timeout_ms\\": 30000,\n          \\"voicemail_message\\": \\"Hi, please give us a callback.\\",\n          \\"voicemail_option\\": {\n            \\"action\\": {\n              \\"text\\": \\"Please give us a callback tomorrow at 10am.\\",\n              \\"type\\": \\"static_text\\"\n            }\n          },\n          \\"volume\\": 1,\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
       },
       python: {
         method: 'agent.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(agent_response.agent_id)',
       },
       typescript: {
         method: 'client.agent.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse.agent_id);",
       },
     },
   },
@@ -851,17 +851,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nagent_response = client.agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(agent_response.agent_id)',
       },
       typescript: {
         method: 'client.agent.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponse = await client.agent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponse.agent_id);",
       },
     },
   },
@@ -879,17 +879,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## list\n\n`client.agent.list(limit?: number, pagination_key?: string, pagination_key_version?: number): object[]`\n\n**get** `/list-agents`\n\nList all agents\n\n### Parameters\n\n- `limit?: number`\n  A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 1000.\n\n- `pagination_key?: string`\n  The pagination key to continue fetching the next page of agents. Pagination key is represented by a agent id, pagination key and version pair is exclusive (not included in the fetched page). If not set, will start from the beginning.\n\n- `pagination_key_version?: number`\n  Specifies the version of the agent associated with the pagination_key. When paginating, both the pagination_key and its version must be provided to ensure consistent ordering and to fetch the next page correctly.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; backchannel_frequency?: number; backchannel_words?: string[]; begin_message_delay_ms?: number; boosted_keywords?: string[]; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; end_call_after_silence_ms?: number; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_public?: boolean; is_published?: boolean; ivr_option?: { action: object; }; language?: string; max_call_duration_ms?: number; normalize_for_speech?: boolean; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_detection_timeout_ms?: number; voicemail_message?: string; voicemail_option?: { action: object | object | object | object; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponses = await client.agent.list();\n\nconsole.log(agentResponses);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/list-agents \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/list-agents \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nagent_responses = client.agent.list()\nprint(agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_responses = client.agent.list()\nprint(agent_responses)',
       },
       typescript: {
         method: 'client.agent.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponses = await client.agent.list();\n\nconsole.log(agentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponses = await client.agent.list();\n\nconsole.log(agentResponses);",
       },
     },
   },
@@ -967,17 +968,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d "{\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"allow_user_dtmf\\": true,\n          \\"ambient_sound_volume\\": 1,\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the outcome of the conversation in two sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"backchannel_frequency\\": 0.9,\n          \\"backchannel_words\\": [\n            \\"yeah\\",\n            \\"uh-huh\\"\n          ],\n          \\"begin_message_delay_ms\\": 1000,\n          \\"boosted_keywords\\": [\n            \\"retell\\",\n            \\"kroger\\"\n          ],\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"denoising_mode\\": \\"noise-cancellation\\",\n          \\"enable_backchannel\\": true,\n          \\"enable_dynamic_responsiveness\\": true,\n          \\"enable_dynamic_voice_speed\\": true,\n          \\"end_call_after_silence_ms\\": 600000,\n          \\"fallback_voice_ids\\": [\n            \\"cartesia-Cimo\\",\n            \\"minimax-Cimo\\"\n          ],\n          \\"interruption_sensitivity\\": 1,\n          \\"ivr_option\\": {\n            \\"action\\": {\n              \\"type\\": \\"hangup\\"\n            }\n          },\n          \\"language\\": \\"en-US\\",\n          \\"max_call_duration_ms\\": 3600000,\n          \\"normalize_for_speech\\": true,\n          \\"opt_in_signed_url\\": true,\n          \\"post_call_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"reminder_max_count\\": 2,\n          \\"reminder_trigger_ms\\": 10000,\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"responsiveness\\": 1,\n          \\"ring_duration_ms\\": 30000,\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"stt_mode\\": \\"fast\\",\n          \\"timezone\\": \\"America/New_York\\",\n          \\"version_description\\": \\"Customer support agent for handling product inquiries\\",\n          \\"vocab_specialization\\": \\"general\\",\n          \\"voice_emotion\\": \\"calm\\",\n          \\"voice_id\\": \\"retell-Cimo\\",\n          \\"voice_speed\\": 1,\n          \\"voice_temperature\\": 1,\n          \\"voicemail_detection_timeout_ms\\": 30000,\n          \\"voicemail_message\\": \\"Hi, please give us a callback.\\",\n          \\"voicemail_option\\": {\n            \\"action\\": {\n              \\"text\\": \\"Please give us a callback tomorrow at 10am.\\",\n              \\"type\\": \\"static_text\\"\n            }\n          },\n          \\"volume\\": 1,\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
+          'curl https://api.retellai.com/update-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d "{\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"allow_user_dtmf\\": true,\n          \\"ambient_sound_volume\\": 1,\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the outcome of the conversation in two sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"backchannel_frequency\\": 0.9,\n          \\"backchannel_words\\": [\n            \\"yeah\\",\n            \\"uh-huh\\"\n          ],\n          \\"begin_message_delay_ms\\": 1000,\n          \\"boosted_keywords\\": [\n            \\"retell\\",\n            \\"kroger\\"\n          ],\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"denoising_mode\\": \\"noise-cancellation\\",\n          \\"enable_backchannel\\": true,\n          \\"enable_dynamic_responsiveness\\": true,\n          \\"enable_dynamic_voice_speed\\": true,\n          \\"end_call_after_silence_ms\\": 600000,\n          \\"fallback_voice_ids\\": [\n            \\"cartesia-Cimo\\",\n            \\"minimax-Cimo\\"\n          ],\n          \\"interruption_sensitivity\\": 1,\n          \\"ivr_option\\": {\n            \\"action\\": {\n              \\"type\\": \\"hangup\\"\n            }\n          },\n          \\"language\\": \\"en-US\\",\n          \\"max_call_duration_ms\\": 3600000,\n          \\"normalize_for_speech\\": true,\n          \\"opt_in_signed_url\\": true,\n          \\"post_call_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"reminder_max_count\\": 2,\n          \\"reminder_trigger_ms\\": 10000,\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"responsiveness\\": 1,\n          \\"ring_duration_ms\\": 30000,\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"stt_mode\\": \\"fast\\",\n          \\"timezone\\": \\"America/New_York\\",\n          \\"version_description\\": \\"Customer support agent for handling product inquiries\\",\n          \\"vocab_specialization\\": \\"general\\",\n          \\"voice_emotion\\": \\"calm\\",\n          \\"voice_id\\": \\"retell-Cimo\\",\n          \\"voice_speed\\": 1,\n          \\"voice_temperature\\": 1,\n          \\"voicemail_detection_timeout_ms\\": 30000,\n          \\"voicemail_message\\": \\"Hi, please give us a callback.\\",\n          \\"voicemail_option\\": {\n            \\"action\\": {\n              \\"text\\": \\"Please give us a callback tomorrow at 10am.\\",\n              \\"type\\": \\"static_text\\"\n            }\n          },\n          \\"volume\\": 1,\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
       },
       python: {
         method: 'agent.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nagent_response = client.agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n    agent_name="Jarvis",\n)\nprint(agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n    agent_name="Jarvis",\n)\nprint(agent_response.agent_id)',
       },
       typescript: {
         method: 'client.agent.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponse = await client.agent.update('16b980523634a6dc504898cda492e939', {\n  agent_name: 'Jarvis',\n});\n\nconsole.log(agentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.update('16b980523634a6dc504898cda492e939', {\n  agent_name: 'Jarvis',\n});\n\nconsole.log(agentResponse.agent_id);",
       },
     },
   },
@@ -995,17 +996,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
       },
       typescript: {
         method: 'client.agent.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
     },
   },
@@ -1023,17 +1024,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/publish-agent/$AGENT_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/publish-agent/$AGENT_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.publish',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.agent.publish(\n    "16b980523634a6dc504898cda492e939",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.publish(\n    "16b980523634a6dc504898cda492e939",\n)',
       },
       typescript: {
         method: 'client.agent.publish',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.agent.publish('16b980523634a6dc504898cda492e939');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.publish('16b980523634a6dc504898cda492e939');",
       },
     },
   },
@@ -1052,17 +1053,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.get_versions',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nagent_responses = client.agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_responses = client.agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(agent_responses)',
       },
       typescript: {
         method: 'client.agent.getVersions',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponses = await client.agent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponses = await client.agent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponses);",
       },
     },
   },
@@ -1105,17 +1106,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-chat-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d "{\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the call in a few sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"auto_close_message\\": \\"Thank you for chatting. The conversation has ended.\\",\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"end_chat_after_silence_ms\\": 3600000,\n          \\"language\\": \\"en-US\\",\n          \\"opt_in_signed_url\\": true,\n          \\"post_chat_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"timezone\\": \\"America/New_York\\",\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
+          'curl https://api.retellai.com/create-chat-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d "{\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the call in a few sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"auto_close_message\\": \\"Thank you for chatting. The conversation has ended.\\",\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"end_chat_after_silence_ms\\": 3600000,\n          \\"language\\": \\"en-US\\",\n          \\"opt_in_signed_url\\": true,\n          \\"post_chat_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"timezone\\": \\"America/New_York\\",\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
       },
       python: {
         method: 'chat_agent.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_agent_response = client.chat_agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n)\nprint(chat_agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n)\nprint(chat_agent_response.agent_id)',
       },
       typescript: {
         method: 'client.chatAgent.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatAgentResponse = await client.chatAgent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n});\n\nconsole.log(chatAgentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n});\n\nconsole.log(chatAgentResponse.agent_id);",
       },
     },
   },
@@ -1135,17 +1136,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-chat-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-chat-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_agent_response = client.chat_agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
       },
       typescript: {
         method: 'client.chatAgent.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatAgentResponse = await client.chatAgent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
       },
     },
   },
@@ -1164,17 +1165,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## list\n\n`client.chatAgent.list(limit?: number, pagination_key?: string, pagination_key_version?: number): object[]`\n\n**get** `/list-chat-agents`\n\nList all chat agents\n\n### Parameters\n\n- `limit?: number`\n  A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 1000.\n\n- `pagination_key?: string`\n  The pagination key to continue fetching the next page of agents. Pagination key is represented by a agent id, pagination key and version pair is exclusive (not included in the fetched page). If not set, will start from the beginning.\n\n- `pagination_key_version?: number`\n  Specifies the version of the agent associated with the pagination_key. When paginating, both the pagination_key and its version must be provided to ensure consistent ordering and to fetch the next page correctly.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; auto_close_message?: string; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_public?: boolean; is_published?: boolean; language?: string; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst chatAgentResponses = await client.chatAgent.list();\n\nconsole.log(chatAgentResponses);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/list-chat-agents \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/list-chat-agents \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_agent_responses = client.chat_agent.list()\nprint(chat_agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_responses = client.chat_agent.list()\nprint(chat_agent_responses)',
       },
       typescript: {
         method: 'client.chatAgent.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatAgentResponses = await client.chatAgent.list();\n\nconsole.log(chatAgentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponses = await client.chatAgent.list();\n\nconsole.log(chatAgentResponses);",
       },
     },
   },
@@ -1219,17 +1221,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-chat-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d "{\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the call in a few sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"auto_close_message\\": \\"Thank you for chatting. The conversation has ended.\\",\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"end_chat_after_silence_ms\\": 3600000,\n          \\"language\\": \\"en-US\\",\n          \\"opt_in_signed_url\\": true,\n          \\"post_chat_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"timezone\\": \\"America/New_York\\",\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
+          'curl https://api.retellai.com/update-chat-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d "{\n          \\"agent_name\\": \\"Jarvis\\",\n          \\"analysis_successful_prompt\\": \\"The agent finished the task and the call was complete without being cutoff.\\",\n          \\"analysis_summary_prompt\\": \\"Summarize the call in a few sentences.\\",\n          \\"analysis_user_sentiment_prompt\\": \\"Evaluate the user\'s sentiment based on their tone and satisfaction level.\\",\n          \\"auto_close_message\\": \\"Thank you for chatting. The conversation has ended.\\",\n          \\"data_storage_retention_days\\": 30,\n          \\"data_storage_setting\\": \\"everything\\",\n          \\"end_chat_after_silence_ms\\": 3600000,\n          \\"language\\": \\"en-US\\",\n          \\"opt_in_signed_url\\": true,\n          \\"post_chat_analysis_model\\": \\"gpt-4.1-mini\\",\n          \\"response_engine\\": {\n            \\"llm_id\\": \\"llm_234sdertfsdsfsdf\\",\n            \\"type\\": \\"retell-llm\\",\n            \\"version\\": 0\n          },\n          \\"signed_url_expiration_ms\\": 86400000,\n          \\"timezone\\": \\"America/New_York\\",\n          \\"webhook_timeout_ms\\": 10000,\n          \\"webhook_url\\": \\"https://webhook-url-here\\"\n        }"',
       },
       python: {
         method: 'chat_agent.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_agent_response = client.chat_agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
       },
       typescript: {
         method: 'client.chatAgent.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatAgentResponse = await client.chatAgent.update('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.update('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
       },
     },
   },
@@ -1247,17 +1249,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-chat-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-chat-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.chat_agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
       },
       typescript: {
         method: 'client.chatAgent.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.chatAgent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
     },
   },
@@ -1276,17 +1278,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/publish-chat-agent/$AGENT_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/publish-chat-agent/$AGENT_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.publish',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.chat_agent.publish(\n    "16b980523634a6dc504898cda492e939",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.publish(\n    "16b980523634a6dc504898cda492e939",\n)',
       },
       typescript: {
         method: 'client.chatAgent.publish',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.chatAgent.publish('16b980523634a6dc504898cda492e939');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.publish('16b980523634a6dc504898cda492e939');",
       },
     },
   },
@@ -1306,17 +1308,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-chat-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-chat-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.get_versions',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nchat_agent_responses = client.chat_agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_responses = client.chat_agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_responses)',
       },
       typescript: {
         method: 'client.chatAgent.getVersions',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst chatAgentResponses = await client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponses = await client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponses);",
       },
     },
   },
@@ -1355,17 +1357,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-retell-llm \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true,\n          "version": 1\n        }\'',
+          'curl https://api.retellai.com/create-retell-llm \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true,\n          "version": 1\n        }\'',
       },
       python: {
         method: 'llm.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nllm_response = client.llm.create()\nprint(llm_response.llm_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.create()\nprint(llm_response.llm_id)',
       },
       typescript: {
         method: 'client.llm.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst llmResponse = await client.llm.create();\n\nconsole.log(llmResponse.llm_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.create();\n\nconsole.log(llmResponse.llm_id);",
       },
     },
   },
@@ -1385,17 +1387,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-retell-llm/$LLM_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-retell-llm/$LLM_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'llm.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nllm_response = client.llm.retrieve(\n    llm_id="16b980523634a6dc504898cda492e939",\n)\nprint(llm_response.llm_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.retrieve(\n    llm_id="16b980523634a6dc504898cda492e939",\n)\nprint(llm_response.llm_id)',
       },
       typescript: {
         method: 'client.llm.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst llmResponse = await client.llm.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(llmResponse.llm_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(llmResponse.llm_id);",
       },
     },
   },
@@ -1414,17 +1416,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## list\n\n`client.llm.list(limit?: number, pagination_key?: string, pagination_key_version?: number): object[]`\n\n**get** `/list-retell-llms`\n\nList all Retell LLM Response Engines that can be attached to an agent.\n\n### Parameters\n\n- `limit?: number`\n  A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 1000.\n\n- `pagination_key?: string`\n  The pagination key to continue fetching the next page of LLMs. Pagination key is represented by a llm id, pagination key and version pair is exclusive (not included in the fetched page). If not set, will start from the beginning.\n\n- `pagination_key_version?: number`\n  Specifies the version of the llm associated with the pagination_key. When paginating, both the pagination_key and its version must be provided to ensure consistent ordering and to fetch the next page correctly.\n\n### Returns\n\n- `{ last_modification_timestamp: number; llm_id: string; begin_after_user_silence_ms?: number; begin_message?: string; default_dynamic_variables?: object; general_prompt?: string; general_tools?: { name: string; type: 'end_call'; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; speak_during_execution?: boolean; } | { name: string; transfer_destination: object | object; transfer_option: object | object | object; type: 'transfer_call'; custom_sip_headers?: object; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; ignore_e164_validation?: boolean; speak_during_execution?: boolean; } | { cal_api_key: string; event_type_id: number | string; name: string; type: 'check_availability_cal'; description?: string; timezone?: string; } | { cal_api_key: string; event_type_id: number | string; name: string; type: 'book_appointment_cal'; description?: string; timezone?: string; } | { agent_id: string; name: string; post_call_analysis_setting: 'both_agents' | 'only_destination_agent'; type: 'agent_swap'; agent_version?: number; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; keep_current_language?: boolean; keep_current_voice?: boolean; speak_during_execution?: boolean; webhook_setting?: 'both_agents' | 'only_destination_agent' | 'only_source_agent'; } | { name: string; type: 'press_digit'; delay_ms?: number; description?: string; } | { name: string; sms_content: object | object; type: 'send_sms'; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; speak_during_execution?: boolean; } | { name: string; type: 'custom'; url: string; args_at_root?: boolean; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; headers?: object; method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'; parameters?: object; query_params?: object; response_variables?: object; speak_after_execution?: boolean; speak_during_execution?: boolean; timeout_ms?: number; } | { code: string; name: string; type: 'code'; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; response_variables?: object; speak_after_execution?: boolean; speak_during_execution?: boolean; timeout_ms?: number; } | { description: string; name: string; type: 'extract_dynamic_variable'; variables: object | object | object | object[]; } | { name: string; type: 'bridge_transfer'; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; speak_during_execution?: boolean; } | { name: string; type: 'cancel_transfer'; description?: string; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; speak_during_execution?: boolean; } | { description: string; name: string; type: 'mcp'; execution_message_description?: string; execution_message_type?: 'prompt' | 'static_text'; input_schema?: object; mcp_id?: string; response_variables?: object; speak_after_execution?: boolean; speak_during_execution?: boolean; }[]; is_published?: boolean; kb_config?: { filter_score?: number; top_k?: number; }; knowledge_base_ids?: string[]; mcps?: { name: string; url: string; headers?: object; query_params?: object; timeout_ms?: number; }[]; model?: string; model_high_priority?: boolean; model_temperature?: number; s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini'; start_speaker?: 'user' | 'agent'; starting_state?: string; states?: { name: string; edges?: object[]; state_prompt?: string; tools?: object | object | object | object | object | object | object | object | object | object | object | object | object[]; }[]; tool_call_strict_mode?: boolean; version?: number; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst llmResponses = await client.llm.list();\n\nconsole.log(llmResponses);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/list-retell-llms \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/list-retell-llms \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'llm.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nllm_responses = client.llm.list()\nprint(llm_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_responses = client.llm.list()\nprint(llm_responses)',
       },
       typescript: {
         method: 'client.llm.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst llmResponses = await client.llm.list();\n\nconsole.log(llmResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponses = await client.llm.list();\n\nconsole.log(llmResponses);",
       },
     },
   },
@@ -1464,17 +1467,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-retell-llm/$LLM_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true,\n          "version": 1\n        }\'',
+          'curl https://api.retellai.com/update-retell-llm/$LLM_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true,\n          "version": 1\n        }\'',
       },
       python: {
         method: 'llm.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nllm_response = client.llm.update(\n    llm_id="16b980523634a6dc504898cda492e939",\n    begin_message="Hey I am a virtual assistant calling from Retell Hospital.",\n)\nprint(llm_response.llm_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.update(\n    llm_id="16b980523634a6dc504898cda492e939",\n    begin_message="Hey I am a virtual assistant calling from Retell Hospital.",\n)\nprint(llm_response.llm_id)',
       },
       typescript: {
         method: 'client.llm.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst llmResponse = await client.llm.update('16b980523634a6dc504898cda492e939', {\n  begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',\n});\n\nconsole.log(llmResponse.llm_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.update('16b980523634a6dc504898cda492e939', {\n  begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',\n});\n\nconsole.log(llmResponse.llm_id);",
       },
     },
   },
@@ -1492,17 +1495,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-retell-llm/$LLM_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-retell-llm/$LLM_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'llm.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.llm.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.llm.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
       },
       typescript: {
         method: 'client.llm.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
     },
   },
@@ -1541,17 +1544,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-conversation-flow \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "model_choice": {\n            "model": "gpt-4.1",\n            "type": "cascading"\n          },\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_speaker": "agent",\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "global_prompt": "You are a helpful customer service agent.",\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "start_node_id": "start",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+          'curl https://api.retellai.com/create-conversation-flow \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "model_choice": {\n            "model": "gpt-4.1",\n            "type": "cascading"\n          },\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_speaker": "agent",\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "global_prompt": "You are a helpful customer service agent.",\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "start_node_id": "start",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
       python: {
         method: 'conversation_flow.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_response = client.conversation_flow.create(\n    model_choice={\n        "model": "gpt-4.1",\n        "type": "cascading",\n    },\n    nodes=[{\n        "id": "start",\n        "instruction": {\n            "text": "Greet the customer and ask how you can help them.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n    start_speaker="agent",\n)\nprint(conversation_flow_response.conversation_flow_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.create(\n    model_choice={\n        "model": "gpt-4.1",\n        "type": "cascading",\n    },\n    nodes=[{\n        "id": "start",\n        "instruction": {\n            "text": "Greet the customer and ask how you can help them.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n    start_speaker="agent",\n)\nprint(conversation_flow_response.conversation_flow_id)',
       },
       typescript: {
         method: 'client.conversationFlow.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowResponse = await client.conversationFlow.create({\n  model_choice: { model: 'gpt-4.1', type: 'cascading' },\n  nodes: [\n    {\n      id: 'start',\n      instruction: { text: 'Greet the customer and ask how you can help them.', type: 'prompt' },\n      type: 'conversation',\n    },\n  ],\n  start_speaker: 'agent',\n});\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.create({\n  model_choice: { model: 'gpt-4.1', type: 'cascading' },\n  nodes: [\n    {\n      id: 'start',\n      instruction: { text: 'Greet the customer and ask how you can help them.', type: 'prompt' },\n      type: 'conversation',\n    },\n  ],\n  start_speaker: 'agent',\n});\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
     },
   },
@@ -1571,17 +1574,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_response = client.conversation_flow.retrieve(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.retrieve(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
       },
       typescript: {
         method: 'client.conversationFlow.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowResponse = await client.conversationFlow.retrieve('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.retrieve('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
     },
   },
@@ -1601,17 +1604,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-conversation-flows \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-conversation-flows \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_responses = client.conversation_flow.list()\nprint(conversation_flow_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_responses = client.conversation_flow.list()\nprint(conversation_flow_responses)',
       },
       typescript: {
         method: 'client.conversationFlow.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowResponses = await client.conversationFlow.list();\n\nconsole.log(conversationFlowResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponses = await client.conversationFlow.list();\n\nconsole.log(conversationFlowResponses);",
       },
     },
   },
@@ -1651,17 +1654,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "global_prompt": "You are a helpful customer service agent.",\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_node_id": "start",\n          "start_speaker": "agent",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+          'curl https://api.retellai.com/update-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "global_prompt": "You are a helpful customer service agent.",\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_node_id": "start",\n          "start_speaker": "agent",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
       python: {
         method: 'conversation_flow.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_response = client.conversation_flow.update(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.update(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
       },
       typescript: {
         method: 'client.conversationFlow.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowResponse = await client.conversationFlow.update('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.update('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
     },
   },
@@ -1679,17 +1682,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.conversation_flow.delete(\n    "conversation_flow_id",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.conversation_flow.delete(\n    "conversation_flow_id",\n)',
       },
       typescript: {
         method: 'client.conversationFlow.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.conversationFlow.delete('conversation_flow_id');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.conversationFlow.delete('conversation_flow_id');",
       },
     },
   },
@@ -1717,17 +1720,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-conversation-flow-component \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+          'curl https://api.retellai.com/create-conversation-flow-component \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
       python: {
         method: 'conversation_flow_component.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_component_response = client.conversation_flow_component.create(\n    name="Customer Information Collector",\n    nodes=[{\n        "id": "collect_info",\n        "instruction": {\n            "text": "Ask the customer for their name and contact information.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.create(\n    name="Customer Information Collector",\n    nodes=[{\n        "id": "collect_info",\n        "instruction": {\n            "text": "Ask the customer for their name and contact information.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
       },
       typescript: {
         method: 'client.conversationFlowComponent.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.create({\n  name: 'Customer Information Collector',\n  nodes: [\n    {\n      id: 'collect_info',\n      instruction: {\n        text: 'Ask the customer for their name and contact information.',\n        type: 'prompt',\n      },\n      type: 'conversation',\n    },\n  ],\n});\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.create({\n  name: 'Customer Information Collector',\n  nodes: [\n    {\n      id: 'collect_info',\n      instruction: {\n        text: 'Ask the customer for their name and contact information.',\n        type: 'prompt',\n      },\n      type: 'conversation',\n    },\n  ],\n});\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
     },
   },
@@ -1747,17 +1750,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow_component.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_component_response = client.conversation_flow_component.retrieve(\n    "conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.retrieve(\n    "conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
       },
       typescript: {
         method: 'client.conversationFlowComponent.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.retrieve(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.retrieve(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
     },
   },
@@ -1776,17 +1779,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-conversation-flow-components \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-conversation-flow-components \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow_component.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_component_responses = client.conversation_flow_component.list()\nprint(conversation_flow_component_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_responses = client.conversation_flow_component.list()\nprint(conversation_flow_component_responses)',
       },
       typescript: {
         method: 'client.conversationFlowComponent.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowComponentResponses = await client.conversationFlowComponent.list();\n\nconsole.log(conversationFlowComponentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponses = await client.conversationFlowComponent.list();\n\nconsole.log(conversationFlowComponentResponses);",
       },
     },
   },
@@ -1815,17 +1818,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/update-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+          'curl https://api.retellai.com/update-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
       python: {
         method: 'conversation_flow_component.update',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconversation_flow_component_response = client.conversation_flow_component.update(\n    conversation_flow_component_id="conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.update(\n    conversation_flow_component_id="conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
       },
       typescript: {
         method: 'client.conversationFlowComponent.update',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.update(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.update(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
     },
   },
@@ -1844,17 +1847,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'conversation_flow_component.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.conversation_flow_component.delete(\n    "conversation_flow_component_id",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.conversation_flow_component.delete(\n    "conversation_flow_component_id",\n)',
       },
       typescript: {
         method: 'client.conversationFlowComponent.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.conversationFlowComponent.delete('conversation_flow_component_id');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.conversationFlowComponent.delete('conversation_flow_component_id');",
       },
     },
   },
@@ -1882,17 +1885,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-knowledge-base \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -F knowledge_base_name=\'Sample KB\' \\\n    -F enable_auto_refresh=true \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\' \\\n    -F max_chunk_size=2000 \\\n    -F min_chunk_size=400',
+          'curl https://api.retellai.com/create-knowledge-base \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_name=\'Sample KB\' \\\n    -F enable_auto_refresh=true \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\' \\\n    -F max_chunk_size=2000 \\\n    -F min_chunk_size=400',
       },
       python: {
         method: 'knowledge_base.create',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nknowledge_base_response = client.knowledge_base.create(\n    knowledge_base_name="Sample KB",\n)\nprint(knowledge_base_response.knowledge_base_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.create(\n    knowledge_base_name="Sample KB",\n)\nprint(knowledge_base_response.knowledge_base_id)',
       },
       typescript: {
         method: 'client.knowledgeBase.create',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.create({\n  knowledge_base_name: 'Sample KB',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.create({\n  knowledge_base_name: 'Sample KB',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
     },
   },
@@ -1912,17 +1915,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'knowledge_base.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nknowledge_base_response = client.knowledge_base.retrieve(\n    "kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.retrieve(\n    "kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
       },
       typescript: {
         method: 'client.knowledgeBase.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.retrieve('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.retrieve('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
     },
   },
@@ -1941,17 +1944,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-knowledge-bases \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-knowledge-bases \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'knowledge_base.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nknowledge_base_responses = client.knowledge_base.list()\nprint(knowledge_base_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_responses = client.knowledge_base.list()\nprint(knowledge_base_responses)',
       },
       typescript: {
         method: 'client.knowledgeBase.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst knowledgeBaseResponses = await client.knowledgeBase.list();\n\nconsole.log(knowledgeBaseResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponses = await client.knowledgeBase.list();\n\nconsole.log(knowledgeBaseResponses);",
       },
     },
   },
@@ -1969,17 +1972,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'knowledge_base.delete',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.knowledge_base.delete(\n    "kb_1234567890",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.knowledge_base.delete(\n    "kb_1234567890",\n)',
       },
       typescript: {
         method: 'client.knowledgeBase.delete',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.knowledgeBase.delete('kb_1234567890');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.knowledgeBase.delete('kb_1234567890');",
       },
     },
   },
@@ -2004,17 +2007,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/add-knowledge-base-sources/$KNOWLEDGE_BASE_ID \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\'',
+          'curl https://api.retellai.com/add-knowledge-base-sources/$KNOWLEDGE_BASE_ID \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\'',
       },
       python: {
         method: 'knowledge_base.add_sources',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nknowledge_base_response = client.knowledge_base.add_sources(\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.add_sources(\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
       },
       typescript: {
         method: 'client.knowledgeBase.addSources',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.addSources('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.addSources('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
     },
   },
@@ -2034,17 +2037,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-knowledge-base-source/$KNOWLEDGE_BASE_ID/source/$SOURCE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-knowledge-base-source/$KNOWLEDGE_BASE_ID/source/$SOURCE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'knowledge_base.delete_source',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nknowledge_base_response = client.knowledge_base.delete_source(\n    source_id="source_1234567890",\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.delete_source(\n    source_id="source_1234567890",\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
       },
       typescript: {
         method: 'client.knowledgeBase.deleteSource',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.deleteSource('source_1234567890', {\n  knowledge_base_id: 'kb_1234567890',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.deleteSource('source_1234567890', {\n  knowledge_base_id: 'kb_1234567890',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
     },
   },
@@ -2069,17 +2072,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/add-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "provider_voice_id": "provider_voice_id",\n          "voice_name": "x"\n        }\'',
+          'curl https://api.retellai.com/add-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "provider_voice_id": "provider_voice_id",\n          "voice_name": "x"\n        }\'',
       },
       python: {
         method: 'voice.add_resource',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nvoice_response = client.voice.add_resource(\n    provider_voice_id="provider_voice_id",\n    voice_name="x",\n)\nprint(voice_response.provider)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.add_resource(\n    provider_voice_id="provider_voice_id",\n    voice_name="x",\n)\nprint(voice_response.provider)',
       },
       typescript: {
         method: 'client.voice.addResource',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst voiceResponse = await client.voice.addResource({\n  provider_voice_id: 'provider_voice_id',\n  voice_name: 'x',\n});\n\nconsole.log(voiceResponse.provider);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.addResource({\n  provider_voice_id: 'provider_voice_id',\n  voice_name: 'x',\n});\n\nconsole.log(voiceResponse.provider);",
       },
     },
   },
@@ -2103,17 +2106,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/clone-voice \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -F files=\'["Example data"]\' \\\n    -F voice_name=x \\\n    -F voice_provider=elevenlabs',
+          'curl https://api.retellai.com/clone-voice \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F files=\'["Example data"]\' \\\n    -F voice_name=x \\\n    -F voice_provider=elevenlabs',
       },
       python: {
         method: 'voice.clone',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nvoice_response = client.voice.clone(\n    files=[b"Example data"],\n    voice_name="x",\n    voice_provider="elevenlabs",\n)\nprint(voice_response.provider)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.clone(\n    files=[b"Example data"],\n    voice_name="x",\n    voice_provider="elevenlabs",\n)\nprint(voice_response.provider)',
       },
       typescript: {
         method: 'client.voice.clone',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst voiceResponse = await client.voice.clone({\n  files: [fs.createReadStream('path/to/file')],\n  voice_name: 'x',\n  voice_provider: 'elevenlabs',\n});\n\nconsole.log(voiceResponse.provider);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.clone({\n  files: [fs.createReadStream('path/to/file')],\n  voice_name: 'x',\n  voice_provider: 'elevenlabs',\n});\n\nconsole.log(voiceResponse.provider);",
       },
     },
   },
@@ -2133,17 +2136,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-voice/$VOICE_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-voice/$VOICE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'voice.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nvoice_response = client.voice.retrieve(\n    "retell-Cimo",\n)\nprint(voice_response.provider)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.retrieve(\n    "retell-Cimo",\n)\nprint(voice_response.provider)',
       },
       typescript: {
         method: 'client.voice.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst voiceResponse = await client.voice.retrieve('retell-Cimo');\n\nconsole.log(voiceResponse.provider);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.retrieve('retell-Cimo');\n\nconsole.log(voiceResponse.provider);",
       },
     },
   },
@@ -2161,17 +2164,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## list\n\n`client.voice.list(): object[]`\n\n**get** `/list-voices`\n\nList all voices available to the user\n\n### Returns\n\n- `{ gender: 'male' | 'female'; provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform'; voice_id: string; voice_name: string; accent?: string; age?: string; preview_audio_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst voiceResponses = await client.voice.list();\n\nconsole.log(voiceResponses);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/list-voices \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/list-voices \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'voice.list',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nvoice_responses = client.voice.list()\nprint(voice_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_responses = client.voice.list()\nprint(voice_responses)',
       },
       typescript: {
         method: 'client.voice.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst voiceResponses = await client.voice.list();\n\nconsole.log(voiceResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponses = await client.voice.list();\n\nconsole.log(voiceResponses);",
       },
     },
   },
@@ -2194,17 +2198,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/search-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "search_query": "search_query"\n        }\'',
+          'curl https://api.retellai.com/search-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "search_query": "search_query"\n        }\'',
       },
       python: {
         method: 'voice.search',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nresponse = client.voice.search(\n    search_query="search_query",\n)\nprint(response.voices)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.voice.search(\n    search_query="search_query",\n)\nprint(response.voices)',
       },
       typescript: {
         method: 'client.voice.search',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst response = await client.voice.search({ search_query: 'search_query' });\n\nconsole.log(response.voices);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.voice.search({ search_query: 'search_query' });\n\nconsole.log(response.voices);",
       },
     },
   },
@@ -2222,17 +2226,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## retrieve\n\n`client.concurrency.retrieve(): { base_concurrency?: number; concurrency_burst_enabled?: boolean; concurrency_burst_limit?: number; concurrency_limit?: number; concurrency_purchase_limit?: number; current_concurrency?: number; purchased_concurrency?: number; remaining_purchase_limit?: number; }`\n\n**get** `/get-concurrency`\n\nGet the current concurrency and concurrency limit of the org\n\n### Returns\n\n- `{ base_concurrency?: number; concurrency_burst_enabled?: boolean; concurrency_burst_limit?: number; concurrency_limit?: number; concurrency_purchase_limit?: number; current_concurrency?: number; purchased_concurrency?: number; remaining_purchase_limit?: number; }`\n\n  - `base_concurrency?: number`\n  - `concurrency_burst_enabled?: boolean`\n  - `concurrency_burst_limit?: number`\n  - `concurrency_limit?: number`\n  - `concurrency_purchase_limit?: number`\n  - `current_concurrency?: number`\n  - `purchased_concurrency?: number`\n  - `remaining_purchase_limit?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst concurrency = await client.concurrency.retrieve();\n\nconsole.log(concurrency);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/get-concurrency \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/get-concurrency \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'concurrency.retrieve',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nconcurrency = client.concurrency.retrieve()\nprint(concurrency.base_concurrency)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconcurrency = client.concurrency.retrieve()\nprint(concurrency.base_concurrency)',
       },
       typescript: {
         method: 'client.concurrency.retrieve',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst concurrency = await client.concurrency.retrieve();\n\nconsole.log(concurrency.base_concurrency);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst concurrency = await client.concurrency.retrieve();\n\nconsole.log(concurrency.base_concurrency);",
       },
     },
   },
@@ -2259,17 +2264,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-batch-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "tasks": [\n            {\n              "to_number": "+12137774445"\n            }\n          ],\n          "name": "First batch call",\n          "trigger_timestamp": 1735718400000\n        }\'',
+          'curl https://api.retellai.com/create-batch-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "tasks": [\n            {\n              "to_number": "+12137774445"\n            }\n          ],\n          "name": "First batch call",\n          "trigger_timestamp": 1735718400000\n        }\'',
       },
       python: {
         method: 'batch_call.create_batch_call',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nbatch_call_response = client.batch_call.create_batch_call(\n    from_number="+14157774444",\n    tasks=[{\n        "to_number": "+12137774445"\n    }],\n)\nprint(batch_call_response.batch_call_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_call_response = client.batch_call.create_batch_call(\n    from_number="+14157774444",\n    tasks=[{\n        "to_number": "+12137774445"\n    }],\n)\nprint(batch_call_response.batch_call_id)',
       },
       typescript: {
         method: 'client.batchCall.createBatchCall',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst batchCallResponse = await client.batchCall.createBatchCall({\n  from_number: '+14157774444',\n  tasks: [{ to_number: '+12137774445' }],\n});\n\nconsole.log(batchCallResponse.batch_call_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchCallResponse = await client.batchCall.createBatchCall({\n  from_number: '+14157774444',\n  tasks: [{ to_number: '+12137774445' }],\n});\n\nconsole.log(batchCallResponse.batch_call_id);",
       },
     },
   },
@@ -2297,17 +2302,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-test-case-definition \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "metrics": [\n            "string"\n          ],\n          "name": "name",\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "user_prompt": "user_prompt"\n        }\'',
+          'curl https://api.retellai.com/create-test-case-definition \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "metrics": [\n            "string"\n          ],\n          "name": "name",\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "user_prompt": "user_prompt"\n        }\'',
       },
       python: {
         method: 'tests.create_test_case_definition',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_definition_response = client.tests.create_test_case_definition(\n    metrics=["string"],\n    name="name",\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    user_prompt="user_prompt",\n)\nprint(test_case_definition_response.test_case_definition_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.create_test_case_definition(\n    metrics=["string"],\n    name="name",\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    user_prompt="user_prompt",\n)\nprint(test_case_definition_response.test_case_definition_id)',
       },
       typescript: {
         method: 'client.tests.createTestCaseDefinition',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseDefinitionResponse = await client.tests.createTestCaseDefinition({\n  metrics: ['string'],\n  name: 'name',\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  user_prompt: 'user_prompt',\n});\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.createTestCaseDefinition({\n  metrics: ['string'],\n  name: 'name',\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  user_prompt: 'user_prompt',\n});\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
     },
   },
@@ -2327,17 +2332,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.get_test_case_definition',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_definition_response = client.tests.get_test_case_definition(\n    "test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.get_test_case_definition(\n    "test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
       },
       typescript: {
         method: 'client.tests.getTestCaseDefinition',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseDefinitionResponse = await client.tests.getTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.getTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
     },
   },
@@ -2362,17 +2367,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-test-case-definitions \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-test-case-definitions \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.list_test_case_definitions',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_definition_responses = client.tests.list_test_case_definitions(\n    type="retell-llm",\n)\nprint(test_case_definition_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_responses = client.tests.list_test_case_definitions(\n    type="retell-llm",\n)\nprint(test_case_definition_responses)',
       },
       typescript: {
         method: 'client.tests.listTestCaseDefinitions',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseDefinitionResponses = await client.tests.listTestCaseDefinitions({\n  type: 'retell-llm',\n});\n\nconsole.log(testCaseDefinitionResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponses = await client.tests.listTestCaseDefinitions({\n  type: 'retell-llm',\n});\n\nconsole.log(testCaseDefinitionResponses);",
       },
     },
   },
@@ -2401,17 +2406,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          "curl https://api.retellai.com/update-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $API_KEY\" \\\n    -d '{}'",
+          "curl https://api.retellai.com/update-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
       },
       python: {
         method: 'tests.update_test_case_definition',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_definition_response = client.tests.update_test_case_definition(\n    test_case_definition_id="test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.update_test_case_definition(\n    test_case_definition_id="test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
       },
       typescript: {
         method: 'client.tests.updateTestCaseDefinition',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseDefinitionResponse = await client.tests.updateTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.updateTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
     },
   },
@@ -2429,17 +2434,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/delete-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/delete-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.delete_test_case_definition',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nclient.tests.delete_test_case_definition(\n    "test_case_definition_id",\n)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.tests.delete_test_case_definition(\n    "test_case_definition_id",\n)',
       },
       typescript: {
         method: 'client.tests.deleteTestCaseDefinition',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nawait client.tests.deleteTestCaseDefinition('test_case_definition_id');",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.tests.deleteTestCaseDefinition('test_case_definition_id');",
       },
     },
   },
@@ -2462,17 +2467,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/create-batch-test \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "test_case_definition_ids": [\n            "string"\n          ]\n        }\'',
+          'curl https://api.retellai.com/create-batch-test \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "test_case_definition_ids": [\n            "string"\n          ]\n        }\'',
       },
       python: {
         method: 'tests.create_batch_test',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nbatch_test_response = client.tests.create_batch_test(\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    test_case_definition_ids=["string"],\n)\nprint(batch_test_response.test_case_batch_job_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_test_response = client.tests.create_batch_test(\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    test_case_definition_ids=["string"],\n)\nprint(batch_test_response.test_case_batch_job_id)',
       },
       typescript: {
         method: 'client.tests.createBatchTest',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst batchTestResponse = await client.tests.createBatchTest({\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  test_case_definition_ids: ['string'],\n});\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchTestResponse = await client.tests.createBatchTest({\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  test_case_definition_ids: ['string'],\n});\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
       },
     },
   },
@@ -2492,17 +2497,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-batch-test/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-batch-test/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.get_batch_test',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nbatch_test_response = client.tests.get_batch_test(\n    "test_case_batch_job_id",\n)\nprint(batch_test_response.test_case_batch_job_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_test_response = client.tests.get_batch_test(\n    "test_case_batch_job_id",\n)\nprint(batch_test_response.test_case_batch_job_id)',
       },
       typescript: {
         method: 'client.tests.getBatchTest',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst batchTestResponse = await client.tests.getBatchTest('test_case_batch_job_id');\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchTestResponse = await client.tests.getBatchTest('test_case_batch_job_id');\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
       },
     },
   },
@@ -2526,17 +2531,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "## list-batch-tests\n\n`client.tests.listBatchTests(type: 'retell-llm' | 'conversation-flow', conversation_flow_id?: string, llm_id?: string, version?: number): object[]`\n\n**get** `/list-batch-tests`\n\nList batch test jobs for a response engine\n\n### Parameters\n\n- `type: 'retell-llm' | 'conversation-flow'`\n  Type of response engine\n\n- `conversation_flow_id?: string`\n  Conversation flow ID (required when type is conversation-flow)\n\n- `llm_id?: string`\n  LLM ID (required when type is retell-llm)\n\n- `version?: number`\n  Version of the response engine (defaults to latest)\n\n### Returns\n\n- `{ creation_timestamp: number; error_count: number; fail_count: number; pass_count: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; status: 'in_progress' | 'complete'; test_case_batch_job_id: string; total_count: number; user_modified_timestamp: number; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst batchTestResponses = await client.tests.listBatchTests({ type: 'retell-llm' });\n\nconsole.log(batchTestResponses);\n```",
     perLanguage: {
       http: {
-        example: 'curl https://api.retellai.com/list-batch-tests \\\n    -H "Authorization: Bearer $API_KEY"',
+        example:
+          'curl https://api.retellai.com/list-batch-tests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.list_batch_tests',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nbatch_test_responses = client.tests.list_batch_tests(\n    type="retell-llm",\n)\nprint(batch_test_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_test_responses = client.tests.list_batch_tests(\n    type="retell-llm",\n)\nprint(batch_test_responses)',
       },
       typescript: {
         method: 'client.tests.listBatchTests',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst batchTestResponses = await client.tests.listBatchTests({ type: 'retell-llm' });\n\nconsole.log(batchTestResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchTestResponses = await client.tests.listBatchTests({ type: 'retell-llm' });\n\nconsole.log(batchTestResponses);",
       },
     },
   },
@@ -2556,17 +2562,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-test-run/$TEST_CASE_JOB_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-test-run/$TEST_CASE_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.get_test_run',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_job_response = client.tests.get_test_run(\n    "test_case_job_id",\n)\nprint(test_case_job_response.test_case_definition_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_job_response = client.tests.get_test_run(\n    "test_case_job_id",\n)\nprint(test_case_job_response.test_case_definition_id)',
       },
       typescript: {
         method: 'client.tests.getTestRun',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseJobResponse = await client.tests.getTestRun('test_case_job_id');\n\nconsole.log(testCaseJobResponse.test_case_definition_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseJobResponse = await client.tests.getTestRun('test_case_job_id');\n\nconsole.log(testCaseJobResponse.test_case_definition_id);",
       },
     },
   },
@@ -2586,17 +2592,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/list-test-runs/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/list-test-runs/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'tests.list_test_runs',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\ntest_case_job_responses = client.tests.list_test_runs(\n    "test_case_batch_job_id",\n)\nprint(test_case_job_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_job_responses = client.tests.list_test_runs(\n    "test_case_batch_job_id",\n)\nprint(test_case_job_responses)',
       },
       typescript: {
         method: 'client.tests.listTestRuns',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst testCaseJobResponses = await client.tests.listTestRuns('test_case_batch_job_id');\n\nconsole.log(testCaseJobResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseJobResponses = await client.tests.listTestRuns('test_case_batch_job_id');\n\nconsole.log(testCaseJobResponses);",
       },
     },
   },
@@ -2615,17 +2621,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     perLanguage: {
       http: {
         example:
-          'curl https://api.retellai.com/get-mcp-tools/$AGENT_ID \\\n    -H "Authorization: Bearer $API_KEY"',
+          'curl https://api.retellai.com/get-mcp-tools/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'mcp_tool.get_mcp_tools',
         example:
-          'from retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\nmcp_tool_definitions = client.mcp_tool.get_mcp_tools(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    mcp_id="mcp-server-1",\n)\nprint(mcp_tool_definitions)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nmcp_tool_definitions = client.mcp_tool.get_mcp_tools(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    mcp_id="mcp-server-1",\n)\nprint(mcp_tool_definitions)',
       },
       typescript: {
         method: 'client.mcpTool.getMcpTools',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst mcpToolDefinitions = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {\n  mcp_id: 'mcp-server-1',\n});\n\nconsole.log(mcpToolDefinitions);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst mcpToolDefinitions = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {\n  mcp_id: 'mcp-server-1',\n});\n\nconsole.log(mcpToolDefinitions);",
       },
     },
   },
@@ -2635,12 +2641,12 @@ const EMBEDDED_READMES: { language: string; content: string }[] = [
   {
     language: 'python',
     content:
-      '# Retell Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/retell-sdk.svg?label=pypi%20(stable))](https://pypi.org/project/retell-sdk/)\n\nThe Retell Python library provides convenient access to the Retell REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\n\n\n## MCP Server\n\nUse the Retell MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40retell-ai%2Fmcp-server&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkByZXRlbGwtYWkvbWNwLXNlcnZlciJdLCJlbnYiOnsiUkVURUxMX0FQSV9LRVkiOiJZT1VSX1JFVEVMTF9BUElfS0VZIn19)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40retell-ai%2Fmcp-server%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40retell-ai%2Fmcp-server%22%5D%2C%22env%22%3A%7B%22RETELL_API_KEY%22%3A%22YOUR_RETELL_API_KEY%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install retell-sdk\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nfrom retell import Retell\n\nclient = Retell(\n    api_key="YOUR_RETELL_API_KEY",\n)\n\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(agent_response.agent_id)\n```\n\n\n\n## Async usage\n\nSimply import `AsyncRetell` instead of `Retell` and use `await` with each API call:\n\n```python\nimport asyncio\nfrom retell import AsyncRetell\n\nclient = AsyncRetell(\n    api_key="YOUR_RETELL_API_KEY",\n)\n\nasync def main() -> None:\n  agent_response = await client.agent.create(\n      response_engine={\n          "llm_id": "llm_234sdertfsdsfsdf",\n          "type": "retell-llm",\n      },\n      voice_id="retell-Cimo",\n  )\n  print(agent_response.agent_id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install retell-sdk[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport asyncio\nfrom retell import DefaultAioHttpClient\nfrom retell import AsyncRetell\n\nasync def main() -> None:\n  async with AsyncRetell(\n    api_key="YOUR_RETELL_API_KEY",\n    http_client=DefaultAioHttpClient(),\n) as client:\n    agent_response = await client.agent.create(\n        response_engine={\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n        },\n        voice_id="retell-Cimo",\n    )\n    print(agent_response.agent_id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom retell import Retell\n\nclient = Retell()\n\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n    custom_stt_config={\n        "endpointing_ms": 0,\n        "provider": "azure",\n    },\n)\nprint(agent_response.custom_stt_config)\n```\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `retell.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `retell.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `retell.APIError`.\n\n```python\nimport retell\nfrom retell import Retell\n\nclient = Retell()\n\ntry:\n    client.agent.create(\n        response_engine={\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n        },\n        voice_id="retell-Cimo",\n    )\nexcept retell.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept retell.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept retell.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom retell import Retell\n\n# Configure the default for all requests:\nclient = Retell(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\n```\n\n### Timeouts\n\nBy default requests time out after 1 minute. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom retell import Retell\n\n# Configure the default for all requests:\nclient = Retell(\n    # 20 seconds (default is 1 minute)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = Retell(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `RETELL_LOG` to `info`.\n\n```shell\n$ export RETELL_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom retell import Retell\n\nclient = Retell()\nresponse = client.agent.with_raw_response.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(response.headers.get(\'X-My-Header\'))\n\nagent = response.parse()  # get the object that `agent.create()` would have returned\nprint(agent.agent_id)\n```\n\nThese methods return an [`APIResponse`](https://github.com/RetellAI/retell-python-sdk/tree/main/src/retell/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/RetellAI/retell-python-sdk/tree/main/src/retell/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.agent.with_streaming_response.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom retell import Retell, DefaultHttpxClient\n\nclient = Retell(\n    # Or use the `RETELL_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom retell import Retell\n\nwith Retell() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/RetellAI/retell-python-sdk/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport retell\nprint(retell.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
+      '# Retell Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/retell-sdk.svg?label=pypi%20(stable))](https://pypi.org/project/retell-sdk/)\n\nThe Retell Python library provides convenient access to the Retell REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\n\n\n## MCP Server\n\nUse the Retell MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40retell-ai%2Fmcp-server&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkByZXRlbGwtYWkvbWNwLXNlcnZlciJdLCJlbnYiOnsiUkVURUxMX0FQSV9LRVkiOiJZT1VSX1JFVEVMTF9BUElfS0VZIn19)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40retell-ai%2Fmcp-server%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40retell-ai%2Fmcp-server%22%5D%2C%22env%22%3A%7B%22RETELL_API_KEY%22%3A%22YOUR_RETELL_API_KEY%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install retell-sdk\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nimport os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\n\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(agent_response.agent_id)\n```\n\nWhile you can provide an `api_key` keyword argument,\nwe recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)\nto add `RETELL_API_KEY="YOUR_RETELL_API_KEY"` to your `.env` file\nso that your API Key is not stored in source control.\n\n## Async usage\n\nSimply import `AsyncRetell` instead of `Retell` and use `await` with each API call:\n\n```python\nimport os\nimport asyncio\nfrom retell import AsyncRetell\n\nclient = AsyncRetell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\n\nasync def main() -> None:\n  agent_response = await client.agent.create(\n      response_engine={\n          "llm_id": "llm_234sdertfsdsfsdf",\n          "type": "retell-llm",\n      },\n      voice_id="retell-Cimo",\n  )\n  print(agent_response.agent_id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install retell-sdk[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport os\nimport asyncio\nfrom retell import DefaultAioHttpClient\nfrom retell import AsyncRetell\n\nasync def main() -> None:\n  async with AsyncRetell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n    http_client=DefaultAioHttpClient(),\n) as client:\n    agent_response = await client.agent.create(\n        response_engine={\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n        },\n        voice_id="retell-Cimo",\n    )\n    print(agent_response.agent_id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom retell import Retell\n\nclient = Retell()\n\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n    custom_stt_config={\n        "endpointing_ms": 0,\n        "provider": "azure",\n    },\n)\nprint(agent_response.custom_stt_config)\n```\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `retell.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `retell.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `retell.APIError`.\n\n```python\nimport retell\nfrom retell import Retell\n\nclient = Retell()\n\ntry:\n    client.agent.create(\n        response_engine={\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n        },\n        voice_id="retell-Cimo",\n    )\nexcept retell.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept retell.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept retell.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom retell import Retell\n\n# Configure the default for all requests:\nclient = Retell(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\n```\n\n### Timeouts\n\nBy default requests time out after 1 minute. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom retell import Retell\n\n# Configure the default for all requests:\nclient = Retell(\n    # 20 seconds (default is 1 minute)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = Retell(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `RETELL_LOG` to `info`.\n\n```shell\n$ export RETELL_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom retell import Retell\n\nclient = Retell()\nresponse = client.agent.with_raw_response.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(response.headers.get(\'X-My-Header\'))\n\nagent = response.parse()  # get the object that `agent.create()` would have returned\nprint(agent.agent_id)\n```\n\nThese methods return an [`APIResponse`](https://github.com/RetellAI/retell-python-sdk/tree/main/src/retell/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/RetellAI/retell-python-sdk/tree/main/src/retell/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.agent.with_streaming_response.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom retell import Retell, DefaultHttpxClient\n\nclient = Retell(\n    # Or use the `RETELL_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom retell import Retell\n\nwith Retell() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/RetellAI/retell-python-sdk/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport retell\nprint(retell.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
   },
   {
     language: 'typescript',
     content:
-      "# Retell TypeScript API Library\n\n[![NPM version](https://img.shields.io/npm/v/retell-sdk.svg?label=npm%20(stable))](https://npmjs.org/package/retell-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/retell-sdk)\n\nThis library provides convenient access to the Retell REST API from server-side TypeScript or JavaScript.\n\n\n\nThe REST API documentation can be found on [docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).\n\n\n\n## MCP Server\n\nUse the Retell MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40retell-ai%2Fmcp-server&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkByZXRlbGwtYWkvbWNwLXNlcnZlciJdLCJlbnYiOnsiUkVURUxMX0FQSV9LRVkiOiJZT1VSX1JFVEVMTF9BUElfS0VZIn19)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40retell-ai%2Fmcp-server%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40retell-ai%2Fmcp-server%22%5D%2C%22env%22%3A%7B%22RETELL_API_KEY%22%3A%22YOUR_RETELL_API_KEY%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Installation\n\n```sh\nnpm install retell-sdk\n```\n\n\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n<!-- prettier-ignore -->\n```js\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse.agent_id);\n```\n\n\n\n### Request & Response types\n\nThis library includes TypeScript definitions for all request params and response fields. You may import and use them like so:\n\n<!-- prettier-ignore -->\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: 'YOUR_RETELL_API_KEY',\n});\n\nconst params: Retell.AgentCreateParams = {\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n};\nconst agentResponse: Retell.AgentResponse = await client.agent.create(params);\n```\n\nDocumentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.\n\n\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API,\nor if the API returns a non-success status code (i.e., 4xx or 5xx response),\na subclass of `APIError` will be thrown:\n\n<!-- prettier-ignore -->\n```ts\nconst agentResponse = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .catch(async (err) => {\n    if (err instanceof Retell.APIError) {\n      console.log(err.status); // 400\n      console.log(err.name); // BadRequestError\n      console.log(err.headers); // {server: 'nginx', ...}\n    } else {\n      throw err;\n    }\n  });\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors will be automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors will all be retried by default.\n\nYou can use the `maxRetries` option to configure or disable this:\n\n<!-- prettier-ignore -->\n```js\n// Configure the default for all requests:\nconst client = new Retell({\n  maxRetries: 0, // default is 2\n});\n\n// Or, configure per-request:\nawait client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n}, {\n  maxRetries: 5,\n});\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default. You can configure this with a `timeout` option:\n\n<!-- prettier-ignore -->\n```ts\n// Configure the default for all requests:\nconst client = new Retell({\n  timeout: 20 * 1000, // 20 seconds (default is 1 minute)\n});\n\n// Override per-request:\nawait client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n}, {\n  timeout: 5 * 1000,\n});\n```\n\nOn timeout, an `APIConnectionTimeoutError` is thrown.\n\nNote that requests which time out will be [retried twice by default](#retries).\n\n\n\n\n\n## Advanced Usage\n\n### Accessing raw Response data (e.g., headers)\n\nThe \"raw\" `Response` returned by `fetch()` can be accessed through the `.asResponse()` method on the `APIPromise` type that all methods return.\nThis method returns as soon as the headers for a successful response are received and does not consume the response body, so you are free to write custom parsing or streaming logic.\n\nYou can also use the `.withResponse()` method to get the raw `Response` along with the parsed data.\nUnlike `.asResponse()` this method consumes the body, returning once it is parsed.\n\n<!-- prettier-ignore -->\n```ts\nconst client = new Retell();\n\nconst response = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .asResponse();\nconsole.log(response.headers.get('X-My-Header'));\nconsole.log(response.statusText); // access the underlying Response object\n\nconst { data: agentResponse, response: raw } = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .withResponse();\nconsole.log(raw.headers.get('X-My-Header'));\nconsole.log(agentResponse.agent_id);\n```\n\n### Logging\n\n> [!IMPORTANT]\n> All log messages are intended for debugging only. The format and content of log messages\n> may change between releases.\n\n#### Log levels\n\nThe log level can be configured in two ways:\n\n1. Via the `RETELL_LOG` environment variable\n2. Using the `logLevel` client option (overrides the environment variable if set)\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  logLevel: 'debug', // Show all log messages\n});\n```\n\nAvailable log levels, from most to least verbose:\n\n- `'debug'` - Show debug messages, info, warnings, and errors\n- `'info'` - Show info messages, warnings, and errors\n- `'warn'` - Show warnings and errors (default)\n- `'error'` - Show only errors\n- `'off'` - Disable all logging\n\nAt the `'debug'` level, all HTTP requests and responses are logged, including headers and bodies.\nSome authentication-related headers are redacted, but sensitive data in request and response bodies\nmay still be visible.\n\n#### Custom logger\n\nBy default, this library logs to `globalThis.console`. You can also provide a custom logger.\nMost logging libraries are supported, including [pino](https://www.npmjs.com/package/pino), [winston](https://www.npmjs.com/package/winston), [bunyan](https://www.npmjs.com/package/bunyan), [consola](https://www.npmjs.com/package/consola), [signale](https://www.npmjs.com/package/signale), and [@std/log](https://jsr.io/@std/log). If your logger doesn't work, please open an issue.\n\nWhen providing a custom logger, the `logLevel` option still controls which messages are emitted, messages\nbelow the configured level will not be sent to your logger.\n\n```ts\nimport Retell from 'retell-sdk';\nimport pino from 'pino';\n\nconst logger = pino();\n\nconst client = new Retell({\n  logger: logger.child({ name: 'Retell' }),\n  logLevel: 'debug', // Send all messages to pino, allowing it to filter\n});\n```\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API. If you need to access undocumented\nendpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can use `client.get`, `client.post`, and other HTTP verbs.\nOptions on the client, such as retries, will be respected when making these requests.\n\n```ts\nawait client.post('/some/path', {\n  body: { some_prop: 'foo' },\n  query: { some_query_arg: 'bar' },\n});\n```\n\n#### Undocumented request params\n\nTo make requests using undocumented parameters, you may use `// @ts-expect-error` on the undocumented\nparameter. This library doesn't validate at runtime that the request matches the type, so any extra values you\nsend will be sent as-is.\n\n```ts\nclient.agent.create({\n  // ...\n  // @ts-expect-error baz is not yet public\n  baz: 'undocumented option',\n});\n```\n\nFor requests with the `GET` verb, any extra params will be in the query, all other requests will send the\nextra param in the body.\n\nIf you want to explicitly send an extra argument, you can do so with the `query`, `body`, and `headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you may access the response object with `// @ts-expect-error` on\nthe response object, or cast the response object to the requisite type. Like the request params, we do not\nvalidate or strip extra properties from the response from the API.\n\n### Customizing the fetch client\n\nBy default, this library expects a global `fetch` function is defined.\n\nIf you want to use a different `fetch` function, you can either polyfill the global:\n\n```ts\nimport fetch from 'my-fetch';\n\nglobalThis.fetch = fetch;\n```\n\nOr pass it to the client:\n\n```ts\nimport Retell from 'retell-sdk';\nimport fetch from 'my-fetch';\n\nconst client = new Retell({ fetch });\n```\n\n### Fetch options\n\nIf you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  fetchOptions: {\n    // `RequestInit` options\n  },\n});\n```\n\n#### Configuring proxies\n\nTo modify proxy behavior, you can provide custom `fetchOptions` that add runtime-specific proxy\noptions to requests:\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg\" align=\"top\" width=\"18\" height=\"21\"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>\n\n```ts\nimport Retell from 'retell-sdk';\nimport * as undici from 'undici';\n\nconst proxyAgent = new undici.ProxyAgent('http://localhost:8888');\nconst client = new Retell({\n  fetchOptions: {\n    dispatcher: proxyAgent,\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg\" align=\"top\" width=\"18\" height=\"21\"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  fetchOptions: {\n    proxy: 'http://localhost:8888',\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg\" align=\"top\" width=\"18\" height=\"21\"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>\n\n```ts\nimport Retell from 'npm:retell-sdk';\n\nconst httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });\nconst client = new Retell({\n  fetchOptions: {\n    client: httpClient,\n  },\n});\n```\n\n## Frequently Asked Questions\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/RetellAI/retell-typescript-sdk/issues) with questions, bugs, or suggestions.\n\n## Requirements\n\nTypeScript >= 4.9 is supported.\n\nThe following runtimes are supported:\n\n- Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)\n- Node.js 20 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.\n- Deno v1.28.0 or higher.\n- Bun 1.0 or later.\n- Cloudflare Workers.\n- Vercel Edge Runtime.\n- Jest 28 or greater with the `\"node\"` environment (`\"jsdom\"` is not supported at this time).\n- Nitro v2.6 or greater.\n\nNote that React Native is not supported at this time.\n\nIf you are interested in other runtime environments, please open or upvote an issue on GitHub.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n",
+      "# Retell TypeScript API Library\n\n[![NPM version](https://img.shields.io/npm/v/retell-sdk.svg?label=npm%20(stable))](https://npmjs.org/package/retell-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/retell-sdk)\n\nThis library provides convenient access to the Retell REST API from server-side TypeScript or JavaScript.\n\n\n\nThe REST API documentation can be found on [docs.retellai.com](https://docs.retellai.com/). The full API of this library can be found in [api.md](api.md).\n\n\n\n## MCP Server\n\nUse the Retell MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=%40retell-ai%2Fmcp-server&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkByZXRlbGwtYWkvbWNwLXNlcnZlciJdLCJlbnYiOnsiUkVURUxMX0FQSV9LRVkiOiJZT1VSX1JFVEVMTF9BUElfS0VZIn19)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40retell-ai%2Fmcp-server%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40retell-ai%2Fmcp-server%22%5D%2C%22env%22%3A%7B%22RETELL_API_KEY%22%3A%22YOUR_RETELL_API_KEY%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Installation\n\n```sh\nnpm install retell-sdk\n```\n\n\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n<!-- prettier-ignore -->\n```js\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse.agent_id);\n```\n\n\n\n### Request & Response types\n\nThis library includes TypeScript definitions for all request params and response fields. You may import and use them like so:\n\n<!-- prettier-ignore -->\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst params: Retell.AgentCreateParams = {\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n};\nconst agentResponse: Retell.AgentResponse = await client.agent.create(params);\n```\n\nDocumentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.\n\n\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API,\nor if the API returns a non-success status code (i.e., 4xx or 5xx response),\na subclass of `APIError` will be thrown:\n\n<!-- prettier-ignore -->\n```ts\nconst agentResponse = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .catch(async (err) => {\n    if (err instanceof Retell.APIError) {\n      console.log(err.status); // 400\n      console.log(err.name); // BadRequestError\n      console.log(err.headers); // {server: 'nginx', ...}\n    } else {\n      throw err;\n    }\n  });\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors will be automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors will all be retried by default.\n\nYou can use the `maxRetries` option to configure or disable this:\n\n<!-- prettier-ignore -->\n```js\n// Configure the default for all requests:\nconst client = new Retell({\n  maxRetries: 0, // default is 2\n});\n\n// Or, configure per-request:\nawait client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n}, {\n  maxRetries: 5,\n});\n```\n\n### Timeouts\n\nRequests time out after 1 minute by default. You can configure this with a `timeout` option:\n\n<!-- prettier-ignore -->\n```ts\n// Configure the default for all requests:\nconst client = new Retell({\n  timeout: 20 * 1000, // 20 seconds (default is 1 minute)\n});\n\n// Override per-request:\nawait client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n}, {\n  timeout: 5 * 1000,\n});\n```\n\nOn timeout, an `APIConnectionTimeoutError` is thrown.\n\nNote that requests which time out will be [retried twice by default](#retries).\n\n\n\n\n\n## Advanced Usage\n\n### Accessing raw Response data (e.g., headers)\n\nThe \"raw\" `Response` returned by `fetch()` can be accessed through the `.asResponse()` method on the `APIPromise` type that all methods return.\nThis method returns as soon as the headers for a successful response are received and does not consume the response body, so you are free to write custom parsing or streaming logic.\n\nYou can also use the `.withResponse()` method to get the raw `Response` along with the parsed data.\nUnlike `.asResponse()` this method consumes the body, returning once it is parsed.\n\n<!-- prettier-ignore -->\n```ts\nconst client = new Retell();\n\nconst response = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .asResponse();\nconsole.log(response.headers.get('X-My-Header'));\nconsole.log(response.statusText); // access the underlying Response object\n\nconst { data: agentResponse, response: raw } = await client.agent\n  .create({\n    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n    voice_id: 'retell-Cimo',\n  })\n  .withResponse();\nconsole.log(raw.headers.get('X-My-Header'));\nconsole.log(agentResponse.agent_id);\n```\n\n### Logging\n\n> [!IMPORTANT]\n> All log messages are intended for debugging only. The format and content of log messages\n> may change between releases.\n\n#### Log levels\n\nThe log level can be configured in two ways:\n\n1. Via the `RETELL_LOG` environment variable\n2. Using the `logLevel` client option (overrides the environment variable if set)\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  logLevel: 'debug', // Show all log messages\n});\n```\n\nAvailable log levels, from most to least verbose:\n\n- `'debug'` - Show debug messages, info, warnings, and errors\n- `'info'` - Show info messages, warnings, and errors\n- `'warn'` - Show warnings and errors (default)\n- `'error'` - Show only errors\n- `'off'` - Disable all logging\n\nAt the `'debug'` level, all HTTP requests and responses are logged, including headers and bodies.\nSome authentication-related headers are redacted, but sensitive data in request and response bodies\nmay still be visible.\n\n#### Custom logger\n\nBy default, this library logs to `globalThis.console`. You can also provide a custom logger.\nMost logging libraries are supported, including [pino](https://www.npmjs.com/package/pino), [winston](https://www.npmjs.com/package/winston), [bunyan](https://www.npmjs.com/package/bunyan), [consola](https://www.npmjs.com/package/consola), [signale](https://www.npmjs.com/package/signale), and [@std/log](https://jsr.io/@std/log). If your logger doesn't work, please open an issue.\n\nWhen providing a custom logger, the `logLevel` option still controls which messages are emitted, messages\nbelow the configured level will not be sent to your logger.\n\n```ts\nimport Retell from 'retell-sdk';\nimport pino from 'pino';\n\nconst logger = pino();\n\nconst client = new Retell({\n  logger: logger.child({ name: 'Retell' }),\n  logLevel: 'debug', // Send all messages to pino, allowing it to filter\n});\n```\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API. If you need to access undocumented\nendpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can use `client.get`, `client.post`, and other HTTP verbs.\nOptions on the client, such as retries, will be respected when making these requests.\n\n```ts\nawait client.post('/some/path', {\n  body: { some_prop: 'foo' },\n  query: { some_query_arg: 'bar' },\n});\n```\n\n#### Undocumented request params\n\nTo make requests using undocumented parameters, you may use `// @ts-expect-error` on the undocumented\nparameter. This library doesn't validate at runtime that the request matches the type, so any extra values you\nsend will be sent as-is.\n\n```ts\nclient.agent.create({\n  // ...\n  // @ts-expect-error baz is not yet public\n  baz: 'undocumented option',\n});\n```\n\nFor requests with the `GET` verb, any extra params will be in the query, all other requests will send the\nextra param in the body.\n\nIf you want to explicitly send an extra argument, you can do so with the `query`, `body`, and `headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you may access the response object with `// @ts-expect-error` on\nthe response object, or cast the response object to the requisite type. Like the request params, we do not\nvalidate or strip extra properties from the response from the API.\n\n### Customizing the fetch client\n\nBy default, this library expects a global `fetch` function is defined.\n\nIf you want to use a different `fetch` function, you can either polyfill the global:\n\n```ts\nimport fetch from 'my-fetch';\n\nglobalThis.fetch = fetch;\n```\n\nOr pass it to the client:\n\n```ts\nimport Retell from 'retell-sdk';\nimport fetch from 'my-fetch';\n\nconst client = new Retell({ fetch });\n```\n\n### Fetch options\n\nIf you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  fetchOptions: {\n    // `RequestInit` options\n  },\n});\n```\n\n#### Configuring proxies\n\nTo modify proxy behavior, you can provide custom `fetchOptions` that add runtime-specific proxy\noptions to requests:\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg\" align=\"top\" width=\"18\" height=\"21\"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>\n\n```ts\nimport Retell from 'retell-sdk';\nimport * as undici from 'undici';\n\nconst proxyAgent = new undici.ProxyAgent('http://localhost:8888');\nconst client = new Retell({\n  fetchOptions: {\n    dispatcher: proxyAgent,\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg\" align=\"top\" width=\"18\" height=\"21\"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>\n\n```ts\nimport Retell from 'retell-sdk';\n\nconst client = new Retell({\n  fetchOptions: {\n    proxy: 'http://localhost:8888',\n  },\n});\n```\n\n<img src=\"https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg\" align=\"top\" width=\"18\" height=\"21\"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>\n\n```ts\nimport Retell from 'npm:retell-sdk';\n\nconst httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });\nconst client = new Retell({\n  fetchOptions: {\n    client: httpClient,\n  },\n});\n```\n\n## Frequently Asked Questions\n\n## Semantic versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/RetellAI/retell-typescript-sdk/issues) with questions, bugs, or suggestions.\n\n## Requirements\n\nTypeScript >= 4.9 is supported.\n\nThe following runtimes are supported:\n\n- Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)\n- Node.js 20 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.\n- Deno v1.28.0 or higher.\n- Bun 1.0 or later.\n- Cloudflare Workers.\n- Vercel Edge Runtime.\n- Jest 28 or greater with the `\"node\"` environment (`\"jsdom\"` is not supported at this time).\n- Nitro v2.6 or greater.\n\nNote that React Native is not supported at this time.\n\nIf you are interested in other runtime environments, please open or upvote an issue on GitHub.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n",
   },
 ];
 

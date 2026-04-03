@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.12.0 (2026-04-03)
+
+Full Changelog: [v5.11.0...v5.12.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.11.0...v5.12.0)
+
+### Features
+
+* **api:** api update ([8556dc9](https://github.com/RetellAI/retell-typescript-sdk/commit/8556dc9768f439496fcfaedba9c1711d8494c6d0))
+
+
+### Chores
+
+* **internal:** fix MCP docker image builds in yarn projects ([e454b48](https://github.com/RetellAI/retell-typescript-sdk/commit/e454b48158afb2ea83a62009015447ed1d97280f))
+* **internal:** support type annotations when running MCP in local execution mode ([3c4bc7f](https://github.com/RetellAI/retell-typescript-sdk/commit/3c4bc7f9648db6610b368a80c429452a982873ce))
+* **internal:** use link instead of file in MCP server package.json files ([a1bd92e](https://github.com/RetellAI/retell-typescript-sdk/commit/a1bd92e7f1bcacc34c2bd12b7ab988b4621ad336))
+* **mcp-server:** log client info ([7b8d4c7](https://github.com/RetellAI/retell-typescript-sdk/commit/7b8d4c720f1c3467f145a1b2040c02278e709f3a))
+
 ## 5.11.0 (2026-04-01)
 
 Full Changelog: [v5.10.3...v5.11.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.10.3...v5.11.0)

@@ -10,7 +10,7 @@ import {
   asTextContentResult,
 } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, readEnvOrError } from './util';
+import { readEnv, requireValue } from './util';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 import { getLogger } from './logger';
 import { SdkMethod } from './methods';
@@ -147,7 +147,13 @@ const remoteStainlessHandler = async ({
 
   const codeModeEndpoint = readEnv('CODE_MODE_ENDPOINT_URL') ?? 'https://api.stainless.com/api/ai/code-tool';
 
-  const localClientEnvs = { RETELL_BASE_URL: readEnv('RETELL_BASE_URL') ?? client.baseURL ?? undefined };
+  const localClientEnvs = {
+    RETELL_API_KEY: requireValue(
+      readEnv('RETELL_API_KEY') ?? client.apiKey,
+      'set RETELL_API_KEY environment variable or provide apiKey client option',
+    ),
+    RETELL_BASE_URL: readEnv('RETELL_BASE_URL') ?? client.baseURL ?? undefined,
+  };
   // Merge any upstream client envs from the request header, with upstream values taking precedence.
   const mergedClientEnvs = { ...localClientEnvs, ...reqContext.upstreamClientEnvs };
 
@@ -163,7 +169,7 @@ const remoteStainlessHandler = async ({
       project_name: 'retell',
       code,
       intent,
-      client_opts: { apiKey: readEnvOrError('RETELL_API_KEY') },
+      client_opts: {},
     } satisfies WorkerInput),
   });
 
