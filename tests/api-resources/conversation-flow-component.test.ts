@@ -115,6 +115,7 @@ describe('resource conversationFlowComponent', () => {
           url: 'https://api.example.com/customer',
           args_at_root: true,
           description: 'Get customer information from database',
+          enable_typing_sound: true,
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
           headers: { Authorization: 'Bearer 1234567890' },

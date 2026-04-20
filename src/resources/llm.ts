@@ -195,6 +195,7 @@ export interface LlmResponse {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -805,7 +806,10 @@ export namespace LlmResponse {
      */
     name: string;
 
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -856,6 +860,16 @@ export namespace LlmResponse {
 
       type?: 'inferred';
     }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
   }
 
   export interface CustomTool {
@@ -885,6 +899,13 @@ export namespace LlmResponse {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -1004,6 +1025,12 @@ export namespace LlmResponse {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -1294,6 +1321,12 @@ export namespace LlmResponse {
     name: string;
 
     type: 'mcp';
+
+    /**
+     * If true, play a typing sound on the agent audio track while this MCP tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -2039,7 +2072,10 @@ export namespace LlmResponse {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -2090,6 +2126,16 @@ export namespace LlmResponse {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -2119,6 +2165,13 @@ export namespace LlmResponse {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -2238,6 +2291,12 @@ export namespace LlmResponse {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -2530,6 +2589,12 @@ export namespace LlmResponse {
       type: 'mcp';
 
       /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
        * The description for the sentence agent say during execution. Only applicable
        * when speak_during_execution is true. Can write what to say or even provide
        * examples. The default is "The message you will say to callee when calling this
@@ -2671,6 +2736,7 @@ export interface LlmCreateParams {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -3281,7 +3347,10 @@ export namespace LlmCreateParams {
      */
     name: string;
 
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -3332,6 +3401,16 @@ export namespace LlmCreateParams {
 
       type?: 'inferred';
     }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
   }
 
   export interface CustomTool {
@@ -3361,6 +3440,13 @@ export namespace LlmCreateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -3480,6 +3566,12 @@ export namespace LlmCreateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -3770,6 +3862,12 @@ export namespace LlmCreateParams {
     name: string;
 
     type: 'mcp';
+
+    /**
+     * If true, play a typing sound on the agent audio track while this MCP tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -4515,7 +4613,10 @@ export namespace LlmCreateParams {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -4566,6 +4667,16 @@ export namespace LlmCreateParams {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -4595,6 +4706,13 @@ export namespace LlmCreateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -4714,6 +4832,12 @@ export namespace LlmCreateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -5006,6 +5130,12 @@ export namespace LlmCreateParams {
       type: 'mcp';
 
       /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
        * The description for the sentence agent say during execution. Only applicable
        * when speak_during_execution is true. Can write what to say or even provide
        * examples. The default is "The message you will say to callee when calling this
@@ -5161,6 +5291,7 @@ export interface LlmUpdateParams {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -5771,7 +5902,10 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
-    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -5822,6 +5956,16 @@ export namespace LlmUpdateParams {
 
       type?: 'inferred';
     }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
   }
 
   export interface CustomTool {
@@ -5851,6 +5995,13 @@ export namespace LlmUpdateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -5970,6 +6121,12 @@ export namespace LlmUpdateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -6260,6 +6417,12 @@ export namespace LlmUpdateParams {
     name: string;
 
     type: 'mcp';
+
+    /**
+     * If true, play a typing sound on the agent audio track while this MCP tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -7005,7 +7168,10 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -7056,6 +7222,16 @@ export namespace LlmUpdateParams {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -7085,6 +7261,13 @@ export namespace LlmUpdateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -7204,6 +7387,12 @@ export namespace LlmUpdateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -7494,6 +7683,12 @@ export namespace LlmUpdateParams {
       name: string;
 
       type: 'mcp';
+
+      /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable

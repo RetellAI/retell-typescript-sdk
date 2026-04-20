@@ -71,7 +71,6 @@ describe('resource agent', () => {
       ivr_option: { action: { type: 'hangup' } },
       language: 'en-US',
       max_call_duration_ms: 3600000,
-      normalize_for_speech: true,
       opt_in_signed_url: true,
       pii_config: { categories: ['person_name'], mode: 'post_call' },
       post_call_analysis_data: [
@@ -176,6 +175,7 @@ describe('resource agent', () => {
     await expect(
       client.agent.list(
         {
+          is_latest: true,
           limit: 50,
           pagination_key: 'agent_1ffdb9717444d0e77346838911',
           pagination_key_version: 0,

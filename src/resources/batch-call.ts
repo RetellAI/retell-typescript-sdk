@@ -506,17 +506,6 @@ export namespace BatchCallCreateBatchCallParams {
         max_call_duration_ms?: number;
 
         /**
-         * If set to true, will normalize the some part of text (number, currency, date,
-         * etc) to spoken to its spoken form for more consistent speech synthesis
-         * (sometimes the voice synthesize system itself might read these wrong with the
-         * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
-         * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
-         * three four two on july fifth, twenty twenty four for the twenty four dollars
-         * twelve cents payment" before starting audio generation.
-         */
-        normalize_for_speech?: boolean;
-
-        /**
          * Whether this agent opts in for signed URLs for public logs and recordings. When
          * enabled, the generated URLs will include security signatures that restrict
          * access and automatically expire after 24 hours.
@@ -542,7 +531,7 @@ export namespace BatchCallCreateBatchCallParams {
         > | null;
 
         /**
-         * The model to use for post call analysis. Default to gpt-4.1-mini.
+         * The model to use for post call analysis. Default to gpt-4.1.
          */
         post_call_analysis_model?:
           | 'gpt-4.1'
@@ -562,6 +551,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
           | null;
 
         /**
@@ -676,6 +666,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'speech-02-turbo'
           | 'speech-2.8-turbo'
           | 's1'
+          | 's2-pro'
           | null;
 
         /**
@@ -759,14 +750,15 @@ export namespace BatchCallCreateBatchCallParams {
          */
         export interface CustomSttConfig {
           /**
-           * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+           * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+           * 500 for Soniox
            */
           endpointing_ms: number;
 
           /**
            * The STT provider to use.
            */
-          provider: 'azure' | 'deepgram';
+          provider: 'azure' | 'deepgram' | 'soniox';
         }
 
         /**
@@ -1274,7 +1266,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'claude-4.5-haiku'
             | 'gemini-2.5-flash'
             | 'gemini-2.5-flash-lite'
-            | 'gemini-3.0-flash';
+            | 'gemini-3.0-flash'
+            | 'gemini-3.1-flash-lite';
 
           /**
            * Type of model choice
@@ -1341,6 +1334,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
           | null;
 
         /**
