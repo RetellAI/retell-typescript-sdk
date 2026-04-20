@@ -249,7 +249,8 @@ export interface PhoneCallResponse {
     | 'error_user_not_joined'
     | 'registered_call_timeout'
     | 'transfer_bridged'
-    | 'transfer_cancelled';
+    | 'transfer_cancelled'
+    | 'manual_stopped';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -999,6 +1000,14 @@ export namespace PhoneCallResponse {
      * This is result of a node transition
      */
     role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
   export interface DtmfUtterance {
@@ -1180,6 +1189,14 @@ export namespace PhoneCallResponse {
      * This is result of a node transition
      */
     role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
   export interface DtmfUtterance {
@@ -1305,7 +1322,8 @@ export interface WebCallResponse {
     | 'error_user_not_joined'
     | 'registered_call_timeout'
     | 'transfer_bridged'
-    | 'transfer_cancelled';
+    | 'transfer_cancelled'
+    | 'manual_stopped';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -2049,6 +2067,14 @@ export namespace WebCallResponse {
      * This is result of a node transition
      */
     role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
   export interface DtmfUtterance {
@@ -2219,6 +2245,14 @@ export namespace WebCallResponse {
      * This is result of a node transition
      */
     role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
   export interface DtmfUtterance {
@@ -2370,6 +2404,7 @@ export namespace CallListParams {
       | 'registered_call_timeout'
       | 'transfer_bridged'
       | 'transfer_cancelled'
+      | 'manual_stopped'
     >;
 
     /**
@@ -2840,17 +2875,6 @@ export namespace CallCreatePhoneCallParams {
       max_call_duration_ms?: number;
 
       /**
-       * If set to true, will normalize the some part of text (number, currency, date,
-       * etc) to spoken to its spoken form for more consistent speech synthesis
-       * (sometimes the voice synthesize system itself might read these wrong with the
-       * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
-       * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
-       * three four two on july fifth, twenty twenty four for the twenty four dollars
-       * twelve cents payment" before starting audio generation.
-       */
-      normalize_for_speech?: boolean;
-
-      /**
        * Whether this agent opts in for signed URLs for public logs and recordings. When
        * enabled, the generated URLs will include security signatures that restrict
        * access and automatically expire after 24 hours.
@@ -2876,7 +2900,7 @@ export namespace CallCreatePhoneCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4.1-mini.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -2896,6 +2920,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**
@@ -3010,6 +3035,7 @@ export namespace CallCreatePhoneCallParams {
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
+        | 's2-pro'
         | null;
 
       /**
@@ -3093,14 +3119,15 @@ export namespace CallCreatePhoneCallParams {
        */
       export interface CustomSttConfig {
         /**
-         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox
          */
         endpointing_ms: number;
 
         /**
          * The STT provider to use.
          */
-        provider: 'azure' | 'deepgram';
+        provider: 'azure' | 'deepgram' | 'soniox';
       }
 
       /**
@@ -3608,7 +3635,8 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash';
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -3675,6 +3703,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**
@@ -4094,17 +4123,6 @@ export namespace CallCreateWebCallParams {
       max_call_duration_ms?: number;
 
       /**
-       * If set to true, will normalize the some part of text (number, currency, date,
-       * etc) to spoken to its spoken form for more consistent speech synthesis
-       * (sometimes the voice synthesize system itself might read these wrong with the
-       * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
-       * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
-       * three four two on july fifth, twenty twenty four for the twenty four dollars
-       * twelve cents payment" before starting audio generation.
-       */
-      normalize_for_speech?: boolean;
-
-      /**
        * Whether this agent opts in for signed URLs for public logs and recordings. When
        * enabled, the generated URLs will include security signatures that restrict
        * access and automatically expire after 24 hours.
@@ -4130,7 +4148,7 @@ export namespace CallCreateWebCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4.1-mini.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -4150,6 +4168,7 @@ export namespace CallCreateWebCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**
@@ -4264,6 +4283,7 @@ export namespace CallCreateWebCallParams {
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
+        | 's2-pro'
         | null;
 
       /**
@@ -4347,14 +4367,15 @@ export namespace CallCreateWebCallParams {
        */
       export interface CustomSttConfig {
         /**
-         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox
          */
         endpointing_ms: number;
 
         /**
          * The STT provider to use.
          */
-        provider: 'azure' | 'deepgram';
+        provider: 'azure' | 'deepgram' | 'soniox';
       }
 
       /**
@@ -4862,7 +4883,8 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash';
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -4929,6 +4951,7 @@ export namespace CallCreateWebCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**
@@ -5348,17 +5371,6 @@ export namespace CallRegisterPhoneCallParams {
       max_call_duration_ms?: number;
 
       /**
-       * If set to true, will normalize the some part of text (number, currency, date,
-       * etc) to spoken to its spoken form for more consistent speech synthesis
-       * (sometimes the voice synthesize system itself might read these wrong with the
-       * raw text). For example, it will convert "Call my number 2137112342 on Jul 5th,
-       * 2024 for the $24.12 payment" to "Call my number two one three seven one one two
-       * three four two on july fifth, twenty twenty four for the twenty four dollars
-       * twelve cents payment" before starting audio generation.
-       */
-      normalize_for_speech?: boolean;
-
-      /**
        * Whether this agent opts in for signed URLs for public logs and recordings. When
        * enabled, the generated URLs will include security signatures that restrict
        * access and automatically expire after 24 hours.
@@ -5384,7 +5396,7 @@ export namespace CallRegisterPhoneCallParams {
       > | null;
 
       /**
-       * The model to use for post call analysis. Default to gpt-4.1-mini.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -5404,6 +5416,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**
@@ -5518,6 +5531,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
+        | 's2-pro'
         | null;
 
       /**
@@ -5601,14 +5615,15 @@ export namespace CallRegisterPhoneCallParams {
        */
       export interface CustomSttConfig {
         /**
-         * Endpointing timeout in milliseconds. Minimum is 100 for azure, 10 for deepgram.
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox
          */
         endpointing_ms: number;
 
         /**
          * The STT provider to use.
          */
-        provider: 'azure' | 'deepgram';
+        provider: 'azure' | 'deepgram' | 'soniox';
       }
 
       /**
@@ -6116,7 +6131,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash';
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -6183,6 +6199,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
         | null;
 
       /**

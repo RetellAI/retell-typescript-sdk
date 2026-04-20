@@ -187,11 +187,11 @@ export interface ChatResponse {
    * Transcript of the chat weaved with tool call invocation and results.
    */
   message_with_tool_calls?: Array<
-    | ChatResponse.Message
-    | ChatResponse.ToolCallInvocationMessage
-    | ChatResponse.ToolCallResultMessage
-    | ChatResponse.NodeTransitionMessage
-    | ChatResponse.StateTransitionMessage
+    | ChatResponse.MessageBase
+    | ChatResponse.ToolCallInvocationMessageBase
+    | ChatResponse.ToolCallResultMessageBase
+    | ChatResponse.NodeTransitionMessageBase
+    | ChatResponse.StateTransitionMessageBase
   >;
 
   /**
@@ -291,38 +291,33 @@ export namespace ChatResponse {
     }
   }
 
-  export interface Message {
+  export interface MessageBase {
     /**
      * Content of the message
      */
     content: string;
 
     /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
      * Create timestamp of the message
      */
-    created_timestamp: number;
+    created_timestamp?: number;
 
     /**
      * Unique id of the message
      */
-    message_id: string;
-
-    /**
-     * Documents whether this message is sent by agent or user.
-     */
-    role: 'agent' | 'user';
+    message_id?: string;
   }
 
-  export interface ToolCallInvocationMessage {
+  export interface ToolCallInvocationMessageBase {
     /**
      * Arguments for this tool call, it's a stringified JSON object.
      */
     arguments: string;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
 
     /**
      * Name of the function in this tool call.
@@ -345,27 +340,22 @@ export namespace ChatResponse {
     created_timestamp?: number;
 
     /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
   }
 
-  export interface ToolCallResultMessage {
+  export interface ToolCallResultMessageBase {
     /**
      * Result of the tool call, can be a string, a stringified json, etc.
      */
     content: string;
-
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
 
     /**
      * This is the result of a tool call.
@@ -378,26 +368,31 @@ export namespace ChatResponse {
     tool_call_id: string;
 
     /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * Whether the tool call was successful.
      */
     successful?: boolean;
   }
 
-  export interface NodeTransitionMessage {
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
-
+  export interface NodeTransitionMessageBase {
     /**
      * This is a node transition.
      */
     role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
 
     /**
      * Former node id
@@ -410,6 +405,11 @@ export namespace ChatResponse {
     former_node_name?: string;
 
     /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * New node id
      */
     new_node_id?: string;
@@ -418,28 +418,36 @@ export namespace ChatResponse {
      * New node name
      */
     new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
-  export interface StateTransitionMessage {
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
-
+  export interface StateTransitionMessageBase {
     /**
      * This is a state transition.
      */
     role: 'state_transition';
 
     /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
      * Former state name
      */
     former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
 
     /**
      * New state name
@@ -457,47 +465,42 @@ export interface ChatCreateChatCompletionResponse {
    * messages.
    */
   messages: Array<
-    | ChatCreateChatCompletionResponse.Message
-    | ChatCreateChatCompletionResponse.ToolCallInvocationMessage
-    | ChatCreateChatCompletionResponse.ToolCallResultMessage
-    | ChatCreateChatCompletionResponse.NodeTransitionMessage
-    | ChatCreateChatCompletionResponse.StateTransitionMessage
+    | ChatCreateChatCompletionResponse.MessageBase
+    | ChatCreateChatCompletionResponse.ToolCallInvocationMessageBase
+    | ChatCreateChatCompletionResponse.ToolCallResultMessageBase
+    | ChatCreateChatCompletionResponse.NodeTransitionMessageBase
+    | ChatCreateChatCompletionResponse.StateTransitionMessageBase
   >;
 }
 
 export namespace ChatCreateChatCompletionResponse {
-  export interface Message {
+  export interface MessageBase {
     /**
      * Content of the message
      */
     content: string;
 
     /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
      * Create timestamp of the message
      */
-    created_timestamp: number;
+    created_timestamp?: number;
 
     /**
      * Unique id of the message
      */
-    message_id: string;
-
-    /**
-     * Documents whether this message is sent by agent or user.
-     */
-    role: 'agent' | 'user';
+    message_id?: string;
   }
 
-  export interface ToolCallInvocationMessage {
+  export interface ToolCallInvocationMessageBase {
     /**
      * Arguments for this tool call, it's a stringified JSON object.
      */
     arguments: string;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
 
     /**
      * Name of the function in this tool call.
@@ -520,27 +523,22 @@ export namespace ChatCreateChatCompletionResponse {
     created_timestamp?: number;
 
     /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
   }
 
-  export interface ToolCallResultMessage {
+  export interface ToolCallResultMessageBase {
     /**
      * Result of the tool call, can be a string, a stringified json, etc.
      */
     content: string;
-
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
 
     /**
      * This is the result of a tool call.
@@ -553,26 +551,31 @@ export namespace ChatCreateChatCompletionResponse {
     tool_call_id: string;
 
     /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * Whether the tool call was successful.
      */
     successful?: boolean;
   }
 
-  export interface NodeTransitionMessage {
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
-
+  export interface NodeTransitionMessageBase {
     /**
      * This is a node transition.
      */
     role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
 
     /**
      * Former node id
@@ -585,6 +588,11 @@ export namespace ChatCreateChatCompletionResponse {
     former_node_name?: string;
 
     /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
      * New node id
      */
     new_node_id?: string;
@@ -593,28 +601,36 @@ export namespace ChatCreateChatCompletionResponse {
      * New node name
      */
     new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
   }
 
-  export interface StateTransitionMessage {
-    /**
-     * Create timestamp of the message
-     */
-    created_timestamp: number;
-
-    /**
-     * Unique id of the message
-     */
-    message_id: string;
-
+  export interface StateTransitionMessageBase {
     /**
      * This is a state transition.
      */
     role: 'state_transition';
 
     /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
      * Former state name
      */
     former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
 
     /**
      * New state name

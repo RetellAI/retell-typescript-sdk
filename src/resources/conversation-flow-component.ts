@@ -675,7 +675,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -1275,7 +1276,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -1919,7 +1921,10 @@ export namespace ConversationFlowComponentResponse {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -1970,6 +1975,16 @@ export namespace ConversationFlowComponentResponse {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -1999,6 +2014,13 @@ export namespace ConversationFlowComponentResponse {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -2118,6 +2140,12 @@ export namespace ConversationFlowComponentResponse {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -2408,6 +2436,12 @@ export namespace ConversationFlowComponentResponse {
       name: string;
 
       type: 'mcp';
+
+      /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -2714,7 +2748,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -2762,6 +2797,11 @@ export namespace ConversationFlowComponentResponse {
     edges?: Array<FunctionNode.Edge>;
 
     else_edge?: FunctionNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this function executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<FunctionNode.FinetuneTransitionExample>;
 
@@ -3183,7 +3223,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -3226,6 +3267,11 @@ export namespace ConversationFlowComponentResponse {
     edges?: Array<CodeNode.Edge>;
 
     else_edge?: CodeNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while code executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -3659,7 +3705,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -4311,7 +4358,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -4677,7 +4725,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -5100,7 +5149,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -5122,7 +5172,10 @@ export namespace ConversationFlowComponentResponse {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText;
+    instruction:
+      | SMSNode.NodeInstructionPrompt
+      | SMSNode.NodeInstructionStaticText
+      | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -5246,6 +5299,19 @@ export namespace ConversationFlowComponentResponse {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface SMSInstructionTemplate {
+      /**
+       * The template to use for the instruction. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      /**
+       * Type of instruction
+       */
+      type: 'template';
     }
 
     export interface SuccessEdge {
@@ -5520,7 +5586,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -6080,7 +6147,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -6463,7 +6531,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -6511,6 +6580,11 @@ export namespace ConversationFlowComponentResponse {
     edges?: Array<McpNode.Edge>;
 
     else_edge?: McpNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while MCP tool executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
@@ -6941,7 +7015,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -7621,7 +7696,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -7892,7 +7968,8 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -8010,6 +8087,13 @@ export namespace ConversationFlowComponentResponse {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -8760,7 +8844,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -9360,7 +9445,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -10004,7 +10090,10 @@ export namespace ConversationFlowComponentCreateParams {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -10055,6 +10144,16 @@ export namespace ConversationFlowComponentCreateParams {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -10084,6 +10183,13 @@ export namespace ConversationFlowComponentCreateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -10203,6 +10309,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -10493,6 +10605,12 @@ export namespace ConversationFlowComponentCreateParams {
       name: string;
 
       type: 'mcp';
+
+      /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -10799,7 +10917,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -10847,6 +10966,11 @@ export namespace ConversationFlowComponentCreateParams {
     edges?: Array<FunctionNode.Edge>;
 
     else_edge?: FunctionNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this function executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<FunctionNode.FinetuneTransitionExample>;
 
@@ -11268,7 +11392,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -11311,6 +11436,11 @@ export namespace ConversationFlowComponentCreateParams {
     edges?: Array<CodeNode.Edge>;
 
     else_edge?: CodeNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while code executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -11744,7 +11874,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -12396,7 +12527,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -12762,7 +12894,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -13185,7 +13318,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -13207,7 +13341,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText;
+    instruction:
+      | SMSNode.NodeInstructionPrompt
+      | SMSNode.NodeInstructionStaticText
+      | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -13331,6 +13468,19 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface SMSInstructionTemplate {
+      /**
+       * The template to use for the instruction. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      /**
+       * Type of instruction
+       */
+      type: 'template';
     }
 
     export interface SuccessEdge {
@@ -13605,7 +13755,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -14165,7 +14316,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -14548,7 +14700,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -14596,6 +14749,11 @@ export namespace ConversationFlowComponentCreateParams {
     edges?: Array<McpNode.Edge>;
 
     else_edge?: McpNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while MCP tool executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
@@ -15026,7 +15184,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -15706,7 +15865,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -15977,7 +16137,8 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -16095,6 +16256,13 @@ export namespace ConversationFlowComponentCreateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable
@@ -16877,7 +17045,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -17477,7 +17646,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -18121,7 +18291,10 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       name: string;
 
-      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred;
+      sms_content:
+        | SendSMSTool.SMSContentPredefined
+        | SendSMSTool.SMSContentInferred
+        | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -18172,6 +18345,16 @@ export namespace ConversationFlowComponentUpdateParams {
 
         type?: 'inferred';
       }
+
+      export interface SMSContentTemplate {
+        /**
+         * The template to use for the SMS content. "info_collection" sends a predefined
+         * message requesting information from the user.
+         */
+        template: 'info_collection';
+
+        type: 'template';
+      }
     }
 
     export interface CustomTool {
@@ -18201,6 +18384,13 @@ export namespace ConversationFlowComponentUpdateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing. Useful when the tool takes a noticeable amount of time to prevent
+       * silence on the call.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -18320,6 +18510,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Describes what this tool does and when to call this tool.
        */
       description?: string;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -18610,6 +18806,12 @@ export namespace ConversationFlowComponentUpdateParams {
       name: string;
 
       type: 'mcp';
+
+      /**
+       * If true, play a typing sound on the agent audio track while this MCP tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
 
       /**
        * The description for the sentence agent say during execution. Only applicable
@@ -18916,7 +19118,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -18964,6 +19167,11 @@ export namespace ConversationFlowComponentUpdateParams {
     edges?: Array<FunctionNode.Edge>;
 
     else_edge?: FunctionNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this function executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<FunctionNode.FinetuneTransitionExample>;
 
@@ -19385,7 +19593,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -19428,6 +19637,11 @@ export namespace ConversationFlowComponentUpdateParams {
     edges?: Array<CodeNode.Edge>;
 
     else_edge?: CodeNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while code executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -19861,7 +20075,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -20513,7 +20728,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -20879,7 +21095,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -21302,7 +21519,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -21324,7 +21542,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText;
+    instruction:
+      | SMSNode.NodeInstructionPrompt
+      | SMSNode.NodeInstructionStaticText
+      | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -21448,6 +21669,19 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    export interface SMSInstructionTemplate {
+      /**
+       * The template to use for the instruction. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      /**
+       * Type of instruction
+       */
+      type: 'template';
     }
 
     export interface SuccessEdge {
@@ -21722,7 +21956,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -22282,7 +22517,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -22665,7 +22901,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -22713,6 +22950,11 @@ export namespace ConversationFlowComponentUpdateParams {
     edges?: Array<McpNode.Edge>;
 
     else_edge?: McpNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while MCP tool executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
@@ -23143,7 +23385,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -23823,7 +24066,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -24094,7 +24338,8 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash';
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -24178,6 +24423,13 @@ export namespace ConversationFlowComponentUpdateParams {
      * Describes what this tool does and when to call this tool.
      */
     description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
 
     /**
      * The description for the sentence agent say during execution. Only applicable

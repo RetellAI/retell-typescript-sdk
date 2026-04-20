@@ -223,7 +223,8 @@ export interface TestCaseDefinitionResponse {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash';
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Array of metric names to evaluate
@@ -388,7 +389,7 @@ export interface TestCaseJobResponse {
 
   /**
    * Snapshot of the transcript generated during test execution. Can be either
-   * ConversationFlowPlaygroundSnapshot or MultiStatePromptPlaygroundSnapshot
+   * ConversationFlowPlaygroundSnapshot or RetellLlmPlaygroundSnapshot
    */
   transcript_snapshot?: unknown | null;
 }
@@ -497,7 +498,8 @@ export interface TestCreateTestCaseDefinitionParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash';
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Mock tool calls for testing
@@ -656,7 +658,8 @@ export interface TestUpdateTestCaseDefinitionParams {
     | 'claude-4.5-haiku'
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash';
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Array of metric names to evaluate

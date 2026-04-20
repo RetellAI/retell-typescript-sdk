@@ -124,6 +124,7 @@ describe('resource chatAgent', () => {
     await expect(
       client.chatAgent.list(
         {
+          is_latest: true,
           limit: 50,
           pagination_key: '16b980523634a6dc504898cda492e939',
           pagination_key_version: 0,
