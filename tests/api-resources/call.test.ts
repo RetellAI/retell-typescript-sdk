@@ -120,7 +120,6 @@ describe('resource call', () => {
           ivr_option: { action: { type: 'hangup' } },
           language: 'en-US',
           max_call_duration_ms: 3600000,
-          normalize_for_speech: true,
           opt_in_signed_url: true,
           pii_config: { categories: ['person_name'], mode: 'post_call' },
           post_call_analysis_data: [
@@ -270,7 +269,6 @@ describe('resource call', () => {
           ivr_option: { action: { type: 'hangup' } },
           language: 'en-US',
           max_call_duration_ms: 3600000,
-          normalize_for_speech: true,
           opt_in_signed_url: true,
           pii_config: { categories: ['person_name'], mode: 'post_call' },
           post_call_analysis_data: [
@@ -419,7 +417,6 @@ describe('resource call', () => {
           ivr_option: { action: { type: 'hangup' } },
           language: 'en-US',
           max_call_duration_ms: 3600000,
-          normalize_for_speech: true,
           opt_in_signed_url: true,
           pii_config: { categories: ['person_name'], mode: 'post_call' },
           post_call_analysis_data: [

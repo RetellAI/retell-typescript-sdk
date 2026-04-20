@@ -41,9 +41,21 @@ export class PhoneNumber extends APIResource {
    * const phoneNumberResponse = await client.phoneNumber.update(
    *   '+14157774444',
    *   {
-   *     inbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *     inbound_agents: [
+   *       {
+   *         agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *         agent_version: 1,
+   *         weight: 1,
+   *       },
+   *     ],
    *     nickname: 'Frontdesk Number',
-   *     outbound_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *     outbound_agents: [
+   *       {
+   *         agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *         agent_version: 1,
+   *         weight: 1,
+   *       },
+   *     ],
    *   },
    * );
    * ```
@@ -147,25 +159,9 @@ export interface PhoneNumberResponse {
   fallback_number?: string | null;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when receiving inbound calls. If null, this number
-   * would not accept inbound call. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the inbound agent to bind to the number. If not provided,
-   * will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_version?: number | null;
-
-  /**
    * Inbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_agents?: Array<PhoneNumberResponse.InboundAgent> | null;
 
@@ -195,26 +191,9 @@ export interface PhoneNumberResponse {
   nickname?: string | null;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when conducting outbound calls. If null, this number
-   * would not be able to initiate outbound call without agent id override.
-   * Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the outbound agent to bind to the number. If not
-   * provided, will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_version?: number | null;
-
-  /**
    * Outbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each outbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_agents?: Array<PhoneNumberResponse.OutboundAgent> | null;
 
@@ -338,25 +317,9 @@ export interface PhoneNumberCreateParams {
   fallback_number?: string | null;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when receiving inbound calls. If null, this number
-   * would not accept inbound call. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the inbound agent to bind to the number. If not provided,
-   * will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_version?: number | null;
-
-  /**
    * Inbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_agents?: Array<PhoneNumberCreateParams.InboundAgent> | null;
 
@@ -377,26 +340,9 @@ export interface PhoneNumberCreateParams {
   number_provider?: 'twilio' | 'telnyx';
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when conducting outbound calls. If null, this number
-   * would not be able to initiate outbound call without agent id override.
-   * Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the outbound agent to bind to the number. If not
-   * provided, will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_version?: number | null;
-
-  /**
    * Outbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each outbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_agents?: Array<PhoneNumberCreateParams.OutboundAgent> | null;
 
@@ -479,25 +425,9 @@ export interface PhoneNumberUpdateParams {
   fallback_number?: string | null;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when receiving inbound calls. If set to null, this
-   * number would not accept inbound call. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the inbound agent to bind to the number. If not provided,
-   * will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_version?: number | null;
-
-  /**
    * Inbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_agents?: Array<PhoneNumberUpdateParams.InboundAgent> | null;
 
@@ -527,25 +457,9 @@ export interface PhoneNumberUpdateParams {
   nickname?: string | null;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when conducting outbound calls. If set to null, this
-   * number would not be able to initiate outbound call without agent id override.
-   * Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_id?: string | null;
-
-  /**
-   * Version of the outbound agent to bind to the number. If not provided, will
-   * default to latest version.
-   */
-  outbound_agent_version?: number | null;
-
-  /**
    * Outbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each outbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_agents?: Array<PhoneNumberUpdateParams.OutboundAgent> | null;
 
@@ -656,25 +570,9 @@ export interface PhoneNumberImportParams {
   ignore_e164_validation?: boolean;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when receiving inbound calls. If null, this number
-   * would not accept inbound call. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the inbound agent to bind to the number. If not provided,
-   * will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  inbound_agent_version?: number | null;
-
-  /**
    * Inbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_agents?: Array<PhoneNumberImportParams.InboundAgent> | null;
 
@@ -690,26 +588,9 @@ export interface PhoneNumberImportParams {
   nickname?: string;
 
   /**
-   * @deprecated Unique id of agent to bind to the number. The number will
-   * automatically use the agent when conducting outbound calls. If null, this number
-   * would not be able to initiate outbound call without agent id override.
-   * Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_id?: string | null;
-
-  /**
-   * @deprecated Version of the outbound agent to bind to the number. If not
-   * provided, will default to latest version. Deprecated. See
-   * https://docs.retellai.com/deprecation-notice/2026/03-31_phone_number_agent_fields
-   */
-  outbound_agent_version?: number | null;
-
-  /**
    * Outbound agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each outbound call, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_agents?: Array<PhoneNumberImportParams.OutboundAgent> | null;
 

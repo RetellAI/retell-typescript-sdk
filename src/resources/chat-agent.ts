@@ -294,7 +294,7 @@ export interface ChatAgentResponse {
   > | null;
 
   /**
-   * The model to use for post chat analysis. Default to gpt-4.1-mini.
+   * The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -314,6 +314,7 @@ export interface ChatAgentResponse {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -806,7 +807,7 @@ export interface ChatAgentCreateParams {
   > | null;
 
   /**
-   * The model to use for post chat analysis. Default to gpt-4.1-mini.
+   * The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -826,6 +827,7 @@ export interface ChatAgentCreateParams {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -1315,7 +1317,7 @@ export interface ChatAgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for post chat analysis. Default to gpt-4.1-mini.
+   * Body param: The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -1335,6 +1337,7 @@ export interface ChatAgentUpdateParams {
     | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
     | null;
 
   /**
@@ -1678,6 +1681,11 @@ export namespace ChatAgentUpdateParams {
 }
 
 export interface ChatAgentListParams {
+  /**
+   * If true, only return the latest version of each chat agent.
+   */
+  is_latest?: boolean;
+
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and
    * 1000, and the default is 1000.
