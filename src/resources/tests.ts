@@ -625,11 +625,6 @@ export interface TestListTestCaseDefinitionsParams {
    * LLM ID (required when type is retell-llm)
    */
   llm_id?: string;
-
-  /**
-   * Version of the response engine (defaults to latest)
-   */
-  version?: number;
 }
 
 export interface TestUpdateTestCaseDefinitionParams {
