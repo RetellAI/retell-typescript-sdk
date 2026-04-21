@@ -164,7 +164,6 @@ describe('resource tests', () => {
       type: 'retell-llm',
       conversation_flow_id: 'conversation_flow_id',
       llm_id: 'llm_id',
-      version: 0,
     });
   });
 
