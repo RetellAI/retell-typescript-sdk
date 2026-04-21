@@ -1,5 +1,28 @@
 # Changelog
 
+## 5.13.0 (2026-04-21)
+
+Full Changelog: [v5.12.0...v5.13.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.12.0...v5.13.0)
+
+### Features
+
+* **api:** api update ([63c27c2](https://github.com/RetellAI/retell-typescript-sdk/commit/63c27c27cf605acb083da7b2feca9eb1ef62edc2))
+* **api:** api update ([d0dc5ef](https://github.com/RetellAI/retell-typescript-sdk/commit/d0dc5efc525a91636ee0fcbf5068d57910218f8d))
+* **api:** api update ([5badbb3](https://github.com/RetellAI/retell-typescript-sdk/commit/5badbb3dd6cf47d1e0d7c71df5b725d260f2527c))
+
+
+### Bug Fixes
+
+* remove unused import ([5eccf72](https://github.com/RetellAI/retell-typescript-sdk/commit/5eccf7209058116e621a27c31a8fdd2f8521d225))
+
+
+### Chores
+
+* **internal:** codegen related update ([d6a5005](https://github.com/RetellAI/retell-typescript-sdk/commit/d6a50051adc27c671bb0e66dd3afde51e6e53f62))
+* **internal:** fix MCP server import ordering ([75b7533](https://github.com/RetellAI/retell-typescript-sdk/commit/75b75338643044c092f0663227b325333f64d9d9))
+* **internal:** show error causes in MCP servers when running in local mode ([2eba89d](https://github.com/RetellAI/retell-typescript-sdk/commit/2eba89decf2e90400f6e7c2843d6bf67d440adcf))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([2ed25d5](https://github.com/RetellAI/retell-typescript-sdk/commit/2ed25d50600fdc86760b27ccec0e15607752b706))
+
 ## 5.12.0 (2026-04-03)
 
 Full Changelog: [v5.11.0...v5.12.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.11.0...v5.12.0)
