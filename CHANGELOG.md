@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.14.1 (2026-04-23)
+
+Full Changelog: [v5.14.0...v5.14.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.14.0...v5.14.1)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([a256830](https://github.com/RetellAI/retell-typescript-sdk/commit/a2568305d31be5616319e638cd4378c335baf0f6))
+
 ## 5.14.0 (2026-04-23)
 
 Full Changelog: [v5.13.0...v5.14.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.13.0...v5.14.0)
