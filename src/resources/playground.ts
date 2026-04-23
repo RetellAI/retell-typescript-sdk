@@ -10,6 +10,27 @@ export class Playground extends APIResource {
    * Stateless playground completion. Send the full conversation history (same shape
    * as chat completion messages) and receive only the newly generated messages.
    * Nothing is persisted server-side — the caller manages conversation state.
+   *
+   * @example
+   * ```ts
+   * const response = await client.playground.completion(
+   *   'agent_id',
+   *   {
+   *     messages: [
+   *       {
+   *         content: "Hi, I'd like to check my appointment.",
+   *         role: 'user',
+   *       },
+   *       {
+   *         content:
+   *           'Sure! Could you please provide your name?',
+   *         role: 'agent',
+   *       },
+   *       { content: 'My name is John Smith.', role: 'user' },
+   *     ],
+   *   },
+   * );
+   * ```
    */
   completion(
     agentID: string,
