@@ -109,6 +109,7 @@ import {
   PhoneNumberResponse,
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
+import { Playground, PlaygroundCompletionParams, PlaygroundCompletionResponse } from './resources/playground';
 import {
   BatchTestResponse,
   TestCaseDefinitionResponse,
@@ -845,6 +846,7 @@ export class Retell {
   concurrency: API.Concurrency = new API.Concurrency(this);
   batchCall: API.BatchCall = new API.BatchCall(this);
   tests: API.Tests = new API.Tests(this);
+  playground: API.Playground = new API.Playground(this);
   mcpTool: API.McpTool = new API.McpTool(this);
 }
 
@@ -861,6 +863,7 @@ Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
 Retell.BatchCall = BatchCall;
 Retell.Tests = Tests;
+Retell.Playground = Playground;
 Retell.McpTool = McpTool;
 
 export declare namespace Retell {
@@ -990,6 +993,12 @@ export declare namespace Retell {
     type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
     type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
+  };
+
+  export {
+    Playground as Playground,
+    type PlaygroundCompletionResponse as PlaygroundCompletionResponse,
+    type PlaygroundCompletionParams as PlaygroundCompletionParams,
   };
 
   export {

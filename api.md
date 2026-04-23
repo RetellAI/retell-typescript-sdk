@@ -208,6 +208,16 @@ Methods:
 - <code title="get /list-test-runs/{test_case_batch_job_id}">client.tests.<a href="./src/resources/tests.ts">listTestRuns</a>(testCaseBatchJobID) -> TestListTestRunsResponse</code>
 - <code title="put /update-test-case-definition/{test_case_definition_id}">client.tests.<a href="./src/resources/tests.ts">updateTestCaseDefinition</a>(testCaseDefinitionID, { ...params }) -> TestCaseDefinitionResponse</code>
 
+# Playground
+
+Types:
+
+- <code><a href="./src/resources/playground.ts">PlaygroundCompletionResponse</a></code>
+
+Methods:
+
+- <code title="post /agent-playground-completion/{agent_id}">client.playground.<a href="./src/resources/playground.ts">completion</a>(agentID, { ...params }) -> PlaygroundCompletionResponse</code>
+
 # McpTool
 
 Types:

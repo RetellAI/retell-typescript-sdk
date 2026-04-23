@@ -443,6 +443,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/update-test-case-definition/{test_case_definition_id}',
   },
   {
+    clientCallName: 'client.playground.completion',
+    fullyQualifiedName: 'playground.completion',
+    httpMethod: 'post',
+    httpPath: '/agent-playground-completion/{agent_id}',
+  },
+  {
     clientCallName: 'client.mcpTool.getMcpTools',
     fullyQualifiedName: 'mcpTool.getMcpTools',
     httpMethod: 'get',
