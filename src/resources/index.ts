@@ -92,6 +92,7 @@ export {
   type PhoneNumberUpdateParams,
   type PhoneNumberImportParams,
 } from './phone-number';
+export { Playground, type PlaygroundCompletionResponse, type PlaygroundCompletionParams } from './playground';
 export {
   Tests,
   type BatchTestResponse,

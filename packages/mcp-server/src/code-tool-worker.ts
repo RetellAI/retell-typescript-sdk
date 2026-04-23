@@ -180,6 +180,7 @@ const fuse = new Fuse(
     'client.tests.listTestCaseDefinitions',
     'client.tests.listTestRuns',
     'client.tests.updateTestCaseDefinition',
+    'client.playground.completion',
     'client.mcpTool.getMcpTools',
   ],
   { threshold: 1, shouldSort: true },
