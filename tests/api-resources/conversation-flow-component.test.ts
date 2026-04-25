@@ -2,24 +2,16 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource conversationFlowComponent', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.conversationFlowComponent.create({
-      name: 'Customer Information Collector',
-      nodes: [
-        {
-          id: 'collect_info',
-          instruction: { text: 'Ask the customer for their name and contact information.', type: 'prompt' },
-          type: 'conversation',
-        },
-      ],
-    });
+    const responsePromise = client.conversationFlowComponent.create({ name: 'Customer Information Collector', nodes: [{
+    id: 'collect_info',
+    instruction: { text: 'Ask the customer for their name and contact information.', type: 'prompt' },
+    type: 'conversation',
+  }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -32,108 +24,94 @@ describe('resource conversationFlowComponent', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.conversationFlowComponent.create({
-      name: 'Customer Information Collector',
-      nodes: [
-        {
-          id: 'collect_info',
-          instruction: { text: 'Ask the customer for their name and contact information.', type: 'prompt' },
-          type: 'conversation',
-          always_edge: {
-            id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
-            destination_node_id: 'destination_node_id',
-          },
-          display_position: { x: 0, y: 0 },
-          edges: [
-            {
-              id: 'id',
-              transition_condition: { prompt: 'prompt', type: 'prompt' },
-              destination_node_id: 'destination_node_id',
-            },
-          ],
-          finetune_conversation_examples: [{ id: 'id', transcript: [{ content: 'content', role: 'agent' }] }],
-          finetune_transition_examples: [
-            {
-              id: 'id',
-              transcript: [{ content: 'content', role: 'agent' }],
-              destination_node_id: 'destination_node_id',
-            },
-          ],
-          global_node_setting: {
-            condition: 'condition',
-            cool_down: 1,
-            go_back_conditions: [
-              {
-                id: 'id',
-                transition_condition: { prompt: 'prompt', type: 'prompt' },
-                destination_node_id: 'destination_node_id',
-              },
-            ],
-            negative_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
-            positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
-          },
-          interruption_sensitivity: 0,
-          knowledge_base_ids: ['kb_001', 'kb_002'],
-          model_choice: {
-            model: 'gpt-4.1',
-            type: 'cascading',
-            high_priority: true,
-          },
-          name: 'name',
-          responsiveness: 0,
-          skip_response_edge: {
-            id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
-            destination_node_id: 'destination_node_id',
-          },
-          voice_speed: 0.5,
-        },
-      ],
-      begin_tag_display_position: { x: 100, y: 200 },
-      mcps: [
-        {
-          name: 'name',
-          url: 'url',
-          headers: { Authorization: 'Bearer 1234567890' },
-          query_params: { index: '1', key: 'value' },
-          timeout_ms: 0,
-        },
-      ],
-      notes: [
-        {
-          id: 'note_abc123',
-          content: 'Remember to handle edge cases here.',
-          display_position: { x: 300, y: 150 },
-          size: { height: 100, width: 200 },
-        },
-      ],
-      start_node_id: 'collect_info',
-      tools: [
-        {
-          name: 'get_customer_info',
-          type: 'custom',
-          url: 'https://api.example.com/customer',
-          args_at_root: true,
-          description: 'Get customer information from database',
-          enable_typing_sound: true,
-          execution_message_description: 'execution_message_description',
-          execution_message_type: 'prompt',
-          headers: { Authorization: 'Bearer 1234567890' },
-          method: 'GET',
-          parameters: {
-            properties: { foo: 'bar' },
-            type: 'object',
-            required: ['string'],
-          },
-          query_params: { page: '1', sort: 'asc' },
-          response_variables: { user_name: 'data.user.name' },
-          speak_after_execution: true,
-          speak_during_execution: true,
-          timeout_ms: 0,
-          tool_id: 'tool_001',
-        },
-      ],
-    });
+    name: 'Customer Information Collector',
+    nodes: [{
+    id: 'collect_info',
+    instruction: { text: 'Ask the customer for their name and contact information.', type: 'prompt' },
+    type: 'conversation',
+    always_edge: {
+    id: 'id',
+    transition_condition: { prompt: 'prompt', type: 'prompt' },
+    destination_node_id: 'destination_node_id',
+  },
+    display_position: { x: 0, y: 0 },
+    edges: [{
+    id: 'id',
+    transition_condition: { prompt: 'prompt', type: 'prompt' },
+    destination_node_id: 'destination_node_id',
+  }],
+    finetune_conversation_examples: [{ id: 'id', transcript: [{ content: 'content', role: 'agent' }] }],
+    finetune_transition_examples: [{
+    id: 'id',
+    transcript: [{ content: 'content', role: 'agent' }],
+    destination_node_id: 'destination_node_id',
+  }],
+    global_node_setting: {
+    condition: 'condition',
+    cool_down: 1,
+    go_back_conditions: [{
+    id: 'id',
+    transition_condition: { prompt: 'prompt', type: 'prompt' },
+    destination_node_id: 'destination_node_id',
+  }],
+    negative_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
+    positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
+  },
+    interruption_sensitivity: 0,
+    knowledge_base_ids: ['kb_001', 'kb_002'],
+    model_choice: {
+    model: 'gpt-4.1',
+    type: 'cascading',
+    high_priority: true,
+  },
+    name: 'name',
+    responsiveness: 0,
+    skip_response_edge: {
+    id: 'id',
+    transition_condition: { prompt: 'prompt', type: 'prompt' },
+    destination_node_id: 'destination_node_id',
+  },
+    voice_speed: 0.5,
+  }],
+    begin_tag_display_position: { x: 100, y: 200 },
+    mcps: [{
+    name: 'name',
+    url: 'url',
+    headers: { Authorization: 'Bearer 1234567890' },
+    query_params: { index: '1', key: 'value' },
+    timeout_ms: 0,
+  }],
+    notes: [{
+    id: 'note_abc123',
+    content: 'Remember to handle edge cases here.',
+    display_position: { x: 300, y: 150 },
+    size: { height: 100, width: 200 },
+  }],
+    start_node_id: 'collect_info',
+    tools: [{
+    name: 'get_customer_info',
+    type: 'custom',
+    url: 'https://api.example.com/customer',
+    args_at_root: true,
+    description: 'Get customer information from database',
+    enable_typing_sound: true,
+    execution_message_description: 'execution_message_description',
+    execution_message_type: 'prompt',
+    headers: { Authorization: 'Bearer 1234567890' },
+    method: 'GET',
+    parameters: {
+    properties: { foo: 'bar' },
+    type: 'object',
+    required: ['string'],
+  },
+    query_params: { page: '1', sort: 'asc' },
+    response_variables: { user_name: 'data.user.name' },
+    speak_after_execution: true,
+    speak_during_execution: true,
+    timeout_ms: 0,
+    tool_id: 'tool_001',
+  }],
+  });
   });
 
   // Mock server tests are disabled

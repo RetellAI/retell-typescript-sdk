@@ -9,11 +9,7 @@ export class McpTool extends APIResource {
   /**
    * Get MCP tools for a specific agent
    */
-  getMcpTools(
-    agentID: string,
-    query: McpToolGetMcpToolsParams,
-    options?: RequestOptions,
-  ): APIPromise<McpToolGetMcpToolsResponse> {
+  getMcpTools(agentID: string, query: McpToolGetMcpToolsParams, options?: RequestOptions): APIPromise<McpToolGetMcpToolsResponse> {
     return this._client.get(path`/get-mcp-tools/${agentID}`, { query, ...options });
   }
 }
@@ -35,7 +31,7 @@ export interface McpToolDefinition {
   name: string;
 }
 
-export type McpToolGetMcpToolsResponse = Array<McpToolDefinition>;
+export type McpToolGetMcpToolsResponse = Array<McpToolDefinition>
 
 export interface McpToolGetMcpToolsParams {
   /**
@@ -59,6 +55,6 @@ export declare namespace McpTool {
   export {
     type McpToolDefinition as McpToolDefinition,
     type McpToolGetMcpToolsResponse as McpToolGetMcpToolsResponse,
-    type McpToolGetMcpToolsParams as McpToolGetMcpToolsParams,
+    type McpToolGetMcpToolsParams as McpToolGetMcpToolsParams
   };
 }

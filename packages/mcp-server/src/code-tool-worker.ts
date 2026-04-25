@@ -59,8 +59,8 @@ function getTSDiagnostics(code: string): string[] {
   const codeWithImport = [
     'import { Retell } from "retell-sdk";',
     functionSource.type === 'declaration' ?
-      `async function run(${functionSource.client}: Retell)`
-    : `const run: (${functionSource.client}: Retell) => Promise<unknown> =`,
+      `async function run(${functionSource.client}: Retell)` :
+      `const run: (${functionSource.client}: Retell) => Promise<unknown> =`,
     functionSource.code,
   ].join('\n');
   const sourcePath = path.resolve('code.ts');
@@ -108,80 +108,80 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
-    'client.call.createPhoneCall',
-    'client.call.createWebCall',
-    'client.call.delete',
-    'client.call.list',
-    'client.call.registerPhoneCall',
-    'client.call.retrieve',
-    'client.call.update',
-    'client.chat.create',
-    'client.chat.createChatCompletion',
-    'client.chat.createSMSChat',
-    'client.chat.end',
-    'client.chat.list',
-    'client.chat.retrieve',
-    'client.chat.update',
-    'client.phoneNumber.create',
-    'client.phoneNumber.delete',
-    'client.phoneNumber.import',
-    'client.phoneNumber.list',
-    'client.phoneNumber.retrieve',
-    'client.phoneNumber.update',
-    'client.agent.create',
-    'client.agent.delete',
-    'client.agent.getVersions',
-    'client.agent.list',
-    'client.agent.publish',
-    'client.agent.retrieve',
-    'client.agent.update',
-    'client.chatAgent.create',
-    'client.chatAgent.delete',
-    'client.chatAgent.getVersions',
-    'client.chatAgent.list',
-    'client.chatAgent.publish',
-    'client.chatAgent.retrieve',
-    'client.chatAgent.update',
-    'client.llm.create',
-    'client.llm.delete',
-    'client.llm.list',
-    'client.llm.retrieve',
-    'client.llm.update',
-    'client.conversationFlow.create',
-    'client.conversationFlow.delete',
-    'client.conversationFlow.list',
-    'client.conversationFlow.retrieve',
-    'client.conversationFlow.update',
-    'client.conversationFlowComponent.create',
-    'client.conversationFlowComponent.delete',
-    'client.conversationFlowComponent.list',
-    'client.conversationFlowComponent.retrieve',
-    'client.conversationFlowComponent.update',
-    'client.knowledgeBase.addSources',
-    'client.knowledgeBase.create',
-    'client.knowledgeBase.delete',
-    'client.knowledgeBase.deleteSource',
-    'client.knowledgeBase.list',
-    'client.knowledgeBase.retrieve',
-    'client.voice.addResource',
-    'client.voice.clone',
-    'client.voice.list',
-    'client.voice.retrieve',
-    'client.voice.search',
-    'client.concurrency.retrieve',
-    'client.batchCall.createBatchCall',
-    'client.tests.createBatchTest',
-    'client.tests.createTestCaseDefinition',
-    'client.tests.deleteTestCaseDefinition',
-    'client.tests.getBatchTest',
-    'client.tests.getTestCaseDefinition',
-    'client.tests.getTestRun',
-    'client.tests.listBatchTests',
-    'client.tests.listTestCaseDefinitions',
-    'client.tests.listTestRuns',
-    'client.tests.updateTestCaseDefinition',
-    'client.playground.completion',
-    'client.mcpTool.getMcpTools',
+    "client.call.createPhoneCall",
+    "client.call.createWebCall",
+    "client.call.delete",
+    "client.call.list",
+    "client.call.registerPhoneCall",
+    "client.call.retrieve",
+    "client.call.update",
+    "client.chat.create",
+    "client.chat.createChatCompletion",
+    "client.chat.createSMSChat",
+    "client.chat.end",
+    "client.chat.list",
+    "client.chat.retrieve",
+    "client.chat.update",
+    "client.phoneNumber.create",
+    "client.phoneNumber.delete",
+    "client.phoneNumber.import",
+    "client.phoneNumber.list",
+    "client.phoneNumber.retrieve",
+    "client.phoneNumber.update",
+    "client.agent.create",
+    "client.agent.delete",
+    "client.agent.getVersions",
+    "client.agent.list",
+    "client.agent.publish",
+    "client.agent.retrieve",
+    "client.agent.update",
+    "client.chatAgent.create",
+    "client.chatAgent.delete",
+    "client.chatAgent.getVersions",
+    "client.chatAgent.list",
+    "client.chatAgent.publish",
+    "client.chatAgent.retrieve",
+    "client.chatAgent.update",
+    "client.llm.create",
+    "client.llm.delete",
+    "client.llm.list",
+    "client.llm.retrieve",
+    "client.llm.update",
+    "client.conversationFlow.create",
+    "client.conversationFlow.delete",
+    "client.conversationFlow.list",
+    "client.conversationFlow.retrieve",
+    "client.conversationFlow.update",
+    "client.conversationFlowComponent.create",
+    "client.conversationFlowComponent.delete",
+    "client.conversationFlowComponent.list",
+    "client.conversationFlowComponent.retrieve",
+    "client.conversationFlowComponent.update",
+    "client.knowledgeBase.addSources",
+    "client.knowledgeBase.create",
+    "client.knowledgeBase.delete",
+    "client.knowledgeBase.deleteSource",
+    "client.knowledgeBase.list",
+    "client.knowledgeBase.retrieve",
+    "client.voice.addResource",
+    "client.voice.clone",
+    "client.voice.list",
+    "client.voice.retrieve",
+    "client.voice.search",
+    "client.concurrency.retrieve",
+    "client.batchCall.createBatchCall",
+    "client.tests.createBatchTest",
+    "client.tests.createTestCaseDefinition",
+    "client.tests.deleteTestCaseDefinition",
+    "client.tests.getBatchTest",
+    "client.tests.getTestCaseDefinition",
+    "client.tests.getTestRun",
+    "client.tests.listBatchTests",
+    "client.tests.listTestCaseDefinitions",
+    "client.tests.listTestRuns",
+    "client.tests.updateTestCaseDefinition",
+    "client.playground.completion",
+    "client.mcpTool.getMcpTools"
   ],
   { threshold: 1, shouldSort: true },
 );
@@ -264,12 +264,7 @@ function parseError(code: string, error: unknown): string | undefined {
     // Deno uses V8; the first "<anonymous>:LINE:COLUMN" is the top of stack.
     const lineNumber = error.stack?.match(/<anonymous>:([0-9]+):[0-9]+/)?.[1];
     // -1 for the zero-based indexing
-    const line =
-      lineNumber &&
-      code
-        .split('\n')
-        .at(parseInt(lineNumber, 10) - 1)
-        ?.trim();
+    const line = lineNumber && code.split('\n').at(parseInt(lineNumber, 10) - 1)?.trim();
     return line ? `${message}\n  at line ${lineNumber}\n    ${line}` : message;
   } catch {
     return message;
@@ -281,9 +276,8 @@ const fetch = async (req: Request): Promise<Response> => {
 
   const runFunctionSource = code ? getRunFunctionSource(code) : null;
   if (!runFunctionSource) {
-    const message =
-      code ?
-        'The code is missing a top-level `run` function.'
+    const message = code
+      ? 'The code is missing a top-level `run` function.'
       : 'The code argument is missing. Provide one containing a top-level `run` function.';
     return Response.json(
       {
@@ -328,7 +322,7 @@ const fetch = async (req: Request): Promise<Response> => {
   try {
     let run_ = async (client: any) => {};
     run_ = (await tseval(`${code}\nexport default run;`)).default;
-    const result = await run_(makeSdkProxy(client, { path: ['client'] }));
+    const result = await run_(makeSdkProxy(client, { path: ["client"] }));
     return Response.json({
       is_error: false,
       result,

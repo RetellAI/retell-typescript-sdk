@@ -45,11 +45,7 @@ export class ConversationFlow extends APIResource {
    *   );
    * ```
    */
-  retrieve(
-    conversationFlowID: string,
-    query: ConversationFlowRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ConversationFlowResponse> {
+  retrieve(conversationFlowID: string, query: ConversationFlowRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<ConversationFlowResponse> {
     return this._client.get(path`/get-conversation-flow/${conversationFlowID}`, { query, ...options });
   }
 
@@ -64,17 +60,9 @@ export class ConversationFlow extends APIResource {
    *   );
    * ```
    */
-  update(
-    conversationFlowID: string,
-    params: ConversationFlowUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<ConversationFlowResponse> {
-    const { version, ...body } = params;
-    return this._client.patch(path`/update-conversation-flow/${conversationFlowID}`, {
-      query: { version },
-      body,
-      ...options,
-    });
+  update(conversationFlowID: string, params: ConversationFlowUpdateParams, options?: RequestOptions): APIPromise<ConversationFlowResponse> {
+    const { version, ...body } = params
+    return this._client.patch(path`/update-conversation-flow/${conversationFlowID}`, { query: { version }, body, ...options });
   }
 
   /**
@@ -86,10 +74,7 @@ export class ConversationFlow extends APIResource {
    *   await client.conversationFlow.list();
    * ```
    */
-  list(
-    query: ConversationFlowListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ConversationFlowListResponse> {
+  list(query: ConversationFlowListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ConversationFlowListResponse> {
     return this._client.get('/list-conversation-flows', { query, ...options });
   }
 
@@ -104,10 +89,7 @@ export class ConversationFlow extends APIResource {
    * ```
    */
   delete(conversationFlowID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-conversation-flow/${conversationFlowID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/delete-conversation-flow/${conversationFlowID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -185,23 +167,7 @@ export interface ConversationFlowResponse {
   /**
    * Array of nodes in the conversation flow.
    */
-  nodes?: Array<
-    | ConversationFlowResponse.ConversationNode
-    | ConversationFlowResponse.SubagentNode
-    | ConversationFlowResponse.EndNode
-    | ConversationFlowResponse.FunctionNode
-    | ConversationFlowResponse.CodeNode
-    | ConversationFlowResponse.TransferCallNode
-    | ConversationFlowResponse.PressDigitNode
-    | ConversationFlowResponse.BranchNode
-    | ConversationFlowResponse.SMSNode
-    | ConversationFlowResponse.ExtractDynamicVariablesNode
-    | ConversationFlowResponse.AgentSwapNode
-    | ConversationFlowResponse.McpNode
-    | ConversationFlowResponse.ComponentNode
-    | ConversationFlowResponse.BridgeTransferNode
-    | ConversationFlowResponse.CancelTransferNode
-  >;
+  nodes?: Array<ConversationFlowResponse.ConversationNode | ConversationFlowResponse.SubagentNode | ConversationFlowResponse.EndNode | ConversationFlowResponse.FunctionNode | ConversationFlowResponse.CodeNode | ConversationFlowResponse.TransferCallNode | ConversationFlowResponse.PressDigitNode | ConversationFlowResponse.BranchNode | ConversationFlowResponse.SMSNode | ConversationFlowResponse.ExtractDynamicVariablesNode | ConversationFlowResponse.AgentSwapNode | ConversationFlowResponse.McpNode | ConversationFlowResponse.ComponentNode | ConversationFlowResponse.BridgeTransferNode | ConversationFlowResponse.CancelTransferNode>;
 
   /**
    * Visual annotations displayed on the flow canvas.
@@ -227,11 +193,7 @@ export interface ConversationFlowResponse {
   /**
    * Tools available in the conversation flow.
    */
-  tools?: Array<
-    | ConversationFlowResponse.CustomTool
-    | ConversationFlowResponse.CheckAvailabilityCalTool
-    | ConversationFlowResponse.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowResponse.CustomTool | ConversationFlowResponse.CheckAvailabilityCalTool | ConversationFlowResponse.BookAppointmentCalTool> | null;
 }
 
 export namespace ConversationFlowResponse {
@@ -253,23 +215,7 @@ export namespace ConversationFlowResponse {
     /**
      * Nodes that make up the component
      */
-    nodes: Array<
-      | Component.ConversationNode
-      | Component.SubagentNode
-      | Component.EndNode
-      | Component.FunctionNode
-      | Component.CodeNode
-      | Component.TransferCallNode
-      | Component.PressDigitNode
-      | Component.BranchNode
-      | Component.SMSNode
-      | Component.ExtractDynamicVariablesNode
-      | Component.AgentSwapNode
-      | Component.McpNode
-      | Component.ComponentNode
-      | Component.BridgeTransferNode
-      | Component.CancelTransferNode
-    >;
+    nodes: Array<Component.ConversationNode | Component.SubagentNode | Component.EndNode | Component.FunctionNode | Component.CodeNode | Component.TransferCallNode | Component.PressDigitNode | Component.BranchNode | Component.SMSNode | Component.ExtractDynamicVariablesNode | Component.AgentSwapNode | Component.McpNode | Component.ComponentNode | Component.BridgeTransferNode | Component.CancelTransferNode>;
 
     /**
      * Display position for the begin tag in the frontend
@@ -294,9 +240,7 @@ export namespace ConversationFlowResponse {
     /**
      * Tools available within the component
      */
-    tools?: Array<
-      Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool
-    > | null;
+    tools?: Array<Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool> | null;
   }
 
   export namespace Component {
@@ -380,10 +324,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -421,17 +362,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -499,17 +430,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -529,11 +450,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -571,11 +488,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -678,17 +591,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -703,11 +606,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -740,11 +639,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -778,25 +673,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -815,10 +692,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -856,17 +730,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -943,21 +807,7 @@ export namespace ConversationFlowResponse {
        * The tools owned by this subagent node. This includes other tool types like
        * transfer_call, agent_swap, etc.
        */
-      tools?: Array<
-        | SubagentNode.EndCallTool
-        | SubagentNode.TransferCallTool
-        | SubagentNode.CheckAvailabilityCalTool
-        | SubagentNode.BookAppointmentCalTool
-        | SubagentNode.AgentSwapTool
-        | SubagentNode.PressDigitTool
-        | SubagentNode.SendSMSTool
-        | SubagentNode.CustomTool
-        | SubagentNode.CodeTool
-        | SubagentNode.ExtractDynamicVariableTool
-        | SubagentNode.BridgeTransferTool
-        | SubagentNode.CancelTransferTool
-        | SubagentNode.McpTool
-      > | null;
+      tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
       voice_speed?: number | null;
     }
@@ -981,10 +831,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -1022,17 +869,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -1100,17 +937,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -1130,11 +957,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -1172,11 +995,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -1279,17 +1098,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -1304,11 +1113,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -1341,11 +1146,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -1379,25 +1180,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -1416,10 +1199,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -1457,17 +1237,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -1531,14 +1301,9 @@ export namespace ConversationFlowResponse {
          */
         name: string;
 
-        transfer_destination:
-          | TransferCallTool.TransferDestinationPredefined
-          | TransferCallTool.TransferDestinationInferred;
+        transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-        transfer_option:
-          | TransferCallTool.TransferOptionColdTransfer
-          | TransferCallTool.TransferOptionWarmTransfer
-          | TransferCallTool.TransferOptionAgenticWarmTransfer;
+        transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
         type: 'transfer_call';
 
@@ -1683,18 +1448,14 @@ export namespace ConversationFlowResponse {
            * agent receiving the transfer. Can leave either a static message or a dynamic one
            * based on prompt. Set to null to disable warm handoff.
            */
-          private_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set, when transfer is successful, will say the handoff message to both the
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -1787,9 +1548,7 @@ export namespace ConversationFlowResponse {
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-            | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -2041,10 +1800,7 @@ export namespace ConversationFlowResponse {
          */
         name: string;
 
-        sms_content:
-          | SendSMSTool.SMSContentPredefined
-          | SendSMSTool.SMSContentInferred
-          | SendSMSTool.SMSContentTemplate;
+        sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
         type: 'send_sms';
 
@@ -2326,12 +2082,7 @@ export namespace ConversationFlowResponse {
         /**
          * The variables to be extracted.
          */
-        variables: Array<
-          | ExtractDynamicVariableTool.StringAnalysisData
-          | ExtractDynamicVariableTool.EnumAnalysisData
-          | ExtractDynamicVariableTool.BooleanAnalysisData
-          | ExtractDynamicVariableTool.NumberAnalysisData
-        >;
+        variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
       }
 
       export namespace ExtractDynamicVariableTool {
@@ -2727,17 +2478,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -2752,11 +2493,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -2789,11 +2526,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -2851,25 +2584,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -2991,17 +2706,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -3056,17 +2761,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -3095,11 +2790,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -3202,17 +2893,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -3227,11 +2908,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -3264,11 +2941,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -3326,25 +2999,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -3473,17 +3128,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -3538,17 +3183,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -3577,11 +3212,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -3684,17 +3315,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -3709,11 +3330,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -3746,11 +3363,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -3808,25 +3421,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -3848,14 +3443,9 @@ export namespace ConversationFlowResponse {
 
       edge: TransferCallNode.Edge;
 
-      transfer_destination:
-        | TransferCallNode.TransferDestinationPredefined
-        | TransferCallNode.TransferDestinationInferred;
+      transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer
-        | TransferCallNode.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -3945,17 +3535,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -4076,18 +3656,14 @@ export namespace ConversationFlowResponse {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -4180,9 +3756,7 @@ export namespace ConversationFlowResponse {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -4337,17 +3911,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -4362,11 +3926,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -4399,11 +3959,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -4461,25 +4017,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -4591,17 +4129,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -4621,11 +4149,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -4728,17 +4252,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -4753,11 +4267,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -4790,11 +4300,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -4828,25 +4334,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -4937,17 +4425,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -5015,17 +4493,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -5045,11 +4513,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -5152,17 +4616,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -5177,11 +4631,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -5214,11 +4664,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -5252,25 +4698,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -5292,10 +4720,7 @@ export namespace ConversationFlowResponse {
 
       failed_edge: SMSNode.FailedEdge;
 
-      instruction:
-        | SMSNode.NodeInstructionPrompt
-        | SMSNode.NodeInstructionStaticText
-        | SMSNode.SMSInstructionTemplate;
+      instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
       success_edge: SMSNode.SuccessEdge;
 
@@ -5326,10 +4751,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | FailedEdge.PromptCondition
-          | FailedEdge.EquationCondition
-          | FailedEdge.UnionMember2;
+        transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -5367,17 +4789,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -5440,10 +4852,7 @@ export namespace ConversationFlowResponse {
          */
         id: string;
 
-        transition_condition:
-          | SuccessEdge.PromptCondition
-          | SuccessEdge.EquationCondition
-          | SuccessEdge.UnionMember2;
+        transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -5481,17 +4890,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -5589,17 +4988,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -5614,11 +5003,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -5651,11 +5036,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -5689,25 +5070,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -5732,12 +5095,7 @@ export namespace ConversationFlowResponse {
        */
       type: 'extract_dynamic_variables';
 
-      variables: Array<
-        | ExtractDynamicVariablesNode.StringAnalysisData
-        | ExtractDynamicVariablesNode.EnumAnalysisData
-        | ExtractDynamicVariablesNode.BooleanAnalysisData
-        | ExtractDynamicVariablesNode.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
       /**
        * Position for frontend display
@@ -5939,17 +5297,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -6004,17 +5352,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -6043,11 +5381,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -6150,17 +5484,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -6175,11 +5499,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -6212,11 +5532,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -6250,25 +5566,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -6402,17 +5700,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -6510,17 +5798,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -6535,11 +5813,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -6572,11 +5846,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -6634,25 +5904,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -6783,17 +6035,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -6848,17 +6090,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -6887,11 +6119,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -6994,17 +6222,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -7019,11 +6237,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -7056,11 +6270,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -7118,25 +6328,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -7247,17 +6439,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -7325,17 +6507,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -7355,11 +6527,7 @@ export namespace ConversationFlowResponse {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -7462,17 +6630,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -7487,11 +6645,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -7524,11 +6678,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -7675,17 +6825,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -7700,11 +6840,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -7737,11 +6873,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -7799,25 +6931,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -7947,17 +7061,7 @@ export namespace ConversationFlowResponse {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -7972,11 +7076,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -8009,11 +7109,7 @@ export namespace ConversationFlowResponse {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -8071,25 +7167,7 @@ export namespace ConversationFlowResponse {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -8456,25 +7534,7 @@ export namespace ConversationFlowResponse {
     /**
      * The LLM model to use
      */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-4.1-nano'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'claude-4.5-sonnet'
-      | 'claude-4.6-sonnet'
-      | 'claude-4.5-haiku'
-      | 'gemini-2.5-flash'
-      | 'gemini-2.5-flash-lite'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite';
+    model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
     /**
      * Type of model choice
@@ -8567,10 +7627,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -8608,17 +7665,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -8686,17 +7733,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -8716,11 +7753,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -8758,11 +7791,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -8865,17 +7894,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -8890,11 +7909,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -8927,11 +7942,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -8965,25 +7976,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -9002,10 +7995,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -9043,17 +8033,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -9130,21 +8110,7 @@ export namespace ConversationFlowResponse {
      * The tools owned by this subagent node. This includes other tool types like
      * transfer_call, agent_swap, etc.
      */
-    tools?: Array<
-      | SubagentNode.EndCallTool
-      | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
-      | SubagentNode.AgentSwapTool
-      | SubagentNode.PressDigitTool
-      | SubagentNode.SendSMSTool
-      | SubagentNode.CustomTool
-      | SubagentNode.CodeTool
-      | SubagentNode.ExtractDynamicVariableTool
-      | SubagentNode.BridgeTransferTool
-      | SubagentNode.CancelTransferTool
-      | SubagentNode.McpTool
-    > | null;
+    tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
     voice_speed?: number | null;
   }
@@ -9168,10 +8134,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -9209,17 +8172,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -9287,17 +8240,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -9317,11 +8260,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -9359,11 +8298,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -9466,17 +8401,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -9491,11 +8416,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -9528,11 +8449,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -9566,25 +8483,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -9603,10 +8502,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -9644,17 +8540,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -9718,14 +8604,9 @@ export namespace ConversationFlowResponse {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -9870,18 +8751,14 @@ export namespace ConversationFlowResponse {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -9974,9 +8851,7 @@ export namespace ConversationFlowResponse {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -10228,10 +9103,7 @@ export namespace ConversationFlowResponse {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -10513,12 +9385,7 @@ export namespace ConversationFlowResponse {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -10914,17 +9781,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -10939,11 +9796,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -10976,11 +9829,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -11038,25 +9887,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -11178,17 +10009,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -11243,17 +10064,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -11282,11 +10093,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -11389,17 +10196,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -11414,11 +10211,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -11451,11 +10244,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -11513,25 +10302,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -11660,17 +10431,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -11725,17 +10486,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -11764,11 +10515,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -11871,17 +10618,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -11896,11 +10633,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -11933,11 +10666,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -11995,25 +10724,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -12035,14 +10746,9 @@ export namespace ConversationFlowResponse {
 
     edge: TransferCallNode.Edge;
 
-    transfer_destination:
-      | TransferCallNode.TransferDestinationPredefined
-      | TransferCallNode.TransferDestinationInferred;
+    transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer
-      | TransferCallNode.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -12132,17 +10838,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -12263,18 +10959,14 @@ export namespace ConversationFlowResponse {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -12367,9 +11059,7 @@ export namespace ConversationFlowResponse {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -12524,17 +11214,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -12549,11 +11229,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -12586,11 +11262,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -12648,25 +11320,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -12778,17 +11432,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -12808,11 +11452,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -12915,17 +11555,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -12940,11 +11570,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -12977,11 +11603,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -13015,25 +11637,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -13124,17 +11728,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -13202,17 +11796,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -13232,11 +11816,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -13339,17 +11919,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -13364,11 +11934,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -13401,11 +11967,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -13439,25 +12001,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -13479,10 +12023,7 @@ export namespace ConversationFlowResponse {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction:
-      | SMSNode.NodeInstructionPrompt
-      | SMSNode.NodeInstructionStaticText
-      | SMSNode.SMSInstructionTemplate;
+    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -13513,10 +12054,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | FailedEdge.PromptCondition
-        | FailedEdge.EquationCondition
-        | FailedEdge.UnionMember2;
+      transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -13554,17 +12092,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -13627,10 +12155,7 @@ export namespace ConversationFlowResponse {
        */
       id: string;
 
-      transition_condition:
-        | SuccessEdge.PromptCondition
-        | SuccessEdge.EquationCondition
-        | SuccessEdge.UnionMember2;
+      transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -13668,17 +12193,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -13776,17 +12291,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -13801,11 +12306,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -13838,11 +12339,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -13876,25 +12373,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -13919,12 +12398,7 @@ export namespace ConversationFlowResponse {
      */
     type: 'extract_dynamic_variables';
 
-    variables: Array<
-      | ExtractDynamicVariablesNode.StringAnalysisData
-      | ExtractDynamicVariablesNode.EnumAnalysisData
-      | ExtractDynamicVariablesNode.BooleanAnalysisData
-      | ExtractDynamicVariablesNode.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
     /**
      * Position for frontend display
@@ -14126,17 +12600,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -14191,17 +12655,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -14230,11 +12684,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -14337,17 +12787,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -14362,11 +12802,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -14399,11 +12835,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -14437,25 +12869,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -14589,17 +13003,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -14697,17 +13101,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -14722,11 +13116,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -14759,11 +13149,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -14821,25 +13207,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -14970,17 +13338,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -15035,17 +13393,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -15074,11 +13422,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -15181,17 +13525,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -15206,11 +13540,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -15243,11 +13573,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -15305,25 +13631,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -15434,17 +13742,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -15512,17 +13810,7 @@ export namespace ConversationFlowResponse {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -15542,11 +13830,7 @@ export namespace ConversationFlowResponse {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -15649,17 +13933,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -15674,11 +13948,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -15711,11 +13981,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -15862,17 +14128,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -15887,11 +14143,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -15924,11 +14176,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -15986,25 +14234,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -16134,17 +14364,7 @@ export namespace ConversationFlowResponse {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -16159,11 +14379,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -16196,11 +14412,7 @@ export namespace ConversationFlowResponse {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -16258,25 +14470,7 @@ export namespace ConversationFlowResponse {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -16562,7 +14756,7 @@ export namespace ConversationFlowResponse {
   }
 }
 
-export type ConversationFlowListResponse = Array<ConversationFlowResponse>;
+export type ConversationFlowListResponse = Array<ConversationFlowResponse>
 
 export interface ConversationFlowCreateParams {
   /**
@@ -16573,23 +14767,7 @@ export interface ConversationFlowCreateParams {
   /**
    * Array of nodes in the conversation flow.
    */
-  nodes: Array<
-    | ConversationFlowCreateParams.ConversationNode
-    | ConversationFlowCreateParams.SubagentNode
-    | ConversationFlowCreateParams.EndNode
-    | ConversationFlowCreateParams.FunctionNode
-    | ConversationFlowCreateParams.CodeNode
-    | ConversationFlowCreateParams.TransferCallNode
-    | ConversationFlowCreateParams.PressDigitNode
-    | ConversationFlowCreateParams.BranchNode
-    | ConversationFlowCreateParams.SMSNode
-    | ConversationFlowCreateParams.ExtractDynamicVariablesNode
-    | ConversationFlowCreateParams.AgentSwapNode
-    | ConversationFlowCreateParams.McpNode
-    | ConversationFlowCreateParams.ComponentNode
-    | ConversationFlowCreateParams.BridgeTransferNode
-    | ConversationFlowCreateParams.CancelTransferNode
-  >;
+  nodes: Array<ConversationFlowCreateParams.ConversationNode | ConversationFlowCreateParams.SubagentNode | ConversationFlowCreateParams.EndNode | ConversationFlowCreateParams.FunctionNode | ConversationFlowCreateParams.CodeNode | ConversationFlowCreateParams.TransferCallNode | ConversationFlowCreateParams.PressDigitNode | ConversationFlowCreateParams.BranchNode | ConversationFlowCreateParams.SMSNode | ConversationFlowCreateParams.ExtractDynamicVariablesNode | ConversationFlowCreateParams.AgentSwapNode | ConversationFlowCreateParams.McpNode | ConversationFlowCreateParams.ComponentNode | ConversationFlowCreateParams.BridgeTransferNode | ConversationFlowCreateParams.CancelTransferNode>;
 
   /**
    * Who starts the conversation - user or agent.
@@ -16670,11 +14848,7 @@ export interface ConversationFlowCreateParams {
   /**
    * Tools available in the conversation flow.
    */
-  tools?: Array<
-    | ConversationFlowCreateParams.CustomTool
-    | ConversationFlowCreateParams.CheckAvailabilityCalTool
-    | ConversationFlowCreateParams.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowCreateParams.CustomTool | ConversationFlowCreateParams.CheckAvailabilityCalTool | ConversationFlowCreateParams.BookAppointmentCalTool> | null;
 }
 
 export namespace ConversationFlowCreateParams {
@@ -16685,25 +14859,7 @@ export namespace ConversationFlowCreateParams {
     /**
      * The LLM model to use
      */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-4.1-nano'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'claude-4.5-sonnet'
-      | 'claude-4.6-sonnet'
-      | 'claude-4.5-haiku'
-      | 'gemini-2.5-flash'
-      | 'gemini-2.5-flash-lite'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite';
+    model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
     /**
      * Type of model choice
@@ -16796,10 +14952,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -16837,17 +14990,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -16915,17 +15058,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -16945,11 +15078,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -16987,11 +15116,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -17094,17 +15219,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -17119,11 +15234,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -17156,11 +15267,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -17194,25 +15301,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -17231,10 +15320,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -17272,17 +15358,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -17359,21 +15435,7 @@ export namespace ConversationFlowCreateParams {
      * The tools owned by this subagent node. This includes other tool types like
      * transfer_call, agent_swap, etc.
      */
-    tools?: Array<
-      | SubagentNode.EndCallTool
-      | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
-      | SubagentNode.AgentSwapTool
-      | SubagentNode.PressDigitTool
-      | SubagentNode.SendSMSTool
-      | SubagentNode.CustomTool
-      | SubagentNode.CodeTool
-      | SubagentNode.ExtractDynamicVariableTool
-      | SubagentNode.BridgeTransferTool
-      | SubagentNode.CancelTransferTool
-      | SubagentNode.McpTool
-    > | null;
+    tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
     voice_speed?: number | null;
   }
@@ -17397,10 +15459,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -17438,17 +15497,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -17516,17 +15565,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -17546,11 +15585,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -17588,11 +15623,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -17695,17 +15726,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -17720,11 +15741,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -17757,11 +15774,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -17795,25 +15808,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -17832,10 +15827,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -17873,17 +15865,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -17947,14 +15929,9 @@ export namespace ConversationFlowCreateParams {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -18099,18 +16076,14 @@ export namespace ConversationFlowCreateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -18203,9 +16176,7 @@ export namespace ConversationFlowCreateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -18457,10 +16428,7 @@ export namespace ConversationFlowCreateParams {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -18742,12 +16710,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -19143,17 +17106,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -19168,11 +17121,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -19205,11 +17154,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -19267,25 +17212,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -19407,17 +17334,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -19472,17 +17389,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -19511,11 +17418,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -19618,17 +17521,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -19643,11 +17536,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -19680,11 +17569,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -19742,25 +17627,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -19889,17 +17756,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -19954,17 +17811,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -19993,11 +17840,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -20100,17 +17943,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -20125,11 +17958,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -20162,11 +17991,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -20224,25 +18049,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -20264,14 +18071,9 @@ export namespace ConversationFlowCreateParams {
 
     edge: TransferCallNode.Edge;
 
-    transfer_destination:
-      | TransferCallNode.TransferDestinationPredefined
-      | TransferCallNode.TransferDestinationInferred;
+    transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer
-      | TransferCallNode.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -20361,17 +18163,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -20492,18 +18284,14 @@ export namespace ConversationFlowCreateParams {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -20596,9 +18384,7 @@ export namespace ConversationFlowCreateParams {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -20753,17 +18539,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -20778,11 +18554,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -20815,11 +18587,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -20877,25 +18645,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -21007,17 +18757,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -21037,11 +18777,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -21144,17 +18880,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -21169,11 +18895,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -21206,11 +18928,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -21244,25 +18962,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -21353,17 +19053,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -21431,17 +19121,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -21461,11 +19141,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -21568,17 +19244,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -21593,11 +19259,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -21630,11 +19292,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -21668,25 +19326,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -21708,10 +19348,7 @@ export namespace ConversationFlowCreateParams {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction:
-      | SMSNode.NodeInstructionPrompt
-      | SMSNode.NodeInstructionStaticText
-      | SMSNode.SMSInstructionTemplate;
+    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -21742,10 +19379,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | FailedEdge.PromptCondition
-        | FailedEdge.EquationCondition
-        | FailedEdge.UnionMember2;
+      transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -21783,17 +19417,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -21856,10 +19480,7 @@ export namespace ConversationFlowCreateParams {
        */
       id: string;
 
-      transition_condition:
-        | SuccessEdge.PromptCondition
-        | SuccessEdge.EquationCondition
-        | SuccessEdge.UnionMember2;
+      transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -21897,17 +19518,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -22005,17 +19616,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -22030,11 +19631,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -22067,11 +19664,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -22105,25 +19698,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -22148,12 +19723,7 @@ export namespace ConversationFlowCreateParams {
      */
     type: 'extract_dynamic_variables';
 
-    variables: Array<
-      | ExtractDynamicVariablesNode.StringAnalysisData
-      | ExtractDynamicVariablesNode.EnumAnalysisData
-      | ExtractDynamicVariablesNode.BooleanAnalysisData
-      | ExtractDynamicVariablesNode.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
     /**
      * Position for frontend display
@@ -22355,17 +19925,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -22420,17 +19980,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -22459,11 +20009,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -22566,17 +20112,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -22591,11 +20127,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -22628,11 +20160,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -22666,25 +20194,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -22818,17 +20328,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -22926,17 +20426,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -22951,11 +20441,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -22988,11 +20474,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -23050,25 +20532,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -23199,17 +20663,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -23264,17 +20718,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -23303,11 +20747,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -23410,17 +20850,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -23435,11 +20865,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -23472,11 +20898,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -23534,25 +20956,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -23663,17 +21067,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -23741,17 +21135,7 @@ export namespace ConversationFlowCreateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -23771,11 +21155,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -23878,17 +21258,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -23903,11 +21273,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -23940,11 +21306,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -24091,17 +21453,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -24116,11 +21468,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -24153,11 +21501,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -24215,25 +21559,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -24363,17 +21689,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -24388,11 +21704,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -24425,11 +21737,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -24487,25 +21795,7 @@ export namespace ConversationFlowCreateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -24537,23 +21827,7 @@ export namespace ConversationFlowCreateParams {
     /**
      * Nodes that make up the component
      */
-    nodes: Array<
-      | Component.ConversationNode
-      | Component.SubagentNode
-      | Component.EndNode
-      | Component.FunctionNode
-      | Component.CodeNode
-      | Component.TransferCallNode
-      | Component.PressDigitNode
-      | Component.BranchNode
-      | Component.SMSNode
-      | Component.ExtractDynamicVariablesNode
-      | Component.AgentSwapNode
-      | Component.McpNode
-      | Component.ComponentNode
-      | Component.BridgeTransferNode
-      | Component.CancelTransferNode
-    >;
+    nodes: Array<Component.ConversationNode | Component.SubagentNode | Component.EndNode | Component.FunctionNode | Component.CodeNode | Component.TransferCallNode | Component.PressDigitNode | Component.BranchNode | Component.SMSNode | Component.ExtractDynamicVariablesNode | Component.AgentSwapNode | Component.McpNode | Component.ComponentNode | Component.BridgeTransferNode | Component.CancelTransferNode>;
 
     /**
      * Display position for the begin tag in the frontend
@@ -24578,9 +21852,7 @@ export namespace ConversationFlowCreateParams {
     /**
      * Tools available within the component
      */
-    tools?: Array<
-      Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool
-    > | null;
+    tools?: Array<Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool> | null;
   }
 
   export namespace Component {
@@ -24664,10 +21936,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -24705,17 +21974,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -24783,17 +22042,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -24813,11 +22062,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -24855,11 +22100,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -24962,17 +22203,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -24987,11 +22218,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -25024,11 +22251,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -25062,25 +22285,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -25099,10 +22304,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -25140,17 +22342,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -25227,21 +22419,7 @@ export namespace ConversationFlowCreateParams {
        * The tools owned by this subagent node. This includes other tool types like
        * transfer_call, agent_swap, etc.
        */
-      tools?: Array<
-        | SubagentNode.EndCallTool
-        | SubagentNode.TransferCallTool
-        | SubagentNode.CheckAvailabilityCalTool
-        | SubagentNode.BookAppointmentCalTool
-        | SubagentNode.AgentSwapTool
-        | SubagentNode.PressDigitTool
-        | SubagentNode.SendSMSTool
-        | SubagentNode.CustomTool
-        | SubagentNode.CodeTool
-        | SubagentNode.ExtractDynamicVariableTool
-        | SubagentNode.BridgeTransferTool
-        | SubagentNode.CancelTransferTool
-        | SubagentNode.McpTool
-      > | null;
+      tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
       voice_speed?: number | null;
     }
@@ -25265,10 +22443,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -25306,17 +22481,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -25384,17 +22549,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -25414,11 +22569,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -25456,11 +22607,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -25563,17 +22710,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -25588,11 +22725,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -25625,11 +22758,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -25663,25 +22792,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -25700,10 +22811,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -25741,17 +22849,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -25815,14 +22913,9 @@ export namespace ConversationFlowCreateParams {
          */
         name: string;
 
-        transfer_destination:
-          | TransferCallTool.TransferDestinationPredefined
-          | TransferCallTool.TransferDestinationInferred;
+        transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-        transfer_option:
-          | TransferCallTool.TransferOptionColdTransfer
-          | TransferCallTool.TransferOptionWarmTransfer
-          | TransferCallTool.TransferOptionAgenticWarmTransfer;
+        transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
         type: 'transfer_call';
 
@@ -25967,18 +23060,14 @@ export namespace ConversationFlowCreateParams {
            * agent receiving the transfer. Can leave either a static message or a dynamic one
            * based on prompt. Set to null to disable warm handoff.
            */
-          private_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set, when transfer is successful, will say the handoff message to both the
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -26071,9 +23160,7 @@ export namespace ConversationFlowCreateParams {
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-            | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -26325,10 +23412,7 @@ export namespace ConversationFlowCreateParams {
          */
         name: string;
 
-        sms_content:
-          | SendSMSTool.SMSContentPredefined
-          | SendSMSTool.SMSContentInferred
-          | SendSMSTool.SMSContentTemplate;
+        sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
         type: 'send_sms';
 
@@ -26610,12 +23694,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The variables to be extracted.
          */
-        variables: Array<
-          | ExtractDynamicVariableTool.StringAnalysisData
-          | ExtractDynamicVariableTool.EnumAnalysisData
-          | ExtractDynamicVariableTool.BooleanAnalysisData
-          | ExtractDynamicVariableTool.NumberAnalysisData
-        >;
+        variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
       }
 
       export namespace ExtractDynamicVariableTool {
@@ -27011,17 +24090,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -27036,11 +24105,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -27073,11 +24138,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -27135,25 +24196,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -27275,17 +24318,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -27340,17 +24373,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -27379,11 +24402,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -27486,17 +24505,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -27511,11 +24520,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -27548,11 +24553,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -27610,25 +24611,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -27757,17 +24740,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -27822,17 +24795,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -27861,11 +24824,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -27968,17 +24927,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -27993,11 +24942,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -28030,11 +24975,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -28092,25 +25033,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -28132,14 +25055,9 @@ export namespace ConversationFlowCreateParams {
 
       edge: TransferCallNode.Edge;
 
-      transfer_destination:
-        | TransferCallNode.TransferDestinationPredefined
-        | TransferCallNode.TransferDestinationInferred;
+      transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer
-        | TransferCallNode.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -28229,17 +25147,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -28360,18 +25268,14 @@ export namespace ConversationFlowCreateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -28464,9 +25368,7 @@ export namespace ConversationFlowCreateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -28621,17 +25523,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -28646,11 +25538,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -28683,11 +25571,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -28745,25 +25629,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -28875,17 +25741,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -28905,11 +25761,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -29012,17 +25864,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -29037,11 +25879,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -29074,11 +25912,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -29112,25 +25946,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -29221,17 +26037,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -29299,17 +26105,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -29329,11 +26125,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -29436,17 +26228,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -29461,11 +26243,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -29498,11 +26276,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -29536,25 +26310,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -29576,10 +26332,7 @@ export namespace ConversationFlowCreateParams {
 
       failed_edge: SMSNode.FailedEdge;
 
-      instruction:
-        | SMSNode.NodeInstructionPrompt
-        | SMSNode.NodeInstructionStaticText
-        | SMSNode.SMSInstructionTemplate;
+      instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
       success_edge: SMSNode.SuccessEdge;
 
@@ -29610,10 +26363,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | FailedEdge.PromptCondition
-          | FailedEdge.EquationCondition
-          | FailedEdge.UnionMember2;
+        transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -29651,17 +26401,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -29724,10 +26464,7 @@ export namespace ConversationFlowCreateParams {
          */
         id: string;
 
-        transition_condition:
-          | SuccessEdge.PromptCondition
-          | SuccessEdge.EquationCondition
-          | SuccessEdge.UnionMember2;
+        transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -29765,17 +26502,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -29873,17 +26600,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -29898,11 +26615,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -29935,11 +26648,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -29973,25 +26682,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -30016,12 +26707,7 @@ export namespace ConversationFlowCreateParams {
        */
       type: 'extract_dynamic_variables';
 
-      variables: Array<
-        | ExtractDynamicVariablesNode.StringAnalysisData
-        | ExtractDynamicVariablesNode.EnumAnalysisData
-        | ExtractDynamicVariablesNode.BooleanAnalysisData
-        | ExtractDynamicVariablesNode.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
       /**
        * Position for frontend display
@@ -30223,17 +26909,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -30288,17 +26964,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -30327,11 +26993,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -30434,17 +27096,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -30459,11 +27111,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -30496,11 +27144,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -30534,25 +27178,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -30686,17 +27312,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -30794,17 +27410,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -30819,11 +27425,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -30856,11 +27458,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -30918,25 +27516,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -31067,17 +27647,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -31132,17 +27702,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -31171,11 +27731,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -31278,17 +27834,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -31303,11 +27849,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -31340,11 +27882,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -31402,25 +27940,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -31531,17 +28051,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -31609,17 +28119,7 @@ export namespace ConversationFlowCreateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -31639,11 +28139,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -31746,17 +28242,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -31771,11 +28257,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -31808,11 +28290,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -31959,17 +28437,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -31984,11 +28452,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -32021,11 +28485,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -32083,25 +28543,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -32231,17 +28673,7 @@ export namespace ConversationFlowCreateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -32256,11 +28688,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -32293,11 +28721,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -32355,25 +28779,7 @@ export namespace ConversationFlowCreateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -33084,23 +29490,7 @@ export interface ConversationFlowUpdateParams {
   /**
    * Body param: Array of nodes in the conversation flow.
    */
-  nodes?: Array<
-    | ConversationFlowUpdateParams.ConversationNode
-    | ConversationFlowUpdateParams.SubagentNode
-    | ConversationFlowUpdateParams.EndNode
-    | ConversationFlowUpdateParams.FunctionNode
-    | ConversationFlowUpdateParams.CodeNode
-    | ConversationFlowUpdateParams.TransferCallNode
-    | ConversationFlowUpdateParams.PressDigitNode
-    | ConversationFlowUpdateParams.BranchNode
-    | ConversationFlowUpdateParams.SMSNode
-    | ConversationFlowUpdateParams.ExtractDynamicVariablesNode
-    | ConversationFlowUpdateParams.AgentSwapNode
-    | ConversationFlowUpdateParams.McpNode
-    | ConversationFlowUpdateParams.ComponentNode
-    | ConversationFlowUpdateParams.BridgeTransferNode
-    | ConversationFlowUpdateParams.CancelTransferNode
-  >;
+  nodes?: Array<ConversationFlowUpdateParams.ConversationNode | ConversationFlowUpdateParams.SubagentNode | ConversationFlowUpdateParams.EndNode | ConversationFlowUpdateParams.FunctionNode | ConversationFlowUpdateParams.CodeNode | ConversationFlowUpdateParams.TransferCallNode | ConversationFlowUpdateParams.PressDigitNode | ConversationFlowUpdateParams.BranchNode | ConversationFlowUpdateParams.SMSNode | ConversationFlowUpdateParams.ExtractDynamicVariablesNode | ConversationFlowUpdateParams.AgentSwapNode | ConversationFlowUpdateParams.McpNode | ConversationFlowUpdateParams.ComponentNode | ConversationFlowUpdateParams.BridgeTransferNode | ConversationFlowUpdateParams.CancelTransferNode>;
 
   /**
    * Body param: Visual annotations displayed on the flow canvas.
@@ -33126,11 +29516,7 @@ export interface ConversationFlowUpdateParams {
   /**
    * Body param: Tools available in the conversation flow.
    */
-  tools?: Array<
-    | ConversationFlowUpdateParams.CustomTool
-    | ConversationFlowUpdateParams.CheckAvailabilityCalTool
-    | ConversationFlowUpdateParams.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowUpdateParams.CustomTool | ConversationFlowUpdateParams.CheckAvailabilityCalTool | ConversationFlowUpdateParams.BookAppointmentCalTool> | null;
 }
 
 export namespace ConversationFlowUpdateParams {
@@ -33152,23 +29538,7 @@ export namespace ConversationFlowUpdateParams {
     /**
      * Nodes that make up the component
      */
-    nodes: Array<
-      | Component.ConversationNode
-      | Component.SubagentNode
-      | Component.EndNode
-      | Component.FunctionNode
-      | Component.CodeNode
-      | Component.TransferCallNode
-      | Component.PressDigitNode
-      | Component.BranchNode
-      | Component.SMSNode
-      | Component.ExtractDynamicVariablesNode
-      | Component.AgentSwapNode
-      | Component.McpNode
-      | Component.ComponentNode
-      | Component.BridgeTransferNode
-      | Component.CancelTransferNode
-    >;
+    nodes: Array<Component.ConversationNode | Component.SubagentNode | Component.EndNode | Component.FunctionNode | Component.CodeNode | Component.TransferCallNode | Component.PressDigitNode | Component.BranchNode | Component.SMSNode | Component.ExtractDynamicVariablesNode | Component.AgentSwapNode | Component.McpNode | Component.ComponentNode | Component.BridgeTransferNode | Component.CancelTransferNode>;
 
     /**
      * Display position for the begin tag in the frontend
@@ -33193,9 +29563,7 @@ export namespace ConversationFlowUpdateParams {
     /**
      * Tools available within the component
      */
-    tools?: Array<
-      Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool
-    > | null;
+    tools?: Array<Component.CustomTool | Component.CheckAvailabilityCalTool | Component.BookAppointmentCalTool> | null;
   }
 
   export namespace Component {
@@ -33279,10 +29647,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -33320,17 +29685,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -33398,17 +29753,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -33428,11 +29773,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -33470,11 +29811,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -33577,17 +29914,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -33602,11 +29929,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -33639,11 +29962,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -33677,25 +29996,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -33714,10 +30015,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -33755,17 +30053,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -33842,21 +30130,7 @@ export namespace ConversationFlowUpdateParams {
        * The tools owned by this subagent node. This includes other tool types like
        * transfer_call, agent_swap, etc.
        */
-      tools?: Array<
-        | SubagentNode.EndCallTool
-        | SubagentNode.TransferCallTool
-        | SubagentNode.CheckAvailabilityCalTool
-        | SubagentNode.BookAppointmentCalTool
-        | SubagentNode.AgentSwapTool
-        | SubagentNode.PressDigitTool
-        | SubagentNode.SendSMSTool
-        | SubagentNode.CustomTool
-        | SubagentNode.CodeTool
-        | SubagentNode.ExtractDynamicVariableTool
-        | SubagentNode.BridgeTransferTool
-        | SubagentNode.CancelTransferTool
-        | SubagentNode.McpTool
-      > | null;
+      tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
       voice_speed?: number | null;
     }
@@ -33880,10 +30154,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | AlwaysEdge.PromptCondition
-          | AlwaysEdge.EquationCondition
-          | AlwaysEdge.UnionMember2;
+        transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -33921,17 +30192,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -33999,17 +30260,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -34029,11 +30280,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the conversation should be.
          */
-        transcript: Array<
-          | FinetuneConversationExample.UnionMember0
-          | FinetuneConversationExample.UnionMember1
-          | FinetuneConversationExample.UnionMember2
-        >;
+        transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
       }
 
       export namespace FinetuneConversationExample {
@@ -34071,11 +30318,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -34178,17 +30421,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -34203,11 +30436,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -34240,11 +30469,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -34278,25 +30503,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -34315,10 +30522,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | SkipResponseEdge.PromptCondition
-          | SkipResponseEdge.EquationCondition
-          | SkipResponseEdge.UnionMember2;
+        transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -34356,17 +30560,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -34430,14 +30624,9 @@ export namespace ConversationFlowUpdateParams {
          */
         name: string;
 
-        transfer_destination:
-          | TransferCallTool.TransferDestinationPredefined
-          | TransferCallTool.TransferDestinationInferred;
+        transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-        transfer_option:
-          | TransferCallTool.TransferOptionColdTransfer
-          | TransferCallTool.TransferOptionWarmTransfer
-          | TransferCallTool.TransferOptionAgenticWarmTransfer;
+        transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
         type: 'transfer_call';
 
@@ -34582,18 +30771,14 @@ export namespace ConversationFlowUpdateParams {
            * agent receiving the transfer. Can leave either a static message or a dynamic one
            * based on prompt. Set to null to disable warm handoff.
            */
-          private_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set, when transfer is successful, will say the handoff message to both the
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionWarmTransfer.WarmTransferPrompt
-            | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -34686,9 +30871,7 @@ export namespace ConversationFlowUpdateParams {
            * transferee and the agent receiving the transfer. Can leave either a static
            * message or a dynamic one based on prompt. Set to null to disable warm handoff.
            */
-          public_handoff_option?:
-            | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-            | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+          public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
           /**
            * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -34940,10 +31123,7 @@ export namespace ConversationFlowUpdateParams {
          */
         name: string;
 
-        sms_content:
-          | SendSMSTool.SMSContentPredefined
-          | SendSMSTool.SMSContentInferred
-          | SendSMSTool.SMSContentTemplate;
+        sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
         type: 'send_sms';
 
@@ -35225,12 +31405,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The variables to be extracted.
          */
-        variables: Array<
-          | ExtractDynamicVariableTool.StringAnalysisData
-          | ExtractDynamicVariableTool.EnumAnalysisData
-          | ExtractDynamicVariableTool.BooleanAnalysisData
-          | ExtractDynamicVariableTool.NumberAnalysisData
-        >;
+        variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
       }
 
       export namespace ExtractDynamicVariableTool {
@@ -35626,17 +31801,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -35651,11 +31816,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -35688,11 +31849,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -35750,25 +31907,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -35890,17 +32029,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -35955,17 +32084,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -35994,11 +32113,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -36101,17 +32216,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -36126,11 +32231,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -36163,11 +32264,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -36225,25 +32322,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -36372,17 +32451,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -36437,17 +32506,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -36476,11 +32535,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -36583,17 +32638,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -36608,11 +32653,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -36645,11 +32686,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -36707,25 +32744,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -36747,14 +32766,9 @@ export namespace ConversationFlowUpdateParams {
 
       edge: TransferCallNode.Edge;
 
-      transfer_destination:
-        | TransferCallNode.TransferDestinationPredefined
-        | TransferCallNode.TransferDestinationInferred;
+      transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallNode.TransferOptionColdTransfer
-        | TransferCallNode.TransferOptionWarmTransfer
-        | TransferCallNode.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
       /**
        * Type of the node
@@ -36844,17 +32858,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -36975,18 +32979,14 @@ export namespace ConversationFlowUpdateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -37079,9 +33079,7 @@ export namespace ConversationFlowUpdateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -37236,17 +33234,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -37261,11 +33249,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -37298,11 +33282,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -37360,25 +33340,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -37490,17 +33452,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -37520,11 +33472,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -37627,17 +33575,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -37652,11 +33590,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -37689,11 +33623,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -37727,25 +33657,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -37836,17 +33748,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -37914,17 +33816,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -37944,11 +33836,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -38051,17 +33939,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -38076,11 +33954,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -38113,11 +33987,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -38151,25 +34021,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -38191,10 +34043,7 @@ export namespace ConversationFlowUpdateParams {
 
       failed_edge: SMSNode.FailedEdge;
 
-      instruction:
-        | SMSNode.NodeInstructionPrompt
-        | SMSNode.NodeInstructionStaticText
-        | SMSNode.SMSInstructionTemplate;
+      instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
       success_edge: SMSNode.SuccessEdge;
 
@@ -38225,10 +34074,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | FailedEdge.PromptCondition
-          | FailedEdge.EquationCondition
-          | FailedEdge.UnionMember2;
+        transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -38266,17 +34112,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -38339,10 +34175,7 @@ export namespace ConversationFlowUpdateParams {
          */
         id: string;
 
-        transition_condition:
-          | SuccessEdge.PromptCondition
-          | SuccessEdge.EquationCondition
-          | SuccessEdge.UnionMember2;
+        transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
         /**
          * ID of the destination node
@@ -38380,17 +34213,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -38488,17 +34311,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -38513,11 +34326,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -38550,11 +34359,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -38588,25 +34393,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -38631,12 +34418,7 @@ export namespace ConversationFlowUpdateParams {
        */
       type: 'extract_dynamic_variables';
 
-      variables: Array<
-        | ExtractDynamicVariablesNode.StringAnalysisData
-        | ExtractDynamicVariablesNode.EnumAnalysisData
-        | ExtractDynamicVariablesNode.BooleanAnalysisData
-        | ExtractDynamicVariablesNode.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
       /**
        * Position for frontend display
@@ -38838,17 +34620,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -38903,17 +34675,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -38942,11 +34704,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -39049,17 +34807,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -39074,11 +34822,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -39111,11 +34855,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -39149,25 +34889,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -39301,17 +35023,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -39409,17 +35121,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -39434,11 +35136,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -39471,11 +35169,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -39533,25 +35227,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -39682,17 +35358,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -39747,17 +35413,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -39786,11 +35442,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -39893,17 +35545,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -39918,11 +35560,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -39955,11 +35593,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -40017,25 +35651,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -40146,17 +35762,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -40224,17 +35830,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -40254,11 +35850,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The example transcript to finetune how the node should transition.
          */
-        transcript: Array<
-          | FinetuneTransitionExample.UnionMember0
-          | FinetuneTransitionExample.UnionMember1
-          | FinetuneTransitionExample.UnionMember2
-        >;
+        transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
         /**
          * Optional destination node ID
@@ -40361,17 +35953,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -40386,11 +35968,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -40423,11 +36001,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -40574,17 +36148,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -40599,11 +36163,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -40636,11 +36196,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -40698,25 +36254,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -40846,17 +36384,7 @@ export namespace ConversationFlowUpdateParams {
                */
               left: string;
 
-              operator:
-                | '=='
-                | '!='
-                | '>'
-                | '>='
-                | '<'
-                | '<='
-                | 'contains'
-                | 'not_contains'
-                | 'exists'
-                | 'not_exist';
+              operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
               /**
                * Right side of the equation. The right side of the equation not required when
@@ -40871,11 +36399,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | NegativeFinetuneExample.UnionMember0
-            | NegativeFinetuneExample.UnionMember1
-            | NegativeFinetuneExample.UnionMember2
-          >;
+          transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
         }
 
         export namespace NegativeFinetuneExample {
@@ -40908,11 +36432,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * Find tune the transition condition to this global node
            */
-          transcript: Array<
-            | PositiveFinetuneExample.UnionMember0
-            | PositiveFinetuneExample.UnionMember1
-            | PositiveFinetuneExample.UnionMember2
-          >;
+          transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
         }
 
         export namespace PositiveFinetuneExample {
@@ -40970,25 +36490,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * The LLM model to use
          */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-4.1-nano'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'claude-4.5-sonnet'
-          | 'claude-4.6-sonnet'
-          | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
-          | 'gemini-2.5-flash-lite'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -41355,25 +36857,7 @@ export namespace ConversationFlowUpdateParams {
     /**
      * The LLM model to use
      */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-4.1-nano'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'claude-4.5-sonnet'
-      | 'claude-4.6-sonnet'
-      | 'claude-4.5-haiku'
-      | 'gemini-2.5-flash'
-      | 'gemini-2.5-flash-lite'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite';
+    model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
     /**
      * Type of model choice
@@ -41466,10 +36950,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -41507,17 +36988,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -41585,17 +37056,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -41615,11 +37076,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -41657,11 +37114,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -41764,17 +37217,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -41789,11 +37232,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -41826,11 +37265,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -41864,25 +37299,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -41901,10 +37318,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -41942,17 +37356,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -42029,21 +37433,7 @@ export namespace ConversationFlowUpdateParams {
      * The tools owned by this subagent node. This includes other tool types like
      * transfer_call, agent_swap, etc.
      */
-    tools?: Array<
-      | SubagentNode.EndCallTool
-      | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
-      | SubagentNode.AgentSwapTool
-      | SubagentNode.PressDigitTool
-      | SubagentNode.SendSMSTool
-      | SubagentNode.CustomTool
-      | SubagentNode.CodeTool
-      | SubagentNode.ExtractDynamicVariableTool
-      | SubagentNode.BridgeTransferTool
-      | SubagentNode.CancelTransferTool
-      | SubagentNode.McpTool
-    > | null;
+    tools?: Array<SubagentNode.EndCallTool | SubagentNode.TransferCallTool | SubagentNode.CheckAvailabilityCalTool | SubagentNode.BookAppointmentCalTool | SubagentNode.AgentSwapTool | SubagentNode.PressDigitTool | SubagentNode.SendSMSTool | SubagentNode.CustomTool | SubagentNode.CodeTool | SubagentNode.ExtractDynamicVariableTool | SubagentNode.BridgeTransferTool | SubagentNode.CancelTransferTool | SubagentNode.McpTool> | null;
 
     voice_speed?: number | null;
   }
@@ -42067,10 +37457,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | AlwaysEdge.PromptCondition
-        | AlwaysEdge.EquationCondition
-        | AlwaysEdge.UnionMember2;
+      transition_condition: AlwaysEdge.PromptCondition | AlwaysEdge.EquationCondition | AlwaysEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -42108,17 +37495,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -42186,17 +37563,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -42216,11 +37583,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the conversation should be.
        */
-      transcript: Array<
-        | FinetuneConversationExample.UnionMember0
-        | FinetuneConversationExample.UnionMember1
-        | FinetuneConversationExample.UnionMember2
-      >;
+      transcript: Array<FinetuneConversationExample.UnionMember0 | FinetuneConversationExample.UnionMember1 | FinetuneConversationExample.UnionMember2>;
     }
 
     export namespace FinetuneConversationExample {
@@ -42258,11 +37621,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -42365,17 +37724,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -42390,11 +37739,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -42427,11 +37772,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -42465,25 +37806,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -42502,10 +37825,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | SkipResponseEdge.PromptCondition
-        | SkipResponseEdge.EquationCondition
-        | SkipResponseEdge.UnionMember2;
+      transition_condition: SkipResponseEdge.PromptCondition | SkipResponseEdge.EquationCondition | SkipResponseEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -42543,17 +37863,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -42617,14 +37927,9 @@ export namespace ConversationFlowUpdateParams {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -42769,18 +38074,14 @@ export namespace ConversationFlowUpdateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -42873,9 +38174,7 @@ export namespace ConversationFlowUpdateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -43127,10 +38426,7 @@ export namespace ConversationFlowUpdateParams {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -43412,12 +38708,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -43813,17 +39104,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -43838,11 +39119,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -43875,11 +39152,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -43937,25 +39210,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -44077,17 +39332,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -44142,17 +39387,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -44181,11 +39416,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -44288,17 +39519,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -44313,11 +39534,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -44350,11 +39567,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -44412,25 +39625,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -44559,17 +39754,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -44624,17 +39809,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -44663,11 +39838,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -44770,17 +39941,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -44795,11 +39956,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -44832,11 +39989,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -44894,25 +40047,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -44934,14 +40069,9 @@ export namespace ConversationFlowUpdateParams {
 
     edge: TransferCallNode.Edge;
 
-    transfer_destination:
-      | TransferCallNode.TransferDestinationPredefined
-      | TransferCallNode.TransferDestinationInferred;
+    transfer_destination: TransferCallNode.TransferDestinationPredefined | TransferCallNode.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallNode.TransferOptionColdTransfer
-      | TransferCallNode.TransferOptionWarmTransfer
-      | TransferCallNode.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallNode.TransferOptionColdTransfer | TransferCallNode.TransferOptionWarmTransfer | TransferCallNode.TransferOptionAgenticWarmTransfer;
 
     /**
      * Type of the node
@@ -45031,17 +40161,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -45162,18 +40282,14 @@ export namespace ConversationFlowUpdateParams {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -45266,9 +40382,7 @@ export namespace ConversationFlowUpdateParams {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -45423,17 +40537,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -45448,11 +40552,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -45485,11 +40585,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -45547,25 +40643,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -45677,17 +40755,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -45707,11 +40775,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -45814,17 +40878,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -45839,11 +40893,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -45876,11 +40926,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -45914,25 +40960,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -46023,17 +41051,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -46101,17 +41119,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -46131,11 +41139,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -46238,17 +41242,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -46263,11 +41257,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -46300,11 +41290,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -46338,25 +41324,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -46378,10 +41346,7 @@ export namespace ConversationFlowUpdateParams {
 
     failed_edge: SMSNode.FailedEdge;
 
-    instruction:
-      | SMSNode.NodeInstructionPrompt
-      | SMSNode.NodeInstructionStaticText
-      | SMSNode.SMSInstructionTemplate;
+    instruction: SMSNode.NodeInstructionPrompt | SMSNode.NodeInstructionStaticText | SMSNode.SMSInstructionTemplate;
 
     success_edge: SMSNode.SuccessEdge;
 
@@ -46412,10 +41377,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | FailedEdge.PromptCondition
-        | FailedEdge.EquationCondition
-        | FailedEdge.UnionMember2;
+      transition_condition: FailedEdge.PromptCondition | FailedEdge.EquationCondition | FailedEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -46453,17 +41415,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -46526,10 +41478,7 @@ export namespace ConversationFlowUpdateParams {
        */
       id: string;
 
-      transition_condition:
-        | SuccessEdge.PromptCondition
-        | SuccessEdge.EquationCondition
-        | SuccessEdge.UnionMember2;
+      transition_condition: SuccessEdge.PromptCondition | SuccessEdge.EquationCondition | SuccessEdge.UnionMember2;
 
       /**
        * ID of the destination node
@@ -46567,17 +41516,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -46675,17 +41614,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -46700,11 +41629,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -46737,11 +41662,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -46775,25 +41696,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -46818,12 +41721,7 @@ export namespace ConversationFlowUpdateParams {
      */
     type: 'extract_dynamic_variables';
 
-    variables: Array<
-      | ExtractDynamicVariablesNode.StringAnalysisData
-      | ExtractDynamicVariablesNode.EnumAnalysisData
-      | ExtractDynamicVariablesNode.BooleanAnalysisData
-      | ExtractDynamicVariablesNode.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariablesNode.StringAnalysisData | ExtractDynamicVariablesNode.EnumAnalysisData | ExtractDynamicVariablesNode.BooleanAnalysisData | ExtractDynamicVariablesNode.NumberAnalysisData>;
 
     /**
      * Position for frontend display
@@ -47025,17 +41923,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -47090,17 +41978,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -47129,11 +42007,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -47236,17 +42110,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -47261,11 +42125,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -47298,11 +42158,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -47336,25 +42192,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -47488,17 +42326,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -47596,17 +42424,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -47621,11 +42439,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -47658,11 +42472,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -47720,25 +42530,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -47869,17 +42661,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -47934,17 +42716,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -47973,11 +42745,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -48080,17 +42848,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -48105,11 +42863,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -48142,11 +42896,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -48204,25 +42954,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -48333,17 +43065,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -48411,17 +43133,7 @@ export namespace ConversationFlowUpdateParams {
            */
           left: string;
 
-          operator:
-            | '=='
-            | '!='
-            | '>'
-            | '>='
-            | '<'
-            | '<='
-            | 'contains'
-            | 'not_contains'
-            | 'exists'
-            | 'not_exist';
+          operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
           /**
            * Right side of the equation. The right side of the equation not required when
@@ -48441,11 +43153,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The example transcript to finetune how the node should transition.
        */
-      transcript: Array<
-        | FinetuneTransitionExample.UnionMember0
-        | FinetuneTransitionExample.UnionMember1
-        | FinetuneTransitionExample.UnionMember2
-      >;
+      transcript: Array<FinetuneTransitionExample.UnionMember0 | FinetuneTransitionExample.UnionMember1 | FinetuneTransitionExample.UnionMember2>;
 
       /**
        * Optional destination node ID
@@ -48548,17 +43256,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -48573,11 +43271,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -48610,11 +43304,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -48761,17 +43451,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -48786,11 +43466,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -48823,11 +43499,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -48885,25 +43557,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -49033,17 +43687,7 @@ export namespace ConversationFlowUpdateParams {
              */
             left: string;
 
-            operator:
-              | '=='
-              | '!='
-              | '>'
-              | '>='
-              | '<'
-              | '<='
-              | 'contains'
-              | 'not_contains'
-              | 'exists'
-              | 'not_exist';
+            operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'contains' | 'not_contains' | 'exists' | 'not_exist';
 
             /**
              * Right side of the equation. The right side of the equation not required when
@@ -49058,11 +43702,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | NegativeFinetuneExample.UnionMember0
-          | NegativeFinetuneExample.UnionMember1
-          | NegativeFinetuneExample.UnionMember2
-        >;
+        transcript: Array<NegativeFinetuneExample.UnionMember0 | NegativeFinetuneExample.UnionMember1 | NegativeFinetuneExample.UnionMember2>;
       }
 
       export namespace NegativeFinetuneExample {
@@ -49095,11 +43735,7 @@ export namespace ConversationFlowUpdateParams {
         /**
          * Find tune the transition condition to this global node
          */
-        transcript: Array<
-          | PositiveFinetuneExample.UnionMember0
-          | PositiveFinetuneExample.UnionMember1
-          | PositiveFinetuneExample.UnionMember2
-        >;
+        transcript: Array<PositiveFinetuneExample.UnionMember0 | PositiveFinetuneExample.UnionMember1 | PositiveFinetuneExample.UnionMember2>;
       }
 
       export namespace PositiveFinetuneExample {
@@ -49157,25 +43793,7 @@ export namespace ConversationFlowUpdateParams {
       /**
        * The LLM model to use
        */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-4.1-nano'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'claude-4.5-sonnet'
-        | 'claude-4.6-sonnet'
-        | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
-        | 'gemini-2.5-flash-lite'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite';
+      model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
 
       /**
        * Type of model choice
@@ -49492,6 +44110,6 @@ export declare namespace ConversationFlow {
     type ConversationFlowCreateParams as ConversationFlowCreateParams,
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
     type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
-    type ConversationFlowListParams as ConversationFlowListParams,
+    type ConversationFlowListParams as ConversationFlowListParams
   };
 }

@@ -30,11 +30,7 @@ export class Llm extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    llmID: string,
-    query: LlmRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<LlmResponse> {
+  retrieve(llmID: string, query: LlmRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmResponse> {
     return this._client.get(path`/get-retell-llm/${llmID}`, { query, ...options });
   }
 
@@ -53,12 +49,8 @@ export class Llm extends APIResource {
    * ```
    */
   update(llmID: string, params: LlmUpdateParams, options?: RequestOptions): APIPromise<LlmResponse> {
-    const { query_version, ...body } = params;
-    return this._client.patch(path`/update-retell-llm/${llmID}`, {
-      query: { version: query_version },
-      body,
-      ...options,
-    });
+    const { query_version, ...body } = params
+    return this._client.patch(path`/update-retell-llm/${llmID}`, { query: { version: query_version }, body, ...options });
   }
 
   /**
@@ -82,10 +74,7 @@ export class Llm extends APIResource {
    * ```
    */
   delete(llmID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-retell-llm/${llmID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/delete-retell-llm/${llmID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -138,21 +127,7 @@ export interface LlmResponse {
    * - Tools of LLM (with state) = general tools + state tools + state transitions
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<
-    | LlmResponse.EndCallTool
-    | LlmResponse.TransferCallTool
-    | LlmResponse.CheckAvailabilityCalTool
-    | LlmResponse.BookAppointmentCalTool
-    | LlmResponse.AgentSwapTool
-    | LlmResponse.PressDigitTool
-    | LlmResponse.SendSMSTool
-    | LlmResponse.CustomTool
-    | LlmResponse.CodeTool
-    | LlmResponse.ExtractDynamicVariableTool
-    | LlmResponse.BridgeTransferTool
-    | LlmResponse.CancelTransferTool
-    | LlmResponse.McpTool
-  > | null;
+  general_tools?: Array<LlmResponse.EndCallTool | LlmResponse.TransferCallTool | LlmResponse.CheckAvailabilityCalTool | LlmResponse.BookAppointmentCalTool | LlmResponse.AgentSwapTool | LlmResponse.PressDigitTool | LlmResponse.SendSMSTool | LlmResponse.CustomTool | LlmResponse.CodeTool | LlmResponse.ExtractDynamicVariableTool | LlmResponse.BridgeTransferTool | LlmResponse.CancelTransferTool | LlmResponse.McpTool> | null;
 
   /**
    * Whether the Retell LLM Response Engine is published.
@@ -177,26 +152,7 @@ export interface LlmResponse {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -296,14 +252,9 @@ export namespace LlmResponse {
      */
     name: string;
 
-    transfer_destination:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
+    transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallTool.TransferOptionColdTransfer
-      | TransferCallTool.TransferOptionWarmTransfer
-      | TransferCallTool.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
     type: 'transfer_call';
 
@@ -448,18 +399,14 @@ export namespace LlmResponse {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -552,9 +499,7 @@ export namespace LlmResponse {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -806,10 +751,7 @@ export namespace LlmResponse {
      */
     name: string;
 
-    sms_content:
-      | SendSMSTool.SMSContentPredefined
-      | SendSMSTool.SMSContentInferred
-      | SendSMSTool.SMSContentTemplate;
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -1091,12 +1033,7 @@ export namespace LlmResponse {
     /**
      * The variables to be extracted.
      */
-    variables: Array<
-      | ExtractDynamicVariableTool.StringAnalysisData
-      | ExtractDynamicVariableTool.EnumAnalysisData
-      | ExtractDynamicVariableTool.BooleanAnalysisData
-      | ExtractDynamicVariableTool.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -1444,21 +1381,7 @@ export namespace LlmResponse {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<
-      | State.EndCallTool
-      | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
-      | State.AgentSwapTool
-      | State.PressDigitTool
-      | State.SendSMSTool
-      | State.CustomTool
-      | State.CodeTool
-      | State.ExtractDynamicVariableTool
-      | State.BridgeTransferTool
-      | State.CancelTransferTool
-      | State.McpTool
-    >;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.AgentSwapTool | State.PressDigitTool | State.SendSMSTool | State.CustomTool | State.CodeTool | State.ExtractDynamicVariableTool | State.BridgeTransferTool | State.CancelTransferTool | State.McpTool>;
   }
 
   export namespace State {
@@ -1562,14 +1485,9 @@ export namespace LlmResponse {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -1714,18 +1632,14 @@ export namespace LlmResponse {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -1818,9 +1732,7 @@ export namespace LlmResponse {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -2072,10 +1984,7 @@ export namespace LlmResponse {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -2357,12 +2266,7 @@ export namespace LlmResponse {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -2644,7 +2548,7 @@ export namespace LlmResponse {
   }
 }
 
-export type LlmListResponse = Array<LlmResponse>;
+export type LlmListResponse = Array<LlmResponse>
 
 export interface LlmCreateParams {
   /**
@@ -2684,21 +2588,7 @@ export interface LlmCreateParams {
    * - Tools of LLM (with state) = general tools + state tools + state transitions
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<
-    | LlmCreateParams.EndCallTool
-    | LlmCreateParams.TransferCallTool
-    | LlmCreateParams.CheckAvailabilityCalTool
-    | LlmCreateParams.BookAppointmentCalTool
-    | LlmCreateParams.AgentSwapTool
-    | LlmCreateParams.PressDigitTool
-    | LlmCreateParams.SendSMSTool
-    | LlmCreateParams.CustomTool
-    | LlmCreateParams.CodeTool
-    | LlmCreateParams.ExtractDynamicVariableTool
-    | LlmCreateParams.BridgeTransferTool
-    | LlmCreateParams.CancelTransferTool
-    | LlmCreateParams.McpTool
-  > | null;
+  general_tools?: Array<LlmCreateParams.EndCallTool | LlmCreateParams.TransferCallTool | LlmCreateParams.CheckAvailabilityCalTool | LlmCreateParams.BookAppointmentCalTool | LlmCreateParams.AgentSwapTool | LlmCreateParams.PressDigitTool | LlmCreateParams.SendSMSTool | LlmCreateParams.CustomTool | LlmCreateParams.CodeTool | LlmCreateParams.ExtractDynamicVariableTool | LlmCreateParams.BridgeTransferTool | LlmCreateParams.CancelTransferTool | LlmCreateParams.McpTool> | null;
 
   /**
    * Knowledge base configuration for RAG retrieval.
@@ -2718,26 +2608,7 @@ export interface LlmCreateParams {
   /**
    * Select the underlying text LLM. If not set, would default to gpt-4.1.
    */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * If set to true, will use high priority pool with more dedicated resource to
@@ -2837,14 +2708,9 @@ export namespace LlmCreateParams {
      */
     name: string;
 
-    transfer_destination:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
+    transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallTool.TransferOptionColdTransfer
-      | TransferCallTool.TransferOptionWarmTransfer
-      | TransferCallTool.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
     type: 'transfer_call';
 
@@ -2989,18 +2855,14 @@ export namespace LlmCreateParams {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -3093,9 +2955,7 @@ export namespace LlmCreateParams {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -3347,10 +3207,7 @@ export namespace LlmCreateParams {
      */
     name: string;
 
-    sms_content:
-      | SendSMSTool.SMSContentPredefined
-      | SendSMSTool.SMSContentInferred
-      | SendSMSTool.SMSContentTemplate;
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -3632,12 +3489,7 @@ export namespace LlmCreateParams {
     /**
      * The variables to be extracted.
      */
-    variables: Array<
-      | ExtractDynamicVariableTool.StringAnalysisData
-      | ExtractDynamicVariableTool.EnumAnalysisData
-      | ExtractDynamicVariableTool.BooleanAnalysisData
-      | ExtractDynamicVariableTool.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -3985,21 +3837,7 @@ export namespace LlmCreateParams {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<
-      | State.EndCallTool
-      | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
-      | State.AgentSwapTool
-      | State.PressDigitTool
-      | State.SendSMSTool
-      | State.CustomTool
-      | State.CodeTool
-      | State.ExtractDynamicVariableTool
-      | State.BridgeTransferTool
-      | State.CancelTransferTool
-      | State.McpTool
-    >;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.AgentSwapTool | State.PressDigitTool | State.SendSMSTool | State.CustomTool | State.CodeTool | State.ExtractDynamicVariableTool | State.BridgeTransferTool | State.CancelTransferTool | State.McpTool>;
   }
 
   export namespace State {
@@ -4103,14 +3941,9 @@ export namespace LlmCreateParams {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -4255,18 +4088,14 @@ export namespace LlmCreateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -4359,9 +4188,7 @@ export namespace LlmCreateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -4613,10 +4440,7 @@ export namespace LlmCreateParams {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -4898,12 +4722,7 @@ export namespace LlmCreateParams {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -5238,21 +5057,7 @@ export interface LlmUpdateParams {
    * - Tools of LLM (with state) = general tools + state tools + state transitions
    * - Tools of LLM (no state) = general tools
    */
-  general_tools?: Array<
-    | LlmUpdateParams.EndCallTool
-    | LlmUpdateParams.TransferCallTool
-    | LlmUpdateParams.CheckAvailabilityCalTool
-    | LlmUpdateParams.BookAppointmentCalTool
-    | LlmUpdateParams.AgentSwapTool
-    | LlmUpdateParams.PressDigitTool
-    | LlmUpdateParams.SendSMSTool
-    | LlmUpdateParams.CustomTool
-    | LlmUpdateParams.CodeTool
-    | LlmUpdateParams.ExtractDynamicVariableTool
-    | LlmUpdateParams.BridgeTransferTool
-    | LlmUpdateParams.CancelTransferTool
-    | LlmUpdateParams.McpTool
-  > | null;
+  general_tools?: Array<LlmUpdateParams.EndCallTool | LlmUpdateParams.TransferCallTool | LlmUpdateParams.CheckAvailabilityCalTool | LlmUpdateParams.BookAppointmentCalTool | LlmUpdateParams.AgentSwapTool | LlmUpdateParams.PressDigitTool | LlmUpdateParams.SendSMSTool | LlmUpdateParams.CustomTool | LlmUpdateParams.CodeTool | LlmUpdateParams.ExtractDynamicVariableTool | LlmUpdateParams.BridgeTransferTool | LlmUpdateParams.CancelTransferTool | LlmUpdateParams.McpTool> | null;
 
   /**
    * Body param: Knowledge base configuration for RAG retrieval.
@@ -5273,26 +5078,7 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying text LLM. If not set, would default to
    * gpt-4.1.
    */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * Body param: If set to true, will use high priority pool with more dedicated
@@ -5392,14 +5178,9 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
-    transfer_destination:
-      | TransferCallTool.TransferDestinationPredefined
-      | TransferCallTool.TransferDestinationInferred;
+    transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-    transfer_option:
-      | TransferCallTool.TransferOptionColdTransfer
-      | TransferCallTool.TransferOptionWarmTransfer
-      | TransferCallTool.TransferOptionAgenticWarmTransfer;
+    transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
     type: 'transfer_call';
 
@@ -5544,18 +5325,14 @@ export namespace LlmUpdateParams {
        * agent receiving the transfer. Can leave either a static message or a dynamic one
        * based on prompt. Set to null to disable warm handoff.
        */
-      private_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionWarmTransfer.WarmTransferPrompt
-        | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -5648,9 +5425,7 @@ export namespace LlmUpdateParams {
        * transferee and the agent receiving the transfer. Can leave either a static
        * message or a dynamic one based on prompt. Set to null to disable warm handoff.
        */
-      public_handoff_option?:
-        | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-        | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+      public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -5902,10 +5677,7 @@ export namespace LlmUpdateParams {
      */
     name: string;
 
-    sms_content:
-      | SendSMSTool.SMSContentPredefined
-      | SendSMSTool.SMSContentInferred
-      | SendSMSTool.SMSContentTemplate;
+    sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
     type: 'send_sms';
 
@@ -6187,12 +5959,7 @@ export namespace LlmUpdateParams {
     /**
      * The variables to be extracted.
      */
-    variables: Array<
-      | ExtractDynamicVariableTool.StringAnalysisData
-      | ExtractDynamicVariableTool.EnumAnalysisData
-      | ExtractDynamicVariableTool.BooleanAnalysisData
-      | ExtractDynamicVariableTool.NumberAnalysisData
-    >;
+    variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -6540,21 +6307,7 @@ export namespace LlmUpdateParams {
      *
      * - Tools of LLM = general tools + state tools + state transitions
      */
-    tools?: Array<
-      | State.EndCallTool
-      | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
-      | State.AgentSwapTool
-      | State.PressDigitTool
-      | State.SendSMSTool
-      | State.CustomTool
-      | State.CodeTool
-      | State.ExtractDynamicVariableTool
-      | State.BridgeTransferTool
-      | State.CancelTransferTool
-      | State.McpTool
-    >;
+    tools?: Array<State.EndCallTool | State.TransferCallTool | State.CheckAvailabilityCalTool | State.BookAppointmentCalTool | State.AgentSwapTool | State.PressDigitTool | State.SendSMSTool | State.CustomTool | State.CodeTool | State.ExtractDynamicVariableTool | State.BridgeTransferTool | State.CancelTransferTool | State.McpTool>;
   }
 
   export namespace State {
@@ -6658,14 +6411,9 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
-      transfer_destination:
-        | TransferCallTool.TransferDestinationPredefined
-        | TransferCallTool.TransferDestinationInferred;
+      transfer_destination: TransferCallTool.TransferDestinationPredefined | TransferCallTool.TransferDestinationInferred;
 
-      transfer_option:
-        | TransferCallTool.TransferOptionColdTransfer
-        | TransferCallTool.TransferOptionWarmTransfer
-        | TransferCallTool.TransferOptionAgenticWarmTransfer;
+      transfer_option: TransferCallTool.TransferOptionColdTransfer | TransferCallTool.TransferOptionWarmTransfer | TransferCallTool.TransferOptionAgenticWarmTransfer;
 
       type: 'transfer_call';
 
@@ -6810,18 +6558,14 @@ export namespace LlmUpdateParams {
          * agent receiving the transfer. Can leave either a static message or a dynamic one
          * based on prompt. Set to null to disable warm handoff.
          */
-        private_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        private_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionWarmTransfer.WarmTransferPrompt
-          | TransferOptionWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionWarmTransfer.WarmTransferPrompt | TransferOptionWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -6914,9 +6658,7 @@ export namespace LlmUpdateParams {
          * transferee and the agent receiving the transfer. Can leave either a static
          * message or a dynamic one based on prompt. Set to null to disable warm handoff.
          */
-        public_handoff_option?:
-          | TransferOptionAgenticWarmTransfer.WarmTransferPrompt
-          | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
+        public_handoff_option?: TransferOptionAgenticWarmTransfer.WarmTransferPrompt | TransferOptionAgenticWarmTransfer.WarmTransferStaticMessage;
 
         /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -7168,10 +6910,7 @@ export namespace LlmUpdateParams {
        */
       name: string;
 
-      sms_content:
-        | SendSMSTool.SMSContentPredefined
-        | SendSMSTool.SMSContentInferred
-        | SendSMSTool.SMSContentTemplate;
+      sms_content: SendSMSTool.SMSContentPredefined | SendSMSTool.SMSContentInferred | SendSMSTool.SMSContentTemplate;
 
       type: 'send_sms';
 
@@ -7453,12 +7192,7 @@ export namespace LlmUpdateParams {
       /**
        * The variables to be extracted.
        */
-      variables: Array<
-        | ExtractDynamicVariableTool.StringAnalysisData
-        | ExtractDynamicVariableTool.EnumAnalysisData
-        | ExtractDynamicVariableTool.BooleanAnalysisData
-        | ExtractDynamicVariableTool.NumberAnalysisData
-      >;
+      variables: Array<ExtractDynamicVariableTool.StringAnalysisData | ExtractDynamicVariableTool.EnumAnalysisData | ExtractDynamicVariableTool.BooleanAnalysisData | ExtractDynamicVariableTool.NumberAnalysisData>;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -7769,6 +7503,6 @@ export declare namespace Llm {
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
-    type LlmListParams as LlmListParams,
+    type LlmListParams as LlmListParams
   };
 }

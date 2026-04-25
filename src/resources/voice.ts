@@ -81,7 +81,7 @@ export interface VoiceResponse {
   preview_audio_url?: string;
 }
 
-export type VoiceListResponse = Array<VoiceResponse>;
+export type VoiceListResponse = Array<VoiceResponse>
 
 export interface VoiceSearchResponse {
   voices: Array<VoiceSearchResponse.Voice>;
@@ -173,6 +173,6 @@ export declare namespace Voice {
     type VoiceSearchResponse as VoiceSearchResponse,
     type VoiceAddResourceParams as VoiceAddResourceParams,
     type VoiceCloneParams as VoiceCloneParams,
-    type VoiceSearchParams as VoiceSearchParams,
+    type VoiceSearchParams as VoiceSearchParams
   };
 }

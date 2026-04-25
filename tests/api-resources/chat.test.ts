@@ -2,10 +2,7 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource chat', () => {
   // Mock server tests are disabled
@@ -23,11 +20,11 @@ describe('resource chat', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.chat.create({
-      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      agent_version: 1,
-      metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
-    });
+    agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+    agent_version: 1,
+    metadata: {},
+    retell_llm_dynamic_variables: { customer_name: 'bar' },
+  });
   });
 
   // Mock server tests are disabled
@@ -69,24 +66,18 @@ describe('resource chat', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.chat.list(
-        {
-          limit: 1000,
-          pagination_key: 'pagination_key',
-          sort_order: 'ascending',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
+    await expect(client.chat.list({
+    limit: 1000,
+    pagination_key: 'pagination_key',
+    sort_order: 'ascending',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('createChatCompletion: only required params', async () => {
-    const responsePromise = client.chat.createChatCompletion({
-      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      content: 'hi how are you doing?',
-    });
+    const responsePromise = client.chat.createChatCompletion({ chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', content: 'hi how are you doing?' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -98,18 +89,12 @@ describe('resource chat', () => {
 
   // Mock server tests are disabled
   test.skip('createChatCompletion: required and optional params', async () => {
-    const response = await client.chat.createChatCompletion({
-      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      content: 'hi how are you doing?',
-    });
+    const response = await client.chat.createChatCompletion({ chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', content: 'hi how are you doing?' });
   });
 
   // Mock server tests are disabled
   test.skip('createSMSChat: only required params', async () => {
-    const responsePromise = client.chat.createSMSChat({
-      from_number: '+12137771234',
-      to_number: '+14155551234',
-    });
+    const responsePromise = client.chat.createSMSChat({ from_number: '+12137771234', to_number: '+14155551234' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -122,13 +107,13 @@ describe('resource chat', () => {
   // Mock server tests are disabled
   test.skip('createSMSChat: required and optional params', async () => {
     const response = await client.chat.createSMSChat({
-      from_number: '+12137771234',
-      to_number: '+14155551234',
-      metadata: {},
-      override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      override_agent_version: 1,
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
-    });
+    from_number: '+12137771234',
+    to_number: '+14155551234',
+    metadata: {},
+    override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+    override_agent_version: 1,
+    retell_llm_dynamic_variables: { customer_name: 'bar' },
+  });
   });
 
   // Mock server tests are disabled
