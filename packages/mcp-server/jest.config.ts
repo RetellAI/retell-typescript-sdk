@@ -10,7 +10,9 @@ const config: JestConfigWithTsJest = {
     '^@retell-ai/mcp-server$': '<rootDir>/src/index.ts',
     '^@retell-ai/mcp-server/(.*)$': '<rootDir>/src/$1',
   },
-  modulePathIgnorePatterns: ['<rootDir>/dist/'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/dist/',
+  ],
   testPathIgnorePatterns: ['scripts'],
 };
 

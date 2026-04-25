@@ -2,18 +2,15 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource agent', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.agent.create({
-      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
-      voice_id: 'retell-Cimo',
-    });
+    response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
+    voice_id: 'retell-Cimo',
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,99 +23,91 @@ describe('resource agent', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.agent.create({
-      response_engine: {
-        llm_id: 'llm_234sdertfsdsfsdf',
-        type: 'retell-llm',
-        version: 0,
-      },
-      voice_id: 'retell-Cimo',
-      agent_name: 'Jarvis',
-      allow_user_dtmf: true,
-      ambient_sound: 'coffee-shop',
-      ambient_sound_volume: 1,
-      analysis_successful_prompt:
-        'The agent finished the task and the call was complete without being cutoff.',
-      analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
-      analysis_user_sentiment_prompt:
-        "Evaluate the user's sentiment based on their tone and satisfaction level.",
-      backchannel_frequency: 0.9,
-      backchannel_words: ['yeah', 'uh-huh'],
-      begin_message_delay_ms: 1000,
-      boosted_keywords: ['retell', 'kroger'],
-      custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
-      data_storage_retention_days: 30,
-      data_storage_setting: 'everything',
-      denoising_mode: 'noise-cancellation',
-      enable_backchannel: true,
-      enable_dynamic_responsiveness: true,
-      enable_dynamic_voice_speed: true,
-      end_call_after_silence_ms: 600000,
-      fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
-      guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
-      handbook_config: {
-        ai_disclosure: true,
-        default_personality: true,
-        echo_verification: true,
-        high_empathy: true,
-        nato_phonetic_alphabet: true,
-        natural_filler_words: true,
-        scope_boundaries: true,
-        smart_matching: true,
-        speech_normalization: true,
-      },
-      interruption_sensitivity: 1,
-      is_public: false,
-      ivr_option: { action: { type: 'hangup' } },
-      language: 'en-US',
-      max_call_duration_ms: 3600000,
-      opt_in_signed_url: true,
-      pii_config: { categories: ['person_name'], mode: 'post_call' },
-      post_call_analysis_data: [
-        {
-          description: 'The name of the customer.',
-          name: 'customer_name',
-          type: 'string',
-          conditional_prompt: 'conditional_prompt',
-          examples: ['John Doe', 'Jane Smith'],
-          required: true,
-        },
-      ],
-      post_call_analysis_model: 'gpt-4.1-mini',
-      pronunciation_dictionary: [
-        {
-          alphabet: 'ipa',
-          phoneme: 'ˈæktʃuəli',
-          word: 'actually',
-        },
-      ],
-      reminder_max_count: 2,
-      reminder_trigger_ms: 10000,
-      responsiveness: 1,
-      ring_duration_ms: 30000,
-      signed_url_expiration_ms: 86400000,
-      stt_mode: 'fast',
-      timezone: 'America/New_York',
-      user_dtmf_options: {
-        digit_limit: 1,
-        termination_key: '#',
-        timeout_ms: 1000,
-      },
-      version_description: 'Customer support agent for handling product inquiries',
-      vocab_specialization: 'general',
-      voice_emotion: 'calm',
-      voice_model: 'eleven_turbo_v2',
-      voice_speed: 1,
-      voice_temperature: 1,
-      voicemail_detection_timeout_ms: 30000,
-      voicemail_message: 'Hi, please give us a callback.',
-      voicemail_option: {
-        action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
-      },
-      volume: 1,
-      webhook_events: ['call_started'],
-      webhook_timeout_ms: 10000,
-      webhook_url: 'https://webhook-url-here',
-    });
+    response_engine: {
+    llm_id: 'llm_234sdertfsdsfsdf',
+    type: 'retell-llm',
+    version: 0,
+  },
+    voice_id: 'retell-Cimo',
+    agent_name: 'Jarvis',
+    allow_user_dtmf: true,
+    ambient_sound: 'coffee-shop',
+    ambient_sound_volume: 1,
+    analysis_successful_prompt: 'The agent finished the task and the call was complete without being cutoff.',
+    analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
+    analysis_user_sentiment_prompt: 'Evaluate the user\'s sentiment based on their tone and satisfaction level.',
+    backchannel_frequency: 0.9,
+    backchannel_words: ['yeah', 'uh-huh'],
+    begin_message_delay_ms: 1000,
+    boosted_keywords: ['retell', 'kroger'],
+    custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+    data_storage_retention_days: 30,
+    data_storage_setting: 'everything',
+    denoising_mode: 'noise-cancellation',
+    enable_backchannel: true,
+    enable_dynamic_responsiveness: true,
+    enable_dynamic_voice_speed: true,
+    end_call_after_silence_ms: 600000,
+    fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
+    guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
+    handbook_config: {
+    ai_disclosure: true,
+    default_personality: true,
+    echo_verification: true,
+    high_empathy: true,
+    nato_phonetic_alphabet: true,
+    natural_filler_words: true,
+    scope_boundaries: true,
+    smart_matching: true,
+    speech_normalization: true,
+  },
+    interruption_sensitivity: 1,
+    is_public: false,
+    ivr_option: { action: { type: 'hangup' } },
+    language: 'en-US',
+    max_call_duration_ms: 3600000,
+    opt_in_signed_url: true,
+    pii_config: { categories: ['person_name'], mode: 'post_call' },
+    post_call_analysis_data: [{
+    description: 'The name of the customer.',
+    name: 'customer_name',
+    type: 'string',
+    conditional_prompt: 'conditional_prompt',
+    examples: ['John Doe', 'Jane Smith'],
+    required: true,
+  }],
+    post_call_analysis_model: 'gpt-4.1-mini',
+    pronunciation_dictionary: [{
+    alphabet: 'ipa',
+    phoneme: 'ˈæktʃuəli',
+    word: 'actually',
+  }],
+    reminder_max_count: 2,
+    reminder_trigger_ms: 10000,
+    responsiveness: 1,
+    ring_duration_ms: 30000,
+    signed_url_expiration_ms: 86400000,
+    stt_mode: 'fast',
+    timezone: 'America/New_York',
+    user_dtmf_options: {
+    digit_limit: 1,
+    termination_key: '#',
+    timeout_ms: 1000,
+  },
+    version_description: 'Customer support agent for handling product inquiries',
+    vocab_specialization: 'general',
+    voice_emotion: 'calm',
+    voice_model: 'eleven_turbo_v2',
+    voice_speed: 1,
+    voice_temperature: 1,
+    voicemail_detection_timeout_ms: 30000,
+    voicemail_message: 'Hi, please give us a callback.',
+    voicemail_option: { action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' } },
+    volume: 1,
+    webhook_events: ['call_started'],
+    webhook_timeout_ms: 10000,
+    webhook_url: 'https://webhook-url-here',
+  });
   });
 
   // Mock server tests are disabled
@@ -136,13 +125,9 @@ describe('resource agent', () => {
   // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.agent.retrieve(
-        '16b980523634a6dc504898cda492e939',
-        { version: 1 },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
+    await expect(client.agent.retrieve('16b980523634a6dc504898cda492e939', { version: 1 }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -172,17 +157,14 @@ describe('resource agent', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.agent.list(
-        {
-          is_latest: true,
-          limit: 50,
-          pagination_key: 'agent_1ffdb9717444d0e77346838911',
-          pagination_key_version: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
+    await expect(client.agent.list({
+    is_latest: true,
+    limit: 50,
+    pagination_key: 'agent_1ffdb9717444d0e77346838911',
+    pagination_key_version: 0,
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
