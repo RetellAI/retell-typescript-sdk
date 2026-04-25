@@ -67,15 +67,8 @@ export class Chat extends APIResource {
    * const chatResponses = await client.chat.list();
    * ```
    */
-  list(
-    query: ChatListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatListResponse> {
-    return this._client.get('/list-chat', {
-      query,
-      timeout: (this._client as any)._options.timeout ?? 300000,
-      ...options,
-    });
+  list(query: ChatListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatListResponse> {
+    return this._client.get('/list-chat', { query, timeout: (this._client as any)._options.timeout ?? 300000, ...options });
   }
 
   /**
@@ -89,15 +82,8 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  createChatCompletion(
-    body: ChatCreateChatCompletionParams,
-    options?: RequestOptions,
-  ): APIPromise<ChatCreateChatCompletionResponse> {
-    return this._client.post('/create-chat-completion', {
-      body,
-      timeout: (this._client as any)._options.timeout ?? 300000,
-      ...options,
-    });
+  createChatCompletion(body: ChatCreateChatCompletionParams, options?: RequestOptions): APIPromise<ChatCreateChatCompletionResponse> {
+    return this._client.post('/create-chat-completion', { body, timeout: (this._client as any)._options.timeout ?? 300000, ...options });
   }
 
   /**
@@ -126,10 +112,7 @@ export class Chat extends APIResource {
    * ```
    */
   end(chatID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/end-chat/${chatID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.patch(path`/end-chat/${chatID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -186,13 +169,7 @@ export interface ChatResponse {
   /**
    * Transcript of the chat weaved with tool call invocation and results.
    */
-  message_with_tool_calls?: Array<
-    | ChatResponse.MessageBase
-    | ChatResponse.ToolCallInvocationMessageBase
-    | ChatResponse.ToolCallResultMessageBase
-    | ChatResponse.NodeTransitionMessageBase
-    | ChatResponse.StateTransitionMessageBase
-  >;
+  message_with_tool_calls?: Array<ChatResponse.MessageBase | ChatResponse.ToolCallInvocationMessageBase | ChatResponse.ToolCallResultMessageBase | ChatResponse.NodeTransitionMessageBase | ChatResponse.StateTransitionMessageBase>;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -456,7 +433,7 @@ export namespace ChatResponse {
   }
 }
 
-export type ChatListResponse = Array<ChatResponse>;
+export type ChatListResponse = Array<ChatResponse>
 
 export interface ChatCreateChatCompletionResponse {
   /**
@@ -464,13 +441,7 @@ export interface ChatCreateChatCompletionResponse {
    * call invocations and their results. Does not include the original input
    * messages.
    */
-  messages: Array<
-    | ChatCreateChatCompletionResponse.MessageBase
-    | ChatCreateChatCompletionResponse.ToolCallInvocationMessageBase
-    | ChatCreateChatCompletionResponse.ToolCallResultMessageBase
-    | ChatCreateChatCompletionResponse.NodeTransitionMessageBase
-    | ChatCreateChatCompletionResponse.StateTransitionMessageBase
-  >;
+  messages: Array<ChatCreateChatCompletionResponse.MessageBase | ChatCreateChatCompletionResponse.ToolCallInvocationMessageBase | ChatCreateChatCompletionResponse.ToolCallResultMessageBase | ChatCreateChatCompletionResponse.NodeTransitionMessageBase | ChatCreateChatCompletionResponse.StateTransitionMessageBase>;
 }
 
 export namespace ChatCreateChatCompletionResponse {
@@ -779,6 +750,6 @@ export declare namespace Chat {
     type ChatUpdateParams as ChatUpdateParams,
     type ChatListParams as ChatListParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
-    type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
+    type ChatCreateSMSChatParams as ChatCreateSMSChatParams
   };
 }

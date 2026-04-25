@@ -2,17 +2,12 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({
-  apiKey: 'YOUR_RETELL_API_KEY',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource chatAgent', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.chatAgent.create({
-      response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },
-    });
+    const responsePromise = client.chatAgent.create({ response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,49 +20,45 @@ describe('resource chatAgent', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.chatAgent.create({
-      response_engine: {
-        llm_id: 'llm_234sdertfsdsfsdf',
-        type: 'retell-llm',
-        version: 0,
-      },
-      agent_name: 'Jarvis',
-      analysis_successful_prompt:
-        'The agent finished the task and the call was complete without being cutoff.',
-      analysis_summary_prompt: 'Summarize the call in a few sentences.',
-      analysis_user_sentiment_prompt:
-        "Evaluate the user's sentiment based on their tone and satisfaction level.",
-      auto_close_message: 'Thank you for chatting. The conversation has ended.',
-      data_storage_retention_days: 30,
-      data_storage_setting: 'everything',
-      end_chat_after_silence_ms: 3600000,
-      guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
-      handbook_config: {
-        ai_disclosure: true,
-        default_personality: true,
-        high_empathy: true,
-        scope_boundaries: true,
-      },
-      is_public: false,
-      language: 'en-US',
-      opt_in_signed_url: true,
-      pii_config: { categories: ['person_name'], mode: 'post_call' },
-      post_chat_analysis_data: [
-        {
-          description: 'The name of the customer.',
-          name: 'customer_name',
-          type: 'string',
-          conditional_prompt: 'conditional_prompt',
-          examples: ['John Doe', 'Jane Smith'],
-          required: true,
-        },
-      ],
-      post_chat_analysis_model: 'gpt-4.1-mini',
-      signed_url_expiration_ms: 86400000,
-      timezone: 'America/New_York',
-      webhook_events: ['chat_started'],
-      webhook_timeout_ms: 10000,
-      webhook_url: 'https://webhook-url-here',
-    });
+    response_engine: {
+    llm_id: 'llm_234sdertfsdsfsdf',
+    type: 'retell-llm',
+    version: 0,
+  },
+    agent_name: 'Jarvis',
+    analysis_successful_prompt: 'The agent finished the task and the call was complete without being cutoff.',
+    analysis_summary_prompt: 'Summarize the call in a few sentences.',
+    analysis_user_sentiment_prompt: 'Evaluate the user\'s sentiment based on their tone and satisfaction level.',
+    auto_close_message: 'Thank you for chatting. The conversation has ended.',
+    data_storage_retention_days: 30,
+    data_storage_setting: 'everything',
+    end_chat_after_silence_ms: 3600000,
+    guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
+    handbook_config: {
+    ai_disclosure: true,
+    default_personality: true,
+    high_empathy: true,
+    scope_boundaries: true,
+  },
+    is_public: false,
+    language: 'en-US',
+    opt_in_signed_url: true,
+    pii_config: { categories: ['person_name'], mode: 'post_call' },
+    post_chat_analysis_data: [{
+    description: 'The name of the customer.',
+    name: 'customer_name',
+    type: 'string',
+    conditional_prompt: 'conditional_prompt',
+    examples: ['John Doe', 'Jane Smith'],
+    required: true,
+  }],
+    post_chat_analysis_model: 'gpt-4.1-mini',
+    signed_url_expiration_ms: 86400000,
+    timezone: 'America/New_York',
+    webhook_events: ['chat_started'],
+    webhook_timeout_ms: 10000,
+    webhook_url: 'https://webhook-url-here',
+  });
   });
 
   // Mock server tests are disabled
@@ -85,13 +76,9 @@ describe('resource chatAgent', () => {
   // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.chatAgent.retrieve(
-        '16b980523634a6dc504898cda492e939',
-        { version: 1 },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
+    await expect(client.chatAgent.retrieve('16b980523634a6dc504898cda492e939', { version: 1 }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -121,17 +108,14 @@ describe('resource chatAgent', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.chatAgent.list(
-        {
-          is_latest: true,
-          limit: 50,
-          pagination_key: '16b980523634a6dc504898cda492e939',
-          pagination_key_version: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
+    await expect(client.chatAgent.list({
+    is_latest: true,
+    limit: 50,
+    pagination_key: '16b980523634a6dc504898cda492e939',
+    pagination_key_version: 0,
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled

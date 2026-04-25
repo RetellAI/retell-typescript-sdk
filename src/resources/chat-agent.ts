@@ -34,11 +34,7 @@ export class ChatAgent extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    agentID: string,
-    query: ChatAgentRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentResponse> {
+  retrieve(agentID: string, query: ChatAgentRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatAgentResponse> {
     return this._client.get(path`/get-chat-agent/${agentID}`, { query, ...options });
   }
 
@@ -52,12 +48,8 @@ export class ChatAgent extends APIResource {
    * );
    * ```
    */
-  update(
-    agentID: string,
-    params: ChatAgentUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentResponse> {
-    const { version, ...body } = params;
+  update(agentID: string, params: ChatAgentUpdateParams, options?: RequestOptions): APIPromise<ChatAgentResponse> {
+    const { version, ...body } = params
     return this._client.patch(path`/update-chat-agent/${agentID}`, { query: { version }, body, ...options });
   }
 
@@ -69,10 +61,7 @@ export class ChatAgent extends APIResource {
    * const chatAgentResponses = await client.chatAgent.list();
    * ```
    */
-  list(
-    query: ChatAgentListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentListResponse> {
+  list(query: ChatAgentListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatAgentListResponse> {
     return this._client.get('/list-chat-agents', { query, ...options });
   }
 
@@ -87,10 +76,7 @@ export class ChatAgent extends APIResource {
    * ```
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-chat-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/delete-chat-agent/${agentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -120,10 +106,7 @@ export class ChatAgent extends APIResource {
    * ```
    */
   publish(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-chat-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.post(path`/publish-chat-agent/${agentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -144,10 +127,7 @@ export interface ChatAgentResponse {
    * the agent. You need to create a Response Engine first before attaching it to an
    * agent.
    */
-  response_engine:
-    | ChatAgentResponse.ResponseEngineRetellLm
-    | ChatAgentResponse.ResponseEngineCustomLm
-    | ChatAgentResponse.ResponseEngineConversationFlow;
+  response_engine: ChatAgentResponse.ResponseEngineRetellLm | ChatAgentResponse.ResponseEngineCustomLm | ChatAgentResponse.ResponseEngineConversationFlow;
 
   /**
    * The name of the chat agent. Only used for your own reference.
@@ -228,46 +208,7 @@ export interface ChatAgentResponse {
    * value `en-US`. Select `multi` for multilingual support, currently this supports
    * Spanish and English.
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'en-AU'
-    | 'en-NZ'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'fr-FR'
-    | 'fr-CA'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR'
-    | 'zh-CN'
-    | 'ru-RU'
-    | 'it-IT'
-    | 'ko-KR'
-    | 'nl-NL'
-    | 'nl-BE'
-    | 'pl-PL'
-    | 'tr-TR'
-    | 'th-TH'
-    | 'vi-VN'
-    | 'ro-RO'
-    | 'bg-BG'
-    | 'ca-ES'
-    | 'da-DK'
-    | 'fi-FI'
-    | 'el-GR'
-    | 'hu-HU'
-    | 'id-ID'
-    | 'no-NO'
-    | 'sk-SK'
-    | 'sv-SE'
-    | 'lt-LT'
-    | 'lv-LV'
-    | 'cs-CZ'
-    | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
 
   /**
    * Whether this agent opts in to signed url for public log. If not set, default
@@ -285,37 +226,12 @@ export interface ChatAgentResponse {
    * pre-defined variables extracted in the chat analysis. This will be available
    * after the chat ends.
    */
-  post_chat_analysis_data?: Array<
-    | ChatAgentResponse.StringAnalysisData
-    | ChatAgentResponse.EnumAnalysisData
-    | ChatAgentResponse.BooleanAnalysisData
-    | ChatAgentResponse.NumberAnalysisData
-    | ChatAgentResponse.ChatPresetAnalysisData
-  > | null;
+  post_chat_analysis_data?: Array<ChatAgentResponse.StringAnalysisData | ChatAgentResponse.EnumAnalysisData | ChatAgentResponse.BooleanAnalysisData | ChatAgentResponse.NumberAnalysisData | ChatAgentResponse.ChatPresetAnalysisData> | null;
 
   /**
    * The model to use for post chat analysis. Default to gpt-4.1.
    */
-  post_chat_analysis_model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  post_chat_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * The expiration time for the signed url in milliseconds. Only applicable when
@@ -419,17 +335,7 @@ export namespace ChatAgentResponse {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<
-      | 'harassment'
-      | 'self_harm'
-      | 'sexual_exploitation'
-      | 'violence'
-      | 'defense_and_national_security'
-      | 'illicit_and_harmful_activity'
-      | 'gambling'
-      | 'regulated_professional_advice'
-      | 'child_safety_and_exploitation'
-    > | null;
+    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
   }
 
   /**
@@ -465,22 +371,7 @@ export namespace ChatAgentResponse {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<
-      | 'person_name'
-      | 'address'
-      | 'email'
-      | 'phone_number'
-      | 'ssn'
-      | 'passport'
-      | 'driver_license'
-      | 'credit_card'
-      | 'bank_account'
-      | 'password'
-      | 'pin'
-      | 'medical_id'
-      | 'date_of_birth'
-      | 'customer_account_number'
-    >;
+    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -652,9 +543,9 @@ export namespace ChatAgentResponse {
   }
 }
 
-export type ChatAgentListResponse = Array<ChatAgentResponse>;
+export type ChatAgentListResponse = Array<ChatAgentResponse>
 
-export type ChatAgentGetVersionsResponse = Array<ChatAgentResponse>;
+export type ChatAgentGetVersionsResponse = Array<ChatAgentResponse>
 
 export interface ChatAgentCreateParams {
   /**
@@ -662,10 +553,7 @@ export interface ChatAgentCreateParams {
    * the agent. You need to create a Response Engine first before attaching it to an
    * agent.
    */
-  response_engine:
-    | ChatAgentCreateParams.ResponseEngineRetellLm
-    | ChatAgentCreateParams.ResponseEngineCustomLm
-    | ChatAgentCreateParams.ResponseEngineConversationFlow;
+  response_engine: ChatAgentCreateParams.ResponseEngineRetellLm | ChatAgentCreateParams.ResponseEngineCustomLm | ChatAgentCreateParams.ResponseEngineConversationFlow;
 
   /**
    * The name of the chat agent. Only used for your own reference.
@@ -741,46 +629,7 @@ export interface ChatAgentCreateParams {
    * value `en-US`. Select `multi` for multilingual support, currently this supports
    * Spanish and English.
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'en-AU'
-    | 'en-NZ'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'fr-FR'
-    | 'fr-CA'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR'
-    | 'zh-CN'
-    | 'ru-RU'
-    | 'it-IT'
-    | 'ko-KR'
-    | 'nl-NL'
-    | 'nl-BE'
-    | 'pl-PL'
-    | 'tr-TR'
-    | 'th-TH'
-    | 'vi-VN'
-    | 'ro-RO'
-    | 'bg-BG'
-    | 'ca-ES'
-    | 'da-DK'
-    | 'fi-FI'
-    | 'el-GR'
-    | 'hu-HU'
-    | 'id-ID'
-    | 'no-NO'
-    | 'sk-SK'
-    | 'sv-SE'
-    | 'lt-LT'
-    | 'lv-LV'
-    | 'cs-CZ'
-    | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
 
   /**
    * Whether this agent opts in to signed url for public log. If not set, default
@@ -798,37 +647,12 @@ export interface ChatAgentCreateParams {
    * pre-defined variables extracted in the chat analysis. This will be available
    * after the chat ends.
    */
-  post_chat_analysis_data?: Array<
-    | ChatAgentCreateParams.StringAnalysisData
-    | ChatAgentCreateParams.EnumAnalysisData
-    | ChatAgentCreateParams.BooleanAnalysisData
-    | ChatAgentCreateParams.NumberAnalysisData
-    | ChatAgentCreateParams.ChatPresetAnalysisData
-  > | null;
+  post_chat_analysis_data?: Array<ChatAgentCreateParams.StringAnalysisData | ChatAgentCreateParams.EnumAnalysisData | ChatAgentCreateParams.BooleanAnalysisData | ChatAgentCreateParams.NumberAnalysisData | ChatAgentCreateParams.ChatPresetAnalysisData> | null;
 
   /**
    * The model to use for post chat analysis. Default to gpt-4.1.
    */
-  post_chat_analysis_model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  post_chat_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * The expiration time for the signed url in milliseconds. Only applicable when
@@ -927,17 +751,7 @@ export namespace ChatAgentCreateParams {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<
-      | 'harassment'
-      | 'self_harm'
-      | 'sexual_exploitation'
-      | 'violence'
-      | 'defense_and_national_security'
-      | 'illicit_and_harmful_activity'
-      | 'gambling'
-      | 'regulated_professional_advice'
-      | 'child_safety_and_exploitation'
-    > | null;
+    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
   }
 
   /**
@@ -973,22 +787,7 @@ export namespace ChatAgentCreateParams {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<
-      | 'person_name'
-      | 'address'
-      | 'email'
-      | 'phone_number'
-      | 'ssn'
-      | 'passport'
-      | 'driver_license'
-      | 'credit_card'
-      | 'bank_account'
-      | 'password'
-      | 'pin'
-      | 'medical_id'
-      | 'date_of_birth'
-      | 'customer_account_number'
-    >;
+    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -1251,46 +1050,7 @@ export interface ChatAgentUpdateParams {
    * default value `en-US`. Select `multi` for multilingual support, currently this
    * supports Spanish and English.
    */
-  language?:
-    | 'en-US'
-    | 'en-IN'
-    | 'en-GB'
-    | 'en-AU'
-    | 'en-NZ'
-    | 'de-DE'
-    | 'es-ES'
-    | 'es-419'
-    | 'hi-IN'
-    | 'fr-FR'
-    | 'fr-CA'
-    | 'ja-JP'
-    | 'pt-PT'
-    | 'pt-BR'
-    | 'zh-CN'
-    | 'ru-RU'
-    | 'it-IT'
-    | 'ko-KR'
-    | 'nl-NL'
-    | 'nl-BE'
-    | 'pl-PL'
-    | 'tr-TR'
-    | 'th-TH'
-    | 'vi-VN'
-    | 'ro-RO'
-    | 'bg-BG'
-    | 'ca-ES'
-    | 'da-DK'
-    | 'fi-FI'
-    | 'el-GR'
-    | 'hu-HU'
-    | 'id-ID'
-    | 'no-NO'
-    | 'sk-SK'
-    | 'sv-SE'
-    | 'lt-LT'
-    | 'lv-LV'
-    | 'cs-CZ'
-    | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
 
   /**
    * Body param: Whether this agent opts in to signed url for public log. If not set,
@@ -1308,47 +1068,19 @@ export interface ChatAgentUpdateParams {
    * augment the pre-defined variables extracted in the chat analysis. This will be
    * available after the chat ends.
    */
-  post_chat_analysis_data?: Array<
-    | ChatAgentUpdateParams.StringAnalysisData
-    | ChatAgentUpdateParams.EnumAnalysisData
-    | ChatAgentUpdateParams.BooleanAnalysisData
-    | ChatAgentUpdateParams.NumberAnalysisData
-    | ChatAgentUpdateParams.ChatPresetAnalysisData
-  > | null;
+  post_chat_analysis_data?: Array<ChatAgentUpdateParams.StringAnalysisData | ChatAgentUpdateParams.EnumAnalysisData | ChatAgentUpdateParams.BooleanAnalysisData | ChatAgentUpdateParams.NumberAnalysisData | ChatAgentUpdateParams.ChatPresetAnalysisData> | null;
 
   /**
    * Body param: The model to use for post chat analysis. Default to gpt-4.1.
    */
-  post_chat_analysis_model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-4.1-nano'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'claude-4.5-sonnet'
-    | 'claude-4.6-sonnet'
-    | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
-    | 'gemini-2.5-flash-lite'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | null;
+  post_chat_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
 
   /**
    * Body param: The Response Engine to attach to the agent. It is used to generate
    * responses for the agent. You need to create a Response Engine first before
    * attaching it to an agent.
    */
-  response_engine?:
-    | ChatAgentUpdateParams.ResponseEngineRetellLm
-    | ChatAgentUpdateParams.ResponseEngineCustomLm
-    | ChatAgentUpdateParams.ResponseEngineConversationFlow;
+  response_engine?: ChatAgentUpdateParams.ResponseEngineRetellLm | ChatAgentUpdateParams.ResponseEngineCustomLm | ChatAgentUpdateParams.ResponseEngineConversationFlow;
 
   /**
    * Body param: The expiration time for the signed url in milliseconds. Only
@@ -1401,17 +1133,7 @@ export namespace ChatAgentUpdateParams {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<
-      | 'harassment'
-      | 'self_harm'
-      | 'sexual_exploitation'
-      | 'violence'
-      | 'defense_and_national_security'
-      | 'illicit_and_harmful_activity'
-      | 'gambling'
-      | 'regulated_professional_advice'
-      | 'child_safety_and_exploitation'
-    > | null;
+    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
   }
 
   /**
@@ -1447,22 +1169,7 @@ export namespace ChatAgentUpdateParams {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<
-      | 'person_name'
-      | 'address'
-      | 'email'
-      | 'phone_number'
-      | 'ssn'
-      | 'passport'
-      | 'driver_license'
-      | 'credit_card'
-      | 'bank_account'
-      | 'password'
-      | 'pin'
-      | 'medical_id'
-      | 'date_of_birth'
-      | 'customer_account_number'
-    >;
+    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -1715,6 +1422,6 @@ export declare namespace ChatAgent {
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
-    type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentListParams as ChatAgentListParams
   };
 }
