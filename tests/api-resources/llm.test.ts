@@ -2,7 +2,10 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource llm', () => {
   // Mock server tests are disabled
@@ -32,9 +35,13 @@ describe('resource llm', () => {
   // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.llm.retrieve('16b980523634a6dc504898cda492e939', { version: 1 }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(Retell.NotFoundError);
+    await expect(
+      client.llm.retrieve(
+        '16b980523634a6dc504898cda492e939',
+        { version: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -64,13 +71,16 @@ describe('resource llm', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.llm.list({
-    limit: 50,
-    pagination_key: 'llm_1ffdb9717444d0e77346838911',
-    pagination_key_version: 0,
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(Retell.NotFoundError);
+    await expect(
+      client.llm.list(
+        {
+          limit: 50,
+          pagination_key: 'llm_1ffdb9717444d0e77346838911',
+          pagination_key_version: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled

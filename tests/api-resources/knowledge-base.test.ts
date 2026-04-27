@@ -2,7 +2,10 @@
 
 import Retell, { toFile } from 'retell-sdk';
 
-const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource knowledgeBase', () => {
   // custom code
@@ -20,14 +23,14 @@ describe('resource knowledgeBase', () => {
   // custom code
   test.skip('create: required and optional params', async () => {
     const response = await client.knowledgeBase.create({
-    knowledge_base_name: 'Sample KB',
-    enable_auto_refresh: true,
-    knowledge_base_files: [await toFile(Buffer.from('Example data'), 'README.md')],
-    knowledge_base_texts: [{ text: 'text', title: 'title' }],
-    knowledge_base_urls: ['https://www.example.com', 'https://www.retellai.com'],
-    max_chunk_size: 2000,
-    min_chunk_size: 400,
-  });
+      knowledge_base_name: 'Sample KB',
+      enable_auto_refresh: true,
+      knowledge_base_files: [await toFile(Buffer.from('Example data'), 'README.md')],
+      knowledge_base_texts: [{ text: 'text', title: 'title' }],
+      knowledge_base_urls: ['https://www.example.com', 'https://www.retellai.com'],
+      max_chunk_size: 2000,
+      min_chunk_size: 400,
+    });
   });
 
   // Mock server tests are disabled
@@ -80,7 +83,9 @@ describe('resource knowledgeBase', () => {
 
   // Mock server tests are disabled
   test.skip('deleteSource: only required params', async () => {
-    const responsePromise = client.knowledgeBase.deleteSource('source_1234567890', { knowledge_base_id: 'kb_1234567890' });
+    const responsePromise = client.knowledgeBase.deleteSource('source_1234567890', {
+      knowledge_base_id: 'kb_1234567890',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,6 +97,8 @@ describe('resource knowledgeBase', () => {
 
   // Mock server tests are disabled
   test.skip('deleteSource: required and optional params', async () => {
-    const response = await client.knowledgeBase.deleteSource('source_1234567890', { knowledge_base_id: 'kb_1234567890' });
+    const response = await client.knowledgeBase.deleteSource('source_1234567890', {
+      knowledge_base_id: 'kb_1234567890',
+    });
   });
 });

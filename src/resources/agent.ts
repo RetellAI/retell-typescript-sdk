@@ -35,7 +35,11 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  retrieve(agentID: string, query: AgentRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<AgentResponse> {
+  retrieve(
+    agentID: string,
+    query: AgentRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentResponse> {
     return this._client.get(path`/get-agent/${agentID}`, { query, ...options });
   }
 
@@ -51,7 +55,7 @@ export class Agent extends APIResource {
    * ```
    */
   update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
-    const { version, ...body } = params
+    const { version, ...body } = params;
     return this._client.patch(path`/update-agent/${agentID}`, { query: { version }, body, ...options });
   }
 
@@ -63,7 +67,10 @@ export class Agent extends APIResource {
    * const agentResponses = await client.agent.list();
    * ```
    */
-  list(query: AgentListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AgentListResponse> {
+  list(
+    query: AgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentListResponse> {
     return this._client.get('/list-agents', { query, ...options });
   }
 
@@ -78,7 +85,10 @@ export class Agent extends APIResource {
    * ```
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-agent/${agentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/delete-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -107,7 +117,10 @@ export class Agent extends APIResource {
    * ```
    */
   publish(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent/${agentID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.post(path`/publish-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -128,7 +141,10 @@ export interface AgentResponse {
    * the agent. You need to create a Response Engine first before attaching it to an
    * agent.
    */
-  response_engine: AgentResponse.ResponseEngineRetellLm | AgentResponse.ResponseEngineCustomLm | AgentResponse.ResponseEngineConversationFlow;
+  response_engine:
+    | AgentResponse.ResponseEngineRetellLm
+    | AgentResponse.ResponseEngineCustomLm
+    | AgentResponse.ResponseEngineConversationFlow;
 
   /**
    * Version of the agent.
@@ -171,7 +187,14 @@ export interface AgentResponse {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | 'call-center'
+    | null;
 
   /**
    * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -347,7 +370,136 @@ export interface AgentResponse {
    * and must not appear inside an array. Single-element arrays are normalized to the
    * equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+  language?:
+    | 'en-US'
+    | 'en-IN'
+    | 'en-GB'
+    | 'en-AU'
+    | 'en-NZ'
+    | 'de-DE'
+    | 'es-ES'
+    | 'es-419'
+    | 'hi-IN'
+    | 'fr-FR'
+    | 'fr-CA'
+    | 'ja-JP'
+    | 'pt-PT'
+    | 'pt-BR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'nl-BE'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
+    | 'ro-RO'
+    | 'bg-BG'
+    | 'ca-ES'
+    | 'th-TH'
+    | 'da-DK'
+    | 'fi-FI'
+    | 'el-GR'
+    | 'hu-HU'
+    | 'id-ID'
+    | 'no-NO'
+    | 'sk-SK'
+    | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
+    | 'cs-CZ'
+    | 'ms-MY'
+    | 'af-ZA'
+    | 'ar-SA'
+    | 'az-AZ'
+    | 'bs-BA'
+    | 'cy-GB'
+    | 'fa-IR'
+    | 'fil-PH'
+    | 'gl-ES'
+    | 'he-IL'
+    | 'hr-HR'
+    | 'hy-AM'
+    | 'is-IS'
+    | 'kk-KZ'
+    | 'kn-IN'
+    | 'mk-MK'
+    | 'mr-IN'
+    | 'ne-NP'
+    | 'sl-SI'
+    | 'sr-RS'
+    | 'sw-KE'
+    | 'ta-IN'
+    | 'ur-IN'
+    | 'yue-CN'
+    | 'uk-UA'
+    | 'multi'
+    | Array<
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+      >;
 
   /**
    * Maximum allowed length for the call, will force end the call if reached. The
@@ -373,12 +525,37 @@ export interface AgentResponse {
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
-  post_call_analysis_data?: Array<AgentResponse.StringAnalysisData | AgentResponse.EnumAnalysisData | AgentResponse.BooleanAnalysisData | AgentResponse.NumberAnalysisData | AgentResponse.CallPresetAnalysisData> | null;
+  post_call_analysis_data?: Array<
+    | AgentResponse.StringAnalysisData
+    | AgentResponse.EnumAnalysisData
+    | AgentResponse.BooleanAnalysisData
+    | AgentResponse.NumberAnalysisData
+    | AgentResponse.CallPresetAnalysisData
+  > | null;
 
   /**
    * The model to use for post call analysis. Default to gpt-4.1.
    */
-  post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+  post_call_analysis_model?:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
+    | null;
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -462,7 +639,22 @@ export interface AgentResponse {
    * available voice models. Set to null to remove voice model selection, and default
    * ones will apply. Check out dashboard for more details of each voice model.
    */
-  voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+  voice_model?:
+    | 'eleven_turbo_v2'
+    | 'eleven_flash_v2'
+    | 'eleven_turbo_v2_5'
+    | 'eleven_flash_v2_5'
+    | 'eleven_multilingual_v2'
+    | 'eleven_v3'
+    | 'sonic-3'
+    | 'sonic-3-latest'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
+    | 's1'
+    | 's2-pro'
+    | null;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -513,7 +705,16 @@ export interface AgentResponse {
    * Which webhook events this agent should receive. If not set, defaults to
    * call_started, call_ended, call_analyzed.
    */
-  webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -609,7 +810,17 @@ export namespace AgentResponse {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
   }
 
   /**
@@ -686,7 +897,22 @@ export namespace AgentResponse {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+      | 'customer_account_number'
+    >;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -902,7 +1128,11 @@ export namespace AgentResponse {
    * detection.
    */
   export interface VoicemailOption {
-    action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -935,9 +1165,9 @@ export namespace AgentResponse {
   }
 }
 
-export type AgentListResponse = Array<AgentResponse>
+export type AgentListResponse = Array<AgentResponse>;
 
-export type AgentGetVersionsResponse = Array<AgentResponse>
+export type AgentGetVersionsResponse = Array<AgentResponse>;
 
 export interface AgentCreateParams {
   /**
@@ -945,7 +1175,10 @@ export interface AgentCreateParams {
    * the agent. You need to create a Response Engine first before attaching it to an
    * agent.
    */
-  response_engine: AgentCreateParams.ResponseEngineRetellLm | AgentCreateParams.ResponseEngineCustomLm | AgentCreateParams.ResponseEngineConversationFlow;
+  response_engine:
+    | AgentCreateParams.ResponseEngineRetellLm
+    | AgentCreateParams.ResponseEngineCustomLm
+    | AgentCreateParams.ResponseEngineConversationFlow;
 
   /**
    * Unique voice id used for the agent. Find list of available voices and their
@@ -983,7 +1216,14 @@ export interface AgentCreateParams {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | 'call-center'
+    | null;
 
   /**
    * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -1154,7 +1394,136 @@ export interface AgentCreateParams {
    * and must not appear inside an array. Single-element arrays are normalized to the
    * equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+  language?:
+    | 'en-US'
+    | 'en-IN'
+    | 'en-GB'
+    | 'en-AU'
+    | 'en-NZ'
+    | 'de-DE'
+    | 'es-ES'
+    | 'es-419'
+    | 'hi-IN'
+    | 'fr-FR'
+    | 'fr-CA'
+    | 'ja-JP'
+    | 'pt-PT'
+    | 'pt-BR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'nl-BE'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
+    | 'ro-RO'
+    | 'bg-BG'
+    | 'ca-ES'
+    | 'th-TH'
+    | 'da-DK'
+    | 'fi-FI'
+    | 'el-GR'
+    | 'hu-HU'
+    | 'id-ID'
+    | 'no-NO'
+    | 'sk-SK'
+    | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
+    | 'cs-CZ'
+    | 'ms-MY'
+    | 'af-ZA'
+    | 'ar-SA'
+    | 'az-AZ'
+    | 'bs-BA'
+    | 'cy-GB'
+    | 'fa-IR'
+    | 'fil-PH'
+    | 'gl-ES'
+    | 'he-IL'
+    | 'hr-HR'
+    | 'hy-AM'
+    | 'is-IS'
+    | 'kk-KZ'
+    | 'kn-IN'
+    | 'mk-MK'
+    | 'mr-IN'
+    | 'ne-NP'
+    | 'sl-SI'
+    | 'sr-RS'
+    | 'sw-KE'
+    | 'ta-IN'
+    | 'ur-IN'
+    | 'yue-CN'
+    | 'uk-UA'
+    | 'multi'
+    | Array<
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+      >;
 
   /**
    * Maximum allowed length for the call, will force end the call if reached. The
@@ -1180,12 +1549,37 @@ export interface AgentCreateParams {
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
-  post_call_analysis_data?: Array<AgentCreateParams.StringAnalysisData | AgentCreateParams.EnumAnalysisData | AgentCreateParams.BooleanAnalysisData | AgentCreateParams.NumberAnalysisData | AgentCreateParams.CallPresetAnalysisData> | null;
+  post_call_analysis_data?: Array<
+    | AgentCreateParams.StringAnalysisData
+    | AgentCreateParams.EnumAnalysisData
+    | AgentCreateParams.BooleanAnalysisData
+    | AgentCreateParams.NumberAnalysisData
+    | AgentCreateParams.CallPresetAnalysisData
+  > | null;
 
   /**
    * The model to use for post call analysis. Default to gpt-4.1.
    */
-  post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+  post_call_analysis_model?:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
+    | null;
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -1269,7 +1663,22 @@ export interface AgentCreateParams {
    * available voice models. Set to null to remove voice model selection, and default
    * ones will apply. Check out dashboard for more details of each voice model.
    */
-  voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+  voice_model?:
+    | 'eleven_turbo_v2'
+    | 'eleven_flash_v2'
+    | 'eleven_turbo_v2_5'
+    | 'eleven_flash_v2_5'
+    | 'eleven_multilingual_v2'
+    | 'eleven_v3'
+    | 'sonic-3'
+    | 'sonic-3-latest'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
+    | 's1'
+    | 's2-pro'
+    | null;
 
   /**
    * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -1320,7 +1729,16 @@ export interface AgentCreateParams {
    * Which webhook events this agent should receive. If not set, defaults to
    * call_started, call_ended, call_analyzed.
    */
-  webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1416,7 +1834,17 @@ export namespace AgentCreateParams {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
   }
 
   /**
@@ -1493,7 +1921,22 @@ export namespace AgentCreateParams {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+      | 'customer_account_number'
+    >;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -1709,7 +2152,11 @@ export namespace AgentCreateParams {
    * detection.
    */
   export interface VoicemailOption {
-    action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -1787,7 +2234,14 @@ export interface AgentUpdateParams {
    *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
    *   Set to `null` to remove ambient sound from this agent.
    */
-  ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+  ambient_sound?:
+    | 'coffee-shop'
+    | 'convention-hall'
+    | 'summer-outdoor'
+    | 'mountain-outdoor'
+    | 'static-noise'
+    | 'call-center'
+    | null;
 
   /**
    * Body param: If set, will control the volume of the ambient sound. Value ranging
@@ -1961,7 +2415,136 @@ export interface AgentUpdateParams {
    * legacy form and must not appear inside an array. Single-element arrays are
    * normalized to the equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+  language?:
+    | 'en-US'
+    | 'en-IN'
+    | 'en-GB'
+    | 'en-AU'
+    | 'en-NZ'
+    | 'de-DE'
+    | 'es-ES'
+    | 'es-419'
+    | 'hi-IN'
+    | 'fr-FR'
+    | 'fr-CA'
+    | 'ja-JP'
+    | 'pt-PT'
+    | 'pt-BR'
+    | 'zh-CN'
+    | 'ru-RU'
+    | 'it-IT'
+    | 'ko-KR'
+    | 'nl-NL'
+    | 'nl-BE'
+    | 'pl-PL'
+    | 'tr-TR'
+    | 'vi-VN'
+    | 'ro-RO'
+    | 'bg-BG'
+    | 'ca-ES'
+    | 'th-TH'
+    | 'da-DK'
+    | 'fi-FI'
+    | 'el-GR'
+    | 'hu-HU'
+    | 'id-ID'
+    | 'no-NO'
+    | 'sk-SK'
+    | 'sv-SE'
+    | 'lt-LT'
+    | 'lv-LV'
+    | 'cs-CZ'
+    | 'ms-MY'
+    | 'af-ZA'
+    | 'ar-SA'
+    | 'az-AZ'
+    | 'bs-BA'
+    | 'cy-GB'
+    | 'fa-IR'
+    | 'fil-PH'
+    | 'gl-ES'
+    | 'he-IL'
+    | 'hr-HR'
+    | 'hy-AM'
+    | 'is-IS'
+    | 'kk-KZ'
+    | 'kn-IN'
+    | 'mk-MK'
+    | 'mr-IN'
+    | 'ne-NP'
+    | 'sl-SI'
+    | 'sr-RS'
+    | 'sw-KE'
+    | 'ta-IN'
+    | 'ur-IN'
+    | 'yue-CN'
+    | 'uk-UA'
+    | 'multi'
+    | Array<
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+      >;
 
   /**
    * Body param: Maximum allowed length for the call, will force end the call if
@@ -1987,12 +2570,37 @@ export interface AgentUpdateParams {
    * augment the pre-defined variables extracted in the call analysis. This will be
    * available after the call ends.
    */
-  post_call_analysis_data?: Array<AgentUpdateParams.StringAnalysisData | AgentUpdateParams.EnumAnalysisData | AgentUpdateParams.BooleanAnalysisData | AgentUpdateParams.NumberAnalysisData | AgentUpdateParams.CallPresetAnalysisData> | null;
+  post_call_analysis_data?: Array<
+    | AgentUpdateParams.StringAnalysisData
+    | AgentUpdateParams.EnumAnalysisData
+    | AgentUpdateParams.BooleanAnalysisData
+    | AgentUpdateParams.NumberAnalysisData
+    | AgentUpdateParams.CallPresetAnalysisData
+  > | null;
 
   /**
    * Body param: The model to use for post call analysis. Default to gpt-4.1.
    */
-  post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+  post_call_analysis_model?:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite'
+    | null;
 
   /**
    * Body param: A list of words / phrases and their pronunciation to be used to
@@ -2022,7 +2630,10 @@ export interface AgentUpdateParams {
    * responses for the agent. You need to create a Response Engine first before
    * attaching it to an agent.
    */
-  response_engine?: AgentUpdateParams.ResponseEngineRetellLm | AgentUpdateParams.ResponseEngineCustomLm | AgentUpdateParams.ResponseEngineConversationFlow;
+  response_engine?:
+    | AgentUpdateParams.ResponseEngineRetellLm
+    | AgentUpdateParams.ResponseEngineCustomLm
+    | AgentUpdateParams.ResponseEngineConversationFlow;
 
   /**
    * Body param: Controls how responsive is the agent. Value ranging from [0,1].
@@ -2096,7 +2707,22 @@ export interface AgentUpdateParams {
    * selection, and default ones will apply. Check out dashboard for more details of
    * each voice model.
    */
-  voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+  voice_model?:
+    | 'eleven_turbo_v2'
+    | 'eleven_flash_v2'
+    | 'eleven_turbo_v2_5'
+    | 'eleven_flash_v2_5'
+    | 'eleven_multilingual_v2'
+    | 'eleven_v3'
+    | 'sonic-3'
+    | 'sonic-3-latest'
+    | 'tts-1'
+    | 'gpt-4o-mini-tts'
+    | 'speech-02-turbo'
+    | 'speech-2.8-turbo'
+    | 's1'
+    | 's2-pro'
+    | null;
 
   /**
    * Body param: Controls speed of voice. Value ranging from [0.5,2]. Lower value
@@ -2147,7 +2773,16 @@ export interface AgentUpdateParams {
    * Body param: Which webhook events this agent should receive. If not set, defaults
    * to call_started, call_ended, call_analyzed.
    */
-  webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+  webhook_events?: Array<
+    | 'call_started'
+    | 'call_ended'
+    | 'call_analyzed'
+    | 'transcript_updated'
+    | 'transfer_started'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'transfer_ended'
+  > | null;
 
   /**
    * Body param: The timeout for the webhook in milliseconds. If not set, default
@@ -2197,7 +2832,17 @@ export namespace AgentUpdateParams {
      * Selected prohibited agent topic categories to check. When agent messages contain
      * these topics, they will be replaced with a placeholder message.
      */
-    output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+    output_topics?: Array<
+      | 'harassment'
+      | 'self_harm'
+      | 'sexual_exploitation'
+      | 'violence'
+      | 'defense_and_national_security'
+      | 'illicit_and_harmful_activity'
+      | 'gambling'
+      | 'regulated_professional_advice'
+      | 'child_safety_and_exploitation'
+    > | null;
   }
 
   /**
@@ -2274,7 +2919,22 @@ export namespace AgentUpdateParams {
     /**
      * List of PII categories to scrub from transcripts and recordings.
      */
-    categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+    categories: Array<
+      | 'person_name'
+      | 'address'
+      | 'email'
+      | 'phone_number'
+      | 'ssn'
+      | 'passport'
+      | 'driver_license'
+      | 'credit_card'
+      | 'bank_account'
+      | 'password'
+      | 'pin'
+      | 'medical_id'
+      | 'date_of_birth'
+      | 'customer_account_number'
+    >;
 
     /**
      * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -2536,7 +3196,11 @@ export namespace AgentUpdateParams {
    * detection.
    */
   export interface VoicemailOption {
-    action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+    action:
+      | VoicemailOption.VoicemailActionPrompt
+      | VoicemailOption.VoicemailActionStaticText
+      | VoicemailOption.VoicemailActionHangup
+      | VoicemailOption.VoicemailActionBridgeTransfer;
   }
 
   export namespace VoicemailOption {
@@ -2604,6 +3268,6 @@ export declare namespace Agent {
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
-    type AgentListParams as AgentListParams
+    type AgentListParams as AgentListParams,
   };
 }

@@ -17,7 +17,10 @@ export class Tests extends APIResource {
   /**
    * Create a new test case definition
    */
-  createTestCaseDefinition(body: TestCreateTestCaseDefinitionParams, options?: RequestOptions): APIPromise<TestCaseDefinitionResponse> {
+  createTestCaseDefinition(
+    body: TestCreateTestCaseDefinitionParams,
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
     return this._client.post('/create-test-case-definition', { body, ...options });
   }
 
@@ -25,7 +28,10 @@ export class Tests extends APIResource {
    * Delete a test case definition
    */
   deleteTestCaseDefinition(testCaseDefinitionID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-test-case-definition/${testCaseDefinitionID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/delete-test-case-definition/${testCaseDefinitionID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -38,7 +44,10 @@ export class Tests extends APIResource {
   /**
    * Get a test case definition by ID
    */
-  getTestCaseDefinition(testCaseDefinitionID: string, options?: RequestOptions): APIPromise<TestCaseDefinitionResponse> {
+  getTestCaseDefinition(
+    testCaseDefinitionID: string,
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
     return this._client.get(path`/get-test-case-definition/${testCaseDefinitionID}`, options);
   }
 
@@ -52,14 +61,20 @@ export class Tests extends APIResource {
   /**
    * List batch test jobs for a response engine
    */
-  listBatchTests(query: TestListBatchTestsParams, options?: RequestOptions): APIPromise<TestListBatchTestsResponse> {
+  listBatchTests(
+    query: TestListBatchTestsParams,
+    options?: RequestOptions,
+  ): APIPromise<TestListBatchTestsResponse> {
     return this._client.get('/list-batch-tests', { query, ...options });
   }
 
   /**
    * List test case definitions for a response engine
    */
-  listTestCaseDefinitions(query: TestListTestCaseDefinitionsParams, options?: RequestOptions): APIPromise<TestListTestCaseDefinitionsResponse> {
+  listTestCaseDefinitions(
+    query: TestListTestCaseDefinitionsParams,
+    options?: RequestOptions,
+  ): APIPromise<TestListTestCaseDefinitionsResponse> {
     return this._client.get('/list-test-case-definitions', { query, ...options });
   }
 
@@ -73,7 +88,11 @@ export class Tests extends APIResource {
   /**
    * Update a test case definition
    */
-  updateTestCaseDefinition(testCaseDefinitionID: string, body: TestUpdateTestCaseDefinitionParams, options?: RequestOptions): APIPromise<TestCaseDefinitionResponse> {
+  updateTestCaseDefinition(
+    testCaseDefinitionID: string,
+    body: TestUpdateTestCaseDefinitionParams,
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
     return this._client.put(path`/update-test-case-definition/${testCaseDefinitionID}`, { body, ...options });
   }
 }
@@ -99,7 +118,10 @@ export interface BatchTestResponse {
    */
   pass_count: number;
 
-  response_engine: BatchTestResponse.ResponseEngineRetellLm | BatchTestResponse.ResponseEngineCustomLm | BatchTestResponse.ResponseEngineConversationFlow;
+  response_engine:
+    | BatchTestResponse.ResponseEngineRetellLm
+    | BatchTestResponse.ResponseEngineCustomLm
+    | BatchTestResponse.ResponseEngineConversationFlow;
 
   /**
    * Status of the batch job
@@ -184,7 +206,25 @@ export interface TestCaseDefinitionResponse {
   /**
    * LLM model to use for simulation
    */
-  llm_model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+  llm_model:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Array of metric names to evaluate
@@ -199,7 +239,9 @@ export interface TestCaseDefinitionResponse {
   /**
    * Response engine to use for the test case. Custom LLM is not supported.
    */
-  response_engine: TestCaseDefinitionResponse.ResponseEngineRetellLm | TestCaseDefinitionResponse.ResponseEngineConversationFlow;
+  response_engine:
+    | TestCaseDefinitionResponse.ResponseEngineRetellLm
+    | TestCaseDefinitionResponse.ResponseEngineConversationFlow;
 
   /**
    * Unique identifier for the test case definition
@@ -352,17 +394,19 @@ export interface TestCaseJobResponse {
   transcript_snapshot?: unknown | null;
 }
 
-export type TestListBatchTestsResponse = Array<BatchTestResponse>
+export type TestListBatchTestsResponse = Array<BatchTestResponse>;
 
-export type TestListTestCaseDefinitionsResponse = Array<TestCaseDefinitionResponse>
+export type TestListTestCaseDefinitionsResponse = Array<TestCaseDefinitionResponse>;
 
-export type TestListTestRunsResponse = Array<TestCaseJobResponse>
+export type TestListTestRunsResponse = Array<TestCaseJobResponse>;
 
 export interface TestCreateBatchTestParams {
   /**
    * Response engine to use for the test cases. Custom LLM is not supported.
    */
-  response_engine: TestCreateBatchTestParams.ResponseEngineRetellLm | TestCreateBatchTestParams.ResponseEngineConversationFlow;
+  response_engine:
+    | TestCreateBatchTestParams.ResponseEngineRetellLm
+    | TestCreateBatchTestParams.ResponseEngineConversationFlow;
 
   /**
    * Array of test case definition IDs to run
@@ -420,7 +464,9 @@ export interface TestCreateTestCaseDefinitionParams {
   /**
    * Response engine to use for the test case. Custom LLM is not supported.
    */
-  response_engine: TestCreateTestCaseDefinitionParams.ResponseEngineRetellLm | TestCreateTestCaseDefinitionParams.ResponseEngineConversationFlow;
+  response_engine:
+    | TestCreateTestCaseDefinitionParams.ResponseEngineRetellLm
+    | TestCreateTestCaseDefinitionParams.ResponseEngineConversationFlow;
 
   /**
    * User prompt to simulate in the test case
@@ -435,7 +481,25 @@ export interface TestCreateTestCaseDefinitionParams {
   /**
    * LLM model to use for simulation
    */
-  llm_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+  llm_model?:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Mock tool calls for testing
@@ -572,7 +636,25 @@ export interface TestUpdateTestCaseDefinitionParams {
   /**
    * LLM model to use for simulation
    */
-  llm_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+  llm_model?:
+    | 'gpt-4.1'
+    | 'gpt-4.1-mini'
+    | 'gpt-4.1-nano'
+    | 'gpt-5'
+    | 'gpt-5-mini'
+    | 'gpt-5-nano'
+    | 'gpt-5.1'
+    | 'gpt-5.2'
+    | 'gpt-5.4'
+    | 'gpt-5.4-mini'
+    | 'gpt-5.4-nano'
+    | 'claude-4.5-sonnet'
+    | 'claude-4.6-sonnet'
+    | 'claude-4.5-haiku'
+    | 'gemini-2.5-flash'
+    | 'gemini-2.5-flash-lite'
+    | 'gemini-3.0-flash'
+    | 'gemini-3.1-flash-lite';
 
   /**
    * Array of metric names to evaluate
@@ -587,7 +669,9 @@ export interface TestUpdateTestCaseDefinitionParams {
   /**
    * Response engine to use for the test case. Custom LLM is not supported.
    */
-  response_engine?: TestUpdateTestCaseDefinitionParams.ResponseEngineRetellLm | TestUpdateTestCaseDefinitionParams.ResponseEngineConversationFlow;
+  response_engine?:
+    | TestUpdateTestCaseDefinitionParams.ResponseEngineRetellLm
+    | TestUpdateTestCaseDefinitionParams.ResponseEngineConversationFlow;
 
   /**
    * Mock tool calls for testing
@@ -693,6 +777,6 @@ export declare namespace Tests {
     type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
     type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
-    type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams
+    type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
   };
 }

@@ -60,7 +60,5 @@ export interface ConcurrencyRetrieveResponse {
 }
 
 export declare namespace Concurrency {
-  export {
-    type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse
-  };
+  export { type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 }

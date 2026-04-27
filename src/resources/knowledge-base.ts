@@ -21,7 +21,10 @@ export class KnowledgeBase extends APIResource {
    * ```
    */
   create(body: KnowledgeBaseCreateParams, options?: RequestOptions): APIPromise<KnowledgeBaseResponse> {
-    return this._client.post('/create-knowledge-base', multipartFormRequestOptions({ body, ...options }, this._client));
+    return this._client.post(
+      '/create-knowledge-base',
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
@@ -59,7 +62,10 @@ export class KnowledgeBase extends APIResource {
    * ```
    */
   delete(knowledgeBaseID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-knowledge-base/${knowledgeBaseID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/delete-knowledge-base/${knowledgeBaseID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -71,8 +77,15 @@ export class KnowledgeBase extends APIResource {
    *   await client.knowledgeBase.addSources('kb_1234567890');
    * ```
    */
-  addSources(knowledgeBaseID: string, body: KnowledgeBaseAddSourcesParams, options?: RequestOptions): APIPromise<KnowledgeBaseResponse> {
-    return this._client.post(path`/add-knowledge-base-sources/${knowledgeBaseID}`, multipartFormRequestOptions({ body, ...options }, this._client));
+  addSources(
+    knowledgeBaseID: string,
+    body: KnowledgeBaseAddSourcesParams,
+    options?: RequestOptions,
+  ): APIPromise<KnowledgeBaseResponse> {
+    return this._client.post(
+      path`/add-knowledge-base-sources/${knowledgeBaseID}`,
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
@@ -87,9 +100,16 @@ export class KnowledgeBase extends APIResource {
    *   );
    * ```
    */
-  deleteSource(sourceID: string, params: KnowledgeBaseDeleteSourceParams, options?: RequestOptions): APIPromise<KnowledgeBaseResponse> {
-    const { knowledge_base_id } = params
-    return this._client.delete(path`/delete-knowledge-base-source/${knowledge_base_id}/source/${sourceID}`, options);
+  deleteSource(
+    sourceID: string,
+    params: KnowledgeBaseDeleteSourceParams,
+    options?: RequestOptions,
+  ): APIPromise<KnowledgeBaseResponse> {
+    const { knowledge_base_id } = params;
+    return this._client.delete(
+      path`/delete-knowledge-base-source/${knowledge_base_id}/source/${sourceID}`,
+      options,
+    );
   }
 }
 
@@ -122,7 +142,11 @@ export interface KnowledgeBaseResponse {
    * Sources of the knowledge base. Will be populated after the processing is done
    * (when status is "complete").
    */
-  knowledge_base_sources?: Array<KnowledgeBaseResponse.KnowledgeBaseSourceDocument | KnowledgeBaseResponse.KnowledgeBaseSourceText | KnowledgeBaseResponse.KnowledgeBaseSourceURL>;
+  knowledge_base_sources?: Array<
+    | KnowledgeBaseResponse.KnowledgeBaseSourceDocument
+    | KnowledgeBaseResponse.KnowledgeBaseSourceText
+    | KnowledgeBaseResponse.KnowledgeBaseSourceURL
+  >;
 
   /**
    * Last refreshed timestamp (milliseconds since epoch). Only applicable when
@@ -205,7 +229,7 @@ export namespace KnowledgeBaseResponse {
   }
 }
 
-export type KnowledgeBaseListResponse = Array<KnowledgeBaseResponse>
+export type KnowledgeBaseListResponse = Array<KnowledgeBaseResponse>;
 
 export interface KnowledgeBaseCreateParams {
   /**
@@ -308,6 +332,6 @@ export declare namespace KnowledgeBase {
     type KnowledgeBaseListResponse as KnowledgeBaseListResponse,
     type KnowledgeBaseCreateParams as KnowledgeBaseCreateParams,
     type KnowledgeBaseAddSourcesParams as KnowledgeBaseAddSourcesParams,
-    type KnowledgeBaseDeleteSourceParams as KnowledgeBaseDeleteSourceParams
+    type KnowledgeBaseDeleteSourceParams as KnowledgeBaseDeleteSourceParams,
   };
 }

@@ -2,7 +2,10 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource concurrency', () => {
   // Mock server tests are disabled

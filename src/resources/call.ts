@@ -51,7 +51,11 @@ export class Call extends APIResource {
    * ```
    */
   list(body: CallListParams, options?: RequestOptions): APIPromise<CallListResponse> {
-    return this._client.post('/v2/list-calls', { body, timeout: (this._client as any)._options.timeout ?? 300000, ...options });
+    return this._client.post('/v2/list-calls', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 
   /**
@@ -65,7 +69,10 @@ export class Call extends APIResource {
    * ```
    */
   delete(callID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v2/delete-call/${callID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/v2/delete-call/${callID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -82,7 +89,11 @@ export class Call extends APIResource {
    * ```
    */
   createPhoneCall(body: CallCreatePhoneCallParams, options?: RequestOptions): APIPromise<PhoneCallResponse> {
-    return this._client.post('/v2/create-phone-call', { body, timeout: (this._client as any)._options.timeout ?? 120000, ...options });
+    return this._client.post('/v2/create-phone-call', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 120000,
+      ...options,
+    });
   }
 
   /**
@@ -110,7 +121,10 @@ export class Call extends APIResource {
    *   });
    * ```
    */
-  registerPhoneCall(body: CallRegisterPhoneCallParams, options?: RequestOptions): APIPromise<PhoneCallResponse> {
+  registerPhoneCall(
+    body: CallRegisterPhoneCallParams,
+    options?: RequestOptions,
+  ): APIPromise<PhoneCallResponse> {
     return this._client.post('/v2/register-phone-call', { body, ...options });
   }
 
@@ -123,11 +137,14 @@ export class Call extends APIResource {
    * ```
    */
   stop(callID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/v2/stop-call/${callID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.post(path`/v2/stop-call/${callID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type CallResponse = WebCallResponse | PhoneCallResponse
+export type CallResponse = WebCallResponse | PhoneCallResponse;
 
 export interface PhoneCallResponse {
   /**
@@ -216,7 +233,39 @@ export interface PhoneCallResponse {
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
-  disconnection_reason?: 'user_hangup' | 'agent_hangup' | 'call_transfer' | 'voicemail_reached' | 'ivr_reached' | 'inactivity' | 'max_duration_reached' | 'concurrency_limit_reached' | 'no_valid_payment' | 'scam_detected' | 'dial_busy' | 'dial_failed' | 'dial_no_answer' | 'invalid_destination' | 'telephony_provider_permission_denied' | 'telephony_provider_unavailable' | 'sip_routing_error' | 'marked_as_spam' | 'user_declined' | 'error_llm_websocket_open' | 'error_llm_websocket_lost_connection' | 'error_llm_websocket_runtime' | 'error_llm_websocket_corrupt_payload' | 'error_no_audio_received' | 'error_asr' | 'error_retell' | 'error_unknown' | 'error_user_not_joined' | 'registered_call_timeout' | 'transfer_bridged' | 'transfer_cancelled' | 'manual_stopped';
+  disconnection_reason?:
+    | 'user_hangup'
+    | 'agent_hangup'
+    | 'call_transfer'
+    | 'voicemail_reached'
+    | 'ivr_reached'
+    | 'inactivity'
+    | 'max_duration_reached'
+    | 'concurrency_limit_reached'
+    | 'no_valid_payment'
+    | 'scam_detected'
+    | 'dial_busy'
+    | 'dial_failed'
+    | 'dial_no_answer'
+    | 'invalid_destination'
+    | 'telephony_provider_permission_denied'
+    | 'telephony_provider_unavailable'
+    | 'sip_routing_error'
+    | 'marked_as_spam'
+    | 'user_declined'
+    | 'error_llm_websocket_open'
+    | 'error_llm_websocket_lost_connection'
+    | 'error_llm_websocket_runtime'
+    | 'error_llm_websocket_corrupt_payload'
+    | 'error_no_audio_received'
+    | 'error_asr'
+    | 'error_retell'
+    | 'error_unknown'
+    | 'error_user_not_joined'
+    | 'registered_call_timeout'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'manual_stopped';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -304,7 +353,13 @@ export interface PhoneCallResponse {
    * PII. It precisely captures when (at what utterance, which word) the tool was
    * invoked and what was the result. Available after call ends.
    */
-  scrubbed_transcript_with_tool_calls?: Array<PhoneCallResponse.Utterance | PhoneCallResponse.ToolCallInvocationUtterance | PhoneCallResponse.ToolCallResultUtterance | PhoneCallResponse.NodeTransitionUtterance | PhoneCallResponse.DtmfUtterance>;
+  scrubbed_transcript_with_tool_calls?: Array<
+    | PhoneCallResponse.Utterance
+    | PhoneCallResponse.ToolCallInvocationUtterance
+    | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.NodeTransitionUtterance
+    | PhoneCallResponse.DtmfUtterance
+  >;
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -334,7 +389,13 @@ export interface PhoneCallResponse {
    * precisely captures when (at what utterance, which word) the tool was invoked and
    * what was the result. Available after call ends.
    */
-  transcript_with_tool_calls?: Array<PhoneCallResponse.Utterance | PhoneCallResponse.ToolCallInvocationUtterance | PhoneCallResponse.ToolCallResultUtterance | PhoneCallResponse.NodeTransitionUtterance | PhoneCallResponse.DtmfUtterance>;
+  transcript_with_tool_calls?: Array<
+    | PhoneCallResponse.Utterance
+    | PhoneCallResponse.ToolCallInvocationUtterance
+    | PhoneCallResponse.ToolCallResultUtterance
+    | PhoneCallResponse.NodeTransitionUtterance
+    | PhoneCallResponse.DtmfUtterance
+  >;
 
   /**
    * The destination number or identifier where the call was transferred to. Only
@@ -1245,7 +1306,39 @@ export interface WebCallResponse {
    * reasons listed here at
    * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
    */
-  disconnection_reason?: 'user_hangup' | 'agent_hangup' | 'call_transfer' | 'voicemail_reached' | 'ivr_reached' | 'inactivity' | 'max_duration_reached' | 'concurrency_limit_reached' | 'no_valid_payment' | 'scam_detected' | 'dial_busy' | 'dial_failed' | 'dial_no_answer' | 'invalid_destination' | 'telephony_provider_permission_denied' | 'telephony_provider_unavailable' | 'sip_routing_error' | 'marked_as_spam' | 'user_declined' | 'error_llm_websocket_open' | 'error_llm_websocket_lost_connection' | 'error_llm_websocket_runtime' | 'error_llm_websocket_corrupt_payload' | 'error_no_audio_received' | 'error_asr' | 'error_retell' | 'error_unknown' | 'error_user_not_joined' | 'registered_call_timeout' | 'transfer_bridged' | 'transfer_cancelled' | 'manual_stopped';
+  disconnection_reason?:
+    | 'user_hangup'
+    | 'agent_hangup'
+    | 'call_transfer'
+    | 'voicemail_reached'
+    | 'ivr_reached'
+    | 'inactivity'
+    | 'max_duration_reached'
+    | 'concurrency_limit_reached'
+    | 'no_valid_payment'
+    | 'scam_detected'
+    | 'dial_busy'
+    | 'dial_failed'
+    | 'dial_no_answer'
+    | 'invalid_destination'
+    | 'telephony_provider_permission_denied'
+    | 'telephony_provider_unavailable'
+    | 'sip_routing_error'
+    | 'marked_as_spam'
+    | 'user_declined'
+    | 'error_llm_websocket_open'
+    | 'error_llm_websocket_lost_connection'
+    | 'error_llm_websocket_runtime'
+    | 'error_llm_websocket_corrupt_payload'
+    | 'error_no_audio_received'
+    | 'error_asr'
+    | 'error_retell'
+    | 'error_unknown'
+    | 'error_user_not_joined'
+    | 'registered_call_timeout'
+    | 'transfer_bridged'
+    | 'transfer_cancelled'
+    | 'manual_stopped';
 
   /**
    * Duration of the call in milliseconds. Available after call ends.
@@ -1333,7 +1426,13 @@ export interface WebCallResponse {
    * PII. It precisely captures when (at what utterance, which word) the tool was
    * invoked and what was the result. Available after call ends.
    */
-  scrubbed_transcript_with_tool_calls?: Array<WebCallResponse.Utterance | WebCallResponse.ToolCallInvocationUtterance | WebCallResponse.ToolCallResultUtterance | WebCallResponse.NodeTransitionUtterance | WebCallResponse.DtmfUtterance>;
+  scrubbed_transcript_with_tool_calls?: Array<
+    | WebCallResponse.Utterance
+    | WebCallResponse.ToolCallInvocationUtterance
+    | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.NodeTransitionUtterance
+    | WebCallResponse.DtmfUtterance
+  >;
 
   /**
    * Begin timestamp (milliseconds since epoch) of the call. Available after call
@@ -1357,7 +1456,13 @@ export interface WebCallResponse {
    * precisely captures when (at what utterance, which word) the tool was invoked and
    * what was the result. Available after call ends.
    */
-  transcript_with_tool_calls?: Array<WebCallResponse.Utterance | WebCallResponse.ToolCallInvocationUtterance | WebCallResponse.ToolCallResultUtterance | WebCallResponse.NodeTransitionUtterance | WebCallResponse.DtmfUtterance>;
+  transcript_with_tool_calls?: Array<
+    | WebCallResponse.Utterance
+    | WebCallResponse.ToolCallInvocationUtterance
+    | WebCallResponse.ToolCallResultUtterance
+    | WebCallResponse.NodeTransitionUtterance
+    | WebCallResponse.DtmfUtterance
+  >;
 
   /**
    * The destination number or identifier where the call was transferred to. Only
@@ -2179,7 +2284,7 @@ export namespace WebCallResponse {
   }
 }
 
-export type CallListResponse = Array<CallResponse>
+export type CallListResponse = Array<CallResponse>;
 
 export interface CallUpdateParams {
   /**
@@ -2282,7 +2387,40 @@ export namespace CallListParams {
     /**
      * Only retrieve calls with specific disconnection reason(s).
      */
-    disconnection_reason?: Array<'user_hangup' | 'agent_hangup' | 'call_transfer' | 'voicemail_reached' | 'ivr_reached' | 'inactivity' | 'max_duration_reached' | 'concurrency_limit_reached' | 'no_valid_payment' | 'scam_detected' | 'dial_busy' | 'dial_failed' | 'dial_no_answer' | 'invalid_destination' | 'telephony_provider_permission_denied' | 'telephony_provider_unavailable' | 'sip_routing_error' | 'marked_as_spam' | 'user_declined' | 'error_llm_websocket_open' | 'error_llm_websocket_lost_connection' | 'error_llm_websocket_runtime' | 'error_llm_websocket_corrupt_payload' | 'error_no_audio_received' | 'error_asr' | 'error_retell' | 'error_unknown' | 'error_user_not_joined' | 'registered_call_timeout' | 'transfer_bridged' | 'transfer_cancelled' | 'manual_stopped'>;
+    disconnection_reason?: Array<
+      | 'user_hangup'
+      | 'agent_hangup'
+      | 'call_transfer'
+      | 'voicemail_reached'
+      | 'ivr_reached'
+      | 'inactivity'
+      | 'max_duration_reached'
+      | 'concurrency_limit_reached'
+      | 'no_valid_payment'
+      | 'scam_detected'
+      | 'dial_busy'
+      | 'dial_failed'
+      | 'dial_no_answer'
+      | 'invalid_destination'
+      | 'telephony_provider_permission_denied'
+      | 'telephony_provider_unavailable'
+      | 'sip_routing_error'
+      | 'marked_as_spam'
+      | 'user_declined'
+      | 'error_llm_websocket_open'
+      | 'error_llm_websocket_lost_connection'
+      | 'error_llm_websocket_runtime'
+      | 'error_llm_websocket_corrupt_payload'
+      | 'error_no_audio_received'
+      | 'error_asr'
+      | 'error_retell'
+      | 'error_unknown'
+      | 'error_user_not_joined'
+      | 'registered_call_timeout'
+      | 'transfer_bridged'
+      | 'transfer_cancelled'
+      | 'manual_stopped'
+    >;
 
     /**
      * Only retrieve calls with specific range of duration(s).
@@ -2503,7 +2641,14 @@ export namespace CallCreatePhoneCallParams {
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
        *   Set to `null` to remove ambient sound from this agent.
        */
-      ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+      ambient_sound?:
+        | 'coffee-shop'
+        | 'convention-hall'
+        | 'summer-outdoor'
+        | 'mountain-outdoor'
+        | 'static-noise'
+        | 'call-center'
+        | null;
 
       /**
        * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -2674,7 +2819,136 @@ export namespace CallCreatePhoneCallParams {
        * and must not appear inside an array. Single-element arrays are normalized to the
        * equivalent scalar on output. If unset, defaults to `en-US`.
        */
-      language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+      language?:
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+        | 'multi'
+        | Array<
+            | 'en-US'
+            | 'en-IN'
+            | 'en-GB'
+            | 'en-AU'
+            | 'en-NZ'
+            | 'de-DE'
+            | 'es-ES'
+            | 'es-419'
+            | 'hi-IN'
+            | 'fr-FR'
+            | 'fr-CA'
+            | 'ja-JP'
+            | 'pt-PT'
+            | 'pt-BR'
+            | 'zh-CN'
+            | 'ru-RU'
+            | 'it-IT'
+            | 'ko-KR'
+            | 'nl-NL'
+            | 'nl-BE'
+            | 'pl-PL'
+            | 'tr-TR'
+            | 'vi-VN'
+            | 'ro-RO'
+            | 'bg-BG'
+            | 'ca-ES'
+            | 'th-TH'
+            | 'da-DK'
+            | 'fi-FI'
+            | 'el-GR'
+            | 'hu-HU'
+            | 'id-ID'
+            | 'no-NO'
+            | 'sk-SK'
+            | 'sv-SE'
+            | 'lt-LT'
+            | 'lv-LV'
+            | 'cs-CZ'
+            | 'ms-MY'
+            | 'af-ZA'
+            | 'ar-SA'
+            | 'az-AZ'
+            | 'bs-BA'
+            | 'cy-GB'
+            | 'fa-IR'
+            | 'fil-PH'
+            | 'gl-ES'
+            | 'he-IL'
+            | 'hr-HR'
+            | 'hy-AM'
+            | 'is-IS'
+            | 'kk-KZ'
+            | 'kn-IN'
+            | 'mk-MK'
+            | 'mr-IN'
+            | 'ne-NP'
+            | 'sl-SI'
+            | 'sr-RS'
+            | 'sw-KE'
+            | 'ta-IN'
+            | 'ur-IN'
+            | 'yue-CN'
+            | 'uk-UA'
+          >;
 
       /**
        * Maximum allowed length for the call, will force end the call if reached. The
@@ -2700,12 +2974,37 @@ export namespace CallCreatePhoneCallParams {
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
-      post_call_analysis_data?: Array<Agent.StringAnalysisData | Agent.EnumAnalysisData | Agent.BooleanAnalysisData | Agent.NumberAnalysisData | Agent.CallPresetAnalysisData> | null;
+      post_call_analysis_data?: Array<
+        | Agent.StringAnalysisData
+        | Agent.EnumAnalysisData
+        | Agent.BooleanAnalysisData
+        | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
+      > | null;
 
       /**
        * The model to use for post call analysis. Default to gpt-4.1.
        */
-      post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      post_call_analysis_model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -2734,7 +3033,10 @@ export namespace CallCreatePhoneCallParams {
        * the agent. You need to create a Response Engine first before attaching it to an
        * agent.
        */
-      response_engine?: Agent.ResponseEngineRetellLm | Agent.ResponseEngineCustomLm | Agent.ResponseEngineConversationFlow;
+      response_engine?:
+        | Agent.ResponseEngineRetellLm
+        | Agent.ResponseEngineCustomLm
+        | Agent.ResponseEngineConversationFlow;
 
       /**
        * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -2802,7 +3104,22 @@ export namespace CallCreatePhoneCallParams {
        * available voice models. Set to null to remove voice model selection, and default
        * ones will apply. Check out dashboard for more details of each voice model.
        */
-      voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+      voice_model?:
+        | 'eleven_turbo_v2'
+        | 'eleven_flash_v2'
+        | 'eleven_turbo_v2_5'
+        | 'eleven_flash_v2_5'
+        | 'eleven_multilingual_v2'
+        | 'eleven_v3'
+        | 'sonic-3'
+        | 'sonic-3-latest'
+        | 'tts-1'
+        | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
+        | 's1'
+        | 's2-pro'
+        | null;
 
       /**
        * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -2853,7 +3170,16 @@ export namespace CallCreatePhoneCallParams {
        * Which webhook events this agent should receive. If not set, defaults to
        * call_started, call_ended, call_analyzed.
        */
-      webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
 
       /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -2903,7 +3229,17 @@ export namespace CallCreatePhoneCallParams {
          * Selected prohibited agent topic categories to check. When agent messages contain
          * these topics, they will be replaced with a placeholder message.
          */
-        output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+        output_topics?: Array<
+          | 'harassment'
+          | 'self_harm'
+          | 'sexual_exploitation'
+          | 'violence'
+          | 'defense_and_national_security'
+          | 'illicit_and_harmful_activity'
+          | 'gambling'
+          | 'regulated_professional_advice'
+          | 'child_safety_and_exploitation'
+        > | null;
       }
 
       /**
@@ -2980,7 +3316,22 @@ export namespace CallCreatePhoneCallParams {
         /**
          * List of PII categories to scrub from transcripts and recordings.
          */
-        categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+        categories: Array<
+          | 'person_name'
+          | 'address'
+          | 'email'
+          | 'phone_number'
+          | 'ssn'
+          | 'passport'
+          | 'driver_license'
+          | 'credit_card'
+          | 'bank_account'
+          | 'password'
+          | 'pin'
+          | 'medical_id'
+          | 'date_of_birth'
+          | 'customer_account_number'
+        >;
 
         /**
          * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -3242,7 +3593,11 @@ export namespace CallCreatePhoneCallParams {
        * detection.
        */
       export interface VoicemailOption {
-        action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+        action:
+          | VoicemailOption.VoicemailActionPrompt
+          | VoicemailOption.VoicemailActionStaticText
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -3346,7 +3701,25 @@ export namespace CallCreatePhoneCallParams {
         /**
          * The LLM model to use
          */
-        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -3395,7 +3768,26 @@ export namespace CallCreatePhoneCallParams {
       /**
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
-      model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * If set to true, will use high priority pool with more dedicated resource to
@@ -3565,7 +3957,14 @@ export namespace CallCreateWebCallParams {
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
        *   Set to `null` to remove ambient sound from this agent.
        */
-      ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+      ambient_sound?:
+        | 'coffee-shop'
+        | 'convention-hall'
+        | 'summer-outdoor'
+        | 'mountain-outdoor'
+        | 'static-noise'
+        | 'call-center'
+        | null;
 
       /**
        * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -3736,7 +4135,136 @@ export namespace CallCreateWebCallParams {
        * and must not appear inside an array. Single-element arrays are normalized to the
        * equivalent scalar on output. If unset, defaults to `en-US`.
        */
-      language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+      language?:
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+        | 'multi'
+        | Array<
+            | 'en-US'
+            | 'en-IN'
+            | 'en-GB'
+            | 'en-AU'
+            | 'en-NZ'
+            | 'de-DE'
+            | 'es-ES'
+            | 'es-419'
+            | 'hi-IN'
+            | 'fr-FR'
+            | 'fr-CA'
+            | 'ja-JP'
+            | 'pt-PT'
+            | 'pt-BR'
+            | 'zh-CN'
+            | 'ru-RU'
+            | 'it-IT'
+            | 'ko-KR'
+            | 'nl-NL'
+            | 'nl-BE'
+            | 'pl-PL'
+            | 'tr-TR'
+            | 'vi-VN'
+            | 'ro-RO'
+            | 'bg-BG'
+            | 'ca-ES'
+            | 'th-TH'
+            | 'da-DK'
+            | 'fi-FI'
+            | 'el-GR'
+            | 'hu-HU'
+            | 'id-ID'
+            | 'no-NO'
+            | 'sk-SK'
+            | 'sv-SE'
+            | 'lt-LT'
+            | 'lv-LV'
+            | 'cs-CZ'
+            | 'ms-MY'
+            | 'af-ZA'
+            | 'ar-SA'
+            | 'az-AZ'
+            | 'bs-BA'
+            | 'cy-GB'
+            | 'fa-IR'
+            | 'fil-PH'
+            | 'gl-ES'
+            | 'he-IL'
+            | 'hr-HR'
+            | 'hy-AM'
+            | 'is-IS'
+            | 'kk-KZ'
+            | 'kn-IN'
+            | 'mk-MK'
+            | 'mr-IN'
+            | 'ne-NP'
+            | 'sl-SI'
+            | 'sr-RS'
+            | 'sw-KE'
+            | 'ta-IN'
+            | 'ur-IN'
+            | 'yue-CN'
+            | 'uk-UA'
+          >;
 
       /**
        * Maximum allowed length for the call, will force end the call if reached. The
@@ -3762,12 +4290,37 @@ export namespace CallCreateWebCallParams {
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
-      post_call_analysis_data?: Array<Agent.StringAnalysisData | Agent.EnumAnalysisData | Agent.BooleanAnalysisData | Agent.NumberAnalysisData | Agent.CallPresetAnalysisData> | null;
+      post_call_analysis_data?: Array<
+        | Agent.StringAnalysisData
+        | Agent.EnumAnalysisData
+        | Agent.BooleanAnalysisData
+        | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
+      > | null;
 
       /**
        * The model to use for post call analysis. Default to gpt-4.1.
        */
-      post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      post_call_analysis_model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -3796,7 +4349,10 @@ export namespace CallCreateWebCallParams {
        * the agent. You need to create a Response Engine first before attaching it to an
        * agent.
        */
-      response_engine?: Agent.ResponseEngineRetellLm | Agent.ResponseEngineCustomLm | Agent.ResponseEngineConversationFlow;
+      response_engine?:
+        | Agent.ResponseEngineRetellLm
+        | Agent.ResponseEngineCustomLm
+        | Agent.ResponseEngineConversationFlow;
 
       /**
        * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -3864,7 +4420,22 @@ export namespace CallCreateWebCallParams {
        * available voice models. Set to null to remove voice model selection, and default
        * ones will apply. Check out dashboard for more details of each voice model.
        */
-      voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+      voice_model?:
+        | 'eleven_turbo_v2'
+        | 'eleven_flash_v2'
+        | 'eleven_turbo_v2_5'
+        | 'eleven_flash_v2_5'
+        | 'eleven_multilingual_v2'
+        | 'eleven_v3'
+        | 'sonic-3'
+        | 'sonic-3-latest'
+        | 'tts-1'
+        | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
+        | 's1'
+        | 's2-pro'
+        | null;
 
       /**
        * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -3915,7 +4486,16 @@ export namespace CallCreateWebCallParams {
        * Which webhook events this agent should receive. If not set, defaults to
        * call_started, call_ended, call_analyzed.
        */
-      webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
 
       /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -3965,7 +4545,17 @@ export namespace CallCreateWebCallParams {
          * Selected prohibited agent topic categories to check. When agent messages contain
          * these topics, they will be replaced with a placeholder message.
          */
-        output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+        output_topics?: Array<
+          | 'harassment'
+          | 'self_harm'
+          | 'sexual_exploitation'
+          | 'violence'
+          | 'defense_and_national_security'
+          | 'illicit_and_harmful_activity'
+          | 'gambling'
+          | 'regulated_professional_advice'
+          | 'child_safety_and_exploitation'
+        > | null;
       }
 
       /**
@@ -4042,7 +4632,22 @@ export namespace CallCreateWebCallParams {
         /**
          * List of PII categories to scrub from transcripts and recordings.
          */
-        categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+        categories: Array<
+          | 'person_name'
+          | 'address'
+          | 'email'
+          | 'phone_number'
+          | 'ssn'
+          | 'passport'
+          | 'driver_license'
+          | 'credit_card'
+          | 'bank_account'
+          | 'password'
+          | 'pin'
+          | 'medical_id'
+          | 'date_of_birth'
+          | 'customer_account_number'
+        >;
 
         /**
          * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -4304,7 +4909,11 @@ export namespace CallCreateWebCallParams {
        * detection.
        */
       export interface VoicemailOption {
-        action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+        action:
+          | VoicemailOption.VoicemailActionPrompt
+          | VoicemailOption.VoicemailActionStaticText
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -4408,7 +5017,25 @@ export namespace CallCreateWebCallParams {
         /**
          * The LLM model to use
          */
-        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -4457,7 +5084,26 @@ export namespace CallCreateWebCallParams {
       /**
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
-      model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * If set to true, will use high priority pool with more dedicated resource to
@@ -4627,7 +5273,14 @@ export namespace CallRegisterPhoneCallParams {
        *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
        *   Set to `null` to remove ambient sound from this agent.
        */
-      ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+      ambient_sound?:
+        | 'coffee-shop'
+        | 'convention-hall'
+        | 'summer-outdoor'
+        | 'mountain-outdoor'
+        | 'static-noise'
+        | 'call-center'
+        | null;
 
       /**
        * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -4798,7 +5451,136 @@ export namespace CallRegisterPhoneCallParams {
        * and must not appear inside an array. Single-element arrays are normalized to the
        * equivalent scalar on output. If unset, defaults to `en-US`.
        */
-      language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+      language?:
+        | 'en-US'
+        | 'en-IN'
+        | 'en-GB'
+        | 'en-AU'
+        | 'en-NZ'
+        | 'de-DE'
+        | 'es-ES'
+        | 'es-419'
+        | 'hi-IN'
+        | 'fr-FR'
+        | 'fr-CA'
+        | 'ja-JP'
+        | 'pt-PT'
+        | 'pt-BR'
+        | 'zh-CN'
+        | 'ru-RU'
+        | 'it-IT'
+        | 'ko-KR'
+        | 'nl-NL'
+        | 'nl-BE'
+        | 'pl-PL'
+        | 'tr-TR'
+        | 'vi-VN'
+        | 'ro-RO'
+        | 'bg-BG'
+        | 'ca-ES'
+        | 'th-TH'
+        | 'da-DK'
+        | 'fi-FI'
+        | 'el-GR'
+        | 'hu-HU'
+        | 'id-ID'
+        | 'no-NO'
+        | 'sk-SK'
+        | 'sv-SE'
+        | 'lt-LT'
+        | 'lv-LV'
+        | 'cs-CZ'
+        | 'ms-MY'
+        | 'af-ZA'
+        | 'ar-SA'
+        | 'az-AZ'
+        | 'bs-BA'
+        | 'cy-GB'
+        | 'fa-IR'
+        | 'fil-PH'
+        | 'gl-ES'
+        | 'he-IL'
+        | 'hr-HR'
+        | 'hy-AM'
+        | 'is-IS'
+        | 'kk-KZ'
+        | 'kn-IN'
+        | 'mk-MK'
+        | 'mr-IN'
+        | 'ne-NP'
+        | 'sl-SI'
+        | 'sr-RS'
+        | 'sw-KE'
+        | 'ta-IN'
+        | 'ur-IN'
+        | 'yue-CN'
+        | 'uk-UA'
+        | 'multi'
+        | Array<
+            | 'en-US'
+            | 'en-IN'
+            | 'en-GB'
+            | 'en-AU'
+            | 'en-NZ'
+            | 'de-DE'
+            | 'es-ES'
+            | 'es-419'
+            | 'hi-IN'
+            | 'fr-FR'
+            | 'fr-CA'
+            | 'ja-JP'
+            | 'pt-PT'
+            | 'pt-BR'
+            | 'zh-CN'
+            | 'ru-RU'
+            | 'it-IT'
+            | 'ko-KR'
+            | 'nl-NL'
+            | 'nl-BE'
+            | 'pl-PL'
+            | 'tr-TR'
+            | 'vi-VN'
+            | 'ro-RO'
+            | 'bg-BG'
+            | 'ca-ES'
+            | 'th-TH'
+            | 'da-DK'
+            | 'fi-FI'
+            | 'el-GR'
+            | 'hu-HU'
+            | 'id-ID'
+            | 'no-NO'
+            | 'sk-SK'
+            | 'sv-SE'
+            | 'lt-LT'
+            | 'lv-LV'
+            | 'cs-CZ'
+            | 'ms-MY'
+            | 'af-ZA'
+            | 'ar-SA'
+            | 'az-AZ'
+            | 'bs-BA'
+            | 'cy-GB'
+            | 'fa-IR'
+            | 'fil-PH'
+            | 'gl-ES'
+            | 'he-IL'
+            | 'hr-HR'
+            | 'hy-AM'
+            | 'is-IS'
+            | 'kk-KZ'
+            | 'kn-IN'
+            | 'mk-MK'
+            | 'mr-IN'
+            | 'ne-NP'
+            | 'sl-SI'
+            | 'sr-RS'
+            | 'sw-KE'
+            | 'ta-IN'
+            | 'ur-IN'
+            | 'yue-CN'
+            | 'uk-UA'
+          >;
 
       /**
        * Maximum allowed length for the call, will force end the call if reached. The
@@ -4824,12 +5606,37 @@ export namespace CallRegisterPhoneCallParams {
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
-      post_call_analysis_data?: Array<Agent.StringAnalysisData | Agent.EnumAnalysisData | Agent.BooleanAnalysisData | Agent.NumberAnalysisData | Agent.CallPresetAnalysisData> | null;
+      post_call_analysis_data?: Array<
+        | Agent.StringAnalysisData
+        | Agent.EnumAnalysisData
+        | Agent.BooleanAnalysisData
+        | Agent.NumberAnalysisData
+        | Agent.CallPresetAnalysisData
+      > | null;
 
       /**
        * The model to use for post call analysis. Default to gpt-4.1.
        */
-      post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      post_call_analysis_model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -4858,7 +5665,10 @@ export namespace CallRegisterPhoneCallParams {
        * the agent. You need to create a Response Engine first before attaching it to an
        * agent.
        */
-      response_engine?: Agent.ResponseEngineRetellLm | Agent.ResponseEngineCustomLm | Agent.ResponseEngineConversationFlow;
+      response_engine?:
+        | Agent.ResponseEngineRetellLm
+        | Agent.ResponseEngineCustomLm
+        | Agent.ResponseEngineConversationFlow;
 
       /**
        * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -4926,7 +5736,22 @@ export namespace CallRegisterPhoneCallParams {
        * available voice models. Set to null to remove voice model selection, and default
        * ones will apply. Check out dashboard for more details of each voice model.
        */
-      voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+      voice_model?:
+        | 'eleven_turbo_v2'
+        | 'eleven_flash_v2'
+        | 'eleven_turbo_v2_5'
+        | 'eleven_flash_v2_5'
+        | 'eleven_multilingual_v2'
+        | 'eleven_v3'
+        | 'sonic-3'
+        | 'sonic-3-latest'
+        | 'tts-1'
+        | 'gpt-4o-mini-tts'
+        | 'speech-02-turbo'
+        | 'speech-2.8-turbo'
+        | 's1'
+        | 's2-pro'
+        | null;
 
       /**
        * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -4977,7 +5802,16 @@ export namespace CallRegisterPhoneCallParams {
        * Which webhook events this agent should receive. If not set, defaults to
        * call_started, call_ended, call_analyzed.
        */
-      webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+      webhook_events?: Array<
+        | 'call_started'
+        | 'call_ended'
+        | 'call_analyzed'
+        | 'transcript_updated'
+        | 'transfer_started'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'transfer_ended'
+      > | null;
 
       /**
        * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -5027,7 +5861,17 @@ export namespace CallRegisterPhoneCallParams {
          * Selected prohibited agent topic categories to check. When agent messages contain
          * these topics, they will be replaced with a placeholder message.
          */
-        output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+        output_topics?: Array<
+          | 'harassment'
+          | 'self_harm'
+          | 'sexual_exploitation'
+          | 'violence'
+          | 'defense_and_national_security'
+          | 'illicit_and_harmful_activity'
+          | 'gambling'
+          | 'regulated_professional_advice'
+          | 'child_safety_and_exploitation'
+        > | null;
       }
 
       /**
@@ -5104,7 +5948,22 @@ export namespace CallRegisterPhoneCallParams {
         /**
          * List of PII categories to scrub from transcripts and recordings.
          */
-        categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+        categories: Array<
+          | 'person_name'
+          | 'address'
+          | 'email'
+          | 'phone_number'
+          | 'ssn'
+          | 'passport'
+          | 'driver_license'
+          | 'credit_card'
+          | 'bank_account'
+          | 'password'
+          | 'pin'
+          | 'medical_id'
+          | 'date_of_birth'
+          | 'customer_account_number'
+        >;
 
         /**
          * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -5366,7 +6225,11 @@ export namespace CallRegisterPhoneCallParams {
        * detection.
        */
       export interface VoicemailOption {
-        action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+        action:
+          | VoicemailOption.VoicemailActionPrompt
+          | VoicemailOption.VoicemailActionStaticText
+          | VoicemailOption.VoicemailActionHangup
+          | VoicemailOption.VoicemailActionBridgeTransfer;
       }
 
       export namespace VoicemailOption {
@@ -5470,7 +6333,25 @@ export namespace CallRegisterPhoneCallParams {
         /**
          * The LLM model to use
          */
-        model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite';
 
         /**
          * Type of model choice
@@ -5519,7 +6400,26 @@ export namespace CallRegisterPhoneCallParams {
       /**
        * Select the underlying text LLM. If not set, would default to gpt-4.1.
        */
-      model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+      model?:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-4.1-nano'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'claude-4.5-sonnet'
+        | 'claude-4.6-sonnet'
+        | 'claude-4.5-haiku'
+        | 'gemini-2.5-flash'
+        | 'gemini-2.5-flash-lite'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | null;
 
       /**
        * If set to true, will use high priority pool with more dedicated resource to
@@ -5584,6 +6484,6 @@ export declare namespace Call {
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
-    type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams
+    type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
   };
 }
