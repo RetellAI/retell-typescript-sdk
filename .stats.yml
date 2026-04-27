@@ -1,4 +1,4 @@
 configured_endpoints: 74
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/retell%2Fretell-a5b97d5867ad769421bccf3e6775e8ca9fd55edc148fd67fb2dcf0f75837556d.yml
-openapi_spec_hash: d16969dbb89a7827ddfd8141c9891fe7
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/retell%2Fretell-a44406f743c2839eb511f070851534bf44a33adb0795fc9646bf27316f4cb158.yml
+openapi_spec_hash: 1a5c10134ef6031496783a0fea26a8d6
 config_hash: b431632354d2ffe6d875fbf7e71ab81b

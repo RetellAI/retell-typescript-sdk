@@ -203,12 +203,15 @@ export interface ChatAgentResponse {
   is_published?: boolean;
 
   /**
-   * Specifies what language (and dialect) the chat will operate in. For instance,
-   * selecting `en-GB` optimizes for British English. If unset, will use default
-   * value `en-US`. Select `multi` for multilingual support, currently this supports
-   * Spanish and English.
+   * Specifies what language(s) the agent will operate in. Accepts either a single
+   * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
+   * support, or an array of concrete locale codes for explicit multi-locale
+   * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
+   * locale codes only — the `multi` value is valid only as the scalar legacy form
+   * and must not appear inside an array. Single-element arrays are normalized to the
+   * equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
 
   /**
    * Whether this agent opts in to signed url for public log. If not set, default
@@ -624,12 +627,15 @@ export interface ChatAgentCreateParams {
   is_public?: boolean | null;
 
   /**
-   * Specifies what language (and dialect) the chat will operate in. For instance,
-   * selecting `en-GB` optimizes for British English. If unset, will use default
-   * value `en-US`. Select `multi` for multilingual support, currently this supports
-   * Spanish and English.
+   * Specifies what language(s) the agent will operate in. Accepts either a single
+   * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
+   * support, or an array of concrete locale codes for explicit multi-locale
+   * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
+   * locale codes only — the `multi` value is valid only as the scalar legacy form
+   * and must not appear inside an array. Single-element arrays are normalized to the
+   * equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
 
   /**
    * Whether this agent opts in to signed url for public log. If not set, default
@@ -1045,12 +1051,15 @@ export interface ChatAgentUpdateParams {
   is_public?: boolean | null;
 
   /**
-   * Body param: Specifies what language (and dialect) the chat will operate in. For
-   * instance, selecting `en-GB` optimizes for British English. If unset, will use
-   * default value `en-US`. Select `multi` for multilingual support, currently this
-   * supports Spanish and English.
+   * Body param: Specifies what language(s) the agent will operate in. Accepts either
+   * a single scalar locale (e.g. `en-US`), the legacy scalar value `multi` for
+   * multilingual support, or an array of concrete locale codes for explicit
+   * multi-locale selection (e.g. `["en-US","es-ES"]`). The array form must contain
+   * concrete locale codes only — the `multi` value is valid only as the scalar
+   * legacy form and must not appear inside an array. Single-element arrays are
+   * normalized to the equivalent scalar on output. If unset, defaults to `en-US`.
    */
-  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'th-TH' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'multi';
+  language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
 
   /**
    * Body param: Whether this agent opts in to signed url for public log. If not set,
