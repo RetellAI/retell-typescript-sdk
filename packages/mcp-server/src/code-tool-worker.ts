@@ -114,6 +114,7 @@ const fuse = new Fuse(
     "client.call.list",
     "client.call.registerPhoneCall",
     "client.call.retrieve",
+    "client.call.stop",
     "client.call.update",
     "client.chat.create",
     "client.chat.createChatCompletion",
