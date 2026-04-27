@@ -45,6 +45,11 @@ export const sdkMethods: SdkMethod[] = [{
   httpMethod: 'post',
   httpPath: '/v2/register-phone-call',
 },{
+  clientCallName: 'client.call.stop',
+  fullyQualifiedName: 'call.stop',
+  httpMethod: 'post',
+  httpPath: '/v2/stop-call/{call_id}',
+},{
   clientCallName: 'client.chat.create',
   fullyQualifiedName: 'chat.create',
   httpMethod: 'post',

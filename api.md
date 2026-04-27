@@ -16,6 +16,7 @@ Methods:
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
+- <code title="post /v2/stop-call/{call_id}">client.call.<a href="./src/resources/call.ts">stop</a>(callID) -> void</code>
 
 # Chat
 
