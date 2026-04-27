@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.16.0 (2026-04-27)
+
+Full Changelog: [v5.15.0...v5.16.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.15.0...v5.16.0)
+
+### Features
+
+* **api:** api update ([28ca37a](https://github.com/RetellAI/retell-typescript-sdk/commit/28ca37aab09e4350e09fd6eb03038f3a3b679cd3))
+* **api:** api update ([e930ebf](https://github.com/RetellAI/retell-typescript-sdk/commit/e930ebfb79d5475068ad93dece6cce2262dd2fc6))
+* **api:** api update ([2ea9aea](https://github.com/RetellAI/retell-typescript-sdk/commit/2ea9aea68190cb632c536dd8ec1809a1cd1ecf08))
+
+
+### Chores
+
+* **formatter:** run prettier and eslint separately ([977e0cf](https://github.com/RetellAI/retell-typescript-sdk/commit/977e0cf9b5ee3787b6d05a178b1a158c19ffeb22))
+* restructure docs search code ([619b9d5](https://github.com/RetellAI/retell-typescript-sdk/commit/619b9d5709e2a8cb7563b1e6b83316d9da0e4e2a))
+
 ## 5.15.0 (2026-04-23)
 
 Full Changelog: [v5.14.1...v5.15.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.14.1...v5.15.0)
