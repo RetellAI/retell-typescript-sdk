@@ -60,7 +60,11 @@ export class PhoneNumber extends APIResource {
    * );
    * ```
    */
-  update(phoneNumber: string, body: PhoneNumberUpdateParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
+  update(
+    phoneNumber: string,
+    body: PhoneNumberUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberResponse> {
     return this._client.patch(path`/update-phone-number/${phoneNumber}`, { body, ...options });
   }
 
@@ -86,7 +90,10 @@ export class PhoneNumber extends APIResource {
    * ```
    */
   delete(phoneNumber: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-phone-number/${phoneNumber}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/delete-phone-number/${phoneNumber}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -274,7 +281,7 @@ export namespace PhoneNumberResponse {
   }
 }
 
-export type PhoneNumberListResponse = Array<PhoneNumberResponse>
+export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
 
 export interface PhoneNumberCreateParams {
   /**
@@ -636,6 +643,6 @@ export declare namespace PhoneNumber {
     type PhoneNumberListResponse as PhoneNumberListResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
-    type PhoneNumberImportParams as PhoneNumberImportParams
+    type PhoneNumberImportParams as PhoneNumberImportParams,
   };
 }
