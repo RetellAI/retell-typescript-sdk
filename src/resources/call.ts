@@ -113,6 +113,18 @@ export class Call extends APIResource {
   registerPhoneCall(body: CallRegisterPhoneCallParams, options?: RequestOptions): APIPromise<PhoneCallResponse> {
     return this._client.post('/v2/register-phone-call', { body, ...options });
   }
+
+  /**
+   * Stop an ongoing call.
+   *
+   * @example
+   * ```ts
+   * await client.call.stop('call_a4441234567890777c4a4a123e6');
+   * ```
+   */
+  stop(callID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/v2/stop-call/${callID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  }
 }
 
 export type CallResponse = WebCallResponse | PhoneCallResponse

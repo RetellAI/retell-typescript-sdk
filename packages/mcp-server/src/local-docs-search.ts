@@ -241,6 +241,32 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     }
   },
   {
+    "name": "stop",
+    "endpoint": "/v2/stop-call/{call_id}",
+    "httpMethod": "post",
+    "summary": "",
+    "description": "Stop an ongoing call.",
+    "stainlessPath": "(resource) call > (method) stop",
+    "qualified": "client.call.stop",
+    "params": [
+      "call_id: string;"
+    ],
+    "markdown": "## stop\n\n`client.call.stop(call_id: string): void`\n\n**post** `/v2/stop-call/{call_id}`\n\nStop an ongoing call.\n\n### Parameters\n\n- `call_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.call.stop('call_a4441234567890777c4a4a123e6')\n```",
+    "perLanguage": {
+      "typescript": {
+        "method": "client.call.stop",
+        "example": "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.call.stop('call_a4441234567890777c4a4a123e6');"
+      },
+      "python": {
+        "method": "call.stop",
+        "example": "import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get(\"RETELL_API_KEY\"),  # This is the default and can be omitted\n)\nclient.call.stop(\n    \"call_a4441234567890777c4a4a123e6\",\n)"
+      },
+      "http": {
+        "example": "curl https://api.retellai.com/v2/stop-call/$CALL_ID \\\n    -X POST \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\""
+      }
+    }
+  },
+  {
     "name": "delete",
     "endpoint": "/v2/delete-call/{call_id}",
     "httpMethod": "delete",
