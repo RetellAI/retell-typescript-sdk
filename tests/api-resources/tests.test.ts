@@ -2,15 +2,18 @@
 
 import Retell from 'retell-sdk';
 
-const client = new Retell({ apiKey: 'YOUR_RETELL_API_KEY', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Retell({
+  apiKey: 'YOUR_RETELL_API_KEY',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource tests', () => {
   // Mock server tests are disabled
   test.skip('createBatchTest: only required params', async () => {
     const responsePromise = client.tests.createBatchTest({
-    response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
-    test_case_definition_ids: ['string'],
-  });
+      response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
+      test_case_definition_ids: ['string'],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,23 +26,23 @@ describe('resource tests', () => {
   // Mock server tests are disabled
   test.skip('createBatchTest: required and optional params', async () => {
     const response = await client.tests.createBatchTest({
-    response_engine: {
-    llm_id: 'llm_id',
-    type: 'retell-llm',
-    version: 0,
-  },
-    test_case_definition_ids: ['string'],
-  });
+      response_engine: {
+        llm_id: 'llm_id',
+        type: 'retell-llm',
+        version: 0,
+      },
+      test_case_definition_ids: ['string'],
+    });
   });
 
   // Mock server tests are disabled
   test.skip('createTestCaseDefinition: only required params', async () => {
     const responsePromise = client.tests.createTestCaseDefinition({
-    metrics: ['string'],
-    name: 'name',
-    response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
-    user_prompt: 'user_prompt',
-  });
+      metrics: ['string'],
+      name: 'name',
+      response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
+      user_prompt: 'user_prompt',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -52,23 +55,25 @@ describe('resource tests', () => {
   // Mock server tests are disabled
   test.skip('createTestCaseDefinition: required and optional params', async () => {
     const response = await client.tests.createTestCaseDefinition({
-    metrics: ['string'],
-    name: 'name',
-    response_engine: {
-    llm_id: 'llm_id',
-    type: 'retell-llm',
-    version: 0,
-  },
-    user_prompt: 'user_prompt',
-    dynamic_variables: { foo: 'string' },
-    llm_model: 'gpt-4.1',
-    tool_mocks: [{
-    input_match_rule: { type: 'any' },
-    output: 'output',
-    tool_name: 'tool_name',
-    result: true,
-  }],
-  });
+      metrics: ['string'],
+      name: 'name',
+      response_engine: {
+        llm_id: 'llm_id',
+        type: 'retell-llm',
+        version: 0,
+      },
+      user_prompt: 'user_prompt',
+      dynamic_variables: { foo: 'string' },
+      llm_model: 'gpt-4.1',
+      tool_mocks: [
+        {
+          input_match_rule: { type: 'any' },
+          output: 'output',
+          tool_name: 'tool_name',
+          result: true,
+        },
+      ],
+    });
   });
 
   // Mock server tests are disabled
@@ -134,11 +139,11 @@ describe('resource tests', () => {
   // Mock server tests are disabled
   test.skip('listBatchTests: required and optional params', async () => {
     const response = await client.tests.listBatchTests({
-    type: 'retell-llm',
-    conversation_flow_id: 'conversation_flow_id',
-    llm_id: 'llm_id',
-    version: 0,
-  });
+      type: 'retell-llm',
+      conversation_flow_id: 'conversation_flow_id',
+      llm_id: 'llm_id',
+      version: 0,
+    });
   });
 
   // Mock server tests are disabled
@@ -156,10 +161,10 @@ describe('resource tests', () => {
   // Mock server tests are disabled
   test.skip('listTestCaseDefinitions: required and optional params', async () => {
     const response = await client.tests.listTestCaseDefinitions({
-    type: 'retell-llm',
-    conversation_flow_id: 'conversation_flow_id',
-    llm_id: 'llm_id',
-  });
+      type: 'retell-llm',
+      conversation_flow_id: 'conversation_flow_id',
+      llm_id: 'llm_id',
+    });
   });
 
   // Mock server tests are disabled

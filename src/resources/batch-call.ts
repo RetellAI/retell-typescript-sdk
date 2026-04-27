@@ -17,8 +17,15 @@ export class BatchCall extends APIResource {
    *   });
    * ```
    */
-  createBatchCall(body: BatchCallCreateBatchCallParams, options?: RequestOptions): APIPromise<BatchCallResponse> {
-    return this._client.post('/create-batch-call', { body, timeout: (this._client as any)._options.timeout ?? 300000, ...options });
+  createBatchCall(
+    body: BatchCallCreateBatchCallParams,
+    options?: RequestOptions,
+  ): APIPromise<BatchCallResponse> {
+    return this._client.post('/create-batch-call', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 }
 
@@ -250,7 +257,14 @@ export namespace BatchCallCreateBatchCallParams {
          *   [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)
          *   Set to `null` to remove ambient sound from this agent.
          */
-        ambient_sound?: 'coffee-shop' | 'convention-hall' | 'summer-outdoor' | 'mountain-outdoor' | 'static-noise' | 'call-center' | null;
+        ambient_sound?:
+          | 'coffee-shop'
+          | 'convention-hall'
+          | 'summer-outdoor'
+          | 'mountain-outdoor'
+          | 'static-noise'
+          | 'call-center'
+          | null;
 
         /**
          * If set, will control the volume of the ambient sound. Value ranging from [0,2].
@@ -421,7 +435,136 @@ export namespace BatchCallCreateBatchCallParams {
          * and must not appear inside an array. Single-element arrays are normalized to the
          * equivalent scalar on output. If unset, defaults to `en-US`.
          */
-        language?: 'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA' | 'multi' | Array<'en-US' | 'en-IN' | 'en-GB' | 'en-AU' | 'en-NZ' | 'de-DE' | 'es-ES' | 'es-419' | 'hi-IN' | 'fr-FR' | 'fr-CA' | 'ja-JP' | 'pt-PT' | 'pt-BR' | 'zh-CN' | 'ru-RU' | 'it-IT' | 'ko-KR' | 'nl-NL' | 'nl-BE' | 'pl-PL' | 'tr-TR' | 'vi-VN' | 'ro-RO' | 'bg-BG' | 'ca-ES' | 'th-TH' | 'da-DK' | 'fi-FI' | 'el-GR' | 'hu-HU' | 'id-ID' | 'no-NO' | 'sk-SK' | 'sv-SE' | 'lt-LT' | 'lv-LV' | 'cs-CZ' | 'ms-MY' | 'af-ZA' | 'ar-SA' | 'az-AZ' | 'bs-BA' | 'cy-GB' | 'fa-IR' | 'fil-PH' | 'gl-ES' | 'he-IL' | 'hr-HR' | 'hy-AM' | 'is-IS' | 'kk-KZ' | 'kn-IN' | 'mk-MK' | 'mr-IN' | 'ne-NP' | 'sl-SI' | 'sr-RS' | 'sw-KE' | 'ta-IN' | 'ur-IN' | 'yue-CN' | 'uk-UA'>;
+        language?:
+          | 'en-US'
+          | 'en-IN'
+          | 'en-GB'
+          | 'en-AU'
+          | 'en-NZ'
+          | 'de-DE'
+          | 'es-ES'
+          | 'es-419'
+          | 'hi-IN'
+          | 'fr-FR'
+          | 'fr-CA'
+          | 'ja-JP'
+          | 'pt-PT'
+          | 'pt-BR'
+          | 'zh-CN'
+          | 'ru-RU'
+          | 'it-IT'
+          | 'ko-KR'
+          | 'nl-NL'
+          | 'nl-BE'
+          | 'pl-PL'
+          | 'tr-TR'
+          | 'vi-VN'
+          | 'ro-RO'
+          | 'bg-BG'
+          | 'ca-ES'
+          | 'th-TH'
+          | 'da-DK'
+          | 'fi-FI'
+          | 'el-GR'
+          | 'hu-HU'
+          | 'id-ID'
+          | 'no-NO'
+          | 'sk-SK'
+          | 'sv-SE'
+          | 'lt-LT'
+          | 'lv-LV'
+          | 'cs-CZ'
+          | 'ms-MY'
+          | 'af-ZA'
+          | 'ar-SA'
+          | 'az-AZ'
+          | 'bs-BA'
+          | 'cy-GB'
+          | 'fa-IR'
+          | 'fil-PH'
+          | 'gl-ES'
+          | 'he-IL'
+          | 'hr-HR'
+          | 'hy-AM'
+          | 'is-IS'
+          | 'kk-KZ'
+          | 'kn-IN'
+          | 'mk-MK'
+          | 'mr-IN'
+          | 'ne-NP'
+          | 'sl-SI'
+          | 'sr-RS'
+          | 'sw-KE'
+          | 'ta-IN'
+          | 'ur-IN'
+          | 'yue-CN'
+          | 'uk-UA'
+          | 'multi'
+          | Array<
+              | 'en-US'
+              | 'en-IN'
+              | 'en-GB'
+              | 'en-AU'
+              | 'en-NZ'
+              | 'de-DE'
+              | 'es-ES'
+              | 'es-419'
+              | 'hi-IN'
+              | 'fr-FR'
+              | 'fr-CA'
+              | 'ja-JP'
+              | 'pt-PT'
+              | 'pt-BR'
+              | 'zh-CN'
+              | 'ru-RU'
+              | 'it-IT'
+              | 'ko-KR'
+              | 'nl-NL'
+              | 'nl-BE'
+              | 'pl-PL'
+              | 'tr-TR'
+              | 'vi-VN'
+              | 'ro-RO'
+              | 'bg-BG'
+              | 'ca-ES'
+              | 'th-TH'
+              | 'da-DK'
+              | 'fi-FI'
+              | 'el-GR'
+              | 'hu-HU'
+              | 'id-ID'
+              | 'no-NO'
+              | 'sk-SK'
+              | 'sv-SE'
+              | 'lt-LT'
+              | 'lv-LV'
+              | 'cs-CZ'
+              | 'ms-MY'
+              | 'af-ZA'
+              | 'ar-SA'
+              | 'az-AZ'
+              | 'bs-BA'
+              | 'cy-GB'
+              | 'fa-IR'
+              | 'fil-PH'
+              | 'gl-ES'
+              | 'he-IL'
+              | 'hr-HR'
+              | 'hy-AM'
+              | 'is-IS'
+              | 'kk-KZ'
+              | 'kn-IN'
+              | 'mk-MK'
+              | 'mr-IN'
+              | 'ne-NP'
+              | 'sl-SI'
+              | 'sr-RS'
+              | 'sw-KE'
+              | 'ta-IN'
+              | 'ur-IN'
+              | 'yue-CN'
+              | 'uk-UA'
+            >;
 
         /**
          * Maximum allowed length for the call, will force end the call if reached. The
@@ -447,12 +590,37 @@ export namespace BatchCallCreateBatchCallParams {
          * pre-defined variables extracted in the call analysis. This will be available
          * after the call ends.
          */
-        post_call_analysis_data?: Array<Agent.StringAnalysisData | Agent.EnumAnalysisData | Agent.BooleanAnalysisData | Agent.NumberAnalysisData | Agent.CallPresetAnalysisData> | null;
+        post_call_analysis_data?: Array<
+          | Agent.StringAnalysisData
+          | Agent.EnumAnalysisData
+          | Agent.BooleanAnalysisData
+          | Agent.NumberAnalysisData
+          | Agent.CallPresetAnalysisData
+        > | null;
 
         /**
          * The model to use for post call analysis. Default to gpt-4.1.
          */
-        post_call_analysis_model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+        post_call_analysis_model?:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | null;
 
         /**
          * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -481,7 +649,10 @@ export namespace BatchCallCreateBatchCallParams {
          * the agent. You need to create a Response Engine first before attaching it to an
          * agent.
          */
-        response_engine?: Agent.ResponseEngineRetellLm | Agent.ResponseEngineCustomLm | Agent.ResponseEngineConversationFlow;
+        response_engine?:
+          | Agent.ResponseEngineRetellLm
+          | Agent.ResponseEngineCustomLm
+          | Agent.ResponseEngineConversationFlow;
 
         /**
          * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -549,7 +720,22 @@ export namespace BatchCallCreateBatchCallParams {
          * available voice models. Set to null to remove voice model selection, and default
          * ones will apply. Check out dashboard for more details of each voice model.
          */
-        voice_model?: 'eleven_turbo_v2' | 'eleven_flash_v2' | 'eleven_turbo_v2_5' | 'eleven_flash_v2_5' | 'eleven_multilingual_v2' | 'eleven_v3' | 'sonic-3' | 'sonic-3-latest' | 'tts-1' | 'gpt-4o-mini-tts' | 'speech-02-turbo' | 'speech-2.8-turbo' | 's1' | 's2-pro' | null;
+        voice_model?:
+          | 'eleven_turbo_v2'
+          | 'eleven_flash_v2'
+          | 'eleven_turbo_v2_5'
+          | 'eleven_flash_v2_5'
+          | 'eleven_multilingual_v2'
+          | 'eleven_v3'
+          | 'sonic-3'
+          | 'sonic-3-latest'
+          | 'tts-1'
+          | 'gpt-4o-mini-tts'
+          | 'speech-02-turbo'
+          | 'speech-2.8-turbo'
+          | 's1'
+          | 's2-pro'
+          | null;
 
         /**
          * Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower
@@ -600,7 +786,16 @@ export namespace BatchCallCreateBatchCallParams {
          * Which webhook events this agent should receive. If not set, defaults to
          * call_started, call_ended, call_analyzed.
          */
-        webhook_events?: Array<'call_started' | 'call_ended' | 'call_analyzed' | 'transcript_updated' | 'transfer_started' | 'transfer_bridged' | 'transfer_cancelled' | 'transfer_ended'> | null;
+        webhook_events?: Array<
+          | 'call_started'
+          | 'call_ended'
+          | 'call_analyzed'
+          | 'transcript_updated'
+          | 'transfer_started'
+          | 'transfer_bridged'
+          | 'transfer_cancelled'
+          | 'transfer_ended'
+        > | null;
 
         /**
          * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -650,7 +845,17 @@ export namespace BatchCallCreateBatchCallParams {
            * Selected prohibited agent topic categories to check. When agent messages contain
            * these topics, they will be replaced with a placeholder message.
            */
-          output_topics?: Array<'harassment' | 'self_harm' | 'sexual_exploitation' | 'violence' | 'defense_and_national_security' | 'illicit_and_harmful_activity' | 'gambling' | 'regulated_professional_advice' | 'child_safety_and_exploitation'> | null;
+          output_topics?: Array<
+            | 'harassment'
+            | 'self_harm'
+            | 'sexual_exploitation'
+            | 'violence'
+            | 'defense_and_national_security'
+            | 'illicit_and_harmful_activity'
+            | 'gambling'
+            | 'regulated_professional_advice'
+            | 'child_safety_and_exploitation'
+          > | null;
         }
 
         /**
@@ -727,7 +932,22 @@ export namespace BatchCallCreateBatchCallParams {
           /**
            * List of PII categories to scrub from transcripts and recordings.
            */
-          categories: Array<'person_name' | 'address' | 'email' | 'phone_number' | 'ssn' | 'passport' | 'driver_license' | 'credit_card' | 'bank_account' | 'password' | 'pin' | 'medical_id' | 'date_of_birth' | 'customer_account_number'>;
+          categories: Array<
+            | 'person_name'
+            | 'address'
+            | 'email'
+            | 'phone_number'
+            | 'ssn'
+            | 'passport'
+            | 'driver_license'
+            | 'credit_card'
+            | 'bank_account'
+            | 'password'
+            | 'pin'
+            | 'medical_id'
+            | 'date_of_birth'
+            | 'customer_account_number'
+          >;
 
           /**
            * The processing mode for PII scrubbing. Currently only post-call is supported.
@@ -989,7 +1209,11 @@ export namespace BatchCallCreateBatchCallParams {
          * detection.
          */
         export interface VoicemailOption {
-          action: VoicemailOption.VoicemailActionPrompt | VoicemailOption.VoicemailActionStaticText | VoicemailOption.VoicemailActionHangup | VoicemailOption.VoicemailActionBridgeTransfer;
+          action:
+            | VoicemailOption.VoicemailActionPrompt
+            | VoicemailOption.VoicemailActionStaticText
+            | VoicemailOption.VoicemailActionHangup
+            | VoicemailOption.VoicemailActionBridgeTransfer;
         }
 
         export namespace VoicemailOption {
@@ -1093,7 +1317,25 @@ export namespace BatchCallCreateBatchCallParams {
           /**
            * The LLM model to use
            */
-          model: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite';
+          model:
+            | 'gpt-4.1'
+            | 'gpt-4.1-mini'
+            | 'gpt-4.1-nano'
+            | 'gpt-5'
+            | 'gpt-5-mini'
+            | 'gpt-5-nano'
+            | 'gpt-5.1'
+            | 'gpt-5.2'
+            | 'gpt-5.4'
+            | 'gpt-5.4-mini'
+            | 'gpt-5.4-nano'
+            | 'claude-4.5-sonnet'
+            | 'claude-4.6-sonnet'
+            | 'claude-4.5-haiku'
+            | 'gemini-2.5-flash'
+            | 'gemini-2.5-flash-lite'
+            | 'gemini-3.0-flash'
+            | 'gemini-3.1-flash-lite';
 
           /**
            * Type of model choice
@@ -1142,7 +1384,26 @@ export namespace BatchCallCreateBatchCallParams {
         /**
          * Select the underlying text LLM. If not set, would default to gpt-4.1.
          */
-        model?: 'gpt-4.1' | 'gpt-4.1-mini' | 'gpt-4.1-nano' | 'gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-5.1' | 'gpt-5.2' | 'gpt-5.4' | 'gpt-5.4-mini' | 'gpt-5.4-nano' | 'claude-4.5-sonnet' | 'claude-4.6-sonnet' | 'claude-4.5-haiku' | 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-3.0-flash' | 'gemini-3.1-flash-lite' | null;
+        model?:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-4.1-nano'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'claude-4.5-sonnet'
+          | 'claude-4.6-sonnet'
+          | 'claude-4.5-haiku'
+          | 'gemini-2.5-flash'
+          | 'gemini-2.5-flash-lite'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | null;
 
         /**
          * If set to true, will use high priority pool with more dedicated resource to
@@ -1240,6 +1501,6 @@ export namespace BatchCallCreateBatchCallParams {
 export declare namespace BatchCall {
   export {
     type BatchCallResponse as BatchCallResponse,
-    type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams
+    type BatchCallCreateBatchCallParams as BatchCallCreateBatchCallParams,
   };
 }
