@@ -60,6 +60,8 @@ export class Tests extends APIResource {
 
   /**
    * List batch test jobs for a response engine
+   *
+   * @deprecated
    */
   listBatchTests(
     query: TestListBatchTestsParams,
@@ -70,6 +72,8 @@ export class Tests extends APIResource {
 
   /**
    * List test case definitions for a response engine
+   *
+   * @deprecated
    */
   listTestCaseDefinitions(
     query: TestListTestCaseDefinitionsParams,
@@ -80,6 +84,8 @@ export class Tests extends APIResource {
 
   /**
    * List all test case jobs (test runs) for a batch test job
+   *
+   * @deprecated
    */
   listTestRuns(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<TestListTestRunsResponse> {
     return this._client.get(path`/list-test-runs/${testCaseBatchJobID}`, options);
@@ -218,6 +224,7 @@ export interface TestCaseDefinitionResponse {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -493,6 +500,7 @@ export interface TestCreateTestCaseDefinitionParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -648,6 +656,7 @@ export interface TestUpdateTestCaseDefinitionParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'

@@ -45,10 +45,7 @@ export class Call extends APIResource {
   /**
    * Retrieve call details
    *
-   * @example
-   * ```ts
-   * const callResponses = await client.call.list();
-   * ```
+   * @deprecated
    */
   list(body: CallListParams, options?: RequestOptions): APIPromise<CallListResponse> {
     return this._client.post('/v2/list-calls', {
@@ -2997,6 +2994,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -3208,7 +3206,7 @@ export namespace CallCreatePhoneCallParams {
         endpointing_ms: number;
 
         /**
-         * The STT provider to use.
+         * ASR provider name.
          */
         provider: 'azure' | 'deepgram' | 'soniox';
       }
@@ -3713,6 +3711,7 @@ export namespace CallCreatePhoneCallParams {
           | 'gpt-5.4'
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
+          | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -3780,6 +3779,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -4313,6 +4313,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -4524,7 +4525,7 @@ export namespace CallCreateWebCallParams {
         endpointing_ms: number;
 
         /**
-         * The STT provider to use.
+         * ASR provider name.
          */
         provider: 'azure' | 'deepgram' | 'soniox';
       }
@@ -5029,6 +5030,7 @@ export namespace CallCreateWebCallParams {
           | 'gpt-5.4'
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
+          | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -5096,6 +5098,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -5629,6 +5632,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
@@ -5840,7 +5844,7 @@ export namespace CallRegisterPhoneCallParams {
         endpointing_ms: number;
 
         /**
-         * The STT provider to use.
+         * ASR provider name.
          */
         provider: 'azure' | 'deepgram' | 'soniox';
       }
@@ -6345,6 +6349,7 @@ export namespace CallRegisterPhoneCallParams {
           | 'gpt-5.4'
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
+          | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -6412,6 +6417,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-5.4'
         | 'gpt-5.4-mini'
         | 'gpt-5.4-nano'
+        | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'

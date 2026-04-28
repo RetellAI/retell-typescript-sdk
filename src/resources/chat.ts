@@ -62,10 +62,7 @@ export class Chat extends APIResource {
   /**
    * List all chats
    *
-   * @example
-   * ```ts
-   * const chatResponses = await client.chat.list();
-   * ```
+   * @deprecated
    */
   list(
     query: ChatListParams | null | undefined = {},

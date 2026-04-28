@@ -548,6 +548,7 @@ export interface AgentResponse {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -789,7 +790,7 @@ export namespace AgentResponse {
     endpointing_ms: number;
 
     /**
-     * The STT provider to use.
+     * ASR provider name.
      */
     provider: 'azure' | 'deepgram' | 'soniox';
   }
@@ -1572,6 +1573,7 @@ export interface AgentCreateParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -1813,7 +1815,7 @@ export namespace AgentCreateParams {
     endpointing_ms: number;
 
     /**
-     * The STT provider to use.
+     * ASR provider name.
      */
     provider: 'azure' | 'deepgram' | 'soniox';
   }
@@ -2593,6 +2595,7 @@ export interface AgentUpdateParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -2811,7 +2814,7 @@ export namespace AgentUpdateParams {
     endpointing_ms: number;
 
     /**
-     * The STT provider to use.
+     * ASR provider name.
      */
     provider: 'azure' | 'deepgram' | 'soniox';
   }
