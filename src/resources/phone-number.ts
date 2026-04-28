@@ -71,11 +71,7 @@ export class PhoneNumber extends APIResource {
   /**
    * List all phone numbers
    *
-   * @example
-   * ```ts
-   * const phoneNumberResponses =
-   *   await client.phoneNumber.list();
-   * ```
+   * @deprecated
    */
   list(options?: RequestOptions): APIPromise<PhoneNumberListResponse> {
     return this._client.get('/list-phone-numbers', options);
