@@ -64,10 +64,7 @@ export class Llm extends APIResource {
   /**
    * List all Retell LLM Response Engines that can be attached to an agent.
    *
-   * @example
-   * ```ts
-   * const llmResponses = await client.llm.list();
-   * ```
+   * @deprecated
    */
   list(query: LlmListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmListResponse> {
     return this._client.get('/list-retell-llms', { query, ...options });
@@ -189,6 +186,7 @@ export interface LlmResponse {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -2730,6 +2728,7 @@ export interface LlmCreateParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
@@ -5285,6 +5284,7 @@ export interface LlmUpdateParams {
     | 'gpt-5.4'
     | 'gpt-5.4-mini'
     | 'gpt-5.4-nano'
+    | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'

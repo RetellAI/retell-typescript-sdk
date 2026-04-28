@@ -613,6 +613,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.4'
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
+          | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
@@ -824,7 +825,7 @@ export namespace BatchCallCreateBatchCallParams {
           endpointing_ms: number;
 
           /**
-           * The STT provider to use.
+           * ASR provider name.
            */
           provider: 'azure' | 'deepgram' | 'soniox';
         }
@@ -1329,6 +1330,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gpt-5.4'
             | 'gpt-5.4-mini'
             | 'gpt-5.4-nano'
+            | 'gpt-5.5'
             | 'claude-4.5-sonnet'
             | 'claude-4.6-sonnet'
             | 'claude-4.5-haiku'
@@ -1396,6 +1398,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.4'
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
+          | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
