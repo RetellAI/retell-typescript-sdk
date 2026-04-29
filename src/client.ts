@@ -79,6 +79,11 @@ import {
   ConversationFlowComponentUpdateParams,
 } from './resources/conversation-flow-component';
 import {
+  ExportRequest,
+  ExportRequestListParams,
+  ExportRequestListResponse,
+} from './resources/export-request';
+import {
   KnowledgeBase,
   KnowledgeBaseAddSourcesParams,
   KnowledgeBaseCreateParams,
@@ -856,6 +861,7 @@ export class Retell {
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
+  exportRequest: API.ExportRequest = new API.ExportRequest(this);
   batchCall: API.BatchCall = new API.BatchCall(this);
   tests: API.Tests = new API.Tests(this);
   playground: API.Playground = new API.Playground(this);
@@ -873,6 +879,7 @@ Retell.ConversationFlowComponent = ConversationFlowComponent;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
+Retell.ExportRequest = ExportRequest;
 Retell.BatchCall = BatchCall;
 Retell.Tests = Tests;
 Retell.Playground = Playground;
@@ -985,6 +992,12 @@ export declare namespace Retell {
   };
 
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
+
+  export {
+    ExportRequest as ExportRequest,
+    type ExportRequestListResponse as ExportRequestListResponse,
+    type ExportRequestListParams as ExportRequestListParams,
+  };
 
   export {
     BatchCall as BatchCall,
