@@ -170,6 +170,7 @@ const fuse = new Fuse(
     'client.voice.retrieve',
     'client.voice.search',
     'client.concurrency.retrieve',
+    'client.exportRequest.list',
     'client.batchCall.createBatchCall',
     'client.tests.createBatchTest',
     'client.tests.createTestCaseDefinition',
