@@ -383,6 +383,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-concurrency',
   },
   {
+    clientCallName: 'client.exportRequest.list',
+    fullyQualifiedName: 'exportRequest.list',
+    httpMethod: 'get',
+    httpPath: '/v2/list-export-requests',
+  },
+  {
     clientCallName: 'client.batchCall.createBatchCall',
     fullyQualifiedName: 'batchCall.createBatchCall',
     httpMethod: 'post',

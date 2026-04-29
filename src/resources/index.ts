@@ -62,6 +62,11 @@ export {
   type ConversationFlowComponentUpdateParams,
 } from './conversation-flow-component';
 export {
+  ExportRequest,
+  type ExportRequestListResponse,
+  type ExportRequestListParams,
+} from './export-request';
+export {
   KnowledgeBase,
   type KnowledgeBaseResponse,
   type KnowledgeBaseListResponse,

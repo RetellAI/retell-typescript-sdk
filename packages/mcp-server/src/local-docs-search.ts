@@ -2266,6 +2266,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list',
+    endpoint: '/v2/list-export-requests',
+    httpMethod: 'get',
+    summary: '',
+    description: 'List export requests with pagination',
+    stainlessPath: '(resource) export_request > (method) list',
+    qualified: 'client.exportRequest.list',
+    params: ['limit?: number;', 'pagination_key?: string;', "sort_order?: 'ascending' | 'descending';"],
+    response:
+      "{ has_more?: boolean; items?: { channel?: 'call' | 'chat'; created_timestamp?: number; export_request_id?: string; status?: 'created' | 'processing' | 'completed' | 'error'; timezone?: string; url?: string; }[]; pagination_key?: string; }",
+    markdown:
+      "## list\n\n`client.exportRequest.list(limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: object[]; pagination_key?: string; }`\n\n**get** `/v2/list-export-requests`\n\nList export requests with pagination\n\n### Parameters\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { channel?: 'call' | 'chat'; created_timestamp?: number; export_request_id?: string; status?: 'created' | 'processing' | 'completed' | 'error'; timezone?: string; url?: string; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { channel?: 'call' | 'chat'; created_timestamp?: number; export_request_id?: string; status?: 'created' | 'processing' | 'completed' | 'error'; timezone?: string; url?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst exportRequests = await client.exportRequest.list();\n\nconsole.log(exportRequests);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.exportRequest.list',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst exportRequests = await client.exportRequest.list();\n\nconsole.log(exportRequests.has_more);",
+      },
+      python: {
+        method: 'export_request.list',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nexport_requests = client.export_request.list()\nprint(export_requests.has_more)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-export-requests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'create-batch-call',
     endpoint: '/create-batch-call',
     httpMethod: 'post',

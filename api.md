@@ -175,6 +175,16 @@ Methods:
 
 - <code title="get /get-concurrency">client.concurrency.<a href="./src/resources/concurrency.ts">retrieve</a>() -> ConcurrencyRetrieveResponse</code>
 
+# ExportRequest
+
+Types:
+
+- <code><a href="./src/resources/export-request.ts">ExportRequestListResponse</a></code>
+
+Methods:
+
+- <code title="get /v2/list-export-requests">client.exportRequest.<a href="./src/resources/export-request.ts">list</a>({ ...params }) -> ExportRequestListResponse</code>
+
 # BatchCall
 
 Types:
