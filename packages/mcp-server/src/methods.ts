@@ -173,12 +173,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-agent-versions/{agent_id}',
   },
   {
-    clientCallName: 'client.agent.publish',
-    fullyQualifiedName: 'agent.publish',
-    httpMethod: 'post',
-    httpPath: '/publish-agent/{agent_id}',
-  },
-  {
     clientCallName: 'client.chatAgent.create',
     fullyQualifiedName: 'chatAgent.create',
     httpMethod: 'post',
@@ -213,12 +207,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'chatAgent.getVersions',
     httpMethod: 'get',
     httpPath: '/get-chat-agent-versions/{agent_id}',
-  },
-  {
-    clientCallName: 'client.chatAgent.publish',
-    fullyQualifiedName: 'chatAgent.publish',
-    httpMethod: 'post',
-    httpPath: '/publish-chat-agent/{agent_id}',
   },
   {
     clientCallName: 'client.llm.create',

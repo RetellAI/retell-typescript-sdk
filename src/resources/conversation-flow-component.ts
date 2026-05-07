@@ -189,6 +189,11 @@ export namespace ConversationFlowComponentResponse {
      */
     type: 'conversation';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -205,6 +210,12 @@ export namespace ConversationFlowComponentResponse {
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: ConversationNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -650,6 +661,22 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -670,7 +697,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -777,6 +803,11 @@ export namespace ConversationFlowComponentResponse {
      */
     type: 'subagent';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -793,6 +824,12 @@ export namespace ConversationFlowComponentResponse {
     global_node_setting?: SubagentNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: SubagentNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -1252,6 +1289,22 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -1272,7 +1325,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -1848,7 +1900,7 @@ export namespace ConversationFlowComponentResponse {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2745,7 +2797,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -3221,7 +3272,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -3704,7 +3754,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -4358,7 +4407,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -4726,7 +4774,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -5151,7 +5198,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -5589,7 +5635,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -6151,7 +6196,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -6198,7 +6242,7 @@ export namespace ConversationFlowComponentResponse {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Position for frontend display
@@ -6536,7 +6580,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -7021,7 +7064,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -7703,7 +7745,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -7976,7 +8017,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -8372,6 +8412,11 @@ export namespace ConversationFlowComponentCreateParams {
      */
     type: 'conversation';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -8388,6 +8433,12 @@ export namespace ConversationFlowComponentCreateParams {
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: ConversationNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -8833,6 +8884,22 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -8853,7 +8920,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -8960,6 +9026,11 @@ export namespace ConversationFlowComponentCreateParams {
      */
     type: 'subagent';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -8976,6 +9047,12 @@ export namespace ConversationFlowComponentCreateParams {
     global_node_setting?: SubagentNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: SubagentNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -9435,6 +9512,22 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -9455,7 +9548,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -10031,7 +10123,7 @@ export namespace ConversationFlowComponentCreateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -10928,7 +11020,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -11404,7 +11495,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -11887,7 +11977,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -12541,7 +12630,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -12909,7 +12997,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -13334,7 +13421,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -13772,7 +13858,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -14334,7 +14419,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -14381,7 +14465,7 @@ export namespace ConversationFlowComponentCreateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Position for frontend display
@@ -14719,7 +14803,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -15204,7 +15287,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -15886,7 +15968,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -16159,7 +16240,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -16587,6 +16667,11 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     type: 'conversation';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -16603,6 +16688,12 @@ export namespace ConversationFlowComponentUpdateParams {
     global_node_setting?: ConversationNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: ConversationNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -17048,6 +17139,22 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -17068,7 +17175,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -17175,6 +17281,11 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     type: 'subagent';
 
+    /**
+     * If set, overrides the agent-level allow_dtmf_interruption for this node only.
+     */
+    allow_dtmf_interruption?: boolean | null;
+
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -17191,6 +17302,12 @@ export namespace ConversationFlowComponentUpdateParams {
     global_node_setting?: SubagentNode.GlobalNodeSetting;
 
     interruption_sensitivity?: number | null;
+
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    kb_config?: SubagentNode.KBConfig;
 
     /**
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
@@ -17650,6 +17767,22 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Knowledge base configuration for RAG retrieval at the node level. If
+     * kb_instruction is set here, it overrides the flow-level kb_instruction.
+     */
+    export interface KBConfig {
+      /**
+       * Similarity threshold for filtering search results
+       */
+      filter_score?: number;
+
+      /**
+       * Max number of knowledge base chunks to retrieve
+       */
+      top_k?: number;
+    }
+
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -17670,7 +17803,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -18246,7 +18378,7 @@ export namespace ConversationFlowComponentUpdateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -19143,7 +19275,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -19619,7 +19750,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -20102,7 +20232,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -20756,7 +20885,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -21124,7 +21252,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -21549,7 +21676,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -21987,7 +22113,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -22549,7 +22674,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -22596,7 +22720,7 @@ export namespace ConversationFlowComponentUpdateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Position for frontend display
@@ -22934,7 +23058,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -23419,7 +23542,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -24101,7 +24223,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
@@ -24374,7 +24495,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';

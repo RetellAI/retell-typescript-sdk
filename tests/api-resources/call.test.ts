@@ -79,6 +79,7 @@ describe('resource call', () => {
       agent_override: {
         agent: {
           agent_name: 'Jarvis',
+          allow_dtmf_interruption: false,
           allow_user_dtmf: true,
           ambient_sound: 'coffee-shop',
           ambient_sound_volume: 1,
@@ -91,6 +92,10 @@ describe('resource call', () => {
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
+          call_screening_option: {
+            agent_identity: 'Acme Health scheduling team',
+            call_purpose: 'confirming your appointment for tomorrow',
+          },
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
           data_storage_retention_days: 30,
           data_storage_setting: 'everything',
@@ -117,7 +122,10 @@ describe('resource call', () => {
           },
           interruption_sensitivity: 1,
           is_public: false,
-          ivr_option: { action: { type: 'hangup' } },
+          ivr_option: {
+            action: { type: 'hangup' },
+            detection_prompt: 'detection_prompt',
+          },
           language: 'en-US',
           max_call_duration_ms: 3600000,
           opt_in_signed_url: true,
@@ -168,6 +176,7 @@ describe('resource call', () => {
           voicemail_message: 'Hi, please give us a callback.',
           voicemail_option: {
             action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
+            detection_prompt: 'detection_prompt',
           },
           volume: 1,
           webhook_events: ['call_started'],
@@ -228,6 +237,7 @@ describe('resource call', () => {
       agent_override: {
         agent: {
           agent_name: 'Jarvis',
+          allow_dtmf_interruption: false,
           allow_user_dtmf: true,
           ambient_sound: 'coffee-shop',
           ambient_sound_volume: 1,
@@ -240,6 +250,10 @@ describe('resource call', () => {
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
+          call_screening_option: {
+            agent_identity: 'Acme Health scheduling team',
+            call_purpose: 'confirming your appointment for tomorrow',
+          },
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
           data_storage_retention_days: 30,
           data_storage_setting: 'everything',
@@ -266,7 +280,10 @@ describe('resource call', () => {
           },
           interruption_sensitivity: 1,
           is_public: false,
-          ivr_option: { action: { type: 'hangup' } },
+          ivr_option: {
+            action: { type: 'hangup' },
+            detection_prompt: 'detection_prompt',
+          },
           language: 'en-US',
           max_call_duration_ms: 3600000,
           opt_in_signed_url: true,
@@ -317,6 +334,7 @@ describe('resource call', () => {
           voicemail_message: 'Hi, please give us a callback.',
           voicemail_option: {
             action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
+            detection_prompt: 'detection_prompt',
           },
           volume: 1,
           webhook_events: ['call_started'],
@@ -376,6 +394,7 @@ describe('resource call', () => {
       agent_override: {
         agent: {
           agent_name: 'Jarvis',
+          allow_dtmf_interruption: false,
           allow_user_dtmf: true,
           ambient_sound: 'coffee-shop',
           ambient_sound_volume: 1,
@@ -388,6 +407,10 @@ describe('resource call', () => {
           backchannel_words: ['yeah', 'uh-huh'],
           begin_message_delay_ms: 1000,
           boosted_keywords: ['retell', 'kroger'],
+          call_screening_option: {
+            agent_identity: 'Acme Health scheduling team',
+            call_purpose: 'confirming your appointment for tomorrow',
+          },
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
           data_storage_retention_days: 30,
           data_storage_setting: 'everything',
@@ -414,7 +437,10 @@ describe('resource call', () => {
           },
           interruption_sensitivity: 1,
           is_public: false,
-          ivr_option: { action: { type: 'hangup' } },
+          ivr_option: {
+            action: { type: 'hangup' },
+            detection_prompt: 'detection_prompt',
+          },
           language: 'en-US',
           max_call_duration_ms: 3600000,
           opt_in_signed_url: true,
@@ -465,6 +491,7 @@ describe('resource call', () => {
           voicemail_message: 'Hi, please give us a callback.',
           voicemail_option: {
             action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
+            detection_prompt: 'detection_prompt',
           },
           volume: 1,
           webhook_events: ['call_started'],
