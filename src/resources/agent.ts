@@ -101,26 +101,12 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
-    return this._client.get(path`/get-agent-versions/${agentID}`, options);
-  }
-
-  /**
-   * Publish the latest version of the agent and create a new draft agent with newer
-   * version.
-   *
-   * @example
-   * ```ts
-   * await client.agent.publish(
-   *   '16b980523634a6dc504898cda492e939',
-   * );
-   * ```
-   */
-  publish(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  getVersions(
+    agentID: string,
+    query: AgentGetVersionsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentGetVersionsResponse> {
+    return this._client.get(path`/get-agent-versions/${agentID}`, { query, ...options });
   }
 }
 
@@ -161,6 +147,13 @@ export interface AgentResponse {
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * If set to true, DTMF input will interrupt the agent even when
+   * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+   * node. Default to false.
+   */
+  allow_dtmf_interruption?: boolean;
 
   /**
    * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -224,6 +217,11 @@ export interface AgentResponse {
   analysis_user_sentiment_prompt?: string | null;
 
   /**
+   * Tags assigned to this agent version. Preferred tag is listed first.
+   */
+  assigned_tags?: Array<string>;
+
+  /**
    * Only applicable when enable_backchannel is true. Controls how often the agent
    * would backchannel when a backchannel is possible. Value ranging from [0,1].
    * Lower value means less frequent backchannel, while higher value means more
@@ -242,6 +240,11 @@ export interface AgentResponse {
   backchannel_words?: Array<string> | null;
 
   /**
+   * Version that this draft was based on. Null for initial versions.
+   */
+  base_version?: number | null;
+
+  /**
    * If set, will delay the first message by the specified amount of milliseconds, so
    * that it gives user more time to prepare to take the call. Valid range is [0,
    * 5000]. If not set or set to 0, agent will speak immediately. Only applicable
@@ -255,6 +258,13 @@ export interface AgentResponse {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * If this option is set, the agent prompt will include call screen handling
+   * instructions for identity and call purpose questions. Set this to null to
+   * disable call screen prompt instructions.
+   */
+  call_screening_option?: AgentResponse.CallScreeningOption | null;
 
   /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -552,7 +562,6 @@ export interface AgentResponse {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -579,6 +588,12 @@ export interface AgentResponse {
    * a positive number. If unset, default value of 10000 ms (10 s) will apply.
    */
   reminder_trigger_ms?: number;
+
+  /**
+   * Hydrated response engine for this agent version. Only present when
+   * include_response_engine is true on /get-agent-versions.
+   */
+  response_engine_data?: unknown;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -780,6 +795,25 @@ export namespace AgentResponse {
   }
 
   /**
+   * If this option is set, the agent prompt will include call screen handling
+   * instructions for identity and call purpose questions. Set this to null to
+   * disable call screen prompt instructions.
+   */
+  export interface CallScreeningOption {
+    /**
+     * Identity the agent should provide when a call screen asks who is calling.
+     * Dynamic variables are supported.
+     */
+    agent_identity: string;
+
+    /**
+     * Purpose the agent should provide when a call screen asks why it is calling.
+     * Dynamic variables are supported.
+     */
+    call_purpose: string;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
@@ -883,6 +917,12 @@ export namespace AgentResponse {
    */
   export interface IvrOption {
     action: IvrOption.Action;
+
+    /**
+     * Optionally describe what should be treated as an IVR. Leave as null to use the
+     * default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace IvrOption {
@@ -1134,6 +1174,12 @@ export namespace AgentResponse {
       | VoicemailOption.VoicemailActionStaticText
       | VoicemailOption.VoicemailActionHangup
       | VoicemailOption.VoicemailActionBridgeTransfer;
+
+    /**
+     * Optionally describe what should be treated as voicemail. Leave as null to use
+     * the default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace VoicemailOption {
@@ -1191,6 +1237,13 @@ export interface AgentCreateParams {
    * The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * If set to true, DTMF input will interrupt the agent even when
+   * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+   * node. Default to false.
+   */
+  allow_dtmf_interruption?: boolean;
 
   /**
    * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -1285,6 +1338,13 @@ export interface AgentCreateParams {
    * street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * If this option is set, the agent prompt will include call screen handling
+   * instructions for identity and call purpose questions. Set this to null to
+   * disable call screen prompt instructions.
+   */
+  call_screening_option?: AgentCreateParams.CallScreeningOption | null;
 
   /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -1577,7 +1637,6 @@ export interface AgentCreateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1805,6 +1864,25 @@ export namespace AgentCreateParams {
   }
 
   /**
+   * If this option is set, the agent prompt will include call screen handling
+   * instructions for identity and call purpose questions. Set this to null to
+   * disable call screen prompt instructions.
+   */
+  export interface CallScreeningOption {
+    /**
+     * Identity the agent should provide when a call screen asks who is calling.
+     * Dynamic variables are supported.
+     */
+    agent_identity: string;
+
+    /**
+     * Purpose the agent should provide when a call screen asks why it is calling.
+     * Dynamic variables are supported.
+     */
+    call_purpose: string;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
@@ -1908,6 +1986,12 @@ export namespace AgentCreateParams {
    */
   export interface IvrOption {
     action: IvrOption.Action;
+
+    /**
+     * Optionally describe what should be treated as an IVR. Leave as null to use the
+     * default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace IvrOption {
@@ -2159,6 +2243,12 @@ export namespace AgentCreateParams {
       | VoicemailOption.VoicemailActionStaticText
       | VoicemailOption.VoicemailActionHangup
       | VoicemailOption.VoicemailActionBridgeTransfer;
+
+    /**
+     * Optionally describe what should be treated as voicemail. Leave as null to use
+     * the default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace VoicemailOption {
@@ -2210,6 +2300,13 @@ export interface AgentUpdateParams {
    * Body param: The name of the agent. Only used for your own reference.
    */
   agent_name?: string | null;
+
+  /**
+   * Body param: If set to true, DTMF input will interrupt the agent even when
+   * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+   * node. Default to false.
+   */
+  allow_dtmf_interruption?: boolean;
 
   /**
    * Body param: If set to true, DTMF input will be accepted and processed. If false,
@@ -2304,6 +2401,13 @@ export interface AgentUpdateParams {
    * brands, street, etc.
    */
   boosted_keywords?: Array<string> | null;
+
+  /**
+   * Body param: If this option is set, the agent prompt will include call screen
+   * handling instructions for identity and call purpose questions. Set this to null
+   * to disable call screen prompt instructions.
+   */
+  call_screening_option?: AgentUpdateParams.CallScreeningOption | null;
 
   /**
    * Body param: Custom STT configuration. Only used when stt_mode is set to custom.
@@ -2599,7 +2703,6 @@ export interface AgentUpdateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -2804,6 +2907,25 @@ export interface AgentUpdateParams {
 
 export namespace AgentUpdateParams {
   /**
+   * If this option is set, the agent prompt will include call screen handling
+   * instructions for identity and call purpose questions. Set this to null to
+   * disable call screen prompt instructions.
+   */
+  export interface CallScreeningOption {
+    /**
+     * Identity the agent should provide when a call screen asks who is calling.
+     * Dynamic variables are supported.
+     */
+    agent_identity: string;
+
+    /**
+     * Purpose the agent should provide when a call screen asks why it is calling.
+     * Dynamic variables are supported.
+     */
+    call_purpose: string;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
@@ -2907,6 +3029,12 @@ export namespace AgentUpdateParams {
    */
   export interface IvrOption {
     action: IvrOption.Action;
+
+    /**
+     * Optionally describe what should be treated as an IVR. Leave as null to use the
+     * default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace IvrOption {
@@ -3204,6 +3332,12 @@ export namespace AgentUpdateParams {
       | VoicemailOption.VoicemailActionStaticText
       | VoicemailOption.VoicemailActionHangup
       | VoicemailOption.VoicemailActionBridgeTransfer;
+
+    /**
+     * Optionally describe what should be treated as voicemail. Leave as null to use
+     * the default definition.
+     */
+    detection_prompt?: string | null;
   }
 
   export namespace VoicemailOption {
@@ -3263,6 +3397,15 @@ export interface AgentListParams {
   pagination_key_version?: number;
 }
 
+export interface AgentGetVersionsParams {
+  /**
+   * When true, each returned agent version includes a response_engine_data field
+   * with the hydrated response engine (full retell-llm or conversation-flow
+   * configuration) bound to that version.
+   */
+  include_response_engine?: boolean;
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3272,5 +3415,6 @@ export declare namespace Agent {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentGetVersionsParams as AgentGetVersionsParams,
   };
 }

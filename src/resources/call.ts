@@ -2561,7 +2561,7 @@ export interface CallCreatePhoneCallParams {
    * This does not bind the agent version to this number, this is for one time
    * override.
    */
-  override_agent_version?: number;
+  override_agent_version?: number | string;
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into
@@ -2612,6 +2612,13 @@ export namespace CallCreatePhoneCallParams {
        * The name of the agent. Only used for your own reference.
        */
       agent_name?: string | null;
+
+      /**
+       * If set to true, DTMF input will interrupt the agent even when
+       * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+       * node. Default to false.
+       */
+      allow_dtmf_interruption?: boolean;
 
       /**
        * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -2706,6 +2713,13 @@ export namespace CallCreatePhoneCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      call_screening_option?: Agent.CallScreeningOption | null;
 
       /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -2998,7 +3012,6 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3196,6 +3209,25 @@ export namespace CallCreatePhoneCallParams {
 
     export namespace Agent {
       /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      export interface CallScreeningOption {
+        /**
+         * Identity the agent should provide when a call screen asks who is calling.
+         * Dynamic variables are supported.
+         */
+        agent_identity: string;
+
+        /**
+         * Purpose the agent should provide when a call screen asks why it is calling.
+         * Dynamic variables are supported.
+         */
+        call_purpose: string;
+      }
+
+      /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       export interface CustomSttConfig {
@@ -3299,6 +3331,12 @@ export namespace CallCreatePhoneCallParams {
        */
       export interface IvrOption {
         action: IvrOption.Action;
+
+        /**
+         * Optionally describe what should be treated as an IVR. Leave as null to use the
+         * default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace IvrOption {
@@ -3596,6 +3634,12 @@ export namespace CallCreatePhoneCallParams {
           | VoicemailOption.VoicemailActionStaticText
           | VoicemailOption.VoicemailActionHangup
           | VoicemailOption.VoicemailActionBridgeTransfer;
+
+        /**
+         * Optionally describe what should be treated as voicemail. Leave as null to use
+         * the default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace VoicemailOption {
@@ -3715,7 +3759,6 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
@@ -3783,7 +3826,6 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3859,7 +3901,7 @@ export interface CallCreateWebCallParams {
   /**
    * The version of the agent to use for the call.
    */
-  agent_version?: number;
+  agent_version?: number | string;
 
   /**
    * Start the call at this conversation flow node (stage). Must be a valid node id
@@ -3931,6 +3973,13 @@ export namespace CallCreateWebCallParams {
        * The name of the agent. Only used for your own reference.
        */
       agent_name?: string | null;
+
+      /**
+       * If set to true, DTMF input will interrupt the agent even when
+       * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+       * node. Default to false.
+       */
+      allow_dtmf_interruption?: boolean;
 
       /**
        * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -4025,6 +4074,13 @@ export namespace CallCreateWebCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      call_screening_option?: Agent.CallScreeningOption | null;
 
       /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -4317,7 +4373,6 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -4515,6 +4570,25 @@ export namespace CallCreateWebCallParams {
 
     export namespace Agent {
       /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      export interface CallScreeningOption {
+        /**
+         * Identity the agent should provide when a call screen asks who is calling.
+         * Dynamic variables are supported.
+         */
+        agent_identity: string;
+
+        /**
+         * Purpose the agent should provide when a call screen asks why it is calling.
+         * Dynamic variables are supported.
+         */
+        call_purpose: string;
+      }
+
+      /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       export interface CustomSttConfig {
@@ -4618,6 +4692,12 @@ export namespace CallCreateWebCallParams {
        */
       export interface IvrOption {
         action: IvrOption.Action;
+
+        /**
+         * Optionally describe what should be treated as an IVR. Leave as null to use the
+         * default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace IvrOption {
@@ -4915,6 +4995,12 @@ export namespace CallCreateWebCallParams {
           | VoicemailOption.VoicemailActionStaticText
           | VoicemailOption.VoicemailActionHangup
           | VoicemailOption.VoicemailActionBridgeTransfer;
+
+        /**
+         * Optionally describe what should be treated as voicemail. Leave as null to use
+         * the default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace VoicemailOption {
@@ -5034,7 +5120,6 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
@@ -5102,7 +5187,6 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5177,7 +5261,7 @@ export interface CallRegisterPhoneCallParams {
   /**
    * The version of the agent to use for the call.
    */
-  agent_version?: number;
+  agent_version?: number | string;
 
   /**
    * Direction of the phone call. Stored for tracking purpose.
@@ -5250,6 +5334,13 @@ export namespace CallRegisterPhoneCallParams {
        * The name of the agent. Only used for your own reference.
        */
       agent_name?: string | null;
+
+      /**
+       * If set to true, DTMF input will interrupt the agent even when
+       * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+       * node. Default to false.
+       */
+      allow_dtmf_interruption?: boolean;
 
       /**
        * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -5344,6 +5435,13 @@ export namespace CallRegisterPhoneCallParams {
        * street, etc.
        */
       boosted_keywords?: Array<string> | null;
+
+      /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      call_screening_option?: Agent.CallScreeningOption | null;
 
       /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -5636,7 +5734,6 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5834,6 +5931,25 @@ export namespace CallRegisterPhoneCallParams {
 
     export namespace Agent {
       /**
+       * If this option is set, the agent prompt will include call screen handling
+       * instructions for identity and call purpose questions. Set this to null to
+       * disable call screen prompt instructions.
+       */
+      export interface CallScreeningOption {
+        /**
+         * Identity the agent should provide when a call screen asks who is calling.
+         * Dynamic variables are supported.
+         */
+        agent_identity: string;
+
+        /**
+         * Purpose the agent should provide when a call screen asks why it is calling.
+         * Dynamic variables are supported.
+         */
+        call_purpose: string;
+      }
+
+      /**
        * Custom STT configuration. Only used when stt_mode is set to custom.
        */
       export interface CustomSttConfig {
@@ -5937,6 +6053,12 @@ export namespace CallRegisterPhoneCallParams {
        */
       export interface IvrOption {
         action: IvrOption.Action;
+
+        /**
+         * Optionally describe what should be treated as an IVR. Leave as null to use the
+         * default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace IvrOption {
@@ -6234,6 +6356,12 @@ export namespace CallRegisterPhoneCallParams {
           | VoicemailOption.VoicemailActionStaticText
           | VoicemailOption.VoicemailActionHangup
           | VoicemailOption.VoicemailActionBridgeTransfer;
+
+        /**
+         * Optionally describe what should be treated as voicemail. Leave as null to use
+         * the default definition.
+         */
+        detection_prompt?: string | null;
       }
 
       export namespace VoicemailOption {
@@ -6353,7 +6481,6 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
@@ -6421,7 +6548,6 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash'
         | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'

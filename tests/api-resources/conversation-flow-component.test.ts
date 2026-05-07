@@ -38,6 +38,7 @@ describe('resource conversationFlowComponent', () => {
           id: 'collect_info',
           instruction: { text: 'Ask the customer for their name and contact information.', type: 'prompt' },
           type: 'conversation',
+          allow_dtmf_interruption: true,
           always_edge: {
             id: 'id',
             transition_condition: { prompt: 'prompt', type: 'prompt' },
@@ -73,6 +74,7 @@ describe('resource conversationFlowComponent', () => {
             positive_finetune_examples: [{ transcript: [{ content: 'content', role: 'agent' }] }],
           },
           interruption_sensitivity: 0,
+          kb_config: { filter_score: 0.6, top_k: 3 },
           knowledge_base_ids: ['kb_001', 'kb_002'],
           model_choice: {
             model: 'gpt-4.1',

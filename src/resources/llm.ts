@@ -190,7 +190,6 @@ export interface LlmResponse {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -733,7 +732,7 @@ export namespace LlmResponse {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1999,7 +1998,7 @@ export namespace LlmResponse {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2732,7 +2731,6 @@ export interface LlmCreateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -3275,7 +3273,7 @@ export namespace LlmCreateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -4541,7 +4539,7 @@ export namespace LlmCreateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -5288,7 +5286,6 @@ export interface LlmUpdateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -5831,7 +5828,7 @@ export namespace LlmUpdateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number;
+    agent_version?: number | string;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -7097,7 +7094,7 @@ export namespace LlmUpdateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number;
+      agent_version?: number | string;
 
       /**
        * Describes what the tool does, sometimes can also include information about when

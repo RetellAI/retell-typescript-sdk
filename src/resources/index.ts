@@ -9,6 +9,7 @@ export {
   type AgentRetrieveParams,
   type AgentUpdateParams,
   type AgentListParams,
+  type AgentGetVersionsParams,
 } from './agent';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
@@ -43,6 +44,7 @@ export {
   type ChatAgentRetrieveParams,
   type ChatAgentUpdateParams,
   type ChatAgentListParams,
+  type ChatAgentGetVersionsParams,
 } from './chat-agent';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {

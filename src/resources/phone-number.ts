@@ -219,7 +219,15 @@ export namespace PhoneNumberResponse {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface InboundSMSAgent {
@@ -231,7 +239,15 @@ export namespace PhoneNumberResponse {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundAgent {
@@ -243,7 +259,15 @@ export namespace PhoneNumberResponse {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundSMSAgent {
@@ -255,7 +279,15 @@ export namespace PhoneNumberResponse {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface SipOutboundTrunkConfig {
@@ -370,7 +402,15 @@ export namespace PhoneNumberCreateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundAgent {
@@ -382,7 +422,15 @@ export namespace PhoneNumberCreateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 }
 
@@ -490,7 +538,15 @@ export namespace PhoneNumberUpdateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface InboundSMSAgent {
@@ -502,7 +558,15 @@ export namespace PhoneNumberUpdateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundAgent {
@@ -514,7 +578,15 @@ export namespace PhoneNumberUpdateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundSMSAgent {
@@ -526,7 +598,15 @@ export namespace PhoneNumberUpdateParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 }
 
@@ -617,7 +697,15 @@ export namespace PhoneNumberImportParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 
   export interface OutboundAgent {
@@ -629,7 +717,15 @@ export namespace PhoneNumberImportParams {
      */
     weight: number;
 
-    agent_version?: number;
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). When a tag is provided, resolution
+     * uses that exact tag assignment (including its dynamic variables). If the tag
+     * exists but is currently unassigned, it resolves to latest. When a numeric
+     * version (or latest) is provided, resolution applies dynamic variables from the
+     * preferred tag for that resolved version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
   }
 }
 

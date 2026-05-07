@@ -104,26 +104,12 @@ export class ChatAgent extends APIResource {
    *   );
    * ```
    */
-  getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
-    return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
-  }
-
-  /**
-   * Publish the latest version of the chat agent and create a new draft chat agent
-   * with newer version.
-   *
-   * @example
-   * ```ts
-   * await client.chatAgent.publish(
-   *   '16b980523634a6dc504898cda492e939',
-   * );
-   * ```
-   */
-  publish(agentID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-chat-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  getVersions(
+    agentID: string,
+    query: ChatAgentGetVersionsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentGetVersionsResponse> {
+    return this._client.get(path`/get-chat-agent-versions/${agentID}`, { query, ...options });
   }
 }
 
@@ -173,9 +159,19 @@ export interface ChatAgentResponse {
   analysis_user_sentiment_prompt?: string | null;
 
   /**
+   * Tags assigned to this chat agent version. Preferred tag is listed first.
+   */
+  assigned_tags?: Array<string>;
+
+  /**
    * Message to display when the chat is automatically closed.
    */
   auto_close_message?: string | null;
+
+  /**
+   * Version that this draft was based on. Null for initial versions.
+   */
+  base_version?: number | null;
 
   /**
    * Number of days to retain call/chat data before automatic deletion. Must be
@@ -405,11 +401,16 @@ export interface ChatAgentResponse {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | null;
+
+  /**
+   * Hydrated response engine for this chat agent version. Only present when
+   * include_response_engine is true on /get-chat-agent-versions.
+   */
+  response_engine_data?: unknown;
 
   /**
    * The expiration time for the signed url in milliseconds. Only applicable when
@@ -433,7 +434,7 @@ export interface ChatAgentResponse {
    * Which webhook events this agent should receive. If not set, defaults to
    * chat_started, chat_ended, chat_analyzed.
    */
-  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'> | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1012,7 +1013,6 @@ export interface ChatAgentCreateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1035,7 +1035,7 @@ export interface ChatAgentCreateParams {
    * Which webhook events this agent should receive. If not set, defaults to
    * chat_started, chat_ended, chat_analyzed.
    */
-  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'> | null;
 
   /**
    * The timeout for the webhook in milliseconds. If not set, default value of 10000
@@ -1616,7 +1616,6 @@ export interface ChatAgentUpdateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash'
     | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1649,7 +1648,7 @@ export interface ChatAgentUpdateParams {
    * Body param: Which webhook events this agent should receive. If not set, defaults
    * to chat_started, chat_ended, chat_analyzed.
    */
-  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed'> | null;
+  webhook_events?: Array<'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'> | null;
 
   /**
    * Body param: The timeout for the webhook in milliseconds. If not set, default
@@ -1989,6 +1988,15 @@ export interface ChatAgentListParams {
   pagination_key_version?: number;
 }
 
+export interface ChatAgentGetVersionsParams {
+  /**
+   * When true, each returned chat agent version includes a response_engine_data
+   * field with the hydrated response engine (full retell-llm or conversation-flow
+   * configuration) bound to that version.
+   */
+  include_response_engine?: boolean;
+}
+
 export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
@@ -1998,5 +2006,6 @@ export declare namespace ChatAgent {
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentGetVersionsParams as ChatAgentGetVersionsParams,
   };
 }
