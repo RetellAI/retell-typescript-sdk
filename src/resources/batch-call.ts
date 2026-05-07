@@ -180,7 +180,7 @@ export namespace BatchCallCreateBatchCallParams {
      * For this particular call, override the agent version used with this version.
      * This does not bind the agent to this number, this is for one time override.
      */
-    override_agent_version?: number;
+    override_agent_version?: number | string;
 
     /**
      * Add optional dynamic variables in key value pairs of string that injects into
@@ -231,6 +231,13 @@ export namespace BatchCallCreateBatchCallParams {
          * The name of the agent. Only used for your own reference.
          */
         agent_name?: string | null;
+
+        /**
+         * If set to true, DTMF input will interrupt the agent even when
+         * interruption_sensitivity is 0. Can be overridden per conversation or subagent
+         * node. Default to false.
+         */
+        allow_dtmf_interruption?: boolean;
 
         /**
          * If set to true, DTMF input will be accepted and processed. If false, any DTMF
@@ -325,6 +332,13 @@ export namespace BatchCallCreateBatchCallParams {
          * street, etc.
          */
         boosted_keywords?: Array<string> | null;
+
+        /**
+         * If this option is set, the agent prompt will include call screen handling
+         * instructions for identity and call purpose questions. Set this to null to
+         * disable call screen prompt instructions.
+         */
+        call_screening_option?: Agent.CallScreeningOption | null;
 
         /**
          * Custom STT configuration. Only used when stt_mode is set to custom.
@@ -617,7 +631,6 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
@@ -815,6 +828,25 @@ export namespace BatchCallCreateBatchCallParams {
 
       export namespace Agent {
         /**
+         * If this option is set, the agent prompt will include call screen handling
+         * instructions for identity and call purpose questions. Set this to null to
+         * disable call screen prompt instructions.
+         */
+        export interface CallScreeningOption {
+          /**
+           * Identity the agent should provide when a call screen asks who is calling.
+           * Dynamic variables are supported.
+           */
+          agent_identity: string;
+
+          /**
+           * Purpose the agent should provide when a call screen asks why it is calling.
+           * Dynamic variables are supported.
+           */
+          call_purpose: string;
+        }
+
+        /**
          * Custom STT configuration. Only used when stt_mode is set to custom.
          */
         export interface CustomSttConfig {
@@ -918,6 +950,12 @@ export namespace BatchCallCreateBatchCallParams {
          */
         export interface IvrOption {
           action: IvrOption.Action;
+
+          /**
+           * Optionally describe what should be treated as an IVR. Leave as null to use the
+           * default definition.
+           */
+          detection_prompt?: string | null;
         }
 
         export namespace IvrOption {
@@ -1215,6 +1253,12 @@ export namespace BatchCallCreateBatchCallParams {
             | VoicemailOption.VoicemailActionStaticText
             | VoicemailOption.VoicemailActionHangup
             | VoicemailOption.VoicemailActionBridgeTransfer;
+
+          /**
+           * Optionally describe what should be treated as voicemail. Leave as null to use
+           * the default definition.
+           */
+          detection_prompt?: string | null;
         }
 
         export namespace VoicemailOption {
@@ -1334,7 +1378,6 @@ export namespace BatchCallCreateBatchCallParams {
             | 'claude-4.5-sonnet'
             | 'claude-4.6-sonnet'
             | 'claude-4.5-haiku'
-            | 'gemini-2.5-flash'
             | 'gemini-2.5-flash-lite'
             | 'gemini-3.0-flash'
             | 'gemini-3.1-flash-lite';
@@ -1402,7 +1445,6 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash'
           | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'

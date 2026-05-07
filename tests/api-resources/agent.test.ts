@@ -33,6 +33,7 @@ describe('resource agent', () => {
       },
       voice_id: 'retell-Cimo',
       agent_name: 'Jarvis',
+      allow_dtmf_interruption: false,
       allow_user_dtmf: true,
       ambient_sound: 'coffee-shop',
       ambient_sound_volume: 1,
@@ -45,6 +46,10 @@ describe('resource agent', () => {
       backchannel_words: ['yeah', 'uh-huh'],
       begin_message_delay_ms: 1000,
       boosted_keywords: ['retell', 'kroger'],
+      call_screening_option: {
+        agent_identity: 'Acme Health scheduling team',
+        call_purpose: 'confirming your appointment for tomorrow',
+      },
       custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
       data_storage_retention_days: 30,
       data_storage_setting: 'everything',
@@ -68,7 +73,10 @@ describe('resource agent', () => {
       },
       interruption_sensitivity: 1,
       is_public: false,
-      ivr_option: { action: { type: 'hangup' } },
+      ivr_option: {
+        action: { type: 'hangup' },
+        detection_prompt: 'detection_prompt',
+      },
       language: 'en-US',
       max_call_duration_ms: 3600000,
       opt_in_signed_url: true,
@@ -113,6 +121,7 @@ describe('resource agent', () => {
       voicemail_message: 'Hi, please give us a callback.',
       voicemail_option: {
         action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
+        detection_prompt: 'detection_prompt',
       },
       volume: 1,
       webhook_events: ['call_started'],
@@ -210,14 +219,14 @@ describe('resource agent', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('publish', async () => {
-    const responsePromise = client.agent.publish('16b980523634a6dc504898cda492e939');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
+  test.skip('getVersions: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.agent.getVersions(
+        '16b980523634a6dc504898cda492e939',
+        { include_response_engine: true },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 });

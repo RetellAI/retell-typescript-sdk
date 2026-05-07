@@ -67,8 +67,7 @@ Methods:
 - <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentID, { ...params }) -> AgentResponse</code>
 - <code title="get /list-agents">client.agent.<a href="./src/resources/agent.ts">list</a>({ ...params }) -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentID) -> void</code>
-- <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentID) -> AgentGetVersionsResponse</code>
-- <code title="post /publish-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentID) -> void</code>
+- <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentID, { ...params }) -> AgentGetVersionsResponse</code>
 
 # ChatAgent
 
@@ -85,8 +84,7 @@ Methods:
 - <code title="patch /update-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">update</a>(agentID, { ...params }) -> ChatAgentResponse</code>
 - <code title="get /list-chat-agents">client.chatAgent.<a href="./src/resources/chat-agent.ts">list</a>({ ...params }) -> ChatAgentListResponse</code>
 - <code title="delete /delete-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">delete</a>(agentID) -> void</code>
-- <code title="get /get-chat-agent-versions/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">getVersions</a>(agentID) -> ChatAgentGetVersionsResponse</code>
-- <code title="post /publish-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">publish</a>(agentID) -> void</code>
+- <code title="get /get-chat-agent-versions/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">getVersions</a>(agentID, { ...params }) -> ChatAgentGetVersionsResponse</code>
 
 # Llm
 
