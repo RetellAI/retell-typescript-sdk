@@ -217,16 +217,4 @@ describe('resource agent', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
-
-  // Mock server tests are disabled
-  test.skip('getVersions: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.agent.getVersions(
-        '16b980523634a6dc504898cda492e939',
-        { include_response_engine: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Retell.NotFoundError);
-  });
 });
