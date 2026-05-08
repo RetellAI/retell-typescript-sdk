@@ -1893,7 +1893,7 @@ export namespace ConversationFlowResponse {
               /**
                * The version of the transfer agent to use.
                */
-              agent_version: number;
+              agent_version: number | string;
             }
           }
 
@@ -4286,7 +4286,7 @@ export namespace ConversationFlowResponse {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -10134,7 +10134,7 @@ export namespace ConversationFlowResponse {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -12527,7 +12527,7 @@ export namespace ConversationFlowResponse {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number;
+          agent_version: number | string;
         }
       }
 
@@ -18417,7 +18417,7 @@ export namespace ConversationFlowCreateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -20810,7 +20810,7 @@ export namespace ConversationFlowCreateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number;
+          agent_version: number | string;
         }
       }
 
@@ -26339,7 +26339,7 @@ export namespace ConversationFlowCreateParams {
               /**
                * The version of the transfer agent to use.
                */
-              agent_version: number;
+              agent_version: number | string;
             }
           }
 
@@ -28732,7 +28732,7 @@ export namespace ConversationFlowCreateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -35008,7 +35008,7 @@ export namespace ConversationFlowUpdateParams {
               /**
                * The version of the transfer agent to use.
                */
-              agent_version: number;
+              agent_version: number | string;
             }
           }
 
@@ -37401,7 +37401,7 @@ export namespace ConversationFlowUpdateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -43249,7 +43249,7 @@ export namespace ConversationFlowUpdateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number;
+            agent_version: number | string;
           }
         }
 
@@ -45642,7 +45642,7 @@ export namespace ConversationFlowUpdateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number;
+          agent_version: number | string;
         }
       }
 
