@@ -83,6 +83,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/list-chat',
   },
   {
+    clientCallName: 'client.chat.delete',
+    fullyQualifiedName: 'chat.delete',
+    httpMethod: 'delete',
+    httpPath: '/delete-chat/{chat_id}',
+  },
+  {
     clientCallName: 'client.chat.createChatCompletion',
     fullyQualifiedName: 'chat.createChatCompletion',
     httpMethod: 'post',
