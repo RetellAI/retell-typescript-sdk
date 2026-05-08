@@ -2276,7 +2276,7 @@ export interface AgentRetrieveParams {
    * Optional version of the API to use for this request. If not provided, will
    * default to latest version.
    */
-  version?: number;
+  version?: number | string;
 }
 
 export interface AgentUpdateParams {
@@ -2284,7 +2284,7 @@ export interface AgentUpdateParams {
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
-  version?: number;
+  version?: number | string;
 
   /**
    * Body param: The name of the agent. Only used for your own reference.

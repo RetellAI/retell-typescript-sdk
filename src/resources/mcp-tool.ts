@@ -52,7 +52,7 @@ export interface McpToolGetMcpToolsParams {
    * Optional version of the agent to use for this request. Default to latest
    * version.
    */
-  version?: number;
+  version?: number | string;
 }
 
 export declare namespace McpTool {

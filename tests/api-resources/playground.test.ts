@@ -49,7 +49,7 @@ describe('resource playground', () => {
           message_id: 'Jabr9TXYYJHfvl6Syypi88rdAHYHmcq6',
         },
       ],
-      version: 0,
+      version: 1,
       component_id: 'component_xyz789',
       current_node_id: 'start-node-abc123',
       current_state: 'greeting',
