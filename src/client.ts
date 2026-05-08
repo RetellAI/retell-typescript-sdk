@@ -20,7 +20,6 @@ import { APIPromise } from './core/api-promise';
 import {
   Agent,
   AgentCreateParams,
-  AgentGetVersionsParams,
   AgentGetVersionsResponse,
   AgentListParams,
   AgentListResponse,
@@ -55,7 +54,6 @@ import {
 import {
   ChatAgent,
   ChatAgentCreateParams,
-  ChatAgentGetVersionsParams,
   ChatAgentGetVersionsResponse,
   ChatAgentListParams,
   ChatAgentListResponse,
@@ -933,7 +931,6 @@ export declare namespace Retell {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
-    type AgentGetVersionsParams as AgentGetVersionsParams,
   };
 
   export {
@@ -945,7 +942,6 @@ export declare namespace Retell {
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
-    type ChatAgentGetVersionsParams as ChatAgentGetVersionsParams,
   };
 
   export {

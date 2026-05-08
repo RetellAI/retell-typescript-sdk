@@ -101,12 +101,8 @@ export class Agent extends APIResource {
    * );
    * ```
    */
-  getVersions(
-    agentID: string,
-    query: AgentGetVersionsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentGetVersionsResponse> {
-    return this._client.get(path`/get-agent-versions/${agentID}`, { query, ...options });
+  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
+    return this._client.get(path`/get-agent-versions/${agentID}`, options);
   }
 }
 
@@ -588,12 +584,6 @@ export interface AgentResponse {
    * a positive number. If unset, default value of 10000 ms (10 s) will apply.
    */
   reminder_trigger_ms?: number;
-
-  /**
-   * Hydrated response engine for this agent version. Only present when
-   * include_response_engine is true on /get-agent-versions.
-   */
-  response_engine_data?: unknown;
 
   /**
    * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
@@ -3397,15 +3387,6 @@ export interface AgentListParams {
   pagination_key_version?: number;
 }
 
-export interface AgentGetVersionsParams {
-  /**
-   * When true, each returned agent version includes a response_engine_data field
-   * with the hydrated response engine (full retell-llm or conversation-flow
-   * configuration) bound to that version.
-   */
-  include_response_engine?: boolean;
-}
-
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3415,6 +3396,5 @@ export declare namespace Agent {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
-    type AgentGetVersionsParams as AgentGetVersionsParams,
   };
 }

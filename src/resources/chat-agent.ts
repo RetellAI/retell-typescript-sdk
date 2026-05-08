@@ -104,12 +104,8 @@ export class ChatAgent extends APIResource {
    *   );
    * ```
    */
-  getVersions(
-    agentID: string,
-    query: ChatAgentGetVersionsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentGetVersionsResponse> {
-    return this._client.get(path`/get-chat-agent-versions/${agentID}`, { query, ...options });
+  getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
+    return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
   }
 }
 
@@ -405,12 +401,6 @@ export interface ChatAgentResponse {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | null;
-
-  /**
-   * Hydrated response engine for this chat agent version. Only present when
-   * include_response_engine is true on /get-chat-agent-versions.
-   */
-  response_engine_data?: unknown;
 
   /**
    * The expiration time for the signed url in milliseconds. Only applicable when
@@ -1988,15 +1978,6 @@ export interface ChatAgentListParams {
   pagination_key_version?: number;
 }
 
-export interface ChatAgentGetVersionsParams {
-  /**
-   * When true, each returned chat agent version includes a response_engine_data
-   * field with the hydrated response engine (full retell-llm or conversation-flow
-   * configuration) bound to that version.
-   */
-  include_response_engine?: boolean;
-}
-
 export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
@@ -2006,6 +1987,5 @@ export declare namespace ChatAgent {
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
-    type ChatAgentGetVersionsParams as ChatAgentGetVersionsParams,
   };
 }
