@@ -547,6 +547,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'delete',
+    endpoint: '/delete-chat/{chat_id}',
+    httpMethod: 'delete',
+    summary: '',
+    description: 'Delete an existing chat',
+    stainlessPath: '(resource) chat > (method) delete',
+    qualified: 'client.chat.delete',
+    params: ['chat_id: string;'],
+    markdown:
+      "## delete\n\n`client.chat.delete(chat_id: string): void`\n\n**delete** `/delete-chat/{chat_id}`\n\nDelete an existing chat\n\n### Parameters\n\n- `chat_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.chat.delete('16b980523634a6dc504898cda492e939')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.chat.delete',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chat.delete('16b980523634a6dc504898cda492e939');",
+      },
+      python: {
+        method: 'chat.delete',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat.delete(\n    "16b980523634a6dc504898cda492e939",\n)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-chat/$CHAT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/create-phone-number',
     httpMethod: 'post',

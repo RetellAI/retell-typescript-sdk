@@ -119,6 +119,7 @@ const fuse = new Fuse(
     'client.chat.create',
     'client.chat.createChatCompletion',
     'client.chat.createSMSChat',
+    'client.chat.delete',
     'client.chat.end',
     'client.chat.list',
     'client.chat.retrieve',

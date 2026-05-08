@@ -76,6 +76,23 @@ export class Chat extends APIResource {
   }
 
   /**
+   * Delete an existing chat
+   *
+   * @example
+   * ```ts
+   * await client.chat.delete(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  delete(chatID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-chat/${chatID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
    * Create a chat completion message
    *
    * @example
