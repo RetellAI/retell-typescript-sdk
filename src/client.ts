@@ -24,6 +24,7 @@ import {
   AgentGetVersionsResponse,
   AgentListParams,
   AgentListResponse,
+  AgentPublishParams,
   AgentResponse,
   AgentRetrieveParams,
   AgentUpdateParams,
@@ -58,6 +59,7 @@ import {
   ChatAgentGetVersionsResponse,
   ChatAgentListParams,
   ChatAgentListResponse,
+  ChatAgentPublishParams,
   ChatAgentResponse,
   ChatAgentRetrieveParams,
   ChatAgentUpdateParams,
@@ -75,6 +77,7 @@ import {
 import {
   ConversationFlowComponent,
   ConversationFlowComponentCreateParams,
+  ConversationFlowComponentListParams,
   ConversationFlowComponentListResponse,
   ConversationFlowComponentResponse,
   ConversationFlowComponentUpdateParams,
@@ -111,6 +114,7 @@ import {
   PhoneNumber,
   PhoneNumberCreateParams,
   PhoneNumberImportParams,
+  PhoneNumberListParams,
   PhoneNumberListResponse,
   PhoneNumberResponse,
   PhoneNumberUpdateParams,
@@ -126,6 +130,7 @@ import {
   TestListBatchTestsResponse,
   TestListTestCaseDefinitionsParams,
   TestListTestCaseDefinitionsResponse,
+  TestListTestRunsParams,
   TestListTestRunsResponse,
   TestUpdateTestCaseDefinitionParams,
   Tests,
@@ -923,6 +928,7 @@ export declare namespace Retell {
     type PhoneNumberListResponse as PhoneNumberListResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
+    type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
   };
 
@@ -935,6 +941,7 @@ export declare namespace Retell {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentPublishParams as AgentPublishParams,
   };
 
   export {
@@ -946,6 +953,7 @@ export declare namespace Retell {
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 
   export {
@@ -974,6 +982,7 @@ export declare namespace Retell {
     type ConversationFlowComponentListResponse as ConversationFlowComponentListResponse,
     type ConversationFlowComponentCreateParams as ConversationFlowComponentCreateParams,
     type ConversationFlowComponentUpdateParams as ConversationFlowComponentUpdateParams,
+    type ConversationFlowComponentListParams as ConversationFlowComponentListParams,
   };
 
   export {
@@ -1021,6 +1030,7 @@ export declare namespace Retell {
     type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
     type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
+    type TestListTestRunsParams as TestListTestRunsParams,
     type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
   };
 

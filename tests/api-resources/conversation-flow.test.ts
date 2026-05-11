@@ -320,7 +320,7 @@ describe('resource conversationFlow', () => {
         {
           limit: 1000,
           pagination_key: 'pagination_key',
-          pagination_key_version: 0,
+          sort_order: 'ascending',
         },
         { path: '/_stainless_unknown_path' },
       ),

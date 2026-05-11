@@ -34,7 +34,7 @@ describe('resource call', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.call.list({});
+    const responsePromise = client.call.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,6 +42,157 @@ describe('resource call', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.call.list(
+        {
+          filter_criteria: {
+            agent: [{ agent_id: 'x', version: [0] }],
+            batch_call_id: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
+            },
+            call_id: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
+            },
+            call_status: {
+              op: 'in',
+              type: 'enum',
+              value: ['not_connected'],
+            },
+            call_successful: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
+            call_type: {
+              op: 'in',
+              type: 'enum',
+              value: ['web_call'],
+            },
+            combined_cost: {
+              op: 'eq',
+              type: 'number',
+              value: 0,
+            },
+            custom_analysis_data: [
+              {
+                op: 'eq',
+                type: 'string',
+                value: 'value',
+                key: 'key',
+              },
+            ],
+            custom_attributes: [
+              {
+                op: 'eq',
+                type: 'string',
+                value: 'value',
+                key: 'key',
+              },
+            ],
+            data_storage_setting: {
+              op: 'in',
+              type: 'enum',
+              value: ['everything'],
+            },
+            direction: {
+              op: 'in',
+              type: 'enum',
+              value: ['inbound'],
+            },
+            disconnection_reason: {
+              op: 'in',
+              type: 'enum',
+              value: ['user_hangup'],
+            },
+            duration_ms: {
+              op: 'eq',
+              type: 'number',
+              value: 0,
+            },
+            dynamic_variables: [
+              {
+                key: 'key',
+                op: 'eq',
+                type: 'string',
+                value: 'value',
+              },
+            ],
+            e2e_latency_p50: {
+              op: 'eq',
+              type: 'number',
+              value: 0,
+            },
+            end_timestamp: {
+              op: 'eq',
+              type: 'number',
+              value: 0,
+            },
+            from_number: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
+            },
+            in_voicemail: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
+            metadata: [
+              {
+                op: 'eq',
+                type: 'string',
+                value: 'value',
+                key: 'key',
+              },
+            ],
+            start_timestamp: {
+              op: 'eq',
+              type: 'number',
+              value: 0,
+            },
+            to_number: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
+            },
+            tool_calls: [
+              {
+                name: 'name',
+                latency_ms: {
+                  op: 'eq',
+                  type: 'number',
+                  value: 0,
+                },
+                success: {
+                  op: 'eq',
+                  type: 'boolean',
+                  value: true,
+                },
+              },
+            ],
+            user_sentiment: {
+              op: 'in',
+              type: 'enum',
+              value: ['Negative'],
+            },
+          },
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          skip: 0,
+          sort_order: 'ascending',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled

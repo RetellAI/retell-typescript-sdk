@@ -72,8 +72,10 @@ describe('resource chat', () => {
     await expect(
       client.chat.list(
         {
+          filter_criteria: { foo: 'bar' },
           limit: 1000,
           pagination_key: 'pagination_key',
+          skip: 0,
           sort_order: 'ascending',
         },
         { path: '/_stainless_unknown_path' },

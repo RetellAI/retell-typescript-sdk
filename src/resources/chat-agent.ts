@@ -107,6 +107,24 @@ export class ChatAgent extends APIResource {
   getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
     return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
   }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.publish('agent_xxx', {
+   *   version: 15,
+   * });
+   * ```
+   */
+  publish(agentID: string, body: ChatAgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
 }
 
 export interface ChatAgentResponse {
@@ -1978,6 +1996,12 @@ export interface ChatAgentListParams {
   pagination_key_version?: number;
 }
 
+export interface ChatAgentPublishParams {
+  version: number;
+
+  version_description?: string;
+}
+
 export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
@@ -1987,5 +2011,6 @@ export declare namespace ChatAgent {
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 }
