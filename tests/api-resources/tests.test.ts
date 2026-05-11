@@ -141,7 +141,9 @@ describe('resource tests', () => {
     const response = await client.tests.listBatchTests({
       type: 'retell-llm',
       conversation_flow_id: 'conversation_flow_id',
+      limit: 1000,
       llm_id: 'llm_id',
+      pagination_key: 'pagination_key',
       version: 0,
     });
   });
@@ -163,7 +165,9 @@ describe('resource tests', () => {
     const response = await client.tests.listTestCaseDefinitions({
       type: 'retell-llm',
       conversation_flow_id: 'conversation_flow_id',
+      limit: 1000,
       llm_id: 'llm_id',
+      pagination_key: 'pagination_key',
     });
   });
 
@@ -177,6 +181,18 @@ describe('resource tests', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listTestRuns: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.tests.listTestRuns(
+        'test_case_batch_job_id',
+        { limit: 1000, pagination_key: 'pagination_key' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 
   // Mock server tests are disabled
