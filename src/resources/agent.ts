@@ -670,12 +670,14 @@ export interface AgentResponse {
     | 'eleven_v3'
     | 'sonic-3'
     | 'sonic-3-latest'
+    | 'sonic-3.5'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
     | 'speech-2.8-turbo'
     | 's1'
     | 's2-pro'
+    | 's2.1-pro'
     | null;
 
   /**
@@ -1739,12 +1741,14 @@ export interface AgentCreateParams {
     | 'eleven_v3'
     | 'sonic-3'
     | 'sonic-3-latest'
+    | 'sonic-3.5'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
     | 'speech-2.8-turbo'
     | 's1'
     | 's2-pro'
+    | 's2.1-pro'
     | null;
 
   /**
@@ -2828,12 +2832,14 @@ export interface AgentUpdateParams {
     | 'eleven_v3'
     | 'sonic-3'
     | 'sonic-3-latest'
+    | 'sonic-3.5'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
     | 'speech-2.8-turbo'
     | 's1'
     | 's2-pro'
+    | 's2.1-pro'
     | null;
 
   /**

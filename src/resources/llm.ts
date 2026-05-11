@@ -217,7 +217,7 @@ export interface LlmResponse {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -2770,7 +2770,7 @@ export interface LlmCreateParams {
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
-  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -5325,7 +5325,7 @@ export interface LlmUpdateParams {
    * Body param: Select the underlying speech to speech model. Can only set this or
    * model, not both.
    */
-  s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+  s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
   /**
    * Body param: The speaker who starts the conversation. Required. Must be either

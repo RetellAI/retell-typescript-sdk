@@ -743,12 +743,14 @@ export namespace BatchCallCreateBatchCallParams {
           | 'eleven_v3'
           | 'sonic-3'
           | 'sonic-3-latest'
+          | 'sonic-3.5'
           | 'tts-1'
           | 'gpt-4o-mini-tts'
           | 'speech-02-turbo'
           | 'speech-2.8-turbo'
           | 's1'
           | 's2-pro'
+          | 's2.1-pro'
           | null;
 
         /**
@@ -1469,7 +1471,7 @@ export namespace BatchCallCreateBatchCallParams {
          * Select the underlying speech to speech model. Can only set this or model, not
          * both.
          */
-        s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+        s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
         /**
          * The speaker who starts the conversation. Required. Must be either 'user' or

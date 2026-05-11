@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as CallAPI from './call';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -2291,7 +2290,7 @@ export interface CallListResponse {
    */
   has_more?: boolean;
 
-  items?: Array<CallListResponse.CallWebCallResponse | CallListResponse.CallPhoneCallResponse>;
+  items?: Array<CallListResponse.V3WebCallResponse | CallListResponse.V3PhoneCallResponse>;
 
   /**
    * Pagination key for the next page.
@@ -2300,15 +2299,1437 @@ export interface CallListResponse {
 }
 
 export namespace CallListResponse {
-  /**
-   * V3 list calls response. Transcript fields are intentionally omitted.
-   */
-  export interface CallWebCallResponse extends CallAPI.WebCallResponse {}
+  export interface V3WebCallResponse {
+    /**
+     * Access token to enter the web call room. This needs to be passed to your
+     * frontend to join the call.
+     */
+    access_token: string;
 
-  /**
-   * V3 list calls response. Transcript fields are intentionally omitted.
-   */
-  export interface CallPhoneCallResponse extends CallAPI.PhoneCallResponse {}
+    /**
+     * Corresponding agent id of this call.
+     */
+    agent_id: string;
+
+    /**
+     * The version of the agent.
+     */
+    agent_version: number;
+
+    /**
+     * Unique id of the call. Used to identify the call in the LLM websocket and used
+     * to authenticate in the audio websocket.
+     */
+    call_id: string;
+
+    /**
+     * Status of call.
+     *
+     * - `registered`: Call id issued, starting to make a call using this id.
+     * - `ongoing`: Call connected and ongoing.
+     * - `ended`: The underlying websocket has ended for the call. Either user or agent
+     *   hung up, or call transferred.
+     * - `error`: Call encountered error.
+     */
+    call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
+
+    /**
+     * Type of the call. Used to distinguish between web call and phone call.
+     */
+    call_type: 'web_call';
+
+    /**
+     * Name of the agent.
+     */
+    agent_name?: string;
+
+    /**
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
+     */
+    call_analysis?: V3WebCallResponse.CallAnalysis;
+
+    /**
+     * Cost of the call, including all the products and their costs and discount.
+     */
+    call_cost?: V3WebCallResponse.CallCost;
+
+    /**
+     * Dynamic variables collected from the call. Only available after the call ends.
+     */
+    collected_dynamic_variables?: { [key: string]: unknown };
+
+    /**
+     * Custom SIP headers to be added to the call.
+     */
+    custom_sip_headers?: { [key: string]: string };
+
+    /**
+     * Data storage setting for this call's agent. "everything" stores all data,
+     * "everything_except_pii" excludes PII when possible, "basic_attributes_only"
+     * stores only metadata.
+     */
+    data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
+
+    /**
+     * The reason for the disconnection of the call. Read detailed description about
+     * reasons listed here at
+     * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
+     */
+    disconnection_reason?:
+      | 'user_hangup'
+      | 'agent_hangup'
+      | 'call_transfer'
+      | 'voicemail_reached'
+      | 'ivr_reached'
+      | 'inactivity'
+      | 'max_duration_reached'
+      | 'concurrency_limit_reached'
+      | 'no_valid_payment'
+      | 'scam_detected'
+      | 'dial_busy'
+      | 'dial_failed'
+      | 'dial_no_answer'
+      | 'invalid_destination'
+      | 'telephony_provider_permission_denied'
+      | 'telephony_provider_unavailable'
+      | 'sip_routing_error'
+      | 'marked_as_spam'
+      | 'user_declined'
+      | 'error_llm_websocket_open'
+      | 'error_llm_websocket_lost_connection'
+      | 'error_llm_websocket_runtime'
+      | 'error_llm_websocket_corrupt_payload'
+      | 'error_no_audio_received'
+      | 'error_asr'
+      | 'error_retell'
+      | 'error_unknown'
+      | 'error_user_not_joined'
+      | 'registered_call_timeout'
+      | 'transfer_bridged'
+      | 'transfer_cancelled'
+      | 'manual_stopped';
+
+    /**
+     * Duration of the call in milliseconds. Available after call ends.
+     */
+    duration_ms?: number;
+
+    /**
+     * End timestamp (milliseconds since epoch) of the call. Available after call ends.
+     */
+    end_timestamp?: number;
+
+    /**
+     * URL to the knowledge base retrieved contents of the call. Available after call
+     * ends if the call utilizes knowledge base feature. It consists of the respond id
+     * and the retrieved contents related to that response. It's already rendered in
+     * call history tab of dashboard, and you can also manually download and check
+     * against the transcript to view the knowledge base retrieval results.
+     */
+    knowledge_base_retrieved_contents_url?: string;
+
+    /**
+     * Latency tracking of the call, available after call ends. Not all fields here
+     * will be available, as it depends on the type of call and feature used.
+     */
+    latency?: V3WebCallResponse.Latency;
+
+    /**
+     * LLM token usage of the call, available after call ends. Not populated if using
+     * custom LLM, realtime API, or no LLM call is made.
+     */
+    llm_token_usage?: V3WebCallResponse.LlmTokenUsage;
+
+    /**
+     * An arbitrary object for storage purpose only. You can put anything here like
+     * your internal customer id associated with the call. Not used for processing. You
+     * can later get this field from the call object.
+     */
+    metadata?: unknown;
+
+    /**
+     * Whether this agent opts in for signed URLs for public logs and recordings. When
+     * enabled, the generated URLs will include security signatures that restrict
+     * access and automatically expire after 24 hours.
+     */
+    opt_in_signed_url?: boolean;
+
+    /**
+     * Public log of the call, containing details about all the requests and responses
+     * received in LLM WebSocket, latency tracking for each turntaking, helpful for
+     * debugging and tracing. Available after call ends.
+     */
+    public_log_url?: string;
+
+    /**
+     * Recording of the call, with each party's audio stored in a separate channel.
+     * Available after the call ends.
+     */
+    recording_multi_channel_url?: string;
+
+    /**
+     * Recording of the call. Available after call ends.
+     */
+    recording_url?: string;
+
+    /**
+     * Add optional dynamic variables in key value pairs of string that injects into
+     * your Response Engine prompt and tool description. Only applicable for Response
+     * Engine.
+     */
+    retell_llm_dynamic_variables?: { [key: string]: unknown };
+
+    /**
+     * Recording of the call without PII, with each party's audio stored in a separate
+     * channel. Available after the call ends.
+     */
+    scrubbed_recording_multi_channel_url?: string;
+
+    /**
+     * Recording of the call without PII. Available after call ends.
+     */
+    scrubbed_recording_url?: string;
+
+    /**
+     * Begin timestamp (milliseconds since epoch) of the call. Available after call
+     * starts.
+     */
+    start_timestamp?: number;
+
+    /**
+     * The destination number or identifier where the call was transferred to. Only
+     * populated when the disconnection reason was `call_transfer`. Can be a phone
+     * number or a SIP URI. SIP URIs are prefixed with "sip:" and may include a
+     * ";transport=..." portion (if transport is known) where the transport type can be
+     * "tls", "tcp" or "udp".
+     */
+    transfer_destination?: string | null;
+
+    /**
+     * Transfer end timestamp (milliseconds since epoch) of the call. Available after
+     * transfer call ends.
+     */
+    transfer_end_timestamp?: number;
+  }
+
+  export namespace V3WebCallResponse {
+    /**
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
+     */
+    export interface CallAnalysis {
+      /**
+       * Whether the agent seems to have a successful call with the user, where the agent
+       * finishes the task, and the call was complete without being cutoff.
+       */
+      call_successful?: boolean;
+
+      /**
+       * A high level summary of the call.
+       */
+      call_summary?: string;
+
+      /**
+       * Custom analysis data that was extracted based on the schema defined in agent
+       * post call analysis data. Can be empty if nothing is specified.
+       */
+      custom_analysis_data?: unknown;
+
+      /**
+       * Whether the call is entered voicemail.
+       */
+      in_voicemail?: boolean;
+
+      /**
+       * Sentiment of the user in the call.
+       */
+      user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
+    }
+
+    /**
+     * Cost of the call, including all the products and their costs and discount.
+     */
+    export interface CallCost {
+      /**
+       * Combined cost of all individual costs in cents
+       */
+      combined_cost: number;
+
+      /**
+       * List of products with their unit prices and costs in cents
+       */
+      product_costs: Array<CallCost.ProductCost>;
+
+      /**
+       * Total duration of the call in seconds
+       */
+      total_duration_seconds: number;
+
+      /**
+       * Total unit duration price of all products in cents per second
+       */
+      total_duration_unit_price: number;
+    }
+
+    export namespace CallCost {
+      export interface ProductCost {
+        /**
+         * Cost for the product in cents for the duration of the call.
+         */
+        cost: number;
+
+        /**
+         * Product name that has a cost associated with it.
+         */
+        product: string;
+
+        /**
+         * True if this cost item is for a transfer segment.
+         */
+        is_transfer_leg_cost?: boolean;
+
+        /**
+         * Unit price of the product in cents per second.
+         */
+        unit_price?: number;
+      }
+    }
+
+    /**
+     * Latency tracking of the call, available after call ends. Not all fields here
+     * will be available, as it depends on the type of call and feature used.
+     */
+    export interface Latency {
+      /**
+       * Transcription latency (diff between the duration of the chunks streamed and the
+       * durations of the transcribed part) tracking of the call.
+       */
+      asr?: Latency.Asr;
+
+      /**
+       * End to end latency (from user stops talking to agent start talking) tracking of
+       * the call. This latency does not account for the network trip time from Retell
+       * server to user frontend. The latency is tracked every time turn change between
+       * user and agent.
+       */
+      e2e?: Latency.E2E;
+
+      /**
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * relevant context received) tracking of the call. Only populated when using
+       * knowledge base feature for the agent of the call.
+       */
+      knowledge_base?: Latency.KnowledgeBase;
+
+      /**
+       * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+       * of the call. When using custom LLM. this latency includes LLM websocket
+       * roundtrip time between user server and Retell server.
+       */
+      llm?: Latency.Llm;
+
+      /**
+       * LLM websocket roundtrip latency (between user server and Retell server) tracking
+       * of the call. Only populated for calls using custom LLM.
+       */
+      llm_websocket_network_rtt?: Latency.LlmWebsocketNetworkRtt;
+
+      /**
+       * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
+       */
+      s2s?: Latency.S2s;
+
+      /**
+       * Text-to-speech latency (from the triggering of TTS to first byte received)
+       * tracking of the call.
+       */
+      tts?: Latency.Tts;
+    }
+
+    export namespace Latency {
+      /**
+       * Transcription latency (diff between the duration of the chunks streamed and the
+       * durations of the transcribed part) tracking of the call.
+       */
+      export interface Asr {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * End to end latency (from user stops talking to agent start talking) tracking of
+       * the call. This latency does not account for the network trip time from Retell
+       * server to user frontend. The latency is tracked every time turn change between
+       * user and agent.
+       */
+      export interface E2E {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * relevant context received) tracking of the call. Only populated when using
+       * knowledge base feature for the agent of the call.
+       */
+      export interface KnowledgeBase {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+       * of the call. When using custom LLM. this latency includes LLM websocket
+       * roundtrip time between user server and Retell server.
+       */
+      export interface Llm {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * LLM websocket roundtrip latency (between user server and Retell server) tracking
+       * of the call. Only populated for calls using custom LLM.
+       */
+      export interface LlmWebsocketNetworkRtt {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
+       */
+      export interface S2s {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Text-to-speech latency (from the triggering of TTS to first byte received)
+       * tracking of the call.
+       */
+      export interface Tts {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+    }
+
+    /**
+     * LLM token usage of the call, available after call ends. Not populated if using
+     * custom LLM, realtime API, or no LLM call is made.
+     */
+    export interface LlmTokenUsage {
+      /**
+       * Average token count of the call.
+       */
+      average: number;
+
+      /**
+       * Number of requests made to the LLM.
+       */
+      num_requests: number;
+
+      /**
+       * All the token count values in the call.
+       */
+      values: Array<number>;
+    }
+  }
+
+  export interface V3PhoneCallResponse {
+    /**
+     * Corresponding agent id of this call.
+     */
+    agent_id: string;
+
+    /**
+     * The version of the agent.
+     */
+    agent_version: number;
+
+    /**
+     * Unique id of the call. Used to identify the call in the LLM websocket and used
+     * to authenticate in the audio websocket.
+     */
+    call_id: string;
+
+    /**
+     * Status of call.
+     *
+     * - `registered`: Call id issued, starting to make a call using this id.
+     * - `ongoing`: Call connected and ongoing.
+     * - `ended`: The underlying websocket has ended for the call. Either user or agent
+     *   hung up, or call transferred.
+     * - `error`: Call encountered error.
+     */
+    call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error';
+
+    /**
+     * Type of the call. Used to distinguish between web call and phone call.
+     */
+    call_type: 'phone_call';
+
+    /**
+     * Direction of the phone call.
+     */
+    direction: 'inbound' | 'outbound';
+
+    /**
+     * The caller number.
+     */
+    from_number: string;
+
+    /**
+     * The callee number.
+     */
+    to_number: string;
+
+    /**
+     * Name of the agent.
+     */
+    agent_name?: string;
+
+    /**
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
+     */
+    call_analysis?: V3PhoneCallResponse.CallAnalysis;
+
+    /**
+     * Cost of the call, including all the products and their costs and discount.
+     */
+    call_cost?: V3PhoneCallResponse.CallCost;
+
+    /**
+     * Dynamic variables collected from the call. Only available after the call ends.
+     */
+    collected_dynamic_variables?: { [key: string]: unknown };
+
+    /**
+     * Custom SIP headers to be added to the call.
+     */
+    custom_sip_headers?: { [key: string]: string };
+
+    /**
+     * Data storage setting for this call's agent. "everything" stores all data,
+     * "everything_except_pii" excludes PII when possible, "basic_attributes_only"
+     * stores only metadata.
+     */
+    data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only' | null;
+
+    /**
+     * The reason for the disconnection of the call. Read detailed description about
+     * reasons listed here at
+     * [Disconnection Reason Doc](/reliability/debug-call-disconnect#understanding-disconnection-reasons).
+     */
+    disconnection_reason?:
+      | 'user_hangup'
+      | 'agent_hangup'
+      | 'call_transfer'
+      | 'voicemail_reached'
+      | 'ivr_reached'
+      | 'inactivity'
+      | 'max_duration_reached'
+      | 'concurrency_limit_reached'
+      | 'no_valid_payment'
+      | 'scam_detected'
+      | 'dial_busy'
+      | 'dial_failed'
+      | 'dial_no_answer'
+      | 'invalid_destination'
+      | 'telephony_provider_permission_denied'
+      | 'telephony_provider_unavailable'
+      | 'sip_routing_error'
+      | 'marked_as_spam'
+      | 'user_declined'
+      | 'error_llm_websocket_open'
+      | 'error_llm_websocket_lost_connection'
+      | 'error_llm_websocket_runtime'
+      | 'error_llm_websocket_corrupt_payload'
+      | 'error_no_audio_received'
+      | 'error_asr'
+      | 'error_retell'
+      | 'error_unknown'
+      | 'error_user_not_joined'
+      | 'registered_call_timeout'
+      | 'transfer_bridged'
+      | 'transfer_cancelled'
+      | 'manual_stopped';
+
+    /**
+     * Duration of the call in milliseconds. Available after call ends.
+     */
+    duration_ms?: number;
+
+    /**
+     * End timestamp (milliseconds since epoch) of the call. Available after call ends.
+     */
+    end_timestamp?: number;
+
+    /**
+     * URL to the knowledge base retrieved contents of the call. Available after call
+     * ends if the call utilizes knowledge base feature. It consists of the respond id
+     * and the retrieved contents related to that response. It's already rendered in
+     * call history tab of dashboard, and you can also manually download and check
+     * against the transcript to view the knowledge base retrieval results.
+     */
+    knowledge_base_retrieved_contents_url?: string;
+
+    /**
+     * Latency tracking of the call, available after call ends. Not all fields here
+     * will be available, as it depends on the type of call and feature used.
+     */
+    latency?: V3PhoneCallResponse.Latency;
+
+    /**
+     * LLM token usage of the call, available after call ends. Not populated if using
+     * custom LLM, realtime API, or no LLM call is made.
+     */
+    llm_token_usage?: V3PhoneCallResponse.LlmTokenUsage;
+
+    /**
+     * An arbitrary object for storage purpose only. You can put anything here like
+     * your internal customer id associated with the call. Not used for processing. You
+     * can later get this field from the call object.
+     */
+    metadata?: unknown;
+
+    /**
+     * Whether this agent opts in for signed URLs for public logs and recordings. When
+     * enabled, the generated URLs will include security signatures that restrict
+     * access and automatically expire after 24 hours.
+     */
+    opt_in_signed_url?: boolean;
+
+    /**
+     * Public log of the call, containing details about all the requests and responses
+     * received in LLM WebSocket, latency tracking for each turntaking, helpful for
+     * debugging and tracing. Available after call ends.
+     */
+    public_log_url?: string;
+
+    /**
+     * Recording of the call, with each party's audio stored in a separate channel.
+     * Available after the call ends.
+     */
+    recording_multi_channel_url?: string;
+
+    /**
+     * Recording of the call. Available after call ends.
+     */
+    recording_url?: string;
+
+    /**
+     * Add optional dynamic variables in key value pairs of string that injects into
+     * your Response Engine prompt and tool description. Only applicable for Response
+     * Engine.
+     */
+    retell_llm_dynamic_variables?: { [key: string]: unknown };
+
+    /**
+     * Recording of the call without PII, with each party's audio stored in a separate
+     * channel. Available after the call ends.
+     */
+    scrubbed_recording_multi_channel_url?: string;
+
+    /**
+     * Recording of the call without PII. Available after call ends.
+     */
+    scrubbed_recording_url?: string;
+
+    /**
+     * Begin timestamp (milliseconds since epoch) of the call. Available after call
+     * starts.
+     */
+    start_timestamp?: number;
+
+    /**
+     * Telephony identifier of the call, populated when available. Tracking purposes
+     * only.
+     */
+    telephony_identifier?: V3PhoneCallResponse.TelephonyIdentifier;
+
+    /**
+     * The destination number or identifier where the call was transferred to. Only
+     * populated when the disconnection reason was `call_transfer`. Can be a phone
+     * number or a SIP URI. SIP URIs are prefixed with "sip:" and may include a
+     * ";transport=..." portion (if transport is known) where the transport type can be
+     * "tls", "tcp" or "udp".
+     */
+    transfer_destination?: string | null;
+
+    /**
+     * Transfer end timestamp (milliseconds since epoch) of the call. Available after
+     * transfer call ends.
+     */
+    transfer_end_timestamp?: number;
+  }
+
+  export namespace V3PhoneCallResponse {
+    /**
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
+     */
+    export interface CallAnalysis {
+      /**
+       * Whether the agent seems to have a successful call with the user, where the agent
+       * finishes the task, and the call was complete without being cutoff.
+       */
+      call_successful?: boolean;
+
+      /**
+       * A high level summary of the call.
+       */
+      call_summary?: string;
+
+      /**
+       * Custom analysis data that was extracted based on the schema defined in agent
+       * post call analysis data. Can be empty if nothing is specified.
+       */
+      custom_analysis_data?: unknown;
+
+      /**
+       * Whether the call is entered voicemail.
+       */
+      in_voicemail?: boolean;
+
+      /**
+       * Sentiment of the user in the call.
+       */
+      user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
+    }
+
+    /**
+     * Cost of the call, including all the products and their costs and discount.
+     */
+    export interface CallCost {
+      /**
+       * Combined cost of all individual costs in cents
+       */
+      combined_cost: number;
+
+      /**
+       * List of products with their unit prices and costs in cents
+       */
+      product_costs: Array<CallCost.ProductCost>;
+
+      /**
+       * Total duration of the call in seconds
+       */
+      total_duration_seconds: number;
+
+      /**
+       * Total unit duration price of all products in cents per second
+       */
+      total_duration_unit_price: number;
+    }
+
+    export namespace CallCost {
+      export interface ProductCost {
+        /**
+         * Cost for the product in cents for the duration of the call.
+         */
+        cost: number;
+
+        /**
+         * Product name that has a cost associated with it.
+         */
+        product: string;
+
+        /**
+         * True if this cost item is for a transfer segment.
+         */
+        is_transfer_leg_cost?: boolean;
+
+        /**
+         * Unit price of the product in cents per second.
+         */
+        unit_price?: number;
+      }
+    }
+
+    /**
+     * Latency tracking of the call, available after call ends. Not all fields here
+     * will be available, as it depends on the type of call and feature used.
+     */
+    export interface Latency {
+      /**
+       * Transcription latency (diff between the duration of the chunks streamed and the
+       * durations of the transcribed part) tracking of the call.
+       */
+      asr?: Latency.Asr;
+
+      /**
+       * End to end latency (from user stops talking to agent start talking) tracking of
+       * the call. This latency does not account for the network trip time from Retell
+       * server to user frontend. The latency is tracked every time turn change between
+       * user and agent.
+       */
+      e2e?: Latency.E2E;
+
+      /**
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * relevant context received) tracking of the call. Only populated when using
+       * knowledge base feature for the agent of the call.
+       */
+      knowledge_base?: Latency.KnowledgeBase;
+
+      /**
+       * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+       * of the call. When using custom LLM. this latency includes LLM websocket
+       * roundtrip time between user server and Retell server.
+       */
+      llm?: Latency.Llm;
+
+      /**
+       * LLM websocket roundtrip latency (between user server and Retell server) tracking
+       * of the call. Only populated for calls using custom LLM.
+       */
+      llm_websocket_network_rtt?: Latency.LlmWebsocketNetworkRtt;
+
+      /**
+       * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
+       */
+      s2s?: Latency.S2s;
+
+      /**
+       * Text-to-speech latency (from the triggering of TTS to first byte received)
+       * tracking of the call.
+       */
+      tts?: Latency.Tts;
+    }
+
+    export namespace Latency {
+      /**
+       * Transcription latency (diff between the duration of the chunks streamed and the
+       * durations of the transcribed part) tracking of the call.
+       */
+      export interface Asr {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * End to end latency (from user stops talking to agent start talking) tracking of
+       * the call. This latency does not account for the network trip time from Retell
+       * server to user frontend. The latency is tracked every time turn change between
+       * user and agent.
+       */
+      export interface E2E {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * relevant context received) tracking of the call. Only populated when using
+       * knowledge base feature for the agent of the call.
+       */
+      export interface KnowledgeBase {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * LLM latency (from issue of LLM call to first speakable chunk received) tracking
+       * of the call. When using custom LLM. this latency includes LLM websocket
+       * roundtrip time between user server and Retell server.
+       */
+      export interface Llm {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * LLM websocket roundtrip latency (between user server and Retell server) tracking
+       * of the call. Only populated for calls using custom LLM.
+       */
+      export interface LlmWebsocketNetworkRtt {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Speech-to-speech latency (from requesting responses of a S2S model to first byte
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
+       */
+      export interface S2s {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+
+      /**
+       * Text-to-speech latency (from the triggering of TTS to first byte received)
+       * tracking of the call.
+       */
+      export interface Tts {
+        /**
+         * Maximum latency in the call, measured in milliseconds.
+         */
+        max?: number;
+
+        /**
+         * Minimum latency in the call, measured in milliseconds.
+         */
+        min?: number;
+
+        /**
+         * Number of data points (number of times latency is tracked).
+         */
+        num?: number;
+
+        /**
+         * 50 percentile of latency, measured in milliseconds.
+         */
+        p50?: number;
+
+        /**
+         * 90 percentile of latency, measured in milliseconds.
+         */
+        p90?: number;
+
+        /**
+         * 95 percentile of latency, measured in milliseconds.
+         */
+        p95?: number;
+
+        /**
+         * 99 percentile of latency, measured in milliseconds.
+         */
+        p99?: number;
+
+        /**
+         * All the latency data points in the call, measured in milliseconds.
+         */
+        values?: Array<number>;
+      }
+    }
+
+    /**
+     * LLM token usage of the call, available after call ends. Not populated if using
+     * custom LLM, realtime API, or no LLM call is made.
+     */
+    export interface LlmTokenUsage {
+      /**
+       * Average token count of the call.
+       */
+      average: number;
+
+      /**
+       * Number of requests made to the LLM.
+       */
+      num_requests: number;
+
+      /**
+       * All the token count values in the call.
+       */
+      values: Array<number>;
+    }
+
+    /**
+     * Telephony identifier of the call, populated when available. Tracking purposes
+     * only.
+     */
+    export interface TelephonyIdentifier {
+      /**
+       * Twilio call sid.
+       */
+      twilio_call_sid?: string;
+    }
+  }
 }
 
 export interface CallUpdateParams {
@@ -3786,12 +5207,14 @@ export namespace CallCreatePhoneCallParams {
         | 'eleven_v3'
         | 'sonic-3'
         | 'sonic-3-latest'
+        | 'sonic-3.5'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
         | 's2-pro'
+        | 's2.1-pro'
         | null;
 
       /**
@@ -4512,7 +5935,7 @@ export namespace CallCreatePhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -5147,12 +6570,14 @@ export namespace CallCreateWebCallParams {
         | 'eleven_v3'
         | 'sonic-3'
         | 'sonic-3-latest'
+        | 'sonic-3.5'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
         | 's2-pro'
+        | 's2.1-pro'
         | null;
 
       /**
@@ -5873,7 +7298,7 @@ export namespace CallCreateWebCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -6508,12 +7933,14 @@ export namespace CallRegisterPhoneCallParams {
         | 'eleven_v3'
         | 'sonic-3'
         | 'sonic-3-latest'
+        | 'sonic-3.5'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
         | 'speech-2.8-turbo'
         | 's1'
         | 's2-pro'
+        | 's2.1-pro'
         | null;
 
       /**
@@ -7234,7 +8661,7 @@ export namespace CallRegisterPhoneCallParams {
        * Select the underlying speech to speech model. Can only set this or model, not
        * both.
        */
-      s2s_model?: 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+      s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
 
       /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
