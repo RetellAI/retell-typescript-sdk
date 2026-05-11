@@ -1,4 +1,4 @@
-configured_endpoints: 75
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/retell/retell-12451a2b14cd9c215cb73f2112aa40775cbe48358390072bea2c1f24cba39c30.yml
+configured_endpoints: 76
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/retell/retell-34c75afb2ecc24f4c428eb5402fc823a1fe309699c1c0b321db52d45b1f41b5e.yml
 openapi_spec_hash: bf87b12f54c30051abf0517dfbc2d593
-config_hash: e09b48401947e98c9cb604f34983bf1d
+config_hash: 563668cc30bc4847932ba265108c000c

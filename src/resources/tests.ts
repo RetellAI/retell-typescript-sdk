@@ -59,36 +59,34 @@ export class Tests extends APIResource {
   }
 
   /**
-   * List batch test jobs for a response engine
-   *
-   * @deprecated
+   * List batch test jobs with pagination
    */
   listBatchTests(
     query: TestListBatchTestsParams,
     options?: RequestOptions,
   ): APIPromise<TestListBatchTestsResponse> {
-    return this._client.get('/list-batch-tests', { query, ...options });
+    return this._client.get('/v2/list-batch-tests', { query, ...options });
   }
 
   /**
-   * List test case definitions for a response engine
-   *
-   * @deprecated
+   * List test case definitions with pagination
    */
   listTestCaseDefinitions(
     query: TestListTestCaseDefinitionsParams,
     options?: RequestOptions,
   ): APIPromise<TestListTestCaseDefinitionsResponse> {
-    return this._client.get('/list-test-case-definitions', { query, ...options });
+    return this._client.get('/v2/list-test-case-definitions', { query, ...options });
   }
 
   /**
-   * List all test case jobs (test runs) for a batch test job
-   *
-   * @deprecated
+   * List test case jobs (test runs) for a batch test job with pagination
    */
-  listTestRuns(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<TestListTestRunsResponse> {
-    return this._client.get(path`/list-test-runs/${testCaseBatchJobID}`, options);
+  listTestRuns(
+    testCaseBatchJobID: string,
+    query: TestListTestRunsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<TestListTestRunsResponse> {
+    return this._client.get(path`/v2/list-test-runs/${testCaseBatchJobID}`, { query, ...options });
   }
 
   /**
@@ -400,11 +398,47 @@ export interface TestCaseJobResponse {
   transcript_snapshot?: unknown | null;
 }
 
-export type TestListBatchTestsResponse = Array<BatchTestResponse>;
+export interface TestListBatchTestsResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
 
-export type TestListTestCaseDefinitionsResponse = Array<TestCaseDefinitionResponse>;
+  items?: Array<BatchTestResponse>;
 
-export type TestListTestRunsResponse = Array<TestCaseJobResponse>;
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export interface TestListTestCaseDefinitionsResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<TestCaseDefinitionResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export interface TestListTestRunsResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<TestCaseJobResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
 
 export interface TestCreateBatchTestParams {
   /**
@@ -606,9 +640,19 @@ export interface TestListBatchTestsParams {
   conversation_flow_id?: string;
 
   /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
    * LLM ID (required when type is retell-llm)
    */
   llm_id?: string;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
 
   /**
    * Version of the response engine (defaults to latest)
@@ -628,9 +672,31 @@ export interface TestListTestCaseDefinitionsParams {
   conversation_flow_id?: string;
 
   /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
    * LLM ID (required when type is retell-llm)
    */
   llm_id?: string;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+}
+
+export interface TestListTestRunsParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
 }
 
 export interface TestUpdateTestCaseDefinitionParams {
@@ -783,6 +849,7 @@ export declare namespace Tests {
     type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
     type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
+    type TestListTestRunsParams as TestListTestRunsParams,
     type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
   };
 }

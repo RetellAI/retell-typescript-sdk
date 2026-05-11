@@ -104,6 +104,22 @@ export class Agent extends APIResource {
   getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
     return this._client.get(path`/get-agent-versions/${agentID}`, options);
   }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.agent.publish('agent_xxx', { version: 15 });
+   * ```
+   */
+  publish(agentID: string, body: AgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
 }
 
 export interface AgentResponse {
@@ -3387,6 +3403,12 @@ export interface AgentListParams {
   pagination_key_version?: number;
 }
 
+export interface AgentPublishParams {
+  version: number;
+
+  version_description?: string;
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3396,5 +3418,6 @@ export declare namespace Agent {
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentPublishParams as AgentPublishParams,
   };
 }

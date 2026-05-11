@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ChatAPI from './chat';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -60,16 +61,16 @@ export class Chat extends APIResource {
   }
 
   /**
-   * List all chats
+   * List chats with unified cursor pagination response.
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const chats = await client.chat.list();
+   * ```
    */
-  list(
-    query: ChatListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatListResponse> {
-    return this._client.get('/list-chat', {
-      query,
+  list(body: ChatListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatListResponse> {
+    return this._client.post('/v3/list-chats', {
+      body,
       timeout: (this._client as any)._options.timeout ?? 300000,
       ...options,
     });
@@ -470,7 +471,26 @@ export namespace ChatResponse {
   }
 }
 
-export type ChatListResponse = Array<ChatResponse>;
+export interface ChatListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<ChatListResponse.Item>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export namespace ChatListResponse {
+  /**
+   * V3 list chats response. Transcript fields are intentionally omitted.
+   */
+  export interface Item extends ChatAPI.ChatResponse {}
+}
 
 export interface ChatCreateChatCompletionResponse {
   /**
@@ -712,22 +732,27 @@ export interface ChatUpdateParams {
 
 export interface ChatListParams {
   /**
-   * Limit the number of chats returned. Default 50, Max 1000. To retrieve more than
-   * 1000, use pagination_key to continue fetching the next page.
+   * Filter criteria for chats to retrieve.
+   */
+  filter_criteria?: { [key: string]: unknown };
+
+  /**
+   * Maximum number of chats to return.
    */
   limit?: number;
 
   /**
-   * The pagination key to continue fetching the next page of chats. Pagination key
-   * is represented by a chat id here, and it's exclusive (not included in the
-   * fetched chats). The last chat id from the list chats is usually used as
-   * pagination key here. If not set, will start from the beginning.
+   * Opaque pagination cursor from a previous response.
    */
   pagination_key?: string;
 
   /**
-   * The chats will be sorted by `start_timestamp`, whether to return the chats in
-   * ascending or descending order.
+   * Number of records to skip for pagination.
+   */
+  skip?: number;
+
+  /**
+   * Sort chats by `start_timestamp` in ascending or descending order.
    */
   sort_order?: 'ascending' | 'descending';
 }

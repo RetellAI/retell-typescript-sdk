@@ -9,6 +9,7 @@ export {
   type AgentRetrieveParams,
   type AgentUpdateParams,
   type AgentListParams,
+  type AgentPublishParams,
 } from './agent';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
@@ -43,6 +44,7 @@ export {
   type ChatAgentRetrieveParams,
   type ChatAgentUpdateParams,
   type ChatAgentListParams,
+  type ChatAgentPublishParams,
 } from './chat-agent';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
@@ -60,6 +62,7 @@ export {
   type ConversationFlowComponentListResponse,
   type ConversationFlowComponentCreateParams,
   type ConversationFlowComponentUpdateParams,
+  type ConversationFlowComponentListParams,
 } from './conversation-flow-component';
 export {
   ExportRequest,
@@ -95,6 +98,7 @@ export {
   type PhoneNumberListResponse,
   type PhoneNumberCreateParams,
   type PhoneNumberUpdateParams,
+  type PhoneNumberListParams,
   type PhoneNumberImportParams,
 } from './phone-number';
 export { Playground, type PlaygroundCompletionResponse, type PlaygroundCompletionParams } from './playground';
@@ -110,6 +114,7 @@ export {
   type TestCreateTestCaseDefinitionParams,
   type TestListBatchTestsParams,
   type TestListTestCaseDefinitionsParams,
+  type TestListTestRunsParams,
   type TestUpdateTestCaseDefinitionParams,
 } from './tests';
 export {

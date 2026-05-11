@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as CallAPI from './call';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -43,12 +44,15 @@ export class Call extends APIResource {
   }
 
   /**
-   * Retrieve call details
+   * List calls with unified cursor pagination response.
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const calls = await client.call.list();
+   * ```
    */
-  list(body: CallListParams, options?: RequestOptions): APIPromise<CallListResponse> {
-    return this._client.post('/v2/list-calls', {
+  list(body: CallListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CallListResponse> {
+    return this._client.post('/v3/list-calls', {
       body,
       timeout: (this._client as any)._options.timeout ?? 300000,
       ...options,
@@ -2281,7 +2285,31 @@ export namespace WebCallResponse {
   }
 }
 
-export type CallListResponse = Array<CallResponse>;
+export interface CallListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<CallListResponse.CallWebCallResponse | CallListResponse.CallPhoneCallResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export namespace CallListResponse {
+  /**
+   * V3 list calls response. Transcript fields are intentionally omitted.
+   */
+  export interface CallWebCallResponse extends CallAPI.WebCallResponse {}
+
+  /**
+   * V3 list calls response. Transcript fields are intentionally omitted.
+   */
+  export interface CallPhoneCallResponse extends CallAPI.PhoneCallResponse {}
+}
 
 export interface CallUpdateParams {
   /**
@@ -2316,196 +2344,830 @@ export interface CallUpdateParams {
 
 export interface CallListParams {
   /**
-   * Filter criteria for the calls to retrieve.
+   * Filter criteria for calls. All conditions are implicitly connected with AND.
    */
   filter_criteria?: CallListParams.FilterCriteria;
 
   /**
-   * Limit the number of calls returned. Default 50, Max 1000. To retrieve more than
-   * 1000, use pagination_key to continue fetching the next page.
+   * Maximum number of calls to return.
    */
   limit?: number;
 
   /**
-   * The pagination key to continue fetching the next page of calls. Pagination key
-   * is represented by a call id here, and it's exclusive (not included in the
-   * fetched calls). The last call id from the list calls is usually used as
-   * pagination key here. If not set, will start from the beginning.
+   * Opaque pagination cursor from a previous response.
    */
   pagination_key?: string;
 
   /**
-   * The calls will be sorted by `start_timestamp`, whether to return the calls in
-   * ascending or descending order.
+   * Number of records to skip for pagination.
+   */
+  skip?: number;
+
+  /**
+   * Sort calls by `start_timestamp` in ascending or descending order.
    */
   sort_order?: 'ascending' | 'descending';
 }
 
 export namespace CallListParams {
   /**
-   * Filter criteria for the calls to retrieve.
+   * Filter criteria for calls. All conditions are implicitly connected with AND.
    */
   export interface FilterCriteria {
     /**
-     * Only retrieve calls that are made with specific agent(s).
+     * Filter by agent(s). Agent filters are connected by OR.
      */
-    agent_id?: Array<string>;
+    agent?: Array<FilterCriteria.Agent>;
 
     /**
-     * Only retrieve calls with specific batch call id(s).
+     * Filter by batch call ID.
      */
-    batch_call_id?: Array<string>;
+    batch_call_id?: FilterCriteria.BatchCallID;
 
     /**
-     * Only retrieve calls with specific call id(s).
+     * Filter by call ID.
      */
-    call_id?: Array<string>;
+    call_id?: FilterCriteria.CallID;
+
+    call_status?: FilterCriteria.CallStatus;
 
     /**
-     * Only retrieve calls with specific call status(es).
+     * Filter by whether the call was successful.
      */
-    call_status?: Array<'not_connected' | 'ongoing' | 'ended' | 'error'>;
+    call_successful?: FilterCriteria.CallSuccessful;
+
+    call_type?: FilterCriteria.CallType;
 
     /**
-     * Only retrieve calls with specific call successful(s).
+     * Filter by combined cost of the call.
      */
-    call_successful?: Array<boolean>;
+    combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Only retrieve calls with specific call type(s).
+     * Filter by custom analysis data fields.
      */
-    call_type?: Array<'web_call' | 'phone_call'>;
-
-    /**
-     * Only retrieve calls with specific direction(s).
-     */
-    direction?: Array<'inbound' | 'outbound'>;
-
-    /**
-     * Only retrieve calls with specific disconnection reason(s).
-     */
-    disconnection_reason?: Array<
-      | 'user_hangup'
-      | 'agent_hangup'
-      | 'call_transfer'
-      | 'voicemail_reached'
-      | 'ivr_reached'
-      | 'inactivity'
-      | 'max_duration_reached'
-      | 'concurrency_limit_reached'
-      | 'no_valid_payment'
-      | 'scam_detected'
-      | 'dial_busy'
-      | 'dial_failed'
-      | 'dial_no_answer'
-      | 'invalid_destination'
-      | 'telephony_provider_permission_denied'
-      | 'telephony_provider_unavailable'
-      | 'sip_routing_error'
-      | 'marked_as_spam'
-      | 'user_declined'
-      | 'error_llm_websocket_open'
-      | 'error_llm_websocket_lost_connection'
-      | 'error_llm_websocket_runtime'
-      | 'error_llm_websocket_corrupt_payload'
-      | 'error_no_audio_received'
-      | 'error_asr'
-      | 'error_retell'
-      | 'error_unknown'
-      | 'error_user_not_joined'
-      | 'registered_call_timeout'
-      | 'transfer_bridged'
-      | 'transfer_cancelled'
-      | 'manual_stopped'
+    custom_analysis_data?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
     >;
 
     /**
-     * Only retrieve calls with specific range of duration(s).
+     * Filter by custom attributes fields.
      */
-    duration_ms?: FilterCriteria.DurationMs;
+    custom_attributes?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
+    >;
+
+    data_storage_setting?: FilterCriteria.DataStorageSetting;
+
+    direction?: FilterCriteria.Direction;
+
+    disconnection_reason?: FilterCriteria.DisconnectionReason;
 
     /**
-     * Filter by dynamic variables using dot notation (e.g., `dynamic_variables.name`).
-     * Values are matched exactly as strings.
+     * Filter by call duration in milliseconds.
      */
-    dynamic_variables?: { [key: string]: Array<string> };
-
-    e2e_latency_p50?: FilterCriteria.E2ELatencyP50;
+    duration_ms?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Only retrieve calls with specific range of end timestamp(s).
+     * Filter by dynamic variables.
      */
-    end_timestamp?: FilterCriteria.EndTimestamp;
+    dynamic_variables?: Array<FilterCriteria.DynamicVariable>;
 
     /**
-     * Only retrieve calls with specific from number(s).
+     * Filter by end-to-end latency p50.
      */
-    from_number?: Array<string>;
+    e2e_latency_p50?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Only retrieve calls that are in voicemail or not in voicemail.
+     * Filter by call end timestamp (epoch ms).
      */
-    in_voicemail?: Array<boolean>;
+    end_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by metadata fields using dot notation (e.g., `metadata.customer_id`).
-     * Values are matched exactly as strings.
+     * Filter by from number.
      */
-    metadata?: { [key: string]: Array<string> };
+    from_number?: FilterCriteria.FromNumber;
 
     /**
-     * Only retrieve calls with specific range of start timestamp(s).
+     * Filter by whether the call is in voicemail.
      */
-    start_timestamp?: FilterCriteria.StartTimestamp;
+    in_voicemail?: FilterCriteria.InVoicemail;
 
     /**
-     * Only retrieve calls with specific to number(s).
+     * Filter by metadata fields.
      */
-    to_number?: Array<string>;
+    metadata?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
+    >;
 
     /**
-     * Only retrieve calls with specific user sentiment(s).
+     * Filter by call start timestamp (epoch ms).
      */
-    user_sentiment?: Array<'Negative' | 'Positive' | 'Neutral' | 'Unknown'>;
+    start_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * The version of the agent to use for the call.
+     * Filter by to number.
      */
-    version?: Array<number>;
+    to_number?: FilterCriteria.ToNumber;
+
+    /**
+     * Filter by tool call criteria. Tool call filters are connected by AND.
+     */
+    tool_calls?: Array<FilterCriteria.ToolCall>;
+
+    user_sentiment?: FilterCriteria.UserSentiment;
   }
 
   export namespace FilterCriteria {
-    /**
-     * Only retrieve calls with specific range of duration(s).
-     */
-    export interface DurationMs {
-      lower_threshold?: number;
+    export interface Agent {
+      /**
+       * The agent ID to filter on.
+       */
+      agent_id: string;
 
-      upper_threshold?: number;
-    }
-
-    export interface E2ELatencyP50 {
-      lower_threshold?: number;
-
-      upper_threshold?: number;
+      /**
+       * Specific versions to filter on. If not provided, all versions are included.
+       */
+      version?: Array<number>;
     }
 
     /**
-     * Only retrieve calls with specific range of end timestamp(s).
+     * Filter by batch call ID.
      */
-    export interface EndTimestamp {
-      lower_threshold?: number;
+    export interface BatchCallID {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
 
-      upper_threshold?: number;
+      type: 'string';
+
+      value: string;
     }
 
     /**
-     * Only retrieve calls with specific range of start timestamp(s).
+     * Filter by call ID.
      */
-    export interface StartTimestamp {
-      lower_threshold?: number;
+    export interface CallID {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
 
-      upper_threshold?: number;
+      type: 'string';
+
+      value: string;
+    }
+
+    export interface CallStatus {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'not_connected' | 'ongoing' | 'ended' | 'error'>;
+    }
+
+    /**
+     * Filter by whether the call was successful.
+     */
+    export interface CallSuccessful {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+    }
+
+    export interface CallType {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'web_call' | 'phone_call'>;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface StringFilter {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface StringFilter {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface DataStorageSetting {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'everything' | 'everything_except_pii' | 'basic_attributes_only'>;
+    }
+
+    export interface Direction {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'inbound' | 'outbound'>;
+    }
+
+    export interface DisconnectionReason {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<
+        | 'user_hangup'
+        | 'agent_hangup'
+        | 'call_transfer'
+        | 'voicemail_reached'
+        | 'ivr_reached'
+        | 'inactivity'
+        | 'max_duration_reached'
+        | 'concurrency_limit_reached'
+        | 'no_valid_payment'
+        | 'scam_detected'
+        | 'dial_busy'
+        | 'dial_failed'
+        | 'dial_no_answer'
+        | 'invalid_destination'
+        | 'telephony_provider_permission_denied'
+        | 'telephony_provider_unavailable'
+        | 'sip_routing_error'
+        | 'marked_as_spam'
+        | 'user_declined'
+        | 'error_llm_websocket_open'
+        | 'error_llm_websocket_lost_connection'
+        | 'error_llm_websocket_runtime'
+        | 'error_llm_websocket_corrupt_payload'
+        | 'error_no_audio_received'
+        | 'error_asr'
+        | 'error_retell'
+        | 'error_unknown'
+        | 'error_user_not_joined'
+        | 'registered_call_timeout'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'manual_stopped'
+      >;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface DynamicVariable {
+      /**
+       * The dynamic variable name to filter on.
+       */
+      key: string;
+
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    /**
+     * Filter by from number.
+     */
+    export interface FromNumber {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+    }
+
+    /**
+     * Filter by whether the call is in voicemail.
+     */
+    export interface InVoicemail {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+    }
+
+    export interface StringFilter {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    /**
+     * Filter by to number.
+     */
+    export interface ToNumber {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+    }
+
+    export interface ToolCall {
+      /**
+       * The tool call name to filter on.
+       */
+      name: string;
+
+      /**
+       * Filter by tool call latency in milliseconds.
+       */
+      latency_ms?: ToolCall.NumberFilter | ToolCall.RangeFilter;
+
+      /**
+       * Filter by tool call success status.
+       */
+      success?: ToolCall.Success;
+    }
+
+    export namespace ToolCall {
+      export interface NumberFilter {
+        /**
+         * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+         * than, le: less than or equal
+         */
+        op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+        type: 'number';
+
+        value: number;
+      }
+
+      export interface RangeFilter {
+        /**
+         * bt: between
+         */
+        op: 'bt';
+
+        type: 'range';
+
+        /**
+         * [lower_bound, upper_bound]
+         */
+        value: Array<number>;
+      }
+
+      /**
+       * Filter by tool call success status.
+       */
+      export interface Success {
+        op: 'eq';
+
+        type: 'boolean';
+
+        value: boolean;
+      }
+    }
+
+    export interface UserSentiment {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'Negative' | 'Positive' | 'Neutral' | 'Unknown'>;
     }
   }
 }

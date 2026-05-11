@@ -76,12 +76,19 @@ export class ConversationFlowComponent extends APIResource {
   }
 
   /**
-   * List shared conversation flow components
+   * List shared conversation flow components with pagination
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const conversationFlowComponents =
+   *   await client.conversationFlowComponent.list();
+   * ```
    */
-  list(options?: RequestOptions): APIPromise<ConversationFlowComponentListResponse> {
-    return this._client.get('/list-conversation-flow-components', options);
+  list(
+    query: ConversationFlowComponentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowComponentListResponse> {
+    return this._client.get('/v2/list-conversation-flow-components', { query, ...options });
   }
 
   /**
@@ -8339,7 +8346,19 @@ export namespace ConversationFlowComponentResponse {
   }
 }
 
-export type ConversationFlowComponentListResponse = Array<ConversationFlowComponentResponse>;
+export interface ConversationFlowComponentListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<ConversationFlowComponentResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
 
 export interface ConversationFlowComponentCreateParams {
   /**
@@ -24783,11 +24802,29 @@ export namespace ConversationFlowComponentUpdateParams {
   }
 }
 
+export interface ConversationFlowComponentListParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export declare namespace ConversationFlowComponent {
   export {
     type ConversationFlowComponentResponse as ConversationFlowComponentResponse,
     type ConversationFlowComponentListResponse as ConversationFlowComponentListResponse,
     type ConversationFlowComponentCreateParams as ConversationFlowComponentCreateParams,
     type ConversationFlowComponentUpdateParams as ConversationFlowComponentUpdateParams,
+    type ConversationFlowComponentListParams as ConversationFlowComponentListParams,
   };
 }

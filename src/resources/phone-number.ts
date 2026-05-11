@@ -69,12 +69,18 @@ export class PhoneNumber extends APIResource {
   }
 
   /**
-   * List all phone numbers
+   * List phone numbers with pagination
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const phoneNumbers = await client.phoneNumber.list();
+   * ```
    */
-  list(options?: RequestOptions): APIPromise<PhoneNumberListResponse> {
-    return this._client.get('/list-phone-numbers', options);
+  list(
+    query: PhoneNumberListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberListResponse> {
+    return this._client.get('/v2/list-phone-numbers', { query, ...options });
   }
 
   /**
@@ -309,7 +315,19 @@ export namespace PhoneNumberResponse {
   }
 }
 
-export type PhoneNumberListResponse = Array<PhoneNumberResponse>;
+export interface PhoneNumberListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<PhoneNumberResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
 
 export interface PhoneNumberCreateParams {
   /**
@@ -610,6 +628,23 @@ export namespace PhoneNumberUpdateParams {
   }
 }
 
+export interface PhoneNumberListParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export interface PhoneNumberImportParams {
   /**
    * The number you are trying to import in E.164 format of the number (+country
@@ -735,6 +770,7 @@ export declare namespace PhoneNumber {
     type PhoneNumberListResponse as PhoneNumberListResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
+    type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
   };
 }

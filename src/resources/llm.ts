@@ -62,12 +62,15 @@ export class Llm extends APIResource {
   }
 
   /**
-   * List all Retell LLM Response Engines that can be attached to an agent.
+   * List Retell LLM Response Engines with pagination
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const llms = await client.llm.list();
+   * ```
    */
   list(query: LlmListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmListResponse> {
-    return this._client.get('/list-retell-llms', { query, ...options });
+    return this._client.get('/v2/list-retell-llms', { query, ...options });
   }
 
   /**
@@ -2641,7 +2644,19 @@ export namespace LlmResponse {
   }
 }
 
-export type LlmListResponse = Array<LlmResponse>;
+export interface LlmListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<LlmResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
 
 export interface LlmCreateParams {
   /**
@@ -7739,24 +7754,19 @@ export namespace LlmUpdateParams {
 
 export interface LlmListParams {
   /**
-   * A limit on the number of objects to be returned. Limit can range between 1 and
-   * 1000, and the default is 1000.
+   * Maximum number of items to return.
    */
   limit?: number;
 
   /**
-   * The pagination key to continue fetching the next page of LLMs. Pagination key is
-   * represented by a llm id, pagination key and version pair is exclusive (not
-   * included in the fetched page). If not set, will start from the beginning.
+   * Pagination key for fetching the next page.
    */
   pagination_key?: string;
 
   /**
-   * Specifies the version of the llm associated with the pagination_key. When
-   * paginating, both the pagination_key and its version must be provided to ensure
-   * consistent ordering and to fetch the next page correctly.
+   * Sort order for results.
    */
-  pagination_key_version?: number;
+  sort_order?: 'ascending' | 'descending';
 }
 
 export declare namespace Llm {
