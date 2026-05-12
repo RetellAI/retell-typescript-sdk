@@ -214,7 +214,7 @@ export interface PhoneCallResponse {
   /**
    * Dynamic variables collected from the call. Only available after the call ends.
    */
-  collected_dynamic_variables?: { [key: string]: unknown };
+  collected_dynamic_variables?: { [key: string]: string };
 
   /**
    * Custom SIP headers to be added to the call.
@@ -335,7 +335,7 @@ export interface PhoneCallResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 
   /**
    * Recording of the call without PII, with each party's audio stored in a separate
@@ -1287,7 +1287,7 @@ export interface WebCallResponse {
   /**
    * Dynamic variables collected from the call. Only available after the call ends.
    */
-  collected_dynamic_variables?: { [key: string]: unknown };
+  collected_dynamic_variables?: { [key: string]: string };
 
   /**
    * Custom SIP headers to be added to the call.
@@ -1408,7 +1408,7 @@ export interface WebCallResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 
   /**
    * Recording of the call without PII, with each party's audio stored in a separate
@@ -2358,7 +2358,7 @@ export namespace CallListResponse {
     /**
      * Dynamic variables collected from the call. Only available after the call ends.
      */
-    collected_dynamic_variables?: { [key: string]: unknown };
+    collected_dynamic_variables?: { [key: string]: string };
 
     /**
      * Custom SIP headers to be added to the call.
@@ -2479,7 +2479,7 @@ export namespace CallListResponse {
      * your Response Engine prompt and tool description. Only applicable for Response
      * Engine.
      */
-    retell_llm_dynamic_variables?: { [key: string]: unknown };
+    retell_llm_dynamic_variables?: { [key: string]: string };
 
     /**
      * Recording of the call without PII, with each party's audio stored in a separate
@@ -3070,7 +3070,7 @@ export namespace CallListResponse {
     /**
      * Dynamic variables collected from the call. Only available after the call ends.
      */
-    collected_dynamic_variables?: { [key: string]: unknown };
+    collected_dynamic_variables?: { [key: string]: string };
 
     /**
      * Custom SIP headers to be added to the call.
@@ -3191,7 +3191,7 @@ export namespace CallListResponse {
      * your Response Engine prompt and tool description. Only applicable for Response
      * Engine.
      */
-    retell_llm_dynamic_variables?: { [key: string]: unknown };
+    retell_llm_dynamic_variables?: { [key: string]: string };
 
     /**
      * Recording of the call without PII, with each party's audio stored in a separate
@@ -4651,7 +4651,7 @@ export interface CallCreatePhoneCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
 export namespace CallCreatePhoneCallParams {
@@ -6014,7 +6014,7 @@ export interface CallCreateWebCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
 export namespace CallCreateWebCallParams {
@@ -7372,7 +7372,7 @@ export interface CallRegisterPhoneCallParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 
   /**
    * The number you want to call, in E.164 format. Stored for tracking purpose.

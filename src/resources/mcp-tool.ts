@@ -27,7 +27,7 @@ export interface McpToolDefinition {
   /**
    * JSON schema defining the input parameters for the tool.
    */
-  inputSchema: { [key: string]: unknown };
+  inputSchema: unknown;
 
   /**
    * Name of the MCP tool.

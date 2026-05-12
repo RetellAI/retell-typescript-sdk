@@ -123,7 +123,7 @@ describe('resource conversationFlowComponent', () => {
           headers: { Authorization: 'Bearer 1234567890' },
           method: 'GET',
           parameters: {
-            properties: { foo: 'bar' },
+            properties: {},
             type: 'object',
             required: ['string'],
           },

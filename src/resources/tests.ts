@@ -345,7 +345,7 @@ export namespace TestCaseDefinitionResponse {
       /**
        * Arguments to match. Only provided fields will be checked
        */
-      args: { [key: string]: unknown };
+      args: unknown;
 
       /**
        * Match only calls with specific arguments
@@ -618,7 +618,7 @@ export namespace TestCreateTestCaseDefinitionParams {
       /**
        * Arguments to match. Only provided fields will be checked
        */
-      args: { [key: string]: unknown };
+      args: unknown;
 
       /**
        * Match only calls with specific arguments
@@ -827,7 +827,7 @@ export namespace TestUpdateTestCaseDefinitionParams {
       /**
        * Arguments to match. Only provided fields will be checked
        */
-      args: { [key: string]: unknown };
+      args: unknown;
 
       /**
        * Match only calls with specific arguments

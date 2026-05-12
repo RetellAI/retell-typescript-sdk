@@ -989,7 +989,7 @@ export namespace LlmResponse {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -1502,7 +1502,7 @@ export namespace LlmResponse {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -2255,7 +2255,7 @@ export namespace LlmResponse {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -3542,7 +3542,7 @@ export namespace LlmCreateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -4055,7 +4055,7 @@ export namespace LlmCreateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -4808,7 +4808,7 @@ export namespace LlmCreateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -6097,7 +6097,7 @@ export namespace LlmUpdateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -6610,7 +6610,7 @@ export namespace LlmUpdateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -7363,7 +7363,7 @@ export namespace LlmUpdateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
