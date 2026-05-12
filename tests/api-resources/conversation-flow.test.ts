@@ -197,7 +197,7 @@ describe('resource conversationFlow', () => {
               headers: { Authorization: 'Bearer 1234567890' },
               method: 'GET',
               parameters: {
-                properties: { foo: 'bar' },
+                properties: {},
                 type: 'object',
                 required: ['string'],
               },
@@ -249,7 +249,7 @@ describe('resource conversationFlow', () => {
           headers: { Authorization: 'Bearer 1234567890' },
           method: 'GET',
           parameters: {
-            properties: { foo: 'bar' },
+            properties: {},
             type: 'object',
             required: ['string'],
           },

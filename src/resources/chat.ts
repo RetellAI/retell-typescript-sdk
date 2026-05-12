@@ -186,7 +186,7 @@ export interface ChatResponse {
   /**
    * Dynamic variables collected from the chat. Only available after the chat ends.
    */
-  collected_dynamic_variables?: { [key: string]: unknown };
+  collected_dynamic_variables?: { [key: string]: string };
 
   /**
    * Custom attributes for the chat
@@ -221,7 +221,7 @@ export interface ChatResponse {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 
   /**
    * Begin timestamp (milliseconds since epoch) of the chat. Available after chat
@@ -697,7 +697,7 @@ export interface ChatCreateParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
 export interface ChatUpdateParams {
@@ -734,7 +734,7 @@ export interface ChatListParams {
   /**
    * Filter criteria for chats to retrieve.
    */
-  filter_criteria?: { [key: string]: unknown };
+  filter_criteria?: unknown;
 
   /**
    * Maximum number of chats to return.
@@ -806,7 +806,7 @@ export interface ChatCreateSMSChatParams {
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
-  retell_llm_dynamic_variables?: { [key: string]: unknown };
+  retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
 export declare namespace Chat {

@@ -2161,7 +2161,7 @@ export namespace ConversationFlowComponentResponse {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -8239,7 +8239,7 @@ export namespace ConversationFlowComponentResponse {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -10396,7 +10396,7 @@ export namespace ConversationFlowComponentCreateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -16474,7 +16474,7 @@ export namespace ConversationFlowComponentCreateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.
@@ -18651,7 +18651,7 @@ export namespace ConversationFlowComponentUpdateParams {
          * The value of properties is an object, where each key is the name of a property
          * and each value is a schema used to validate that property.
          */
-        properties: { [key: string]: unknown };
+        properties: unknown;
 
         /**
          * Type must be "object" for a JSON Schema object.
@@ -24695,7 +24695,7 @@ export namespace ConversationFlowComponentUpdateParams {
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
        */
-      properties: { [key: string]: unknown };
+      properties: unknown;
 
       /**
        * Type must be "object" for a JSON Schema object.

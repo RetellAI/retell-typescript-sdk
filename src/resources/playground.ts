@@ -503,7 +503,7 @@ export namespace PlaygroundCompletionParams {
       /**
        * Arguments to match. Only provided fields will be checked
        */
-      args: { [key: string]: unknown };
+      args: unknown;
 
       /**
        * Match only calls with specific arguments
