@@ -85,7 +85,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -123,7 +123,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          },\n          "to_number": "+12137774445"\n        }\'',
+          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "to_number": "+12137774445"\n        }\'',
       },
     },
   },
@@ -161,7 +161,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -351,7 +351,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -389,7 +389,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "bar"\n          }\n        }\'',
+          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },

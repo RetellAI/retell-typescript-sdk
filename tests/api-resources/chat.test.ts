@@ -26,7 +26,7 @@ describe('resource chat', () => {
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       agent_version: 1,
       metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
 
@@ -72,7 +72,7 @@ describe('resource chat', () => {
     await expect(
       client.chat.list(
         {
-          filter_criteria: { foo: 'bar' },
+          filter_criteria: {},
           limit: 1000,
           pagination_key: 'pagination_key',
           skip: 0,
@@ -141,7 +141,7 @@ describe('resource chat', () => {
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       override_agent_version: 1,
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
 

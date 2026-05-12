@@ -187,7 +187,7 @@ export namespace BatchCallCreateBatchCallParams {
      * your Response Engine prompt and tool description. Only applicable for Response
      * Engine.
      */
-    retell_llm_dynamic_variables?: { [key: string]: unknown };
+    retell_llm_dynamic_variables?: { [key: string]: string };
   }
 
   export namespace Task {

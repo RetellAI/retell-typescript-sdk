@@ -365,7 +365,7 @@ describe('resource call', () => {
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       override_agent_version: 1,
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
 
@@ -522,7 +522,7 @@ describe('resource call', () => {
       current_node_id: 'collect_info',
       current_state: 'information_collection',
       metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
 
@@ -679,7 +679,7 @@ describe('resource call', () => {
       direction: 'inbound',
       from_number: '+14157774444',
       metadata: {},
-      retell_llm_dynamic_variables: { customer_name: 'bar' },
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
       to_number: '+12137774445',
     });
   });
