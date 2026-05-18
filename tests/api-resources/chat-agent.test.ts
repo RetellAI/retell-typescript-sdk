@@ -47,7 +47,6 @@ describe('resource chatAgent', () => {
         high_empathy: true,
         scope_boundaries: true,
       },
-      is_public: false,
       language: 'en-US',
       opt_in_signed_url: true,
       pii_config: { categories: ['person_name'], mode: 'post_call' },

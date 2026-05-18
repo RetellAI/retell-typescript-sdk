@@ -169,6 +169,11 @@ export interface KnowledgeBaseResponse {
 export namespace KnowledgeBaseResponse {
   export interface KnowledgeBaseSourceDocument {
     /**
+     * File size in bytes.
+     */
+    file_size: number;
+
+    /**
      * URL of the document stored.
      */
     file_url: string;

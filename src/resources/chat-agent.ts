@@ -222,12 +222,6 @@ export interface ChatAgentResponse {
   handbook_config?: ChatAgentResponse.HandbookConfig;
 
   /**
-   * Whether the agent is public. When set to true, the agent is available for public
-   * agent preview link.
-   */
-  is_public?: boolean | null;
-
-  /**
    * Whether the chat agent is published.
    */
   is_published?: boolean;
@@ -566,7 +560,9 @@ export namespace ChatAgentResponse {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'
@@ -831,12 +827,6 @@ export interface ChatAgentCreateParams {
    * Voice-only presets are not available for chat agents.
    */
   handbook_config?: ChatAgentCreateParams.HandbookConfig;
-
-  /**
-   * Whether the agent is public. When set to true, the agent is available for public
-   * agent preview link.
-   */
-  is_public?: boolean | null;
 
   /**
    * Specifies what language(s) the agent will operate in. Accepts either a single
@@ -1167,7 +1157,9 @@ export namespace ChatAgentCreateParams {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'
@@ -1434,12 +1426,6 @@ export interface ChatAgentUpdateParams {
    * behaviors. Voice-only presets are not available for chat agents.
    */
   handbook_config?: ChatAgentUpdateParams.HandbookConfig;
-
-  /**
-   * Body param: Whether the agent is public. When set to true, the agent is
-   * available for public agent preview link.
-   */
-  is_public?: boolean | null;
 
   /**
    * Body param: Specifies what language(s) the agent will operate in. Accepts either
@@ -1734,7 +1720,9 @@ export namespace ChatAgentUpdateParams {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'

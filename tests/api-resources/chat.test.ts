@@ -73,6 +73,7 @@ describe('resource chat', () => {
       client.chat.list(
         {
           filter_criteria: {},
+          include_total: true,
           limit: 1000,
           pagination_key: 'pagination_key',
           skip: 0,

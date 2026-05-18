@@ -366,12 +366,6 @@ export interface AgentResponse {
   interruption_sensitivity?: number;
 
   /**
-   * Whether the agent is public. When set to true, the agent is available for public
-   * agent preview link.
-   */
-  is_public?: boolean | null;
-
-  /**
    * Whether the agent is published.
    */
   is_published?: boolean;
@@ -944,7 +938,9 @@ export namespace AgentResponse {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'
@@ -1440,12 +1436,6 @@ export interface AgentCreateParams {
    * interrupted.
    */
   interruption_sensitivity?: number;
-
-  /**
-   * Whether the agent is public. When set to true, the agent is available for public
-   * agent preview link.
-   */
-  is_public?: boolean | null;
 
   /**
    * If this option is set, the call will try to detect IVR in the first 3 minutes of
@@ -2015,7 +2005,9 @@ export namespace AgentCreateParams {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'
@@ -2508,12 +2500,6 @@ export interface AgentUpdateParams {
    * never be interrupted.
    */
   interruption_sensitivity?: number;
-
-  /**
-   * Body param: Whether the agent is public. When set to true, the agent is
-   * available for public agent preview link.
-   */
-  is_public?: boolean | null;
 
   /**
    * Body param: If this option is set, the call will try to detect IVR in the first
@@ -3060,7 +3046,9 @@ export namespace AgentUpdateParams {
    */
   export interface PiiConfig {
     /**
-     * List of PII categories to scrub from transcripts and recordings.
+     * List of PII categories to scrub from transcripts and recordings. PII redaction
+     * is only active when this list is non-empty; an empty array means no PII
+     * scrubbing is performed.
      */
     categories: Array<
       | 'person_name'

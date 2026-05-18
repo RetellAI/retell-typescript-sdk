@@ -359,6 +359,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.ToolCallResultUtterance
     | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
+    | PhoneCallResponse.SMSUtterance
   >;
 
   /**
@@ -395,6 +396,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.ToolCallResultUtterance
     | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
+    | PhoneCallResponse.SMSUtterance
   >;
 
   /**
@@ -1038,6 +1040,44 @@ export namespace PhoneCallResponse {
     role: 'dtmf';
   }
 
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
   /**
    * Telephony identifier of the call, populated when available. Tracking purposes
    * only.
@@ -1225,6 +1265,44 @@ export namespace PhoneCallResponse {
      * Digit pressed by the user from their phone keypad.
      */
     role: 'dtmf';
+  }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
   }
 }
 
@@ -1432,6 +1510,7 @@ export interface WebCallResponse {
     | WebCallResponse.ToolCallResultUtterance
     | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
+    | WebCallResponse.SMSUtterance
   >;
 
   /**
@@ -1462,6 +1541,7 @@ export interface WebCallResponse {
     | WebCallResponse.ToolCallResultUtterance
     | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
+    | WebCallResponse.SMSUtterance
   >;
 
   /**
@@ -2105,6 +2185,44 @@ export namespace WebCallResponse {
     role: 'dtmf';
   }
 
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
   export interface TranscriptObject {
     /**
      * Transcript of the utterances.
@@ -2282,6 +2400,44 @@ export namespace WebCallResponse {
      */
     role: 'dtmf';
   }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
 }
 
 export interface CallListResponse {
@@ -2296,6 +2452,12 @@ export interface CallListResponse {
    * Pagination key for the next page.
    */
   pagination_key?: string;
+
+  /**
+   * Total number of calls matching `filter_criteria`. Only present when
+   * `include_total` is true.
+   */
+  total?: number;
 }
 
 export namespace CallListResponse {
@@ -3770,6 +3932,14 @@ export interface CallListParams {
   filter_criteria?: CallListParams.FilterCriteria;
 
   /**
+   * Whether to include `total` (count of all calls matching `filter_criteria`,
+   * ignoring `limit`/`skip`/`pagination_key`) in the response. Defaults to false.
+   * Each enabled request triggers an additional aggregate query, so opt in only when
+   * the total is needed.
+   */
+  include_total?: boolean;
+
+  /**
    * Maximum number of calls to return.
    */
   limit?: number;
@@ -4892,12 +5062,6 @@ export namespace CallCreatePhoneCallParams {
       interruption_sensitivity?: number;
 
       /**
-       * Whether the agent is public. When set to true, the agent is available for public
-       * agent preview link.
-       */
-      is_public?: boolean | null;
-
-      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -5435,7 +5599,9 @@ export namespace CallCreatePhoneCallParams {
        */
       export interface PiiConfig {
         /**
-         * List of PII categories to scrub from transcripts and recordings.
+         * List of PII categories to scrub from transcripts and recordings. PII redaction
+         * is only active when this list is non-empty; an empty array means no PII
+         * scrubbing is performed.
          */
         categories: Array<
           | 'person_name'
@@ -6255,12 +6421,6 @@ export namespace CallCreateWebCallParams {
       interruption_sensitivity?: number;
 
       /**
-       * Whether the agent is public. When set to true, the agent is available for public
-       * agent preview link.
-       */
-      is_public?: boolean | null;
-
-      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -6798,7 +6958,9 @@ export namespace CallCreateWebCallParams {
        */
       export interface PiiConfig {
         /**
-         * List of PII categories to scrub from transcripts and recordings.
+         * List of PII categories to scrub from transcripts and recordings. PII redaction
+         * is only active when this list is non-empty; an empty array means no PII
+         * scrubbing is performed.
          */
         categories: Array<
           | 'person_name'
@@ -7618,12 +7780,6 @@ export namespace CallRegisterPhoneCallParams {
       interruption_sensitivity?: number;
 
       /**
-       * Whether the agent is public. When set to true, the agent is available for public
-       * agent preview link.
-       */
-      is_public?: boolean | null;
-
-      /**
        * If this option is set, the call will try to detect IVR in the first 3 minutes of
        * the call. Actions defined will be applied when the IVR is detected. Set this to
        * null to disable IVR detection.
@@ -8161,7 +8317,9 @@ export namespace CallRegisterPhoneCallParams {
        */
       export interface PiiConfig {
         /**
-         * List of PII categories to scrub from transcripts and recordings.
+         * List of PII categories to scrub from transcripts and recordings. PII redaction
+         * is only active when this list is non-empty; an empty array means no PII
+         * scrubbing is performed.
          */
         categories: Array<
           | 'person_name'

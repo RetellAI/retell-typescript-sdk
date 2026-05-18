@@ -72,7 +72,6 @@ describe('resource agent', () => {
         speech_normalization: true,
       },
       interruption_sensitivity: 1,
-      is_public: false,
       ivr_option: {
         action: { type: 'hangup' },
         detection_prompt: 'detection_prompt',
