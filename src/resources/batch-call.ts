@@ -428,12 +428,6 @@ export namespace BatchCallCreateBatchCallParams {
         interruption_sensitivity?: number;
 
         /**
-         * Whether the agent is public. When set to true, the agent is available for public
-         * agent preview link.
-         */
-        is_public?: boolean | null;
-
-        /**
          * If this option is set, the call will try to detect IVR in the first 3 minutes of
          * the call. Actions defined will be applied when the IVR is detected. Set this to
          * null to disable IVR detection.
@@ -971,7 +965,9 @@ export namespace BatchCallCreateBatchCallParams {
          */
         export interface PiiConfig {
           /**
-           * List of PII categories to scrub from transcripts and recordings.
+           * List of PII categories to scrub from transcripts and recordings. PII redaction
+           * is only active when this list is non-empty; an empty array means no PII
+           * scrubbing is performed.
            */
           categories: Array<
             | 'person_name'

@@ -166,6 +166,7 @@ describe('resource conversationFlow', () => {
             },
           ],
           begin_tag_display_position: { x: 100, y: 200 },
+          flex_mode: false,
           mcps: [
             {
               name: 'name',
@@ -212,6 +213,7 @@ describe('resource conversationFlow', () => {
         },
       ],
       default_dynamic_variables: { company_name: 'Retell Inc', support_hours: '9 AM - 5 PM' },
+      flex_mode: false,
       global_prompt: 'You are a helpful customer service agent.',
       is_transfer_llm: false,
       kb_config: { filter_score: 0.6, top_k: 3 },

@@ -147,6 +147,12 @@ export interface ConversationFlowResponse {
   default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
+   * If enabled, the whole conversation flow will be converted as a Single Prompt
+   * agent.
+   */
+  flex_mode?: boolean | null;
+
+  /**
    * Global prompt used in every node of the conversation flow.
    */
   global_prompt?: string | null;
@@ -275,6 +281,11 @@ export namespace ConversationFlowResponse {
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * If enabled, the whole component will be converted as a Single Prompt agent.
+     */
+    flex_mode?: boolean | null;
 
     /**
      * A list of MCP server configurations to use for this component
@@ -16741,6 +16752,12 @@ export interface ConversationFlowCreateParams {
   default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
+   * If enabled, the whole conversation flow will be converted as a Single Prompt
+   * agent.
+   */
+  flex_mode?: boolean | null;
+
+  /**
    * Global prompt used in every node of the conversation flow.
    */
   global_prompt?: string | null;
@@ -24733,6 +24750,11 @@ export namespace ConversationFlowCreateParams {
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * If enabled, the whole component will be converted as a Single Prompt agent.
+     */
+    flex_mode?: boolean | null;
 
     /**
      * A list of MCP server configurations to use for this component
@@ -33273,6 +33295,12 @@ export interface ConversationFlowUpdateParams {
   default_dynamic_variables?: { [key: string]: string } | null;
 
   /**
+   * Body param: If enabled, the whole conversation flow will be converted as a
+   * Single Prompt agent.
+   */
+  flex_mode?: boolean | null;
+
+  /**
    * Body param: Global prompt used in every node of the conversation flow.
    */
   global_prompt?: string | null;
@@ -33402,6 +33430,11 @@ export namespace ConversationFlowUpdateParams {
      * Display position for the begin tag in the frontend
      */
     begin_tag_display_position?: Component.BeginTagDisplayPosition | null;
+
+    /**
+     * If enabled, the whole component will be converted as a Single Prompt agent.
+     */
+    flex_mode?: boolean | null;
 
     /**
      * A list of MCP server configurations to use for this component

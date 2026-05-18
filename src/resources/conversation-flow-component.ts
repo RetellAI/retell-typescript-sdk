@@ -153,6 +153,11 @@ export interface ConversationFlowComponentResponse {
   begin_tag_display_position?: ConversationFlowComponentResponse.BeginTagDisplayPosition | null;
 
   /**
+   * If enabled, the whole component will be converted as a Single Prompt agent.
+   */
+  flex_mode?: boolean | null;
+
+  /**
    * IDs of conversation flows linked to this shared component
    */
   linked_conversation_flow_ids?: Array<string>;
@@ -8393,6 +8398,11 @@ export interface ConversationFlowComponentCreateParams {
   begin_tag_display_position?: ConversationFlowComponentCreateParams.BeginTagDisplayPosition | null;
 
   /**
+   * If enabled, the whole component will be converted as a Single Prompt agent.
+   */
+  flex_mode?: boolean | null;
+
+  /**
    * A list of MCP server configurations to use for this component
    */
   mcps?: Array<ConversationFlowComponentCreateParams.Mcp> | null;
@@ -16586,6 +16596,11 @@ export interface ConversationFlowComponentUpdateParams {
    * Display position for the begin tag in the frontend
    */
   begin_tag_display_position?: ConversationFlowComponentUpdateParams.BeginTagDisplayPosition | null;
+
+  /**
+   * If enabled, the whole component will be converted as a Single Prompt agent.
+   */
+  flex_mode?: boolean | null;
 
   /**
    * A list of MCP server configurations to use for this component

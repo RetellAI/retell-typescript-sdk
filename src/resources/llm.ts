@@ -53,12 +53,8 @@ export class Llm extends APIResource {
    * ```
    */
   update(llmID: string, params: LlmUpdateParams, options?: RequestOptions): APIPromise<LlmResponse> {
-    const { query_version, ...body } = params;
-    return this._client.patch(path`/update-retell-llm/${llmID}`, {
-      query: { version: query_version },
-      body,
-      ...options,
-    });
+    const { version, ...body } = params;
+    return this._client.patch(path`/update-retell-llm/${llmID}`, { query: { version }, body, ...options });
   }
 
   /**
@@ -246,9 +242,9 @@ export interface LlmResponse {
   tool_call_strict_mode?: boolean | null;
 
   /**
-   * The version of the LLM.
+   * Version of the Retell LLM Response Engine.
    */
-  version?: number | null;
+  version?: number;
 }
 
 export namespace LlmResponse {
@@ -2797,11 +2793,6 @@ export interface LlmCreateParams {
    * supported models.
    */
   tool_call_strict_mode?: boolean | null;
-
-  /**
-   * The version of the LLM.
-   */
-  version?: number | null;
 }
 
 export namespace LlmCreateParams {
@@ -5209,7 +5200,7 @@ export interface LlmUpdateParams {
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
-  query_version?: number;
+  version?: number;
 
   /**
    * Body param: If set, the AI will begin the conversation after waiting for the
@@ -5352,11 +5343,6 @@ export interface LlmUpdateParams {
    * using certain supported models.
    */
   tool_call_strict_mode?: boolean | null;
-
-  /**
-   * Body param: The version of the LLM.
-   */
-  body_version?: number | null;
 }
 
 export namespace LlmUpdateParams {

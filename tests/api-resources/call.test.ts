@@ -185,6 +185,7 @@ describe('resource call', () => {
               value: ['Negative'],
             },
           },
+          include_total: true,
           limit: 1000,
           pagination_key: 'pagination_key',
           skip: 0,
@@ -272,7 +273,6 @@ describe('resource call', () => {
             speech_normalization: true,
           },
           interruption_sensitivity: 1,
-          is_public: false,
           ivr_option: {
             action: { type: 'hangup' },
             detection_prompt: 'detection_prompt',
@@ -430,7 +430,6 @@ describe('resource call', () => {
             speech_normalization: true,
           },
           interruption_sensitivity: 1,
-          is_public: false,
           ivr_option: {
             action: { type: 'hangup' },
             detection_prompt: 'detection_prompt',
@@ -587,7 +586,6 @@ describe('resource call', () => {
             speech_normalization: true,
           },
           interruption_sensitivity: 1,
-          is_public: false,
           ivr_option: {
             action: { type: 'hangup' },
             detection_prompt: 'detection_prompt',

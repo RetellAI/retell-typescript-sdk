@@ -483,6 +483,12 @@ export interface ChatListResponse {
    * Pagination key for the next page.
    */
   pagination_key?: string;
+
+  /**
+   * Total number of chats matching `filter_criteria`. Only present when
+   * `include_total` is true.
+   */
+  total?: number;
 }
 
 export namespace ChatListResponse {
@@ -675,7 +681,7 @@ export namespace ChatCreateChatCompletionResponse {
 
 export interface ChatCreateParams {
   /**
-   * The chat agent to use for the call.
+   * The chat agent to use for the chat.
    */
   agent_id: string;
 
@@ -735,6 +741,14 @@ export interface ChatListParams {
    * Filter criteria for chats to retrieve.
    */
   filter_criteria?: unknown;
+
+  /**
+   * Whether to include `total` (count of all chats matching `filter_criteria`,
+   * ignoring `limit`/`skip`/`pagination_key`) in the response. Defaults to false.
+   * Each enabled request triggers an additional aggregate query, so opt in only when
+   * the total is needed.
+   */
+  include_total?: boolean;
 
   /**
    * Maximum number of chats to return.
