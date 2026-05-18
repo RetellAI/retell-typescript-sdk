@@ -92,6 +92,7 @@ describe('resource conversationFlowComponent', () => {
         },
       ],
       begin_tag_display_position: { x: 100, y: 200 },
+      flex_mode: false,
       mcps: [
         {
           name: 'name',
