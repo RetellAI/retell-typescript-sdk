@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from 'retell-sdk/internal/to-file';
 import { toFile } from 'retell-sdk/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
