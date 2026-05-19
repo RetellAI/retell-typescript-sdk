@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.26.1 (2026-05-19)
+
+Full Changelog: [v5.26.0...v5.26.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.26.0...v5.26.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([fd29f70](https://github.com/RetellAI/retell-typescript-sdk/commit/fd29f700ecc99506cf1c682cd18e8937fc779dd8))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([5437f0b](https://github.com/RetellAI/retell-typescript-sdk/commit/5437f0b2ba2168d067df6abfb348d4e499582ae2))
+
 ## 5.26.0 (2026-05-18)
 
 Full Changelog: [v5.25.1...v5.26.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.25.1...v5.26.0)
