@@ -146,6 +146,40 @@ describe('resource chatAgent', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('createVersion: only required params', async () => {
+    const responsePromise = client.chatAgent.createVersion('agent_xxx', { base_version: 12 });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createVersion: required and optional params', async () => {
+    const response = await client.chatAgent.createVersion('agent_xxx', { base_version: 12 });
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteVersion: only required params', async () => {
+    const responsePromise = client.chatAgent.deleteVersion('agent_xxx', { version: 1 });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteVersion: required and optional params', async () => {
+    const response = await client.chatAgent.deleteVersion('agent_xxx', { version: 1 });
+  });
+
+  // Mock server tests are disabled
   test.skip('getVersions', async () => {
     const responsePromise = client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();

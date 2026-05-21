@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ChatAgentAPI from './chat-agent';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -86,6 +87,48 @@ export class Agent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Create a new draft agent version from a base version.
+   *
+   * @example
+   * ```ts
+   * const response = await client.agent.createVersion(
+   *   'agent_xxx',
+   *   { base_version: 12 },
+   * );
+   * ```
+   */
+  createVersion(
+    agentID: string,
+    body: AgentCreateVersionParams,
+    options?: RequestOptions,
+  ): APIPromise<AgentCreateVersionResponse> {
+    return this._client.post(path`/create-agent-version/${agentID}`, { body, ...options });
+  }
+
+  /**
+   * Delete a specific agent version.
+   *
+   * @example
+   * ```ts
+   * await client.agent.deleteVersion('agent_xxx', {
+   *   version: 1,
+   * });
+   * ```
+   */
+  deleteVersion(
+    agentID: string,
+    params: AgentDeleteVersionParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { version } = params;
+    return this._client.delete(path`/delete-agent-version/${agentID}`, {
+      query: { version },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -1217,6 +1260,8 @@ export namespace AgentResponse {
 }
 
 export type AgentListResponse = Array<AgentResponse>;
+
+export type AgentCreateVersionResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
 
 export type AgentGetVersionsResponse = Array<AgentResponse>;
 
@@ -3397,6 +3442,20 @@ export interface AgentListParams {
   pagination_key_version?: number;
 }
 
+export interface AgentCreateVersionParams {
+  /**
+   * Existing version used as the base when creating a new draft.
+   */
+  base_version: number;
+}
+
+export interface AgentDeleteVersionParams {
+  /**
+   * Version to delete.
+   */
+  version: number;
+}
+
 export interface AgentPublishParams {
   version: number;
 
@@ -3407,11 +3466,14 @@ export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
     type AgentListResponse as AgentListResponse,
+    type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentCreateVersionParams as AgentCreateVersionParams,
+    type AgentDeleteVersionParams as AgentDeleteVersionParams,
     type AgentPublishParams as AgentPublishParams,
   };
 }

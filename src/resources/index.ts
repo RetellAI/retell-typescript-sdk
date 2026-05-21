@@ -4,11 +4,14 @@ export {
   Agent,
   type AgentResponse,
   type AgentListResponse,
+  type AgentCreateVersionResponse,
   type AgentGetVersionsResponse,
   type AgentCreateParams,
   type AgentRetrieveParams,
   type AgentUpdateParams,
   type AgentListParams,
+  type AgentCreateVersionParams,
+  type AgentDeleteVersionParams,
   type AgentPublishParams,
 } from './agent';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
@@ -39,11 +42,14 @@ export {
   ChatAgent,
   type ChatAgentResponse,
   type ChatAgentListResponse,
+  type ChatAgentCreateVersionResponse,
   type ChatAgentGetVersionsResponse,
   type ChatAgentCreateParams,
   type ChatAgentRetrieveParams,
   type ChatAgentUpdateParams,
   type ChatAgentListParams,
+  type ChatAgentCreateVersionParams,
+  type ChatAgentDeleteVersionParams,
   type ChatAgentPublishParams,
 } from './chat-agent';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
