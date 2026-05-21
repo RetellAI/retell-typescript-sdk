@@ -1098,6 +1098,63 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'create-version',
+    endpoint: '/create-agent-version/{agent_id}',
+    httpMethod: 'post',
+    summary: '',
+    description: 'Create a new draft agent version from a base version.',
+    stainlessPath: '(resource) agent > (method) create-version',
+    qualified: 'client.agent.createVersion',
+    params: ['agent_id: string;', 'base_version: number;'],
+    response: 'object | object',
+    markdown:
+      "## create-version\n\n`client.agent.createVersion(agent_id: string, base_version: number): object | object`\n\n**post** `/create-agent-version/{agent_id}`\n\nCreate a new draft agent version from a base version.\n\n### Parameters\n\n- `agent_id: string`\n\n- `base_version: number`\n  Existing version used as the base when creating a new draft.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; end_call_after_silence_ms?: number; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: object; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_detection_timeout_ms?: number; voicemail_message?: string; voicemail_option?: { action: object | object | object | object; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; } | { agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.agent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.agent.createVersion',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.agent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'agent.create_version',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.agent.create_version(\n    agent_id="agent_xxx",\n    base_version=12,\n)\nprint(response)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'delete-version',
+    endpoint: '/delete-agent-version/{agent_id}',
+    httpMethod: 'delete',
+    summary: '',
+    description: 'Delete a specific agent version.',
+    stainlessPath: '(resource) agent > (method) delete-version',
+    qualified: 'client.agent.deleteVersion',
+    params: ['agent_id: string;', 'version: number;'],
+    markdown:
+      "## delete-version\n\n`client.agent.deleteVersion(agent_id: string, version: number): void`\n\n**delete** `/delete-agent-version/{agent_id}`\n\nDelete a specific agent version.\n\n### Parameters\n\n- `agent_id: string`\n\n- `version: number`\n  Version to delete.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.agent.deleteVersion('agent_xxx', { version: 1 })\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.agent.deleteVersion',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.deleteVersion('agent_xxx', { version: 1 });",
+      },
+      python: {
+        method: 'agent.delete_version',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.delete_version(\n    agent_id="agent_xxx",\n    version=1,\n)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'get-versions',
     endpoint: '/get-agent-versions/{agent_id}',
     httpMethod: 'get',
@@ -1350,6 +1407,63 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.retellai.com/publish-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "version": 15,\n          "version_description": "Hotfix for transfer timeout"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'create-version',
+    endpoint: '/create-agent-version/{agent_id}',
+    httpMethod: 'post',
+    summary: '',
+    description: 'Create a new draft agent version from a base version.',
+    stainlessPath: '(resource) chat_agent > (method) create-version',
+    qualified: 'client.chatAgent.createVersion',
+    params: ['agent_id: string;', 'base_version: number;'],
+    response: 'object | object',
+    markdown:
+      "## create-version\n\n`client.chatAgent.createVersion(agent_id: string, base_version: number): object | object`\n\n**post** `/create-agent-version/{agent_id}`\n\nCreate a new draft agent version from a base version.\n\n### Parameters\n\n- `agent_id: string`\n\n- `base_version: number`\n  Existing version used as the base when creating a new draft.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; end_call_after_silence_ms?: number; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: object; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_detection_timeout_ms?: number; voicemail_message?: string; voicemail_option?: { action: object | object | object | object; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; } | { agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; analysis_successful_prompt?: string; analysis_summary_prompt?: string; analysis_user_sentiment_prompt?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.chatAgent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.chatAgent.createVersion',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.chatAgent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);",
+      },
+      python: {
+        method: 'chat_agent.create_version',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.chat_agent.create_version(\n    agent_id="agent_xxx",\n    base_version=12,\n)\nprint(response)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'delete-version',
+    endpoint: '/delete-agent-version/{agent_id}',
+    httpMethod: 'delete',
+    summary: '',
+    description: 'Delete a specific agent version.',
+    stainlessPath: '(resource) chat_agent > (method) delete-version',
+    qualified: 'client.chatAgent.deleteVersion',
+    params: ['agent_id: string;', 'version: number;'],
+    markdown:
+      "## delete-version\n\n`client.chatAgent.deleteVersion(agent_id: string, version: number): void`\n\n**delete** `/delete-agent-version/{agent_id}`\n\nDelete a specific agent version.\n\n### Parameters\n\n- `agent_id: string`\n\n- `version: number`\n  Version to delete.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.chatAgent.deleteVersion('agent_xxx', { version: 1 })\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.chatAgent.deleteVersion',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.deleteVersion('agent_xxx', { version: 1 });",
+      },
+      python: {
+        method: 'chat_agent.delete_version',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.delete_version(\n    agent_id="agent_xxx",\n    version=1,\n)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },

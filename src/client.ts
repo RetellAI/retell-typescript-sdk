@@ -20,6 +20,9 @@ import { APIPromise } from './core/api-promise';
 import {
   Agent,
   AgentCreateParams,
+  AgentCreateVersionParams,
+  AgentCreateVersionResponse,
+  AgentDeleteVersionParams,
   AgentGetVersionsResponse,
   AgentListParams,
   AgentListResponse,
@@ -55,6 +58,9 @@ import {
 import {
   ChatAgent,
   ChatAgentCreateParams,
+  ChatAgentCreateVersionParams,
+  ChatAgentCreateVersionResponse,
+  ChatAgentDeleteVersionParams,
   ChatAgentGetVersionsResponse,
   ChatAgentListParams,
   ChatAgentListResponse,
@@ -932,11 +938,14 @@ export declare namespace Retell {
     Agent as Agent,
     type AgentResponse as AgentResponse,
     type AgentListResponse as AgentListResponse,
+    type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentCreateVersionParams as AgentCreateVersionParams,
+    type AgentDeleteVersionParams as AgentDeleteVersionParams,
     type AgentPublishParams as AgentPublishParams,
   };
 
@@ -944,11 +953,14 @@ export declare namespace Retell {
     ChatAgent as ChatAgent,
     type ChatAgentResponse as ChatAgentResponse,
     type ChatAgentListResponse as ChatAgentListResponse,
+    type ChatAgentCreateVersionResponse as ChatAgentCreateVersionResponse,
     type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentCreateVersionParams as ChatAgentCreateVersionParams,
+    type ChatAgentDeleteVersionParams as ChatAgentDeleteVersionParams,
     type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 

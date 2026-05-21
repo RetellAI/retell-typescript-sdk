@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as AgentAPI from './agent';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -88,6 +89,48 @@ export class ChatAgent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-chat-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Create a new draft agent version from a base version.
+   *
+   * @example
+   * ```ts
+   * const response = await client.chatAgent.createVersion(
+   *   'agent_xxx',
+   *   { base_version: 12 },
+   * );
+   * ```
+   */
+  createVersion(
+    agentID: string,
+    body: ChatAgentCreateVersionParams,
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentCreateVersionResponse> {
+    return this._client.post(path`/create-agent-version/${agentID}`, { body, ...options });
+  }
+
+  /**
+   * Delete a specific agent version.
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.deleteVersion('agent_xxx', {
+   *   version: 1,
+   * });
+   * ```
+   */
+  deleteVersion(
+    agentID: string,
+    params: ChatAgentDeleteVersionParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { version } = params;
+    return this._client.delete(path`/delete-agent-version/${agentID}`, {
+      query: { version },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -752,6 +795,8 @@ export namespace ChatAgentResponse {
 }
 
 export type ChatAgentListResponse = Array<ChatAgentResponse>;
+
+export type ChatAgentCreateVersionResponse = AgentAPI.AgentResponse | ChatAgentResponse;
 
 export type ChatAgentGetVersionsResponse = Array<ChatAgentResponse>;
 
@@ -1984,6 +2029,20 @@ export interface ChatAgentListParams {
   pagination_key_version?: number;
 }
 
+export interface ChatAgentCreateVersionParams {
+  /**
+   * Existing version used as the base when creating a new draft.
+   */
+  base_version: number;
+}
+
+export interface ChatAgentDeleteVersionParams {
+  /**
+   * Version to delete.
+   */
+  version: number;
+}
+
 export interface ChatAgentPublishParams {
   version: number;
 
@@ -1994,11 +2053,14 @@ export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
     type ChatAgentListResponse as ChatAgentListResponse,
+    type ChatAgentCreateVersionResponse as ChatAgentCreateVersionResponse,
     type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentCreateVersionParams as ChatAgentCreateVersionParams,
+    type ChatAgentDeleteVersionParams as ChatAgentDeleteVersionParams,
     type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 }

@@ -59,6 +59,7 @@ Types:
 
 - <code><a href="./src/resources/agent.ts">AgentResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListResponse</a></code>
+- <code><a href="./src/resources/agent.ts">AgentCreateVersionResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentGetVersionsResponse</a></code>
 
 Methods:
@@ -68,6 +69,8 @@ Methods:
 - <code title="patch /update-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">update</a>(agentID, { ...params }) -> AgentResponse</code>
 - <code title="get /list-agents">client.agent.<a href="./src/resources/agent.ts">list</a>({ ...params }) -> AgentListResponse</code>
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentID) -> void</code>
+- <code title="post /create-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">createVersion</a>(agentID, { ...params }) -> AgentCreateVersionResponse</code>
+- <code title="delete /delete-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">deleteVersion</a>(agentID, { ...params }) -> void</code>
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentID) -> AgentGetVersionsResponse</code>
 - <code title="post /publish-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentID, { ...params }) -> void</code>
 
@@ -77,6 +80,7 @@ Types:
 
 - <code><a href="./src/resources/chat-agent.ts">ChatAgentResponse</a></code>
 - <code><a href="./src/resources/chat-agent.ts">ChatAgentListResponse</a></code>
+- <code><a href="./src/resources/chat-agent.ts">ChatAgentCreateVersionResponse</a></code>
 - <code><a href="./src/resources/chat-agent.ts">ChatAgentGetVersionsResponse</a></code>
 
 Methods:
@@ -86,6 +90,8 @@ Methods:
 - <code title="patch /update-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">update</a>(agentID, { ...params }) -> ChatAgentResponse</code>
 - <code title="get /list-chat-agents">client.chatAgent.<a href="./src/resources/chat-agent.ts">list</a>({ ...params }) -> ChatAgentListResponse</code>
 - <code title="delete /delete-chat-agent/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">delete</a>(agentID) -> void</code>
+- <code title="post /create-agent-version/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">createVersion</a>(agentID, { ...params }) -> ChatAgentCreateVersionResponse</code>
+- <code title="delete /delete-agent-version/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">deleteVersion</a>(agentID, { ...params }) -> void</code>
 - <code title="get /get-chat-agent-versions/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">getVersions</a>(agentID) -> ChatAgentGetVersionsResponse</code>
 - <code title="post /publish-agent-version/{agent_id}">client.chatAgent.<a href="./src/resources/chat-agent.ts">publish</a>(agentID, { ...params }) -> void</code>
 
