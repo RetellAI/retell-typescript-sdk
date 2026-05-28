@@ -1,0 +1,99 @@
+name: Promote to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: promote-to-production-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    name: promote
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.repository == 'RetellAI/retell-typescript-sdk-staging'
+
+    env:
+      PRODUCTION_REPO: RetellAI/retell-typescript-sdk
+      PROMOTE_BRANCH: stlc/sync-from-staging
+
+    steps:
+      - name: Checkout staging
+        uses: actions/checkout@v4
+        with:
+          path: staging
+          persist-credentials: false
+
+      - name: Checkout production
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PRODUCTION_REPO }}
+          ref: main
+          path: production
+          token: ${{ secrets.SDK_WRITE_TOKEN }}
+          persist-credentials: false
+
+      - name: Prepare production branch
+        working-directory: production
+        run: git checkout -B "${PROMOTE_BRANCH}"
+
+      - name: Sync staging into production branch
+        run: |
+          rsync -a --delete \
+            --exclude ".git/" \
+            --exclude ".github/workflows/promote-to-production.yml" \
+            --exclude ".github/workflows/release-please.yml" \
+            staging/ production/
+
+      - name: Open or update production PR
+        working-directory: production
+        env:
+          GH_TOKEN: ${{ secrets.SDK_WRITE_TOKEN }}
+          STAGING_SHA: ${{ github.sha }}
+        run: |
+          if git diff --quiet; then
+            echo "No production changes to promote."
+            exit 0
+          fi
+
+          git config user.name "stlc-bot"
+          git config user.email "stlc-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "feat(api): api update"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${PRODUCTION_REPO}.git" "${PROMOTE_BRANCH}"
+
+          pr_number="$(gh pr list \
+            --repo "${PRODUCTION_REPO}" \
+            --base main \
+            --head "${PROMOTE_BRANCH}" \
+            --json number \
+            --jq '.[0].number')"
+
+          pr_body="$(cat <<EOF
+          Promotes the latest stlc-generated TypeScript SDK from staging.
+
+          Staging repo: ${GITHUB_REPOSITORY}
+          Staging commit: ${STAGING_SHA}
+          EOF
+          )"
+
+          if [ -z "${pr_number}" ]; then
+            gh pr create \
+              --repo "${PRODUCTION_REPO}" \
+              --base main \
+              --head "${PROMOTE_BRANCH}" \
+              --title "feat(api): update TypeScript SDK" \
+              --body "${pr_body}"
+          else
+            gh pr edit "${pr_number}" \
+              --repo "${PRODUCTION_REPO}" \
+              --title "feat(api): update TypeScript SDK" \
+              --body "${pr_body}"
+          fi
