@@ -2274,6 +2274,12 @@ export namespace ConversationFlowComponentResponse {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -5689,6 +5695,11 @@ export namespace ConversationFlowComponentResponse {
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this extract step executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
@@ -10514,6 +10525,12 @@ export namespace ConversationFlowComponentCreateParams {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -13929,6 +13946,11 @@ export namespace ConversationFlowComponentCreateParams {
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this extract step executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
@@ -18774,6 +18796,12 @@ export namespace ConversationFlowComponentUpdateParams {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -22189,6 +22217,11 @@ export namespace ConversationFlowComponentUpdateParams {
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
+
+    /**
+     * If true, play a typing sound while this extract step executes.
+     */
+    enable_typing_sound?: boolean;
 
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
