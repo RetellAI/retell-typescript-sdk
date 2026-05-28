@@ -242,6 +242,7 @@ export interface PhoneCallResponse {
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
+    | 'no_concurrency_fallback'
     | 'no_valid_payment'
     | 'scam_detected'
     | 'dial_busy'
@@ -360,6 +361,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
     | PhoneCallResponse.SMSUtterance
+    | PhoneCallResponse.InjectedUtterance
   >;
 
   /**
@@ -397,6 +399,7 @@ export interface PhoneCallResponse {
     | PhoneCallResponse.NodeTransitionUtterance
     | PhoneCallResponse.DtmfUtterance
     | PhoneCallResponse.SMSUtterance
+    | PhoneCallResponse.InjectedUtterance
   >;
 
   /**
@@ -1078,6 +1081,24 @@ export namespace PhoneCallResponse {
     }
   }
 
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
   /**
    * Telephony identifier of the call, populated when available. Tracking purposes
    * only.
@@ -1304,6 +1325,24 @@ export namespace PhoneCallResponse {
       summary?: string;
     }
   }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
 }
 
 export interface WebCallResponse {
@@ -1393,6 +1432,7 @@ export interface WebCallResponse {
     | 'inactivity'
     | 'max_duration_reached'
     | 'concurrency_limit_reached'
+    | 'no_concurrency_fallback'
     | 'no_valid_payment'
     | 'scam_detected'
     | 'dial_busy'
@@ -1511,6 +1551,7 @@ export interface WebCallResponse {
     | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
     | WebCallResponse.SMSUtterance
+    | WebCallResponse.InjectedUtterance
   >;
 
   /**
@@ -1542,6 +1583,7 @@ export interface WebCallResponse {
     | WebCallResponse.NodeTransitionUtterance
     | WebCallResponse.DtmfUtterance
     | WebCallResponse.SMSUtterance
+    | WebCallResponse.InjectedUtterance
   >;
 
   /**
@@ -2223,6 +2265,24 @@ export namespace WebCallResponse {
     }
   }
 
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
   export interface TranscriptObject {
     /**
      * Transcript of the utterances.
@@ -2438,6 +2498,24 @@ export namespace WebCallResponse {
       summary?: string;
     }
   }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
 }
 
 export interface CallListResponse {
@@ -2548,6 +2626,7 @@ export namespace CallListResponse {
       | 'inactivity'
       | 'max_duration_reached'
       | 'concurrency_limit_reached'
+      | 'no_concurrency_fallback'
       | 'no_valid_payment'
       | 'scam_detected'
       | 'dial_busy'
@@ -3260,6 +3339,7 @@ export namespace CallListResponse {
       | 'inactivity'
       | 'max_duration_reached'
       | 'concurrency_limit_reached'
+      | 'no_concurrency_fallback'
       | 'no_valid_payment'
       | 'scam_detected'
       | 'dial_busy'
@@ -3916,7 +3996,7 @@ export interface CallUpdateParams {
   metadata?: unknown;
 
   /**
-   * Override dynamic varaibles represented as key-value pairs of strings. Setting
+   * Override dynamic variables represented as key-value pairs of strings. Setting
    * this will override or add the dynamic variables set in the agent during the
    * call. Only need to set the delta where you want to override, no need to set the
    * entire dynamic variables object. Setting this to null will remove any existing
@@ -4413,6 +4493,7 @@ export namespace CallListParams {
         | 'inactivity'
         | 'max_duration_reached'
         | 'concurrency_limit_reached'
+        | 'no_concurrency_fallback'
         | 'no_valid_payment'
         | 'scam_detected'
         | 'dial_busy'
@@ -4963,7 +5044,7 @@ export namespace CallCreatePhoneCallParams {
       /**
        * Provide a customized list of keywords to bias the transcriber model, so that
        * these words are more likely to get transcribed. Commonly used for names, brands,
-       * street, etc.
+       * street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.
        */
       boosted_keywords?: Array<string> | null;
 
@@ -6322,7 +6403,7 @@ export namespace CallCreateWebCallParams {
       /**
        * Provide a customized list of keywords to bias the transcriber model, so that
        * these words are more likely to get transcribed. Commonly used for names, brands,
-       * street, etc.
+       * street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.
        */
       boosted_keywords?: Array<string> | null;
 
@@ -7681,7 +7762,7 @@ export namespace CallRegisterPhoneCallParams {
       /**
        * Provide a customized list of keywords to bias the transcriber model, so that
        * these words are more likely to get transcribed. Commonly used for names, brands,
-       * street, etc.
+       * street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.
        */
       boosted_keywords?: Array<string> | null;
 

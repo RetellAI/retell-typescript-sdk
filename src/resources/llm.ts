@@ -1093,6 +1093,12 @@ export namespace LlmResponse {
       | ExtractDynamicVariableTool.BooleanAnalysisData
       | ExtractDynamicVariableTool.NumberAnalysisData
     >;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -2359,6 +2365,12 @@ export namespace LlmResponse {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -3641,6 +3653,12 @@ export namespace LlmCreateParams {
       | ExtractDynamicVariableTool.BooleanAnalysisData
       | ExtractDynamicVariableTool.NumberAnalysisData
     >;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -4907,6 +4925,12 @@ export namespace LlmCreateParams {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {
@@ -6191,6 +6215,12 @@ export namespace LlmUpdateParams {
       | ExtractDynamicVariableTool.BooleanAnalysisData
       | ExtractDynamicVariableTool.NumberAnalysisData
     >;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
   }
 
   export namespace ExtractDynamicVariableTool {
@@ -7457,6 +7487,12 @@ export namespace LlmUpdateParams {
         | ExtractDynamicVariableTool.BooleanAnalysisData
         | ExtractDynamicVariableTool.NumberAnalysisData
       >;
+
+      /**
+       * If true, play a typing sound on the agent audio track while this tool is
+       * executing.
+       */
+      enable_typing_sound?: boolean;
     }
 
     export namespace ExtractDynamicVariableTool {

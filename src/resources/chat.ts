@@ -727,7 +727,7 @@ export interface ChatUpdateParams {
   metadata?: unknown;
 
   /**
-   * Override dynamic varaibles represented as key-value pairs of strings. Setting
+   * Override dynamic variables represented as key-value pairs of strings. Setting
    * this will override or add the dynamic variables set in the agent during the
    * call. Only need to set the delta where you want to override, no need to set the
    * entire dynamic variables object. Setting this to null will remove any existing
@@ -740,7 +740,7 @@ export interface ChatListParams {
   /**
    * Filter criteria for chats to retrieve.
    */
-  filter_criteria?: unknown;
+  filter_criteria?: ChatListParams.FilterCriteria;
 
   /**
    * Whether to include `total` (count of all chats matching `filter_criteria`,
@@ -769,6 +769,478 @@ export interface ChatListParams {
    * Sort chats by `start_timestamp` in ascending or descending order.
    */
   sort_order?: 'ascending' | 'descending';
+}
+
+export namespace ChatListParams {
+  /**
+   * Filter criteria for chats to retrieve.
+   */
+  export interface FilterCriteria {
+    /**
+     * Filter by agent(s). Agent filters are connected by OR.
+     */
+    agent?: Array<FilterCriteria.Agent>;
+
+    /**
+     * Filter by chat ID.
+     */
+    chat_id?: FilterCriteria.ChatID;
+
+    chat_status?: FilterCriteria.ChatStatus;
+
+    /**
+     * Filter by whether the chat was successful.
+     */
+    chat_successful?: FilterCriteria.ChatSuccessful;
+
+    /**
+     * Filter by combined cost of the chat.
+     */
+    combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
+
+    /**
+     * Filter by custom analysis data fields.
+     */
+    custom_analysis_data?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
+    >;
+
+    /**
+     * Filter by custom attributes fields.
+     */
+    custom_attributes?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
+    >;
+
+    disconnection_reason?: FilterCriteria.DisconnectionReason;
+
+    /**
+     * Filter by chat duration in milliseconds.
+     */
+    duration_ms?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
+
+    /**
+     * Filter by chat end timestamp (epoch ms).
+     */
+    end_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
+
+    /**
+     * Filter by chat start timestamp (epoch ms).
+     */
+    start_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
+
+    user_sentiment?: FilterCriteria.UserSentiment;
+  }
+
+  export namespace FilterCriteria {
+    export interface Agent {
+      /**
+       * The agent ID to filter on.
+       */
+      agent_id: string;
+
+      /**
+       * Specific versions to filter on. If not provided, all versions are included.
+       */
+      version?: Array<number>;
+    }
+
+    /**
+     * Filter by chat ID.
+     */
+    export interface ChatID {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+    }
+
+    export interface ChatStatus {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'ongoing' | 'ended' | 'error'>;
+    }
+
+    /**
+     * Filter by whether the chat was successful.
+     */
+    export interface ChatSuccessful {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface StringFilter {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface StringFilter {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface DisconnectionReason {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<
+        | 'user_hangup'
+        | 'agent_hangup'
+        | 'call_transfer'
+        | 'voicemail_reached'
+        | 'ivr_reached'
+        | 'inactivity'
+        | 'max_duration_reached'
+        | 'concurrency_limit_reached'
+        | 'no_concurrency_fallback'
+        | 'no_valid_payment'
+        | 'scam_detected'
+        | 'dial_busy'
+        | 'dial_failed'
+        | 'dial_no_answer'
+        | 'invalid_destination'
+        | 'telephony_provider_permission_denied'
+        | 'telephony_provider_unavailable'
+        | 'sip_routing_error'
+        | 'marked_as_spam'
+        | 'user_declined'
+        | 'error_llm_websocket_open'
+        | 'error_llm_websocket_lost_connection'
+        | 'error_llm_websocket_runtime'
+        | 'error_llm_websocket_corrupt_payload'
+        | 'error_no_audio_received'
+        | 'error_asr'
+        | 'error_retell'
+        | 'error_unknown'
+        | 'error_user_not_joined'
+        | 'registered_call_timeout'
+        | 'transfer_bridged'
+        | 'transfer_cancelled'
+        | 'manual_stopped'
+      >;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+    }
+
+    export interface UserSentiment {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'Negative' | 'Positive' | 'Neutral' | 'Unknown'>;
+    }
+  }
 }
 
 export interface ChatCreateChatCompletionParams {
