@@ -53,7 +53,7 @@ export interface VoiceResponse {
   /**
    * Indicates the provider of voice.
    */
-  provider: 'elevenlabs' | 'openai' | 'deepgram' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
+  provider: 'elevenlabs' | 'openai' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
 
   /**
    * Unique id for the voice.

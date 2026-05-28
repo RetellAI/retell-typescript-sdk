@@ -57,6 +57,11 @@ export interface ConcurrencyRetrieveResponse {
    * difference between `concurrency_purchase_limit` and `purchased_concurrency`.
    */
   remaining_purchase_limit?: number;
+
+  /**
+   * Number of normal concurrency slots reserved for inbound calls.
+   */
+  reserved_inbound_concurrency?: number;
 }
 
 export declare namespace Concurrency {
