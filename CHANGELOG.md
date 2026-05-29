@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.30.3](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.2...v5.30.3) (2026-05-29)
+
+
+### Chores
+
+* restrict SDK auto-merge to same-repo branches ([70fe0b0](https://github.com/RetellAI/retell-typescript-sdk/commit/70fe0b06508af3adcd593dfe764e0b0f84b9c575))
+* restrict SDK auto-merge to same-repo branches ([3401f5c](https://github.com/RetellAI/retell-typescript-sdk/commit/3401f5cbf5a12a1d3a227f65c94cf7c7a3ef8b3f))
+
 ## 5.30.2 (2026-05-29)
 
 Full Changelog: [v5.30.1...v5.30.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.1...v5.30.2)
