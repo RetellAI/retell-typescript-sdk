@@ -33301,7 +33301,7 @@ export namespace ConversationFlowCreateParams {
 
 export interface ConversationFlowRetrieveParams {
   /**
-   * Optional version of the conversation flow to retrieve. Default to latest
+   * Optional version of the conversation flow to retrieve. Defaults to the latest
    * version.
    */
   version?: number;
