@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.30.4](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.3...v5.30.4) (2026-05-29)
+
+
+### Chores
+
+* disable stlc auto-merge workflow ([1ed50ed](https://github.com/RetellAI/retell-typescript-sdk/commit/1ed50edc68d36be12c86010784a59782d0d75c1e))
+
 ## 5.30.3 (2026-05-29)
 
 Full Changelog: [v5.30.2...v5.30.3](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.2...v5.30.3)
