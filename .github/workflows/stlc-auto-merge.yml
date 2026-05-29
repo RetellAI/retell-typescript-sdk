@@ -5,12 +5,12 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
   workflow_run:
-    workflows: ["CI", "Release Doctor"]
+    workflows: ['CI', 'Release Doctor']
     types: [completed]
   workflow_dispatch:
     inputs:
       pr_number:
-        description: "Optional PR number to evaluate"
+        description: 'Optional PR number to evaluate'
         required: false
 
 permissions:
@@ -89,5 +89,10 @@ jobs:
               continue
             fi
 
-            gh pr merge "$pr" --repo "$REPO" "$merge_flag" --delete-branch
+            echo "Merging PR #$pr with ${merge_flag}."
+            if gh pr merge "$pr" --repo "$REPO" "$merge_flag" --delete-branch --match-head-commit "$head_sha"; then
+              echo "Merged PR #$pr."
+            else
+              echo "Skipping PR #$pr: GitHub did not consider it mergeable yet."
+            fi
           done
