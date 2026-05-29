@@ -9,33 +9,6 @@ const client = new Retell({
 
 describe('resource tests', () => {
   // Mock server tests are disabled
-  test.skip('createBatchTest: only required params', async () => {
-    const responsePromise = client.tests.createBatchTest({
-      response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
-      test_case_definition_ids: ['string'],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('createBatchTest: required and optional params', async () => {
-    const response = await client.tests.createBatchTest({
-      response_engine: {
-        llm_id: 'llm_id',
-        type: 'retell-llm',
-        version: 0,
-      },
-      test_case_definition_ids: ['string'],
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('createTestCaseDefinition: only required params', async () => {
     const responsePromise = client.tests.createTestCaseDefinition({
       metrics: ['string'],
@@ -77,30 +50,6 @@ describe('resource tests', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('deleteTestCaseDefinition', async () => {
-    const responsePromise = client.tests.deleteTestCaseDefinition('test_case_definition_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getBatchTest', async () => {
-    const responsePromise = client.tests.getBatchTest('test_case_batch_job_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('getTestCaseDefinition', async () => {
     const responsePromise = client.tests.getTestCaseDefinition('test_case_definition_id');
     const rawResponse = await responsePromise.asResponse();
@@ -113,8 +62,82 @@ describe('resource tests', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getTestRun', async () => {
-    const responsePromise = client.tests.getTestRun('test_case_job_id');
+  test.skip('listTestCaseDefinitions: only required params', async () => {
+    const responsePromise = client.tests.listTestCaseDefinitions({ type: 'retell-llm' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listTestCaseDefinitions: required and optional params', async () => {
+    const response = await client.tests.listTestCaseDefinitions({
+      type: 'retell-llm',
+      conversation_flow_id: 'conversation_flow_id',
+      limit: 1000,
+      llm_id: 'llm_id',
+      pagination_key: 'pagination_key',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('updateTestCaseDefinition', async () => {
+    const responsePromise = client.tests.updateTestCaseDefinition('test_case_definition_id', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteTestCaseDefinition', async () => {
+    const responsePromise = client.tests.deleteTestCaseDefinition('test_case_definition_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createBatchTest: only required params', async () => {
+    const responsePromise = client.tests.createBatchTest({
+      response_engine: { llm_id: 'llm_id', type: 'retell-llm' },
+      test_case_definition_ids: ['string'],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createBatchTest: required and optional params', async () => {
+    const response = await client.tests.createBatchTest({
+      response_engine: {
+        llm_id: 'llm_id',
+        type: 'retell-llm',
+        version: 0,
+      },
+      test_case_definition_ids: ['string'],
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('getBatchTest', async () => {
+    const responsePromise = client.tests.getBatchTest('test_case_batch_job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -149,8 +172,8 @@ describe('resource tests', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('listTestCaseDefinitions: only required params', async () => {
-    const responsePromise = client.tests.listTestCaseDefinitions({ type: 'retell-llm' });
+  test.skip('getTestRun', async () => {
+    const responsePromise = client.tests.getTestRun('test_case_job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -158,17 +181,6 @@ describe('resource tests', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('listTestCaseDefinitions: required and optional params', async () => {
-    const response = await client.tests.listTestCaseDefinitions({
-      type: 'retell-llm',
-      conversation_flow_id: 'conversation_flow_id',
-      limit: 1000,
-      llm_id: 'llm_id',
-      pagination_key: 'pagination_key',
-    });
   });
 
   // Mock server tests are disabled
@@ -193,17 +205,5 @@ describe('resource tests', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('updateTestCaseDefinition', async () => {
-    const responsePromise = client.tests.updateTestCaseDefinition('test_case_definition_id', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

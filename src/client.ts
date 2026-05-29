@@ -15,7 +15,6 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
-import * as Webhooks from './lib/webhook_auth';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
@@ -862,9 +861,6 @@ export class Retell {
 
   static toFile = Uploads.toFile;
 
-  static verify = Webhooks.verify;
-  static sign = Webhooks.sign;
-
   call: API.Call = new API.Call(this);
   chat: API.Chat = new API.Chat(this);
   phoneNumber: API.PhoneNumber = new API.PhoneNumber(this);
@@ -909,11 +905,11 @@ export declare namespace Retell {
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
-    type CallUpdateParams as CallUpdateParams,
-    type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
-    type CallCreateWebCallParams as CallCreateWebCallParams,
     type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+    type CallCreateWebCallParams as CallCreateWebCallParams,
+    type CallListParams as CallListParams,
+    type CallUpdateParams as CallUpdateParams,
   };
 
   export {
@@ -922,10 +918,10 @@ export declare namespace Retell {
     type ChatListResponse as ChatListResponse,
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
-    type ChatUpdateParams as ChatUpdateParams,
-    type ChatListParams as ChatListParams,
-    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
+    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
+    type ChatListParams as ChatListParams,
+    type ChatUpdateParams as ChatUpdateParams,
   };
 
   export {
@@ -933,9 +929,9 @@ export declare namespace Retell {
     type PhoneNumberResponse as PhoneNumberResponse,
     type PhoneNumberListResponse as PhoneNumberListResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
-    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
-    type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
+    type PhoneNumberListParams as PhoneNumberListParams,
+    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
   };
 
   export {
@@ -946,11 +942,11 @@ export declare namespace Retell {
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
-    type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentUpdateParams as AgentUpdateParams,
+    type AgentPublishParams as AgentPublishParams,
     type AgentCreateVersionParams as AgentCreateVersionParams,
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
-    type AgentPublishParams as AgentPublishParams,
   };
 
   export {
@@ -961,11 +957,11 @@ export declare namespace Retell {
     type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
-    type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentUpdateParams as ChatAgentUpdateParams,
+    type ChatAgentPublishParams as ChatAgentPublishParams,
     type ChatAgentCreateVersionParams as ChatAgentCreateVersionParams,
     type ChatAgentDeleteVersionParams as ChatAgentDeleteVersionParams,
-    type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 
   export {
@@ -974,8 +970,8 @@ export declare namespace Retell {
     type LlmListResponse as LlmListResponse,
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
-    type LlmUpdateParams as LlmUpdateParams,
     type LlmListParams as LlmListParams,
+    type LlmUpdateParams as LlmUpdateParams,
   };
 
   export {
@@ -984,8 +980,8 @@ export declare namespace Retell {
     type ConversationFlowListResponse as ConversationFlowListResponse,
     type ConversationFlowCreateParams as ConversationFlowCreateParams,
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
-    type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
     type ConversationFlowListParams as ConversationFlowListParams,
+    type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
   };
 
   export {
@@ -993,8 +989,8 @@ export declare namespace Retell {
     type ConversationFlowComponentResponse as ConversationFlowComponentResponse,
     type ConversationFlowComponentListResponse as ConversationFlowComponentListResponse,
     type ConversationFlowComponentCreateParams as ConversationFlowComponentCreateParams,
-    type ConversationFlowComponentUpdateParams as ConversationFlowComponentUpdateParams,
     type ConversationFlowComponentListParams as ConversationFlowComponentListParams,
+    type ConversationFlowComponentUpdateParams as ConversationFlowComponentUpdateParams,
   };
 
   export {
@@ -1038,12 +1034,12 @@ export declare namespace Retell {
     type TestListBatchTestsResponse as TestListBatchTestsResponse,
     type TestListTestCaseDefinitionsResponse as TestListTestCaseDefinitionsResponse,
     type TestListTestRunsResponse as TestListTestRunsResponse,
-    type TestCreateBatchTestParams as TestCreateBatchTestParams,
     type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
-    type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
-    type TestListTestRunsParams as TestListTestRunsParams,
     type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
+    type TestCreateBatchTestParams as TestCreateBatchTestParams,
+    type TestListBatchTestsParams as TestListBatchTestsParams,
+    type TestListTestRunsParams as TestListTestRunsParams,
   };
 
   export {

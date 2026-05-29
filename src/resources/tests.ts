@@ -8,13 +8,6 @@ import { path } from '../internal/utils/path';
 
 export class Tests extends APIResource {
   /**
-   * Create a batch test to run multiple test cases
-   */
-  createBatchTest(body: TestCreateBatchTestParams, options?: RequestOptions): APIPromise<BatchTestResponse> {
-    return this._client.post('/create-batch-test', { body, ...options });
-  }
-
-  /**
    * Create a new test case definition
    */
   createTestCaseDefinition(
@@ -22,23 +15,6 @@ export class Tests extends APIResource {
     options?: RequestOptions,
   ): APIPromise<TestCaseDefinitionResponse> {
     return this._client.post('/create-test-case-definition', { body, ...options });
-  }
-
-  /**
-   * Delete a test case definition
-   */
-  deleteTestCaseDefinition(testCaseDefinitionID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/delete-test-case-definition/${testCaseDefinitionID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Get a batch test job by ID
-   */
-  getBatchTest(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<BatchTestResponse> {
-    return this._client.get(path`/get-batch-test/${testCaseBatchJobID}`, options);
   }
 
   /**
@@ -52,10 +28,48 @@ export class Tests extends APIResource {
   }
 
   /**
-   * Get a test case job (test run) by ID
+   * List test case definitions with pagination
    */
-  getTestRun(testCaseJobID: string, options?: RequestOptions): APIPromise<TestCaseJobResponse> {
-    return this._client.get(path`/get-test-run/${testCaseJobID}`, options);
+  listTestCaseDefinitions(
+    query: TestListTestCaseDefinitionsParams,
+    options?: RequestOptions,
+  ): APIPromise<TestListTestCaseDefinitionsResponse> {
+    return this._client.get('/v2/list-test-case-definitions', { query, ...options });
+  }
+
+  /**
+   * Update a test case definition
+   */
+  updateTestCaseDefinition(
+    testCaseDefinitionID: string,
+    body: TestUpdateTestCaseDefinitionParams,
+    options?: RequestOptions,
+  ): APIPromise<TestCaseDefinitionResponse> {
+    return this._client.put(path`/update-test-case-definition/${testCaseDefinitionID}`, { body, ...options });
+  }
+
+  /**
+   * Delete a test case definition
+   */
+  deleteTestCaseDefinition(testCaseDefinitionID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/delete-test-case-definition/${testCaseDefinitionID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Create a batch test to run multiple test cases
+   */
+  createBatchTest(body: TestCreateBatchTestParams, options?: RequestOptions): APIPromise<BatchTestResponse> {
+    return this._client.post('/create-batch-test', { body, ...options });
+  }
+
+  /**
+   * Get a batch test job by ID
+   */
+  getBatchTest(testCaseBatchJobID: string, options?: RequestOptions): APIPromise<BatchTestResponse> {
+    return this._client.get(path`/get-batch-test/${testCaseBatchJobID}`, options);
   }
 
   /**
@@ -69,13 +83,10 @@ export class Tests extends APIResource {
   }
 
   /**
-   * List test case definitions with pagination
+   * Get a test case job (test run) by ID
    */
-  listTestCaseDefinitions(
-    query: TestListTestCaseDefinitionsParams,
-    options?: RequestOptions,
-  ): APIPromise<TestListTestCaseDefinitionsResponse> {
-    return this._client.get('/v2/list-test-case-definitions', { query, ...options });
+  getTestRun(testCaseJobID: string, options?: RequestOptions): APIPromise<TestCaseJobResponse> {
+    return this._client.get(path`/get-test-run/${testCaseJobID}`, options);
   }
 
   /**
@@ -87,17 +98,6 @@ export class Tests extends APIResource {
     options?: RequestOptions,
   ): APIPromise<TestListTestRunsResponse> {
     return this._client.get(path`/v2/list-test-runs/${testCaseBatchJobID}`, { query, ...options });
-  }
-
-  /**
-   * Update a test case definition
-   */
-  updateTestCaseDefinition(
-    testCaseDefinitionID: string,
-    body: TestUpdateTestCaseDefinitionParams,
-    options?: RequestOptions,
-  ): APIPromise<TestCaseDefinitionResponse> {
-    return this._client.put(path`/update-test-case-definition/${testCaseDefinitionID}`, { body, ...options });
   }
 }
 
@@ -440,56 +440,6 @@ export interface TestListTestRunsResponse {
   pagination_key?: string;
 }
 
-export interface TestCreateBatchTestParams {
-  /**
-   * Response engine to use for the test cases. Custom LLM is not supported.
-   */
-  response_engine:
-    | TestCreateBatchTestParams.ResponseEngineRetellLm
-    | TestCreateBatchTestParams.ResponseEngineConversationFlow;
-
-  /**
-   * Array of test case definition IDs to run
-   */
-  test_case_definition_ids: Array<string>;
-}
-
-export namespace TestCreateBatchTestParams {
-  export interface ResponseEngineRetellLm {
-    /**
-     * id of the Retell LLM Response Engine.
-     */
-    llm_id: string;
-
-    /**
-     * type of the Response Engine.
-     */
-    type: 'retell-llm';
-
-    /**
-     * Version of the Retell LLM Response Engine.
-     */
-    version?: number | null;
-  }
-
-  export interface ResponseEngineConversationFlow {
-    /**
-     * ID of the Conversation Flow Response Engine.
-     */
-    conversation_flow_id: string;
-
-    /**
-     * type of the Response Engine.
-     */
-    type: 'conversation-flow';
-
-    /**
-     * Version of the Conversation Flow Response Engine.
-     */
-    version?: number | null;
-  }
-}
-
 export interface TestCreateTestCaseDefinitionParams {
   /**
    * Array of metric names to evaluate
@@ -628,38 +578,6 @@ export namespace TestCreateTestCaseDefinitionParams {
   }
 }
 
-export interface TestListBatchTestsParams {
-  /**
-   * Type of response engine
-   */
-  type: 'retell-llm' | 'conversation-flow';
-
-  /**
-   * Conversation flow ID (required when type is conversation-flow)
-   */
-  conversation_flow_id?: string;
-
-  /**
-   * Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * LLM ID (required when type is retell-llm)
-   */
-  llm_id?: string;
-
-  /**
-   * Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Version of the response engine (defaults to latest)
-   */
-  version?: number;
-}
-
 export interface TestListTestCaseDefinitionsParams {
   /**
    * Type of response engine
@@ -680,18 +598,6 @@ export interface TestListTestCaseDefinitionsParams {
    * LLM ID (required when type is retell-llm)
    */
   llm_id?: string;
-
-  /**
-   * Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-}
-
-export interface TestListTestRunsParams {
-  /**
-   * Maximum number of items to return.
-   */
-  limit?: number;
 
   /**
    * Pagination key for fetching the next page.
@@ -837,6 +743,100 @@ export namespace TestUpdateTestCaseDefinitionParams {
   }
 }
 
+export interface TestCreateBatchTestParams {
+  /**
+   * Response engine to use for the test cases. Custom LLM is not supported.
+   */
+  response_engine:
+    | TestCreateBatchTestParams.ResponseEngineRetellLm
+    | TestCreateBatchTestParams.ResponseEngineConversationFlow;
+
+  /**
+   * Array of test case definition IDs to run
+   */
+  test_case_definition_ids: Array<string>;
+}
+
+export namespace TestCreateBatchTestParams {
+  export interface ResponseEngineRetellLm {
+    /**
+     * id of the Retell LLM Response Engine.
+     */
+    llm_id: string;
+
+    /**
+     * type of the Response Engine.
+     */
+    type: 'retell-llm';
+
+    /**
+     * Version of the Retell LLM Response Engine.
+     */
+    version?: number | null;
+  }
+
+  export interface ResponseEngineConversationFlow {
+    /**
+     * ID of the Conversation Flow Response Engine.
+     */
+    conversation_flow_id: string;
+
+    /**
+     * type of the Response Engine.
+     */
+    type: 'conversation-flow';
+
+    /**
+     * Version of the Conversation Flow Response Engine.
+     */
+    version?: number | null;
+  }
+}
+
+export interface TestListBatchTestsParams {
+  /**
+   * Type of response engine
+   */
+  type: 'retell-llm' | 'conversation-flow';
+
+  /**
+   * Conversation flow ID (required when type is conversation-flow)
+   */
+  conversation_flow_id?: string;
+
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * LLM ID (required when type is retell-llm)
+   */
+  llm_id?: string;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Version of the response engine (defaults to latest)
+   */
+  version?: number;
+}
+
+export interface TestListTestRunsParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+}
+
 export declare namespace Tests {
   export {
     type BatchTestResponse as BatchTestResponse,
@@ -845,11 +845,11 @@ export declare namespace Tests {
     type TestListBatchTestsResponse as TestListBatchTestsResponse,
     type TestListTestCaseDefinitionsResponse as TestListTestCaseDefinitionsResponse,
     type TestListTestRunsResponse as TestListTestRunsResponse,
-    type TestCreateBatchTestParams as TestCreateBatchTestParams,
     type TestCreateTestCaseDefinitionParams as TestCreateTestCaseDefinitionParams,
-    type TestListBatchTestsParams as TestListBatchTestsParams,
     type TestListTestCaseDefinitionsParams as TestListTestCaseDefinitionsParams,
-    type TestListTestRunsParams as TestListTestRunsParams,
     type TestUpdateTestCaseDefinitionParams as TestUpdateTestCaseDefinitionParams,
+    type TestCreateBatchTestParams as TestCreateBatchTestParams,
+    type TestListBatchTestsParams as TestListBatchTestsParams,
+    type TestListTestRunsParams as TestListTestRunsParams,
   };
 }

@@ -183,8 +183,8 @@ export interface PhoneNumberResponse {
   inbound_sms_webhook_url?: string | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can to override agent
-   * id, set dynamic variables and other fields specific to that call.
+   * If set, will send a webhook for inbound calls, where you can override agent id,
+   * set dynamic variables and other fields specific to that call.
    */
   inbound_webhook_url?: string | null;
 
@@ -384,8 +384,8 @@ export interface PhoneNumberCreateParams {
   inbound_agents?: Array<PhoneNumberCreateParams.InboundAgent> | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can to override agent
-   * id, set dynamic variables and other fields specific to that call.
+   * If set, will send a webhook for inbound calls, where you can override agent id,
+   * set dynamic variables and other fields specific to that call.
    */
   inbound_webhook_url?: string | null;
 
@@ -529,8 +529,8 @@ export interface PhoneNumberUpdateParams {
   inbound_sms_webhook_url?: string | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can to override agent
-   * id, set dynamic variables and other fields specific to that call.
+   * If set, will send a webhook for inbound calls, where you can override agent id,
+   * set dynamic variables and other fields specific to that call.
    */
   inbound_webhook_url?: string | null;
 
@@ -721,8 +721,8 @@ export interface PhoneNumberImportParams {
   inbound_agents?: Array<PhoneNumberImportParams.InboundAgent> | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can to override agent
-   * id, set dynamic variables and other fields specific to that call.
+   * If set, will send a webhook for inbound calls, where you can override agent id,
+   * set dynamic variables and other fields specific to that call.
    */
   inbound_webhook_url?: string | null;
 

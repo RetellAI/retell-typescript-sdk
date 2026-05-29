@@ -23,6 +23,38 @@ export class Chat extends APIResource {
   }
 
   /**
+   * Start an outbound SMS chat conversation with a phone number using the specified
+   * agent. The agent must be configured for chat mode. The initial SMS message will
+   * be automatically generated and sent based on the agent's configuration.
+   *
+   * @example
+   * ```ts
+   * const chatResponse = await client.chat.createSMSChat({
+   *   from_number: '+12137771234',
+   *   to_number: '+14155551234',
+   * });
+   * ```
+   */
+  createSMSChat(body: ChatCreateSMSChatParams, options?: RequestOptions): APIPromise<ChatResponse> {
+    return this._client.post('/create-sms-chat', { body, ...options });
+  }
+
+  /**
+   * End an ongoing chat
+   *
+   * @example
+   * ```ts
+   * await client.chat.end('16b980523634a6dc504898cda492e939');
+   * ```
+   */
+  end(chatID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.patch(path`/end-chat/${chatID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
    * Retrieve details of a specific chat
    *
    * @example
@@ -34,6 +66,44 @@ export class Chat extends APIResource {
    */
   retrieve(chatID: string, options?: RequestOptions): APIPromise<ChatResponse> {
     return this._client.get(path`/get-chat/${chatID}`, options);
+  }
+
+  /**
+   * Create a chat completion message
+   *
+   * @example
+   * ```ts
+   * const response = await client.chat.createChatCompletion({
+   *   chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *   content: 'hi how are you doing?',
+   * });
+   * ```
+   */
+  createChatCompletion(
+    body: ChatCreateChatCompletionParams,
+    options?: RequestOptions,
+  ): APIPromise<ChatCreateChatCompletionResponse> {
+    return this._client.post('/create-chat-completion', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
+  }
+
+  /**
+   * List chats with unified cursor pagination response.
+   *
+   * @example
+   * ```ts
+   * const chats = await client.chat.list();
+   * ```
+   */
+  list(body: ChatListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatListResponse> {
+    return this._client.post('/v3/list-chats', {
+      body,
+      timeout: (this._client as any)._options.timeout ?? 300000,
+      ...options,
+    });
   }
 
   /**
@@ -61,22 +131,6 @@ export class Chat extends APIResource {
   }
 
   /**
-   * List chats with unified cursor pagination response.
-   *
-   * @example
-   * ```ts
-   * const chats = await client.chat.list();
-   * ```
-   */
-  list(body: ChatListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChatListResponse> {
-    return this._client.post('/v3/list-chats', {
-      body,
-      timeout: (this._client as any)._options.timeout ?? 300000,
-      ...options,
-    });
-  }
-
-  /**
    * Delete an existing chat
    *
    * @example
@@ -88,60 +142,6 @@ export class Chat extends APIResource {
    */
   delete(chatID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-chat/${chatID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Create a chat completion message
-   *
-   * @example
-   * ```ts
-   * const response = await client.chat.createChatCompletion({
-   *   chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-   *   content: 'hi how are you doing?',
-   * });
-   * ```
-   */
-  createChatCompletion(
-    body: ChatCreateChatCompletionParams,
-    options?: RequestOptions,
-  ): APIPromise<ChatCreateChatCompletionResponse> {
-    return this._client.post('/create-chat-completion', {
-      body,
-      timeout: (this._client as any)._options.timeout ?? 300000,
-      ...options,
-    });
-  }
-
-  /**
-   * Start an outbound SMS chat conversation with a phone number using the specified
-   * agent. The agent must be configured for chat mode. The initial SMS message will
-   * be automatically generated and sent based on the agent's configuration.
-   *
-   * @example
-   * ```ts
-   * const chatResponse = await client.chat.createSMSChat({
-   *   from_number: '+12137771234',
-   *   to_number: '+14155551234',
-   * });
-   * ```
-   */
-  createSMSChat(body: ChatCreateSMSChatParams, options?: RequestOptions): APIPromise<ChatResponse> {
-    return this._client.post('/create-sms-chat', { body, ...options });
-  }
-
-  /**
-   * End an ongoing chat
-   *
-   * @example
-   * ```ts
-   * await client.chat.end('16b980523634a6dc504898cda492e939');
-   * ```
-   */
-  end(chatID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/end-chat/${chatID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -706,34 +706,56 @@ export interface ChatCreateParams {
   retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
-export interface ChatUpdateParams {
+export interface ChatCreateSMSChatParams {
   /**
-   * Custom attributes for the chat
+   * The phone number to send SMS from in E.164 format. Must be a number purchased
+   * from Retell or imported to Retell with SMS capability.
    */
-  custom_attributes?: { [key: string]: string | number | boolean };
+  from_number: string;
 
   /**
-   * Data storage setting for this chat. Overrides the agent's default setting.
-   * "everything" stores all data, "basic_attributes_only" stores only metadata.
-   * Cannot be downgraded from more restrictive to less restrictive settings.
+   * The phone number to send SMS to in E.164 format
    */
-  data_storage_setting?: 'everything' | 'basic_attributes_only';
+  to_number: string;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
    * your internal customer id associated with the chat. Not used for processing. You
-   * can later get this field from the chat object. Size limited to 50kB max.
+   * can later get this field from the chat object.
    */
   metadata?: unknown;
 
   /**
-   * Override dynamic variables represented as key-value pairs of strings. Setting
-   * this will override or add the dynamic variables set in the agent during the
-   * call. Only need to set the delta where you want to override, no need to set the
-   * entire dynamic variables object. Setting this to null will remove any existing
+   * For this particular chat, override the agent used with this agent id. This does
+   * not bind the agent to this number, this is for one time override.
+   */
+  override_agent_id?: string;
+
+  /**
+   * For this particular chat, override the agent version used with this version.
+   * This does not bind the agent version to this number, this is for one time
    * override.
    */
-  override_dynamic_variables?: { [key: string]: string } | null;
+  override_agent_version?: number | string;
+
+  /**
+   * Add optional dynamic variables in key value pairs of string that injects into
+   * your Response Engine prompt and tool description. Only applicable for Response
+   * Engine.
+   */
+  retell_llm_dynamic_variables?: { [key: string]: string };
+}
+
+export interface ChatCreateChatCompletionParams {
+  /**
+   * Unique id of the chat to create completion.
+   */
+  chat_id: string;
+
+  /**
+   * user message to generate agent chat completion.
+   */
+  content: string;
 }
 
 export interface ChatListParams {
@@ -1243,56 +1265,34 @@ export namespace ChatListParams {
   }
 }
 
-export interface ChatCreateChatCompletionParams {
+export interface ChatUpdateParams {
   /**
-   * Unique id of the chat to create completion.
+   * Custom attributes for the chat
    */
-  chat_id: string;
+  custom_attributes?: { [key: string]: string | number | boolean };
 
   /**
-   * user message to generate agent chat completion.
+   * Data storage setting for this chat. Overrides the agent's default setting.
+   * "everything" stores all data, "basic_attributes_only" stores only metadata.
+   * Cannot be downgraded from more restrictive to less restrictive settings.
    */
-  content: string;
-}
-
-export interface ChatCreateSMSChatParams {
-  /**
-   * The phone number to send SMS from in E.164 format. Must be a number purchased
-   * from Retell or imported to Retell with SMS capability.
-   */
-  from_number: string;
-
-  /**
-   * The phone number to send SMS to in E.164 format
-   */
-  to_number: string;
+  data_storage_setting?: 'everything' | 'basic_attributes_only';
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
    * your internal customer id associated with the chat. Not used for processing. You
-   * can later get this field from the chat object.
+   * can later get this field from the chat object. Size limited to 50kB max.
    */
   metadata?: unknown;
 
   /**
-   * For this particular chat, override the agent used with this agent id. This does
-   * not bind the agent to this number, this is for one time override.
-   */
-  override_agent_id?: string;
-
-  /**
-   * For this particular chat, override the agent version used with this version.
-   * This does not bind the agent version to this number, this is for one time
+   * Override dynamic variables represented as key-value pairs of strings. Setting
+   * this will override or add the dynamic variables set in the agent during the
+   * call. Only need to set the delta where you want to override, no need to set the
+   * entire dynamic variables object. Setting this to null will remove any existing
    * override.
    */
-  override_agent_version?: number | string;
-
-  /**
-   * Add optional dynamic variables in key value pairs of string that injects into
-   * your Response Engine prompt and tool description. Only applicable for Response
-   * Engine.
-   */
-  retell_llm_dynamic_variables?: { [key: string]: string };
+  override_dynamic_variables?: { [key: string]: string } | null;
 }
 
 export declare namespace Chat {
@@ -1301,9 +1301,9 @@ export declare namespace Chat {
     type ChatListResponse as ChatListResponse,
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
     type ChatCreateParams as ChatCreateParams,
-    type ChatUpdateParams as ChatUpdateParams,
-    type ChatListParams as ChatListParams,
-    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
+    type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
+    type ChatListParams as ChatListParams,
+    type ChatUpdateParams as ChatUpdateParams,
   };
 }

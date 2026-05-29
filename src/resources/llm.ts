@@ -39,6 +39,18 @@ export class Llm extends APIResource {
   }
 
   /**
+   * List Retell LLM Response Engines with pagination
+   *
+   * @example
+   * ```ts
+   * const llms = await client.llm.list();
+   * ```
+   */
+  list(query: LlmListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmListResponse> {
+    return this._client.get('/v2/list-retell-llms', { query, ...options });
+  }
+
+  /**
    * Update an existing Retell LLM Response Engine
    *
    * @example
@@ -55,18 +67,6 @@ export class Llm extends APIResource {
   update(llmID: string, params: LlmUpdateParams, options?: RequestOptions): APIPromise<LlmResponse> {
     const { version, ...body } = params;
     return this._client.patch(path`/update-retell-llm/${llmID}`, { query: { version }, body, ...options });
-  }
-
-  /**
-   * List Retell LLM Response Engines with pagination
-   *
-   * @example
-   * ```ts
-   * const llms = await client.llm.list();
-   * ```
-   */
-  list(query: LlmListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LlmListResponse> {
-    return this._client.get('/v2/list-retell-llms', { query, ...options });
   }
 
   /**
@@ -5219,6 +5219,23 @@ export interface LlmRetrieveParams {
   version?: number;
 }
 
+export interface LlmListParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export interface LlmUpdateParams {
   /**
    * Query param: Optional version of the API to use for this request. Default to
@@ -7774,30 +7791,13 @@ export namespace LlmUpdateParams {
   }
 }
 
-export interface LlmListParams {
-  /**
-   * Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Sort order for results.
-   */
-  sort_order?: 'ascending' | 'descending';
-}
-
 export declare namespace Llm {
   export {
     type LlmResponse as LlmResponse,
     type LlmListResponse as LlmListResponse,
     type LlmCreateParams as LlmCreateParams,
     type LlmRetrieveParams as LlmRetrieveParams,
-    type LlmUpdateParams as LlmUpdateParams,
     type LlmListParams as LlmListParams,
+    type LlmUpdateParams as LlmUpdateParams,
   };
 }
