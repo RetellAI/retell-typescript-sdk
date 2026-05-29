@@ -9,20 +9,6 @@ import { path } from '../internal/utils/path';
 
 export class Voice extends APIResource {
   /**
-   * Retrieve details of a specific voice
-   */
-  retrieve(voiceID: string, options?: RequestOptions): APIPromise<VoiceResponse> {
-    return this._client.get(path`/get-voice/${voiceID}`, options);
-  }
-
-  /**
-   * List all voices available to the user
-   */
-  list(options?: RequestOptions): APIPromise<VoiceListResponse> {
-    return this._client.get('/list-voices', options);
-  }
-
-  /**
    * Add a community voice to the voice library
    */
   addResource(body: VoiceAddResourceParams, options?: RequestOptions): APIPromise<VoiceResponse> {
@@ -34,6 +20,20 @@ export class Voice extends APIResource {
    */
   clone(body: VoiceCloneParams, options?: RequestOptions): APIPromise<VoiceResponse> {
     return this._client.post('/clone-voice', multipartFormRequestOptions({ body, ...options }, this._client));
+  }
+
+  /**
+   * Retrieve details of a specific voice
+   */
+  retrieve(voiceID: string, options?: RequestOptions): APIPromise<VoiceResponse> {
+    return this._client.get(path`/get-voice/${voiceID}`, options);
+  }
+
+  /**
+   * List all voices available to the user
+   */
+  list(options?: RequestOptions): APIPromise<VoiceListResponse> {
+    return this._client.get('/list-voices', options);
   }
 
   /**

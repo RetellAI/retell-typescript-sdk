@@ -44,6 +44,21 @@ export class ChatAgent extends APIResource {
   }
 
   /**
+   * List all chat agents
+   *
+   * @example
+   * ```ts
+   * const chatAgentResponses = await client.chatAgent.list();
+   * ```
+   */
+  list(
+    query: ChatAgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentListResponse> {
+    return this._client.get('/list-chat-agents', { query, ...options });
+  }
+
+  /**
    * Update an existing chat agent
    *
    * @example
@@ -63,21 +78,6 @@ export class ChatAgent extends APIResource {
   }
 
   /**
-   * List all chat agents
-   *
-   * @example
-   * ```ts
-   * const chatAgentResponses = await client.chatAgent.list();
-   * ```
-   */
-  list(
-    query: ChatAgentListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentListResponse> {
-    return this._client.get('/list-chat-agents', { query, ...options });
-  }
-
-  /**
    * Delete an existing chat agent
    *
    * @example
@@ -89,6 +89,24 @@ export class ChatAgent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-chat-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.publish('agent_xxx', {
+   *   version: 15,
+   * });
+   * ```
+   */
+  publish(agentID: string, body: ChatAgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -149,24 +167,6 @@ export class ChatAgent extends APIResource {
    */
   getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
     return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
-  }
-
-  /**
-   * Publish an existing draft version in place.
-   *
-   * @example
-   * ```ts
-   * await client.chatAgent.publish('agent_xxx', {
-   *   version: 15,
-   * });
-   * ```
-   */
-  publish(agentID: string, body: ChatAgentPublishParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent-version/${agentID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
   }
 }
 
@@ -1401,6 +1401,33 @@ export interface ChatAgentRetrieveParams {
   version?: number | string;
 }
 
+export interface ChatAgentListParams {
+  /**
+   * If true, only return the latest version of each chat agent.
+   */
+  is_latest?: boolean;
+
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and
+   * 1000, and the default is 1000.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of agents. Pagination key
+   * is represented by a agent id, pagination key and version pair is exclusive (not
+   * included in the fetched page). If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * Specifies the version of the agent associated with the pagination_key. When
+   * paginating, both the pagination_key and its version must be provided to ensure
+   * consistent ordering and to fetch the next page correctly.
+   */
+  pagination_key_version?: number;
+}
+
 export interface ChatAgentUpdateParams {
   /**
    * Query param: Optional version of the API to use for this request. Default to
@@ -2002,31 +2029,10 @@ export namespace ChatAgentUpdateParams {
   }
 }
 
-export interface ChatAgentListParams {
-  /**
-   * If true, only return the latest version of each chat agent.
-   */
-  is_latest?: boolean;
+export interface ChatAgentPublishParams {
+  version: number;
 
-  /**
-   * A limit on the number of objects to be returned. Limit can range between 1 and
-   * 1000, and the default is 1000.
-   */
-  limit?: number;
-
-  /**
-   * The pagination key to continue fetching the next page of agents. Pagination key
-   * is represented by a agent id, pagination key and version pair is exclusive (not
-   * included in the fetched page). If not set, will start from the beginning.
-   */
-  pagination_key?: string;
-
-  /**
-   * Specifies the version of the agent associated with the pagination_key. When
-   * paginating, both the pagination_key and its version must be provided to ensure
-   * consistent ordering and to fetch the next page correctly.
-   */
-  pagination_key_version?: number;
+  version_description?: string;
 }
 
 export interface ChatAgentCreateVersionParams {
@@ -2043,12 +2049,6 @@ export interface ChatAgentDeleteVersionParams {
   version: number;
 }
 
-export interface ChatAgentPublishParams {
-  version: number;
-
-  version_description?: string;
-}
-
 export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
@@ -2057,10 +2057,10 @@ export declare namespace ChatAgent {
     type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
-    type ChatAgentUpdateParams as ChatAgentUpdateParams,
     type ChatAgentListParams as ChatAgentListParams,
+    type ChatAgentUpdateParams as ChatAgentUpdateParams,
+    type ChatAgentPublishParams as ChatAgentPublishParams,
     type ChatAgentCreateVersionParams as ChatAgentCreateVersionParams,
     type ChatAgentDeleteVersionParams as ChatAgentDeleteVersionParams,
-    type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 }

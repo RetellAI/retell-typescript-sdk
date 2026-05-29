@@ -11,40 +11,10 @@ export type SdkMethod = {
 
 export const sdkMethods: SdkMethod[] = [
   {
-    clientCallName: 'client.call.retrieve',
-    fullyQualifiedName: 'call.retrieve',
-    httpMethod: 'get',
-    httpPath: '/v2/get-call/{call_id}',
-  },
-  {
-    clientCallName: 'client.call.update',
-    fullyQualifiedName: 'call.update',
-    httpMethod: 'patch',
-    httpPath: '/v2/update-call/{call_id}',
-  },
-  {
-    clientCallName: 'client.call.list',
-    fullyQualifiedName: 'call.list',
-    httpMethod: 'post',
-    httpPath: '/v3/list-calls',
-  },
-  {
-    clientCallName: 'client.call.delete',
-    fullyQualifiedName: 'call.delete',
-    httpMethod: 'delete',
-    httpPath: '/v2/delete-call/{call_id}',
-  },
-  {
     clientCallName: 'client.call.createPhoneCall',
     fullyQualifiedName: 'call.createPhoneCall',
     httpMethod: 'post',
     httpPath: '/v2/create-phone-call',
-  },
-  {
-    clientCallName: 'client.call.createWebCall',
-    fullyQualifiedName: 'call.createWebCall',
-    httpMethod: 'post',
-    httpPath: '/v2/create-web-call',
   },
   {
     clientCallName: 'client.call.registerPhoneCall',
@@ -53,46 +23,46 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v2/register-phone-call',
   },
   {
+    clientCallName: 'client.call.createWebCall',
+    fullyQualifiedName: 'call.createWebCall',
+    httpMethod: 'post',
+    httpPath: '/v2/create-web-call',
+  },
+  {
+    clientCallName: 'client.call.retrieve',
+    fullyQualifiedName: 'call.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v2/get-call/{call_id}',
+  },
+  {
+    clientCallName: 'client.call.list',
+    fullyQualifiedName: 'call.list',
+    httpMethod: 'post',
+    httpPath: '/v3/list-calls',
+  },
+  {
+    clientCallName: 'client.call.update',
+    fullyQualifiedName: 'call.update',
+    httpMethod: 'patch',
+    httpPath: '/v2/update-call/{call_id}',
+  },
+  {
     clientCallName: 'client.call.stop',
     fullyQualifiedName: 'call.stop',
     httpMethod: 'post',
     httpPath: '/v2/stop-call/{call_id}',
   },
   {
+    clientCallName: 'client.call.delete',
+    fullyQualifiedName: 'call.delete',
+    httpMethod: 'delete',
+    httpPath: '/v2/delete-call/{call_id}',
+  },
+  {
     clientCallName: 'client.chat.create',
     fullyQualifiedName: 'chat.create',
     httpMethod: 'post',
     httpPath: '/create-chat',
-  },
-  {
-    clientCallName: 'client.chat.retrieve',
-    fullyQualifiedName: 'chat.retrieve',
-    httpMethod: 'get',
-    httpPath: '/get-chat/{chat_id}',
-  },
-  {
-    clientCallName: 'client.chat.update',
-    fullyQualifiedName: 'chat.update',
-    httpMethod: 'patch',
-    httpPath: '/update-chat/{chat_id}',
-  },
-  {
-    clientCallName: 'client.chat.list',
-    fullyQualifiedName: 'chat.list',
-    httpMethod: 'post',
-    httpPath: '/v3/list-chats',
-  },
-  {
-    clientCallName: 'client.chat.delete',
-    fullyQualifiedName: 'chat.delete',
-    httpMethod: 'delete',
-    httpPath: '/delete-chat/{chat_id}',
-  },
-  {
-    clientCallName: 'client.chat.createChatCompletion',
-    fullyQualifiedName: 'chat.createChatCompletion',
-    httpMethod: 'post',
-    httpPath: '/create-chat-completion',
   },
   {
     clientCallName: 'client.chat.createSMSChat',
@@ -107,10 +77,46 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/end-chat/{chat_id}',
   },
   {
+    clientCallName: 'client.chat.retrieve',
+    fullyQualifiedName: 'chat.retrieve',
+    httpMethod: 'get',
+    httpPath: '/get-chat/{chat_id}',
+  },
+  {
+    clientCallName: 'client.chat.createChatCompletion',
+    fullyQualifiedName: 'chat.createChatCompletion',
+    httpMethod: 'post',
+    httpPath: '/create-chat-completion',
+  },
+  {
+    clientCallName: 'client.chat.list',
+    fullyQualifiedName: 'chat.list',
+    httpMethod: 'post',
+    httpPath: '/v3/list-chats',
+  },
+  {
+    clientCallName: 'client.chat.update',
+    fullyQualifiedName: 'chat.update',
+    httpMethod: 'patch',
+    httpPath: '/update-chat/{chat_id}',
+  },
+  {
+    clientCallName: 'client.chat.delete',
+    fullyQualifiedName: 'chat.delete',
+    httpMethod: 'delete',
+    httpPath: '/delete-chat/{chat_id}',
+  },
+  {
     clientCallName: 'client.phoneNumber.create',
     fullyQualifiedName: 'phoneNumber.create',
     httpMethod: 'post',
     httpPath: '/create-phone-number',
+  },
+  {
+    clientCallName: 'client.phoneNumber.import',
+    fullyQualifiedName: 'phoneNumber.import',
+    httpMethod: 'post',
+    httpPath: '/import-phone-number',
   },
   {
     clientCallName: 'client.phoneNumber.retrieve',
@@ -119,28 +125,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-phone-number/{phone_number}',
   },
   {
-    clientCallName: 'client.phoneNumber.update',
-    fullyQualifiedName: 'phoneNumber.update',
-    httpMethod: 'patch',
-    httpPath: '/update-phone-number/{phone_number}',
-  },
-  {
     clientCallName: 'client.phoneNumber.list',
     fullyQualifiedName: 'phoneNumber.list',
     httpMethod: 'get',
     httpPath: '/v2/list-phone-numbers',
   },
   {
+    clientCallName: 'client.phoneNumber.update',
+    fullyQualifiedName: 'phoneNumber.update',
+    httpMethod: 'patch',
+    httpPath: '/update-phone-number/{phone_number}',
+  },
+  {
     clientCallName: 'client.phoneNumber.delete',
     fullyQualifiedName: 'phoneNumber.delete',
     httpMethod: 'delete',
     httpPath: '/delete-phone-number/{phone_number}',
-  },
-  {
-    clientCallName: 'client.phoneNumber.import',
-    fullyQualifiedName: 'phoneNumber.import',
-    httpMethod: 'post',
-    httpPath: '/import-phone-number',
   },
   {
     clientCallName: 'client.agent.create',
@@ -155,22 +155,28 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-agent/{agent_id}',
   },
   {
-    clientCallName: 'client.agent.update',
-    fullyQualifiedName: 'agent.update',
-    httpMethod: 'patch',
-    httpPath: '/update-agent/{agent_id}',
-  },
-  {
     clientCallName: 'client.agent.list',
     fullyQualifiedName: 'agent.list',
     httpMethod: 'get',
     httpPath: '/list-agents',
   },
   {
+    clientCallName: 'client.agent.update',
+    fullyQualifiedName: 'agent.update',
+    httpMethod: 'patch',
+    httpPath: '/update-agent/{agent_id}',
+  },
+  {
     clientCallName: 'client.agent.delete',
     fullyQualifiedName: 'agent.delete',
     httpMethod: 'delete',
     httpPath: '/delete-agent/{agent_id}',
+  },
+  {
+    clientCallName: 'client.agent.publish',
+    fullyQualifiedName: 'agent.publish',
+    httpMethod: 'post',
+    httpPath: '/publish-agent-version/{agent_id}',
   },
   {
     clientCallName: 'client.agent.createVersion',
@@ -191,12 +197,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-agent-versions/{agent_id}',
   },
   {
-    clientCallName: 'client.agent.publish',
-    fullyQualifiedName: 'agent.publish',
-    httpMethod: 'post',
-    httpPath: '/publish-agent-version/{agent_id}',
-  },
-  {
     clientCallName: 'client.chatAgent.create',
     fullyQualifiedName: 'chatAgent.create',
     httpMethod: 'post',
@@ -209,22 +209,28 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-chat-agent/{agent_id}',
   },
   {
-    clientCallName: 'client.chatAgent.update',
-    fullyQualifiedName: 'chatAgent.update',
-    httpMethod: 'patch',
-    httpPath: '/update-chat-agent/{agent_id}',
-  },
-  {
     clientCallName: 'client.chatAgent.list',
     fullyQualifiedName: 'chatAgent.list',
     httpMethod: 'get',
     httpPath: '/list-chat-agents',
   },
   {
+    clientCallName: 'client.chatAgent.update',
+    fullyQualifiedName: 'chatAgent.update',
+    httpMethod: 'patch',
+    httpPath: '/update-chat-agent/{agent_id}',
+  },
+  {
     clientCallName: 'client.chatAgent.delete',
     fullyQualifiedName: 'chatAgent.delete',
     httpMethod: 'delete',
     httpPath: '/delete-chat-agent/{agent_id}',
+  },
+  {
+    clientCallName: 'client.chatAgent.publish',
+    fullyQualifiedName: 'chatAgent.publish',
+    httpMethod: 'post',
+    httpPath: '/publish-agent-version/{agent_id}',
   },
   {
     clientCallName: 'client.chatAgent.createVersion',
@@ -245,12 +251,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-chat-agent-versions/{agent_id}',
   },
   {
-    clientCallName: 'client.chatAgent.publish',
-    fullyQualifiedName: 'chatAgent.publish',
-    httpMethod: 'post',
-    httpPath: '/publish-agent-version/{agent_id}',
-  },
-  {
     clientCallName: 'client.llm.create',
     fullyQualifiedName: 'llm.create',
     httpMethod: 'post',
@@ -263,16 +263,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-retell-llm/{llm_id}',
   },
   {
-    clientCallName: 'client.llm.update',
-    fullyQualifiedName: 'llm.update',
-    httpMethod: 'patch',
-    httpPath: '/update-retell-llm/{llm_id}',
-  },
-  {
     clientCallName: 'client.llm.list',
     fullyQualifiedName: 'llm.list',
     httpMethod: 'get',
     httpPath: '/v2/list-retell-llms',
+  },
+  {
+    clientCallName: 'client.llm.update',
+    fullyQualifiedName: 'llm.update',
+    httpMethod: 'patch',
+    httpPath: '/update-retell-llm/{llm_id}',
   },
   {
     clientCallName: 'client.llm.delete',
@@ -293,16 +293,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-conversation-flow/{conversation_flow_id}',
   },
   {
-    clientCallName: 'client.conversationFlow.update',
-    fullyQualifiedName: 'conversationFlow.update',
-    httpMethod: 'patch',
-    httpPath: '/update-conversation-flow/{conversation_flow_id}',
-  },
-  {
     clientCallName: 'client.conversationFlow.list',
     fullyQualifiedName: 'conversationFlow.list',
     httpMethod: 'get',
     httpPath: '/v2/list-conversation-flows',
+  },
+  {
+    clientCallName: 'client.conversationFlow.update',
+    fullyQualifiedName: 'conversationFlow.update',
+    httpMethod: 'patch',
+    httpPath: '/update-conversation-flow/{conversation_flow_id}',
   },
   {
     clientCallName: 'client.conversationFlow.delete',
@@ -323,16 +323,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-conversation-flow-component/{conversation_flow_component_id}',
   },
   {
-    clientCallName: 'client.conversationFlowComponent.update',
-    fullyQualifiedName: 'conversationFlowComponent.update',
-    httpMethod: 'patch',
-    httpPath: '/update-conversation-flow-component/{conversation_flow_component_id}',
-  },
-  {
     clientCallName: 'client.conversationFlowComponent.list',
     fullyQualifiedName: 'conversationFlowComponent.list',
     httpMethod: 'get',
     httpPath: '/v2/list-conversation-flow-components',
+  },
+  {
+    clientCallName: 'client.conversationFlowComponent.update',
+    fullyQualifiedName: 'conversationFlowComponent.update',
+    httpMethod: 'patch',
+    httpPath: '/update-conversation-flow-component/{conversation_flow_component_id}',
   },
   {
     clientCallName: 'client.conversationFlowComponent.delete',
@@ -377,18 +377,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/delete-knowledge-base-source/{knowledge_base_id}/source/{source_id}',
   },
   {
-    clientCallName: 'client.voice.retrieve',
-    fullyQualifiedName: 'voice.retrieve',
-    httpMethod: 'get',
-    httpPath: '/get-voice/{voice_id}',
-  },
-  {
-    clientCallName: 'client.voice.list',
-    fullyQualifiedName: 'voice.list',
-    httpMethod: 'get',
-    httpPath: '/list-voices',
-  },
-  {
     clientCallName: 'client.voice.addResource',
     fullyQualifiedName: 'voice.addResource',
     httpMethod: 'post',
@@ -399,6 +387,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'voice.clone',
     httpMethod: 'post',
     httpPath: '/clone-voice',
+  },
+  {
+    clientCallName: 'client.voice.retrieve',
+    fullyQualifiedName: 'voice.retrieve',
+    httpMethod: 'get',
+    httpPath: '/get-voice/{voice_id}',
+  },
+  {
+    clientCallName: 'client.voice.list',
+    fullyQualifiedName: 'voice.list',
+    httpMethod: 'get',
+    httpPath: '/list-voices',
   },
   {
     clientCallName: 'client.voice.search',
@@ -425,28 +425,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/create-batch-call',
   },
   {
-    clientCallName: 'client.tests.createBatchTest',
-    fullyQualifiedName: 'tests.createBatchTest',
-    httpMethod: 'post',
-    httpPath: '/create-batch-test',
-  },
-  {
     clientCallName: 'client.tests.createTestCaseDefinition',
     fullyQualifiedName: 'tests.createTestCaseDefinition',
     httpMethod: 'post',
     httpPath: '/create-test-case-definition',
-  },
-  {
-    clientCallName: 'client.tests.deleteTestCaseDefinition',
-    fullyQualifiedName: 'tests.deleteTestCaseDefinition',
-    httpMethod: 'delete',
-    httpPath: '/delete-test-case-definition/{test_case_definition_id}',
-  },
-  {
-    clientCallName: 'client.tests.getBatchTest',
-    fullyQualifiedName: 'tests.getBatchTest',
-    httpMethod: 'get',
-    httpPath: '/get-batch-test/{test_case_batch_job_id}',
   },
   {
     clientCallName: 'client.tests.getTestCaseDefinition',
@@ -455,10 +437,34 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-test-case-definition/{test_case_definition_id}',
   },
   {
-    clientCallName: 'client.tests.getTestRun',
-    fullyQualifiedName: 'tests.getTestRun',
+    clientCallName: 'client.tests.listTestCaseDefinitions',
+    fullyQualifiedName: 'tests.listTestCaseDefinitions',
     httpMethod: 'get',
-    httpPath: '/get-test-run/{test_case_job_id}',
+    httpPath: '/v2/list-test-case-definitions',
+  },
+  {
+    clientCallName: 'client.tests.updateTestCaseDefinition',
+    fullyQualifiedName: 'tests.updateTestCaseDefinition',
+    httpMethod: 'put',
+    httpPath: '/update-test-case-definition/{test_case_definition_id}',
+  },
+  {
+    clientCallName: 'client.tests.deleteTestCaseDefinition',
+    fullyQualifiedName: 'tests.deleteTestCaseDefinition',
+    httpMethod: 'delete',
+    httpPath: '/delete-test-case-definition/{test_case_definition_id}',
+  },
+  {
+    clientCallName: 'client.tests.createBatchTest',
+    fullyQualifiedName: 'tests.createBatchTest',
+    httpMethod: 'post',
+    httpPath: '/create-batch-test',
+  },
+  {
+    clientCallName: 'client.tests.getBatchTest',
+    fullyQualifiedName: 'tests.getBatchTest',
+    httpMethod: 'get',
+    httpPath: '/get-batch-test/{test_case_batch_job_id}',
   },
   {
     clientCallName: 'client.tests.listBatchTests',
@@ -467,22 +473,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v2/list-batch-tests',
   },
   {
-    clientCallName: 'client.tests.listTestCaseDefinitions',
-    fullyQualifiedName: 'tests.listTestCaseDefinitions',
+    clientCallName: 'client.tests.getTestRun',
+    fullyQualifiedName: 'tests.getTestRun',
     httpMethod: 'get',
-    httpPath: '/v2/list-test-case-definitions',
+    httpPath: '/get-test-run/{test_case_job_id}',
   },
   {
     clientCallName: 'client.tests.listTestRuns',
     fullyQualifiedName: 'tests.listTestRuns',
     httpMethod: 'get',
     httpPath: '/v2/list-test-runs/{test_case_batch_job_id}',
-  },
-  {
-    clientCallName: 'client.tests.updateTestCaseDefinition',
-    fullyQualifiedName: 'tests.updateTestCaseDefinition',
-    httpMethod: 'put',
-    httpPath: '/update-test-case-definition/{test_case_definition_id}',
   },
   {
     clientCallName: 'client.playground.completion',

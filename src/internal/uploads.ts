@@ -174,19 +174,11 @@ const addFormValue = async (form: FormData, key: string, value: unknown): Promis
   } else if (isNamedBlob(value)) {
     form.append(key, value, getName(value));
   } else if (Array.isArray(value)) {
-    if (hasUploadableValue(value)) {
-      await Promise.all(value.map((entry) => addFormValue(form, key, entry)));
-    } else {
-      form.append(key, JSON.stringify(value));
-    }
+    await Promise.all(value.map((entry) => addFormValue(form, key + '[]', entry)));
   } else if (typeof value === 'object') {
-    if (hasUploadableValue(value)) {
-      await Promise.all(
-        Object.entries(value).map(([name, prop]) => addFormValue(form, `${key}[${name}]`, prop)),
-      );
-    } else {
-      form.append(key, JSON.stringify(value));
-    }
+    await Promise.all(
+      Object.entries(value).map(([name, prop]) => addFormValue(form, `${key}[${name}]`, prop)),
+    );
   } else {
     throw new TypeError(
       `Invalid value given to form, expected a string, number, boolean, object, Array, File or Blob but got ${value} instead`,

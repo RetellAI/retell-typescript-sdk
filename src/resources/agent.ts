@@ -45,6 +45,21 @@ export class Agent extends APIResource {
   }
 
   /**
+   * List all agents
+   *
+   * @example
+   * ```ts
+   * const agentResponses = await client.agent.list();
+   * ```
+   */
+  list(
+    query: AgentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentListResponse> {
+    return this._client.get('/list-agents', { query, ...options });
+  }
+
+  /**
    * Update an existing agent's latest draft version
    *
    * @example
@@ -61,21 +76,6 @@ export class Agent extends APIResource {
   }
 
   /**
-   * List all agents
-   *
-   * @example
-   * ```ts
-   * const agentResponses = await client.agent.list();
-   * ```
-   */
-  list(
-    query: AgentListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AgentListResponse> {
-    return this._client.get('/list-agents', { query, ...options });
-  }
-
-  /**
    * Delete an existing agent
    *
    * @example
@@ -87,6 +87,22 @@ export class Agent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-agent/${agentID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.agent.publish('agent_xxx', { version: 15 });
+   * ```
+   */
+  publish(agentID: string, body: AgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -146,22 +162,6 @@ export class Agent extends APIResource {
    */
   getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
     return this._client.get(path`/get-agent-versions/${agentID}`, options);
-  }
-
-  /**
-   * Publish an existing draft version in place.
-   *
-   * @example
-   * ```ts
-   * await client.agent.publish('agent_xxx', { version: 15 });
-   * ```
-   */
-  publish(agentID: string, body: AgentPublishParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent-version/${agentID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
   }
 }
 
@@ -2336,6 +2336,33 @@ export interface AgentRetrieveParams {
   version?: number | string;
 }
 
+export interface AgentListParams {
+  /**
+   * If true, only return the latest version of each agent.
+   */
+  is_latest?: boolean;
+
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and
+   * 1000, and the default is 1000.
+   */
+  limit?: number;
+
+  /**
+   * The pagination key to continue fetching the next page of agents. Pagination key
+   * is represented by a agent id, pagination key and version pair is exclusive (not
+   * included in the fetched page). If not set, will start from the beginning.
+   */
+  pagination_key?: string;
+
+  /**
+   * Specifies the version of the agent associated with the pagination_key. When
+   * paginating, both the pagination_key and its version must be provided to ensure
+   * consistent ordering and to fetch the next page correctly.
+   */
+  pagination_key_version?: number;
+}
+
 export interface AgentUpdateParams {
   /**
    * Query param: Optional version of the API to use for this request. Default to
@@ -3416,31 +3443,10 @@ export namespace AgentUpdateParams {
   }
 }
 
-export interface AgentListParams {
-  /**
-   * If true, only return the latest version of each agent.
-   */
-  is_latest?: boolean;
+export interface AgentPublishParams {
+  version: number;
 
-  /**
-   * A limit on the number of objects to be returned. Limit can range between 1 and
-   * 1000, and the default is 1000.
-   */
-  limit?: number;
-
-  /**
-   * The pagination key to continue fetching the next page of agents. Pagination key
-   * is represented by a agent id, pagination key and version pair is exclusive (not
-   * included in the fetched page). If not set, will start from the beginning.
-   */
-  pagination_key?: string;
-
-  /**
-   * Specifies the version of the agent associated with the pagination_key. When
-   * paginating, both the pagination_key and its version must be provided to ensure
-   * consistent ordering and to fetch the next page correctly.
-   */
-  pagination_key_version?: number;
+  version_description?: string;
 }
 
 export interface AgentCreateVersionParams {
@@ -3457,12 +3463,6 @@ export interface AgentDeleteVersionParams {
   version: number;
 }
 
-export interface AgentPublishParams {
-  version: number;
-
-  version_description?: string;
-}
-
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3471,10 +3471,10 @@ export declare namespace Agent {
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
-    type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
+    type AgentUpdateParams as AgentUpdateParams,
+    type AgentPublishParams as AgentPublishParams,
     type AgentCreateVersionParams as AgentCreateVersionParams,
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
-    type AgentPublishParams as AgentPublishParams,
   };
 }

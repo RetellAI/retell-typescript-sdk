@@ -31,6 +31,45 @@ describe('resource chat', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('createSMSChat: only required params', async () => {
+    const responsePromise = client.chat.createSMSChat({
+      from_number: '+12137771234',
+      to_number: '+14155551234',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createSMSChat: required and optional params', async () => {
+    const response = await client.chat.createSMSChat({
+      from_number: '+12137771234',
+      to_number: '+14155551234',
+      metadata: {},
+      override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      override_agent_version: 1,
+      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('end', async () => {
+    const responsePromise = client.chat.end('16b980523634a6dc504898cda492e939');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.chat.retrieve('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
@@ -43,8 +82,11 @@ describe('resource chat', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('update', async () => {
-    const responsePromise = client.chat.update('chat_98c1a2157aa0559144d67bb0729', {});
+  test.skip('createChatCompletion: only required params', async () => {
+    const responsePromise = client.chat.createChatCompletion({
+      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      content: 'hi how are you doing?',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -52,6 +94,14 @@ describe('resource chat', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createChatCompletion: required and optional params', async () => {
+    const response = await client.chat.createChatCompletion({
+      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+      content: 'hi how are you doing?',
+    });
   });
 
   // Mock server tests are disabled
@@ -148,70 +198,20 @@ describe('resource chat', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.chat.update('chat_98c1a2157aa0559144d67bb0729', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.chat.delete('16b980523634a6dc504898cda492e939');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('createChatCompletion: only required params', async () => {
-    const responsePromise = client.chat.createChatCompletion({
-      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      content: 'hi how are you doing?',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('createChatCompletion: required and optional params', async () => {
-    const response = await client.chat.createChatCompletion({
-      chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      content: 'hi how are you doing?',
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('createSMSChat: only required params', async () => {
-    const responsePromise = client.chat.createSMSChat({
-      from_number: '+12137771234',
-      to_number: '+14155551234',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('createSMSChat: required and optional params', async () => {
-    const response = await client.chat.createSMSChat({
-      from_number: '+12137771234',
-      to_number: '+14155551234',
-      metadata: {},
-      override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      override_agent_version: 1,
-      retell_llm_dynamic_variables: { customer_name: 'John Doe' },
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('end', async () => {
-    const responsePromise = client.chat.end('16b980523634a6dc504898cda492e939');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

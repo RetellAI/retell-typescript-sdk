@@ -94,18 +94,6 @@ describe('resource chatAgent', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('update', async () => {
-    const responsePromise = client.chatAgent.update('16b980523634a6dc504898cda492e939', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.chatAgent.list();
     const rawResponse = await responsePromise.asResponse();
@@ -134,6 +122,18 @@ describe('resource chatAgent', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.chatAgent.update('16b980523634a6dc504898cda492e939', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.chatAgent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
     const rawResponse = await responsePromise.asResponse();
@@ -143,6 +143,26 @@ describe('resource chatAgent', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('publish: only required params', async () => {
+    const responsePromise = client.chatAgent.publish('agent_xxx', { version: 15 });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('publish: required and optional params', async () => {
+    const response = await client.chatAgent.publish('agent_xxx', {
+      version: 15,
+      version_description: 'Hotfix for transfer timeout',
+    });
   });
 
   // Mock server tests are disabled
@@ -189,25 +209,5 @@ describe('resource chatAgent', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('publish: only required params', async () => {
-    const responsePromise = client.chatAgent.publish('agent_xxx', { version: 15 });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('publish: required and optional params', async () => {
-    const response = await client.chatAgent.publish('agent_xxx', {
-      version: 15,
-      version_description: 'Hotfix for transfer timeout',
-    });
   });
 });
