@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.30.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.1...v5.30.2) (2026-05-29)
+
+
+### Chores
+
+* add SDK auto-merge workflow ([87a8633](https://github.com/RetellAI/retell-typescript-sdk/commit/87a86332fc670155f1e97019ad53e436625cce75))
+* harden SDK auto-merge workflow ([03e1eb1](https://github.com/RetellAI/retell-typescript-sdk/commit/03e1eb1190c218d21ba4f6b20915eeef4c8155bb))
+
 ## 5.30.1 (2026-05-29)
 
 Full Changelog: [v5.30.0...v5.30.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.0...v5.30.1)
