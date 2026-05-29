@@ -41,14 +41,14 @@ jobs:
 
       - name: Push staging main to the release branch on production
         if: steps.diff.outputs.synced == 'false'
-        run: git push production origin/main:refs/heads/stainless/release --force
+        run: git push production origin/main:refs/heads/stainless-release --force
 
       - name: Open or update the release PR on production
         if: steps.diff.outputs.synced == 'false'
         run: |
           EXISTING_PR=$(gh pr list \
             --repo "${PRODUCTION_REPO}" \
-            --head stainless/release \
+            --head stainless-release \
             --state open \
             --json number \
             --jq '.[0].number')
@@ -56,7 +56,7 @@ jobs:
             gh pr create \
               --repo "${PRODUCTION_REPO}" \
               --base main \
-              --head stainless/release \
+              --head stainless-release \
               --title "Release SDK updates" \
               --body "$(git log --oneline production/main..origin/main)"
           else
