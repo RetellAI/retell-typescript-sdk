@@ -66,7 +66,7 @@ jobs:
             fi
 
             merge_flag=""
-            if [ "$head_ref" = "stainless/release" ] && [ "$title" = "Release SDK updates" ]; then
+            if [ "$head_ref" = "stainless-release" ] && [ "$title" = "Release SDK updates" ]; then
               merge_flag="--merge"
             elif [[ "$head_ref" == release-please--* ]] && [[ "$title" == release:* ]]; then
               merge_flag="--squash"
