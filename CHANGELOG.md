@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.31.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.31.0...v5.31.1) (2026-05-29)
+
+
+### Chores
+
+* restore stlc auto-merge triggers ([9d55ba4](https://github.com/RetellAI/retell-typescript-sdk/commit/9d55ba478df77a638da069ed7b09b4157f95c909))
+
 ## 5.31.0 (2026-05-29)
 
 Full Changelog: [v5.30.3...v5.31.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.3...v5.31.0)
