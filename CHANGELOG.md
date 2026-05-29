@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.30.1 (2026-05-29)
+
+Full Changelog: [v5.30.0...v5.30.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.30.0...v5.30.1)
+
+### Bug Fixes
+
+* **mcp:** use `pure-lockfile` when building mcp server ([c8e9e5b](https://github.com/RetellAI/retell-typescript-sdk/commit/c8e9e5bc9f440a1118f9b14e343c6a8881328428))
+
 ## 5.30.0 (2026-05-28)
 
 Full Changelog: [v5.29.0...v5.30.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.29.0...v5.30.0)
