@@ -46,15 +46,22 @@ jobs:
 
           for pr in "${pr_numbers[@]}"; do
             echo "Evaluating PR #$pr"
-            pr_json=$(gh pr view "$pr" --repo "$REPO" --json title,isDraft,headRefName,headRefOid,baseRefName,mergeStateStatus)
+            pr_json=$(gh pr view "$pr" --repo "$REPO" --json title,isDraft,headRefName,headRefOid,headRepository,isCrossRepository,baseRefName,mergeStateStatus)
             title=$(jq -r '.title' <<<"$pr_json")
             is_draft=$(jq -r '.isDraft' <<<"$pr_json")
             head_ref=$(jq -r '.headRefName' <<<"$pr_json")
             head_sha=$(jq -r '.headRefOid' <<<"$pr_json")
+            head_repo=$(jq -r '.headRepository.nameWithOwner // ""' <<<"$pr_json")
+            is_cross_repository=$(jq -r '.isCrossRepository' <<<"$pr_json")
             base_ref=$(jq -r '.baseRefName' <<<"$pr_json")
 
             if [ "$base_ref" != "main" ] || [ "$is_draft" = "true" ]; then
               echo "Skipping PR #$pr: not a ready PR to main."
+              continue
+            fi
+
+            if [ "$is_cross_repository" = "true" ] || [ "$head_repo" != "$REPO" ]; then
+              echo "Skipping PR #$pr: head branch is not in $REPO."
               continue
             fi
 
