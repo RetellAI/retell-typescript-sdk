@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'retell_sdk_api',
-      version: '5.30.1',
+      version: '5.30.2',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
