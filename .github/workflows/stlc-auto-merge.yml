@@ -1,12 +1,6 @@
 name: Auto-merge SDK release PRs
 
 on:
-  pull_request_target:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches: [main]
-  workflow_run:
-    workflows: ['CI', 'Release Doctor']
-    types: [completed]
   workflow_dispatch:
     inputs:
       pr_number:
