@@ -62,7 +62,7 @@ jobs:
 
           git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 
-          if ! git diff --quiet; then
+          if ! git diff --quiet HEAD -- .github/workflows; then
             git add .github/workflows
             git commit -m "chore: preserve production workflow files"
           fi
