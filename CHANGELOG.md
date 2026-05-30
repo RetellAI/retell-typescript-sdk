@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.32.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.1...v5.32.2) (2026-05-30)
+
+
+### Bug Fixes
+
+* **api:** clarify inbound webhook description ([e394e72](https://github.com/RetellAI/retell-typescript-sdk/commit/e394e7283ed293e4f9570e2dfc338eff63d98034))
+
+
+### Chores
+
+* preserve production workflow files ([afc0a53](https://github.com/RetellAI/retell-typescript-sdk/commit/afc0a537ac9cdf8bac65f1b661f4b93b593fa255))
+
 ## [5.32.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.0...v5.32.1) (2026-05-30)
 
 
