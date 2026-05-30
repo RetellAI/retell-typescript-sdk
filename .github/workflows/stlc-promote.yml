@@ -74,7 +74,7 @@ jobs:
           done
 
           prod_version="$(git show production/main:package.json | node -e 'let input = ""; process.stdin.on("data", chunk => input += chunk); process.stdin.on("end", () => console.log(JSON.parse(input).version));')"
-          PROD_VERSION="${prod_version}" node -e '
+          PROD_VERSION="${prod_version}" node <<'NODE'
             const fs = require("fs");
             for (const path of ["package.json", "packages/mcp-server/package.json"]) {
               const contents = JSON.parse(fs.readFileSync(path, "utf8"));
@@ -87,7 +87,7 @@ jobs:
               versionPath,
               versionFile.replace(/export const VERSION = '[^']+';/, `export const VERSION = '${process.env.PROD_VERSION}';`),
             );
-          '
+          NODE
 
           if ! git diff --quiet HEAD -- \
             .github/workflows \
