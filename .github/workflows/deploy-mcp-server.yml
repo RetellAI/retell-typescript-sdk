@@ -8,7 +8,6 @@ on:
       - 'src/**'
       - 'package.json'
       - 'yarn.lock'
-      - 'ecs/mcp/**'
       - '.github/workflows/deploy-mcp-server.yml'
   workflow_dispatch:
 
@@ -21,9 +20,10 @@ env:
   ECR_REPOSITORY: retell-mcp-server
   ECS_CLUSTER: retell-mcp-server
   ECS_SERVICE: retell-mcp-server-service
-  ECS_TASK_DEFINITION: ecs/mcp/task-def-mcp-server.json
   CONTAINER_NAME: retell-mcp-server
   MCP_HEALTH_URL: https://mcp.retellai.com/health
+  TASK_CPU: '1024'
+  TASK_MEMORY: '4096'
 
 permissions:
   contents: read
@@ -74,13 +74,71 @@ jobs:
           docker push "$IMAGE_URI"
           echo "image=$IMAGE_URI" >> "$GITHUB_OUTPUT"
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
+      - name: Generate Amazon ECS task definition
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
+        env:
+          IMAGE_URI: ${{ steps.build-image.outputs.image }}
+          ECS_TASK_EXECUTION_ROLE_ARN: ${{ secrets.ECS_TASK_EXECUTION_ROLE_ARN }}
+        run: |
+          TASK_DEFINITION="$RUNNER_TEMP/task-def-mcp-server.json"
+
+          if [ -z "$ECS_TASK_EXECUTION_ROLE_ARN" ]; then
+            echo "ECS_TASK_EXECUTION_ROLE_ARN secret must be configured in the production environment." >&2
+            exit 1
+          fi
+
+          cat > "$TASK_DEFINITION" <<JSON
+          {
+            "family": "retell-mcp-server",
+            "taskRoleArn": "$ECS_TASK_EXECUTION_ROLE_ARN",
+            "executionRoleArn": "$ECS_TASK_EXECUTION_ROLE_ARN",
+            "networkMode": "awsvpc",
+            "containerDefinitions": [
+              {
+                "name": "$CONTAINER_NAME",
+                "image": "$IMAGE_URI",
+                "cpu": 0,
+                "portMappings": [
+                  {
+                    "name": "retell-mcp-server-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                  }
+                ],
+                "essential": true,
+                "command": ["--transport=http", "--port=3000"],
+                "environment": [],
+                "secrets": [],
+                "logConfiguration": {
+                  "logDriver": "awslogs",
+                  "options": {
+                    "awslogs-group": "/ecs/retell-mcp-server",
+                    "awslogs-region": "$AWS_REGION",
+                    "awslogs-stream-prefix": "ecs"
+                  }
+                },
+                "healthCheck": {
+                  "command": ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"],
+                  "interval": 30,
+                  "timeout": 5,
+                  "retries": 3,
+                  "startPeriod": 30
+                }
+              }
+            ],
+            "requiresCompatibilities": ["FARGATE"],
+            "cpu": "$TASK_CPU",
+            "memory": "$TASK_MEMORY",
+            "runtimePlatform": {
+              "cpuArchitecture": "X86_64",
+              "operatingSystemFamily": "LINUX"
+            }
+          }
+          JSON
+
+          echo "task-definition=$TASK_DEFINITION" >> "$GITHUB_OUTPUT"
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
