@@ -22,6 +22,7 @@ No files in `RetellAI/retell-typescript-sdk` are changed by this plan.
 ### Task 1: Preserve the Non-Workflow MCP Task Definition
 
 **Files:**
+
 - Modify: `.github/workflows/stlc-promote.yml`
 
 - [ ] **Step 1: Clone the staging repo into a temporary worktree**
@@ -59,11 +60,11 @@ git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 Edit `.github/workflows/stlc-promote.yml` so the block immediately after `git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml` is:
 
 ```yaml
-          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
-            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
-          else
-            git rm -f --ignore-unmatch ecs/mcp/task-def-mcp-server.json
-          fi
+if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
+git checkout production/main -- ecs/mcp/task-def-mcp-server.json
+else
+git rm -f --ignore-unmatch ecs/mcp/task-def-mcp-server.json
+fi
 ```
 
 - [ ] **Step 4: Include the task definition in the preserve commit detection**
@@ -71,15 +72,15 @@ Edit `.github/workflows/stlc-promote.yml` so the block immediately after `git rm
 Edit the `git diff --quiet HEAD -- \` block so it includes `ecs/mcp/task-def-mcp-server.json`:
 
 ```yaml
-          if ! git diff --quiet HEAD -- \
-            .github/workflows \
-            .release-please-manifest.json \
-            CHANGELOG.md \
-            package.json \
-            packages/mcp-server/package.json \
-            src/version.ts \
-            ecs/mcp/task-def-mcp-server.json
-          then
+if ! git diff --quiet HEAD -- \
+.github/workflows \
+.release-please-manifest.json \
+CHANGELOG.md \
+package.json \
+packages/mcp-server/package.json \
+src/version.ts \
+ecs/mcp/task-def-mcp-server.json
+then
 ```
 
 - [ ] **Step 5: Include the task definition in the preserve commit add list**
@@ -87,14 +88,14 @@ Edit the `git diff --quiet HEAD -- \` block so it includes `ecs/mcp/task-def-mcp
 Edit the `git add \` block so it includes `ecs/mcp/task-def-mcp-server.json`:
 
 ```yaml
-            git add \
-              .github/workflows \
-              .release-please-manifest.json \
-              CHANGELOG.md \
-              package.json \
-              packages/mcp-server/package.json \
-              src/version.ts \
-              ecs/mcp/task-def-mcp-server.json
+git add \
+.github/workflows \
+.release-please-manifest.json \
+CHANGELOG.md \
+package.json \
+packages/mcp-server/package.json \
+src/version.ts \
+ecs/mcp/task-def-mcp-server.json
 ```
 
 - [ ] **Step 6: Verify YAML parses**
@@ -160,6 +161,7 @@ Expected: PR contains one workflow-only commit.
 ### Task 2: Re-Align TypeScript Staging With stls
 
 **Files:**
+
 - Modify in `RetellAI/docs`: `stainless/custom-code/typescript/2026-05-29T18-39-50-117Z-custom-code.json`
 - Update remote ref in `RetellAI/retell-typescript-sdk-staging`: `refs/stainless/integrated-for/main/44a070a3b5635060bf26f55e25d103de586f835b`
 

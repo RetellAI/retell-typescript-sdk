@@ -23,6 +23,7 @@
 ### Task 1: Make the Docker Image Compatible With ECS Health Checks
 
 **Files:**
+
 - Modify: `packages/mcp-server/Dockerfile`
 
 - [ ] **Step 1: Update the runtime package install**
@@ -77,6 +78,7 @@ Expected: one commit with only `packages/mcp-server/Dockerfile` changed.
 ### Task 2: Add ECS Task Definition
 
 **Files:**
+
 - Create: `ecs/mcp/task-def-mcp-server.json`
 
 - [ ] **Step 1: Create the ECS task definition file**
@@ -176,6 +178,7 @@ Expected: one commit with only `ecs/mcp/task-def-mcp-server.json` changed.
 ### Task 3: Add GitHub Actions Deploy Workflow
 
 **Files:**
+
 - Create: `.github/workflows/deploy-mcp-server.yml`
 
 - [ ] **Step 1: Create deploy workflow**
@@ -187,14 +190,14 @@ name: Deploy MCP server to ECS
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "packages/mcp-server/**"
-      - "src/**"
-      - "package.json"
-      - "yarn.lock"
-      - "ecs/mcp/**"
-      - ".github/workflows/deploy-mcp-server.yml"
+      - 'packages/mcp-server/**'
+      - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'ecs/mcp/**'
+      - '.github/workflows/deploy-mcp-server.yml'
   workflow_dispatch:
 
 concurrency:
@@ -231,7 +234,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          mask-aws-account-id: "no"
+          mask-aws-account-id: 'no'
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -252,7 +255,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
-          DOCKER_BUILDKIT: "1"
+          DOCKER_BUILDKIT: '1'
         run: |
           IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker build --platform linux/amd64 -f packages/mcp-server/Dockerfile -t "$IMAGE_URI" .
@@ -324,6 +327,7 @@ Expected: one commit with only `.github/workflows/deploy-mcp-server.yml` changed
 ### Task 4: Local End-to-End Container Verification
 
 **Files:**
+
 - Verify only.
 
 - [ ] **Step 1: Build the final image**
@@ -373,6 +377,7 @@ Expected: container stops cleanly.
 ### Task 5: Regeneration Preservation Verification
 
 **Files:**
+
 - Verify only.
 
 - [ ] **Step 1: Confirm deploy files are in production working tree**

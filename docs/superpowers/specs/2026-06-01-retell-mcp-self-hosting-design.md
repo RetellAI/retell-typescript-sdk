@@ -123,14 +123,14 @@ Suggested workflow triggers:
 ```yaml
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "packages/mcp-server/**"
-      - "src/**"
-      - "package.json"
-      - "yarn.lock"
-      - "ecs/mcp/**"
-      - ".github/workflows/deploy-mcp-server.yml"
+      - 'packages/mcp-server/**'
+      - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'ecs/mcp/**'
+      - '.github/workflows/deploy-mcp-server.yml'
   workflow_dispatch:
 ```
 

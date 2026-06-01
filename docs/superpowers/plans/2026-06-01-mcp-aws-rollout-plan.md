@@ -20,13 +20,14 @@ This plan does not change runtime code.
 ### Task 1: Create AWS Rollout Runbook
 
 **Files:**
+
 - Create: `docs/mcp-self-hosting-runbook.md`
 
 - [ ] **Step 1: Create the runbook with fixed service constants**
 
 Create `docs/mcp-self-hosting-runbook.md` with exactly:
 
-```markdown
+````markdown
 # MCP Self-Hosting AWS Runbook
 
 ## Fixed Service Names
@@ -58,6 +59,7 @@ ACM certificate ARN:
 Route53 hosted zone ID:
 GitHub AWS role secret configured:
 ```
+````
 
 ## Rollout Notes
 
@@ -66,7 +68,8 @@ GitHub AWS role secret configured:
 - The ECS task must not receive `RETELL_API_KEY` through environment variables or secrets.
 - ALB health check path must be `/health`.
 - MCP traffic path is `Internet -> public ALB -> mcp.retellai.com host rule -> MCP target group -> ECS task port 3000`.
-```
+
+````
 
 - [ ] **Step 2: Commit the runbook skeleton**
 
@@ -75,13 +78,14 @@ Run:
 ```bash
 git add docs/mcp-self-hosting-runbook.md
 git commit -m "docs: add MCP AWS rollout runbook"
-```
+````
 
 Expected: one commit with only `docs/mcp-self-hosting-runbook.md` changed.
 
 ### Task 2: Discover Existing AWS Resources
 
 **Files:**
+
 - Modify: `docs/mcp-self-hosting-runbook.md`
 
 - [ ] **Step 1: Confirm AWS caller identity**
@@ -153,6 +157,7 @@ Expected: one commit with runbook values recorded.
 ### Task 3: Provision ECS Network Resources
 
 **Files:**
+
 - Modify: `docs/mcp-self-hosting-runbook.md`
 
 - [ ] **Step 1: Create MCP task security group**
@@ -238,6 +243,7 @@ Expected: one runbook commit.
 ### Task 4: Wire ALB, DNS, and ECS Service
 
 **Files:**
+
 - Modify: `docs/mcp-self-hosting-runbook.md`
 
 - [ ] **Step 1: Confirm or request ACM certificate coverage**
@@ -348,6 +354,7 @@ Expected: one runbook commit.
 ### Task 5: Production Deploy and Smoke Test
 
 **Files:**
+
 - Verify only.
 
 - [ ] **Step 1: Configure GitHub Actions secret**
