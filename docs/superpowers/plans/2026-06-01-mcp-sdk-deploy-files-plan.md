@@ -357,7 +357,7 @@ curl -fsS http://localhost:3000/health
 Expected:
 
 ```txt
-OK
+2xx response, for example {"status":"ok"}
 ```
 
 - [ ] **Step 4: Stop local container**

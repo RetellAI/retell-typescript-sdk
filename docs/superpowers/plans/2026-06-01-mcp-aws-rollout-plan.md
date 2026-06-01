@@ -404,7 +404,7 @@ curl -fsS https://mcp.retellai.com/health
 Expected:
 
 ```txt
-OK
+2xx response, for example {"status":"ok"}
 ```
 
 - [ ] **Step 6: Verify MCP invalid-auth behavior**
@@ -433,4 +433,3 @@ aws logs filter-log-events \
 ```
 
 Expected: recent request logs show redacted sensitive headers, and no raw Retell API key appears.
-
