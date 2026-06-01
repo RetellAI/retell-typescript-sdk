@@ -138,8 +138,8 @@ export interface BatchCallCreateBatchCallParams {
 export namespace BatchCallCreateBatchCallParams {
   export interface Task {
     /**
-     * The The number you want to call, in E.164 format. If using a number purchased
-     * from Retell, only US numbers are supported as destination.
+     * The number you want to call, in E.164 format. If using a number purchased from
+     * Retell, only US numbers are supported as destination.
      */
     to_number: string;
 
