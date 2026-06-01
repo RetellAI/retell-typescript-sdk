@@ -36,7 +36,7 @@ Route53 service record change ID: /change/C006700138H7TPKN81YQN
 Public health smoke test: `curl -fsS https://mcp.retellai.com/health` returned `OK`
 Invalid-auth smoke test: `execute` without `RETELL_API_KEY` returned MCP `isError: true`
 CloudWatch redaction check: fake `authorization` header was logged as `[REDACTED]`
-GitHub AWS role secret configured:
+GitHub AWS role secret configured: `AWS_ROLE_ARN=arn:aws:iam::393287594714:role/github-actions-deploy`
 ```
 
 ## Discovery Notes
@@ -52,6 +52,7 @@ GitHub AWS role secret configured:
 - The local MCP image verified during SDK deploy-file implementation was pushed to ECR as the bootstrap image and registered as ECS task definition revision `retell-mcp-server:1`.
 - The `retell-mcp-server-service` ECS service is running two healthy Fargate tasks in the selected private subnets.
 - `mcp.retellai.com` is routed to the selected public ALB through a Route53 CNAME in hosted zone `Z03671293OHPNOEBDIVJP`.
+- The existing `github-actions-deploy` IAM role trust policy now includes `repo:RetellAI/retell-typescript-sdk:*`, and the SDK repo has `AWS_ROLE_ARN` configured for GitHub Actions.
 
 ## Rollout Notes
 
