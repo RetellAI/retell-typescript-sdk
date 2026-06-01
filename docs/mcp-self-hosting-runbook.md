@@ -28,6 +28,8 @@ MCP target group ARN: arn:aws:elasticloadbalancing:us-west-2:393287594714:target
 ACM certificate ARN: arn:aws:acm:us-west-2:393287594714:certificate/3a169b8a-006a-4d95-9b67-7fc23c74c812
 MCP HTTPS listener rule ARN: arn:aws:elasticloadbalancing:us-west-2:393287594714:listener-rule/app/cpu-api-lb/d09449d5f21bdd2a/8fe02377e55f7df1/d97608ea51c4437d
 Route53 hosted zone ID: Z03671293OHPNOEBDIVJP
+Bootstrap image URI: 393287594714.dkr.ecr.us-west-2.amazonaws.com/retell-mcp-server:bootstrap
+Initial task definition ARN: arn:aws:ecs:us-west-2:393287594714:task-definition/retell-mcp-server:1
 GitHub AWS role secret configured:
 ```
 
@@ -41,6 +43,7 @@ GitHub AWS role secret configured:
 - ACM validation record: `_a53fd9f776cd20dec71a4534d491771c.mcp.retellai.com. CNAME _cbc6199a14649e1c933dbf8ea4e681f3.jkddzztszm.acm-validations.aws.`
 - The `mcp.retellai.com` certificate is attached to the selected HTTPS listener as a non-default SNI certificate.
 - The HTTPS listener has a host-header rule for `mcp.retellai.com` that forwards to the MCP target group.
+- The local MCP image verified during SDK deploy-file implementation was pushed to ECR as the bootstrap image and registered as ECS task definition revision `retell-mcp-server:1`.
 - `mcp.retellai.com` does not currently have a Route53 record in hosted zone `Z03671293OHPNOEBDIVJP`.
 
 ## Rollout Notes
