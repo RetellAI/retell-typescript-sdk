@@ -25,7 +25,7 @@ VPC ID: vpc-0746f45d65bb88e92
 Private subnet IDs: subnet-0cae5f36e6a399ea2, subnet-0f3ecf3b33a1a54f0, subnet-032354b1274d73831, subnet-0a46d06b9536d6db9
 MCP task security group: sg-054d6f1f723fd5eca
 MCP target group ARN: arn:aws:elasticloadbalancing:us-west-2:393287594714:targetgroup/retell-mcp-server/47f3a108e6df52d9
-ACM certificate ARN: not yet available for mcp.retellai.com
+ACM certificate ARN: arn:aws:acm:us-west-2:393287594714:certificate/3a169b8a-006a-4d95-9b67-7fc23c74c812
 Route53 hosted zone ID: Z03671293OHPNOEBDIVJP
 GitHub AWS role secret configured:
 ```
@@ -36,7 +36,9 @@ GitHub AWS role secret configured:
 - Selected `cpu-api-lb` because it is the existing public ALB for `api.retellai.com` style traffic in the target VPC.
 - `cpu-api-lb` HTTPS listener: `arn:aws:elasticloadbalancing:us-west-2:393287594714:listener/app/cpu-api-lb/d09449d5f21bdd2a/8fe02377e55f7df1`.
 - Existing `cpu-api-service-stable` ECS service runs in the selected four `subnet-ecs*` private subnets with `assignPublicIp=DISABLED`; MCP should mirror that network shape.
-- Existing issued ACM certificates in `us-west-2` do not currently include `mcp.retellai.com` or `*.retellai.com`. A new `mcp.retellai.com` certificate is required before adding the HTTPS host rule.
+- Existing issued ACM certificates in `us-west-2` did not include `mcp.retellai.com` or `*.retellai.com`, so a dedicated `mcp.retellai.com` certificate was created and DNS-validated.
+- ACM validation record: `_a53fd9f776cd20dec71a4534d491771c.mcp.retellai.com. CNAME _cbc6199a14649e1c933dbf8ea4e681f3.jkddzztszm.acm-validations.aws.`
+- The `mcp.retellai.com` certificate is attached to the selected HTTPS listener as a non-default SNI certificate.
 - `mcp.retellai.com` does not currently have a Route53 record in hosted zone `Z03671293OHPNOEBDIVJP`.
 
 ## Rollout Notes
