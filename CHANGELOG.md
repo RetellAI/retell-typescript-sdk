@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.32.5](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.4...v5.32.5) (2026-06-01)
+
+
+### Documentation
+
+* remove internal MCP rollout notes ([e851e2f](https://github.com/RetellAI/retell-typescript-sdk/commit/e851e2f0f29133a8644939419d3f9d44459c6585))
+
 ## [5.32.4](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.3...v5.32.4) (2026-06-01)
 
 
