@@ -23,8 +23,8 @@ Public ALB DNS name: cpu-api-lb-833001245.us-west-2.elb.amazonaws.com
 Public ALB security group: sg-070d854183de06b8b
 VPC ID: vpc-0746f45d65bb88e92
 Private subnet IDs: subnet-0cae5f36e6a399ea2, subnet-0f3ecf3b33a1a54f0, subnet-032354b1274d73831, subnet-0a46d06b9536d6db9
-MCP task security group:
-MCP target group ARN:
+MCP task security group: sg-054d6f1f723fd5eca
+MCP target group ARN: arn:aws:elasticloadbalancing:us-west-2:393287594714:targetgroup/retell-mcp-server/47f3a108e6df52d9
 ACM certificate ARN: not yet available for mcp.retellai.com
 Route53 hosted zone ID: Z03671293OHPNOEBDIVJP
 GitHub AWS role secret configured:
