@@ -41,8 +41,8 @@ RUN yarn install --frozen-lockfile && \
 
 FROM denoland/deno:alpine-2.7.1
 
-# Install node and npm
-RUN apk add --no-cache nodejs npm
+# Install node, npm, and curl for ECS container health checks
+RUN apk add --no-cache nodejs npm curl
 
 ENV LD_LIBRARY_PATH=/usr/lib:/usr/local/lib
 
