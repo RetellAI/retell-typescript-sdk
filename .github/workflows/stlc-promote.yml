@@ -46,20 +46,8 @@ jobs:
           git config user.email "stlc-bot@users.noreply.github.com"
           git switch --force-create stainless-release origin/main
 
-          for path in \
-            .github/workflows/ci.yml \
-            .github/workflows/publish-npm.yml \
-            .github/workflows/release-doctor.yml \
-            .github/workflows/release-please.yml \
-            .github/workflows/stlc-auto-merge.yml
-          do
-            if git cat-file -e "production/main:${path}" 2>/dev/null; then
-              git checkout production/main -- "${path}"
-            else
-              git rm -f --ignore-unmatch "${path}"
-            fi
-          done
-
+          git rm -r -f --ignore-unmatch .github/workflows
+          git checkout production/main -- .github/workflows
           git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 
           for release_path in \
