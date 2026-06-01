@@ -50,6 +50,12 @@ jobs:
           git checkout production/main -- .github/workflows
           git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 
+          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
+            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
+          else
+            git rm -f --ignore-unmatch ecs/mcp/task-def-mcp-server.json
+          fi
+
           for release_path in \
             .release-please-manifest.json \
             CHANGELOG.md
@@ -83,7 +89,8 @@ jobs:
             CHANGELOG.md \
             package.json \
             packages/mcp-server/package.json \
-            src/version.ts
+            src/version.ts \
+            ecs/mcp/task-def-mcp-server.json
           then
             git add \
               .github/workflows \
@@ -91,7 +98,8 @@ jobs:
               CHANGELOG.md \
               package.json \
               packages/mcp-server/package.json \
-              src/version.ts
+              src/version.ts \
+              ecs/mcp/task-def-mcp-server.json
             git commit -m "chore: preserve production workflow files"
           fi
 
