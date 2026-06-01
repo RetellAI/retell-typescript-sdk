@@ -1,6 +1,6 @@
 {
   "name": "@retell-ai/mcp-server",
-  "version": "5.32.4",
+  "version": "5.32.5",
   "description": "The official MCP Server for the Retell API",
   "author": "Retell <support@retellai.com>",
   "types": "dist/index.d.ts",
