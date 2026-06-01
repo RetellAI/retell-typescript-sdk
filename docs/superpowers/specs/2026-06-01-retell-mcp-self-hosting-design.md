@@ -4,11 +4,11 @@
 
 Retell currently exposes an MCP server package generated with the TypeScript SDK. The package supports local `npx` usage and HTTP transport, but the public remote MCP runtime has depended on Stainless-hosted domain/server infrastructure. Stainless is deprecating that hosted runtime. Retell should migrate the remote MCP endpoint to Retell-owned infrastructure while preserving the existing Stainless/stls OpenAPI-to-artifact generation pipeline.
 
-The target state is a public, developer-facing MCP endpoint hosted by Retell, backed by the existing `packages/mcp-server` runtime in this repository and deployed as an independent ECS service.
+The target state is a public, developer-facing MCP endpoint at `https://mcp.retellai.com/`, hosted by Retell, backed by the existing `packages/mcp-server` runtime in this repository, and deployed as an independent ECS service.
 
 ## Goals
 
-- Host the remote MCP runtime at a Retell-owned domain, recommended as `https://mcp.retellai.com/`.
+- Host the remote MCP runtime at `https://mcp.retellai.com/`.
 - Preserve existing MCP clients' core behavior:
   - MCP Streamable HTTP endpoint at `/`.
   - Health endpoint at `/health`.
@@ -58,7 +58,7 @@ Remaining Stainless-hosted/runtime coupling:
 
 Create an independent ECS service for the MCP server.
 
-Recommended AWS/service names:
+AWS/service names:
 
 - Domain: `mcp.retellai.com`
 - ECR repository: `retell-mcp-server`
@@ -80,6 +80,18 @@ The ALB should route:
 - `https://mcp.retellai.com/health` to the service health endpoint.
 
 This should be separate from the main backend API service. The MCP runtime starts Deno worker processes for code execution; isolating it avoids coupling that runtime and resource profile to the main Retell API.
+
+Use the existing public ALB pattern if AWS inspection confirms it can safely host another rule. The preferred edge path is:
+
+```text
+Internet -> existing public ALB -> mcp.retellai.com host rule -> MCP target group -> ECS Fargate tasks on port 3000
+```
+
+Create a dedicated ALB only if the infrastructure owner wants stronger isolation for the code-execution surface or the existing public ALB cannot safely route this service. A dedicated ALB is cleaner isolation, but it adds more AWS resources, cost, DNS/certificate work, and operational surface.
+
+Run the service on Fargate in private subnets with no public task IP. The MCP task security group should allow inbound TCP `3000` only from the ALB security group. Do not copy cronjob subnet/security-group defaults unless AWS inspection confirms they are the correct public-service networking values.
+
+Start with desired count `2`. This preserves availability during deploys and single-task failures. Start with `1 vCPU / 4 GB` per task; if Deno worker smoke/load testing shows memory pressure, move to `1 vCPU / 8 GB`, matching the existing `retell-backend` copilot Fargate task size.
 
 ## Deployment Contract
 
@@ -128,6 +140,8 @@ on:
 
 - `requiresCompatibilities`: `["FARGATE"]`
 - `networkMode`: `awsvpc`
+- `cpu`: start with `"1024"`
+- `memory`: start with `"4096"`; increase to `"8192"` if Deno worker testing requires it
 - `runtimePlatform.cpuArchitecture`: `X86_64`
 - `runtimePlatform.operatingSystemFamily`: `LINUX`
 - `executionRoleArn`: existing Retell ECS task execution role
@@ -180,6 +194,12 @@ Add or verify:
 - CloudWatch alarms for 5xx rate, task restarts, CPU/memory saturation, and elevated code execution errors.
 - Reasonable ECS CPU/memory sizing for Deno worker startup and concurrent tool calls.
 
+Retell API keys already support scopes in `retell-backend`. Preserve the existing MCP behavior by passing the caller-provided API key through to the Retell API; do not add a separate MCP-specific authorization model in this migration. Documentation should recommend creating a dedicated, scoped API key for MCP usage:
+
+- Use read scopes for exploration when possible.
+- Add write scopes such as `Agent.Write`, `Call.Write`, or `Phone.Write` only when the assistant is expected to mutate resources.
+- Treat legacy unscoped keys as broad-access keys.
+
 Legacy Stainless headers such as `x-stainless-mcp-client-envs` and `x-stainless-mcp-client-permissions` can remain initially for compatibility. A follow-up cleanup can introduce Retell-prefixed aliases and deprecate Stainless names after the hosting migration is stable.
 
 ## Generation Preservation
@@ -208,7 +228,7 @@ Do not remove the existing artifact upload behavior to `pkg.stainless.com` unles
    - ECR repo
    - ECS cluster/service
    - Target group
-   - ALB host rule
+   - Existing public ALB host rule for `mcp.retellai.com`
    - ACM coverage
    - Route53 record
    - GitHub `AWS_ROLE_ARN` secret or equivalent deploy credential
@@ -257,10 +277,23 @@ Regeneration verification:
 - Some MCP clients may not support custom headers uniformly. Keep both `Authorization` and `x-retell-api-key` support.
 - Changing Stainless-prefixed headers too early may break clients that already send them. Treat naming cleanup as a follow-up compatibility project.
 
-## Open Questions
+## Decisions
 
-- Confirm the final public domain: `mcp.retellai.com` or another Retell-owned hostname.
-- Confirm whether the service should use an existing public ALB or a dedicated ALB.
-- Confirm ECS cluster choice and Fargate networking values from AWS rather than copying cronjob defaults blindly.
-- Confirm expected public traffic and concurrency so CPU/memory/autoscaling can be sized.
-- Confirm whether Retell API keys already support scopes/limited permissions suitable for MCP usage.
+- Public domain: use `mcp.retellai.com`.
+- Service shape: independent ECS Fargate service, not embedded in the main backend API service.
+- Edge routing: prefer the existing public ALB with a new `mcp.retellai.com` host rule and a dedicated MCP target group.
+- Task networking: private subnets, no public task IP, inbound port `3000` allowed only from the ALB security group.
+- Initial capacity: desired count `2`, `1 vCPU / 4 GB` per task, with a planned increase to `1 vCPU / 8 GB` if Deno worker testing shows memory pressure.
+- Auth model: preserve per-request caller API key behavior. Recommend dedicated scoped API keys for MCP usage; do not add a shared server-side Retell API key.
+
+## Implementation Checks
+
+Before coding or provisioning, inspect AWS and confirm:
+
+- Which existing public ALB should receive the `mcp.retellai.com` host rule.
+- Which ALB security group should be allowed to reach MCP task port `3000`.
+- Which private subnet IDs should be used for the Fargate service.
+- Which ECS cluster should host this service. Reuse an existing public stateless service cluster if that is the Retell convention; otherwise create a dedicated `retell-mcp-server` cluster.
+- Whether existing ACM certificate coverage includes `mcp.retellai.com`, or whether a new certificate/SAN is needed.
+- Whether the target group, ECS service, and ALB listener should be managed manually, by existing infra tooling, or by a one-off AWS setup runbook.
+- Whether autoscaling should start with CPU/memory policies only, or also use ALB request count per target once baseline traffic is known.
