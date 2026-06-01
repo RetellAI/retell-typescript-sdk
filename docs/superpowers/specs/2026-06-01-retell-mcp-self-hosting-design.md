@@ -210,7 +210,7 @@ The active overwrite risk is the staging repo's promote workflow: `RetellAI/rete
 
 That means files that exist only in production `main`, but not in staging `main`, can appear as deletions in the next generated release PR.
 
-The source of this pipeline is `RetellAI/docs`. Its `.github/workflows/stlc-generate.yml` runs `stlc build --push` from the `stainless` workspace when `openapi.yaml`, `config.yaml`, or `stainless/**` changes. `RetellAI/docs` `config.yaml` currently configures the TypeScript target as:
+The source of the SDK generation pipeline is `RetellAI/docs`. Its `.github/workflows/stlc-generate.yml` runs `stlc build --push` from the `stainless` workspace when `openapi.yaml`, `config.yaml`, or `stainless/**` changes. `RetellAI/docs` `config.yaml` currently configures the TypeScript target as:
 
 ```yaml
 targets:
@@ -221,34 +221,37 @@ targets:
     staging_repo: RetellAI/retell-typescript-sdk-staging
 ```
 
-Preferred approach: add the MCP deploy files to the source-controlled TypeScript `keep_files` list in `RetellAI/docs/config.yaml`, then seed those files into the SDK repos. This uses the same mechanism that already preserves `stlc-promote.yml`, avoids an untracked manual staging patch, and keeps later stls fast-forward pushes from deleting the files:
+Do not add the MCP deploy files to staging just to make generation preserve them. A manual staging commit has previously caused stls push failures because the staging base no longer matched the generated fast-forward target. If a staging re-alignment is required anyway, keep that change focused on the existing promote workflow rather than introducing production deploy files into the staging tree.
+
+Preferred approach: keep the MCP deploy files production-only, and add them to the `Preserve production-owned files` allowlist inside `RetellAI/retell-typescript-sdk-staging` `.github/workflows/stlc-promote.yml`:
 
 ```yaml
-targets:
-  typescript:
-    keep_files:
-      - .github/workflows/stlc-promote.yml
-      - .github/workflows/deploy-mcp-server.yml
-      - ecs/mcp/task-def-mcp-server.json
+for path in \
+  .github/workflows/ci.yml \
+  .github/workflows/publish-npm.yml \
+  .github/workflows/release-doctor.yml \
+  .github/workflows/release-please.yml \
+  .github/workflows/stlc-auto-merge.yml \
+  .github/workflows/deploy-mcp-server.yml \
+  ecs/mcp/task-def-mcp-server.json
+do
+  if git cat-file -e "production/main:${path}" 2>/dev/null; then
+    git checkout production/main -- "${path}"
+  else
+    git rm -f --ignore-unmatch "${path}"
+  fi
+done
 ```
 
-The deploy workflow should also be gated so it only runs in the production repo:
-
-```yaml
-jobs:
-  deploy:
-    if: github.repository == 'RetellAI/retell-typescript-sdk'
-```
-
-This keeps `stainless-release` from deleting the files while avoiding accidental deploys from `RetellAI/retell-typescript-sdk-staging`.
+This keeps `stainless-release` from deleting the files without requiring the generated staging tree to contain production deploy config. Since `stlc-promote.yml` itself is already protected by `RetellAI/docs` `keep_files`, the one-time staging workflow change should survive later stls generation once the staging base has been re-aligned.
 
 Do not remove the existing artifact upload behavior to `pkg.stainless.com` unless the SDK artifact pipeline owners confirm it is no longer needed. That upload is separate from remote MCP hosting.
 
 ## Rollout Plan
 
-1. Update `RetellAI/docs` `config.yaml` TypeScript `keep_files` to include `.github/workflows/deploy-mcp-server.yml` and `ecs/mcp/task-def-mcp-server.json`.
-2. Add ECS task definition and deploy workflow to this repo, with deploy jobs gated to `RetellAI/retell-typescript-sdk`.
-3. Seed the same MCP deploy files into `RetellAI/retell-typescript-sdk-staging` once, after the docs `keep_files` change is in place, so future stls pushes preserve them instead of deleting them.
+1. Add `.github/workflows/deploy-mcp-server.yml` and `ecs/mcp/task-def-mcp-server.json` to the `Preserve production-owned files` allowlist in `RetellAI/retell-typescript-sdk-staging` `.github/workflows/stlc-promote.yml`.
+2. Re-align the staging branch with the stls pipeline after that one-time staging workflow commit, so future generated pushes can fast-forward cleanly.
+3. Add ECS task definition and deploy workflow to this repo.
 4. Provision AWS resources:
    - ECR repo
    - ECS cluster/service
@@ -298,7 +301,7 @@ Regeneration verification:
 
 - Public MCP endpoint can be abused for code execution attempts. Mitigate with per-request auth, rate limiting, log redaction, ECS isolation, and Retell API permission boundaries.
 - Deno worker startup may increase latency and CPU/memory usage. Size ECS tasks based on smoke/load testing rather than backend API defaults.
-- Production-only deploy files can be deleted by `stlc-promote.yml` because `stainless-release` starts from staging `origin/main`. Mitigate by adding MCP deploy files to the source-controlled TypeScript `keep_files` list in `RetellAI/docs/config.yaml`, seeding them into staging once, and gating deploy jobs to production only.
+- Production-only deploy files can be deleted by `stlc-promote.yml` because `stainless-release` starts from staging `origin/main`. Mitigate by adding MCP deploy files to the promote workflow's production-owned file allowlist, then re-aligning staging with the stls pipeline so future generated pushes can fast-forward cleanly.
 - Some MCP clients may not support custom headers uniformly. Keep both `Authorization` and `x-retell-api-key` support.
 - Changing Stainless-prefixed headers too early may break clients that already send them. Treat naming cleanup as a follow-up compatibility project.
 
