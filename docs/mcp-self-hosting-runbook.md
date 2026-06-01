@@ -30,6 +30,12 @@ MCP HTTPS listener rule ARN: arn:aws:elasticloadbalancing:us-west-2:393287594714
 Route53 hosted zone ID: Z03671293OHPNOEBDIVJP
 Bootstrap image URI: 393287594714.dkr.ecr.us-west-2.amazonaws.com/retell-mcp-server:bootstrap
 Initial task definition ARN: arn:aws:ecs:us-west-2:393287594714:task-definition/retell-mcp-server:1
+ECS service status: ACTIVE, 2 running / 2 desired, rollout COMPLETED
+Route53 mcp.retellai.com record: CNAME cpu-api-lb-833001245.us-west-2.elb.amazonaws.com
+Route53 service record change ID: /change/C006700138H7TPKN81YQN
+Public health smoke test: `curl -fsS https://mcp.retellai.com/health` returned `OK`
+Invalid-auth smoke test: `execute` without `RETELL_API_KEY` returned MCP `isError: true`
+CloudWatch redaction check: fake `authorization` header was logged as `[REDACTED]`
 GitHub AWS role secret configured:
 ```
 
@@ -44,7 +50,8 @@ GitHub AWS role secret configured:
 - The `mcp.retellai.com` certificate is attached to the selected HTTPS listener as a non-default SNI certificate.
 - The HTTPS listener has a host-header rule for `mcp.retellai.com` that forwards to the MCP target group.
 - The local MCP image verified during SDK deploy-file implementation was pushed to ECR as the bootstrap image and registered as ECS task definition revision `retell-mcp-server:1`.
-- `mcp.retellai.com` does not currently have a Route53 record in hosted zone `Z03671293OHPNOEBDIVJP`.
+- The `retell-mcp-server-service` ECS service is running two healthy Fargate tasks in the selected private subnets.
+- `mcp.retellai.com` is routed to the selected public ALB through a Route53 CNAME in hosted zone `Z03671293OHPNOEBDIVJP`.
 
 ## Rollout Notes
 
