@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.32.3](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.2...v5.32.3) (2026-06-01)
+
+
+### Chores
+
+* preserve production workflow files ([d065805](https://github.com/RetellAI/retell-typescript-sdk/commit/d065805f6c02fe8b03d0916d254b13775ae5a838))
+
+
+### Documentation
+
+* fix OpenAPI phone number description typo ([3b56484](https://github.com/RetellAI/retell-typescript-sdk/commit/3b56484f00a0bc9a24cee48f76a0ad28585d1bc3))
+
 ## [5.32.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.32.1...v5.32.2) (2026-05-30)
 
 
