@@ -391,20 +391,23 @@ Expected:
 deploy files present
 ```
 
-- [ ] **Step 2: Confirm staging promote allowlist protects the deploy files**
+- [ ] **Step 2: Confirm staging promote protects the deploy files**
 
 Run:
 
 ```bash
 git fetch https://github.com/RetellAI/retell-typescript-sdk-staging.git main:refs/remotes/staging/main
-git show staging/main:.github/workflows/stlc-promote.yml | rg "deploy-mcp-server|task-def-mcp-server"
+git show staging/main:.github/workflows/stlc-promote.yml | rg "git checkout production/main -- \\.github/workflows|task-def-mcp-server"
 ```
 
 Expected:
 
 ```txt
-            .github/workflows/deploy-mcp-server.yml \
+          git checkout production/main -- .github/workflows
+          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
+            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
             ecs/mcp/task-def-mcp-server.json
+              ecs/mcp/task-def-mcp-server.json
 ```
 
 - [ ] **Step 3: Commit no verification changes**

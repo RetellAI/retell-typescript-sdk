@@ -4,7 +4,7 @@
 
 **Goal:** Prevent future stls-generated release PRs from deleting production-only MCP deploy files.
 
-**Architecture:** Keep MCP deploy files production-only in `RetellAI/retell-typescript-sdk`. Update the staging repo's promotion workflow so `stainless-release` checks those files out from production `main`, the same way it already preserves production-owned workflow files.
+**Architecture:** Keep MCP deploy files production-only in `RetellAI/retell-typescript-sdk`. The staging repo already preserves the production `.github/workflows` directory as of `f934014c`, which protects the deploy workflow. Add one remaining preservation hook for the non-workflow ECS task definition, then re-align stls tracking to the final staging head.
 
 **Tech Stack:** GitHub Actions, git, RetellAI/retell-typescript-sdk-staging, stls promotion workflow.
 
@@ -14,11 +14,12 @@
 
 - Modify in `RetellAI/retell-typescript-sdk-staging`: `.github/workflows/stlc-promote.yml`
   - Responsibility: creates and force-pushes the production `stainless-release` branch from staging `origin/main`.
-  - Change: add MCP deploy paths to the existing `Preserve production-owned files` allowlist.
+  - Existing state: preserves production `.github/workflows`, then removes staging-only `.github/workflows/stlc-promote.yml`.
+  - Change: preserve `ecs/mcp/task-def-mcp-server.json` from production and include it in the promote commit's diff/add paths.
 
 No files in `RetellAI/retell-typescript-sdk` are changed by this plan.
 
-### Task 1: Patch Staging Promotion Allowlist
+### Task 1: Preserve the Non-Workflow MCP Task Definition
 
 **Files:**
 - Modify: `.github/workflows/stlc-promote.yml`
@@ -32,52 +33,71 @@ cd /private/tmp
 rm -rf retell-typescript-sdk-staging-mcp-preserve
 git clone https://github.com/RetellAI/retell-typescript-sdk-staging.git retell-typescript-sdk-staging-mcp-preserve
 cd retell-typescript-sdk-staging-mcp-preserve
-git switch -c mcp-preserve-prod-deploy-files
+git switch -c mcp-preserve-task-definition
 ```
 
-Expected: branch `mcp-preserve-prod-deploy-files` exists locally.
+Expected: branch `mcp-preserve-task-definition` exists locally.
 
-- [ ] **Step 2: Inspect the current preserve list**
+- [ ] **Step 2: Verify current workflow-directory preservation**
 
 Run:
 
 ```bash
-sed -n '/for path in \\/,/^          do$/p' .github/workflows/stlc-promote.yml
+sed -n '/git switch --force-create stainless-release origin\\/main/,/for release_path in \\/p' .github/workflows/stlc-promote.yml
 ```
 
-Expected output includes exactly these existing production-owned workflow files:
+Expected output includes:
 
 ```txt
-.github/workflows/ci.yml
-.github/workflows/publish-npm.yml
-.github/workflows/release-doctor.yml
-.github/workflows/release-please.yml
-.github/workflows/stlc-auto-merge.yml
+git rm -r -f --ignore-unmatch .github/workflows
+git checkout production/main -- .github/workflows
+git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 ```
 
-- [ ] **Step 3: Add MCP deploy files to the preserve list**
+- [ ] **Step 3: Add explicit preservation for the ECS task definition**
 
-Edit `.github/workflows/stlc-promote.yml` so the first `for path in \` block is:
+Edit `.github/workflows/stlc-promote.yml` so the block immediately after `git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml` is:
 
 ```yaml
-          for path in \
-            .github/workflows/ci.yml \
-            .github/workflows/publish-npm.yml \
-            .github/workflows/release-doctor.yml \
-            .github/workflows/release-please.yml \
-            .github/workflows/stlc-auto-merge.yml \
-            .github/workflows/deploy-mcp-server.yml \
-            ecs/mcp/task-def-mcp-server.json
-          do
-            if git cat-file -e "production/main:${path}" 2>/dev/null; then
-              git checkout production/main -- "${path}"
-            else
-              git rm -f --ignore-unmatch "${path}"
-            fi
-          done
+          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
+            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
+          else
+            git rm -f --ignore-unmatch ecs/mcp/task-def-mcp-server.json
+          fi
 ```
 
-- [ ] **Step 4: Verify YAML parses**
+- [ ] **Step 4: Include the task definition in the preserve commit detection**
+
+Edit the `git diff --quiet HEAD -- \` block so it includes `ecs/mcp/task-def-mcp-server.json`:
+
+```yaml
+          if ! git diff --quiet HEAD -- \
+            .github/workflows \
+            .release-please-manifest.json \
+            CHANGELOG.md \
+            package.json \
+            packages/mcp-server/package.json \
+            src/version.ts \
+            ecs/mcp/task-def-mcp-server.json
+          then
+```
+
+- [ ] **Step 5: Include the task definition in the preserve commit add list**
+
+Edit the `git add \` block so it includes `ecs/mcp/task-def-mcp-server.json`:
+
+```yaml
+            git add \
+              .github/workflows \
+              .release-please-manifest.json \
+              CHANGELOG.md \
+              package.json \
+              packages/mcp-server/package.json \
+              src/version.ts \
+              ecs/mcp/task-def-mcp-server.json
+```
+
+- [ ] **Step 6: Verify YAML parses**
 
 Run:
 
@@ -91,7 +111,7 @@ Expected:
 yaml ok
 ```
 
-- [ ] **Step 5: Verify only the allowlist changed**
+- [ ] **Step 7: Verify only task-definition preservation changed**
 
 Run:
 
@@ -99,45 +119,40 @@ Run:
 git diff -- .github/workflows/stlc-promote.yml
 ```
 
-Expected diff only adds:
+Expected diff includes the new `ecs/mcp/task-def-mcp-server.json` preservation block and adds that same path to both the `git diff --quiet` and `git add` path lists. It must not remove the existing `.github/workflows` directory preservation.
 
-```diff
-+            .github/workflows/deploy-mcp-server.yml \
-+            ecs/mcp/task-def-mcp-server.json
-```
-
-- [ ] **Step 6: Commit the staging workflow change**
+- [ ] **Step 8: Commit the staging workflow change**
 
 Run:
 
 ```bash
 git add .github/workflows/stlc-promote.yml
-git commit -m "chore: preserve MCP deploy files"
+git commit -m "chore: preserve MCP task definition"
 ```
 
 Expected: one commit with only `.github/workflows/stlc-promote.yml` changed.
 
-- [ ] **Step 7: Push a staging PR branch**
+- [ ] **Step 9: Push a staging PR branch**
 
 Run only after explicit approval for the external push:
 
 ```bash
-git push origin mcp-preserve-prod-deploy-files
+git push origin mcp-preserve-task-definition
 ```
 
 Expected: branch exists on `RetellAI/retell-typescript-sdk-staging`.
 
-- [ ] **Step 8: Open PR**
+- [ ] **Step 10: Open PR**
 
 Create a PR in `RetellAI/retell-typescript-sdk-staging`:
 
 ```txt
-Title: chore: preserve MCP deploy files
+Title: chore: preserve MCP task definition
 
 Body:
-This adds the Retell-owned MCP deploy workflow and ECS task definition to the stlc promotion preserve list.
+The staging promote workflow already preserves production .github/workflows and removes the staging-only stlc-promote workflow from the release branch.
 
-These files live only in the production SDK repo. Without this allowlist, the staging-generated stainless-release branch can delete them from production during the next SDK release PR.
+This PR adds the remaining non-workflow MCP deploy file, ecs/mcp/task-def-mcp-server.json, to the production-owned files restored from production main. Without this, the staging-generated stainless-release branch can still delete the ECS task definition from production during the next SDK release PR.
 ```
 
 Expected: PR contains one workflow-only commit.
@@ -152,7 +167,7 @@ Expected: PR contains one workflow-only commit.
 
 Use normal repo review and merge process for `RetellAI/retell-typescript-sdk-staging`.
 
-Expected: `main` includes commit `chore: preserve MCP deploy files`.
+Expected: `main` includes the workflow-directory preservation commit and the task-definition preservation commit. Capture the final staging head after all manual staging commits have merged.
 
 - [ ] **Step 2: Capture the new TypeScript staging head**
 
@@ -164,7 +179,7 @@ echo "$NEW_TS_STAGING_HEAD"
 printf '%s\n' "$NEW_TS_STAGING_HEAD" > /tmp/new-ts-staging-head.txt
 ```
 
-Expected: output is the new merge commit SHA from staging `main`.
+Expected: output is the final manually advanced staging `main` SHA.
 
 - [ ] **Step 3: Confirm the current docs tracking base**
 
@@ -255,7 +270,7 @@ Title: chore: realign TypeScript SDK staging tracking
 Body:
 This updates the TypeScript stlc custom-code tracking metadata after a one-time manual staging commit to preserve production-owned MCP deploy files.
 
-The staging repo main branch was advanced intentionally. Updating integrated tells stlc that the new staging head is the valid baseline for future build --push runs.
+The staging repo main branch was advanced intentionally to preserve production-owned MCP deploy files. Updating integrated tells stlc that the new staging head is the valid baseline for future build --push runs.
 ```
 
 Expected: PR contains one JSON-only commit.
@@ -312,21 +327,24 @@ gh run list --repo RetellAI/docs --workflow stlc-generate.yml --limit 1
 
 Expected: latest run eventually reaches `completed` with conclusion `success`.
 
-- [ ] **Step 14: Confirm staging still has the allowlist after generation**
+- [ ] **Step 14: Confirm staging still preserves workflow directory and task definition after generation**
 
 Run from the SDK repo:
 
 ```bash
 cd /Users/rogersxie/retell-typescript-sdk
 git fetch https://github.com/RetellAI/retell-typescript-sdk-staging.git main:refs/remotes/staging/main
-git show staging/main:.github/workflows/stlc-promote.yml | rg "deploy-mcp-server|task-def-mcp-server"
+git show staging/main:.github/workflows/stlc-promote.yml | rg "git checkout production/main -- \\.github/workflows|task-def-mcp-server"
 ```
 
 Expected:
 
 ```txt
-            .github/workflows/deploy-mcp-server.yml \
+          git checkout production/main -- .github/workflows
+          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
+            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
             ecs/mcp/task-def-mcp-server.json
+              ecs/mcp/task-def-mcp-server.json
 ```
 
 - [ ] **Step 15: Commit no SDK repo changes**
