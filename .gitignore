@@ -12,3 +12,4 @@ dist-deno
 dist-bundle
 *.mcpb
 oidc
+.worktrees/

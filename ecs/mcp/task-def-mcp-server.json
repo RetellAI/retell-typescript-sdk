@@ -1,0 +1,48 @@
+{
+  "family": "retell-mcp-server",
+  "taskRoleArn": "arn:aws:iam::393287594714:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::393287594714:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "retell-mcp-server",
+      "image": "393287594714.dkr.ecr.us-west-2.amazonaws.com/retell-mcp-server:bootstrap",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "retell-mcp-server-3000-tcp",
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "command": ["--transport=http", "--port=3000"],
+      "environment": [],
+      "secrets": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/retell-mcp-server",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "4096",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  }
+}
