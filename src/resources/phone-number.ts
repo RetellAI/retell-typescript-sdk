@@ -21,6 +21,23 @@ export class PhoneNumber extends APIResource {
   }
 
   /**
+   * Import a phone number from custom telephony & Bind agents
+   *
+   * @example
+   * ```ts
+   * const phoneNumberResponse = await client.phoneNumber.import(
+   *   {
+   *     phone_number: '+14157774444',
+   *     termination_uri: 'someuri.pstn.twilio.com',
+   *   },
+   * );
+   * ```
+   */
+  import(body: PhoneNumberImportParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
+    return this._client.post('/import-phone-number', { body, ...options });
+  }
+
+  /**
    * Retrieve details of a specific phone number
    *
    * @example
@@ -31,6 +48,21 @@ export class PhoneNumber extends APIResource {
    */
   retrieve(phoneNumber: string, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
     return this._client.get(path`/get-phone-number/${phoneNumber}`, options);
+  }
+
+  /**
+   * List phone numbers with pagination
+   *
+   * @example
+   * ```ts
+   * const phoneNumbers = await client.phoneNumber.list();
+   * ```
+   */
+  list(
+    query: PhoneNumberListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberListResponse> {
+    return this._client.get('/v2/list-phone-numbers', { query, ...options });
   }
 
   /**
@@ -69,21 +101,6 @@ export class PhoneNumber extends APIResource {
   }
 
   /**
-   * List phone numbers with pagination
-   *
-   * @example
-   * ```ts
-   * const phoneNumbers = await client.phoneNumber.list();
-   * ```
-   */
-  list(
-    query: PhoneNumberListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<PhoneNumberListResponse> {
-    return this._client.get('/v2/list-phone-numbers', { query, ...options });
-  }
-
-  /**
    * Delete an existing phone number
    *
    * @example
@@ -96,23 +113,6 @@ export class PhoneNumber extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * Import a phone number from custom telephony & Bind agents
-   *
-   * @example
-   * ```ts
-   * const phoneNumberResponse = await client.phoneNumber.import(
-   *   {
-   *     phone_number: '+14157774444',
-   *     termination_uri: 'someuri.pstn.twilio.com',
-   *   },
-   * );
-   * ```
-   */
-  import(body: PhoneNumberImportParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
-    return this._client.post('/import-phone-number', { body, ...options });
   }
 }
 
@@ -153,11 +153,11 @@ export interface PhoneNumberResponse {
   area_code?: number;
 
   /**
-   * Enterprise only. Phone number to transfer inbound calls to when organization is
-   * in outage mode or when an inbound call cannot get a concurrency slot before the
-   * fallback timeout. Can be either a Retell phone number or an external number.
-   * Cannot be the same as this phone number, and cannot be a number that already has
-   * its own fallback configured (prevents nested forwarding).
+   * When inbound call concurrency is reached and a slot does not free up after
+   * extended ringing, the call will fall back to this number. Can be either a Retell
+   * phone number or an external number. Cannot be the same as this phone number, and
+   * cannot be a number that already has its own fallback configured (prevents nested
+   * forwarding).
    */
   fallback_number?: string | null;
 
@@ -177,8 +177,9 @@ export interface PhoneNumberResponse {
   inbound_sms_agents?: Array<PhoneNumberResponse.InboundSMSAgent> | null;
 
   /**
-   * If set, will send a webhook for inbound SMS, where you can override agent id,
-   * set dynamic variables and other fields specific to that chat.
+   * If set, Retell will send a webhook for inbound SMS, where you can override the
+   * agent ID, set dynamic variables, and configure other fields specific to that
+   * chat.
    */
   inbound_sms_webhook_url?: string | null;
 
@@ -369,11 +370,11 @@ export interface PhoneNumberCreateParams {
   country_code?: 'US' | 'CA';
 
   /**
-   * Enterprise only. Phone number to transfer inbound calls to when organization is
-   * in outage mode or when an inbound call cannot get a concurrency slot before the
-   * fallback timeout. Can be either a Retell phone number or an external number.
-   * Cannot be the same as this phone number, and cannot be a number that already has
-   * its own fallback configured (prevents nested forwarding).
+   * When inbound call concurrency is reached and a slot does not free up after
+   * extended ringing, the call will fall back to this number. Can be either a Retell
+   * phone number or an external number. Cannot be the same as this phone number, and
+   * cannot be a number that already has its own fallback configured (prevents nested
+   * forwarding).
    */
   fallback_number?: string | null;
 
@@ -385,8 +386,9 @@ export interface PhoneNumberCreateParams {
   inbound_agents?: Array<PhoneNumberCreateParams.InboundAgent> | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can override agent id,
-   * set dynamic variables and other fields specific to that call.
+   * If set, Retell will send a webhook for inbound calls, where you can override the
+   * agent ID, set dynamic variables, and configure other fields specific to that
+   * call.
    */
   inbound_webhook_url?: string | null;
 
@@ -473,6 +475,149 @@ export namespace PhoneNumberCreateParams {
   }
 }
 
+export interface PhoneNumberImportParams {
+  /**
+   * The number you are trying to import in E.164 format of the number (+country
+   * code, then number with no space, no special characters), used as the unique
+   * identifier for phone number APIs.
+   */
+  phone_number: string;
+
+  /**
+   * The termination uri to uniquely identify your elastic SIP trunk. This is used
+   * for outbound calls. For Twilio elastic SIP trunks it always end with
+   * ".pstn.twilio.com".
+   */
+  termination_uri: string;
+
+  /**
+   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
+   * If not set or empty, calls from all countries are allowed.
+   */
+  allowed_inbound_country_list?: Array<string> | null;
+
+  /**
+   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
+   * not set or empty, calls to all countries are allowed.
+   */
+  allowed_outbound_country_list?: Array<string> | null;
+
+  /**
+   * If true, E.164 validation for phone_number is skipped. This is useful for
+   * internal pseudo numbers when using custom telephony. If omitted, default is
+   * true. Must be a boolean literal; string values like "true" or "false" are
+   * invalid.
+   */
+  ignore_e164_validation?: boolean;
+
+  /**
+   * Inbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each inbound call, with probability
+   * proportional to the weight. Total weights must add up to 1.
+   */
+  inbound_agents?: Array<PhoneNumberImportParams.InboundAgent> | null;
+
+  /**
+   * If set, Retell will send a webhook for inbound calls, where you can override the
+   * agent ID, set dynamic variables, and configure other fields specific to that
+   * call.
+   */
+  inbound_webhook_url?: string | null;
+
+  /**
+   * Nickname of the number. This is for your reference only.
+   */
+  nickname?: string;
+
+  /**
+   * Outbound agents to bind to the number with weights. If set and non-empty, one
+   * agent will be picked randomly for each outbound call, with probability
+   * proportional to the weight. Total weights must add up to 1.
+   */
+  outbound_agents?: Array<PhoneNumberImportParams.OutboundAgent> | null;
+
+  /**
+   * The password used for authentication for the SIP trunk.
+   */
+  sip_trunk_auth_password?: string;
+
+  /**
+   * The username used for authentication for the SIP trunk.
+   */
+  sip_trunk_auth_username?: string;
+
+  /**
+   * Outbound transport protocol to update for the phone number. Valid values are
+   * "TLS", "TCP" and "UDP". Default is "TCP".
+   */
+  transport?: string | null;
+}
+
+export namespace PhoneNumberImportParams {
+  export interface InboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). The string "latest" resolves to the
+     * most recently created version (the largest version number), and
+     * "latest_published" resolves to the most recently published version. When a tag
+     * is provided, resolution uses that exact tag assignment (including its dynamic
+     * variables). If the tag exists but is currently unassigned, it resolves to
+     * latest. When a numeric version, latest, or latest_published is provided,
+     * resolution applies dynamic variables from the preferred tag for that resolved
+     * version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
+  }
+
+  export interface OutboundAgent {
+    agent_id: string;
+
+    /**
+     * The weight of the agent. When used in a list of agents, the total weights must
+     * add up to 1.
+     */
+    weight: number;
+
+    /**
+     * Agent version reference. Supports a numeric version (for example 3) or a
+     * tag/environment name (for example "prod"). The string "latest" resolves to the
+     * most recently created version (the largest version number), and
+     * "latest_published" resolves to the most recently published version. When a tag
+     * is provided, resolution uses that exact tag assignment (including its dynamic
+     * variables). If the tag exists but is currently unassigned, it resolves to
+     * latest. When a numeric version, latest, or latest_published is provided,
+     * resolution applies dynamic variables from the preferred tag for that resolved
+     * version (most recently assigned), if any.
+     */
+    agent_version?: number | string;
+  }
+}
+
+export interface PhoneNumberListParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export interface PhoneNumberUpdateParams {
   /**
    * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
@@ -499,12 +644,11 @@ export interface PhoneNumberUpdateParams {
   auth_username?: string;
 
   /**
-   * Enterprise only. Phone number to transfer inbound calls to when organization is
-   * in outage mode or when an inbound call cannot get a concurrency slot before the
-   * fallback timeout. Can be either a Retell phone number or an external number. Set
-   * to null to remove. Cannot be the same as this phone number, and cannot be a
-   * number that already has its own fallback configured (prevents nested
-   * forwarding).
+   * When inbound call concurrency is reached and a slot does not free up after
+   * extended ringing, the call will fall back to this number. Can be either a Retell
+   * phone number or an external number. Set to null to remove. Cannot be the same as
+   * this phone number, and cannot be a number that already has its own fallback
+   * configured (prevents nested forwarding).
    */
   fallback_number?: string | null;
 
@@ -524,14 +668,16 @@ export interface PhoneNumberUpdateParams {
   inbound_sms_agents?: Array<PhoneNumberUpdateParams.InboundSMSAgent> | null;
 
   /**
-   * If set, will send a webhook for inbound SMS, where you can override agent id,
-   * set dynamic variables and other fields specific to that chat.
+   * If set, Retell will send a webhook for inbound SMS, where you can override the
+   * agent ID, set dynamic variables, and configure other fields specific to that
+   * chat.
    */
   inbound_sms_webhook_url?: string | null;
 
   /**
-   * If set, will send a webhook for inbound calls, where you can override agent id,
-   * set dynamic variables and other fields specific to that call.
+   * If set, Retell will send a webhook for inbound calls, where you can override the
+   * agent ID, set dynamic variables, and configure other fields specific to that
+   * call.
    */
   inbound_webhook_url?: string | null;
 
@@ -662,155 +808,13 @@ export namespace PhoneNumberUpdateParams {
   }
 }
 
-export interface PhoneNumberListParams {
-  /**
-   * Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Sort order for results.
-   */
-  sort_order?: 'ascending' | 'descending';
-}
-
-export interface PhoneNumberImportParams {
-  /**
-   * The number you are trying to import in E.164 format of the number (+country
-   * code, then number with no space, no special characters), used as the unique
-   * identifier for phone number APIs.
-   */
-  phone_number: string;
-
-  /**
-   * The termination uri to uniquely identify your elastic SIP trunk. This is used
-   * for outbound calls. For Twilio elastic SIP trunks it always end with
-   * ".pstn.twilio.com".
-   */
-  termination_uri: string;
-
-  /**
-   * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
-   * If not set or empty, calls from all countries are allowed.
-   */
-  allowed_inbound_country_list?: Array<string> | null;
-
-  /**
-   * List of ISO 3166-1 alpha-2 country codes to which outbound calls are allowed. If
-   * not set or empty, calls to all countries are allowed.
-   */
-  allowed_outbound_country_list?: Array<string> | null;
-
-  /**
-   * If true, E.164 validation for phone_number is skipped. This is useful for
-   * internal pseudo numbers when using custom telephony. If omitted, default is
-   * true. Must be a boolean literal; string values like "true" or "false" are
-   * invalid.
-   */
-  ignore_e164_validation?: boolean;
-
-  /**
-   * Inbound agents to bind to the number with weights. If set and non-empty, one
-   * agent will be picked randomly for each inbound call, with probability
-   * proportional to the weight. Total weights must add up to 1.
-   */
-  inbound_agents?: Array<PhoneNumberImportParams.InboundAgent> | null;
-
-  /**
-   * If set, will send a webhook for inbound calls, where you can override agent id,
-   * set dynamic variables and other fields specific to that call.
-   */
-  inbound_webhook_url?: string | null;
-
-  /**
-   * Nickname of the number. This is for your reference only.
-   */
-  nickname?: string;
-
-  /**
-   * Outbound agents to bind to the number with weights. If set and non-empty, one
-   * agent will be picked randomly for each outbound call, with probability
-   * proportional to the weight. Total weights must add up to 1.
-   */
-  outbound_agents?: Array<PhoneNumberImportParams.OutboundAgent> | null;
-
-  /**
-   * The password used for authentication for the SIP trunk.
-   */
-  sip_trunk_auth_password?: string;
-
-  /**
-   * The username used for authentication for the SIP trunk.
-   */
-  sip_trunk_auth_username?: string;
-
-  /**
-   * Outbound transport protocol to update for the phone number. Valid values are
-   * "TLS", "TCP" and "UDP". Default is "TCP".
-   */
-  transport?: string | null;
-}
-
-export namespace PhoneNumberImportParams {
-  export interface InboundAgent {
-    agent_id: string;
-
-    /**
-     * The weight of the agent. When used in a list of agents, the total weights must
-     * add up to 1.
-     */
-    weight: number;
-
-    /**
-     * Agent version reference. Supports a numeric version (for example 3) or a
-     * tag/environment name (for example "prod"). The string "latest" resolves to the
-     * most recently created version (the largest version number), and
-     * "latest_published" resolves to the most recently published version. When a tag
-     * is provided, resolution uses that exact tag assignment (including its dynamic
-     * variables). If the tag exists but is currently unassigned, it resolves to
-     * latest. When a numeric version, latest, or latest_published is provided,
-     * resolution applies dynamic variables from the preferred tag for that resolved
-     * version (most recently assigned), if any.
-     */
-    agent_version?: number | string;
-  }
-
-  export interface OutboundAgent {
-    agent_id: string;
-
-    /**
-     * The weight of the agent. When used in a list of agents, the total weights must
-     * add up to 1.
-     */
-    weight: number;
-
-    /**
-     * Agent version reference. Supports a numeric version (for example 3) or a
-     * tag/environment name (for example "prod"). The string "latest" resolves to the
-     * most recently created version (the largest version number), and
-     * "latest_published" resolves to the most recently published version. When a tag
-     * is provided, resolution uses that exact tag assignment (including its dynamic
-     * variables). If the tag exists but is currently unassigned, it resolves to
-     * latest. When a numeric version, latest, or latest_published is provided,
-     * resolution applies dynamic variables from the preferred tag for that resolved
-     * version (most recently assigned), if any.
-     */
-    agent_version?: number | string;
-  }
-}
-
 export declare namespace PhoneNumber {
   export {
     type PhoneNumberResponse as PhoneNumberResponse,
     type PhoneNumberListResponse as PhoneNumberListResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
-    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
-    type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
+    type PhoneNumberListParams as PhoneNumberListParams,
+    type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
   };
 }
