@@ -46,25 +46,25 @@ jobs:
           git config user.email "stlc-bot@users.noreply.github.com"
           git switch --force-create stainless-release origin/main
 
-          git rm -r -f --ignore-unmatch .github/workflows
-          git checkout production/main -- .github/workflows
-          git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
+          restore_from_production_or_remove() {
+            local path="$1"
+            if git cat-file -e "production/main:${path}" 2>/dev/null; then
+              mkdir -p "$(dirname "${path}")"
+              git restore --source=production/main -- "${path}"
+            else
+              git rm -r -f --ignore-unmatch "${path}"
+            fi
+          }
 
-          if git cat-file -e "production/main:ecs/mcp/task-def-mcp-server.json" 2>/dev/null; then
-            git checkout production/main -- ecs/mcp/task-def-mcp-server.json
-          else
-            git rm -f --ignore-unmatch ecs/mcp/task-def-mcp-server.json
-          fi
+          git rm -r -f --ignore-unmatch .github/workflows
+          git restore --source=production/main -- .github/workflows
+          git rm -f --ignore-unmatch .github/workflows/stlc-promote.yml
 
           for release_path in \
             .release-please-manifest.json \
             CHANGELOG.md
           do
-            if git cat-file -e "production/main:${release_path}" 2>/dev/null; then
-              git checkout production/main -- "${release_path}"
-            else
-              git rm -f --ignore-unmatch "${release_path}"
-            fi
+            restore_from_production_or_remove "${release_path}"
           done
 
           prod_version="$(git show production/main:package.json | node -e 'let input = ""; process.stdin.on("data", chunk => input += chunk); process.stdin.on("end", () => console.log(JSON.parse(input).version));')"
@@ -89,17 +89,15 @@ jobs:
             CHANGELOG.md \
             package.json \
             packages/mcp-server/package.json \
-            src/version.ts \
-            ecs/mcp/task-def-mcp-server.json
+            src/version.ts
           then
-            git add \
+            git add -A -- \
               .github/workflows \
               .release-please-manifest.json \
               CHANGELOG.md \
               package.json \
               packages/mcp-server/package.json \
-              src/version.ts \
-              ecs/mcp/task-def-mcp-server.json
+              src/version.ts
             git commit -m "chore: preserve production workflow files"
           fi
 
