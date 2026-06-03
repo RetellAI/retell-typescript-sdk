@@ -1171,6 +1171,7 @@ export namespace ChatListParams {
         | 'transfer_bridged'
         | 'transfer_cancelled'
         | 'manual_stopped'
+        | 'call_take_over'
       >;
     }
 
