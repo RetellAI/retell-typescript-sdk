@@ -207,6 +207,8 @@ export interface ChatResponse {
     | ChatResponse.ToolCallResultMessageBase
     | ChatResponse.NodeTransitionMessageBase
     | ChatResponse.StateTransitionMessageBase
+    | ChatResponse.InjectedMessageBase
+    | ChatResponse.SMSMessageBase
   >;
 
   /**
@@ -469,6 +471,73 @@ export namespace ChatResponse {
      */
     new_state_name?: string;
   }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
 }
 
 export interface ChatListResponse {
@@ -510,6 +579,8 @@ export interface ChatCreateChatCompletionResponse {
     | ChatCreateChatCompletionResponse.ToolCallResultMessageBase
     | ChatCreateChatCompletionResponse.NodeTransitionMessageBase
     | ChatCreateChatCompletionResponse.StateTransitionMessageBase
+    | ChatCreateChatCompletionResponse.InjectedMessageBase
+    | ChatCreateChatCompletionResponse.SMSMessageBase
   >;
 }
 
@@ -676,6 +747,73 @@ export namespace ChatCreateChatCompletionResponse {
      * New state name
      */
     new_state_name?: string;
+  }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
   }
 }
 
