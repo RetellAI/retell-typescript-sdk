@@ -8121,7 +8121,7 @@ export namespace CallListParams {
     /**
      * Filter by call ID.
      */
-    call_id?: FilterCriteria.CallID;
+    call_id?: FilterCriteria.StringFilter | FilterCriteria.EnumFilter;
 
     call_status?: FilterCriteria.CallStatus;
 
@@ -8254,10 +8254,7 @@ export namespace CallListParams {
       value: string;
     }
 
-    /**
-     * Filter by call ID.
-     */
-    export interface CallID {
+    export interface StringFilter {
       /**
        * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
        */
@@ -8266,6 +8263,17 @@ export namespace CallListParams {
       type: 'string';
 
       value: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     export interface CallStatus {
