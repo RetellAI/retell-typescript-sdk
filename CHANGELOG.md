@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.35.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.34.0...v5.35.0) (2026-06-04)
+
+
+### Features
+
+* **api:** api update ([582c1f3](https://github.com/RetellAI/retell-typescript-sdk/commit/582c1f3f285940f2bb9a79e971cd7651c609e42f))
+
+
+### Chores
+
+* preserve production workflow files ([d44b1c1](https://github.com/RetellAI/retell-typescript-sdk/commit/d44b1c198aa7ce4282d44e2319bc2e28e14abaa9))
+
 ## [5.34.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.33.0...v5.34.0) (2026-06-04)
 
 
