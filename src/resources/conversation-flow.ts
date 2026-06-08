@@ -338,6 +338,8 @@ export namespace ConversationFlowResponse {
 
       edges?: Array<ConversationNode.Edge>;
 
+      else_edge?: ConversationNode.ElseEdge;
+
       finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -539,6 +541,80 @@ export namespace ConversationFlowResponse {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -952,6 +1028,8 @@ export namespace ConversationFlowResponse {
 
       edges?: Array<SubagentNode.Edge>;
 
+      else_edge?: SubagentNode.ElseEdge;
+
       finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -1167,6 +1245,80 @@ export namespace ConversationFlowResponse {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -4589,6 +4741,8 @@ export namespace ConversationFlowResponse {
 
       edges?: Array<PressDigitNode.Edge>;
 
+      else_edge?: PressDigitNode.ElseEdge;
+
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -4680,6 +4834,80 @@ export namespace ConversationFlowResponse {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -8590,6 +8818,8 @@ export namespace ConversationFlowResponse {
 
     edges?: Array<ConversationNode.Edge>;
 
+    else_edge?: ConversationNode.ElseEdge;
+
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -8791,6 +9021,80 @@ export namespace ConversationFlowResponse {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -9204,6 +9508,8 @@ export namespace ConversationFlowResponse {
 
     edges?: Array<SubagentNode.Edge>;
 
+    else_edge?: SubagentNode.ElseEdge;
+
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -9419,6 +9725,80 @@ export namespace ConversationFlowResponse {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -12841,6 +13221,8 @@ export namespace ConversationFlowResponse {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    else_edge?: PressDigitNode.ElseEdge;
+
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -12932,6 +13314,80 @@ export namespace ConversationFlowResponse {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -16902,6 +17358,8 @@ export namespace ConversationFlowCreateParams {
 
     edges?: Array<ConversationNode.Edge>;
 
+    else_edge?: ConversationNode.ElseEdge;
+
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -17103,6 +17561,80 @@ export namespace ConversationFlowCreateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -17516,6 +18048,8 @@ export namespace ConversationFlowCreateParams {
 
     edges?: Array<SubagentNode.Edge>;
 
+    else_edge?: SubagentNode.ElseEdge;
+
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -17731,6 +18265,80 @@ export namespace ConversationFlowCreateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -21153,6 +21761,8 @@ export namespace ConversationFlowCreateParams {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    else_edge?: PressDigitNode.ElseEdge;
+
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -21244,6 +21854,80 @@ export namespace ConversationFlowCreateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -24840,6 +25524,8 @@ export namespace ConversationFlowCreateParams {
 
       edges?: Array<ConversationNode.Edge>;
 
+      else_edge?: ConversationNode.ElseEdge;
+
       finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -25041,6 +25727,80 @@ export namespace ConversationFlowCreateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -25454,6 +26214,8 @@ export namespace ConversationFlowCreateParams {
 
       edges?: Array<SubagentNode.Edge>;
 
+      else_edge?: SubagentNode.ElseEdge;
+
       finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -25669,6 +26431,80 @@ export namespace ConversationFlowCreateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -29091,6 +29927,8 @@ export namespace ConversationFlowCreateParams {
 
       edges?: Array<PressDigitNode.Edge>;
 
+      else_edge?: PressDigitNode.ElseEdge;
+
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -29182,6 +30020,80 @@ export namespace ConversationFlowCreateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -33548,6 +34460,8 @@ export namespace ConversationFlowUpdateParams {
 
       edges?: Array<ConversationNode.Edge>;
 
+      else_edge?: ConversationNode.ElseEdge;
+
       finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -33749,6 +34663,80 @@ export namespace ConversationFlowUpdateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -34162,6 +35150,8 @@ export namespace ConversationFlowUpdateParams {
 
       edges?: Array<SubagentNode.Edge>;
 
+      else_edge?: SubagentNode.ElseEdge;
+
       finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
       finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -34377,6 +35367,80 @@ export namespace ConversationFlowUpdateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -37799,6 +38863,8 @@ export namespace ConversationFlowUpdateParams {
 
       edges?: Array<PressDigitNode.Edge>;
 
+      else_edge?: PressDigitNode.ElseEdge;
+
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -37890,6 +38956,80 @@ export namespace ConversationFlowUpdateParams {
              */
             right?: string;
           }
+        }
+      }
+
+      export interface ElseEdge {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace ElseEdge {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt?: 'Else';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+
+        export interface UnionMember2 {
+          /**
+           * Must be "Else" for else edge
+           */
+          prompt: 'Else';
+
+          type: 'prompt';
         }
       }
 
@@ -41800,6 +42940,8 @@ export namespace ConversationFlowUpdateParams {
 
     edges?: Array<ConversationNode.Edge>;
 
+    else_edge?: ConversationNode.ElseEdge;
+
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<ConversationNode.FinetuneTransitionExample>;
@@ -42001,6 +43143,80 @@ export namespace ConversationFlowUpdateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -42414,6 +43630,8 @@ export namespace ConversationFlowUpdateParams {
 
     edges?: Array<SubagentNode.Edge>;
 
+    else_edge?: SubagentNode.ElseEdge;
+
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
 
     finetune_transition_examples?: Array<SubagentNode.FinetuneTransitionExample>;
@@ -42629,6 +43847,80 @@ export namespace ConversationFlowUpdateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
@@ -46051,6 +47343,8 @@ export namespace ConversationFlowUpdateParams {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    else_edge?: PressDigitNode.ElseEdge;
+
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
@@ -46142,6 +47436,80 @@ export namespace ConversationFlowUpdateParams {
            */
           right?: string;
         }
+      }
+    }
+
+    export interface ElseEdge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: ElseEdge.PromptCondition | ElseEdge.EquationCondition | ElseEdge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace ElseEdge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt?: 'Else';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        /**
+         * Must be "Else" for else edge
+         */
+        prompt: 'Else';
+
+        type: 'prompt';
       }
     }
 
