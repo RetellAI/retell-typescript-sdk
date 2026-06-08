@@ -57,6 +57,11 @@ describe('resource conversationFlow', () => {
               destination_node_id: 'book_appointment',
             },
           ],
+          else_edge: {
+            id: 'id',
+            transition_condition: { prompt: 'prompt', type: 'prompt' },
+            destination_node_id: 'destination_node_id',
+          },
           finetune_conversation_examples: [{ id: 'id', transcript: [{ content: 'content', role: 'agent' }] }],
           finetune_transition_examples: [
             {
@@ -124,6 +129,11 @@ describe('resource conversationFlow', () => {
                   destination_node_id: 'destination_node_id',
                 },
               ],
+              else_edge: {
+                id: 'id',
+                transition_condition: { prompt: 'prompt', type: 'prompt' },
+                destination_node_id: 'destination_node_id',
+              },
               finetune_conversation_examples: [
                 { id: 'id', transcript: [{ content: 'content', role: 'agent' }] },
               ],
