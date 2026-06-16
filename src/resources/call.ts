@@ -200,6 +200,17 @@ export interface PhoneCallResponse {
   agent_name?: string;
 
   /**
+   * Tag pointing at the agent version used for this call, captured at call creation
+   * time and frozen thereafter (unaffected by later tag reassignments). Populated
+   * whether the caller dispatched by tag, numeric version, "latest", or
+   * "latest_published" — when the caller specified a tag, that tag wins; otherwise
+   * the most-recently- assigned tag on the resolved version is used. Absent when no
+   * tag points at the resolved version (or for calls created before this field was
+   * introduced).
+   */
+  agent_tag?: string | null;
+
+  /**
    * Post call analysis that includes information such as sentiment, status, summary,
    * and custom defined data to extract. Available after call ends. Subscribe to
    * `call_analyzed` webhook event type to receive it once ready.
@@ -1389,6 +1400,17 @@ export interface WebCallResponse {
    * Name of the agent.
    */
   agent_name?: string;
+
+  /**
+   * Tag pointing at the agent version used for this call, captured at call creation
+   * time and frozen thereafter (unaffected by later tag reassignments). Populated
+   * whether the caller dispatched by tag, numeric version, "latest", or
+   * "latest_published" — when the caller specified a tag, that tag wins; otherwise
+   * the most-recently- assigned tag on the resolved version is used. Absent when no
+   * tag points at the resolved version (or for calls created before this field was
+   * introduced).
+   */
+  agent_tag?: string | null;
 
   /**
    * Post call analysis that includes information such as sentiment, status, summary,
@@ -2586,6 +2608,17 @@ export namespace CallListResponse {
     agent_name?: string;
 
     /**
+     * Tag pointing at the agent version used for this call, captured at call creation
+     * time and frozen thereafter (unaffected by later tag reassignments). Populated
+     * whether the caller dispatched by tag, numeric version, "latest", or
+     * "latest_published" — when the caller specified a tag, that tag wins; otherwise
+     * the most-recently- assigned tag on the resolved version is used. Absent when no
+     * tag points at the resolved version (or for calls created before this field was
+     * introduced).
+     */
+    agent_tag?: string | null;
+
+    /**
      * Post call analysis that includes information such as sentiment, status, summary,
      * and custom defined data to extract. Available after call ends. Subscribe to
      * `call_analyzed` webhook event type to receive it once ready.
@@ -3298,6 +3331,17 @@ export namespace CallListResponse {
      * Name of the agent.
      */
     agent_name?: string;
+
+    /**
+     * Tag pointing at the agent version used for this call, captured at call creation
+     * time and frozen thereafter (unaffected by later tag reassignments). Populated
+     * whether the caller dispatched by tag, numeric version, "latest", or
+     * "latest_published" — when the caller specified a tag, that tag wins; otherwise
+     * the most-recently- assigned tag on the resolved version is used. Absent when no
+     * tag points at the resolved version (or for calls created before this field was
+     * introduced).
+     */
+    agent_tag?: string | null;
 
     /**
      * Post call analysis that includes information such as sentiment, status, summary,
@@ -4242,10 +4286,43 @@ export namespace CallCreatePhoneCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
+       * Master toggle for expressive mode. When true, the agent may add expressive voice
+       * tags to the audio it generates. Only applicable for platform voices. If unset,
+       * defaults to false.
+       */
+      enable_expressive_mode?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
       end_call_after_silence_ms?: number;
+
+      /**
+       * The expressive voice tags Retell pre-teaches the model to use when
+       * enable_expressive_mode is true. Custom tags defined in the system prompt are
+       * still allowed. If empty, the agent follows general expressive guidance without a
+       * fixed tag set.
+       */
+      expressive_emotion_tags?: Array<
+        | 'empathetic'
+        | 'excited'
+        | 'happy'
+        | 'curious'
+        | 'surprised'
+        | 'sigh'
+        | 'clear throat'
+        | 'pause'
+        | 'long pause'
+        | 'emphasis'
+      >;
+
+      /**
+       * Custom expressive voice guidance to use instead of the default Retell expressive
+       * prompt when enable_expressive_mode is true. If omitted or blank, the default
+       * expressive prompt will be used.
+       */
+      expressive_mode_prompt?: string | null;
 
       /**
        * When TTS provider for the selected voice is experiencing outages, we would use
@@ -4554,6 +4631,11 @@ export namespace CallCreatePhoneCallParams {
       version_description?: string | null;
 
       /**
+       * Optional title of the agent version. Used for your own reference.
+       */
+      version_title?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -4610,21 +4692,6 @@ export namespace CallCreatePhoneCallParams {
        * will apply.
        */
       voice_temperature?: number;
-
-      /**
-       * Configures when to stop running voicemail detection, as it becomes unlikely to
-       * hit voicemail after a couple minutes, and keep running it will only have
-       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
-       */
-      voicemail_detection_timeout_ms?: number;
-
-      /**
-       * The message to be played when the call enters a voicemail. Note that this
-       * feature is only available for phone calls. If you want to hangup after hitting
-       * voicemail, set this to empty string.
-       */
-      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -4697,14 +4764,14 @@ export namespace CallCreatePhoneCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox
+         * 500 for Soniox, 100 for AssemblyAI.
          */
         endpointing_ms: number;
 
         /**
          * ASR provider name.
          */
-        provider: 'azure' | 'deepgram' | 'soniox';
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -4744,6 +4811,13 @@ export namespace CallCreatePhoneCallParams {
          * When asked, acknowledge being a virtual assistant.
          */
         ai_disclosure?: boolean;
+
+        /**
+         * Enables Conversational Personality. When true, the agent uses the Conversational
+         * Personality handbook preset, skips Professional Rep Personality during prompt
+         * assembly, and enables internal colloquial rewrite behavior.
+         */
+        conversational_personality?: boolean;
 
         /**
          * Professional call center rep baseline.
@@ -5601,10 +5675,43 @@ export namespace CallRegisterPhoneCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
+       * Master toggle for expressive mode. When true, the agent may add expressive voice
+       * tags to the audio it generates. Only applicable for platform voices. If unset,
+       * defaults to false.
+       */
+      enable_expressive_mode?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
       end_call_after_silence_ms?: number;
+
+      /**
+       * The expressive voice tags Retell pre-teaches the model to use when
+       * enable_expressive_mode is true. Custom tags defined in the system prompt are
+       * still allowed. If empty, the agent follows general expressive guidance without a
+       * fixed tag set.
+       */
+      expressive_emotion_tags?: Array<
+        | 'empathetic'
+        | 'excited'
+        | 'happy'
+        | 'curious'
+        | 'surprised'
+        | 'sigh'
+        | 'clear throat'
+        | 'pause'
+        | 'long pause'
+        | 'emphasis'
+      >;
+
+      /**
+       * Custom expressive voice guidance to use instead of the default Retell expressive
+       * prompt when enable_expressive_mode is true. If omitted or blank, the default
+       * expressive prompt will be used.
+       */
+      expressive_mode_prompt?: string | null;
 
       /**
        * When TTS provider for the selected voice is experiencing outages, we would use
@@ -5913,6 +6020,11 @@ export namespace CallRegisterPhoneCallParams {
       version_description?: string | null;
 
       /**
+       * Optional title of the agent version. Used for your own reference.
+       */
+      version_title?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -5969,21 +6081,6 @@ export namespace CallRegisterPhoneCallParams {
        * will apply.
        */
       voice_temperature?: number;
-
-      /**
-       * Configures when to stop running voicemail detection, as it becomes unlikely to
-       * hit voicemail after a couple minutes, and keep running it will only have
-       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
-       */
-      voicemail_detection_timeout_ms?: number;
-
-      /**
-       * The message to be played when the call enters a voicemail. Note that this
-       * feature is only available for phone calls. If you want to hangup after hitting
-       * voicemail, set this to empty string.
-       */
-      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -6056,14 +6153,14 @@ export namespace CallRegisterPhoneCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox
+         * 500 for Soniox, 100 for AssemblyAI.
          */
         endpointing_ms: number;
 
         /**
          * ASR provider name.
          */
-        provider: 'azure' | 'deepgram' | 'soniox';
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -6103,6 +6200,13 @@ export namespace CallRegisterPhoneCallParams {
          * When asked, acknowledge being a virtual assistant.
          */
         ai_disclosure?: boolean;
+
+        /**
+         * Enables Conversational Personality. When true, the agent uses the Conversational
+         * Personality handbook preset, skips Professional Rep Personality during prompt
+         * assembly, and enables internal colloquial rewrite behavior.
+         */
+        conversational_personality?: boolean;
 
         /**
          * Professional call center rep baseline.
@@ -6960,10 +7064,43 @@ export namespace CallCreateWebCallParams {
       enable_dynamic_voice_speed?: boolean;
 
       /**
+       * Master toggle for expressive mode. When true, the agent may add expressive voice
+       * tags to the audio it generates. Only applicable for platform voices. If unset,
+       * defaults to false.
+       */
+      enable_expressive_mode?: boolean;
+
+      /**
        * If users stay silent for a period after agent speech, end the call. The minimum
        * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
        */
       end_call_after_silence_ms?: number;
+
+      /**
+       * The expressive voice tags Retell pre-teaches the model to use when
+       * enable_expressive_mode is true. Custom tags defined in the system prompt are
+       * still allowed. If empty, the agent follows general expressive guidance without a
+       * fixed tag set.
+       */
+      expressive_emotion_tags?: Array<
+        | 'empathetic'
+        | 'excited'
+        | 'happy'
+        | 'curious'
+        | 'surprised'
+        | 'sigh'
+        | 'clear throat'
+        | 'pause'
+        | 'long pause'
+        | 'emphasis'
+      >;
+
+      /**
+       * Custom expressive voice guidance to use instead of the default Retell expressive
+       * prompt when enable_expressive_mode is true. If omitted or blank, the default
+       * expressive prompt will be used.
+       */
+      expressive_mode_prompt?: string | null;
 
       /**
        * When TTS provider for the selected voice is experiencing outages, we would use
@@ -7272,6 +7409,11 @@ export namespace CallCreateWebCallParams {
       version_description?: string | null;
 
       /**
+       * Optional title of the agent version. Used for your own reference.
+       */
+      version_title?: string | null;
+
+      /**
        * If set, determines the vocabulary set to use for transcription. This setting
        * only applies for English agents, for non English agent, this setting is a no-op.
        * Default to general.
@@ -7328,21 +7470,6 @@ export namespace CallCreateWebCallParams {
        * will apply.
        */
       voice_temperature?: number;
-
-      /**
-       * Configures when to stop running voicemail detection, as it becomes unlikely to
-       * hit voicemail after a couple minutes, and keep running it will only have
-       * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-       * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
-       */
-      voicemail_detection_timeout_ms?: number;
-
-      /**
-       * The message to be played when the call enters a voicemail. Note that this
-       * feature is only available for phone calls. If you want to hangup after hitting
-       * voicemail, set this to empty string.
-       */
-      voicemail_message?: string;
 
       /**
        * If this option is set, the call will try to detect voicemail in the first 3
@@ -7415,14 +7542,14 @@ export namespace CallCreateWebCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox
+         * 500 for Soniox, 100 for AssemblyAI.
          */
         endpointing_ms: number;
 
         /**
          * ASR provider name.
          */
-        provider: 'azure' | 'deepgram' | 'soniox';
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -7462,6 +7589,13 @@ export namespace CallCreateWebCallParams {
          * When asked, acknowledge being a virtual assistant.
          */
         ai_disclosure?: boolean;
+
+        /**
+         * Enables Conversational Personality. When true, the agent uses the Conversational
+         * Personality handbook preset, skips Professional Rep Personality during prompt
+         * assembly, and enables internal colloquial rewrite behavior.
+         */
+        conversational_personality?: boolean;
 
         /**
          * Professional call center rep baseline.
@@ -8849,19 +8983,24 @@ export namespace CallListParams {
 
     export interface ToolCall {
       /**
-       * The tool call name to filter on.
-       */
-      name: string;
-
-      /**
        * Filter by tool call latency in milliseconds.
        */
       latency_ms?: ToolCall.NumberFilter | ToolCall.RangeFilter;
 
       /**
+       * The tool call name to filter on.
+       */
+      name?: string;
+
+      /**
        * Filter by tool call success status.
        */
       success?: ToolCall.Success;
+
+      /**
+       * The tool call type to filter on.
+       */
+      type?: string;
     }
 
     export namespace ToolCall {

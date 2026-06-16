@@ -362,9 +362,11 @@ export interface TestCaseJobResponse {
   creation_timestamp: number;
 
   /**
-   * Status of the test case job
+   * Status of the test case job. `pending` means the run is queued but has not
+   * started yet; it becomes `in_progress` once a worker picks it up, then resolves
+   * to `pass`, `fail`, or `error`.
    */
-  status: 'in_progress' | 'pass' | 'fail' | 'error';
+  status: 'pending' | 'in_progress' | 'pass' | 'fail' | 'error';
 
   /**
    * ID of the test case definition used
