@@ -46,10 +46,7 @@ export class ChatAgent extends APIResource {
   /**
    * List all chat agents
    *
-   * @example
-   * ```ts
-   * const chatAgentResponses = await client.chatAgent.list();
-   * ```
+   * @deprecated
    */
   list(
     query: ChatAgentListParams | null | undefined = {},
@@ -474,6 +471,11 @@ export interface ChatAgentResponse {
    * The version of the chat agent.
    */
   version?: number;
+
+  /**
+   * Optional title of the chat agent version. Used for your own reference.
+   */
+  version_title?: string | null;
 
   /**
    * Which webhook events this agent should receive. If not set, defaults to
@@ -1073,6 +1075,11 @@ export interface ChatAgentCreateParams {
    * America/Los_Angeles if not set.
    */
   timezone?: string | null;
+
+  /**
+   * Optional title of the chat agent version. Used for your own reference.
+   */
+  version_title?: string | null;
 
   /**
    * Which webhook events this agent should receive. If not set, defaults to
@@ -1711,6 +1718,12 @@ export interface ChatAgentUpdateParams {
   timezone?: string | null;
 
   /**
+   * Body param: Optional title of the chat agent version. Used for your own
+   * reference.
+   */
+  version_title?: string | null;
+
+  /**
    * Body param: Which webhook events this agent should receive. If not set, defaults
    * to chat_started, chat_ended, chat_analyzed.
    */
@@ -2033,6 +2046,11 @@ export interface ChatAgentPublishParams {
   version: number;
 
   version_description?: string;
+
+  /**
+   * Optional title of the agent version. Used for your own reference.
+   */
+  version_title?: string;
 }
 
 export interface ChatAgentCreateVersionParams {

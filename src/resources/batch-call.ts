@@ -393,10 +393,43 @@ export namespace BatchCallCreateBatchCallParams {
         enable_dynamic_voice_speed?: boolean;
 
         /**
+         * Master toggle for expressive mode. When true, the agent may add expressive voice
+         * tags to the audio it generates. Only applicable for platform voices. If unset,
+         * defaults to false.
+         */
+        enable_expressive_mode?: boolean;
+
+        /**
          * If users stay silent for a period after agent speech, end the call. The minimum
          * value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).
          */
         end_call_after_silence_ms?: number;
+
+        /**
+         * The expressive voice tags Retell pre-teaches the model to use when
+         * enable_expressive_mode is true. Custom tags defined in the system prompt are
+         * still allowed. If empty, the agent follows general expressive guidance without a
+         * fixed tag set.
+         */
+        expressive_emotion_tags?: Array<
+          | 'empathetic'
+          | 'excited'
+          | 'happy'
+          | 'curious'
+          | 'surprised'
+          | 'sigh'
+          | 'clear throat'
+          | 'pause'
+          | 'long pause'
+          | 'emphasis'
+        >;
+
+        /**
+         * Custom expressive voice guidance to use instead of the default Retell expressive
+         * prompt when enable_expressive_mode is true. If omitted or blank, the default
+         * expressive prompt will be used.
+         */
+        expressive_mode_prompt?: string | null;
 
         /**
          * When TTS provider for the selected voice is experiencing outages, we would use
@@ -705,6 +738,11 @@ export namespace BatchCallCreateBatchCallParams {
         version_description?: string | null;
 
         /**
+         * Optional title of the agent version. Used for your own reference.
+         */
+        version_title?: string | null;
+
+        /**
          * If set, determines the vocabulary set to use for transcription. This setting
          * only applies for English agents, for non English agent, this setting is a no-op.
          * Default to general.
@@ -761,21 +799,6 @@ export namespace BatchCallCreateBatchCallParams {
          * will apply.
          */
         voice_temperature?: number;
-
-        /**
-         * Configures when to stop running voicemail detection, as it becomes unlikely to
-         * hit voicemail after a couple minutes, and keep running it will only have
-         * negative impact. The minimum value allowed is 5,000 ms (5 s), and maximum value
-         * allowed is 180,000 (3 minutes). By default, this is set to 30,000 (30 s).
-         */
-        voicemail_detection_timeout_ms?: number;
-
-        /**
-         * The message to be played when the call enters a voicemail. Note that this
-         * feature is only available for phone calls. If you want to hangup after hitting
-         * voicemail, set this to empty string.
-         */
-        voicemail_message?: string;
 
         /**
          * If this option is set, the call will try to detect voicemail in the first 3
@@ -848,14 +871,14 @@ export namespace BatchCallCreateBatchCallParams {
         export interface CustomSttConfig {
           /**
            * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-           * 500 for Soniox
+           * 500 for Soniox, 100 for AssemblyAI.
            */
           endpointing_ms: number;
 
           /**
            * ASR provider name.
            */
-          provider: 'azure' | 'deepgram' | 'soniox';
+          provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
         }
 
         /**
@@ -895,6 +918,13 @@ export namespace BatchCallCreateBatchCallParams {
            * When asked, acknowledge being a virtual assistant.
            */
           ai_disclosure?: boolean;
+
+          /**
+           * Enables Conversational Personality. When true, the agent uses the Conversational
+           * Personality handbook preset, skips Professional Rep Personality during prompt
+           * assembly, and enables internal colloquial rewrite behavior.
+           */
+          conversational_personality?: boolean;
 
           /**
            * Professional call center rep baseline.

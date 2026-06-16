@@ -57,11 +57,15 @@ describe('resource agent', () => {
       enable_backchannel: true,
       enable_dynamic_responsiveness: true,
       enable_dynamic_voice_speed: true,
+      enable_expressive_mode: true,
       end_call_after_silence_ms: 600000,
+      expressive_emotion_tags: ['empathetic', 'excited', 'sigh', 'clear throat', 'emphasis'],
+      expressive_mode_prompt: 'Use [sigh] for thoughtful pauses and [excited] for good news.',
       fallback_voice_ids: ['cartesia-Cimo', 'minimax-Cimo'],
       guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
       handbook_config: {
         ai_disclosure: true,
+        conversational_personality: true,
         default_personality: true,
         echo_verification: true,
         high_empathy: true,
@@ -111,13 +115,12 @@ describe('resource agent', () => {
         timeout_ms: 1000,
       },
       version_description: 'Customer support agent for handling product inquiries',
+      version_title: 'Production hotfix',
       vocab_specialization: 'general',
       voice_emotion: 'calm',
       voice_model: 'eleven_turbo_v2',
       voice_speed: 1,
       voice_temperature: 1,
-      voicemail_detection_timeout_ms: 30000,
-      voicemail_message: 'Hi, please give us a callback.',
       voicemail_option: {
         action: { text: 'Please give us a callback tomorrow at 10am.', type: 'static_text' },
         detection_prompt: 'detection_prompt',
@@ -222,6 +225,7 @@ describe('resource agent', () => {
     const response = await client.agent.publish('agent_xxx', {
       version: 15,
       version_description: 'Hotfix for transfer timeout',
+      version_title: 'Hotfix',
     });
   });
 

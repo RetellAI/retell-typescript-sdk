@@ -63,6 +63,7 @@ describe('resource chatAgent', () => {
       post_chat_analysis_model: 'gpt-4.1-mini',
       signed_url_expiration_ms: 86400000,
       timezone: 'America/New_York',
+      version_title: 'Production hotfix',
       webhook_events: ['chat_started'],
       webhook_timeout_ms: 10000,
       webhook_url: 'https://webhook-url-here',
@@ -162,6 +163,7 @@ describe('resource chatAgent', () => {
     const response = await client.chatAgent.publish('agent_xxx', {
       version: 15,
       version_description: 'Hotfix for transfer timeout',
+      version_title: 'Hotfix',
     });
   });
 
