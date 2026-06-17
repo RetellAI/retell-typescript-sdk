@@ -249,26 +249,6 @@ export interface AgentResponse {
   ambient_sound_volume?: number;
 
   /**
-   * Prompt to determine whether the post call or chat analysis should mark the
-   * interaction as successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post call or chat analysis summary should be generated.
-   * When unset, the default system prompt is used. Set to null to use the default
-   * prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post call or chat analysis should evaluate user
-   * sentiment. When unset, the default system prompt is used. Set to null to use the
-   * default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
-
-  /**
    * Tags assigned to this agent version. Preferred tag is listed first.
    */
   assigned_tags?: Array<string>;
@@ -1361,26 +1341,6 @@ export interface AgentCreateParams {
    * sound. If unset, default value 1 will apply.
    */
   ambient_sound_volume?: number;
-
-  /**
-   * Prompt to determine whether the post call or chat analysis should mark the
-   * interaction as successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post call or chat analysis summary should be generated.
-   * When unset, the default system prompt is used. Set to null to use the default
-   * prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post call or chat analysis should evaluate user
-   * sentiment. When unset, the default system prompt is used. Set to null to use the
-   * default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
 
   /**
    * Only applicable when enable_backchannel is true. Controls how often the agent
@@ -2479,26 +2439,6 @@ export interface AgentUpdateParams {
    * louder ambient sound. If unset, default value 1 will apply.
    */
   ambient_sound_volume?: number;
-
-  /**
-   * Body param: Prompt to determine whether the post call or chat analysis should
-   * mark the interaction as successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * Body param: Prompt to guide how the post call or chat analysis summary should be
-   * generated. When unset, the default system prompt is used. Set to null to use the
-   * default prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Body param: Prompt to guide how the post call or chat analysis should evaluate
-   * user sentiment. When unset, the default system prompt is used. Set to null to
-   * use the default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
 
   /**
    * Body param: Only applicable when enable_backchannel is true. Controls how often

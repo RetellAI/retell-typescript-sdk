@@ -281,26 +281,6 @@ export namespace BatchCallCreateBatchCallParams {
         ambient_sound_volume?: number;
 
         /**
-         * Prompt to determine whether the post call or chat analysis should mark the
-         * interaction as successful. Set to null to use the default prompt.
-         */
-        analysis_successful_prompt?: string | null;
-
-        /**
-         * Prompt to guide how the post call or chat analysis summary should be generated.
-         * When unset, the default system prompt is used. Set to null to use the default
-         * prompt.
-         */
-        analysis_summary_prompt?: string | null;
-
-        /**
-         * Prompt to guide how the post call or chat analysis should evaluate user
-         * sentiment. When unset, the default system prompt is used. Set to null to use the
-         * default prompt.
-         */
-        analysis_user_sentiment_prompt?: string | null;
-
-        /**
          * Only applicable when enable_backchannel is true. Controls how often the agent
          * would backchannel when a backchannel is possible. Value ranging from [0,1].
          * Lower value means less frequent backchannel, while higher value means more

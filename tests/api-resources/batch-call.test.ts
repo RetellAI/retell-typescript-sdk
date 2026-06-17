@@ -37,11 +37,6 @@ describe('resource batchCall', () => {
               allow_user_dtmf: true,
               ambient_sound: 'coffee-shop',
               ambient_sound_volume: 1,
-              analysis_successful_prompt:
-                'The agent finished the task and the call was complete without being cutoff.',
-              analysis_summary_prompt: 'Summarize the outcome of the conversation in two sentences.',
-              analysis_user_sentiment_prompt:
-                "Evaluate the user's sentiment based on their tone and satisfaction level.",
               backchannel_frequency: 0.9,
               backchannel_words: ['yeah', 'uh-huh'],
               begin_message_delay_ms: 1000,

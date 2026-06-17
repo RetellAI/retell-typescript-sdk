@@ -195,24 +195,6 @@ export interface ChatAgentResponse {
   agent_name?: string | null;
 
   /**
-   * The prompt to use for post call analysis to evaluate whether the call is
-   * successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * The prompt to use for post call analysis to summarize the call. Set to null to
-   * use the default prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post chat analysis should evaluate user sentiment. When
-   * unset, the default system prompt is used. Set to null to use the default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
-
-  /**
    * Tags assigned to this chat agent version. Preferred tag is listed first.
    */
   assigned_tags?: Array<string>;
@@ -817,24 +799,6 @@ export interface ChatAgentCreateParams {
    * The name of the chat agent. Only used for your own reference.
    */
   agent_name?: string | null;
-
-  /**
-   * The prompt to use for post call analysis to evaluate whether the call is
-   * successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * The prompt to use for post call analysis to summarize the call. Set to null to
-   * use the default prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Prompt to guide how the post chat analysis should evaluate user sentiment. When
-   * unset, the default system prompt is used. Set to null to use the default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
 
   /**
    * Message to display when the chat is automatically closed.
@@ -1446,25 +1410,6 @@ export interface ChatAgentUpdateParams {
    * Body param: The name of the chat agent. Only used for your own reference.
    */
   agent_name?: string | null;
-
-  /**
-   * Body param: The prompt to use for post call analysis to evaluate whether the
-   * call is successful. Set to null to use the default prompt.
-   */
-  analysis_successful_prompt?: string | null;
-
-  /**
-   * Body param: The prompt to use for post call analysis to summarize the call. Set
-   * to null to use the default prompt.
-   */
-  analysis_summary_prompt?: string | null;
-
-  /**
-   * Body param: Prompt to guide how the post chat analysis should evaluate user
-   * sentiment. When unset, the default system prompt is used. Set to null to use the
-   * default prompt.
-   */
-  analysis_user_sentiment_prompt?: string | null;
 
   /**
    * Body param: Message to display when the chat is automatically closed.
