@@ -31,11 +31,6 @@ describe('resource chatAgent', () => {
         version: 0,
       },
       agent_name: 'Jarvis',
-      analysis_successful_prompt:
-        'The agent finished the task and the call was complete without being cutoff.',
-      analysis_summary_prompt: 'Summarize the call in a few sentences.',
-      analysis_user_sentiment_prompt:
-        "Evaluate the user's sentiment based on their tone and satisfaction level.",
       auto_close_message: 'Thank you for chatting. The conversation has ended.',
       data_storage_retention_days: 30,
       data_storage_setting: 'everything',
