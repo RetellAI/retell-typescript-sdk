@@ -189,7 +189,6 @@ export interface LlmResponse {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | null;
@@ -418,6 +417,13 @@ export namespace LlmResponse {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -429,9 +435,10 @@ export namespace LlmResponse {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -534,14 +541,22 @@ export namespace LlmResponse {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -1690,6 +1705,13 @@ export namespace LlmResponse {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -1701,9 +1723,10 @@ export namespace LlmResponse {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -1806,14 +1829,22 @@ export namespace LlmResponse {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
@@ -2754,7 +2785,6 @@ export interface LlmCreateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | null;
@@ -2978,6 +3008,13 @@ export namespace LlmCreateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -2989,9 +3026,10 @@ export namespace LlmCreateParams {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -3094,14 +3132,22 @@ export namespace LlmCreateParams {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -4250,6 +4296,13 @@ export namespace LlmCreateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -4261,9 +4314,10 @@ export namespace LlmCreateParams {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -4366,14 +4420,22 @@ export namespace LlmCreateParams {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
@@ -5333,7 +5395,6 @@ export interface LlmUpdateParams {
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
-    | 'gemini-2.5-flash-lite'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | null;
@@ -5557,6 +5618,13 @@ export namespace LlmUpdateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -5568,9 +5636,10 @@ export namespace LlmUpdateParams {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -5673,14 +5742,22 @@ export namespace LlmUpdateParams {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -6829,6 +6906,13 @@ export namespace LlmUpdateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -6840,9 +6924,10 @@ export namespace LlmUpdateParams {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -6945,14 +7030,22 @@ export namespace LlmUpdateParams {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
