@@ -4531,7 +4531,6 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;
@@ -5279,7 +5278,6 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
 
@@ -5346,7 +5344,6 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;
@@ -5900,7 +5897,6 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;
@@ -6648,7 +6644,6 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
 
@@ -6715,7 +6710,6 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;
@@ -7269,7 +7263,6 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;
@@ -8017,7 +8010,6 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
-          | 'gemini-2.5-flash-lite'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite';
 
@@ -8084,7 +8076,6 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | null;

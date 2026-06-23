@@ -785,7 +785,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -1489,7 +1488,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -1751,6 +1749,13 @@ export namespace ConversationFlowComponentResponse {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -1762,9 +1767,10 @@ export namespace ConversationFlowComponentResponse {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -1867,14 +1873,22 @@ export namespace ConversationFlowComponentResponse {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
@@ -2967,7 +2981,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -3442,7 +3455,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -3924,7 +3936,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -4150,6 +4161,13 @@ export namespace ConversationFlowComponentResponse {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -4161,9 +4179,10 @@ export namespace ConversationFlowComponentResponse {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -4266,14 +4285,22 @@ export namespace ConversationFlowComponentResponse {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -4577,7 +4604,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -5020,7 +5046,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -5444,7 +5469,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -5881,7 +5905,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -6447,7 +6470,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -6831,7 +6853,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -7315,7 +7336,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -7996,7 +8016,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -8268,7 +8287,6 @@ export namespace ConversationFlowComponentResponse {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -9264,7 +9282,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -9968,7 +9985,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -10230,6 +10246,13 @@ export namespace ConversationFlowComponentCreateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -10241,9 +10264,10 @@ export namespace ConversationFlowComponentCreateParams {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -10346,14 +10370,22 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
@@ -11446,7 +11478,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -11921,7 +11952,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -12403,7 +12433,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -12629,6 +12658,13 @@ export namespace ConversationFlowComponentCreateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -12640,9 +12676,10 @@ export namespace ConversationFlowComponentCreateParams {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -12745,14 +12782,22 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -13056,7 +13101,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -13499,7 +13543,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -13923,7 +13966,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -14360,7 +14402,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -14926,7 +14967,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -15310,7 +15350,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -15794,7 +15833,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -16475,7 +16513,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -16747,7 +16784,6 @@ export namespace ConversationFlowComponentCreateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -17780,7 +17816,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -18484,7 +18519,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -18746,6 +18780,13 @@ export namespace ConversationFlowComponentUpdateParams {
         agent_detection_timeout_ms?: number;
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
@@ -18757,9 +18798,10 @@ export namespace ConversationFlowComponentUpdateParams {
         ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set to true, will not perform human detection for the transfer. Default to
@@ -18862,14 +18904,22 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'agentic_warm_transfer';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
          * Whether to play an audio cue when bridging the call. Defaults to true.
          */
         enable_bridge_audio_cue?: boolean;
 
         /**
-         * The music to play while the caller is being transferred.
+         * The music to play while the caller is being transferred. Use `custom` together
+         * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
          */
-        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
         /**
          * If set, when transfer is successful, will say the handoff message to both the
@@ -19962,7 +20012,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -20437,7 +20486,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -20919,7 +20967,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -21145,6 +21192,13 @@ export namespace ConversationFlowComponentUpdateParams {
       agent_detection_timeout_ms?: number;
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
@@ -21156,9 +21210,10 @@ export namespace ConversationFlowComponentUpdateParams {
       ivr_option?: TransferOptionWarmTransfer.IvrOption;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will not perform human detection for the transfer. Default to
@@ -21261,14 +21316,22 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'agentic_warm_transfer';
 
       /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
        * Whether to play an audio cue when bridging the call. Defaults to true.
        */
       enable_bridge_audio_cue?: boolean;
 
       /**
-       * The music to play while the caller is being transferred.
+       * The music to play while the caller is being transferred. Use `custom` together
+       * with `custom_on_hold_music_asset_id` to play an uploaded audio asset.
        */
-      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone';
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set, when transfer is successful, will say the handoff message to both the
@@ -21572,7 +21635,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -22015,7 +22077,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -22439,7 +22500,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -22876,7 +22936,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -23442,7 +23501,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -23826,7 +23884,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -24310,7 +24367,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -24991,7 +25047,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
@@ -25263,7 +25318,6 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
         | 'claude-4.5-haiku'
-        | 'gemini-2.5-flash-lite'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite';
 
