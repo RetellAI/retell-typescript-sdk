@@ -2277,6 +2277,14 @@ export namespace ConversationFlowComponentResponse {
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
@@ -8439,6 +8447,14 @@ export namespace ConversationFlowComponentResponse {
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
@@ -10774,6 +10790,14 @@ export namespace ConversationFlowComponentCreateParams {
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
@@ -16936,6 +16960,14 @@ export namespace ConversationFlowComponentCreateParams {
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
@@ -19308,6 +19340,14 @@ export namespace ConversationFlowComponentUpdateParams {
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
       /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
+
+      /**
        * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
@@ -25436,6 +25476,14 @@ export namespace ConversationFlowComponentUpdateParams {
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
 
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
