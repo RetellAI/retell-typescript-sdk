@@ -157,8 +157,8 @@ export const sdkMethods: SdkMethod[] = [
   {
     clientCallName: 'client.agent.list',
     fullyQualifiedName: 'agent.list',
-    httpMethod: 'get',
-    httpPath: '/list-agents',
+    httpMethod: 'post',
+    httpPath: '/v2/list-agents',
   },
   {
     clientCallName: 'client.agent.update',
@@ -211,8 +211,8 @@ export const sdkMethods: SdkMethod[] = [
   {
     clientCallName: 'client.chatAgent.list',
     fullyQualifiedName: 'chatAgent.list',
-    httpMethod: 'get',
-    httpPath: '/list-chat-agents',
+    httpMethod: 'post',
+    httpPath: '/v2/list-agents',
   },
   {
     clientCallName: 'client.chatAgent.update',

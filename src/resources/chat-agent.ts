@@ -44,15 +44,23 @@ export class ChatAgent extends APIResource {
   }
 
   /**
-   * List all chat agents
+   * List unique agents with pagination.
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const chatAgents = await client.chatAgent.list();
+   * ```
    */
   list(
-    query: ChatAgentListParams | null | undefined = {},
+    params: ChatAgentListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ChatAgentListResponse> {
-    return this._client.get('/list-chat-agents', { query, ...options });
+    const { limit, pagination_key, sort_order, ...body } = params ?? {};
+    return this._client.post('/v2/list-agents', {
+      query: { limit, pagination_key, sort_order },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -777,7 +785,54 @@ export namespace ChatAgentResponse {
   }
 }
 
-export type ChatAgentListResponse = Array<ChatAgentResponse>;
+export interface ChatAgentListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<ChatAgentListResponse.Item>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export namespace ChatAgentListResponse {
+  export interface Item {
+    /**
+     * Unique id of agent.
+     */
+    agent_id: string;
+
+    /**
+     * The name of the agent. Only used for your own reference.
+     */
+    agent_name: string;
+
+    channel: 'voice' | 'chat';
+
+    /**
+     * Authoritative root tags for this agent, keyed by tag name.
+     */
+    tags: { [key: string]: Item.Tags };
+
+    /**
+     * User modification timestamp (milliseconds since epoch). Either the time of last
+     * update or creation if no updates available.
+     */
+    user_modified_timestamp: number;
+  }
+
+  export namespace Item {
+    export interface Tags {
+      dynamic_variables?: { [key: string]: string };
+
+      version?: number;
+    }
+  }
+}
 
 export type ChatAgentCreateVersionResponse = AgentAPI.AgentResponse | ChatAgentResponse;
 
@@ -1372,29 +1427,53 @@ export interface ChatAgentRetrieveParams {
 
 export interface ChatAgentListParams {
   /**
-   * If true, only return the latest version of each chat agent.
-   */
-  is_latest?: boolean;
-
-  /**
-   * A limit on the number of objects to be returned. Limit can range between 1 and
-   * 1000, and the default is 1000.
+   * Query param: Maximum number of items to return.
    */
   limit?: number;
 
   /**
-   * The pagination key to continue fetching the next page of agents. Pagination key
-   * is represented by a agent id, pagination key and version pair is exclusive (not
-   * included in the fetched page). If not set, will start from the beginning.
+   * Query param: Pagination key for fetching the next page.
    */
   pagination_key?: string;
 
   /**
-   * Specifies the version of the agent associated with the pagination_key. When
-   * paginating, both the pagination_key and its version must be provided to ensure
-   * consistent ordering and to fetch the next page correctly.
+   * Query param: Sort order for results.
    */
-  pagination_key_version?: number;
+  sort_order?: 'ascending' | 'descending';
+
+  /**
+   * Body param: Filters for listing agents. All provided filters are connected with
+   * AND.
+   */
+  filter_criteria?: ChatAgentListParams.FilterCriteria;
+}
+
+export namespace ChatAgentListParams {
+  /**
+   * Filters for listing agents. All provided filters are connected with AND.
+   */
+  export interface FilterCriteria {
+    channel?: FilterCriteria.Channel;
+
+    /**
+     * Case-insensitive substring search over agent name, plus substring search over
+     * agent id.
+     */
+    query?: string;
+  }
+
+  export namespace FilterCriteria {
+    export interface Channel {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: 'voice' | 'chat';
+    }
+  }
 }
 
 export interface ChatAgentUpdateParams {

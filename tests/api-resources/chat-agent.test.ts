@@ -107,10 +107,17 @@ describe('resource chatAgent', () => {
     await expect(
       client.chatAgent.list(
         {
-          is_latest: true,
-          limit: 50,
-          pagination_key: '16b980523634a6dc504898cda492e939',
-          pagination_key_version: 0,
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          sort_order: 'ascending',
+          filter_criteria: {
+            channel: {
+              op: 'eq',
+              type: 'string',
+              value: 'voice',
+            },
+            query: 'query',
+          },
         },
         { path: '/_stainless_unknown_path' },
       ),

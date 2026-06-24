@@ -920,35 +920,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'list',
-    endpoint: '/list-agents',
-    httpMethod: 'get',
+    endpoint: '/v2/list-agents',
+    httpMethod: 'post',
     summary: '',
-    description: 'List all agents',
+    description: 'List unique agents with pagination.',
     stainlessPath: '(resource) agent > (method) list',
     qualified: 'client.agent.list',
     params: [
-      'is_latest?: boolean;',
       'limit?: number;',
       'pagination_key?: string;',
-      'pagination_key_version?: number;',
+      "sort_order?: 'ascending' | 'descending';",
+      "filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; };",
     ],
-    response: 'object[]',
+    response:
+      "{ has_more?: boolean; items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]; pagination_key?: string; }",
     markdown:
-      "## list\n\n`client.agent.list(is_latest?: boolean, limit?: number, pagination_key?: string, pagination_key_version?: number): object[]`\n\n**get** `/list-agents`\n\nList all agents\n\n### Parameters\n\n- `is_latest?: boolean`\n  If true, only return the latest version of each agent.\n\n- `limit?: number`\n  A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 1000.\n\n- `pagination_key?: string`\n  The pagination key to continue fetching the next page of agents. Pagination key is represented by a agent id, pagination key and version pair is exclusive (not included in the fetched page). If not set, will start from the beginning.\n\n- `pagination_key_version?: number`\n  Specifies the version of the agent associated with the pagination_key. When paginating, both the pagination_key and its version must be provided to ensure consistent ordering and to fetch the next page correctly.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: object; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: object | object | object | object; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponses = await client.agent.list();\n\nconsole.log(agentResponses);\n```",
+      "## list\n\n`client.agent.list(limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending', filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; }): { has_more?: boolean; items?: object[]; pagination_key?: string; }`\n\n**post** `/v2/list-agents`\n\nList unique agents with pagination.\n\n### Parameters\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n- `filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; }`\n  Filters for listing agents. All provided filters are connected with AND.\n  - `channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }`\n  - `query?: string`\n    Case-insensitive substring search over agent name, plus substring search over agent id.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agents = await client.agent.list();\n\nconsole.log(agents);\n```",
     perLanguage: {
       typescript: {
         method: 'client.agent.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponses = await client.agent.list();\n\nconsole.log(agentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agents = await client.agent.list();\n\nconsole.log(agents.has_more);",
       },
       http: {
         example:
-          'curl https://api.retellai.com/list-agents \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'agent.list',
         example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_responses = client.agent.list()\nprint(agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagents = client.agent.list()\nprint(agents.has_more)',
       },
     },
   },
@@ -1268,36 +1269,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'list',
-    endpoint: '/list-chat-agents',
-    httpMethod: 'get',
+    endpoint: '/v2/list-agents',
+    httpMethod: 'post',
     summary: '',
-    description: 'List all chat agents',
+    description: 'List unique agents with pagination.',
     stainlessPath: '(resource) chat_agent > (method) list',
     qualified: 'client.chatAgent.list',
     params: [
-      'is_latest?: boolean;',
       'limit?: number;',
       'pagination_key?: string;',
-      'pagination_key_version?: number;',
+      "sort_order?: 'ascending' | 'descending';",
+      "filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; };",
     ],
     response:
-      "{ agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; agent_name?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: object; handbook_config?: object; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: object; post_chat_analysis_data?: object | object | object | object | object[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; version_title?: string; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]",
+      "{ has_more?: boolean; items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]; pagination_key?: string; }",
     markdown:
-      "## list\n\n`client.chatAgent.list(is_latest?: boolean, limit?: number, pagination_key?: string, pagination_key_version?: number): object[]`\n\n**get** `/list-chat-agents`\n\nList all chat agents\n\n### Parameters\n\n- `is_latest?: boolean`\n  If true, only return the latest version of each chat agent.\n\n- `limit?: number`\n  A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 1000.\n\n- `pagination_key?: string`\n  The pagination key to continue fetching the next page of agents. Pagination key is represented by a agent id, pagination key and version pair is exclusive (not included in the fetched page). If not set, will start from the beginning.\n\n- `pagination_key_version?: number`\n  Specifies the version of the agent associated with the pagination_key. When paginating, both the pagination_key and its version must be provided to ensure consistent ordering and to fetch the next page correctly.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; version_title?: string; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst chatAgentResponses = await client.chatAgent.list();\n\nconsole.log(chatAgentResponses);\n```",
+      "## list\n\n`client.chatAgent.list(limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending', filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; }): { has_more?: boolean; items?: object[]; pagination_key?: string; }`\n\n**post** `/v2/list-agents`\n\nList unique agents with pagination.\n\n### Parameters\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n- `filter_criteria?: { channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }; query?: string; }`\n  Filters for listing agents. All provided filters are connected with AND.\n  - `channel?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: 'voice' | 'chat'; }`\n  - `query?: string`\n    Case-insensitive substring search over agent name, plus substring search over agent id.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { agent_id: string; agent_name: string; channel: 'voice' | 'chat'; tags: object; user_modified_timestamp: number; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst chatAgents = await client.chatAgent.list();\n\nconsole.log(chatAgents);\n```",
     perLanguage: {
       typescript: {
         method: 'client.chatAgent.list',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponses = await client.chatAgent.list();\n\nconsole.log(chatAgentResponses);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgents = await client.chatAgent.list();\n\nconsole.log(chatAgents.has_more);",
       },
       http: {
         example:
-          'curl https://api.retellai.com/list-chat-agents \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
       python: {
         method: 'chat_agent.list',
         example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_responses = client.chat_agent.list()\nprint(chat_agent_responses)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agents = client.chat_agent.list()\nprint(chat_agents.has_more)',
       },
     },
   },
