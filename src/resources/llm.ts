@@ -945,6 +945,14 @@ export namespace LlmResponse {
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
@@ -2231,6 +2239,14 @@ export namespace LlmResponse {
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
@@ -3536,6 +3552,14 @@ export namespace LlmCreateParams {
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
@@ -4822,6 +4846,14 @@ export namespace LlmCreateParams {
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
@@ -6146,6 +6178,14 @@ export namespace LlmUpdateParams {
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
     /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
@@ -7432,6 +7472,14 @@ export namespace LlmUpdateParams {
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+      /**
+       * How the tool's `parameters` are authored and shown in the dashboard editor —
+       * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+       * produce the same `parameters` schema; this does not change how the request body
+       * is encoded (see `args_at_root`).
+       */
+      parameter_type?: 'json' | 'form';
 
       /**
        * The parameters the functions accepts, described as a JSON Schema object. See
