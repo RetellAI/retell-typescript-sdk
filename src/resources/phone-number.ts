@@ -171,8 +171,7 @@ export interface PhoneNumberResponse {
   /**
    * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound SMS, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_sms_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_sms_agents?: Array<PhoneNumberResponse.InboundSMSAgent> | null;
 
@@ -205,8 +204,7 @@ export interface PhoneNumberResponse {
   /**
    * Outbound SMS agents to bind to the number with weights. If set and non-empty,
    * one agent will be picked randomly for each outbound SMS, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_sms_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_sms_agents?: Array<PhoneNumberResponse.OutboundSMSAgent> | null;
 
@@ -662,8 +660,7 @@ export interface PhoneNumberUpdateParams {
   /**
    * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound SMS, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to inbound_sms_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   inbound_sms_agents?: Array<PhoneNumberUpdateParams.InboundSMSAgent> | null;
 
@@ -696,8 +693,7 @@ export interface PhoneNumberUpdateParams {
   /**
    * Outbound SMS agents to bind to the number with weights. If set and non-empty,
    * one agent will be picked randomly for each outbound SMS, with probability
-   * proportional to the weight. Total weights must add up to 1. If not set or empty,
-   * fallback to outbound_sms_agent_id.
+   * proportional to the weight. Total weights must add up to 1.
    */
   outbound_sms_agents?: Array<PhoneNumberUpdateParams.OutboundSMSAgent> | null;
 
