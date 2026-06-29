@@ -227,7 +227,8 @@ export interface TestCaseDefinitionResponse {
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite';
+    | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash';
 
   /**
    * Array of metric names to evaluate
@@ -489,7 +490,8 @@ export interface TestCreateTestCaseDefinitionParams {
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite';
+    | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash';
 
   /**
    * Mock tool calls for testing
@@ -631,7 +633,8 @@ export interface TestUpdateTestCaseDefinitionParams {
     | 'claude-4.6-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite';
+    | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash';
 
   /**
    * Array of metric names to evaluate

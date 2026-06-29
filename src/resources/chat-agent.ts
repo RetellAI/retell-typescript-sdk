@@ -441,6 +441,7 @@ export interface ChatAgentResponse {
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash'
     | null;
 
   /**
@@ -1078,6 +1079,7 @@ export interface ChatAgentCreateParams {
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash'
     | null;
 
   /**
@@ -1713,6 +1715,7 @@ export interface ChatAgentUpdateParams {
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
+    | 'gemini-3.5-flash'
     | null;
 
   /**
