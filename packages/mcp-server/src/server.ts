@@ -9,13 +9,11 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'retell-sdk';
 import Retell from 'retell-sdk';
-import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { setLocalSearch } from './docs-search-tool';
 import { LocalDocsSearch } from './local-docs-search';
 import { getInstructions } from './instructions';
 import { McpOptions } from './options';
-import { blockedMethodsForCodeTool } from './methods';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
 
 export const newMcpServer = async ({
@@ -178,14 +176,6 @@ export async function initMcpServer(params: {
 export function selectTools(options?: McpOptions): McpTool[] {
   const includedTools = [];
 
-  if (options?.includeCodeTool ?? true) {
-    includedTools.push(
-      codeTool({
-        blockedMethods: blockedMethodsForCodeTool(options),
-        codeExecutionMode: options?.codeExecutionMode ?? 'local',
-      }),
-    );
-  }
   if (options?.includeDocsTools ?? true) {
     includedTools.push(docsSearchTool);
   }
