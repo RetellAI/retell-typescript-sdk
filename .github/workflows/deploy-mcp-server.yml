@@ -108,7 +108,7 @@ jobs:
                   }
                 ],
                 "essential": true,
-                "command": ["--transport=http", "--port=3000", "--no-tools=code"],
+                "command": ["--transport=http", "--port=3000"],
                 "environment": [],
                 "secrets": [],
                 "logConfiguration": {
