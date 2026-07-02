@@ -4533,6 +4533,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -5279,7 +5280,8 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash';
 
         /**
          * Type of model choice
@@ -5346,6 +5348,7 @@ export namespace CallCreatePhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -5899,6 +5902,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -6645,7 +6649,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash';
 
         /**
          * Type of model choice
@@ -6712,6 +6717,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -7265,6 +7271,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -8011,7 +8018,8 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.6-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite';
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash';
 
         /**
          * Type of model choice
@@ -8078,6 +8086,7 @@ export namespace CallCreateWebCallParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
         | null;
 
       /**
@@ -8177,6 +8186,11 @@ export namespace CallListParams {
      * Filter by agent(s). Agent filters are connected by OR.
      */
     agent?: Array<FilterCriteria.Agent>;
+
+    /**
+     * Filter by agent environment tag(s) (e.g. "prod", "staging").
+     */
+    agent_tag?: FilterCriteria.AgentTag;
 
     /**
      * Filter by batch call ID.
@@ -8303,6 +8317,20 @@ export namespace CallListParams {
        * Specific versions to filter on. If not provided, all versions are included.
        */
       version?: Array<number>;
+    }
+
+    /**
+     * Filter by agent environment tag(s) (e.g. "prod", "staging").
+     */
+    export interface AgentTag {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     /**

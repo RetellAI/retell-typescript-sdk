@@ -640,6 +640,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
           | null;
 
         /**
@@ -1386,7 +1387,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'claude-4.6-sonnet'
             | 'claude-4.5-haiku'
             | 'gemini-3.0-flash'
-            | 'gemini-3.1-flash-lite';
+            | 'gemini-3.1-flash-lite'
+            | 'gemini-3.5-flash';
 
           /**
            * Type of model choice
@@ -1453,6 +1455,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
           | null;
 
         /**

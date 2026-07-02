@@ -169,10 +169,17 @@ describe('resource agent', () => {
     await expect(
       client.agent.list(
         {
-          is_latest: true,
-          limit: 50,
-          pagination_key: 'agent_1ffdb9717444d0e77346838911',
-          pagination_key_version: 0,
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          sort_order: 'ascending',
+          filter_criteria: {
+            channel: {
+              op: 'eq',
+              type: 'string',
+              value: 'voice',
+            },
+            query: 'query',
+          },
         },
         { path: '/_stainless_unknown_path' },
       ),

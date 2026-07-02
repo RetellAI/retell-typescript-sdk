@@ -508,6 +508,11 @@ describe('resource call', () => {
         {
           filter_criteria: {
             agent: [{ agent_id: 'x', version: [0] }],
+            agent_tag: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
             batch_call_id: {
               op: 'eq',
               type: 'string',
