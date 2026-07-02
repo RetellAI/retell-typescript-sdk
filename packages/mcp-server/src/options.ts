@@ -15,6 +15,7 @@ export type CLIOptions = McpOptions & {
 };
 
 export type McpOptions = {
+  includeCodeTool?: boolean | undefined;
   includeDocsTools?: boolean | undefined;
   stainlessApiKey?: string | undefined;
   docsSearchMode?: 'local' | undefined;
@@ -79,7 +80,7 @@ export function parseCLIOptions(): CLIOptions {
     .option('no-tools', {
       type: 'string',
       array: true,
-      choices: ['docs'],
+      choices: ['code', 'docs'],
       description: 'Tools to explicitly disable',
     })
     .option('port', {
@@ -97,7 +98,7 @@ export function parseCLIOptions(): CLIOptions {
     .option('tools', {
       type: 'string',
       array: true,
-      choices: ['docs'],
+      choices: ['code', 'docs'],
       description: 'Tools to explicitly enable',
     })
     .option('transport', {
@@ -112,11 +113,12 @@ export function parseCLIOptions(): CLIOptions {
 
   const argv = opts.parseSync();
 
-  const shouldIncludeToolType = (toolType: 'docs') =>
+  const shouldIncludeToolType = (toolType: 'code' | 'docs') =>
     argv.noTools?.includes(toolType) ? false
     : argv.tools?.includes(toolType) ? true
     : undefined;
 
+  const includeCodeTool = shouldIncludeToolType('code');
   const includeDocsTools = shouldIncludeToolType('docs');
 
   const transport = argv.transport as 'stdio' | 'http';
@@ -126,6 +128,7 @@ export function parseCLIOptions(): CLIOptions {
     : 'json';
 
   return {
+    ...(includeCodeTool !== undefined && { includeCodeTool }),
     ...(includeDocsTools !== undefined && { includeDocsTools }),
     debug: !!argv.debug,
     stainlessApiKey: argv.stainlessApiKey,
@@ -153,8 +156,8 @@ const coerceArray = <T extends z.ZodTypeAny>(zodType: T) =>
   );
 
 const QueryOptions = z.object({
-  tools: coerceArray(z.enum(['docs'])).describe('Specify which MCP tools to use'),
-  no_tools: coerceArray(z.enum(['docs'])).describe('Specify which MCP tools to not use.'),
+  tools: coerceArray(z.enum(['code', 'docs'])).describe('Specify which MCP tools to use'),
+  no_tools: coerceArray(z.enum(['code', 'docs'])).describe('Specify which MCP tools to not use.'),
   tool: coerceArray(z.string()).describe('Include tools matching the specified names'),
 });
 
@@ -162,12 +165,18 @@ export function parseQueryOptions(defaultOptions: McpOptions, query: unknown): M
   const queryObject = typeof query === 'string' ? qs.parse(query) : query;
   const queryOptions = QueryOptions.parse(queryObject);
 
+  let codeTool: boolean | undefined =
+    queryOptions.no_tools && queryOptions.no_tools?.includes('code') ? false
+    : queryOptions.tools?.includes('code') ? true
+    : defaultOptions.includeCodeTool;
+
   let docsTools: boolean | undefined =
     queryOptions.no_tools && queryOptions.no_tools?.includes('docs') ? false
     : queryOptions.tools?.includes('docs') ? true
     : defaultOptions.includeDocsTools;
 
   return {
+    ...(codeTool !== undefined && { includeCodeTool: codeTool }),
     ...(docsTools !== undefined && { includeDocsTools: docsTools }),
     codeExecutionMode: defaultOptions.codeExecutionMode,
     docsSearchMode: defaultOptions.docsSearchMode,
