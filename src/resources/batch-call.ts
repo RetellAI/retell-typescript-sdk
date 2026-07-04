@@ -180,7 +180,7 @@ export namespace BatchCallCreateBatchCallParams {
      * For this particular call, override the agent version used with this version.
      * This does not bind the agent to this number, this is for one time override.
      */
-    override_agent_version?: number | string;
+    override_agent_version?: string | number;
 
     /**
      * Add optional dynamic variables in key value pairs of string that injects into
@@ -637,6 +637,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
+          | 'claude-5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
@@ -747,9 +748,7 @@ export namespace BatchCallCreateBatchCallParams {
          * ones will apply. Check out dashboard for more details of each voice model.
          */
         voice_model?:
-          | 'eleven_turbo_v2'
           | 'eleven_flash_v2'
-          | 'eleven_turbo_v2_5'
           | 'eleven_flash_v2_5'
           | 'eleven_multilingual_v2'
           | 'eleven_v3'
@@ -1385,6 +1384,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gpt-5.5'
             | 'claude-4.5-sonnet'
             | 'claude-4.6-sonnet'
+            | 'claude-5-sonnet'
             | 'claude-4.5-haiku'
             | 'gemini-3.0-flash'
             | 'gemini-3.1-flash-lite'
@@ -1452,6 +1452,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.5'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
+          | 'claude-5-sonnet'
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'

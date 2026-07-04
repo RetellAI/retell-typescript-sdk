@@ -340,7 +340,7 @@ export interface PlaygroundCompletionParams {
   /**
    * Query param: Agent version to use. Defaults to latest.
    */
-  version?: number | string;
+  version?: string | number;
 
   /**
    * Body param: Conversation flow component id. Required when current_node_id refers

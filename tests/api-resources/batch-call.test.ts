@@ -122,7 +122,7 @@ describe('resource batchCall', () => {
               vocab_specialization: 'general',
               voice_emotion: 'calm',
               voice_id: 'retell-Cimo',
-              voice_model: 'eleven_turbo_v2',
+              voice_model: 'eleven_flash_v2',
               voice_speed: 1,
               voice_temperature: 1,
               voicemail_option: {
@@ -164,7 +164,7 @@ describe('resource batchCall', () => {
           ignore_e164_validation: false,
           metadata: {},
           override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-          override_agent_version: 1,
+          override_agent_version: 'latest_published',
           retell_llm_dynamic_variables: { customer_name: 'John Doe' },
         },
       ],

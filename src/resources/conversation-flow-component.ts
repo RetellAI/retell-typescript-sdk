@@ -784,6 +784,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -1488,6 +1489,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -1953,7 +1955,7 @@ export namespace ConversationFlowComponentResponse {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -2080,7 +2082,7 @@ export namespace ConversationFlowComponentResponse {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2990,6 +2992,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3465,6 +3468,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3947,6 +3951,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -4376,7 +4381,7 @@ export namespace ConversationFlowComponentResponse {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -4616,6 +4621,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5059,6 +5065,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5483,6 +5490,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5920,6 +5928,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -6486,6 +6495,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -6533,7 +6543,7 @@ export namespace ConversationFlowComponentResponse {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Position for frontend display
@@ -6870,6 +6880,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -7354,6 +7365,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -8035,6 +8047,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -8307,6 +8320,7 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -9311,6 +9325,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -10015,6 +10030,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -10480,7 +10496,7 @@ export namespace ConversationFlowComponentCreateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -10607,7 +10623,7 @@ export namespace ConversationFlowComponentCreateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -11517,6 +11533,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -11992,6 +12009,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -12474,6 +12492,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -12903,7 +12922,7 @@ export namespace ConversationFlowComponentCreateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -13143,6 +13162,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -13586,6 +13606,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -14010,6 +14031,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -14447,6 +14469,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -15013,6 +15036,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -15060,7 +15084,7 @@ export namespace ConversationFlowComponentCreateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Position for frontend display
@@ -15397,6 +15421,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -15881,6 +15906,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -16562,6 +16588,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -16834,6 +16861,7 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -17875,6 +17903,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -18579,6 +18608,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -19044,7 +19074,7 @@ export namespace ConversationFlowComponentUpdateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -19171,7 +19201,7 @@ export namespace ConversationFlowComponentUpdateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -20081,6 +20111,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -20556,6 +20587,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -21038,6 +21070,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -21467,7 +21500,7 @@ export namespace ConversationFlowComponentUpdateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -21707,6 +21740,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -22150,6 +22184,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -22574,6 +22609,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -23011,6 +23047,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -23577,6 +23614,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -23624,7 +23662,7 @@ export namespace ConversationFlowComponentUpdateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Position for frontend display
@@ -23961,6 +23999,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -24445,6 +24484,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -25126,6 +25166,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -25398,6 +25439,7 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'

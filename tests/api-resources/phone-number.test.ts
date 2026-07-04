@@ -47,7 +47,7 @@ describe('resource phoneNumber', () => {
         {
           agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
           weight: 0.5,
-          agent_version: 1,
+          agent_version: 'latest_published',
         },
       ],
       inbound_webhook_url: 'https://example.com/inbound-webhook',
@@ -56,7 +56,7 @@ describe('resource phoneNumber', () => {
         {
           agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
           weight: 0.5,
-          agent_version: 1,
+          agent_version: 'latest_published',
         },
       ],
       sip_trunk_auth_password: '123456',

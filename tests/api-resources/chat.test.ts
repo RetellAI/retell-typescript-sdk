@@ -24,7 +24,7 @@ describe('resource chat', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.chat.create({
       agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      agent_version: 1,
+      agent_version: 'latest_published',
       metadata: {},
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
@@ -52,7 +52,7 @@ describe('resource chat', () => {
       to_number: '+14155551234',
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      override_agent_version: 1,
+      override_agent_version: 'latest_published',
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });

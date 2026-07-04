@@ -188,6 +188,7 @@ export interface LlmResponse {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -620,7 +621,7 @@ export namespace LlmResponse {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -747,7 +748,7 @@ export namespace LlmResponse {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -1916,7 +1917,7 @@ export namespace LlmResponse {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -2043,7 +2044,7 @@ export namespace LlmResponse {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2801,6 +2802,7 @@ export interface LlmCreateParams {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -3228,7 +3230,7 @@ export namespace LlmCreateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -3355,7 +3357,7 @@ export namespace LlmCreateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -4524,7 +4526,7 @@ export namespace LlmCreateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -4651,7 +4653,7 @@ export namespace LlmCreateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -5428,6 +5430,7 @@ export interface LlmUpdateParams {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -5855,7 +5858,7 @@ export namespace LlmUpdateParams {
           /**
            * The version of the transfer agent to use.
            */
-          agent_version: number | string;
+          agent_version: string | number;
         }
       }
 
@@ -5982,7 +5985,7 @@ export namespace LlmUpdateParams {
      * The version of the agent to swap to. If not specified, will use the latest
      * version.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
 
     /**
      * Describes what the tool does, sometimes can also include information about when
@@ -7151,7 +7154,7 @@ export namespace LlmUpdateParams {
             /**
              * The version of the transfer agent to use.
              */
-            agent_version: number | string;
+            agent_version: string | number;
           }
         }
 
@@ -7278,7 +7281,7 @@ export namespace LlmUpdateParams {
        * The version of the agent to swap to. If not specified, will use the latest
        * version.
        */
-      agent_version?: number | string;
+      agent_version?: string | number;
 
       /**
        * Describes what the tool does, sometimes can also include information about when

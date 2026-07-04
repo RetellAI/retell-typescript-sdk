@@ -827,7 +827,7 @@ export interface ChatCreateParams {
    * The version of the chat agent to use for the chat. If not provided, will default
    * to latest version.
    */
-  agent_version?: number | string;
+  agent_version?: string | number;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
@@ -874,7 +874,7 @@ export interface ChatCreateSMSChatParams {
    * This does not bind the agent version to this number, this is for one time
    * override.
    */
-  override_agent_version?: number | string;
+  override_agent_version?: string | number;
 
   /**
    * Add optional dynamic variables in key value pairs of string that injects into

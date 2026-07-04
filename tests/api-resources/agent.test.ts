@@ -113,7 +113,7 @@ describe('resource agent', () => {
       version_title: 'Production hotfix',
       vocab_specialization: 'general',
       voice_emotion: 'calm',
-      voice_model: 'eleven_turbo_v2',
+      voice_model: 'eleven_flash_v2',
       voice_speed: 1,
       voice_temperature: 1,
       voicemail_option: {
@@ -145,7 +145,7 @@ describe('resource agent', () => {
     await expect(
       client.agent.retrieve(
         '16b980523634a6dc504898cda492e939',
-        { version: 1 },
+        { version: 'latest_published' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);
