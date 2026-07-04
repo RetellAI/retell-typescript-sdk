@@ -237,7 +237,7 @@ export namespace PhoneNumberResponse {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface InboundSMSAgent {
@@ -260,7 +260,7 @@ export namespace PhoneNumberResponse {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundAgent {
@@ -283,7 +283,7 @@ export namespace PhoneNumberResponse {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundSMSAgent {
@@ -306,7 +306,7 @@ export namespace PhoneNumberResponse {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface SipOutboundTrunkConfig {
@@ -446,7 +446,7 @@ export namespace PhoneNumberCreateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundAgent {
@@ -469,7 +469,7 @@ export namespace PhoneNumberCreateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 }
 
@@ -572,7 +572,7 @@ export namespace PhoneNumberImportParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundAgent {
@@ -595,7 +595,7 @@ export namespace PhoneNumberImportParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 }
 
@@ -731,7 +731,7 @@ export namespace PhoneNumberUpdateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface InboundSMSAgent {
@@ -754,7 +754,7 @@ export namespace PhoneNumberUpdateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundAgent {
@@ -777,7 +777,7 @@ export namespace PhoneNumberUpdateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 
   export interface OutboundSMSAgent {
@@ -800,7 +800,7 @@ export namespace PhoneNumberUpdateParams {
      * resolution applies dynamic variables from the preferred tag for that resolved
      * version (most recently assigned), if any.
      */
-    agent_version?: number | string;
+    agent_version?: string | number;
   }
 }
 

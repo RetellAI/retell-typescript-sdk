@@ -83,7 +83,7 @@ describe('resource chatAgent', () => {
     await expect(
       client.chatAgent.retrieve(
         '16b980523634a6dc504898cda492e939',
-        { version: 1 },
+        { version: 'latest_published' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);

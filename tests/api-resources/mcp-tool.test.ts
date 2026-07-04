@@ -27,7 +27,7 @@ describe('resource mcpTool', () => {
     const response = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {
       mcp_id: 'mcp-server-1',
       component_id: 'component-123',
-      version: 1,
+      version: 'latest_published',
     });
   });
 });

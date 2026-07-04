@@ -438,6 +438,7 @@ export interface ChatAgentResponse {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1076,6 +1077,7 @@ export interface ChatAgentCreateParams {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1424,7 +1426,7 @@ export interface ChatAgentRetrieveParams {
    * Optional version of the API to use for this request. If not provided, will
    * default to latest version.
    */
-  version?: number | string;
+  version?: string | number;
 }
 
 export interface ChatAgentListParams {
@@ -1483,7 +1485,7 @@ export interface ChatAgentUpdateParams {
    * Query param: Optional version of the API to use for this request. Default to
    * latest version.
    */
-  version?: number | string;
+  version?: string | number;
 
   /**
    * Body param: The name of the chat agent. Only used for your own reference.
@@ -1712,6 +1714,7 @@ export interface ChatAgentUpdateParams {
     | 'gpt-5.5'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'

@@ -120,7 +120,7 @@ describe('resource call', () => {
           vocab_specialization: 'general',
           voice_emotion: 'calm',
           voice_id: 'retell-Cimo',
-          voice_model: 'eleven_turbo_v2',
+          voice_model: 'eleven_flash_v2',
           voice_speed: 1,
           voice_temperature: 1,
           voicemail_option: {
@@ -162,7 +162,7 @@ describe('resource call', () => {
       ignore_e164_validation: true,
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-      override_agent_version: 1,
+      override_agent_version: 'latest_published',
       retell_llm_dynamic_variables: { customer_name: 'John Doe' },
     });
   });
@@ -275,7 +275,7 @@ describe('resource call', () => {
           vocab_specialization: 'general',
           voice_emotion: 'calm',
           voice_id: 'retell-Cimo',
-          voice_model: 'eleven_turbo_v2',
+          voice_model: 'eleven_flash_v2',
           voice_speed: 1,
           voice_temperature: 1,
           voicemail_option: {
@@ -313,7 +313,7 @@ describe('resource call', () => {
           tool_call_strict_mode: true,
         },
       },
-      agent_version: 1,
+      agent_version: 'latest_published',
       direction: 'inbound',
       from_number: '+14157774444',
       metadata: {},
@@ -430,7 +430,7 @@ describe('resource call', () => {
           vocab_specialization: 'general',
           voice_emotion: 'calm',
           voice_id: 'retell-Cimo',
-          voice_model: 'eleven_turbo_v2',
+          voice_model: 'eleven_flash_v2',
           voice_speed: 1,
           voice_temperature: 1,
           voicemail_option: {
@@ -468,7 +468,7 @@ describe('resource call', () => {
           tool_call_strict_mode: true,
         },
       },
-      agent_version: 1,
+      agent_version: 'latest_published',
       current_node_id: 'collect_info',
       current_state: 'information_collection',
       metadata: {},
