@@ -62,6 +62,62 @@ const agentResponse: Retell.AgentResponse = await client.agent.create(params);
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
 
+## Webhook Signature Verification
+
+Retell signs every webhook request so you can verify it came from Retell and not a third party.
+Each request includes an `X-Retell-Signature` header with the format `v=<timestamp_ms>,d=<hmac_sha256_hex>`.
+
+> **Note:** `Retell.verify()` existed in v4 but was removed in v5. Use the helper below instead.
+
+<!-- prettier-ignore -->
+```ts
+import { createHmac, timingSafeEqual } from 'crypto';
+
+/**
+ * Returns true when the request is genuinely from Retell.
+ *
+ * @param rawBody  The raw (unparsed) request body string.
+ * @param apiKey   Your Retell API key (used as the HMAC secret).
+ * @param signature The value of the `X-Retell-Signature` request header.
+ */
+function verifyRetellSignature(rawBody: string, apiKey: string, signature: string): boolean {
+  const match = signature.match(/^v=(\d+),d=(.+)$/);
+  if (!match) return false;
+
+  const [, timestamp, digest] = match;
+
+  // Reject requests older than 5 minutes to prevent replay attacks
+  if (Math.abs(Date.now() - parseInt(timestamp, 10)) > 5 * 60 * 1_000) return false;
+
+  const expected = createHmac('sha256', apiKey).update(rawBody + timestamp).digest('hex');
+
+  try {
+    return timingSafeEqual(Buffer.from(digest), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+```
+
+Example usage in an Express handler:
+
+<!-- prettier-ignore -->
+```ts
+app.post('/retell-webhook', express.raw({ type: '*/*' }), (req, res) => {
+  const rawBody = req.body.toString('utf8');
+  const signature = req.headers['x-retell-signature'] as string;
+
+  if (!verifyRetellSignature(rawBody, process.env['RETELL_API_KEY']!, signature)) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
+  const event = JSON.parse(rawBody);
+  // handle event ...
+  res.sendStatus(200);
+});
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API,
