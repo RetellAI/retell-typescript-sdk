@@ -605,20 +605,29 @@ export namespace PlaygroundCompletionParams {
     }
   }
 
+  /**
+   * A fake response for one tool. During a simulation, when the LLM calls a tool
+   * whose name matches `tool_name` and whose arguments satisfy `input_match_rule`,
+   * the real tool is not run; `output` is returned to the LLM instead. This keeps
+   * runs deterministic and avoids calling live integrations. A tool call that
+   * matches no mock falls through to the real tool.
+   */
   export interface ToolMock {
     /**
-     * Rule for matching tool calls
+     * Decides which calls to this tool the mock applies to.
      */
     input_match_rule: ToolMock.Type | ToolMock.UnionMember1;
 
     /**
-     * The output of the tool call that will be fed into the LLM. Should be a JSON
-     * string.
+     * The tool result fed back to the LLM in place of the real tool's output. Should
+     * be a JSON string, the same shape the real tool would return.
      */
     output: string;
 
     /**
-     * Name of the tool to mock
+     * The tool's function name, not the tool ID, i.e. the name the LLM uses when it
+     * calls the tool (for example `check_availability_cal`, `book_appointment_cal`, or
+     * the name you gave a custom function).
      */
     tool_name: string;
 
@@ -632,19 +641,22 @@ export namespace PlaygroundCompletionParams {
   export namespace ToolMock {
     export interface Type {
       /**
-       * Match any input of the tool
+       * Match every call to the tool, no matter what arguments were passed. Use this for
+       * a catch-all mock.
        */
       type: 'any';
     }
 
     export interface UnionMember1 {
       /**
-       * Arguments to match. Only provided fields will be checked
+       * Argument values the call must have to match. Only the fields you list here are
+       * checked, and each must equal the value in the actual call. Extra fields in the
+       * call are ignored, so this is a subset match.
        */
       args: unknown;
 
       /**
-       * Match only calls with specific arguments
+       * Match only calls whose arguments contain the values listed in `args`.
        */
       type: 'partial_match';
     }
