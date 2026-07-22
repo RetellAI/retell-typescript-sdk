@@ -942,6 +942,11 @@ export namespace ChatListParams {
     agent?: Array<FilterCriteria.Agent>;
 
     /**
+     * Filter by agent environment tag(s) (e.g. "prod", "staging").
+     */
+    agent_tag?: FilterCriteria.AgentTag;
+
+    /**
      * Filter by chat ID.
      */
     chat_id?: FilterCriteria.ChatID;
@@ -1013,6 +1018,20 @@ export namespace ChatListParams {
        * Specific versions to filter on. If not provided, all versions are included.
        */
       version?: Array<number>;
+    }
+
+    /**
+     * Filter by agent environment tag(s) (e.g. "prod", "staging").
+     */
+    export interface AgentTag {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     /**

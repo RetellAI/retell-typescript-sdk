@@ -635,6 +635,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
           | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-5-sonnet'
@@ -1382,6 +1384,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gpt-5.4-mini'
             | 'gpt-5.4-nano'
             | 'gpt-5.5'
+            | 'gpt-5.6-terra'
+            | 'gpt-5.6-luna'
             | 'claude-4.5-sonnet'
             | 'claude-4.6-sonnet'
             | 'claude-5-sonnet'
@@ -1450,6 +1454,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gpt-5.4-mini'
           | 'gpt-5.4-nano'
           | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
           | 'claude-4.5-sonnet'
           | 'claude-4.6-sonnet'
           | 'claude-5-sonnet'
@@ -1478,7 +1484,14 @@ export namespace BatchCallCreateBatchCallParams {
          * Select the underlying speech to speech model. Can only set this or model, not
          * both.
          */
-        s2s_model?: 'gpt-realtime-2' | 'gpt-realtime-1.5' | 'gpt-realtime' | 'gpt-realtime-mini' | null;
+        s2s_model?:
+          | 'gpt-realtime-2.1'
+          | 'gpt-realtime-2.1-mini'
+          | 'gpt-realtime-2'
+          | 'gpt-realtime-1.5'
+          | 'gpt-realtime'
+          | 'gpt-realtime-mini'
+          | null;
 
         /**
          * The speaker who starts the conversation. Required. Must be either 'user' or
