@@ -124,6 +124,11 @@ describe('resource chat', () => {
         {
           filter_criteria: {
             agent: [{ agent_id: 'x', version: [0] }],
+            agent_tag: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
             chat_id: {
               op: 'eq',
               type: 'string',
