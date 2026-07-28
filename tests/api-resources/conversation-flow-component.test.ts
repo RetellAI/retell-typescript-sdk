@@ -87,6 +87,8 @@ describe('resource conversationFlowComponent', () => {
             high_priority: true,
           },
           name: 'name',
+          reminder_max_count: 0,
+          reminder_trigger_ms: 1,
           responsiveness: 0,
           skip_response_edge: {
             id: 'id',
