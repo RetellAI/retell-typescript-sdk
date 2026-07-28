@@ -49,7 +49,15 @@ export class Agent extends APIResource {
    *
    * @example
    * ```ts
-   * const agents = await client.agent.list();
+   * const agents = await client.agent.list({
+   *   filter_criteria: {
+   *     channel: {
+   *       type: 'string',
+   *       op: 'eq',
+   *       value: 'voice',
+   *     },
+   *   },
+   * });
    * ```
    */
   list(

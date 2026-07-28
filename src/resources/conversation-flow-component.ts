@@ -243,6 +243,18 @@ export namespace ConversationFlowComponentResponse {
      */
     name?: string;
 
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
+
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
@@ -935,6 +947,18 @@ export namespace ConversationFlowComponentResponse {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
 
     responsiveness?: number | null;
 
@@ -8812,6 +8836,18 @@ export namespace ConversationFlowComponentCreateParams {
      */
     name?: string;
 
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
+
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
@@ -9504,6 +9540,18 @@ export namespace ConversationFlowComponentCreateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
 
     responsiveness?: number | null;
 
@@ -17418,6 +17466,18 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     name?: string;
 
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
+
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
@@ -18110,6 +18170,18 @@ export namespace ConversationFlowComponentUpdateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * If set, overrides the agent-level reminder_max_count for this node only. Set to
+     * 0 to disable reminders for this node.
+     */
+    reminder_max_count?: number | null;
+
+    /**
+     * If set (in milliseconds), overrides the agent-level reminder_trigger_ms for this
+     * node only.
+     */
+    reminder_trigger_ms?: number | null;
 
     responsiveness?: number | null;
 

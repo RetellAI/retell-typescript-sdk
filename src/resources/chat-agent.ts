@@ -48,7 +48,15 @@ export class ChatAgent extends APIResource {
    *
    * @example
    * ```ts
-   * const chatAgents = await client.chatAgent.list();
+   * const chatAgents = await client.chatAgent.list({
+   *   filter_criteria: {
+   *     channel: {
+   *       type: 'string',
+   *       op: 'eq',
+   *       value: 'voice',
+   *     },
+   *   },
+   * });
    * ```
    */
   list(
