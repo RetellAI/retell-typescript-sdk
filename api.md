@@ -6,6 +6,7 @@ Types:
 - <code><a href="./src/resources/call.ts">PhoneCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">WebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
+- <code><a href="./src/resources/call.ts">CallUpdateLiveResponse</a></code>
 
 Methods:
 
@@ -16,7 +17,9 @@ Methods:
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
+- <code title="put /rerun-call-analysis/{call_id}">client.call.<a href="./src/resources/call.ts">rerunAnalysis</a>(callID) -> CallResponse</code>
 - <code title="post /v2/stop-call/{call_id}">client.call.<a href="./src/resources/call.ts">stop</a>(callID) -> void</code>
+- <code title="patch /v2/update-live-call/{call_id}">client.call.<a href="./src/resources/call.ts">updateLive</a>(callID, { ...params }) -> CallUpdateLiveResponse</code>
 
 # Chat
 
@@ -36,6 +39,7 @@ Methods:
 - <code title="post /create-chat-completion">client.chat.<a href="./src/resources/chat.ts">createChatCompletion</a>({ ...params }) -> ChatCreateChatCompletionResponse</code>
 - <code title="post /create-sms-chat">client.chat.<a href="./src/resources/chat.ts">createSMSChat</a>({ ...params }) -> ChatResponse</code>
 - <code title="patch /end-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">end</a>(chatID) -> void</code>
+- <code title="put /rerun-chat-analysis/{chat_id}">client.chat.<a href="./src/resources/chat.ts">rerunAnalysis</a>(chatID) -> ChatResponse</code>
 
 # PhoneNumber
 

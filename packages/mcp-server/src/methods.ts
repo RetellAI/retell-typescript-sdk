@@ -53,10 +53,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v2/register-phone-call',
   },
   {
+    clientCallName: 'client.call.rerunAnalysis',
+    fullyQualifiedName: 'call.rerunAnalysis',
+    httpMethod: 'put',
+    httpPath: '/rerun-call-analysis/{call_id}',
+  },
+  {
     clientCallName: 'client.call.stop',
     fullyQualifiedName: 'call.stop',
     httpMethod: 'post',
     httpPath: '/v2/stop-call/{call_id}',
+  },
+  {
+    clientCallName: 'client.call.updateLive',
+    fullyQualifiedName: 'call.updateLive',
+    httpMethod: 'patch',
+    httpPath: '/v2/update-live-call/{call_id}',
   },
   {
     clientCallName: 'client.chat.create',
@@ -105,6 +117,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'chat.end',
     httpMethod: 'patch',
     httpPath: '/end-chat/{chat_id}',
+  },
+  {
+    clientCallName: 'client.chat.rerunAnalysis',
+    fullyQualifiedName: 'chat.rerunAnalysis',
+    httpMethod: 'put',
+    httpPath: '/rerun-chat-analysis/{chat_id}',
   },
   {
     clientCallName: 'client.phoneNumber.create',

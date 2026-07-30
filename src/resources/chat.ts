@@ -146,6 +146,20 @@ export class Chat extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Rerun post-chat analysis for a specific chat
+   *
+   * @example
+   * ```ts
+   * const chatResponse = await client.chat.rerunAnalysis(
+   *   'chat_16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  rerunAnalysis(chatID: string, options?: RequestOptions): APIPromise<ChatResponse> {
+    return this._client.put(path`/rerun-chat-analysis/${chatID}`, options);
+  }
 }
 
 export interface ChatResponse {

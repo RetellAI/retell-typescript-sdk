@@ -683,8 +683,32 @@ describe('resource call', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('rerunAnalysis', async () => {
+    const responsePromise = client.call.rerunAnalysis('call_119c3f8e47135a29e65947eeb34cf12d');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('stop', async () => {
     const responsePromise = client.call.stop('call_a4441234567890777c4a4a123e6');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('updateLive', async () => {
+    const responsePromise = client.call.updateLive('call_a4441234567890777c4a4a123e6', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
