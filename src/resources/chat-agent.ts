@@ -44,6 +44,25 @@ export class ChatAgent extends APIResource {
   }
 
   /**
+   * Update an existing chat agent
+   *
+   * @example
+   * ```ts
+   * const chatAgentResponse = await client.chatAgent.update(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  update(
+    agentID: string,
+    params: ChatAgentUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ChatAgentResponse> {
+    const { version, ...body } = params;
+    return this._client.patch(path`/update-chat-agent/${agentID}`, { query: { version }, body, ...options });
+  }
+
+  /**
    * List unique agents with pagination.
    *
    * @example
@@ -72,25 +91,6 @@ export class ChatAgent extends APIResource {
   }
 
   /**
-   * Update an existing chat agent
-   *
-   * @example
-   * ```ts
-   * const chatAgentResponse = await client.chatAgent.update(
-   *   '16b980523634a6dc504898cda492e939',
-   * );
-   * ```
-   */
-  update(
-    agentID: string,
-    params: ChatAgentUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<ChatAgentResponse> {
-    const { version, ...body } = params;
-    return this._client.patch(path`/update-chat-agent/${agentID}`, { query: { version }, body, ...options });
-  }
-
-  /**
    * Delete an existing chat agent
    *
    * @example
@@ -102,24 +102,6 @@ export class ChatAgent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-chat-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Publish an existing draft version in place.
-   *
-   * @example
-   * ```ts
-   * await client.chatAgent.publish('agent_xxx', {
-   *   version: 15,
-   * });
-   * ```
-   */
-  publish(agentID: string, body: ChatAgentPublishParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent-version/${agentID}`, {
-      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -180,6 +162,24 @@ export class ChatAgent extends APIResource {
    */
   getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
     return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
+  }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.chatAgent.publish('agent_xxx', {
+   *   version: 15,
+   * });
+   * ```
+   */
+  publish(agentID: string, body: ChatAgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -1441,57 +1441,6 @@ export interface ChatAgentRetrieveParams {
   version?: string | number;
 }
 
-export interface ChatAgentListParams {
-  /**
-   * Query param: Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * Query param: Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Query param: Sort order for results.
-   */
-  sort_order?: 'ascending' | 'descending';
-
-  /**
-   * Body param: Filters for listing agents. All provided filters are connected with
-   * AND.
-   */
-  filter_criteria?: ChatAgentListParams.FilterCriteria;
-}
-
-export namespace ChatAgentListParams {
-  /**
-   * Filters for listing agents. All provided filters are connected with AND.
-   */
-  export interface FilterCriteria {
-    channel?: FilterCriteria.Channel;
-
-    /**
-     * Case-insensitive substring search over agent name, plus substring search over
-     * agent id.
-     */
-    query?: string;
-  }
-
-  export namespace FilterCriteria {
-    export interface Channel {
-      /**
-       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
-       */
-      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
-
-      type: 'string';
-
-      value: 'voice' | 'chat';
-    }
-  }
-}
-
 export interface ChatAgentUpdateParams {
   /**
    * Query param: Optional version of the API to use for this request. Default to
@@ -2083,15 +2032,55 @@ export namespace ChatAgentUpdateParams {
   }
 }
 
-export interface ChatAgentPublishParams {
-  version: number;
-
-  version_description?: string;
+export interface ChatAgentListParams {
+  /**
+   * Query param: Maximum number of items to return.
+   */
+  limit?: number;
 
   /**
-   * Optional title of the agent version. Used for your own reference.
+   * Query param: Pagination key for fetching the next page.
    */
-  version_title?: string;
+  pagination_key?: string;
+
+  /**
+   * Query param: Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+
+  /**
+   * Body param: Filters for listing agents. All provided filters are connected with
+   * AND.
+   */
+  filter_criteria?: ChatAgentListParams.FilterCriteria;
+}
+
+export namespace ChatAgentListParams {
+  /**
+   * Filters for listing agents. All provided filters are connected with AND.
+   */
+  export interface FilterCriteria {
+    channel?: FilterCriteria.Channel;
+
+    /**
+     * Case-insensitive substring search over agent name, plus substring search over
+     * agent id.
+     */
+    query?: string;
+  }
+
+  export namespace FilterCriteria {
+    export interface Channel {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: 'voice' | 'chat';
+    }
+  }
 }
 
 export interface ChatAgentCreateVersionParams {
@@ -2108,6 +2097,17 @@ export interface ChatAgentDeleteVersionParams {
   version: number;
 }
 
+export interface ChatAgentPublishParams {
+  version: number;
+
+  version_description?: string;
+
+  /**
+   * Optional title of the agent version. Used for your own reference.
+   */
+  version_title?: string;
+}
+
 export declare namespace ChatAgent {
   export {
     type ChatAgentResponse as ChatAgentResponse,
@@ -2116,10 +2116,10 @@ export declare namespace ChatAgent {
     type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
-    type ChatAgentListParams as ChatAgentListParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,
-    type ChatAgentPublishParams as ChatAgentPublishParams,
+    type ChatAgentListParams as ChatAgentListParams,
     type ChatAgentCreateVersionParams as ChatAgentCreateVersionParams,
     type ChatAgentDeleteVersionParams as ChatAgentDeleteVersionParams,
+    type ChatAgentPublishParams as ChatAgentPublishParams,
   };
 }
