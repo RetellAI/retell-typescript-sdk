@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.53.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.52.0...v5.53.0) (2026-07-30)
+
+
+### Features
+
+* **sdks:** infer new resource actions ([ff3d36f](https://github.com/RetellAI/retell-typescript-sdk/commit/ff3d36fa44498ecdf711b261787535f2eb1f302a))
+
+
+### Chores
+
+* preserve production workflow files ([9a4141b](https://github.com/RetellAI/retell-typescript-sdk/commit/9a4141b7c1ee1a8f42ce395ce1ef1a069a383772))
+
 ## [5.52.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.51.1...v5.52.0) (2026-07-30)
 
 
