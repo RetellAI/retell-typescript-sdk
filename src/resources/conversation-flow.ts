@@ -54,22 +54,6 @@ export class ConversationFlow extends APIResource {
   }
 
   /**
-   * List conversation flows with pagination
-   *
-   * @example
-   * ```ts
-   * const conversationFlows =
-   *   await client.conversationFlow.list();
-   * ```
-   */
-  list(
-    query: ConversationFlowListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ConversationFlowListResponse> {
-    return this._client.get('/v2/list-conversation-flows', { query, ...options });
-  }
-
-  /**
    * Update an existing conversation flow
    *
    * @example
@@ -91,6 +75,22 @@ export class ConversationFlow extends APIResource {
       body,
       ...options,
     });
+  }
+
+  /**
+   * List conversation flows with pagination
+   *
+   * @example
+   * ```ts
+   * const conversationFlows =
+   *   await client.conversationFlow.list();
+   * ```
+   */
+  list(
+    query: ConversationFlowListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConversationFlowListResponse> {
+    return this._client.get('/v2/list-conversation-flows', { query, ...options });
   }
 
   /**
@@ -34687,23 +34687,6 @@ export interface ConversationFlowRetrieveParams {
   version?: number;
 }
 
-export interface ConversationFlowListParams {
-  /**
-   * Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Sort order for results.
-   */
-  sort_order?: 'ascending' | 'descending';
-}
-
 export interface ConversationFlowUpdateParams {
   /**
    * Query param: Optional version of the conversation flow to update. Default to
@@ -51980,13 +51963,30 @@ export namespace ConversationFlowUpdateParams {
   }
 }
 
+export interface ConversationFlowListParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export declare namespace ConversationFlow {
   export {
     type ConversationFlowResponse as ConversationFlowResponse,
     type ConversationFlowListResponse as ConversationFlowListResponse,
     type ConversationFlowCreateParams as ConversationFlowCreateParams,
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
-    type ConversationFlowListParams as ConversationFlowListParams,
     type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
+    type ConversationFlowListParams as ConversationFlowListParams,
   };
 }

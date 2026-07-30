@@ -45,6 +45,22 @@ export class Agent extends APIResource {
   }
 
   /**
+   * Update an existing agent's latest draft version
+   *
+   * @example
+   * ```ts
+   * const agentResponse = await client.agent.update(
+   *   '16b980523634a6dc504898cda492e939',
+   *   { agent_name: 'Jarvis' },
+   * );
+   * ```
+   */
+  update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
+    const { version, ...body } = params;
+    return this._client.patch(path`/update-agent/${agentID}`, { query: { version }, body, ...options });
+  }
+
+  /**
    * List unique agents with pagination.
    *
    * @example
@@ -73,22 +89,6 @@ export class Agent extends APIResource {
   }
 
   /**
-   * Update an existing agent's latest draft version
-   *
-   * @example
-   * ```ts
-   * const agentResponse = await client.agent.update(
-   *   '16b980523634a6dc504898cda492e939',
-   *   { agent_name: 'Jarvis' },
-   * );
-   * ```
-   */
-  update(agentID: string, params: AgentUpdateParams, options?: RequestOptions): APIPromise<AgentResponse> {
-    const { version, ...body } = params;
-    return this._client.patch(path`/update-agent/${agentID}`, { query: { version }, body, ...options });
-  }
-
-  /**
    * Delete an existing agent
    *
    * @example
@@ -100,22 +100,6 @@ export class Agent extends APIResource {
    */
   delete(agentID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-agent/${agentID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
-  /**
-   * Publish an existing draft version in place.
-   *
-   * @example
-   * ```ts
-   * await client.agent.publish('agent_xxx', { version: 15 });
-   * ```
-   */
-  publish(agentID: string, body: AgentPublishParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/publish-agent-version/${agentID}`, {
-      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -175,6 +159,22 @@ export class Agent extends APIResource {
    */
   getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
     return this._client.get(path`/get-agent-versions/${agentID}`, options);
+  }
+
+  /**
+   * Publish an existing draft version in place.
+   *
+   * @example
+   * ```ts
+   * await client.agent.publish('agent_xxx', { version: 15 });
+   * ```
+   */
+  publish(agentID: string, body: AgentPublishParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/publish-agent-version/${agentID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -2418,57 +2418,6 @@ export interface AgentRetrieveParams {
   version?: string | number;
 }
 
-export interface AgentListParams {
-  /**
-   * Query param: Maximum number of items to return.
-   */
-  limit?: number;
-
-  /**
-   * Query param: Pagination key for fetching the next page.
-   */
-  pagination_key?: string;
-
-  /**
-   * Query param: Sort order for results.
-   */
-  sort_order?: 'ascending' | 'descending';
-
-  /**
-   * Body param: Filters for listing agents. All provided filters are connected with
-   * AND.
-   */
-  filter_criteria?: AgentListParams.FilterCriteria;
-}
-
-export namespace AgentListParams {
-  /**
-   * Filters for listing agents. All provided filters are connected with AND.
-   */
-  export interface FilterCriteria {
-    channel?: FilterCriteria.Channel;
-
-    /**
-     * Case-insensitive substring search over agent name, plus substring search over
-     * agent id.
-     */
-    query?: string;
-  }
-
-  export namespace FilterCriteria {
-    export interface Channel {
-      /**
-       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
-       */
-      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
-
-      type: 'string';
-
-      value: 'voice' | 'chat';
-    }
-  }
-}
-
 export interface AgentUpdateParams {
   /**
    * Query param: Optional version of the API to use for this request. Default to
@@ -3560,15 +3509,55 @@ export namespace AgentUpdateParams {
   }
 }
 
-export interface AgentPublishParams {
-  version: number;
-
-  version_description?: string;
+export interface AgentListParams {
+  /**
+   * Query param: Maximum number of items to return.
+   */
+  limit?: number;
 
   /**
-   * Optional title of the agent version. Used for your own reference.
+   * Query param: Pagination key for fetching the next page.
    */
-  version_title?: string;
+  pagination_key?: string;
+
+  /**
+   * Query param: Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+
+  /**
+   * Body param: Filters for listing agents. All provided filters are connected with
+   * AND.
+   */
+  filter_criteria?: AgentListParams.FilterCriteria;
+}
+
+export namespace AgentListParams {
+  /**
+   * Filters for listing agents. All provided filters are connected with AND.
+   */
+  export interface FilterCriteria {
+    channel?: FilterCriteria.Channel;
+
+    /**
+     * Case-insensitive substring search over agent name, plus substring search over
+     * agent id.
+     */
+    query?: string;
+  }
+
+  export namespace FilterCriteria {
+    export interface Channel {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: 'voice' | 'chat';
+    }
+  }
 }
 
 export interface AgentCreateVersionParams {
@@ -3585,6 +3574,17 @@ export interface AgentDeleteVersionParams {
   version: number;
 }
 
+export interface AgentPublishParams {
+  version: number;
+
+  version_description?: string;
+
+  /**
+   * Optional title of the agent version. Used for your own reference.
+   */
+  version_title?: string;
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3593,10 +3593,10 @@ export declare namespace Agent {
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
-    type AgentListParams as AgentListParams,
     type AgentUpdateParams as AgentUpdateParams,
-    type AgentPublishParams as AgentPublishParams,
+    type AgentListParams as AgentListParams,
     type AgentCreateVersionParams as AgentCreateVersionParams,
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
+    type AgentPublishParams as AgentPublishParams,
   };
 }
