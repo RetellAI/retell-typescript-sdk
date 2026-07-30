@@ -21,11 +21,13 @@ export {
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
+  type CallUpdateLiveResponse,
   type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
   type CallRegisterPhoneCallParams,
+  type CallUpdateLiveParams,
 } from './call';
 export {
   Chat,

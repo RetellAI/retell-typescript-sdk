@@ -41,6 +41,8 @@ import {
   CallListResponse,
   CallRegisterPhoneCallParams,
   CallResponse,
+  CallUpdateLiveParams,
+  CallUpdateLiveResponse,
   CallUpdateParams,
   PhoneCallResponse,
   WebCallResponse,
@@ -916,11 +918,13 @@ export declare namespace Retell {
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
+    type CallUpdateLiveResponse as CallUpdateLiveResponse,
     type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
     type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+    type CallUpdateLiveParams as CallUpdateLiveParams,
   };
 
   export {

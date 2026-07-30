@@ -129,6 +129,20 @@ export class Call extends APIResource {
   }
 
   /**
+   * Rerun post-call analysis for a specific call
+   *
+   * @example
+   * ```ts
+   * const callResponse = await client.call.rerunAnalysis(
+   *   'call_119c3f8e47135a29e65947eeb34cf12d',
+   * );
+   * ```
+   */
+  rerunAnalysis(callID: string, options?: RequestOptions): APIPromise<CallResponse> {
+    return this._client.put(path`/rerun-call-analysis/${callID}`, options);
+  }
+
+  /**
    * Stop an ongoing call.
    *
    * @example
@@ -141,6 +155,41 @@ export class Call extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * Update an ongoing call at runtime. Supports overriding dynamic variables,
+   * metadata, and the data storage setting on the running call, and controlling the
+   * live agent (inject context, trigger a response). These overrides take effect
+   * immediately on the live call; metadata and data storage setting changes are also
+   * persisted to the call record. To update a call that is no longer ongoing, use
+   * /v2/update-call/{call_id}.
+   *
+   * @example
+   * ```ts
+   * const response = await client.call.updateLive(
+   *   'call_a4441234567890777c4a4a123e6',
+   *   {
+   *     call_control: {
+   *       additional_context:
+   *         'Customer just opened a support ticket about billing.',
+   *       trigger_response: true,
+   *     },
+   *     fields_to_override: {
+   *       override_dynamic_variables: {
+   *         additional_discount: '15%',
+   *       },
+   *     },
+   *   },
+   * );
+   * ```
+   */
+  updateLive(
+    callID: string,
+    body: CallUpdateLiveParams,
+    options?: RequestOptions,
+  ): APIPromise<CallUpdateLiveResponse> {
+    return this._client.patch(path`/v2/update-live-call/${callID}`, { body, ...options });
   }
 }
 
@@ -4020,6 +4069,10 @@ export namespace CallListResponse {
       twilio_call_sid?: string;
     }
   }
+}
+
+export interface CallUpdateLiveResponse {
+  success: boolean;
 }
 
 export interface CallUpdateParams {
@@ -9083,16 +9136,87 @@ export namespace CallRegisterPhoneCallParams {
   }
 }
 
+export interface CallUpdateLiveParams {
+  /**
+   * Live agent control. At least one of `additional_context` or `trigger_response`
+   * should be supplied; an empty object is a no-op.
+   */
+  call_control?: CallUpdateLiveParams.CallControl;
+
+  /**
+   * Call fields to override on the running call. Each field is applied to the live
+   * call immediately; omitted fields are left unchanged.
+   */
+  fields_to_override?: CallUpdateLiveParams.FieldsToOverride;
+}
+
+export namespace CallUpdateLiveParams {
+  /**
+   * Live agent control. At least one of `additional_context` or `trigger_response`
+   * should be supplied; an empty object is a no-op.
+   */
+  export interface CallControl {
+    /**
+     * Free-form text appended to the call transcript with role "injected" and injected
+     * into the next agent response context. Must be non-empty.
+     */
+    additional_context?: string;
+
+    /**
+     * Only `true` has an effect. When set, if the agent is currently speaking the
+     * response is interrupted and a new one is generated. If the agent has already
+     * finished speaking and is waiting silently for the user, the agent is nudged to
+     * produce another response. If the user is currently speaking, this field is a
+     * no-op so the agent does not talk over them. This field respects the agent's
+     * `interruption_sensitivity`: when sensitivity is `0` the agent's current speech
+     * is treated as uninterruptible, so `trigger_response` is a no-op while the agent
+     * is speaking. Omitting or setting `false` leaves the call untouched.
+     */
+    trigger_response?: boolean;
+  }
+
+  /**
+   * Call fields to override on the running call. Each field is applied to the live
+   * call immediately; omitted fields are left unchanged.
+   */
+  export interface FieldsToOverride {
+    /**
+     * Data storage setting for this call. Overrides the agent's default setting.
+     * "everything" stores all data, "everything_except_pii" excludes PII when
+     * possible, "basic_attributes_only" stores only metadata. Cannot be downgraded
+     * from more restrictive to less restrictive settings.
+     */
+    data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
+
+    /**
+     * An arbitrary object for storage purpose only. Overrides the metadata on the
+     * call. Size limited to 50kB max.
+     */
+    metadata?: unknown;
+
+    /**
+     * Override dynamic variables represented as key-value pairs of strings. Setting
+     * this will override or add the dynamic variables set in the agent during the
+     * call. Only need to set the delta where you want to override, no need to set the
+     * entire dynamic variables object. Setting this to null will remove any existing
+     * override.
+     */
+    override_dynamic_variables?: { [key: string]: string } | null;
+  }
+}
+
 export declare namespace Call {
   export {
     type CallResponse as CallResponse,
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
+    type CallUpdateLiveResponse as CallUpdateLiveResponse,
     type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
     type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+    type CallUpdateLiveParams as CallUpdateLiveParams,
   };
 }
