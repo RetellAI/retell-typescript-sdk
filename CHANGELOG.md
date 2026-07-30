@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.50.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.49.2...v5.50.0) (2026-07-30)
+
+
+### Features
+
+* **webhooks:** restore signature helpers ([#5](https://github.com/RetellAI/retell-typescript-sdk/issues/5)) ([a6d80d3](https://github.com/RetellAI/retell-typescript-sdk/commit/a6d80d3a0e22f5a5f06e39dac5c2d009af3a09e6))
+
+
+### Chores
+
+* preserve production workflow files ([51b3743](https://github.com/RetellAI/retell-typescript-sdk/commit/51b37439542c92d0a2d84b6eb632a41866f6b240))
+
 ## [5.49.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.49.1...v5.49.2) (2026-07-30)
 
 
