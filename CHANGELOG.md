@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.49.2](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.49.1...v5.49.2) (2026-07-30)
+
+
+### Bug Fixes
+
+* **stlc:** make manual generation persistent ([410255d](https://github.com/RetellAI/retell-typescript-sdk/commit/410255df888303ab1c21723206c4197effbc4070))
+
+
+### Chores
+
+* preserve production workflow files ([26d1e1a](https://github.com/RetellAI/retell-typescript-sdk/commit/26d1e1a005d6303316951589a6ba341243219af6))
+
 ## [5.49.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.49.0...v5.49.1) (2026-07-30)
 
 
