@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.52.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.51.1...v5.52.0) (2026-07-30)
+
+
+### Features
+
+* **sdks:** expose live updates and analysis reruns ([45afd56](https://github.com/RetellAI/retell-typescript-sdk/commit/45afd56cef2e8368bec1ff086bcd82de9ebf5515))
+
+
+### Chores
+
+* preserve production workflow files ([558ae31](https://github.com/RetellAI/retell-typescript-sdk/commit/558ae31f3369835502be2fdd29dc0be2ba6d5252))
+
 ## [5.51.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.51.0...v5.51.1) (2026-07-30)
 
 
