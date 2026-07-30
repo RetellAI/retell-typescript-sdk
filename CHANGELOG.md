@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.49.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.49.0...v5.49.1) (2026-07-30)
+
+
+### Bug Fixes
+
+* **uploads:** restore multipart serialization ([#4](https://github.com/RetellAI/retell-typescript-sdk/issues/4)) ([cee46ed](https://github.com/RetellAI/retell-typescript-sdk/commit/cee46ed22e20c1d453f5600e4127d2bcd592dd6f))
+
+
+### Chores
+
+* preserve production workflow files ([c140043](https://github.com/RetellAI/retell-typescript-sdk/commit/c140043d42ac4c550a32a0c596cc7cdd3e35f42a))
+
 ## [5.49.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.48.0...v5.49.0) (2026-07-28)
 
 
