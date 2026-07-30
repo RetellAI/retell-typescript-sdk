@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.51.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.51.0...v5.51.1) (2026-07-30)
+
+
+### Bug Fixes
+
+* **python:** seal webhook verification hardening ([40e256b](https://github.com/RetellAI/retell-typescript-sdk/commit/40e256b5e8b6d158e747aafe35a24ebc98d0b9ba))
+
+
+### Chores
+
+* preserve production workflow files ([737468c](https://github.com/RetellAI/retell-typescript-sdk/commit/737468c4c97cf7b031cd5bccb3090f6716fc57d5))
+
 ## [5.51.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.50.0...v5.51.0) (2026-07-30)
 
 
