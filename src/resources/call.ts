@@ -129,7 +129,7 @@ export class Call extends APIResource {
   }
 
   /**
-   * Rerun post-call analysis for a specific call
+   * Rerun post-call analysis for a specific call. This operation incurs charges.
    *
    * @example
    * ```ts
