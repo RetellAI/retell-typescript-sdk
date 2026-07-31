@@ -148,7 +148,7 @@ export class Chat extends APIResource {
   }
 
   /**
-   * Rerun post-chat analysis for a specific chat
+   * Rerun post-chat analysis for a specific chat. This operation incurs charges.
    *
    * @example
    * ```ts
