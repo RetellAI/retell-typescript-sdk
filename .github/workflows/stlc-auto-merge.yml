@@ -1,0 +1,105 @@
+name: Auto-merge SDK release PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+  workflow_run:
+    workflows: ['CI', 'Release Doctor']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Optional PR number to evaluate'
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+  actions: read
+
+jobs:
+  auto-merge:
+    if: github.repository == 'RetellAI/retell-typescript-sdk'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Merge qualifying green PRs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          pr_numbers=()
+          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            pr_numbers+=("${{ github.event.pull_request.number }}")
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.pr_number }}" ]; then
+            pr_numbers+=("${{ inputs.pr_number }}")
+          else
+            while IFS= read -r number; do
+              pr_numbers+=("$number")
+            done < <(gh pr list --repo "$REPO" --base main --state open --json number --jq '.[].number')
+          fi
+
+          for pr in "${pr_numbers[@]}"; do
+            echo "Evaluating PR #$pr"
+            pr_json=$(gh pr view "$pr" --repo "$REPO" --json title,isDraft,headRefName,headRefOid,headRepository,isCrossRepository,baseRefName,mergeStateStatus)
+            title=$(jq -r '.title' <<<"$pr_json")
+            is_draft=$(jq -r '.isDraft' <<<"$pr_json")
+            head_ref=$(jq -r '.headRefName' <<<"$pr_json")
+            head_sha=$(jq -r '.headRefOid' <<<"$pr_json")
+            head_repo=$(jq -r '.headRepository.nameWithOwner // ""' <<<"$pr_json")
+            is_cross_repository=$(jq -r '.isCrossRepository' <<<"$pr_json")
+            base_ref=$(jq -r '.baseRefName' <<<"$pr_json")
+
+            if [ "$base_ref" != "main" ] || [ "$is_draft" = "true" ]; then
+              echo "Skipping PR #$pr: not a ready PR to main."
+              continue
+            fi
+
+            if [ "$is_cross_repository" = "true" ] || [ "$head_repo" != "$REPO" ]; then
+              echo "Skipping PR #$pr: head branch is not in $REPO."
+              continue
+            fi
+
+            merge_flag=""
+            if [ "$head_ref" = "stainless-release" ] && [ "$title" = "Release SDK updates" ]; then
+              merge_flag="--merge"
+            elif [[ "$head_ref" == release-please--* ]] && [[ "$title" == release:* ]]; then
+              merge_flag="--squash"
+            else
+              echo "Skipping PR #$pr: not an automated SDK release PR."
+              continue
+            fi
+
+            check_runs=$(gh api "/repos/$REPO/commits/$head_sha/check-runs?per_page=100")
+            check_count=$(jq '.total_count' <<<"$check_runs")
+            if [ "$check_count" -eq 0 ]; then
+              echo "Skipping PR #$pr: no check runs found yet."
+              continue
+            fi
+
+            bad_checks=$(jq '[.check_runs[] | select(.status != "completed" or (.conclusion != "success" and .conclusion != "neutral" and .conclusion != "skipped"))] | length' <<<"$check_runs")
+            if [ "$bad_checks" -ne 0 ]; then
+              echo "Skipping PR #$pr: checks are pending or failed."
+              continue
+            fi
+
+            statuses=$(gh api "/repos/$REPO/commits/$head_sha/status")
+            status_count=$(jq '.total_count' <<<"$statuses")
+            status_state=$(jq -r '.state' <<<"$statuses")
+            if [ "$status_count" -gt 0 ] && [ "$status_state" != "success" ]; then
+              echo "Skipping PR #$pr: commit statuses are $status_state."
+              continue
+            fi
+
+            echo "Merging PR #$pr with ${merge_flag}."
+            if gh pr merge "$pr" --repo "$REPO" "$merge_flag" --delete-branch --match-head-commit "$head_sha"; then
+              echo "Merged PR #$pr."
+            else
+              echo "Skipping PR #$pr: GitHub did not consider it mergeable yet."
+            fi
+          done
