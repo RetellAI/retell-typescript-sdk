@@ -867,7 +867,7 @@ export namespace LlmResponse {
       /**
        * The static message to be sent in the SMS. Can contain dynamic variables.
        */
-      content?: string;
+      text?: string;
 
       type?: 'predefined';
     }
@@ -2163,7 +2163,7 @@ export namespace LlmResponse {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }
@@ -3485,7 +3485,7 @@ export namespace LlmCreateParams {
       /**
        * The static message to be sent in the SMS. Can contain dynamic variables.
        */
-      content?: string;
+      text?: string;
 
       type?: 'predefined';
     }
@@ -4781,7 +4781,7 @@ export namespace LlmCreateParams {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }
@@ -6105,7 +6105,7 @@ export namespace LlmUpdateParams {
       /**
        * The static message to be sent in the SMS. Can contain dynamic variables.
        */
-      content?: string;
+      text?: string;
 
       type?: 'predefined';
     }
@@ -7401,7 +7401,7 @@ export namespace LlmUpdateParams {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }

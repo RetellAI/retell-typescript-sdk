@@ -2220,7 +2220,7 @@ export namespace ConversationFlowComponentResponse {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }
@@ -10813,7 +10813,7 @@ export namespace ConversationFlowComponentCreateParams {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }
@@ -19426,7 +19426,7 @@ export namespace ConversationFlowComponentUpdateParams {
         /**
          * The static message to be sent in the SMS. Can contain dynamic variables.
          */
-        content?: string;
+        text?: string;
 
         type?: 'predefined';
       }
