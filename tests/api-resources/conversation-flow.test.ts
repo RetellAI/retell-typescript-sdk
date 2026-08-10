@@ -210,6 +210,7 @@ describe('resource conversationFlow', () => {
               execution_message_description: 'execution_message_description',
               execution_message_type: 'prompt',
               headers: { Authorization: 'Bearer 1234567890' },
+              max_retry: 0,
               method: 'GET',
               parameter_type: 'json',
               parameters: {
@@ -230,7 +231,7 @@ describe('resource conversationFlow', () => {
       default_dynamic_variables: { company_name: 'Retell Inc', support_hours: '9 AM - 5 PM' },
       flex_mode: false,
       global_prompt: 'You are a helpful customer service agent.',
-      is_transfer_llm: false,
+      is_transfer_cf: false,
       kb_config: { filter_score: 0.6, top_k: 3 },
       knowledge_base_ids: ['kb_001', 'kb_002'],
       mcps: [
@@ -264,6 +265,7 @@ describe('resource conversationFlow', () => {
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
           headers: { Authorization: 'Bearer 1234567890' },
+          max_retry: 0,
           method: 'GET',
           parameter_type: 'json',
           parameters: {

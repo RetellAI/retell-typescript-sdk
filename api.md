@@ -186,6 +186,16 @@ Methods:
 
 - <code title="get /get-concurrency">client.concurrency.<a href="./src/resources/concurrency.ts">retrieve</a>() -> ConcurrencyRetrieveResponse</code>
 
+# Identity
+
+Types:
+
+- <code><a href="./src/resources/identity.ts">IdentityRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /get-api-key-info">client.identity.<a href="./src/resources/identity.ts">retrieve</a>() -> IdentityRetrieveResponse</code>
+
 # ExportRequest
 
 Types:

@@ -95,6 +95,7 @@ import {
   ExportRequestListParams,
   ExportRequestListResponse,
 } from './resources/export-request';
+import { Identity, IdentityRetrieveResponse } from './resources/identity';
 import {
   KnowledgeBase,
   KnowledgeBaseAddSourcesParams,
@@ -885,6 +886,7 @@ export class Retell {
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
+  identity: API.Identity = new API.Identity(this);
   exportRequest: API.ExportRequest = new API.ExportRequest(this);
   batchCall: API.BatchCall = new API.BatchCall(this);
   tests: API.Tests = new API.Tests(this);
@@ -903,6 +905,7 @@ Retell.ConversationFlowComponent = ConversationFlowComponent;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
 Retell.Concurrency = Concurrency;
+Retell.Identity = Identity;
 Retell.ExportRequest = ExportRequest;
 Retell.BatchCall = BatchCall;
 Retell.Tests = Tests;
@@ -1028,6 +1031,8 @@ export declare namespace Retell {
   };
 
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
+
+  export { Identity as Identity, type IdentityRetrieveResponse as IdentityRetrieveResponse };
 
   export {
     ExportRequest as ExportRequest,

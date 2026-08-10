@@ -342,6 +342,28 @@ export namespace ChatResponse {
      * Unique id of the message
      */
     message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
   }
 
   export interface ToolCallInvocationMessageBase {
@@ -619,6 +641,28 @@ export namespace ChatCreateChatCompletionResponse {
      * Unique id of the message
      */
     message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
   }
 
   export interface ToolCallInvocationMessageBase {

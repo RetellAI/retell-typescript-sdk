@@ -129,6 +129,7 @@ describe('resource conversationFlowComponent', () => {
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
           headers: { Authorization: 'Bearer 1234567890' },
+          max_retry: 0,
           method: 'GET',
           parameter_type: 'json',
           parameters: {
