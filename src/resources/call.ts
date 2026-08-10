@@ -5294,12 +5294,11 @@ export namespace CallCreatePhoneCallParams {
 
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
-       * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
-       * support, or an array of concrete locale codes for explicit multi-locale
-       * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
-       * locale codes only — the `multi` value is valid only as the scalar legacy form
-       * and must not appear inside an array. Single-element arrays are normalized to the
-       * equivalent scalar on output. If unset, defaults to `en-US`.
+       * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
+       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
+       * as a scalar, and is stored and returned as the ten locales it used to mean. It
+       * must not appear inside the array form. Send an explicit locale array instead. If
+       * unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -5489,6 +5488,8 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**
@@ -6013,12 +6014,14 @@ export namespace CallCreatePhoneCallParams {
 
       export interface PronunciationDictionary {
         /**
-         * The phonetic alphabet to be used for pronunciation.
+         * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+         * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+         * depends on the selected voice provider and model.
          */
-        alphabet: 'ipa' | 'cmu';
+        alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
         /**
-         * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+         * Pronunciation of the word in the format of the selected phonetic alphabet.
          */
         phoneme: string;
 
@@ -6237,7 +6240,9 @@ export namespace CallCreatePhoneCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -6308,6 +6313,8 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**
@@ -6677,12 +6684,11 @@ export namespace CallCreateWebCallParams {
 
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
-       * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
-       * support, or an array of concrete locale codes for explicit multi-locale
-       * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
-       * locale codes only — the `multi` value is valid only as the scalar legacy form
-       * and must not appear inside an array. Single-element arrays are normalized to the
-       * equivalent scalar on output. If unset, defaults to `en-US`.
+       * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
+       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
+       * as a scalar, and is stored and returned as the ten locales it used to mean. It
+       * must not appear inside the array form. Send an explicit locale array instead. If
+       * unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -6872,6 +6878,8 @@ export namespace CallCreateWebCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**
@@ -7396,12 +7404,14 @@ export namespace CallCreateWebCallParams {
 
       export interface PronunciationDictionary {
         /**
-         * The phonetic alphabet to be used for pronunciation.
+         * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+         * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+         * depends on the selected voice provider and model.
          */
-        alphabet: 'ipa' | 'cmu';
+        alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
         /**
-         * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+         * Pronunciation of the word in the format of the selected phonetic alphabet.
          */
         phoneme: string;
 
@@ -7620,7 +7630,9 @@ export namespace CallCreateWebCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -7691,6 +7703,8 @@ export namespace CallCreateWebCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**
@@ -8060,12 +8074,11 @@ export namespace CallRegisterPhoneCallParams {
 
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
-       * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
-       * support, or an array of concrete locale codes for explicit multi-locale
-       * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
-       * locale codes only — the `multi` value is valid only as the scalar legacy form
-       * and must not appear inside an array. Single-element arrays are normalized to the
-       * equivalent scalar on output. If unset, defaults to `en-US`.
+       * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
+       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
+       * as a scalar, and is stored and returned as the ten locales it used to mean. It
+       * must not appear inside the array form. Send an explicit locale array instead. If
+       * unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -8255,6 +8268,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**
@@ -8779,12 +8794,14 @@ export namespace CallRegisterPhoneCallParams {
 
       export interface PronunciationDictionary {
         /**
-         * The phonetic alphabet to be used for pronunciation.
+         * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+         * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+         * depends on the selected voice provider and model.
          */
-        alphabet: 'ipa' | 'cmu';
+        alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
         /**
-         * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+         * Pronunciation of the word in the format of the selected phonetic alphabet.
          */
         phoneme: string;
 
@@ -9003,7 +9020,9 @@ export namespace CallRegisterPhoneCallParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -9074,6 +9093,8 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
         | null;
 
       /**

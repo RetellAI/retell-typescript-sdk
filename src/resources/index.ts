@@ -77,6 +77,7 @@ export {
   type ExportRequestListResponse,
   type ExportRequestListParams,
 } from './export-request';
+export { Identity, type IdentityRetrieveResponse } from './identity';
 export {
   KnowledgeBase,
   type KnowledgeBaseResponse,

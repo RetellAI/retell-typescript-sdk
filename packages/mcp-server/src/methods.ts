@@ -431,6 +431,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-concurrency',
   },
   {
+    clientCallName: 'client.identity.retrieve',
+    fullyQualifiedName: 'identity.retrieve',
+    httpMethod: 'get',
+    httpPath: '/get-api-key-info',
+  },
+  {
     clientCallName: 'client.exportRequest.list',
     fullyQualifiedName: 'exportRequest.list',
     httpMethod: 'get',

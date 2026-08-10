@@ -448,12 +448,11 @@ export interface AgentResponse {
 
   /**
    * Specifies what language(s) the agent will operate in. Accepts either a single
-   * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
-   * support, or an array of concrete locale codes for explicit multi-locale
-   * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
-   * locale codes only — the `multi` value is valid only as the scalar legacy form
-   * and must not appear inside an array. Single-element arrays are normalized to the
-   * equivalent scalar on output. If unset, defaults to `en-US`.
+   * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
+   * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
+   * as a scalar, and is stored and returned as the ten locales it used to mean. It
+   * must not appear inside the array form. Send an explicit locale array instead. If
+   * unset, defaults to `en-US`.
    */
   language?:
     | 'en-US'
@@ -643,6 +642,8 @@ export interface AgentResponse {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -1197,12 +1198,14 @@ export namespace AgentResponse {
 
   export interface PronunciationDictionary {
     /**
-     * The phonetic alphabet to be used for pronunciation.
+     * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+     * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+     * depends on the selected voice provider and model.
      */
-    alphabet: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
     /**
-     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     * Pronunciation of the word in the format of the selected phonetic alphabet.
      */
     phoneme: string;
 
@@ -1575,12 +1578,11 @@ export interface AgentCreateParams {
 
   /**
    * Specifies what language(s) the agent will operate in. Accepts either a single
-   * scalar locale (e.g. `en-US`), the legacy scalar value `multi` for multilingual
-   * support, or an array of concrete locale codes for explicit multi-locale
-   * selection (e.g. `["en-US","es-ES"]`). The array form must contain concrete
-   * locale codes only — the `multi` value is valid only as the scalar legacy form
-   * and must not appear inside an array. Single-element arrays are normalized to the
-   * equivalent scalar on output. If unset, defaults to `en-US`.
+   * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
+   * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
+   * as a scalar, and is stored and returned as the ten locales it used to mean. It
+   * must not appear inside the array form. Send an explicit locale array instead. If
+   * unset, defaults to `en-US`.
    */
   language?:
     | 'en-US'
@@ -1770,6 +1772,8 @@ export interface AgentCreateParams {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -2324,12 +2328,14 @@ export namespace AgentCreateParams {
 
   export interface PronunciationDictionary {
     /**
-     * The phonetic alphabet to be used for pronunciation.
+     * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+     * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+     * depends on the selected voice provider and model.
      */
-    alphabet: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
     /**
-     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     * Pronunciation of the word in the format of the selected phonetic alphabet.
      */
     phoneme: string;
 
@@ -2651,12 +2657,11 @@ export interface AgentUpdateParams {
 
   /**
    * Body param: Specifies what language(s) the agent will operate in. Accepts either
-   * a single scalar locale (e.g. `en-US`), the legacy scalar value `multi` for
-   * multilingual support, or an array of concrete locale codes for explicit
-   * multi-locale selection (e.g. `["en-US","es-ES"]`). The array form must contain
-   * concrete locale codes only — the `multi` value is valid only as the scalar
-   * legacy form and must not appear inside an array. Single-element arrays are
-   * normalized to the equivalent scalar on output. If unset, defaults to `en-US`.
+   * a single locale (e.g. `en-US`) or an array of locales for multilingual agents
+   * (e.g. `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still
+   * accepted as a scalar, and is stored and returned as the ten locales it used to
+   * mean. It must not appear inside the array form. Send an explicit locale array
+   * instead. If unset, defaults to `en-US`.
    */
   language?:
     | 'en-US'
@@ -2846,6 +2851,8 @@ export interface AgentUpdateParams {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -3377,12 +3384,14 @@ export namespace AgentUpdateParams {
 
   export interface PronunciationDictionary {
     /**
-     * The phonetic alphabet to be used for pronunciation.
+     * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
+     * MiniMax speech-2.8-turbo also supports Jyutping. Support for other alphabets
+     * depends on the selected voice provider and model.
      */
-    alphabet: 'ipa' | 'cmu';
+    alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping';
 
     /**
-     * Pronunciation of the word in the format of a IPA / CMU pronunciation.
+     * Pronunciation of the word in the format of the selected phonetic alphabet.
      */
     phoneme: string;
 

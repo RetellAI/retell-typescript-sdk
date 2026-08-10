@@ -164,9 +164,10 @@ export interface ConversationFlowResponse {
   global_prompt?: string | null;
 
   /**
-   * Whether this conversation flow is used for transfer LLM.
+   * Whether this conversation flow is used for warm transfer. Can only be set at
+   * creation, and is ignored on update.
    */
-  is_transfer_llm?: boolean | null;
+  is_transfer_cf?: boolean | null;
 
   /**
    * Knowledge base configuration for RAG retrieval.
@@ -931,7 +932,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -1650,7 +1653,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -2433,6 +2438,20 @@ export namespace ConversationFlowResponse {
         headers?: { [key: string]: string };
 
         /**
+         * Maximum number of times to retry the request after a failed attempt, from 0 (no
+         * retry) to 5. Retries happen on any failure, with exponential backoff between
+         * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+         * attempt rather than as a budget across all attempts, so an attempt that times
+         * out is still retried and the worst-case total duration is `timeout_ms`
+         * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+         * exponential backoff + jitter between each retry. Only the final attempt's result
+         * is reported to the agent. Because retries repeat the request, only set this
+         * above 0 if your endpoint is idempotent — a retried request may be processed more
+         * than once. Defaults to 0 (no retry).
+         */
+        max_retry?: number;
+
+        /**
          * Method to use for the request, default to POST.
          */
         method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -3155,7 +3174,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -3633,7 +3654,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -4118,7 +4141,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -4790,7 +4815,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -5236,7 +5263,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -5663,7 +5692,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -6103,7 +6134,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -6672,7 +6705,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -7059,7 +7094,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -7546,7 +7583,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -8230,7 +8269,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -8505,7 +8546,9 @@ export namespace ConversationFlowResponse {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -8651,6 +8694,20 @@ export namespace ConversationFlowResponse {
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
+
+      /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
 
       /**
        * Method to use for the request, default to POST.
@@ -8901,7 +8958,9 @@ export namespace ConversationFlowResponse {
       | 'claude-4.5-haiku'
       | 'gemini-3.0-flash'
       | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash';
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash';
 
     /**
      * Type of model choice
@@ -9528,7 +9587,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -10247,7 +10308,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -11030,6 +11093,20 @@ export namespace ConversationFlowResponse {
       headers?: { [key: string]: string };
 
       /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
+
+      /**
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -11752,7 +11829,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -12230,7 +12309,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -12715,7 +12796,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -13387,7 +13470,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -13833,7 +13918,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -14260,7 +14347,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -14700,7 +14789,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -15269,7 +15360,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -15656,7 +15749,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -16143,7 +16238,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -16827,7 +16924,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -17102,7 +17201,9 @@ export namespace ConversationFlowResponse {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -17214,6 +17315,20 @@ export namespace ConversationFlowResponse {
      * Headers to add to the request.
      */
     headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
 
     /**
      * Method to use for the request, default to POST.
@@ -17478,9 +17593,10 @@ export interface ConversationFlowCreateParams {
   global_prompt?: string | null;
 
   /**
-   * Whether this conversation flow is used for transfer LLM.
+   * Whether this conversation flow is used for warm transfer. Can only be set at
+   * creation, and is ignored on update.
    */
-  is_transfer_llm?: boolean | null;
+  is_transfer_cf?: boolean | null;
 
   /**
    * Knowledge base configuration for RAG retrieval.
@@ -17558,7 +17674,9 @@ export namespace ConversationFlowCreateParams {
       | 'claude-4.5-haiku'
       | 'gemini-3.0-flash'
       | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash';
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash';
 
     /**
      * Type of model choice
@@ -18185,7 +18303,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -18904,7 +19024,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -19687,6 +19809,20 @@ export namespace ConversationFlowCreateParams {
       headers?: { [key: string]: string };
 
       /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
+
+      /**
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -20409,7 +20545,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -20887,7 +21025,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -21372,7 +21512,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -22044,7 +22186,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -22490,7 +22634,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -22917,7 +23063,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -23357,7 +23505,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -23926,7 +24076,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -24313,7 +24465,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -24800,7 +24954,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -25484,7 +25640,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -25759,7 +25917,9 @@ export namespace ConversationFlowCreateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -26457,7 +26617,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -27176,7 +27338,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -27959,6 +28123,20 @@ export namespace ConversationFlowCreateParams {
         headers?: { [key: string]: string };
 
         /**
+         * Maximum number of times to retry the request after a failed attempt, from 0 (no
+         * retry) to 5. Retries happen on any failure, with exponential backoff between
+         * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+         * attempt rather than as a budget across all attempts, so an attempt that times
+         * out is still retried and the worst-case total duration is `timeout_ms`
+         * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+         * exponential backoff + jitter between each retry. Only the final attempt's result
+         * is reported to the agent. Because retries repeat the request, only set this
+         * above 0 if your endpoint is idempotent — a retried request may be processed more
+         * than once. Defaults to 0 (no retry).
+         */
+        max_retry?: number;
+
+        /**
          * Method to use for the request, default to POST.
          */
         method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -28681,7 +28859,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -29159,7 +29339,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -29644,7 +29826,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -30316,7 +30500,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -30762,7 +30948,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -31189,7 +31377,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -31629,7 +31819,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -32198,7 +32390,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -32585,7 +32779,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -33072,7 +33268,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -33756,7 +33954,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -34031,7 +34231,9 @@ export namespace ConversationFlowCreateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -34177,6 +34379,20 @@ export namespace ConversationFlowCreateParams {
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
+
+      /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
 
       /**
        * Method to use for the request, default to POST.
@@ -34499,6 +34715,20 @@ export namespace ConversationFlowCreateParams {
     headers?: { [key: string]: string };
 
     /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -34730,9 +34960,10 @@ export interface ConversationFlowUpdateParams {
   global_prompt?: string | null;
 
   /**
-   * Body param: Whether this conversation flow is used for transfer LLM.
+   * Body param: Whether this conversation flow is used for warm transfer. Can only
+   * be set at creation, and is ignored on update.
    */
-  is_transfer_llm?: boolean | null;
+  is_transfer_cf?: boolean | null;
 
   /**
    * Body param: Knowledge base configuration for RAG retrieval.
@@ -35498,7 +35729,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -36217,7 +36450,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -37000,6 +37235,20 @@ export namespace ConversationFlowUpdateParams {
         headers?: { [key: string]: string };
 
         /**
+         * Maximum number of times to retry the request after a failed attempt, from 0 (no
+         * retry) to 5. Retries happen on any failure, with exponential backoff between
+         * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+         * attempt rather than as a budget across all attempts, so an attempt that times
+         * out is still retried and the worst-case total duration is `timeout_ms`
+         * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+         * exponential backoff + jitter between each retry. Only the final attempt's result
+         * is reported to the agent. Because retries repeat the request, only set this
+         * above 0 if your endpoint is idempotent — a retried request may be processed more
+         * than once. Defaults to 0 (no retry).
+         */
+        max_retry?: number;
+
+        /**
          * Method to use for the request, default to POST.
          */
         method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -37722,7 +37971,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -38200,7 +38451,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -38685,7 +38938,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -39357,7 +39612,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -39803,7 +40060,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -40230,7 +40489,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -40670,7 +40931,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -41239,7 +41502,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -41626,7 +41891,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -42113,7 +42380,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -42797,7 +43066,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -43072,7 +43343,9 @@ export namespace ConversationFlowUpdateParams {
           | 'claude-4.5-haiku'
           | 'gemini-3.0-flash'
           | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash';
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash';
 
         /**
          * Type of model choice
@@ -43218,6 +43491,20 @@ export namespace ConversationFlowUpdateParams {
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
+
+      /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
 
       /**
        * Method to use for the request, default to POST.
@@ -43468,7 +43755,9 @@ export namespace ConversationFlowUpdateParams {
       | 'claude-4.5-haiku'
       | 'gemini-3.0-flash'
       | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash';
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash';
 
     /**
      * Type of model choice
@@ -44095,7 +44384,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -44814,7 +45105,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -45597,6 +45890,20 @@ export namespace ConversationFlowUpdateParams {
       headers?: { [key: string]: string };
 
       /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
+
+      /**
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -46319,7 +46626,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -46797,7 +47106,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -47282,7 +47593,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -47954,7 +48267,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -48400,7 +48715,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -48827,7 +49144,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -49267,7 +49586,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -49836,7 +50157,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -50223,7 +50546,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -50710,7 +51035,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -51394,7 +51721,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -51669,7 +51998,9 @@ export namespace ConversationFlowUpdateParams {
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash';
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash';
 
       /**
        * Type of model choice
@@ -51781,6 +52112,20 @@ export namespace ConversationFlowUpdateParams {
      * Headers to add to the request.
      */
     headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
 
     /**
      * Method to use for the request, default to POST.

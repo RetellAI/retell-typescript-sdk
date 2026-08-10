@@ -156,6 +156,12 @@ export interface LlmResponse {
   is_published?: boolean;
 
   /**
+   * Whether this Retell LLM is used for warm transfer. Can only be set at creation,
+   * and is ignored on update.
+   */
+  is_transfer_llm?: boolean | null;
+
+  /**
    * Knowledge base configuration for RAG retrieval.
    */
   kb_config?: LlmResponse.KBConfig | null;
@@ -195,6 +201,8 @@ export interface LlmResponse {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -951,6 +959,20 @@ export namespace LlmResponse {
     headers?: { [key: string]: string };
 
     /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -2247,6 +2269,20 @@ export namespace LlmResponse {
       headers?: { [key: string]: string };
 
       /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
+
+      /**
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -2779,6 +2815,12 @@ export interface LlmCreateParams {
   > | null;
 
   /**
+   * Whether this Retell LLM is used for warm transfer. Can only be set at creation,
+   * and is ignored on update.
+   */
+  is_transfer_llm?: boolean | null;
+
+  /**
    * Knowledge base configuration for RAG retrieval.
    */
   kb_config?: LlmCreateParams.KBConfig | null;
@@ -2818,6 +2860,8 @@ export interface LlmCreateParams {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -3569,6 +3613,20 @@ export namespace LlmCreateParams {
     headers?: { [key: string]: string };
 
     /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -4865,6 +4923,20 @@ export namespace LlmCreateParams {
       headers?: { [key: string]: string };
 
       /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
+
+      /**
        * Method to use for the request, default to POST.
        */
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -5398,6 +5470,12 @@ export interface LlmUpdateParams {
   > | null;
 
   /**
+   * Body param: Whether this Retell LLM is used for warm transfer. Can only be set
+   * at creation, and is ignored on update.
+   */
+  is_transfer_llm?: boolean | null;
+
+  /**
    * Body param: Knowledge base configuration for RAG retrieval.
    */
   kb_config?: LlmUpdateParams.KBConfig | null;
@@ -5438,6 +5516,8 @@ export interface LlmUpdateParams {
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
     | 'gemini-3.5-flash'
+    | 'gemini-3.5-flash-lite'
+    | 'gemini-3.6-flash'
     | null;
 
   /**
@@ -6189,6 +6269,20 @@ export namespace LlmUpdateParams {
     headers?: { [key: string]: string };
 
     /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
      * Method to use for the request, default to POST.
      */
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -7483,6 +7577,20 @@ export namespace LlmUpdateParams {
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
+
+      /**
+       * Maximum number of times to retry the request after a failed attempt, from 0 (no
+       * retry) to 5. Retries happen on any failure, with exponential backoff between
+       * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+       * attempt rather than as a budget across all attempts, so an attempt that times
+       * out is still retried and the worst-case total duration is `timeout_ms`
+       * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+       * exponential backoff + jitter between each retry. Only the final attempt's result
+       * is reported to the agent. Because retries repeat the request, only set this
+       * above 0 if your endpoint is idempotent — a retried request may be processed more
+       * than once. Defaults to 0 (no retry).
+       */
+      max_retry?: number;
 
       /**
        * Method to use for the request, default to POST.
