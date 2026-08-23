@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.64.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.63.0...v5.64.0) (2026-08-23)
+
+
+### Features
+
+* **api:** expose contact, app, and CRM APIs in API reference and SDKs ([1a808ae](https://github.com/RetellAI/retell-typescript-sdk/commit/1a808ae99f7679adc11143353158ad4b6c772c3c))
+
+
+### Chores
+
+* preserve production workflow files ([ab94b82](https://github.com/RetellAI/retell-typescript-sdk/commit/ab94b82f7798a84aca3151df150b55fbe4e7d1f8))
+
 ## [5.63.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.62.0...v5.63.0) (2026-08-12)
 
 
