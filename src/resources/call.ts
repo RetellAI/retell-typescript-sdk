@@ -4214,7 +4214,14 @@ export namespace CallListParams {
     /**
      * Filter by dynamic variables.
      */
-    dynamic_variables?: Array<FilterCriteria.DynamicVariable>;
+    dynamic_variables?: Array<
+      | FilterCriteria.StringFilter
+      | FilterCriteria.NumberFilter
+      | FilterCriteria.BooleanFilter
+      | FilterCriteria.RangeFilter
+      | FilterCriteria.EnumFilter
+      | FilterCriteria.PresentFilter
+    >;
 
     /**
      * Filter by end-to-end latency p50.
@@ -4672,12 +4679,7 @@ export namespace CallListParams {
       value: Array<number>;
     }
 
-    export interface DynamicVariable {
-      /**
-       * The dynamic variable name to filter on.
-       */
-      key: string;
-
+    export interface StringFilter {
       /**
        * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
        */
@@ -4686,6 +4688,90 @@ export namespace CallListParams {
       type: 'string';
 
       value: string;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface NumberFilter {
+      /**
+       * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
+       * than, le: less than or equal
+       */
+      op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+
+      type: 'number';
+
+      value: number;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface BooleanFilter {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface RangeFilter {
+      /**
+       * bt: between
+       */
+      op: 'bt';
+
+      type: 'range';
+
+      /**
+       * [lower_bound, upper_bound]
+       */
+      value: Array<number>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
+    }
+
+    export interface PresentFilter {
+      /**
+       * pr: present (has value), np: not present
+       */
+      op: 'pr' | 'np';
+
+      type: 'present';
+
+      /**
+       * The field name to filter on.
+       */
+      key?: string;
     }
 
     export interface NumberFilter {

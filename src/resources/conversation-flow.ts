@@ -103,8 +103,14 @@ export class ConversationFlow extends APIResource {
    * );
    * ```
    */
-  delete(conversationFlowID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    conversationFlowID: string,
+    params: ConversationFlowDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { force_delete } = params ?? {};
     return this._client.delete(path`/delete-conversation-flow/${conversationFlowID}`, {
+      query: { force_delete },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -2271,7 +2277,9 @@ export namespace ConversationFlowResponse {
         keep_current_language?: boolean;
 
         /**
-         * If true, keep the current voice when swapping agents. Defaults to false.
+         * If true, keep the current voice and ambient sound settings when swapping agents.
+         * Otherwise, use the destination agent's voice and ambient sound settings.
+         * Defaults to false.
          */
         keep_current_voice?: boolean;
 
@@ -6771,7 +6779,9 @@ export namespace ConversationFlowResponse {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -10926,7 +10936,9 @@ export namespace ConversationFlowResponse {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -15426,7 +15438,9 @@ export namespace ConversationFlowResponse {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -19642,7 +19656,9 @@ export namespace ConversationFlowCreateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -24142,7 +24158,9 @@ export namespace ConversationFlowCreateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -27956,7 +27974,9 @@ export namespace ConversationFlowCreateParams {
         keep_current_language?: boolean;
 
         /**
-         * If true, keep the current voice when swapping agents. Defaults to false.
+         * If true, keep the current voice and ambient sound settings when swapping agents.
+         * Otherwise, use the destination agent's voice and ambient sound settings.
+         * Defaults to false.
          */
         keep_current_voice?: boolean;
 
@@ -32456,7 +32476,9 @@ export namespace ConversationFlowCreateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -37068,7 +37090,9 @@ export namespace ConversationFlowUpdateParams {
         keep_current_language?: boolean;
 
         /**
-         * If true, keep the current voice when swapping agents. Defaults to false.
+         * If true, keep the current voice and ambient sound settings when swapping agents.
+         * Otherwise, use the destination agent's voice and ambient sound settings.
+         * Defaults to false.
          */
         keep_current_voice?: boolean;
 
@@ -41568,7 +41592,9 @@ export namespace ConversationFlowUpdateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -45723,7 +45749,9 @@ export namespace ConversationFlowUpdateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -50223,7 +50251,9 @@ export namespace ConversationFlowUpdateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -52325,6 +52355,15 @@ export interface ConversationFlowListParams {
   sort_order?: 'ascending' | 'descending';
 }
 
+export interface ConversationFlowDeleteParams {
+  /**
+   * By default the deletion is rejected with a 400 if any agent still uses this
+   * conversation flow as its response engine. Set to true to delete it anyway, which
+   * leaves those agents pointing at a conversation flow that no longer exists.
+   */
+  force_delete?: boolean;
+}
+
 export declare namespace ConversationFlow {
   export {
     type ConversationFlowResponse as ConversationFlowResponse,
@@ -52333,5 +52372,6 @@ export declare namespace ConversationFlow {
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
     type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
     type ConversationFlowListParams as ConversationFlowListParams,
+    type ConversationFlowDeleteParams as ConversationFlowDeleteParams,
   };
 }

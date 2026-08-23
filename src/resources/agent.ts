@@ -148,17 +148,31 @@ export class Agent extends APIResource {
   }
 
   /**
-   * Get all versions of an agent
+   * Get agent versions. Large version histories may be truncated.
+   *
+   * @deprecated
+   */
+  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
+    return this._client.get(path`/get-agent-versions/${agentID}`, options);
+  }
+
+  /**
+   * List stored versions of a voice or chat agent with pagination. Root-level data
+   * such as assigned tags is not included.
    *
    * @example
    * ```ts
-   * const agentResponses = await client.agent.getVersions(
+   * const response = await client.agent.listVersions(
    *   '16b980523634a6dc504898cda492e939',
    * );
    * ```
    */
-  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
-    return this._client.get(path`/get-agent-versions/${agentID}`, options);
+  listVersions(
+    agentID: string,
+    query: AgentListVersionsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentListVersionsResponse> {
+    return this._client.get(path`/list-agent-versions/${agentID}`, { query, ...options });
   }
 
   /**
@@ -1338,6 +1352,54 @@ export namespace AgentListResponse {
 export type AgentCreateVersionResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
 
 export type AgentGetVersionsResponse = Array<AgentResponse>;
+
+export interface AgentListVersionsResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more?: boolean;
+
+  items?: Array<AgentListVersionsResponse.Item>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export namespace AgentListVersionsResponse {
+  export interface Item {
+    /**
+     * Whether the agent version is published.
+     */
+    is_published: boolean;
+
+    /**
+     * Last modification timestamp in milliseconds since epoch.
+     */
+    last_modification_timestamp: number;
+
+    /**
+     * Version number of the agent.
+     */
+    version: number;
+
+    /**
+     * Version that this agent version was based on.
+     */
+    base_version?: number;
+
+    /**
+     * Optional description of the agent version.
+     */
+    version_description?: string;
+
+    /**
+     * Optional title of the agent version.
+     */
+    version_title?: string;
+  }
+}
 
 export interface AgentCreateParams {
   /**
@@ -3583,6 +3645,23 @@ export interface AgentDeleteVersionParams {
   version: number;
 }
 
+export interface AgentListVersionsParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+}
+
 export interface AgentPublishParams {
   version: number;
 
@@ -3600,12 +3679,14 @@ export declare namespace Agent {
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
+    type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
     type AgentCreateVersionParams as AgentCreateVersionParams,
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
+    type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
   };
 }

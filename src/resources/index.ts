@@ -6,15 +6,38 @@ export {
   type AgentListResponse,
   type AgentCreateVersionResponse,
   type AgentGetVersionsResponse,
+  type AgentListVersionsResponse,
   type AgentCreateParams,
   type AgentRetrieveParams,
   type AgentUpdateParams,
   type AgentListParams,
   type AgentCreateVersionParams,
   type AgentDeleteVersionParams,
+  type AgentListVersionsParams,
   type AgentPublishParams,
 } from './agent';
+export {
+  App,
+  type AppResponse,
+  type AppListResponse,
+  type AppListUsagesResponse,
+  type AppTestAuthResponse,
+  type AppCreateParams,
+  type AppUpdateParams,
+  type AppListParams,
+  type AppDeleteParams,
+  type AppListUsagesParams,
+} from './app';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
+export {
+  CRM,
+  type CRMConfig,
+  type CRMGetSchemaResponse,
+  type CRMGetSyncJobStatusResponse,
+  type CRMRunSyncJobResponse,
+  type CRMGetSchemaParams,
+  type CRMUpdateConfigParams,
+} from './crm';
 export {
   Call,
   type CallResponse,
@@ -56,6 +79,19 @@ export {
 } from './chat-agent';
 export { Concurrency, type ConcurrencyRetrieveResponse } from './concurrency';
 export {
+  Contact,
+  type ContactResponse,
+  type ContactListResponse,
+  type ContactBackfillAnalysisDataResponse,
+  type ContactGetBackfillJobStatusResponse,
+  type ContactListConversationsResponse,
+  type ContactCreateParams,
+  type ContactUpdateParams,
+  type ContactListParams,
+  type ContactBackfillAnalysisDataParams,
+  type ContactListConversationsParams,
+} from './contact';
+export {
   ConversationFlow,
   type ConversationFlowResponse,
   type ConversationFlowListResponse,
@@ -63,6 +99,7 @@ export {
   type ConversationFlowRetrieveParams,
   type ConversationFlowUpdateParams,
   type ConversationFlowListParams,
+  type ConversationFlowDeleteParams,
 } from './conversation-flow';
 export {
   ConversationFlowComponent,
@@ -94,6 +131,7 @@ export {
   type LlmRetrieveParams,
   type LlmUpdateParams,
   type LlmListParams,
+  type LlmDeleteParams,
 } from './llm';
 export {
   McpTool,

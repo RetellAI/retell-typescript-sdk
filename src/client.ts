@@ -27,11 +27,25 @@ import {
   AgentGetVersionsResponse,
   AgentListParams,
   AgentListResponse,
+  AgentListVersionsParams,
+  AgentListVersionsResponse,
   AgentPublishParams,
   AgentResponse,
   AgentRetrieveParams,
   AgentUpdateParams,
 } from './resources/agent';
+import {
+  App,
+  AppCreateParams,
+  AppDeleteParams,
+  AppListParams,
+  AppListResponse,
+  AppListUsagesParams,
+  AppListUsagesResponse,
+  AppResponse,
+  AppTestAuthResponse,
+  AppUpdateParams,
+} from './resources/app';
 import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
 import {
   Call,
@@ -74,8 +88,22 @@ import {
 } from './resources/chat-agent';
 import { Concurrency, ConcurrencyRetrieveResponse } from './resources/concurrency';
 import {
+  Contact,
+  ContactBackfillAnalysisDataParams,
+  ContactBackfillAnalysisDataResponse,
+  ContactCreateParams,
+  ContactGetBackfillJobStatusResponse,
+  ContactListConversationsParams,
+  ContactListConversationsResponse,
+  ContactListParams,
+  ContactListResponse,
+  ContactResponse,
+  ContactUpdateParams,
+} from './resources/contact';
+import {
   ConversationFlow,
   ConversationFlowCreateParams,
+  ConversationFlowDeleteParams,
   ConversationFlowListParams,
   ConversationFlowListResponse,
   ConversationFlowResponse,
@@ -90,6 +118,15 @@ import {
   ConversationFlowComponentResponse,
   ConversationFlowComponentUpdateParams,
 } from './resources/conversation-flow-component';
+import {
+  CRM,
+  CRMConfig,
+  CRMGetSchemaParams,
+  CRMGetSchemaResponse,
+  CRMGetSyncJobStatusResponse,
+  CRMRunSyncJobResponse,
+  CRMUpdateConfigParams,
+} from './resources/crm';
 import {
   ExportRequest,
   ExportRequestListParams,
@@ -107,6 +144,7 @@ import {
 import {
   Llm,
   LlmCreateParams,
+  LlmDeleteParams,
   LlmListParams,
   LlmListResponse,
   LlmResponse,
@@ -892,6 +930,9 @@ export class Retell {
   tests: API.Tests = new API.Tests(this);
   playground: API.Playground = new API.Playground(this);
   mcpTool: API.McpTool = new API.McpTool(this);
+  contact: API.Contact = new API.Contact(this);
+  app: API.App = new API.App(this);
+  crm: API.CRM = new API.CRM(this);
 }
 
 Retell.Call = Call;
@@ -911,6 +952,9 @@ Retell.BatchCall = BatchCall;
 Retell.Tests = Tests;
 Retell.Playground = Playground;
 Retell.McpTool = McpTool;
+Retell.Contact = Contact;
+Retell.App = App;
+Retell.CRM = CRM;
 
 export declare namespace Retell {
   export type RequestOptions = Opts.RequestOptions;
@@ -958,12 +1002,14 @@ export declare namespace Retell {
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
+    type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
     type AgentListParams as AgentListParams,
     type AgentCreateVersionParams as AgentCreateVersionParams,
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
+    type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
   };
 
@@ -990,6 +1036,7 @@ export declare namespace Retell {
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
     type LlmListParams as LlmListParams,
+    type LlmDeleteParams as LlmDeleteParams,
   };
 
   export {
@@ -1000,6 +1047,7 @@ export declare namespace Retell {
     type ConversationFlowRetrieveParams as ConversationFlowRetrieveParams,
     type ConversationFlowUpdateParams as ConversationFlowUpdateParams,
     type ConversationFlowListParams as ConversationFlowListParams,
+    type ConversationFlowDeleteParams as ConversationFlowDeleteParams,
   };
 
   export {
@@ -1073,5 +1121,42 @@ export declare namespace Retell {
     type McpToolDefinition as McpToolDefinition,
     type McpToolGetMcpToolsResponse as McpToolGetMcpToolsResponse,
     type McpToolGetMcpToolsParams as McpToolGetMcpToolsParams,
+  };
+
+  export {
+    Contact as Contact,
+    type ContactResponse as ContactResponse,
+    type ContactListResponse as ContactListResponse,
+    type ContactBackfillAnalysisDataResponse as ContactBackfillAnalysisDataResponse,
+    type ContactGetBackfillJobStatusResponse as ContactGetBackfillJobStatusResponse,
+    type ContactListConversationsResponse as ContactListConversationsResponse,
+    type ContactCreateParams as ContactCreateParams,
+    type ContactUpdateParams as ContactUpdateParams,
+    type ContactListParams as ContactListParams,
+    type ContactBackfillAnalysisDataParams as ContactBackfillAnalysisDataParams,
+    type ContactListConversationsParams as ContactListConversationsParams,
+  };
+
+  export {
+    App as App,
+    type AppResponse as AppResponse,
+    type AppListResponse as AppListResponse,
+    type AppListUsagesResponse as AppListUsagesResponse,
+    type AppTestAuthResponse as AppTestAuthResponse,
+    type AppCreateParams as AppCreateParams,
+    type AppUpdateParams as AppUpdateParams,
+    type AppListParams as AppListParams,
+    type AppDeleteParams as AppDeleteParams,
+    type AppListUsagesParams as AppListUsagesParams,
+  };
+
+  export {
+    CRM as CRM,
+    type CRMConfig as CRMConfig,
+    type CRMGetSchemaResponse as CRMGetSchemaResponse,
+    type CRMGetSyncJobStatusResponse as CRMGetSyncJobStatusResponse,
+    type CRMRunSyncJobResponse as CRMRunSyncJobResponse,
+    type CRMGetSchemaParams as CRMGetSchemaParams,
+    type CRMUpdateConfigParams as CRMUpdateConfigParams,
   };
 }

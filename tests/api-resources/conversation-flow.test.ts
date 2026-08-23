@@ -222,7 +222,7 @@ describe('resource conversationFlow', () => {
               response_variables: { user_name: 'data.user.name' },
               speak_after_execution: true,
               speak_during_execution: true,
-              timeout_ms: 0,
+              timeout_ms: 1000,
               tool_id: 'tool_001',
             },
           ],
@@ -277,7 +277,7 @@ describe('resource conversationFlow', () => {
           response_variables: { user_name: 'data.user.name' },
           speak_after_execution: true,
           speak_during_execution: true,
-          timeout_ms: 0,
+          timeout_ms: 1000,
           tool_id: 'tool_001',
         },
       ],
@@ -357,5 +357,17 @@ describe('resource conversationFlow', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.conversationFlow.delete(
+        'conversation_flow_id',
+        { force_delete: true },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
   });
 });

@@ -150,15 +150,9 @@ export class ChatAgent extends APIResource {
   }
 
   /**
-   * Get all versions of a chat agent
+   * Get chat agent versions. Large version histories may be truncated.
    *
-   * @example
-   * ```ts
-   * const chatAgentResponses =
-   *   await client.chatAgent.getVersions(
-   *     '16b980523634a6dc504898cda492e939',
-   *   );
-   * ```
+   * @deprecated
    */
   getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
     return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);

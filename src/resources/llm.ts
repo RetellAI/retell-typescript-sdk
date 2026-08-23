@@ -77,8 +77,14 @@ export class Llm extends APIResource {
    * await client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');
    * ```
    */
-  delete(llmID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    llmID: string,
+    params: LlmDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { force_delete } = params ?? {};
     return this._client.delete(path`/delete-retell-llm/${llmID}`, {
+      query: { force_delete },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -792,7 +798,9 @@ export namespace LlmResponse {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -2102,7 +2110,9 @@ export namespace LlmResponse {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -3446,7 +3456,9 @@ export namespace LlmCreateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -4756,7 +4768,9 @@ export namespace LlmCreateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -6102,7 +6116,9 @@ export namespace LlmUpdateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -7412,7 +7428,9 @@ export namespace LlmUpdateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -8073,6 +8091,15 @@ export interface LlmListParams {
   sort_order?: 'ascending' | 'descending';
 }
 
+export interface LlmDeleteParams {
+  /**
+   * By default the deletion is rejected with a 400 if any agent still uses this
+   * Retell LLM as its response engine. Set to true to delete it anyway, which leaves
+   * those agents pointing at a Retell LLM that no longer exists.
+   */
+  force_delete?: boolean;
+}
+
 export declare namespace Llm {
   export {
     type LlmResponse as LlmResponse,
@@ -8081,5 +8108,6 @@ export declare namespace Llm {
     type LlmRetrieveParams as LlmRetrieveParams,
     type LlmUpdateParams as LlmUpdateParams,
     type LlmListParams as LlmListParams,
+    type LlmDeleteParams as LlmDeleteParams,
   };
 }

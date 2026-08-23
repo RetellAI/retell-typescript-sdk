@@ -125,10 +125,18 @@ export interface KnowledgeBaseResponse {
   knowledge_base_name: string;
 
   /**
-   * Status of the knowledge base. When it's created and being processed, it's
-   * "in_progress". When the processing is done, it's "complete". When there's an
-   * error in processing, it's "error". When it is during kb updating, it's
-   * "refreshing_in_progress".
+   * Current processing state of the knowledge base:
+   *
+   * - `in_progress`: Initial indexing is running. Source metadata may be incomplete
+   *   until indexing finishes.
+   * - `complete`: Initial indexing or the latest update or refresh finished.
+   *   Individual source failures may still be reported in `error_messages`.
+   * - `error`: Initial indexing failed. Source metadata may be incomplete.
+   * - `refreshing_in_progress`: An existing knowledge base is being updated. This
+   *   includes indexing newly added sources or running a manual or automatic refresh
+   *   that re-indexes URLs, Google Drive files, and pages from auto-crawling paths.
+   *   Previously indexed sources remain available during the update, and the source
+   *   list may change when it finishes.
    */
   status: 'in_progress' | 'complete' | 'error' | 'refreshing_in_progress';
 

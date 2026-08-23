@@ -125,10 +125,10 @@ describe('resource call', () => {
             },
             dynamic_variables: [
               {
-                key: 'key',
                 op: 'eq',
                 type: 'string',
                 value: 'value',
+                key: 'key',
               },
             ],
             e2e_latency_p50: {
