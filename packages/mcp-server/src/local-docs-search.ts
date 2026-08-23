@@ -78,14 +78,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneCallResponse = await client.call.createPhoneCall({\n  from_number: '+14157774444',\n  to_number: '+12137774445',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
+      },
       python: {
         method: 'call.create_phone_call',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_call_response = client.call.create_phone_call(\n    from_number="+14157774444",\n    to_number="+12137774445",\n)\nprint(phone_call_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/create-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 120 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "to_number": "+12137774445",\n          "custom_sip_headers": {\n            "X-Custom-Header": "Custom Value"\n          },\n          "ignore_e164_validation": true,\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -116,14 +116,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneCallResponse = await client.call.registerPhoneCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(phoneCallResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "to_number": "+12137774445"\n        }\'',
+      },
       python: {
         method: 'call.register_phone_call',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_call_response = client.call.register_phone_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(phone_call_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/register-phone-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "direction": "inbound",\n          "from_number": "+14157774444",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "to_number": "+12137774445"\n        }\'',
       },
     },
   },
@@ -154,14 +154,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst webCallResponse = await client.call.createWebCall({\n  agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n});\n\nconsole.log(webCallResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
+      },
       python: {
         method: 'call.create_web_call',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nweb_call_response = client.call.create_web_call(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(web_call_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/create-web-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "current_node_id": "collect_info",\n          "current_state": "information_collection",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -183,14 +183,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponse = await client.call.retrieve('119c3f8e47135a29e65947eeb34cf12d');\n\nconsole.log(callResponse);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/get-call/$CALL_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'call.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_response = client.call.retrieve(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)\nprint(call_response)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/get-call/$CALL_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -203,7 +203,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) call > (method) list',
     qualified: 'client.call.list',
     params: [
-      "filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { key: string; op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; };",
+      "filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; };",
       'include_total?: boolean;',
       'limit?: number;',
       'pagination_key?: string;',
@@ -212,21 +212,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: '{ has_more?: boolean; items?: object | object[]; pagination_key?: string; total?: number; }',
     markdown:
-      "## list\n\n`client.call.list(filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { key: string; op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: object | object; name?: string; success?: object; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; }, include_total?: boolean, limit?: number, pagination_key?: string, skip?: number, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: object | object[]; pagination_key?: string; total?: number; }`\n\n**post** `/v3/list-calls`\n\nList calls with unified cursor pagination response.\n\n### Parameters\n\n- `filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { key: string; op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; }`\n  Filter criteria for calls. All conditions are implicitly connected with AND.\n  - `agent?: { agent_id: string; version?: number[]; }[]`\n    Filter by agent(s). Agent filters are connected by OR.\n  - `agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }`\n    Filter by agent environment tag(s) (e.g. \"prod\", \"staging\").\n  - `batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by batch call ID.\n  - `call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }`\n    Filter by call ID.\n  - `call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }`\n  - `call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }`\n    Filter by whether the call was successful.\n  - `call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }`\n  - `combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by combined cost of the call.\n  - `custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by custom analysis data fields.\n  - `custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by custom attributes fields.\n  - `data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }`\n  - `direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }`\n  - `disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }`\n  - `duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call duration in milliseconds.\n  - `dynamic_variables?: { key: string; op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }[]`\n    Filter by dynamic variables.\n  - `e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by end-to-end latency p50.\n  - `end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call end timestamp (epoch ms).\n  - `from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by from number.\n  - `in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }`\n    Filter by whether the call is in voicemail.\n  - `metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by metadata fields.\n  - `start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call start timestamp (epoch ms).\n  - `to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by to number.\n  - `tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]`\n    Filter by tool call criteria. Tool call filters are connected by AND.\n  - `user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }`\n\n- `include_total?: boolean`\n  Whether to include `total` (count of all calls matching `filter_criteria`, ignoring `limit`/`skip`/`pagination_key`) in the response. Defaults to false. Each enabled request triggers an additional aggregate query, so opt in only when the total is needed.\n\n- `limit?: number`\n  Maximum number of calls to return.\n\n- `pagination_key?: string`\n  Opaque pagination cursor from a previous response.\n\n- `skip?: number`\n  Number of records to skip for pagination.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort calls by `start_timestamp` in ascending or descending order.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { access_token: string; agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'web_call'; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: object[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: object; e2e?: object; knowledge_base?: object; llm?: object; llm_websocket_network_rtt?: object; s2s?: object; tts?: object; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; transfer_destination?: string; transfer_end_timestamp?: number; } | { agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'phone_call'; direction: 'inbound' | 'outbound'; from_number: string; to_number: string; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: object[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: object; e2e?: object; knowledge_base?: object; llm?: object; llm_websocket_network_rtt?: object; s2s?: object; tts?: object; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; telephony_identifier?: { twilio_call_sid?: string; }; transfer_destination?: string; transfer_end_timestamp?: number; }[]; pagination_key?: string; total?: number; }`\n\n  - `has_more?: boolean`\n  - `items?: { access_token: string; agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'web_call'; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: { cost: number; product: string; is_transfer_leg_cost?: boolean; unit_price?: number; }[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; e2e?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; knowledge_base?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm_websocket_network_rtt?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; s2s?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; tts?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; transfer_destination?: string; transfer_end_timestamp?: number; } | { agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'phone_call'; direction: 'inbound' | 'outbound'; from_number: string; to_number: string; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: { cost: number; product: string; is_transfer_leg_cost?: boolean; unit_price?: number; }[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; e2e?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; knowledge_base?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm_websocket_network_rtt?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; s2s?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; tts?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; telephony_identifier?: { twilio_call_sid?: string; }; transfer_destination?: string; transfer_end_timestamp?: number; }[]`\n  - `pagination_key?: string`\n  - `total?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst calls = await client.call.list();\n\nconsole.log(calls);\n```",
+      "## list\n\n`client.call.list(filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: object | object; name?: string; success?: object; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; }, include_total?: boolean, limit?: number, pagination_key?: string, skip?: number, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: object | object[]; pagination_key?: string; total?: number; }`\n\n**post** `/v3/list-calls`\n\nList calls with unified cursor pagination response.\n\n### Parameters\n\n- `filter_criteria?: { agent?: { agent_id: string; version?: number[]; }[]; agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }; batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }; call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }; call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }; call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }; combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }; direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }; disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }; duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; dynamic_variables?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }; metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]; user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }; }`\n  Filter criteria for calls. All conditions are implicitly connected with AND.\n  - `agent?: { agent_id: string; version?: number[]; }[]`\n    Filter by agent(s). Agent filters are connected by OR.\n  - `agent_tag?: { op: 'in'; type: 'enum'; value: string[]; }`\n    Filter by agent environment tag(s) (e.g. \"prod\", \"staging\").\n  - `batch_call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by batch call ID.\n  - `call_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'in'; type: 'enum'; value: string[]; }`\n    Filter by call ID.\n  - `call_status?: { op: 'in'; type: 'enum'; value: 'not_connected' | 'ongoing' | 'ended' | 'error'[]; }`\n  - `call_successful?: { op: 'eq'; type: 'boolean'; value: boolean; }`\n    Filter by whether the call was successful.\n  - `call_type?: { op: 'in'; type: 'enum'; value: 'web_call' | 'phone_call'[]; }`\n  - `combined_cost?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by combined cost of the call.\n  - `custom_analysis_data?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by custom analysis data fields.\n  - `custom_attributes?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by custom attributes fields.\n  - `data_storage_setting?: { op: 'in'; type: 'enum'; value: 'everything' | 'everything_except_pii' | 'basic_attributes_only'[]; }`\n  - `direction?: { op: 'in'; type: 'enum'; value: 'inbound' | 'outbound'[]; }`\n  - `disconnection_reason?: { op: 'in'; type: 'enum'; value: string[]; }`\n  - `duration_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call duration in milliseconds.\n  - `dynamic_variables?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by dynamic variables.\n  - `e2e_latency_p50?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by end-to-end latency p50.\n  - `end_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call end timestamp (epoch ms).\n  - `from_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by from number.\n  - `in_voicemail?: { op: 'eq'; type: 'boolean'; value: boolean; }`\n    Filter by whether the call is in voicemail.\n  - `metadata?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by metadata fields.\n  - `start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by call start timestamp (epoch ms).\n  - `to_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by to number.\n  - `tool_calls?: { latency_ms?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; name?: string; success?: { op: 'eq'; type: 'boolean'; value: boolean; }; type?: string; }[]`\n    Filter by tool call criteria. Tool call filters are connected by AND.\n  - `user_sentiment?: { op: 'in'; type: 'enum'; value: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'[]; }`\n\n- `include_total?: boolean`\n  Whether to include `total` (count of all calls matching `filter_criteria`, ignoring `limit`/`skip`/`pagination_key`) in the response. Defaults to false. Each enabled request triggers an additional aggregate query, so opt in only when the total is needed.\n\n- `limit?: number`\n  Maximum number of calls to return.\n\n- `pagination_key?: string`\n  Opaque pagination cursor from a previous response.\n\n- `skip?: number`\n  Number of records to skip for pagination.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort calls by `start_timestamp` in ascending or descending order.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { access_token: string; agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'web_call'; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: object[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: object; e2e?: object; knowledge_base?: object; llm?: object; llm_websocket_network_rtt?: object; s2s?: object; tts?: object; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; transfer_destination?: string; transfer_end_timestamp?: number; } | { agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'phone_call'; direction: 'inbound' | 'outbound'; from_number: string; to_number: string; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: object[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: object; e2e?: object; knowledge_base?: object; llm?: object; llm_websocket_network_rtt?: object; s2s?: object; tts?: object; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; telephony_identifier?: { twilio_call_sid?: string; }; transfer_destination?: string; transfer_end_timestamp?: number; }[]; pagination_key?: string; total?: number; }`\n\n  - `has_more?: boolean`\n  - `items?: { access_token: string; agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'web_call'; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: { cost: number; product: string; is_transfer_leg_cost?: boolean; unit_price?: number; }[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; e2e?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; knowledge_base?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm_websocket_network_rtt?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; s2s?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; tts?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; transfer_destination?: string; transfer_end_timestamp?: number; } | { agent_id: string; agent_version: number; call_id: string; call_status: 'registered' | 'not_connected' | 'ongoing' | 'ended' | 'error'; call_type: 'phone_call'; direction: 'inbound' | 'outbound'; from_number: string; to_number: string; agent_name?: string; agent_tag?: string; call_analysis?: { call_successful?: boolean; call_summary?: string; custom_analysis_data?: object; in_voicemail?: boolean; user_sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; }; call_cost?: { combined_cost: number; product_costs: { cost: number; product: string; is_transfer_leg_cost?: boolean; unit_price?: number; }[]; total_duration_seconds: number; total_duration_unit_price: number; }; collected_dynamic_variables?: object; custom_sip_headers?: object; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; disconnection_reason?: string; duration_ms?: number; end_timestamp?: number; knowledge_base_retrieved_contents_url?: string; latency?: { asr?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; e2e?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; knowledge_base?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; llm_websocket_network_rtt?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; s2s?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; tts?: { max?: number; min?: number; num?: number; p50?: number; p90?: number; p95?: number; p99?: number; values?: number[]; }; }; llm_token_usage?: { average: number; num_requests: number; values: number[]; }; metadata?: object; opt_in_signed_url?: boolean; public_log_url?: string; recording_multi_channel_url?: string; recording_url?: string; retell_llm_dynamic_variables?: object; scrubbed_recording_multi_channel_url?: string; scrubbed_recording_url?: string; start_timestamp?: number; telephony_identifier?: { twilio_call_sid?: string; }; transfer_destination?: string; transfer_end_timestamp?: number; }[]`\n  - `pagination_key?: string`\n  - `total?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst calls = await client.call.list();\n\nconsole.log(calls);\n```",
     perLanguage: {
       typescript: {
         method: 'client.call.list',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst calls = await client.call.list();\n\nconsole.log(calls.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v3/list-calls \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300',
+      },
       python: {
         method: 'call.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncalls = client.call.list()\nprint(calls.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v3/list-calls \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300',
       },
     },
   },
@@ -248,14 +248,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponse = await client.call.rerunAnalysis('call_119c3f8e47135a29e65947eeb34cf12d');\n\nconsole.log(callResponse);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/rerun-call-analysis/$CALL_ID \\\n    -X PUT \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'call.rerun_analysis',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_response = client.call.rerun_analysis(\n    "call_119c3f8e47135a29e65947eeb34cf12d",\n)\nprint(call_response)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/rerun-call-analysis/$CALL_ID \\\n    -X PUT \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -282,14 +282,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst callResponse = await client.call.update('call_a4441234567890777c4a4a123e6', {\n  data_storage_setting: 'everything_except_pii',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n});\n\nconsole.log(callResponse);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/update-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything_except_pii",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          }\n        }\'',
+      },
       python: {
         method: 'call.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncall_response = client.call.update(\n    call_id="call_a4441234567890777c4a4a123e6",\n    data_storage_setting="everything_except_pii",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n)\nprint(call_response)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/update-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything_except_pii",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          }\n        }\'',
       },
     },
   },
@@ -316,14 +316,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.call.updateLive('call_a4441234567890777c4a4a123e6', {\n  call_control: {\n    additional_context: 'Customer just opened a support ticket about billing.',\n    trigger_response: true,\n  },\n  fields_to_override: { override_dynamic_variables: { additional_discount: '15%' } },\n});\n\nconsole.log(response.success);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/update-live-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "call_control": {\n            "additional_context": "Customer just opened a support ticket about billing.",\n            "trigger_response": true\n          },\n          "fields_to_override": {\n            "override_dynamic_variables": {\n              "additional_discount": "15%"\n            }\n          }\n        }\'',
+      },
       python: {
         method: 'call.update_live',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.call.update_live(\n    call_id="call_a4441234567890777c4a4a123e6",\n    call_control={\n        "additional_context": "Customer just opened a support ticket about billing.",\n        "trigger_response": True,\n    },\n    fields_to_override={\n        "override_dynamic_variables": {\n            "additional_discount": "15%"\n        }\n    },\n)\nprint(response.success)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/update-live-call/$CALL_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "call_control": {\n            "additional_context": "Customer just opened a support ticket about billing.",\n            "trigger_response": true\n          },\n          "fields_to_override": {\n            "override_dynamic_variables": {\n              "additional_discount": "15%"\n            }\n          }\n        }\'',
       },
     },
   },
@@ -344,14 +344,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.call.stop('call_a4441234567890777c4a4a123e6');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/stop-call/$CALL_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'call.stop',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.call.stop(\n    "call_a4441234567890777c4a4a123e6",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/stop-call/$CALL_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -372,14 +372,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.call.delete('119c3f8e47135a29e65947eeb34cf12d');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/delete-call/$CALL_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'call.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.call.delete(\n    "119c3f8e47135a29e65947eeb34cf12d",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/delete-call/$CALL_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -407,14 +407,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.create({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });\n\nconsole.log(chatResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
+      },
       python: {
         method: 'chat.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.create(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)\nprint(chat_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -445,14 +445,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.createSMSChat({\n  from_number: '+12137771234',\n  to_number: '+14155551234',\n});\n\nconsole.log(chatResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
+      },
       python: {
         method: 'chat.create_sms_chat',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.create_sms_chat(\n    from_number="+12137771234",\n    to_number="+14155551234",\n)\nprint(chat_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-sms-chat \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "from_number": "+12137771234",\n          "to_number": "+14155551234",\n          "override_agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "retell_llm_dynamic_variables": {\n            "customer_name": "John Doe"\n          }\n        }\'',
       },
     },
   },
@@ -473,14 +473,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chat.end('16b980523634a6dc504898cda492e939');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/end-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat.end',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat.end(\n    "16b980523634a6dc504898cda492e939",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/end-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -503,14 +503,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-chat/$CHAT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.retrieve(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-chat/$CHAT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -533,14 +533,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.chat.createChatCompletion({\n  chat_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n  content: 'hi how are you doing?',\n});\n\nconsole.log(response.messages);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-chat-completion \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "chat_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "content": "hi how are you doing?"\n        }\'',
+      },
       python: {
         method: 'chat.create_chat_completion',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.chat.create_chat_completion(\n    chat_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    content="hi how are you doing?",\n)\nprint(response.messages)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-chat-completion \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "chat_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n          "content": "hi how are you doing?"\n        }\'',
       },
     },
   },
@@ -570,14 +570,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chats = await client.chat.list();\n\nconsole.log(chats.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v3/list-chats \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300',
+      },
       python: {
         method: 'chat.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchats = client.chat.list()\nprint(chats.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v3/list-chats \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300',
       },
     },
   },
@@ -600,14 +600,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.rerunAnalysis('chat_16b980523634a6dc504898cda492e939');\n\nconsole.log(chatResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/rerun-chat-analysis/$CHAT_ID \\\n    -X PUT \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat.rerun_analysis',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.rerun_analysis(\n    "chat_16b980523634a6dc504898cda492e939",\n)\nprint(chat_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/rerun-chat-analysis/$CHAT_ID \\\n    -X PUT \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -636,14 +636,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatResponse = await client.chat.update('chat_98c1a2157aa0559144d67bb0729', {\n  data_storage_setting: 'everything',\n  metadata: { customer_id: 'cust_123', notes: 'Follow-up required' },\n  override_dynamic_variables: { additional_discount: '15%' },\n});\n\nconsole.log(chatResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          },\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
+      },
       python: {
         method: 'chat.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_response = client.chat.update(\n    chat_id="chat_98c1a2157aa0559144d67bb0729",\n    data_storage_setting="everything",\n    metadata={\n        "customer_id": "cust_123",\n        "notes": "Follow-up required",\n    },\n    override_dynamic_variables={\n        "additional_discount": "15%"\n    },\n)\nprint(chat_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-chat/$CHAT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "custom_attributes": {\n            "custom_attribute_1": "value1",\n            "custom_attribute_2": "value2"\n          },\n          "data_storage_setting": "everything",\n          "metadata": {\n            "customer_id": "cust_123",\n            "notes": "Follow-up required"\n          },\n          "override_dynamic_variables": {\n            "additional_discount": "15%"\n          }\n        }\'',
       },
     },
   },
@@ -664,14 +664,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chat.delete('16b980523634a6dc504898cda492e939');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-chat/$CHAT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat.delete(\n    "16b980523634a6dc504898cda492e939",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-chat/$CHAT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -708,14 +708,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.create();\n\nconsole.log(phoneNumberResponse.last_modification_timestamp);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "area_code": 415,\n          "country_code": "US",\n          "fallback_number": "+14155551234",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "number_provider": "twilio",\n          "phone_number": "+14157774444",\n          "transport": "TCP"\n        }\'',
+      },
       python: {
         method: 'phone_number.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.create()\nprint(phone_number_response.last_modification_timestamp)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "area_code": 415,\n          "country_code": "US",\n          "fallback_number": "+14155551234",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "number_provider": "twilio",\n          "phone_number": "+14157774444",\n          "transport": "TCP"\n        }\'',
       },
     },
   },
@@ -751,14 +751,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.import({\n  phone_number: '+14157774444',\n  termination_uri: 'someuri.pstn.twilio.com',\n});\n\nconsole.log(phoneNumberResponse.last_modification_timestamp);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/import-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "phone_number": "+14157774444",\n          "termination_uri": "someuri.pstn.twilio.com",\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "ignore_e164_validation": true,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "sip_trunk_auth_password": "123456",\n          "sip_trunk_auth_username": "username",\n          "transport": "TCP"\n        }\'',
+      },
       python: {
         method: 'phone_number.import_',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.import_(\n    phone_number="+14157774444",\n    termination_uri="someuri.pstn.twilio.com",\n)\nprint(phone_number_response.last_modification_timestamp)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/import-phone-number \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "phone_number": "+14157774444",\n          "termination_uri": "someuri.pstn.twilio.com",\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "ignore_e164_validation": true,\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "sip_trunk_auth_password": "123456",\n          "sip_trunk_auth_username": "username",\n          "transport": "TCP"\n        }\'',
       },
     },
   },
@@ -781,14 +781,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.retrieve('+14157774444');\n\nconsole.log(phoneNumberResponse.last_modification_timestamp);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-phone-number/$PHONE_NUMBER \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'phone_number.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.retrieve(\n    "+14157774444",\n)\nprint(phone_number_response.last_modification_timestamp)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-phone-number/$PHONE_NUMBER \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -811,14 +811,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumbers = await client.phoneNumber.list();\n\nconsole.log(phoneNumbers.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-phone-numbers \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'phone_number.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_numbers = client.phone_number.list()\nprint(phone_numbers.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-phone-numbers \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -857,14 +857,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst phoneNumberResponse = await client.phoneNumber.update('+14157774444', {\n  inbound_agents: [\n    {\n      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n      agent_version: 1,\n      weight: 1,\n    },\n  ],\n  nickname: 'Frontdesk Number',\n  outbound_agents: [\n    {\n      agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',\n      agent_version: 1,\n      weight: 1,\n    },\n  ],\n});\n\nconsole.log(phoneNumberResponse.last_modification_timestamp);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-phone-number/$PHONE_NUMBER \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "auth_password": "123456",\n          "auth_username": "username",\n          "fallback_number": "+14155551234",\n          "inbound_agents": [\n            {\n              "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n              "weight": 1,\n              "agent_version": 1\n            }\n          ],\n          "inbound_sms_webhook_url": "https://example.com/inbound-sms-webhook",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agents": [\n            {\n              "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n              "weight": 1,\n              "agent_version": 1\n            }\n          ],\n          "termination_uri": "someuri.pstn.twilio.com",\n          "transport": "TCP"\n        }\'',
+      },
       python: {
         method: 'phone_number.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nphone_number_response = client.phone_number.update(\n    phone_number="+14157774444",\n    inbound_agents=[{\n        "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n        "agent_version": 1,\n        "weight": 1,\n    }],\n    nickname="Frontdesk Number",\n    outbound_agents=[{\n        "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n        "agent_version": 1,\n        "weight": 1,\n    }],\n)\nprint(phone_number_response.last_modification_timestamp)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-phone-number/$PHONE_NUMBER \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "allowed_inbound_country_list": [\n            "US",\n            "CA",\n            "GB"\n          ],\n          "allowed_outbound_country_list": [\n            "US",\n            "CA"\n          ],\n          "auth_password": "123456",\n          "auth_username": "username",\n          "fallback_number": "+14155551234",\n          "inbound_agents": [\n            {\n              "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n              "weight": 1,\n              "agent_version": 1\n            }\n          ],\n          "inbound_sms_webhook_url": "https://example.com/inbound-sms-webhook",\n          "inbound_webhook_url": "https://example.com/inbound-webhook",\n          "nickname": "Frontdesk Number",\n          "outbound_agents": [\n            {\n              "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n              "weight": 1,\n              "agent_version": 1\n            }\n          ],\n          "termination_uri": "someuri.pstn.twilio.com",\n          "transport": "TCP"\n        }\'',
       },
     },
   },
@@ -885,14 +885,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.phoneNumber.delete('+14157774444');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-phone-number/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'phone_number.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.phone_number.delete(\n    "+14157774444",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-phone-number/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -963,21 +963,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: 'object',
     markdown:
-      "## create\n\n`client.agent.create(response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }, voice_id: string, agent_name?: string, allow_dtmf_interruption?: boolean, allow_user_dtmf?: boolean, ambient_sound?: string, ambient_sound_volume?: number, backchannel_frequency?: number, backchannel_words?: string[], begin_message_delay_ms?: number, boosted_keywords?: string[], call_screening_option?: { agent_identity: string; call_purpose: string; }, custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }, data_storage_retention_days?: number, data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only', denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation', enable_backchannel?: boolean, enable_dynamic_responsiveness?: boolean, enable_dynamic_voice_speed?: boolean, enable_expressive_mode?: boolean, end_call_after_silence_ms?: number, expressive_emotion_tags?: string[], expressive_mode_prompt?: string, fallback_voice_ids?: string[], guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }, handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }, interruption_sensitivity?: number, ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }, language?: string | string[], max_call_duration_ms?: number, opt_in_signed_url?: boolean, pii_config?: { categories: string[]; mode: 'post_call'; }, post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[], post_call_analysis_model?: string, pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[], reminder_max_count?: number, reminder_trigger_ms?: number, responsiveness?: number, ring_duration_ms?: number, signed_url_expiration_ms?: number, stt_mode?: 'fast' | 'accurate' | 'custom', timezone?: string, user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }, version_description?: string, version_title?: string, vocab_specialization?: 'general' | 'medical', voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised', voice_model?: string, voice_speed?: number, voice_temperature?: number, voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }, volume?: number, webhook_events?: string[], webhook_timeout_ms?: number, webhook_url?: string): { agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: object; custom_stt_config?: object; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: object; handbook_config?: object; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: object; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: object; post_call_analysis_data?: object | object | object | object | object[]; post_call_analysis_model?: string; pronunciation_dictionary?: object[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: object; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: object; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n**post** `/create-agent`\n\nCreate a new agent\n\n### Parameters\n\n- `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  The Response Engine to attach to the agent. It is used to generate responses for the agent. You need to create a Response Engine first before attaching it to an agent.\n\n- `voice_id: string`\n  Unique voice id used for the agent. Find list of available voices and their preview in Dashboard.\n\n- `agent_name?: string`\n  The name of the agent. Only used for your own reference.\n\n- `allow_dtmf_interruption?: boolean`\n  If set to true, DTMF input will interrupt the agent even when interruption_sensitivity is 0. Can be overridden per conversation or subagent node. Default to false.\n\n- `allow_user_dtmf?: boolean`\n  If set to true, DTMF input will be accepted and processed. If false, any DTMF input will be ignored. Default to true.\n\n- `ambient_sound?: string`\n  If set, will add ambient environment sound to the call to make experience more realistic. Currently supports the following options:\n\n- `coffee-shop`: Coffee shop ambience with people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)\n- `convention-hall`: Convention hall ambience, with some echo and people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)\n- `summer-outdoor`: Summer outdoor ambience with cicada chirping. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)\n- `mountain-outdoor`: Mountain outdoor ambience with birds singing. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)\n- `static-noise`: Constant static noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)\n- `call-center`: Call center work noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)\nSet to `null` to remove ambient sound from this agent.\n\n- `ambient_sound_volume?: number`\n  If set, will control the volume of the ambient sound. Value ranging from [0,2]. Lower value means quieter ambient sound, while higher value means louder ambient sound. If unset, default value 1 will apply.\n\n- `backchannel_frequency?: number`\n  Only applicable when enable_backchannel is true. Controls how often the agent would backchannel when a backchannel is possible. Value ranging from [0,1]. Lower value means less frequent backchannel, while higher value means more frequent backchannel. If unset, default value 0.8 will apply.\n\n- `backchannel_words?: string[]`\n  Only applicable when enable_backchannel is true. A list of words that the agent would use as backchannel. If not set, default backchannel words will apply. Check out [backchannel default words](/agent/interaction-configuration#backchannel) for more details. Note that certain voices do not work too well with certain words, so it's recommended to experiment before adding any words.\n\n- `begin_message_delay_ms?: number`\n  If set, will delay the first message by the specified amount of milliseconds, so that it gives user more time to prepare to take the call. Valid range is [0, 5000]. If not set or set to 0, agent will speak immediately. Only applicable when agent speaks first.\n\n- `boosted_keywords?: string[]`\n  Provide a customized list of keywords to bias the transcriber model, so that these words are more likely to get transcribed. Commonly used for names, brands, street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.\n\n- `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  If this option is set, the agent prompt will include call screen handling instructions for identity and call purpose questions. Set this to null to disable call screen prompt instructions.\n  - `agent_identity: string`\n    Identity the agent should provide when a call screen asks who is calling. Dynamic variables are supported.\n  - `call_purpose: string`\n    Purpose the agent should provide when a call screen asks why it is calling. Dynamic variables are supported.\n\n- `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  Custom STT configuration. Only used when stt_mode is set to custom.\n  - `endpointing_ms: number`\n    Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram, 500 for Soniox, 100 for AssemblyAI.\n  - `provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'`\n    ASR provider name.\n\n- `data_storage_retention_days?: number`\n  Number of days to retain call/chat data before automatic deletion. Must be between 1 and 730 days. If not set, data is retained forever (no automatic deletion).\n\n- `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  Granular setting to manage how Retell stores sensitive data (transcripts, recordings, logs, etc.).\nThis replaces the deprecated `opt_out_sensitive_data_storage` field.\n- `everything`: Store all data including transcripts, recordings, and logs.\n- `everything_except_pii`: Store data without PII when PII is detected.\n- `basic_attributes_only`: Store only basic attributes; no transcripts/recordings/logs.\nIf not set, default value of \"everything\" will apply.\n\n- `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  If set, determines what denoising mode to use. Use \"no-denoise\" to bypass all audio denoising. Default to noise-cancellation.\n\n- `enable_backchannel?: boolean`\n  Controls whether the agent would backchannel (agent interjects the speaker with phrases like \"yeah\", \"uh-huh\" to signify interest and engagement). Backchannel when enabled tends to show up more in longer user utterances. If not set, agent will not backchannel.\n\n- `enable_dynamic_responsiveness?: boolean`\n  If set to true, the agent will dynamically adjust how quickly it responds based on the user's speech rate and past turn-taking behavior in the call. If unset, default value false will apply.\n\n- `enable_dynamic_voice_speed?: boolean`\n  If set to true, will enable dynamic voice speed adjustment based on the user's speech rate and conversation context. If unset, default value false will apply.\n\n- `enable_expressive_mode?: boolean`\n  Master toggle for expressive mode. When true, the agent may add expressive voice tags to the audio it generates. Only applicable for platform voices. If unset, defaults to false.\n\n- `end_call_after_silence_ms?: number`\n  If users stay silent for a period after agent speech, end the call. The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).\n\n- `expressive_emotion_tags?: string[]`\n  The expressive voice tags Retell pre-teaches the model to use when enable_expressive_mode is true. Custom tags defined in the system prompt are still allowed. If empty, the agent follows general expressive guidance without a fixed tag set.\n\n- `expressive_mode_prompt?: string`\n  Custom expressive voice guidance to use instead of the default Retell expressive prompt when enable_expressive_mode is true. If omitted or blank, the default expressive prompt will be used.\n\n- `fallback_voice_ids?: string[]`\n  When TTS provider for the selected voice is experiencing outages, we would use fallback voices listed here for the agent. Voice id and the fallback voice ids must be from different TTS providers. The system would go through the list in order, if the first one in the list is also having outage, it would use the next one. Set to null to remove voice fallback for the agent.\n\n- `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  Configuration for guardrail checks to detect and prevent prohibited topics in agent output and user input.\n  - `input_topics?: 'platform_integrity_jailbreaking'[]`\n    Selected prohibited user topic categories to check. When user messages contain these topics, the agent will respond with a placeholder message instead of processing the request.\n  - `output_topics?: string[]`\n    Selected prohibited agent topic categories to check. When agent messages contain these topics, they will be replaced with a placeholder message.\n\n- `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  Toggle behavior presets on/off to influence agent response style and behaviors.\n  - `ai_disclosure?: boolean`\n    When asked, acknowledge being a virtual assistant.\n  - `conversational_personality?: boolean`\n    Enables Conversational Personality. When true, the agent uses the Conversational Personality handbook preset, skips Professional Rep Personality during prompt assembly, and enables internal colloquial rewrite behavior.\n  - `default_personality?: boolean`\n    Professional call center rep baseline.\n  - `echo_verification?: boolean`\n    Repeat back and confirm important details (voice only).\n  - `high_empathy?: boolean`\n    Warm acknowledgment of caller concerns.\n  - `nato_phonetic_alphabet?: boolean`\n    Spell using NATO phonetic alphabet style (voice only).\n  - `natural_filler_words?: boolean`\n    Sprinkle natural speech fillers like \"um\", \"you know\" for a more human, conversational tone.\n  - `scope_boundaries?: boolean`\n    Stay within prompt/context scope, don't invent details.\n  - `smart_matching?: boolean`\n    Treat near-match similar words as same entity to reduce impact of transcription error (voice only).\n  - `speech_normalization?: boolean`\n    Convert numbers/dates/currency to spoken forms (voice only).\n\n- `interruption_sensitivity?: number`\n  Controls how sensitive the agent is to user interruptions. Value ranging from [0,1]. Lower value means it will take longer / more words for user to interrupt agent, while higher value means it's easier for user to interrupt agent. If unset, default value 1 will apply. When this is set to 0, agent would never be interrupted.\n\n- `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect IVR in the first 3 minutes of the call. Actions defined will be applied when the IVR is detected. Set this to null to disable IVR detection.\n  - `action: { type: 'hangup'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as an IVR. Leave as null to use the default definition.\n\n- `language?: string | string[]`\n  Specifies what language(s) the agent will operate in. Accepts either a single locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g. `[\"en-US\",\"es-ES\"]`). The scalar value `multi` is deprecated but still accepted as a scalar, and is stored and returned as the ten locales it used to mean. It must not appear inside the array form. Send an explicit locale array instead. If unset, defaults to `en-US`.\n\n- `max_call_duration_ms?: number`\n  Maximum allowed length for the call, will force end the call if reached. The minimum value allowed is 60,000 ms (1 min), and maximum value allowed is 7,200,000 (2 hours). By default, this is set to 3,600,000 (1 hour).\n\n- `opt_in_signed_url?: boolean`\n  Whether this agent opts in for signed URLs for public logs and recordings. When enabled, the generated URLs will include security signatures that restrict access and automatically expire after 24 hours.\n\n- `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  Configuration for PII scrubbing from transcripts and recordings.\n  - `categories: string[]`\n    List of PII categories to scrub from transcripts and recordings. PII redaction is only active when this list is non-empty; an empty array means no PII scrubbing is performed.\n  - `mode: 'post_call'`\n    The processing mode for PII scrubbing. Currently only post-call is supported.\n\n- `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  Post call analysis data to extract from the call. This data will augment the pre-defined variables extracted in the call analysis. This will be available after the call ends.\n\n- `post_call_analysis_model?: string`\n  The model to use for post call analysis. Default to gpt-4.1.\n\n- `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  A list of words / phrases and their pronunciation to be used to guide the audio synthesize for consistent pronunciation. Check the dashboard to see what provider supports this feature. Set to null to remove pronunciation dictionary from this agent.\n\n- `reminder_max_count?: number`\n  If set, controls how many times agent would remind user when user is unresponsive. Must be a non negative integer. If unset, default value of 1 will apply (remind once). Set to 0 to disable agent from reminding.\n\n- `reminder_trigger_ms?: number`\n  If set (in milliseconds), will trigger a reminder to the agent to speak if the user has been silent for the specified duration after some agent speech. Must be a positive number. If unset, default value of 10000 ms (10 s) will apply.\n\n- `responsiveness?: number`\n  Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.\n\n- `ring_duration_ms?: number`\n  If set, the phone ringing will last for the specified amount of milliseconds. This applies for both outbound call ringtime, and call transfer ringtime. Default to 30000 (30 s). Valid range is [5000, 300000].\n\n- `signed_url_expiration_ms?: number`\n  The expiration time for the signed url in milliseconds. Only applicable when opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will apply.\n\n- `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  If set, determines whether speech to text should focus on latency or accuracy. Default to fast mode. When set to custom, custom_stt_config must be provided.\n\n- `timezone?: string`\n  IANA timezone for the agent (e.g. America/New_York). Defaults to America/Los_Angeles if not set.\n\n- `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `digit_limit?: number`\n    The maximum number of digits allowed in the user's DTMF (Dual-Tone Multi-Frequency) input per turn. Once this limit is reached, the input is considered complete and a response will be generated immediately.\n  - `termination_key?: string`\n    A single key that signals the end of DTMF input. Acceptable values include any digit (0-9), the pound/hash symbol (#), or the asterisk (*).\n  - `timeout_ms?: number`\n    The time (in milliseconds) to wait for user DTMF input before timing out. The timer resets with each digit received.\n\n- `version_description?: string`\n  Optional description of the agent version. Used for your own reference and documentation.\n\n- `version_title?: string`\n  Optional title of the agent version. Used for your own reference.\n\n- `vocab_specialization?: 'general' | 'medical'`\n  If set, determines the vocabulary set to use for transcription. This setting only applies for English agents, for non English agent, this setting is a no-op. Default to general.\n\n- `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  Controls the emotional tone of the agent's voice. Currently supported for Cartesia and Minimax TTS providers. If unset, no emotion will be used.\n\n- `voice_model?: string`\n  Select the voice model used for the selected voice. Each provider has a set of available voice models. Set to null to remove voice model selection, and default ones will apply. Check out dashboard for more details of each voice model.\n\n- `voice_speed?: number`\n  Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.\n\n- `voice_temperature?: number`\n  Controls how stable the voice is. Value ranging from [0,2]. Lower value means more stable, and higher value means more variant speech generation. Check the dashboard to see what provider supports this feature. If unset, default value 1 will apply.\n\n- `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect voicemail in the first 3 minutes of the call. Actions defined (hangup, or leave a message) will be applied when the voicemail is detected. Set this to null to disable voicemail detection.\n  - `action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as voicemail. Leave as null to use the default definition.\n\n- `volume?: number`\n  If set, will control the volume of the agent. Value ranging from [0,2]. Lower value means quieter agent speech, while higher value means louder agent speech. If unset, default value 1 will apply.\n\n- `webhook_events?: string[]`\n  Which webhook events this agent should receive. If not set, defaults to call_started, call_ended, call_analyzed.\n\n- `webhook_timeout_ms?: number`\n  The timeout for the webhook in milliseconds. If not set, default value of 10000 will apply.\n\n- `webhook_url?: string`\n  The webhook for agent to listen to call events. See what events it would get at [webhook doc](/features/webhook). If set, will binds webhook events for this agent to the specified url, and will ignore the account level webhook for this agent. Set to `null` to remove webhook url from this agent.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n  - `agent_id: string`\n  - `last_modification_timestamp: number`\n  - `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  - `version: number`\n  - `voice_id: string`\n  - `agent_name?: string`\n  - `allow_dtmf_interruption?: boolean`\n  - `allow_user_dtmf?: boolean`\n  - `ambient_sound?: string`\n  - `ambient_sound_volume?: number`\n  - `assigned_tags?: string[]`\n  - `backchannel_frequency?: number`\n  - `backchannel_words?: string[]`\n  - `base_version?: number`\n  - `begin_message_delay_ms?: number`\n  - `boosted_keywords?: string[]`\n  - `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  - `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  - `data_storage_retention_days?: number`\n  - `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  - `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  - `enable_backchannel?: boolean`\n  - `enable_dynamic_responsiveness?: boolean`\n  - `enable_dynamic_voice_speed?: boolean`\n  - `enable_expressive_mode?: boolean`\n  - `end_call_after_silence_ms?: number`\n  - `expressive_emotion_tags?: string[]`\n  - `expressive_mode_prompt?: string`\n  - `fallback_voice_ids?: string[]`\n  - `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  - `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  - `interruption_sensitivity?: number`\n  - `is_published?: boolean`\n  - `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  - `language?: string | string[]`\n  - `max_call_duration_ms?: number`\n  - `opt_in_signed_url?: boolean`\n  - `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  - `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  - `post_call_analysis_model?: string`\n  - `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  - `reminder_max_count?: number`\n  - `reminder_trigger_ms?: number`\n  - `responsiveness?: number`\n  - `ring_duration_ms?: number`\n  - `signed_url_expiration_ms?: number`\n  - `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  - `timezone?: string`\n  - `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `version_description?: string`\n  - `version_title?: string`\n  - `vocab_specialization?: 'general' | 'medical'`\n  - `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  - `voice_model?: string`\n  - `voice_speed?: number`\n  - `voice_temperature?: number`\n  - `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  - `volume?: number`\n  - `webhook_events?: string[]`\n  - `webhook_timeout_ms?: number`\n  - `webhook_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse);\n```",
+      "## create\n\n`client.agent.create(response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }, voice_id: string, agent_name?: string, allow_dtmf_interruption?: boolean, allow_user_dtmf?: boolean, ambient_sound?: string, ambient_sound_volume?: number, backchannel_frequency?: number, backchannel_words?: string[], begin_message_delay_ms?: number, boosted_keywords?: string[], call_screening_option?: { agent_identity: string; call_purpose: string; }, custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }, data_storage_retention_days?: number, data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only', denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation', enable_backchannel?: boolean, enable_dynamic_responsiveness?: boolean, enable_dynamic_voice_speed?: boolean, enable_expressive_mode?: boolean, end_call_after_silence_ms?: number, expressive_emotion_tags?: string[], expressive_mode_prompt?: string, fallback_voice_ids?: string[], guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }, handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }, interruption_sensitivity?: number, ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }, language?: string | string[], max_call_duration_ms?: number, opt_in_signed_url?: boolean, pii_config?: { categories: string[]; mode: 'post_call'; }, post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[], post_call_analysis_model?: string, pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[], reminder_max_count?: number, reminder_trigger_ms?: number, responsiveness?: number, ring_duration_ms?: number, signed_url_expiration_ms?: number, stt_mode?: 'fast' | 'accurate' | 'custom', timezone?: string, user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }, version_description?: string, version_title?: string, vocab_specialization?: 'general' | 'medical', voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised', voice_model?: string, voice_speed?: number, voice_temperature?: number, voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }, volume?: number, webhook_events?: string[], webhook_timeout_ms?: number, webhook_url?: string): { agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: object; custom_stt_config?: object; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: object; handbook_config?: object; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: object; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: object; post_call_analysis_data?: object | object | object | object | object[]; post_call_analysis_model?: string; pronunciation_dictionary?: object[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: object; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: object; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n**post** `/create-agent`\n\nCreate a new agent\n\n### Parameters\n\n- `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  The Response Engine to attach to the agent. It is used to generate responses for the agent. You need to create a Response Engine first before attaching it to an agent.\n\n- `voice_id: string`\n  Unique voice id used for the agent. Find list of available voices and their preview in Dashboard.\n\n- `agent_name?: string`\n  The name of the agent. Only used for your own reference.\n\n- `allow_dtmf_interruption?: boolean`\n  If set to true, DTMF input will interrupt the agent even when interruption_sensitivity is 0. Can be overridden per conversation or subagent node. Default to false.\n\n- `allow_user_dtmf?: boolean`\n  If set to true, DTMF input will be accepted and processed. If false, any DTMF input will be ignored. Default to true.\n\n- `ambient_sound?: string`\n  If set, will add ambient environment sound to the call to make experience more realistic. Currently supports the following options:\n\n- `coffee-shop`: Coffee shop ambience with people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)\n- `convention-hall`: Convention hall ambience, with some echo and people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)\n- `summer-outdoor`: Summer outdoor ambience with cicada chirping. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)\n- `mountain-outdoor`: Mountain outdoor ambience with birds singing. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)\n- `static-noise`: Constant static noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)\n- `call-center`: Call center work noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)\nSet to `null` to remove ambient sound from this agent.\n\n\n- `ambient_sound_volume?: number`\n  If set, will control the volume of the ambient sound. Value ranging from [0,2]. Lower value means quieter ambient sound, while higher value means louder ambient sound. If unset, default value 1 will apply.\n\n- `backchannel_frequency?: number`\n  Only applicable when enable_backchannel is true. Controls how often the agent would backchannel when a backchannel is possible. Value ranging from [0,1]. Lower value means less frequent backchannel, while higher value means more frequent backchannel. If unset, default value 0.8 will apply.\n\n- `backchannel_words?: string[]`\n  Only applicable when enable_backchannel is true. A list of words that the agent would use as backchannel. If not set, default backchannel words will apply. Check out [backchannel default words](/agent/interaction-configuration#backchannel) for more details. Note that certain voices do not work too well with certain words, so it's recommended to experiment before adding any words.\n\n- `begin_message_delay_ms?: number`\n  If set, will delay the first message by the specified amount of milliseconds, so that it gives user more time to prepare to take the call. Valid range is [0, 5000]. If not set or set to 0, agent will speak immediately. Only applicable when agent speaks first.\n\n- `boosted_keywords?: string[]`\n  Provide a customized list of keywords to bias the transcriber model, so that these words are more likely to get transcribed. Commonly used for names, brands, street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.\n\n- `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  If this option is set, the agent prompt will include call screen handling instructions for identity and call purpose questions. Set this to null to disable call screen prompt instructions.\n  - `agent_identity: string`\n    Identity the agent should provide when a call screen asks who is calling. Dynamic variables are supported.\n  - `call_purpose: string`\n    Purpose the agent should provide when a call screen asks why it is calling. Dynamic variables are supported.\n\n- `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  Custom STT configuration. Only used when stt_mode is set to custom.\n  - `endpointing_ms: number`\n    Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram, 500 for Soniox, 100 for AssemblyAI.\n  - `provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'`\n    ASR provider name.\n\n- `data_storage_retention_days?: number`\n  Number of days to retain call/chat data before automatic deletion. Must be between 1 and 730 days. If not set, data is retained forever (no automatic deletion).\n\n- `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  Granular setting to manage how Retell stores sensitive data (transcripts, recordings, logs, etc.).\nThis replaces the deprecated `opt_out_sensitive_data_storage` field.\n- `everything`: Store all data including transcripts, recordings, and logs.\n- `everything_except_pii`: Store data without PII when PII is detected.\n- `basic_attributes_only`: Store only basic attributes; no transcripts/recordings/logs.\nIf not set, default value of \"everything\" will apply.\n\n\n- `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  If set, determines what denoising mode to use. Use \"no-denoise\" to bypass all audio denoising. Default to noise-cancellation.\n\n- `enable_backchannel?: boolean`\n  Controls whether the agent would backchannel (agent interjects the speaker with phrases like \"yeah\", \"uh-huh\" to signify interest and engagement). Backchannel when enabled tends to show up more in longer user utterances. If not set, agent will not backchannel.\n\n- `enable_dynamic_responsiveness?: boolean`\n  If set to true, the agent will dynamically adjust how quickly it responds based on the user's speech rate and past turn-taking behavior in the call. If unset, default value false will apply.\n\n- `enable_dynamic_voice_speed?: boolean`\n  If set to true, will enable dynamic voice speed adjustment based on the user's speech rate and conversation context. If unset, default value false will apply.\n\n- `enable_expressive_mode?: boolean`\n  Master toggle for expressive mode. When true, the agent may add expressive voice tags to the audio it generates. Only applicable for platform voices. If unset, defaults to false.\n\n- `end_call_after_silence_ms?: number`\n  If users stay silent for a period after agent speech, end the call. The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).\n\n- `expressive_emotion_tags?: string[]`\n  The expressive voice tags Retell pre-teaches the model to use when enable_expressive_mode is true. Custom tags defined in the system prompt are still allowed. If empty, the agent follows general expressive guidance without a fixed tag set.\n\n- `expressive_mode_prompt?: string`\n  Custom expressive voice guidance to use instead of the default Retell expressive prompt when enable_expressive_mode is true. If omitted or blank, the default expressive prompt will be used.\n\n- `fallback_voice_ids?: string[]`\n  When TTS provider for the selected voice is experiencing outages, we would use fallback voices listed here for the agent. Voice id and the fallback voice ids must be from different TTS providers. The system would go through the list in order, if the first one in the list is also having outage, it would use the next one. Set to null to remove voice fallback for the agent.\n\n- `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  Configuration for guardrail checks to detect and prevent prohibited topics in agent output and user input.\n  - `input_topics?: 'platform_integrity_jailbreaking'[]`\n    Selected prohibited user topic categories to check. When user messages contain these topics, the agent will respond with a placeholder message instead of processing the request.\n  - `output_topics?: string[]`\n    Selected prohibited agent topic categories to check. When agent messages contain these topics, they will be replaced with a placeholder message.\n\n- `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  Toggle behavior presets on/off to influence agent response style and behaviors.\n  - `ai_disclosure?: boolean`\n    When asked, acknowledge being a virtual assistant.\n  - `conversational_personality?: boolean`\n    Enables Conversational Personality. When true, the agent uses the Conversational Personality handbook preset, skips Professional Rep Personality during prompt assembly, and enables internal colloquial rewrite behavior.\n  - `default_personality?: boolean`\n    Professional call center rep baseline.\n  - `echo_verification?: boolean`\n    Repeat back and confirm important details (voice only).\n  - `high_empathy?: boolean`\n    Warm acknowledgment of caller concerns.\n  - `nato_phonetic_alphabet?: boolean`\n    Spell using NATO phonetic alphabet style (voice only).\n  - `natural_filler_words?: boolean`\n    Sprinkle natural speech fillers like \"um\", \"you know\" for a more human, conversational tone.\n  - `scope_boundaries?: boolean`\n    Stay within prompt/context scope, don't invent details.\n  - `smart_matching?: boolean`\n    Treat near-match similar words as same entity to reduce impact of transcription error (voice only).\n  - `speech_normalization?: boolean`\n    Convert numbers/dates/currency to spoken forms (voice only).\n\n- `interruption_sensitivity?: number`\n  Controls how sensitive the agent is to user interruptions. Value ranging from [0,1]. Lower value means it will take longer / more words for user to interrupt agent, while higher value means it's easier for user to interrupt agent. If unset, default value 1 will apply. When this is set to 0, agent would never be interrupted.\n\n- `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect IVR in the first 3 minutes of the call. Actions defined will be applied when the IVR is detected. Set this to null to disable IVR detection.\n  - `action: { type: 'hangup'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as an IVR. Leave as null to use the default definition.\n\n- `language?: string | string[]`\n  Specifies what language(s) the agent will operate in. Accepts either a single locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g. `[\"en-US\",\"es-ES\"]`). The scalar value `multi` is deprecated but still accepted as a scalar, and is stored and returned as the ten locales it used to mean. It must not appear inside the array form. Send an explicit locale array instead. If unset, defaults to `en-US`.\n\n- `max_call_duration_ms?: number`\n  Maximum allowed length for the call, will force end the call if reached. The minimum value allowed is 60,000 ms (1 min), and maximum value allowed is 7,200,000 (2 hours). By default, this is set to 3,600,000 (1 hour).\n\n- `opt_in_signed_url?: boolean`\n  Whether this agent opts in for signed URLs for public logs and recordings. When enabled, the generated URLs will include security signatures that restrict access and automatically expire after 24 hours.\n\n- `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  Configuration for PII scrubbing from transcripts and recordings.\n  - `categories: string[]`\n    List of PII categories to scrub from transcripts and recordings. PII redaction is only active when this list is non-empty; an empty array means no PII scrubbing is performed.\n  - `mode: 'post_call'`\n    The processing mode for PII scrubbing. Currently only post-call is supported.\n\n- `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  Post call analysis data to extract from the call. This data will augment the pre-defined variables extracted in the call analysis. This will be available after the call ends.\n\n- `post_call_analysis_model?: string`\n  The model to use for post call analysis. Default to gpt-4.1.\n\n- `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  A list of words / phrases and their pronunciation to be used to guide the audio synthesize for consistent pronunciation. Check the dashboard to see what provider supports this feature. Set to null to remove pronunciation dictionary from this agent.\n\n- `reminder_max_count?: number`\n  If set, controls how many times agent would remind user when user is unresponsive. Must be a non negative integer. If unset, default value of 1 will apply (remind once). Set to 0 to disable agent from reminding.\n\n- `reminder_trigger_ms?: number`\n  If set (in milliseconds), will trigger a reminder to the agent to speak if the user has been silent for the specified duration after some agent speech. Must be a positive number. If unset, default value of 10000 ms (10 s) will apply.\n\n- `responsiveness?: number`\n  Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.\n\n- `ring_duration_ms?: number`\n  If set, the phone ringing will last for the specified amount of milliseconds. This applies for both outbound call ringtime, and call transfer ringtime. Default to 30000 (30 s). Valid range is [5000, 300000].\n\n- `signed_url_expiration_ms?: number`\n  The expiration time for the signed url in milliseconds. Only applicable when opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will apply.\n\n- `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  If set, determines whether speech to text should focus on latency or accuracy. Default to fast mode. When set to custom, custom_stt_config must be provided.\n\n- `timezone?: string`\n  IANA timezone for the agent (e.g. America/New_York). Defaults to America/Los_Angeles if not set.\n\n- `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `digit_limit?: number`\n    The maximum number of digits allowed in the user's DTMF (Dual-Tone Multi-Frequency) input per turn. Once this limit is reached, the input is considered complete and a response will be generated immediately.\n  - `termination_key?: string`\n    A single key that signals the end of DTMF input. Acceptable values include any digit (0-9), the pound/hash symbol (#), or the asterisk (*).\n  - `timeout_ms?: number`\n    The time (in milliseconds) to wait for user DTMF input before timing out. The timer resets with each digit received.\n\n- `version_description?: string`\n  Optional description of the agent version. Used for your own reference and documentation.\n\n- `version_title?: string`\n  Optional title of the agent version. Used for your own reference.\n\n- `vocab_specialization?: 'general' | 'medical'`\n  If set, determines the vocabulary set to use for transcription. This setting only applies for English agents, for non English agent, this setting is a no-op. Default to general.\n\n- `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  Controls the emotional tone of the agent's voice. Currently supported for Cartesia and Minimax TTS providers. If unset, no emotion will be used.\n\n\n- `voice_model?: string`\n  Select the voice model used for the selected voice. Each provider has a set of available voice models. Set to null to remove voice model selection, and default ones will apply. Check out dashboard for more details of each voice model.\n\n- `voice_speed?: number`\n  Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.\n\n- `voice_temperature?: number`\n  Controls how stable the voice is. Value ranging from [0,2]. Lower value means more stable, and higher value means more variant speech generation. Check the dashboard to see what provider supports this feature. If unset, default value 1 will apply.\n\n- `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect voicemail in the first 3 minutes of the call. Actions defined (hangup, or leave a message) will be applied when the voicemail is detected. Set this to null to disable voicemail detection.\n  - `action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as voicemail. Leave as null to use the default definition.\n\n- `volume?: number`\n  If set, will control the volume of the agent. Value ranging from [0,2]. Lower value means quieter agent speech, while higher value means louder agent speech. If unset, default value 1 will apply.\n\n- `webhook_events?: string[]`\n  Which webhook events this agent should receive. If not set, defaults to call_started, call_ended, call_analyzed.\n\n- `webhook_timeout_ms?: number`\n  The timeout for the webhook in milliseconds. If not set, default value of 10000 will apply.\n\n- `webhook_url?: string`\n  The webhook for agent to listen to call events. See what events it would get at [webhook doc](/features/webhook). If set, will binds webhook events for this agent to the specified url, and will ignore the account level webhook for this agent. Set to `null` to remove webhook url from this agent.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n  - `agent_id: string`\n  - `last_modification_timestamp: number`\n  - `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  - `version: number`\n  - `voice_id: string`\n  - `agent_name?: string`\n  - `allow_dtmf_interruption?: boolean`\n  - `allow_user_dtmf?: boolean`\n  - `ambient_sound?: string`\n  - `ambient_sound_volume?: number`\n  - `assigned_tags?: string[]`\n  - `backchannel_frequency?: number`\n  - `backchannel_words?: string[]`\n  - `base_version?: number`\n  - `begin_message_delay_ms?: number`\n  - `boosted_keywords?: string[]`\n  - `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  - `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  - `data_storage_retention_days?: number`\n  - `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  - `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  - `enable_backchannel?: boolean`\n  - `enable_dynamic_responsiveness?: boolean`\n  - `enable_dynamic_voice_speed?: boolean`\n  - `enable_expressive_mode?: boolean`\n  - `end_call_after_silence_ms?: number`\n  - `expressive_emotion_tags?: string[]`\n  - `expressive_mode_prompt?: string`\n  - `fallback_voice_ids?: string[]`\n  - `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  - `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  - `interruption_sensitivity?: number`\n  - `is_published?: boolean`\n  - `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  - `language?: string | string[]`\n  - `max_call_duration_ms?: number`\n  - `opt_in_signed_url?: boolean`\n  - `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  - `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  - `post_call_analysis_model?: string`\n  - `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  - `reminder_max_count?: number`\n  - `reminder_trigger_ms?: number`\n  - `responsiveness?: number`\n  - `ring_duration_ms?: number`\n  - `signed_url_expiration_ms?: number`\n  - `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  - `timezone?: string`\n  - `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `version_description?: string`\n  - `version_title?: string`\n  - `vocab_specialization?: 'general' | 'medical'`\n  - `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  - `voice_model?: string`\n  - `voice_speed?: number`\n  - `voice_temperature?: number`\n  - `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  - `volume?: number`\n  - `webhook_events?: string[]`\n  - `webhook_timeout_ms?: number`\n  - `webhook_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.agent.create',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n  voice_id: 'retell-Cimo',\n});\n\nconsole.log(agentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "voice_id": "retell-Cimo",\n          "agent_name": "Jarvis",\n          "allow_dtmf_interruption": false,\n          "allow_user_dtmf": true,\n          "ambient_sound_volume": 1,\n          "backchannel_frequency": 0.9,\n          "backchannel_words": [\n            "yeah",\n            "uh-huh"\n          ],\n          "begin_message_delay_ms": 1000,\n          "boosted_keywords": [\n            "retell",\n            "kroger"\n          ],\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "denoising_mode": "noise-cancellation",\n          "enable_backchannel": true,\n          "enable_dynamic_responsiveness": true,\n          "enable_dynamic_voice_speed": true,\n          "enable_expressive_mode": true,\n          "end_call_after_silence_ms": 600000,\n          "expressive_emotion_tags": [\n            "empathetic",\n            "excited",\n            "sigh",\n            "clear throat",\n            "emphasis"\n          ],\n          "expressive_mode_prompt": "Use [sigh] for thoughtful pauses and [excited] for good news.",\n          "fallback_voice_ids": [\n            "cartesia-Cimo",\n            "minimax-Cimo"\n          ],\n          "interruption_sensitivity": 1,\n          "ivr_option": {\n            "action": {\n              "type": "hangup"\n            }\n          },\n          "max_call_duration_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_call_analysis_model": "gpt-4.1-mini",\n          "reminder_max_count": 2,\n          "reminder_trigger_ms": 10000,\n          "responsiveness": 1,\n          "ring_duration_ms": 30000,\n          "signed_url_expiration_ms": 86400000,\n          "stt_mode": "fast",\n          "timezone": "America/New_York",\n          "version_description": "Customer support agent for handling product inquiries",\n          "version_title": "Production hotfix",\n          "vocab_specialization": "general",\n          "voice_emotion": "calm",\n          "voice_speed": 1,\n          "voice_temperature": 1,\n          "voicemail_option": {\n            "action": {\n              "text": "Please give us a callback tomorrow at 10am.",\n              "type": "static_text"\n            }\n          },\n          "volume": 1,\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
+      },
       python: {
         method: 'agent.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n    voice_id="retell-Cimo",\n)\nprint(agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "voice_id": "retell-Cimo",\n          "agent_name": "Jarvis",\n          "allow_dtmf_interruption": false,\n          "allow_user_dtmf": true,\n          "ambient_sound_volume": 1,\n          "backchannel_frequency": 0.9,\n          "backchannel_words": [\n            "yeah",\n            "uh-huh"\n          ],\n          "begin_message_delay_ms": 1000,\n          "boosted_keywords": [\n            "retell",\n            "kroger"\n          ],\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "denoising_mode": "noise-cancellation",\n          "enable_backchannel": true,\n          "enable_dynamic_responsiveness": true,\n          "enable_dynamic_voice_speed": true,\n          "enable_expressive_mode": true,\n          "end_call_after_silence_ms": 600000,\n          "expressive_emotion_tags": [\n            "empathetic",\n            "excited",\n            "sigh",\n            "clear throat",\n            "emphasis"\n          ],\n          "expressive_mode_prompt": "Use [sigh] for thoughtful pauses and [excited] for good news.",\n          "fallback_voice_ids": [\n            "cartesia-Cimo",\n            "minimax-Cimo"\n          ],\n          "interruption_sensitivity": 1,\n          "ivr_option": {\n            "action": {\n              "type": "hangup"\n            }\n          },\n          "max_call_duration_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_call_analysis_model": "gpt-4.1-mini",\n          "reminder_max_count": 2,\n          "reminder_trigger_ms": 10000,\n          "responsiveness": 1,\n          "ring_duration_ms": 30000,\n          "signed_url_expiration_ms": 86400000,\n          "stt_mode": "fast",\n          "timezone": "America/New_York",\n          "version_description": "Customer support agent for handling product inquiries",\n          "version_title": "Production hotfix",\n          "vocab_specialization": "general",\n          "voice_emotion": "calm",\n          "voice_speed": 1,\n          "voice_temperature": 1,\n          "voicemail_option": {\n            "action": {\n              "text": "Please give us a callback tomorrow at 10am.",\n              "type": "static_text"\n            }\n          },\n          "volume": 1,\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
       },
     },
   },
@@ -999,14 +999,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'agent.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1034,14 +1034,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agents = await client.agent.list({\n  filter_criteria: {\n    channel: {\n      type: 'string',\n      op: 'eq',\n      value: 'voice',\n    },\n  },\n});\n\nconsole.log(agents.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'agent.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagents = client.agent.list(\n    filter_criteria={\n        "channel": {\n            "type": "string",\n            "op": "eq",\n            "value": "voice",\n        }\n    },\n)\nprint(agents.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1114,21 +1114,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: 'object',
     markdown:
-      "## update\n\n`client.agent.update(agent_id: string, version?: string | number, agent_name?: string, allow_dtmf_interruption?: boolean, allow_user_dtmf?: boolean, ambient_sound?: string, ambient_sound_volume?: number, backchannel_frequency?: number, backchannel_words?: string[], begin_message_delay_ms?: number, boosted_keywords?: string[], call_screening_option?: { agent_identity: string; call_purpose: string; }, custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }, data_storage_retention_days?: number, data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only', denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation', enable_backchannel?: boolean, enable_dynamic_responsiveness?: boolean, enable_dynamic_voice_speed?: boolean, enable_expressive_mode?: boolean, end_call_after_silence_ms?: number, expressive_emotion_tags?: string[], expressive_mode_prompt?: string, fallback_voice_ids?: string[], guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }, handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }, interruption_sensitivity?: number, ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }, language?: string | string[], max_call_duration_ms?: number, opt_in_signed_url?: boolean, pii_config?: { categories: string[]; mode: 'post_call'; }, post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[], post_call_analysis_model?: string, pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[], reminder_max_count?: number, reminder_trigger_ms?: number, response_engine?: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }, responsiveness?: number, ring_duration_ms?: number, signed_url_expiration_ms?: number, stt_mode?: 'fast' | 'accurate' | 'custom', timezone?: string, user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }, version_description?: string, version_title?: string, vocab_specialization?: 'general' | 'medical', voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised', voice_id?: string, voice_model?: string, voice_speed?: number, voice_temperature?: number, voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }, volume?: number, webhook_events?: string[], webhook_timeout_ms?: number, webhook_url?: string): { agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: object; custom_stt_config?: object; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: object; handbook_config?: object; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: object; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: object; post_call_analysis_data?: object | object | object | object | object[]; post_call_analysis_model?: string; pronunciation_dictionary?: object[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: object; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: object; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n**patch** `/update-agent/{agent_id}`\n\nUpdate an existing agent's latest draft version\n\n### Parameters\n\n- `agent_id: string`\n\n- `version?: string | number`\n  Optional version of the API to use for this request. Default to latest version.\n\n- `agent_name?: string`\n  The name of the agent. Only used for your own reference.\n\n- `allow_dtmf_interruption?: boolean`\n  If set to true, DTMF input will interrupt the agent even when interruption_sensitivity is 0. Can be overridden per conversation or subagent node. Default to false.\n\n- `allow_user_dtmf?: boolean`\n  If set to true, DTMF input will be accepted and processed. If false, any DTMF input will be ignored. Default to true.\n\n- `ambient_sound?: string`\n  If set, will add ambient environment sound to the call to make experience more realistic. Currently supports the following options:\n\n- `coffee-shop`: Coffee shop ambience with people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)\n- `convention-hall`: Convention hall ambience, with some echo and people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)\n- `summer-outdoor`: Summer outdoor ambience with cicada chirping. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)\n- `mountain-outdoor`: Mountain outdoor ambience with birds singing. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)\n- `static-noise`: Constant static noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)\n- `call-center`: Call center work noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)\nSet to `null` to remove ambient sound from this agent.\n\n- `ambient_sound_volume?: number`\n  If set, will control the volume of the ambient sound. Value ranging from [0,2]. Lower value means quieter ambient sound, while higher value means louder ambient sound. If unset, default value 1 will apply.\n\n- `backchannel_frequency?: number`\n  Only applicable when enable_backchannel is true. Controls how often the agent would backchannel when a backchannel is possible. Value ranging from [0,1]. Lower value means less frequent backchannel, while higher value means more frequent backchannel. If unset, default value 0.8 will apply.\n\n- `backchannel_words?: string[]`\n  Only applicable when enable_backchannel is true. A list of words that the agent would use as backchannel. If not set, default backchannel words will apply. Check out [backchannel default words](/agent/interaction-configuration#backchannel) for more details. Note that certain voices do not work too well with certain words, so it's recommended to experiment before adding any words.\n\n- `begin_message_delay_ms?: number`\n  If set, will delay the first message by the specified amount of milliseconds, so that it gives user more time to prepare to take the call. Valid range is [0, 5000]. If not set or set to 0, agent will speak immediately. Only applicable when agent speaks first.\n\n- `boosted_keywords?: string[]`\n  Provide a customized list of keywords to bias the transcriber model, so that these words are more likely to get transcribed. Commonly used for names, brands, street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.\n\n- `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  If this option is set, the agent prompt will include call screen handling instructions for identity and call purpose questions. Set this to null to disable call screen prompt instructions.\n  - `agent_identity: string`\n    Identity the agent should provide when a call screen asks who is calling. Dynamic variables are supported.\n  - `call_purpose: string`\n    Purpose the agent should provide when a call screen asks why it is calling. Dynamic variables are supported.\n\n- `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  Custom STT configuration. Only used when stt_mode is set to custom.\n  - `endpointing_ms: number`\n    Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram, 500 for Soniox, 100 for AssemblyAI.\n  - `provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'`\n    ASR provider name.\n\n- `data_storage_retention_days?: number`\n  Number of days to retain call/chat data before automatic deletion. Must be between 1 and 730 days. If not set, data is retained forever (no automatic deletion).\n\n- `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  Granular setting to manage how Retell stores sensitive data (transcripts, recordings, logs, etc.).\nThis replaces the deprecated `opt_out_sensitive_data_storage` field.\n- `everything`: Store all data including transcripts, recordings, and logs.\n- `everything_except_pii`: Store data without PII when PII is detected.\n- `basic_attributes_only`: Store only basic attributes; no transcripts/recordings/logs.\nIf not set, default value of \"everything\" will apply.\n\n- `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  If set, determines what denoising mode to use. Use \"no-denoise\" to bypass all audio denoising. Default to noise-cancellation.\n\n- `enable_backchannel?: boolean`\n  Controls whether the agent would backchannel (agent interjects the speaker with phrases like \"yeah\", \"uh-huh\" to signify interest and engagement). Backchannel when enabled tends to show up more in longer user utterances. If not set, agent will not backchannel.\n\n- `enable_dynamic_responsiveness?: boolean`\n  If set to true, the agent will dynamically adjust how quickly it responds based on the user's speech rate and past turn-taking behavior in the call. If unset, default value false will apply.\n\n- `enable_dynamic_voice_speed?: boolean`\n  If set to true, will enable dynamic voice speed adjustment based on the user's speech rate and conversation context. If unset, default value false will apply.\n\n- `enable_expressive_mode?: boolean`\n  Master toggle for expressive mode. When true, the agent may add expressive voice tags to the audio it generates. Only applicable for platform voices. If unset, defaults to false.\n\n- `end_call_after_silence_ms?: number`\n  If users stay silent for a period after agent speech, end the call. The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).\n\n- `expressive_emotion_tags?: string[]`\n  The expressive voice tags Retell pre-teaches the model to use when enable_expressive_mode is true. Custom tags defined in the system prompt are still allowed. If empty, the agent follows general expressive guidance without a fixed tag set.\n\n- `expressive_mode_prompt?: string`\n  Custom expressive voice guidance to use instead of the default Retell expressive prompt when enable_expressive_mode is true. If omitted or blank, the default expressive prompt will be used.\n\n- `fallback_voice_ids?: string[]`\n  When TTS provider for the selected voice is experiencing outages, we would use fallback voices listed here for the agent. Voice id and the fallback voice ids must be from different TTS providers. The system would go through the list in order, if the first one in the list is also having outage, it would use the next one. Set to null to remove voice fallback for the agent.\n\n- `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  Configuration for guardrail checks to detect and prevent prohibited topics in agent output and user input.\n  - `input_topics?: 'platform_integrity_jailbreaking'[]`\n    Selected prohibited user topic categories to check. When user messages contain these topics, the agent will respond with a placeholder message instead of processing the request.\n  - `output_topics?: string[]`\n    Selected prohibited agent topic categories to check. When agent messages contain these topics, they will be replaced with a placeholder message.\n\n- `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  Toggle behavior presets on/off to influence agent response style and behaviors.\n  - `ai_disclosure?: boolean`\n    When asked, acknowledge being a virtual assistant.\n  - `conversational_personality?: boolean`\n    Enables Conversational Personality. When true, the agent uses the Conversational Personality handbook preset, skips Professional Rep Personality during prompt assembly, and enables internal colloquial rewrite behavior.\n  - `default_personality?: boolean`\n    Professional call center rep baseline.\n  - `echo_verification?: boolean`\n    Repeat back and confirm important details (voice only).\n  - `high_empathy?: boolean`\n    Warm acknowledgment of caller concerns.\n  - `nato_phonetic_alphabet?: boolean`\n    Spell using NATO phonetic alphabet style (voice only).\n  - `natural_filler_words?: boolean`\n    Sprinkle natural speech fillers like \"um\", \"you know\" for a more human, conversational tone.\n  - `scope_boundaries?: boolean`\n    Stay within prompt/context scope, don't invent details.\n  - `smart_matching?: boolean`\n    Treat near-match similar words as same entity to reduce impact of transcription error (voice only).\n  - `speech_normalization?: boolean`\n    Convert numbers/dates/currency to spoken forms (voice only).\n\n- `interruption_sensitivity?: number`\n  Controls how sensitive the agent is to user interruptions. Value ranging from [0,1]. Lower value means it will take longer / more words for user to interrupt agent, while higher value means it's easier for user to interrupt agent. If unset, default value 1 will apply. When this is set to 0, agent would never be interrupted.\n\n- `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect IVR in the first 3 minutes of the call. Actions defined will be applied when the IVR is detected. Set this to null to disable IVR detection.\n  - `action: { type: 'hangup'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as an IVR. Leave as null to use the default definition.\n\n- `language?: string | string[]`\n  Specifies what language(s) the agent will operate in. Accepts either a single locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g. `[\"en-US\",\"es-ES\"]`). The scalar value `multi` is deprecated but still accepted as a scalar, and is stored and returned as the ten locales it used to mean. It must not appear inside the array form. Send an explicit locale array instead. If unset, defaults to `en-US`.\n\n- `max_call_duration_ms?: number`\n  Maximum allowed length for the call, will force end the call if reached. The minimum value allowed is 60,000 ms (1 min), and maximum value allowed is 7,200,000 (2 hours). By default, this is set to 3,600,000 (1 hour).\n\n- `opt_in_signed_url?: boolean`\n  Whether this agent opts in for signed URLs for public logs and recordings. When enabled, the generated URLs will include security signatures that restrict access and automatically expire after 24 hours.\n\n- `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  Configuration for PII scrubbing from transcripts and recordings.\n  - `categories: string[]`\n    List of PII categories to scrub from transcripts and recordings. PII redaction is only active when this list is non-empty; an empty array means no PII scrubbing is performed.\n  - `mode: 'post_call'`\n    The processing mode for PII scrubbing. Currently only post-call is supported.\n\n- `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  Post call analysis data to extract from the call. This data will augment the pre-defined variables extracted in the call analysis. This will be available after the call ends.\n\n- `post_call_analysis_model?: string`\n  The model to use for post call analysis. Default to gpt-4.1.\n\n- `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  A list of words / phrases and their pronunciation to be used to guide the audio synthesize for consistent pronunciation. Check the dashboard to see what provider supports this feature. Set to null to remove pronunciation dictionary from this agent.\n\n- `reminder_max_count?: number`\n  If set, controls how many times agent would remind user when user is unresponsive. Must be a non negative integer. If unset, default value of 1 will apply (remind once). Set to 0 to disable agent from reminding.\n\n- `reminder_trigger_ms?: number`\n  If set (in milliseconds), will trigger a reminder to the agent to speak if the user has been silent for the specified duration after some agent speech. Must be a positive number. If unset, default value of 10000 ms (10 s) will apply.\n\n- `response_engine?: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  The Response Engine to attach to the agent. It is used to generate responses for the agent. You need to create a Response Engine first before attaching it to an agent.\n\n- `responsiveness?: number`\n  Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.\n\n- `ring_duration_ms?: number`\n  If set, the phone ringing will last for the specified amount of milliseconds. This applies for both outbound call ringtime, and call transfer ringtime. Default to 30000 (30 s). Valid range is [5000, 300000].\n\n- `signed_url_expiration_ms?: number`\n  The expiration time for the signed url in milliseconds. Only applicable when opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will apply.\n\n- `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  If set, determines whether speech to text should focus on latency or accuracy. Default to fast mode. When set to custom, custom_stt_config must be provided.\n\n- `timezone?: string`\n  IANA timezone for the agent (e.g. America/New_York). Defaults to America/Los_Angeles if not set.\n\n- `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `digit_limit?: number`\n    The maximum number of digits allowed in the user's DTMF (Dual-Tone Multi-Frequency) input per turn. Once this limit is reached, the input is considered complete and a response will be generated immediately.\n  - `termination_key?: string`\n    A single key that signals the end of DTMF input. Acceptable values include any digit (0-9), the pound/hash symbol (#), or the asterisk (*).\n  - `timeout_ms?: number`\n    The time (in milliseconds) to wait for user DTMF input before timing out. The timer resets with each digit received.\n\n- `version_description?: string`\n  Optional description of the agent version. Used for your own reference and documentation.\n\n- `version_title?: string`\n  Optional title of the agent version. Used for your own reference.\n\n- `vocab_specialization?: 'general' | 'medical'`\n  If set, determines the vocabulary set to use for transcription. This setting only applies for English agents, for non English agent, this setting is a no-op. Default to general.\n\n- `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  Controls the emotional tone of the agent's voice. Currently supported for Cartesia and Minimax TTS providers. If unset, no emotion will be used.\n\n- `voice_id?: string`\n  Unique voice id used for the agent. Find list of available voices and their preview in Dashboard.\n\n- `voice_model?: string`\n  Select the voice model used for the selected voice. Each provider has a set of available voice models. Set to null to remove voice model selection, and default ones will apply. Check out dashboard for more details of each voice model.\n\n- `voice_speed?: number`\n  Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.\n\n- `voice_temperature?: number`\n  Controls how stable the voice is. Value ranging from [0,2]. Lower value means more stable, and higher value means more variant speech generation. Check the dashboard to see what provider supports this feature. If unset, default value 1 will apply.\n\n- `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect voicemail in the first 3 minutes of the call. Actions defined (hangup, or leave a message) will be applied when the voicemail is detected. Set this to null to disable voicemail detection.\n  - `action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as voicemail. Leave as null to use the default definition.\n\n- `volume?: number`\n  If set, will control the volume of the agent. Value ranging from [0,2]. Lower value means quieter agent speech, while higher value means louder agent speech. If unset, default value 1 will apply.\n\n- `webhook_events?: string[]`\n  Which webhook events this agent should receive. If not set, defaults to call_started, call_ended, call_analyzed.\n\n- `webhook_timeout_ms?: number`\n  The timeout for the webhook in milliseconds. If not set, default value of 10000 will apply.\n\n- `webhook_url?: string`\n  The webhook for agent to listen to call events. See what events it would get at [webhook doc](/features/webhook). If set, will binds webhook events for this agent to the specified url, and will ignore the account level webhook for this agent. Set to `null` to remove webhook url from this agent.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n  - `agent_id: string`\n  - `last_modification_timestamp: number`\n  - `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  - `version: number`\n  - `voice_id: string`\n  - `agent_name?: string`\n  - `allow_dtmf_interruption?: boolean`\n  - `allow_user_dtmf?: boolean`\n  - `ambient_sound?: string`\n  - `ambient_sound_volume?: number`\n  - `assigned_tags?: string[]`\n  - `backchannel_frequency?: number`\n  - `backchannel_words?: string[]`\n  - `base_version?: number`\n  - `begin_message_delay_ms?: number`\n  - `boosted_keywords?: string[]`\n  - `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  - `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  - `data_storage_retention_days?: number`\n  - `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  - `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  - `enable_backchannel?: boolean`\n  - `enable_dynamic_responsiveness?: boolean`\n  - `enable_dynamic_voice_speed?: boolean`\n  - `enable_expressive_mode?: boolean`\n  - `end_call_after_silence_ms?: number`\n  - `expressive_emotion_tags?: string[]`\n  - `expressive_mode_prompt?: string`\n  - `fallback_voice_ids?: string[]`\n  - `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  - `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  - `interruption_sensitivity?: number`\n  - `is_published?: boolean`\n  - `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  - `language?: string | string[]`\n  - `max_call_duration_ms?: number`\n  - `opt_in_signed_url?: boolean`\n  - `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  - `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  - `post_call_analysis_model?: string`\n  - `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  - `reminder_max_count?: number`\n  - `reminder_trigger_ms?: number`\n  - `responsiveness?: number`\n  - `ring_duration_ms?: number`\n  - `signed_url_expiration_ms?: number`\n  - `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  - `timezone?: string`\n  - `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `version_description?: string`\n  - `version_title?: string`\n  - `vocab_specialization?: 'general' | 'medical'`\n  - `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  - `voice_model?: string`\n  - `voice_speed?: number`\n  - `voice_temperature?: number`\n  - `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  - `volume?: number`\n  - `webhook_events?: string[]`\n  - `webhook_timeout_ms?: number`\n  - `webhook_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponse = await client.agent.update('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponse);\n```",
+      "## update\n\n`client.agent.update(agent_id: string, version?: string | number, agent_name?: string, allow_dtmf_interruption?: boolean, allow_user_dtmf?: boolean, ambient_sound?: string, ambient_sound_volume?: number, backchannel_frequency?: number, backchannel_words?: string[], begin_message_delay_ms?: number, boosted_keywords?: string[], call_screening_option?: { agent_identity: string; call_purpose: string; }, custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }, data_storage_retention_days?: number, data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only', denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation', enable_backchannel?: boolean, enable_dynamic_responsiveness?: boolean, enable_dynamic_voice_speed?: boolean, enable_expressive_mode?: boolean, end_call_after_silence_ms?: number, expressive_emotion_tags?: string[], expressive_mode_prompt?: string, fallback_voice_ids?: string[], guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }, handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }, interruption_sensitivity?: number, ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }, language?: string | string[], max_call_duration_ms?: number, opt_in_signed_url?: boolean, pii_config?: { categories: string[]; mode: 'post_call'; }, post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[], post_call_analysis_model?: string, pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[], reminder_max_count?: number, reminder_trigger_ms?: number, response_engine?: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }, responsiveness?: number, ring_duration_ms?: number, signed_url_expiration_ms?: number, stt_mode?: 'fast' | 'accurate' | 'custom', timezone?: string, user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }, version_description?: string, version_title?: string, vocab_specialization?: 'general' | 'medical', voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised', voice_id?: string, voice_model?: string, voice_speed?: number, voice_temperature?: number, voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }, volume?: number, webhook_events?: string[], webhook_timeout_ms?: number, webhook_url?: string): { agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: object; custom_stt_config?: object; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: object; handbook_config?: object; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: object; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: object; post_call_analysis_data?: object | object | object | object | object[]; post_call_analysis_model?: string; pronunciation_dictionary?: object[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: object; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: object; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n**patch** `/update-agent/{agent_id}`\n\nUpdate an existing agent's latest draft version\n\n### Parameters\n\n- `agent_id: string`\n\n- `version?: string | number`\n  Optional version of the API to use for this request. Default to latest version.\n\n- `agent_name?: string`\n  The name of the agent. Only used for your own reference.\n\n- `allow_dtmf_interruption?: boolean`\n  If set to true, DTMF input will interrupt the agent even when interruption_sensitivity is 0. Can be overridden per conversation or subagent node. Default to false.\n\n- `allow_user_dtmf?: boolean`\n  If set to true, DTMF input will be accepted and processed. If false, any DTMF input will be ignored. Default to true.\n\n- `ambient_sound?: string`\n  If set, will add ambient environment sound to the call to make experience more realistic. Currently supports the following options:\n\n- `coffee-shop`: Coffee shop ambience with people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/coffee-shop.wav)\n- `convention-hall`: Convention hall ambience, with some echo and people chatting in background. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/convention-hall.wav)\n- `summer-outdoor`: Summer outdoor ambience with cicada chirping. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/summer-outdoor.wav)\n- `mountain-outdoor`: Mountain outdoor ambience with birds singing. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/mountain-outdoor.wav)\n- `static-noise`: Constant static noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/static-noise.wav)\n- `call-center`: Call center work noise. [Listen to Ambience](https://retell-utils-public.s3.us-west-2.amazonaws.com/call-center.wav)\nSet to `null` to remove ambient sound from this agent.\n\n\n- `ambient_sound_volume?: number`\n  If set, will control the volume of the ambient sound. Value ranging from [0,2]. Lower value means quieter ambient sound, while higher value means louder ambient sound. If unset, default value 1 will apply.\n\n- `backchannel_frequency?: number`\n  Only applicable when enable_backchannel is true. Controls how often the agent would backchannel when a backchannel is possible. Value ranging from [0,1]. Lower value means less frequent backchannel, while higher value means more frequent backchannel. If unset, default value 0.8 will apply.\n\n- `backchannel_words?: string[]`\n  Only applicable when enable_backchannel is true. A list of words that the agent would use as backchannel. If not set, default backchannel words will apply. Check out [backchannel default words](/agent/interaction-configuration#backchannel) for more details. Note that certain voices do not work too well with certain words, so it's recommended to experiment before adding any words.\n\n- `begin_message_delay_ms?: number`\n  If set, will delay the first message by the specified amount of milliseconds, so that it gives user more time to prepare to take the call. Valid range is [0, 5000]. If not set or set to 0, agent will speak immediately. Only applicable when agent speaks first.\n\n- `boosted_keywords?: string[]`\n  Provide a customized list of keywords to bias the transcriber model, so that these words are more likely to get transcribed. Commonly used for names, brands, street, etc. Entries may reference dynamic variables with `{{variable}}` syntax.\n\n- `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  If this option is set, the agent prompt will include call screen handling instructions for identity and call purpose questions. Set this to null to disable call screen prompt instructions.\n  - `agent_identity: string`\n    Identity the agent should provide when a call screen asks who is calling. Dynamic variables are supported.\n  - `call_purpose: string`\n    Purpose the agent should provide when a call screen asks why it is calling. Dynamic variables are supported.\n\n- `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  Custom STT configuration. Only used when stt_mode is set to custom.\n  - `endpointing_ms: number`\n    Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram, 500 for Soniox, 100 for AssemblyAI.\n  - `provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'`\n    ASR provider name.\n\n- `data_storage_retention_days?: number`\n  Number of days to retain call/chat data before automatic deletion. Must be between 1 and 730 days. If not set, data is retained forever (no automatic deletion).\n\n- `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  Granular setting to manage how Retell stores sensitive data (transcripts, recordings, logs, etc.).\nThis replaces the deprecated `opt_out_sensitive_data_storage` field.\n- `everything`: Store all data including transcripts, recordings, and logs.\n- `everything_except_pii`: Store data without PII when PII is detected.\n- `basic_attributes_only`: Store only basic attributes; no transcripts/recordings/logs.\nIf not set, default value of \"everything\" will apply.\n\n\n- `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  If set, determines what denoising mode to use. Use \"no-denoise\" to bypass all audio denoising. Default to noise-cancellation.\n\n- `enable_backchannel?: boolean`\n  Controls whether the agent would backchannel (agent interjects the speaker with phrases like \"yeah\", \"uh-huh\" to signify interest and engagement). Backchannel when enabled tends to show up more in longer user utterances. If not set, agent will not backchannel.\n\n- `enable_dynamic_responsiveness?: boolean`\n  If set to true, the agent will dynamically adjust how quickly it responds based on the user's speech rate and past turn-taking behavior in the call. If unset, default value false will apply.\n\n- `enable_dynamic_voice_speed?: boolean`\n  If set to true, will enable dynamic voice speed adjustment based on the user's speech rate and conversation context. If unset, default value false will apply.\n\n- `enable_expressive_mode?: boolean`\n  Master toggle for expressive mode. When true, the agent may add expressive voice tags to the audio it generates. Only applicable for platform voices. If unset, defaults to false.\n\n- `end_call_after_silence_ms?: number`\n  If users stay silent for a period after agent speech, end the call. The minimum value allowed is 10,000 ms (10 s). By default, this is set to 600000 (10 min).\n\n- `expressive_emotion_tags?: string[]`\n  The expressive voice tags Retell pre-teaches the model to use when enable_expressive_mode is true. Custom tags defined in the system prompt are still allowed. If empty, the agent follows general expressive guidance without a fixed tag set.\n\n- `expressive_mode_prompt?: string`\n  Custom expressive voice guidance to use instead of the default Retell expressive prompt when enable_expressive_mode is true. If omitted or blank, the default expressive prompt will be used.\n\n- `fallback_voice_ids?: string[]`\n  When TTS provider for the selected voice is experiencing outages, we would use fallback voices listed here for the agent. Voice id and the fallback voice ids must be from different TTS providers. The system would go through the list in order, if the first one in the list is also having outage, it would use the next one. Set to null to remove voice fallback for the agent.\n\n- `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  Configuration for guardrail checks to detect and prevent prohibited topics in agent output and user input.\n  - `input_topics?: 'platform_integrity_jailbreaking'[]`\n    Selected prohibited user topic categories to check. When user messages contain these topics, the agent will respond with a placeholder message instead of processing the request.\n  - `output_topics?: string[]`\n    Selected prohibited agent topic categories to check. When agent messages contain these topics, they will be replaced with a placeholder message.\n\n- `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  Toggle behavior presets on/off to influence agent response style and behaviors.\n  - `ai_disclosure?: boolean`\n    When asked, acknowledge being a virtual assistant.\n  - `conversational_personality?: boolean`\n    Enables Conversational Personality. When true, the agent uses the Conversational Personality handbook preset, skips Professional Rep Personality during prompt assembly, and enables internal colloquial rewrite behavior.\n  - `default_personality?: boolean`\n    Professional call center rep baseline.\n  - `echo_verification?: boolean`\n    Repeat back and confirm important details (voice only).\n  - `high_empathy?: boolean`\n    Warm acknowledgment of caller concerns.\n  - `nato_phonetic_alphabet?: boolean`\n    Spell using NATO phonetic alphabet style (voice only).\n  - `natural_filler_words?: boolean`\n    Sprinkle natural speech fillers like \"um\", \"you know\" for a more human, conversational tone.\n  - `scope_boundaries?: boolean`\n    Stay within prompt/context scope, don't invent details.\n  - `smart_matching?: boolean`\n    Treat near-match similar words as same entity to reduce impact of transcription error (voice only).\n  - `speech_normalization?: boolean`\n    Convert numbers/dates/currency to spoken forms (voice only).\n\n- `interruption_sensitivity?: number`\n  Controls how sensitive the agent is to user interruptions. Value ranging from [0,1]. Lower value means it will take longer / more words for user to interrupt agent, while higher value means it's easier for user to interrupt agent. If unset, default value 1 will apply. When this is set to 0, agent would never be interrupted.\n\n- `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect IVR in the first 3 minutes of the call. Actions defined will be applied when the IVR is detected. Set this to null to disable IVR detection.\n  - `action: { type: 'hangup'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as an IVR. Leave as null to use the default definition.\n\n- `language?: string | string[]`\n  Specifies what language(s) the agent will operate in. Accepts either a single locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g. `[\"en-US\",\"es-ES\"]`). The scalar value `multi` is deprecated but still accepted as a scalar, and is stored and returned as the ten locales it used to mean. It must not appear inside the array form. Send an explicit locale array instead. If unset, defaults to `en-US`.\n\n- `max_call_duration_ms?: number`\n  Maximum allowed length for the call, will force end the call if reached. The minimum value allowed is 60,000 ms (1 min), and maximum value allowed is 7,200,000 (2 hours). By default, this is set to 3,600,000 (1 hour).\n\n- `opt_in_signed_url?: boolean`\n  Whether this agent opts in for signed URLs for public logs and recordings. When enabled, the generated URLs will include security signatures that restrict access and automatically expire after 24 hours.\n\n- `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  Configuration for PII scrubbing from transcripts and recordings.\n  - `categories: string[]`\n    List of PII categories to scrub from transcripts and recordings. PII redaction is only active when this list is non-empty; an empty array means no PII scrubbing is performed.\n  - `mode: 'post_call'`\n    The processing mode for PII scrubbing. Currently only post-call is supported.\n\n- `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  Post call analysis data to extract from the call. This data will augment the pre-defined variables extracted in the call analysis. This will be available after the call ends.\n\n- `post_call_analysis_model?: string`\n  The model to use for post call analysis. Default to gpt-4.1.\n\n- `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  A list of words / phrases and their pronunciation to be used to guide the audio synthesize for consistent pronunciation. Check the dashboard to see what provider supports this feature. Set to null to remove pronunciation dictionary from this agent.\n\n- `reminder_max_count?: number`\n  If set, controls how many times agent would remind user when user is unresponsive. Must be a non negative integer. If unset, default value of 1 will apply (remind once). Set to 0 to disable agent from reminding.\n\n- `reminder_trigger_ms?: number`\n  If set (in milliseconds), will trigger a reminder to the agent to speak if the user has been silent for the specified duration after some agent speech. Must be a positive number. If unset, default value of 10000 ms (10 s) will apply.\n\n- `response_engine?: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  The Response Engine to attach to the agent. It is used to generate responses for the agent. You need to create a Response Engine first before attaching it to an agent.\n\n- `responsiveness?: number`\n  Controls how responsive is the agent. Value ranging from [0,1]. Lower value means less responsive agent (wait more, respond slower), while higher value means faster exchanges (respond when it can). If unset, default value 1 will apply.\n\n- `ring_duration_ms?: number`\n  If set, the phone ringing will last for the specified amount of milliseconds. This applies for both outbound call ringtime, and call transfer ringtime. Default to 30000 (30 s). Valid range is [5000, 300000].\n\n- `signed_url_expiration_ms?: number`\n  The expiration time for the signed url in milliseconds. Only applicable when opt_in_signed_url is true. If not set, default value of 86400000 (24 hours) will apply.\n\n- `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  If set, determines whether speech to text should focus on latency or accuracy. Default to fast mode. When set to custom, custom_stt_config must be provided.\n\n- `timezone?: string`\n  IANA timezone for the agent (e.g. America/New_York). Defaults to America/Los_Angeles if not set.\n\n- `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `digit_limit?: number`\n    The maximum number of digits allowed in the user's DTMF (Dual-Tone Multi-Frequency) input per turn. Once this limit is reached, the input is considered complete and a response will be generated immediately.\n  - `termination_key?: string`\n    A single key that signals the end of DTMF input. Acceptable values include any digit (0-9), the pound/hash symbol (#), or the asterisk (*).\n  - `timeout_ms?: number`\n    The time (in milliseconds) to wait for user DTMF input before timing out. The timer resets with each digit received.\n\n- `version_description?: string`\n  Optional description of the agent version. Used for your own reference and documentation.\n\n- `version_title?: string`\n  Optional title of the agent version. Used for your own reference.\n\n- `vocab_specialization?: 'general' | 'medical'`\n  If set, determines the vocabulary set to use for transcription. This setting only applies for English agents, for non English agent, this setting is a no-op. Default to general.\n\n- `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  Controls the emotional tone of the agent's voice. Currently supported for Cartesia and Minimax TTS providers. If unset, no emotion will be used.\n\n\n- `voice_id?: string`\n  Unique voice id used for the agent. Find list of available voices and their preview in Dashboard.\n\n- `voice_model?: string`\n  Select the voice model used for the selected voice. Each provider has a set of available voice models. Set to null to remove voice model selection, and default ones will apply. Check out dashboard for more details of each voice model.\n\n- `voice_speed?: number`\n  Controls speed of voice. Value ranging from [0.5,2]. Lower value means slower speech, while higher value means faster speech rate. If unset, default value 1 will apply.\n\n- `voice_temperature?: number`\n  Controls how stable the voice is. Value ranging from [0,2]. Lower value means more stable, and higher value means more variant speech generation. Check the dashboard to see what provider supports this feature. If unset, default value 1 will apply.\n\n- `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  If this option is set, the call will try to detect voicemail in the first 3 minutes of the call. Actions defined (hangup, or leave a message) will be applied when the voicemail is detected. Set this to null to disable voicemail detection.\n  - `action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }`\n  - `detection_prompt?: string`\n    Optionally describe what should be treated as voicemail. Leave as null to use the default definition.\n\n- `volume?: number`\n  If set, will control the volume of the agent. Value ranging from [0,2]. Lower value means quieter agent speech, while higher value means louder agent speech. If unset, default value 1 will apply.\n\n- `webhook_events?: string[]`\n  Which webhook events this agent should receive. If not set, defaults to call_started, call_ended, call_analyzed.\n\n- `webhook_timeout_ms?: number`\n  The timeout for the webhook in milliseconds. If not set, default value of 10000 will apply.\n\n- `webhook_url?: string`\n  The webhook for agent to listen to call events. See what events it would get at [webhook doc](/features/webhook). If set, will binds webhook events for this agent to the specified url, and will ignore the account level webhook for this agent. Set to `null` to remove webhook url from this agent.\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }`\n\n  - `agent_id: string`\n  - `last_modification_timestamp: number`\n  - `response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }`\n  - `version: number`\n  - `voice_id: string`\n  - `agent_name?: string`\n  - `allow_dtmf_interruption?: boolean`\n  - `allow_user_dtmf?: boolean`\n  - `ambient_sound?: string`\n  - `ambient_sound_volume?: number`\n  - `assigned_tags?: string[]`\n  - `backchannel_frequency?: number`\n  - `backchannel_words?: string[]`\n  - `base_version?: number`\n  - `begin_message_delay_ms?: number`\n  - `boosted_keywords?: string[]`\n  - `call_screening_option?: { agent_identity: string; call_purpose: string; }`\n  - `custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }`\n  - `data_storage_retention_days?: number`\n  - `data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'`\n  - `denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'`\n  - `enable_backchannel?: boolean`\n  - `enable_dynamic_responsiveness?: boolean`\n  - `enable_dynamic_voice_speed?: boolean`\n  - `enable_expressive_mode?: boolean`\n  - `end_call_after_silence_ms?: number`\n  - `expressive_emotion_tags?: string[]`\n  - `expressive_mode_prompt?: string`\n  - `fallback_voice_ids?: string[]`\n  - `guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }`\n  - `handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }`\n  - `interruption_sensitivity?: number`\n  - `is_published?: boolean`\n  - `ivr_option?: { action: { type: 'hangup'; }; detection_prompt?: string; }`\n  - `language?: string | string[]`\n  - `max_call_duration_ms?: number`\n  - `opt_in_signed_url?: boolean`\n  - `pii_config?: { categories: string[]; mode: 'post_call'; }`\n  - `post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]`\n  - `post_call_analysis_model?: string`\n  - `pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]`\n  - `reminder_max_count?: number`\n  - `reminder_trigger_ms?: number`\n  - `responsiveness?: number`\n  - `ring_duration_ms?: number`\n  - `signed_url_expiration_ms?: number`\n  - `stt_mode?: 'fast' | 'accurate' | 'custom'`\n  - `timezone?: string`\n  - `user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }`\n  - `version_description?: string`\n  - `version_title?: string`\n  - `vocab_specialization?: 'general' | 'medical'`\n  - `voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'`\n  - `voice_model?: string`\n  - `voice_speed?: number`\n  - `voice_temperature?: number`\n  - `voicemail_option?: { action: { text: string; type: 'prompt'; } | { text: string; type: 'static_text'; } | { type: 'hangup'; } | { type: 'bridge_transfer'; }; detection_prompt?: string; }`\n  - `volume?: number`\n  - `webhook_events?: string[]`\n  - `webhook_timeout_ms?: number`\n  - `webhook_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponse = await client.agent.update('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.agent.update',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponse = await client.agent.update('16b980523634a6dc504898cda492e939', {\n  agent_name: 'Jarvis',\n});\n\nconsole.log(agentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_name": "Jarvis",\n          "allow_dtmf_interruption": false,\n          "allow_user_dtmf": true,\n          "ambient_sound_volume": 1,\n          "backchannel_frequency": 0.9,\n          "backchannel_words": [\n            "yeah",\n            "uh-huh"\n          ],\n          "begin_message_delay_ms": 1000,\n          "boosted_keywords": [\n            "retell",\n            "kroger"\n          ],\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "denoising_mode": "noise-cancellation",\n          "enable_backchannel": true,\n          "enable_dynamic_responsiveness": true,\n          "enable_dynamic_voice_speed": true,\n          "enable_expressive_mode": true,\n          "end_call_after_silence_ms": 600000,\n          "expressive_emotion_tags": [\n            "empathetic",\n            "excited",\n            "sigh",\n            "clear throat",\n            "emphasis"\n          ],\n          "expressive_mode_prompt": "Use [sigh] for thoughtful pauses and [excited] for good news.",\n          "fallback_voice_ids": [\n            "cartesia-Cimo",\n            "minimax-Cimo"\n          ],\n          "interruption_sensitivity": 1,\n          "ivr_option": {\n            "action": {\n              "type": "hangup"\n            }\n          },\n          "max_call_duration_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_call_analysis_model": "gpt-4.1-mini",\n          "reminder_max_count": 2,\n          "reminder_trigger_ms": 10000,\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "responsiveness": 1,\n          "ring_duration_ms": 30000,\n          "signed_url_expiration_ms": 86400000,\n          "stt_mode": "fast",\n          "timezone": "America/New_York",\n          "version_description": "Customer support agent for handling product inquiries",\n          "version_title": "Production hotfix",\n          "vocab_specialization": "general",\n          "voice_emotion": "calm",\n          "voice_id": "retell-Cimo",\n          "voice_speed": 1,\n          "voice_temperature": 1,\n          "voicemail_option": {\n            "action": {\n              "text": "Please give us a callback tomorrow at 10am.",\n              "type": "static_text"\n            }\n          },\n          "volume": 1,\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
+      },
       python: {
         method: 'agent.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_response = client.agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n    agent_name="Jarvis",\n)\nprint(agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_name": "Jarvis",\n          "allow_dtmf_interruption": false,\n          "allow_user_dtmf": true,\n          "ambient_sound_volume": 1,\n          "backchannel_frequency": 0.9,\n          "backchannel_words": [\n            "yeah",\n            "uh-huh"\n          ],\n          "begin_message_delay_ms": 1000,\n          "boosted_keywords": [\n            "retell",\n            "kroger"\n          ],\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "denoising_mode": "noise-cancellation",\n          "enable_backchannel": true,\n          "enable_dynamic_responsiveness": true,\n          "enable_dynamic_voice_speed": true,\n          "enable_expressive_mode": true,\n          "end_call_after_silence_ms": 600000,\n          "expressive_emotion_tags": [\n            "empathetic",\n            "excited",\n            "sigh",\n            "clear throat",\n            "emphasis"\n          ],\n          "expressive_mode_prompt": "Use [sigh] for thoughtful pauses and [excited] for good news.",\n          "fallback_voice_ids": [\n            "cartesia-Cimo",\n            "minimax-Cimo"\n          ],\n          "interruption_sensitivity": 1,\n          "ivr_option": {\n            "action": {\n              "type": "hangup"\n            }\n          },\n          "max_call_duration_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_call_analysis_model": "gpt-4.1-mini",\n          "reminder_max_count": 2,\n          "reminder_trigger_ms": 10000,\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "responsiveness": 1,\n          "ring_duration_ms": 30000,\n          "signed_url_expiration_ms": 86400000,\n          "stt_mode": "fast",\n          "timezone": "America/New_York",\n          "version_description": "Customer support agent for handling product inquiries",\n          "version_title": "Production hotfix",\n          "vocab_specialization": "general",\n          "voice_emotion": "calm",\n          "voice_id": "retell-Cimo",\n          "voice_speed": 1,\n          "voice_temperature": 1,\n          "voicemail_option": {\n            "action": {\n              "text": "Please give us a callback tomorrow at 10am.",\n              "type": "static_text"\n            }\n          },\n          "volume": 1,\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
       },
     },
   },
@@ -1149,14 +1149,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'agent.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1182,14 +1182,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.publish('agent_xxx', { version: 15 });",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/publish-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "version": 15,\n          "version_description": "Hotfix for transfer timeout",\n          "version_title": "Hotfix"\n        }\'',
+      },
       python: {
         method: 'agent.publish',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.publish(\n    agent_id="agent_xxx",\n    version=15,\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/publish-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "version": 15,\n          "version_description": "Hotfix for transfer timeout",\n          "version_title": "Hotfix"\n        }\'',
       },
     },
   },
@@ -1211,14 +1211,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.agent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
+      },
       python: {
         method: 'agent.create_version',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.agent.create_version(\n    agent_id="agent_xxx",\n    base_version=12,\n)\nprint(response)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
       },
     },
   },
@@ -1239,14 +1239,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.agent.deleteVersion('agent_xxx', { version: 1 });",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'agent.delete_version',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.agent.delete_version(\n    agent_id="agent_xxx",\n    version=1,\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1255,27 +1255,63 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/get-agent-versions/{agent_id}',
     httpMethod: 'get',
     summary: '',
-    description: 'Get all versions of an agent',
+    description: 'Get agent versions. Large version histories may be truncated.',
     stainlessPath: '(resource) agent > (method) get-versions',
     qualified: 'client.agent.getVersions',
     params: ['agent_id: string;'],
     response: 'object[]',
     markdown:
-      "## get-versions\n\n`client.agent.getVersions(agent_id: string): object[]`\n\n**get** `/get-agent-versions/{agent_id}`\n\nGet all versions of an agent\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: object; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: object | object | object | object; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponses = await client.agent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponses);\n```",
+      "## get-versions\n\n`client.agent.getVersions(agent_id: string): object[]`\n\n**get** `/get-agent-versions/{agent_id}`\n\nGet agent versions. Large version histories may be truncated.\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; version: number; voice_id: string; agent_name?: string; allow_dtmf_interruption?: boolean; allow_user_dtmf?: boolean; ambient_sound?: string; ambient_sound_volume?: number; assigned_tags?: string[]; backchannel_frequency?: number; backchannel_words?: string[]; base_version?: number; begin_message_delay_ms?: number; boosted_keywords?: string[]; call_screening_option?: { agent_identity: string; call_purpose: string; }; custom_stt_config?: { endpointing_ms: number; provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai'; }; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; denoising_mode?: 'no-denoise' | 'noise-cancellation' | 'noise-and-background-speech-cancellation'; enable_backchannel?: boolean; enable_dynamic_responsiveness?: boolean; enable_dynamic_voice_speed?: boolean; enable_expressive_mode?: boolean; end_call_after_silence_ms?: number; expressive_emotion_tags?: string[]; expressive_mode_prompt?: string; fallback_voice_ids?: string[]; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; conversational_personality?: boolean; default_personality?: boolean; echo_verification?: boolean; high_empathy?: boolean; nato_phonetic_alphabet?: boolean; natural_filler_words?: boolean; scope_boundaries?: boolean; smart_matching?: boolean; speech_normalization?: boolean; }; interruption_sensitivity?: number; is_published?: boolean; ivr_option?: { action: object; detection_prompt?: string; }; language?: string | string[]; max_call_duration_ms?: number; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_call_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'call_summary' | 'call_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_call_analysis_model?: string; pronunciation_dictionary?: { alphabet: 'ipa' | 'cmu' | 'pinyin' | 'jyutping'; phoneme: string; word: string; }[]; reminder_max_count?: number; reminder_trigger_ms?: number; responsiveness?: number; ring_duration_ms?: number; signed_url_expiration_ms?: number; stt_mode?: 'fast' | 'accurate' | 'custom'; timezone?: string; user_dtmf_options?: { digit_limit?: number; termination_key?: string; timeout_ms?: number; }; version_description?: string; version_title?: string; vocab_specialization?: 'general' | 'medical'; voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised'; voice_model?: string; voice_speed?: number; voice_temperature?: number; voicemail_option?: { action: object | object | object | object; detection_prompt?: string; }; volume?: number; webhook_events?: string[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentResponses = await client.agent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponses);\n```",
     perLanguage: {
       typescript: {
         method: 'client.agent.getVersions',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentResponses = await client.agent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(agentResponses);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'agent.get_versions',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_responses = client.agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(agent_responses)',
       },
+    },
+  },
+  {
+    name: 'list-versions',
+    endpoint: '/list-agent-versions/{agent_id}',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      'List stored versions of a voice or chat agent with pagination. Root-level data such as assigned tags is not included.',
+    stainlessPath: '(resource) agent > (method) list-versions',
+    qualified: 'client.agent.listVersions',
+    params: [
+      'agent_id: string;',
+      'limit?: number;',
+      'pagination_key?: string;',
+      "sort_order?: 'ascending' | 'descending';",
+    ],
+    response:
+      '{ has_more?: boolean; items?: { is_published: boolean; last_modification_timestamp: number; version: number; base_version?: number; version_description?: string; version_title?: string; }[]; pagination_key?: string; }',
+    markdown:
+      "## list-versions\n\n`client.agent.listVersions(agent_id: string, limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: object[]; pagination_key?: string; }`\n\n**get** `/list-agent-versions/{agent_id}`\n\nList stored versions of a voice or chat agent with pagination. Root-level data such as assigned tags is not included.\n\n### Parameters\n\n- `agent_id: string`\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { is_published: boolean; last_modification_timestamp: number; version: number; base_version?: number; version_description?: string; version_title?: string; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { is_published: boolean; last_modification_timestamp: number; version: number; base_version?: number; version_description?: string; version_title?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.agent.listVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.agent.listVersions',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.agent.listVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(response.has_more);",
+      },
       http: {
         example:
-          'curl https://api.retellai.com/get-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+          'curl https://api.retellai.com/list-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'agent.list_versions',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.agent.list_versions(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(response.has_more)',
       },
     },
   },
@@ -1318,14 +1354,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.create({\n  response_engine: { llm_id: 'llm_234sdertfsdsfsdf', type: 'retell-llm' },\n});\n\nconsole.log(chatAgentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-chat-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "agent_name": "Jarvis",\n          "auto_close_message": "Thank you for chatting. The conversation has ended.",\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "end_chat_after_silence_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_chat_analysis_model": "gpt-4.1-mini",\n          "signed_url_expiration_ms": 86400000,\n          "timezone": "America/New_York",\n          "version_title": "Production hotfix",\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
+      },
       python: {
         method: 'chat_agent.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.create(\n    response_engine={\n        "llm_id": "llm_234sdertfsdsfsdf",\n        "type": "retell-llm",\n    },\n)\nprint(chat_agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-chat-agent \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "agent_name": "Jarvis",\n          "auto_close_message": "Thank you for chatting. The conversation has ended.",\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "end_chat_after_silence_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_chat_analysis_model": "gpt-4.1-mini",\n          "signed_url_expiration_ms": 86400000,\n          "timezone": "America/New_York",\n          "version_title": "Production hotfix",\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
       },
     },
   },
@@ -1348,14 +1384,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-chat-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat_agent.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.retrieve(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-chat-agent/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1383,14 +1419,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgents = await client.chatAgent.list({\n  filter_criteria: {\n    channel: {\n      type: 'string',\n      op: 'eq',\n      value: 'voice',\n    },\n  },\n});\n\nconsole.log(chatAgents.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat_agent.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agents = client.chat_agent.list(\n    filter_criteria={\n        "channel": {\n            "type": "string",\n            "op": "eq",\n            "value": "voice",\n        }\n    },\n)\nprint(chat_agents.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-agents \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1435,14 +1471,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponse = await client.chatAgent.update('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponse.agent_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-chat-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_name": "Jarvis",\n          "auto_close_message": "Thank you for chatting. The conversation has ended.",\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "end_chat_after_silence_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_chat_analysis_model": "gpt-4.1-mini",\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "signed_url_expiration_ms": 86400000,\n          "timezone": "America/New_York",\n          "version_title": "Production hotfix",\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
+      },
       python: {
         method: 'chat_agent.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_response = client.chat_agent.update(\n    agent_id="16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_response.agent_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-chat-agent/$AGENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "agent_name": "Jarvis",\n          "auto_close_message": "Thank you for chatting. The conversation has ended.",\n          "data_storage_retention_days": 30,\n          "data_storage_setting": "everything",\n          "end_chat_after_silence_ms": 3600000,\n          "opt_in_signed_url": true,\n          "post_chat_analysis_model": "gpt-4.1-mini",\n          "response_engine": {\n            "llm_id": "llm_234sdertfsdsfsdf",\n            "type": "retell-llm",\n            "version": 0\n          },\n          "signed_url_expiration_ms": 86400000,\n          "timezone": "America/New_York",\n          "version_title": "Production hotfix",\n          "webhook_timeout_ms": 10000,\n          "webhook_url": "https://webhook-url-here"\n        }\'',
       },
     },
   },
@@ -1463,14 +1499,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-chat-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat_agent.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-chat-agent/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1496,14 +1532,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.publish('agent_xxx', { version: 15 });",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/publish-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "version": 15,\n          "version_description": "Hotfix for transfer timeout",\n          "version_title": "Hotfix"\n        }\'',
+      },
       python: {
         method: 'chat_agent.publish',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.publish(\n    agent_id="agent_xxx",\n    version=15,\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/publish-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "version": 15,\n          "version_description": "Hotfix for transfer timeout",\n          "version_title": "Hotfix"\n        }\'',
       },
     },
   },
@@ -1525,14 +1561,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.chatAgent.createVersion('agent_xxx', { base_version: 12 });\n\nconsole.log(response);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
+      },
       python: {
         method: 'chat_agent.create_version',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.chat_agent.create_version(\n    agent_id="agent_xxx",\n    base_version=12,\n)\nprint(response)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-agent-version/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "base_version": 12\n        }\'',
       },
     },
   },
@@ -1553,14 +1589,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.chatAgent.deleteVersion('agent_xxx', { version: 1 });",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat_agent.delete_version',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.chat_agent.delete_version(\n    agent_id="agent_xxx",\n    version=1,\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-agent-version/$AGENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1569,28 +1605,28 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/get-chat-agent-versions/{agent_id}',
     httpMethod: 'get',
     summary: '',
-    description: 'Get all versions of a chat agent',
+    description: 'Get chat agent versions. Large version histories may be truncated.',
     stainlessPath: '(resource) chat_agent > (method) get-versions',
     qualified: 'client.chatAgent.getVersions',
     params: ['agent_id: string;'],
     response:
       "{ agent_id: string; last_modification_timestamp: number; response_engine: object | object | object; agent_name?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: object; handbook_config?: object; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: object; post_chat_analysis_data?: object | object | object | object | object[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; version_title?: string; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]",
     markdown:
-      "## get-versions\n\n`client.chatAgent.getVersions(agent_id: string): object[]`\n\n**get** `/get-chat-agent-versions/{agent_id}`\n\nGet all versions of a chat agent\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; version_title?: string; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst chatAgentResponses = await client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponses);\n```",
+      "## get-versions\n\n`client.chatAgent.getVersions(agent_id: string): object[]`\n\n**get** `/get-chat-agent-versions/{agent_id}`\n\nGet chat agent versions. Large version histories may be truncated.\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; last_modification_timestamp: number; response_engine: { llm_id: string; type: 'retell-llm'; version?: number; } | { llm_websocket_url: string; type: 'custom-llm'; } | { conversation_flow_id: string; type: 'conversation-flow'; version?: number; }; agent_name?: string; assigned_tags?: string[]; auto_close_message?: string; base_version?: number; data_storage_retention_days?: number; data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only'; end_chat_after_silence_ms?: number; guardrail_config?: { input_topics?: 'platform_integrity_jailbreaking'[]; output_topics?: string[]; }; handbook_config?: { ai_disclosure?: boolean; default_personality?: boolean; high_empathy?: boolean; scope_boundaries?: boolean; }; is_published?: boolean; language?: string | string[]; opt_in_signed_url?: boolean; pii_config?: { categories: string[]; mode: 'post_call'; }; post_chat_analysis_data?: { description: string; name: string; type: 'string'; conditional_prompt?: string; examples?: string[]; required?: boolean; } | { choices: string[]; description: string; name: string; type: 'enum'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'boolean'; conditional_prompt?: string; required?: boolean; } | { description: string; name: string; type: 'number'; conditional_prompt?: string; required?: boolean; } | { name: 'chat_summary' | 'chat_successful' | 'user_sentiment'; type: 'system-presets'; conditional_prompt?: string; description?: string; required?: boolean; }[]; post_chat_analysis_model?: string; signed_url_expiration_ms?: number; timezone?: string; version?: number; version_title?: string; webhook_events?: 'chat_started' | 'chat_ended' | 'chat_analyzed' | 'transcript_updated'[]; webhook_timeout_ms?: number; webhook_url?: string; }[]`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst chatAgentResponses = await client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponses);\n```",
     perLanguage: {
       typescript: {
         method: 'client.chatAgent.getVersions',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst chatAgentResponses = await client.chatAgent.getVersions('16b980523634a6dc504898cda492e939');\n\nconsole.log(chatAgentResponses);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-chat-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'chat_agent.get_versions',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nchat_agent_responses = client.chat_agent.get_versions(\n    "16b980523634a6dc504898cda492e939",\n)\nprint(chat_agent_responses)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-chat-agent-versions/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1632,14 +1668,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.create();\n\nconsole.log(llmResponse.llm_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-retell-llm \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "is_transfer_llm": false,\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "model_temperature": 0,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true\n        }\'',
+      },
       python: {
         method: 'llm.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.create()\nprint(llm_response.llm_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-retell-llm \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "is_transfer_llm": false,\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "model_temperature": 0,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true\n        }\'',
       },
     },
   },
@@ -1662,14 +1698,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.retrieve('16b980523634a6dc504898cda492e939');\n\nconsole.log(llmResponse.llm_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-retell-llm/$LLM_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'llm.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.retrieve(\n    llm_id="16b980523634a6dc504898cda492e939",\n)\nprint(llm_response.llm_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-retell-llm/$LLM_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1692,14 +1728,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llms = await client.llm.list();\n\nconsole.log(llms.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-retell-llms \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'llm.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllms = client.llm.list()\nprint(llms.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-retell-llms \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1742,14 +1778,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst llmResponse = await client.llm.update('16b980523634a6dc504898cda492e939', {\n  begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',\n});\n\nconsole.log(llmResponse.llm_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-retell-llm/$LLM_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "is_transfer_llm": false,\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "model_temperature": 0,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true\n        }\'',
+      },
       python: {
         method: 'llm.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nllm_response = client.llm.update(\n    llm_id="16b980523634a6dc504898cda492e939",\n    begin_message="Hey I am a virtual assistant calling from Retell Hospital.",\n)\nprint(llm_response.llm_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-retell-llm/$LLM_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "begin_message": "Hey I am a virtual assistant calling from Retell Hospital.",\n          "default_dynamic_variables": {\n            "customer_name": "John Doe"\n          },\n          "general_prompt": "You are ...",\n          "general_tools": [\n            {\n              "name": "end_call",\n              "type": "end_call",\n              "description": "End the call with user."\n            }\n          ],\n          "is_transfer_llm": false,\n          "model": "gpt-4.1",\n          "model_high_priority": true,\n          "model_temperature": 0,\n          "s2s_model": "gpt-realtime-1.5",\n          "starting_state": "information_collection",\n          "states": [\n            {\n              "name": "information_collection",\n              "edges": [\n                {\n                  "description": "Transition to book an appointment.",\n                  "destination_state_name": "appointment_booking"\n                }\n              ],\n              "state_prompt": "You will follow the steps below to collect information...",\n              "tools": [\n                {\n                  "name": "transfer_to_support",\n                  "transfer_destination": {\n                    "number": "16175551212",\n                    "type": "predefined"\n                  },\n                  "transfer_option": {\n                    "type": "cold_transfer",\n                    "show_transferee_as_caller": false\n                  },\n                  "type": "transfer_call",\n                  "description": "Transfer to the support team."\n                }\n              ]\n            },\n            {\n              "name": "appointment_booking",\n              "state_prompt": "You will follow the steps below to book an appointment...",\n              "tools": [\n                {\n                  "cal_api_key": "cal_live_xxxxxxxxxxxx",\n                  "event_type_id": 60444,\n                  "name": "book_appointment",\n                  "type": "book_appointment_cal",\n                  "description": "Book an annual check up.",\n                  "timezone": "America/Los_Angeles"\n                }\n              ]\n            }\n          ],\n          "tool_call_strict_mode": true\n        }\'',
       },
     },
   },
@@ -1761,23 +1797,23 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     description: 'Delete an existing Retell LLM Response Engine',
     stainlessPath: '(resource) llm > (method) delete',
     qualified: 'client.llm.delete',
-    params: ['llm_id: string;'],
+    params: ['llm_id: string;', 'force_delete?: boolean;'],
     markdown:
-      "## delete\n\n`client.llm.delete(llm_id: string): void`\n\n**delete** `/delete-retell-llm/{llm_id}`\n\nDelete an existing Retell LLM Response Engine\n\n### Parameters\n\n- `llm_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD')\n```",
+      "## delete\n\n`client.llm.delete(llm_id: string, force_delete?: boolean): void`\n\n**delete** `/delete-retell-llm/{llm_id}`\n\nDelete an existing Retell LLM Response Engine\n\n### Parameters\n\n- `llm_id: string`\n\n- `force_delete?: boolean`\n  By default the deletion is rejected with a 400 if any agent still uses this Retell LLM as its response engine. Set to true to delete it anyway, which leaves those agents pointing at a Retell LLM that no longer exists.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD')\n```",
     perLanguage: {
       typescript: {
         method: 'client.llm.delete',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.llm.delete('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD');",
       },
-      python: {
-        method: 'llm.delete',
-        example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.llm.delete(\n    "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
-      },
       http: {
         example:
           'curl https://api.retellai.com/delete-retell-llm/$LLM_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'llm.delete',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.llm.delete(\n    llm_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n)',
       },
     },
   },
@@ -1820,14 +1856,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.create({\n  model_choice: { model: 'gpt-4.1', type: 'cascading' },\n  nodes: [\n    {\n      id: 'start',\n      instruction: { text: 'Greet the customer and ask how you can help them.', type: 'prompt' },\n      type: 'conversation',\n    },\n  ],\n  start_speaker: 'agent',\n});\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-conversation-flow \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "model_choice": {\n            "model": "gpt-4.1",\n            "type": "cascading"\n          },\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_speaker": "agent",\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "flex_mode": false,\n          "global_prompt": "You are a helpful customer service agent.",\n          "is_transfer_cf": false,\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "start_node_id": "start",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+      },
       python: {
         method: 'conversation_flow.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.create(\n    model_choice={\n        "model": "gpt-4.1",\n        "type": "cascading",\n    },\n    nodes=[{\n        "id": "start",\n        "instruction": {\n            "text": "Greet the customer and ask how you can help them.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n    start_speaker="agent",\n)\nprint(conversation_flow_response.conversation_flow_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-conversation-flow \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "model_choice": {\n            "model": "gpt-4.1",\n            "type": "cascading"\n          },\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_speaker": "agent",\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "flex_mode": false,\n          "global_prompt": "You are a helpful customer service agent.",\n          "is_transfer_cf": false,\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "start_node_id": "start",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -1850,14 +1886,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.retrieve('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'conversation_flow.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.retrieve(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1880,14 +1916,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlows = await client.conversationFlow.list();\n\nconsole.log(conversationFlows.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-conversation-flows \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'conversation_flow.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flows = client.conversation_flow.list()\nprint(conversation_flows.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-conversation-flows \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -1931,14 +1967,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowResponse = await client.conversationFlow.update('conversation_flow_id');\n\nconsole.log(conversationFlowResponse.conversation_flow_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "flex_mode": false,\n          "global_prompt": "You are a helpful customer service agent.",\n          "is_transfer_cf": false,\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_node_id": "start",\n          "start_speaker": "agent",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+      },
       python: {
         method: 'conversation_flow.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_response = client.conversation_flow.update(\n    conversation_flow_id="conversation_flow_id",\n)\nprint(conversation_flow_response.conversation_flow_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "begin_after_user_silence_ms": 2000,\n          "default_dynamic_variables": {\n            "company_name": "Retell Inc",\n            "support_hours": "9 AM - 5 PM"\n          },\n          "flex_mode": false,\n          "global_prompt": "You are a helpful customer service agent.",\n          "is_transfer_cf": false,\n          "knowledge_base_ids": [\n            "kb_001",\n            "kb_002"\n          ],\n          "model_temperature": 0.7,\n          "nodes": [\n            {\n              "id": "start",\n              "instruction": {\n                "text": "Greet the customer and ask how you can help them.",\n                "type": "prompt"\n              },\n              "type": "conversation",\n              "edges": [\n                {\n                  "id": "edge_1",\n                  "transition_condition": {\n                    "prompt": "Customer wants to book appointment",\n                    "type": "prompt"\n                  },\n                  "destination_node_id": "book_appointment"\n                }\n              ]\n            }\n          ],\n          "start_node_id": "start",\n          "start_speaker": "agent",\n          "tool_call_strict_mode": true,\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -1950,23 +1986,23 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     description: 'Delete a conversation flow and all its versions',
     stainlessPath: '(resource) conversation_flow > (method) delete',
     qualified: 'client.conversationFlow.delete',
-    params: ['conversation_flow_id: string;'],
+    params: ['conversation_flow_id: string;', 'force_delete?: boolean;'],
     markdown:
-      "## delete\n\n`client.conversationFlow.delete(conversation_flow_id: string): void`\n\n**delete** `/delete-conversation-flow/{conversation_flow_id}`\n\nDelete a conversation flow and all its versions\n\n### Parameters\n\n- `conversation_flow_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.conversationFlow.delete('conversation_flow_id')\n```",
+      "## delete\n\n`client.conversationFlow.delete(conversation_flow_id: string, force_delete?: boolean): void`\n\n**delete** `/delete-conversation-flow/{conversation_flow_id}`\n\nDelete a conversation flow and all its versions\n\n### Parameters\n\n- `conversation_flow_id: string`\n\n- `force_delete?: boolean`\n  By default the deletion is rejected with a 400 if any agent still uses this conversation flow as its response engine. Set to true to delete it anyway, which leaves those agents pointing at a conversation flow that no longer exists.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.conversationFlow.delete('conversation_flow_id')\n```",
     perLanguage: {
       typescript: {
         method: 'client.conversationFlow.delete',
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.conversationFlow.delete('conversation_flow_id');",
       },
-      python: {
-        method: 'conversation_flow.delete',
-        example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.conversation_flow.delete(\n    "conversation_flow_id",\n)',
-      },
       http: {
         example:
           'curl https://api.retellai.com/delete-conversation-flow/$CONVERSATION_FLOW_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'conversation_flow.delete',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.conversation_flow.delete(\n    conversation_flow_id="conversation_flow_id",\n)',
       },
     },
   },
@@ -1998,14 +2034,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.create({\n  name: 'Customer Information Collector',\n  nodes: [\n    {\n      id: 'collect_info',\n      instruction: {\n        text: 'Ask the customer for their name and contact information.',\n        type: 'prompt',\n      },\n      type: 'conversation',\n    },\n  ],\n});\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-conversation-flow-component \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "flex_mode": false,\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+      },
       python: {
         method: 'conversation_flow_component.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.create(\n    name="Customer Information Collector",\n    nodes=[{\n        "id": "collect_info",\n        "instruction": {\n            "text": "Ask the customer for their name and contact information.",\n            "type": "prompt",\n        },\n        "type": "conversation",\n    }],\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-conversation-flow-component \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "flex_mode": false,\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -2028,14 +2064,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.retrieve(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'conversation_flow_component.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.retrieve(\n    "conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2058,14 +2094,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponents = await client.conversationFlowComponent.list();\n\nconsole.log(conversationFlowComponents.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-conversation-flow-components \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'conversation_flow_component.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_components = client.conversation_flow_component.list()\nprint(conversation_flow_components.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-conversation-flow-components \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2098,14 +2134,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst conversationFlowComponentResponse = await client.conversationFlowComponent.update(\n  'conversation_flow_component_id',\n);\n\nconsole.log(conversationFlowComponentResponse.conversation_flow_component_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/update-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "flex_mode": false,\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
+      },
       python: {
         method: 'conversation_flow_component.update',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconversation_flow_component_response = client.conversation_flow_component.update(\n    conversation_flow_component_id="conversation_flow_component_id",\n)\nprint(conversation_flow_component_response.conversation_flow_component_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/update-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "flex_mode": false,\n          "name": "Customer Information Collector",\n          "nodes": [\n            {\n              "id": "collect_info",\n              "instruction": {\n                "text": "Ask the customer for their name and contact information.",\n                "type": "prompt"\n              },\n              "type": "conversation"\n            }\n          ],\n          "start_node_id": "collect_info",\n          "tools": [\n            {\n              "name": "get_customer_info",\n              "type": "custom",\n              "url": "https://api.example.com/customer",\n              "description": "Get customer information from database",\n              "method": "GET",\n              "tool_id": "tool_001"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -2127,14 +2163,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.conversationFlowComponent.delete('conversation_flow_component_id');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'conversation_flow_component.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.conversation_flow_component.delete(\n    "conversation_flow_component_id",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-conversation-flow-component/$CONVERSATION_FLOW_COMPONENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2165,14 +2201,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.create({\n  knowledge_base_name: 'Sample KB',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-knowledge-base \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_name=\'Sample KB\' \\\n    -F enable_auto_refresh=true \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\' \\\n    -F max_chunk_size=2000 \\\n    -F min_chunk_size=400',
+      },
       python: {
         method: 'knowledge_base.create',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.create(\n    knowledge_base_name="Sample KB",\n)\nprint(knowledge_base_response.knowledge_base_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-knowledge-base \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_name=\'Sample KB\' \\\n    -F enable_auto_refresh=true \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\' \\\n    -F max_chunk_size=2000 \\\n    -F min_chunk_size=400',
       },
     },
   },
@@ -2195,14 +2231,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.retrieve('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'knowledge_base.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.retrieve(\n    "kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2224,14 +2260,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponses = await client.knowledgeBase.list();\n\nconsole.log(knowledgeBaseResponses);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/list-knowledge-bases \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'knowledge_base.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_responses = client.knowledge_base.list()\nprint(knowledge_base_responses)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/list-knowledge-bases \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2252,14 +2288,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.knowledgeBase.delete('kb_1234567890');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'knowledge_base.delete',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.knowledge_base.delete(\n    "kb_1234567890",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2287,14 +2323,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.addSources('kb_1234567890');\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/add-knowledge-base-sources/$KNOWLEDGE_BASE_ID \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\'',
+      },
       python: {
         method: 'knowledge_base.add_sources',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.add_sources(\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/add-knowledge-base-sources/$KNOWLEDGE_BASE_ID \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F knowledge_base_urls=\'["https://www.example.com","https://www.retellai.com"]\'',
       },
     },
   },
@@ -2317,14 +2353,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst knowledgeBaseResponse = await client.knowledgeBase.deleteSource('source_1234567890', {\n  knowledge_base_id: 'kb_1234567890',\n});\n\nconsole.log(knowledgeBaseResponse.knowledge_base_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-knowledge-base-source/$KNOWLEDGE_BASE_ID/source/$SOURCE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'knowledge_base.delete_source',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nknowledge_base_response = client.knowledge_base.delete_source(\n    source_id="source_1234567890",\n    knowledge_base_id="kb_1234567890",\n)\nprint(knowledge_base_response.knowledge_base_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-knowledge-base-source/$KNOWLEDGE_BASE_ID/source/$SOURCE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2352,14 +2388,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.addResource({\n  provider_voice_id: 'provider_voice_id',\n  voice_name: 'x',\n});\n\nconsole.log(voiceResponse.provider);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/add-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "provider_voice_id": "provider_voice_id",\n          "voice_name": "x"\n        }\'',
+      },
       python: {
         method: 'voice.add_resource',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.add_resource(\n    provider_voice_id="provider_voice_id",\n    voice_name="x",\n)\nprint(voice_response.provider)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/add-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "provider_voice_id": "provider_voice_id",\n          "voice_name": "x"\n        }\'',
       },
     },
   },
@@ -2386,14 +2422,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.clone({\n  files: [fs.createReadStream('path/to/file')],\n  voice_name: 'x',\n  voice_provider: 'elevenlabs',\n});\n\nconsole.log(voiceResponse.provider);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/clone-voice \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F files=\'["Example data"]\' \\\n    -F voice_name=x \\\n    -F voice_provider=elevenlabs',
+      },
       python: {
         method: 'voice.clone',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.clone(\n    files=[b"Example data"],\n    voice_name="x",\n    voice_provider="elevenlabs",\n)\nprint(voice_response.provider)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/clone-voice \\\n    -H \'Content-Type: multipart/form-data\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -F files=\'["Example data"]\' \\\n    -F voice_name=x \\\n    -F voice_provider=elevenlabs',
       },
     },
   },
@@ -2416,14 +2452,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponse = await client.voice.retrieve('retell-Cimo');\n\nconsole.log(voiceResponse.provider);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-voice/$VOICE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'voice.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_response = client.voice.retrieve(\n    "retell-Cimo",\n)\nprint(voice_response.provider)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-voice/$VOICE_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2445,14 +2481,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst voiceResponses = await client.voice.list();\n\nconsole.log(voiceResponses);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/list-voices \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'voice.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nvoice_responses = client.voice.list()\nprint(voice_responses)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/list-voices \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2478,14 +2514,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.voice.search({ search_query: 'search_query' });\n\nconsole.log(response.voices);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/search-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "search_query": "search_query"\n        }\'',
+      },
       python: {
         method: 'voice.search',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.voice.search(\n    search_query="search_query",\n)\nprint(response.voices)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/search-community-voice \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "search_query": "search_query"\n        }\'',
       },
     },
   },
@@ -2507,14 +2543,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst concurrency = await client.concurrency.retrieve();\n\nconsole.log(concurrency.base_concurrency);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-concurrency \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'concurrency.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nconcurrency = client.concurrency.retrieve()\nprint(concurrency.base_concurrency)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-concurrency \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2535,14 +2571,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst identity = await client.identity.retrieve();\n\nconsole.log(identity.api_key_name);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-api-key-info \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'identity.retrieve',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nidentity = client.identity.retrieve()\nprint(identity.api_key_name)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-api-key-info \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2565,14 +2601,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst exportRequests = await client.exportRequest.list();\n\nconsole.log(exportRequests.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-export-requests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'export_request.list',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nexport_requests = client.export_request.list()\nprint(export_requests.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-export-requests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2602,14 +2638,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchCallResponse = await client.batchCall.createBatchCall({\n  from_number: '+14157774444',\n  tasks: [{ to_number: '+12137774445' }],\n});\n\nconsole.log(batchCallResponse.batch_call_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-batch-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "tasks": [\n            {\n              "to_number": "+12137774445"\n            }\n          ],\n          "name": "First batch call",\n          "trigger_timestamp": 1735718400000\n        }\'',
+      },
       python: {
         method: 'batch_call.create_batch_call',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_call_response = client.batch_call.create_batch_call(\n    from_number="+14157774444",\n    tasks=[{\n        "to_number": "+12137774445"\n    }],\n)\nprint(batch_call_response.batch_call_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-batch-call \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d \'{\n          "from_number": "+14157774444",\n          "tasks": [\n            {\n              "to_number": "+12137774445"\n            }\n          ],\n          "name": "First batch call",\n          "trigger_timestamp": 1735718400000\n        }\'',
       },
     },
   },
@@ -2640,14 +2676,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.createTestCaseDefinition({\n  metrics: ['string'],\n  name: 'name',\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  user_prompt: 'user_prompt',\n});\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-test-case-definition \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "metrics": [\n            "string"\n          ],\n          "name": "name",\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "user_prompt": "user_prompt"\n        }\'',
+      },
       python: {
         method: 'tests.create_test_case_definition',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.create_test_case_definition(\n    metrics=["string"],\n    name="name",\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    user_prompt="user_prompt",\n)\nprint(test_case_definition_response.test_case_definition_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-test-case-definition \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "metrics": [\n            "string"\n          ],\n          "name": "name",\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "user_prompt": "user_prompt"\n        }\'',
       },
     },
   },
@@ -2670,14 +2706,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.getTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.get_test_case_definition',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.get_test_case_definition(\n    "test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2706,14 +2742,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.tests.listTestCaseDefinitions({ type: 'retell-llm' });\n\nconsole.log(response.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-test-case-definitions \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.list_test_case_definitions',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.tests.list_test_case_definitions(\n    type="retell-llm",\n)\nprint(response.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-test-case-definitions \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2745,14 +2781,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseDefinitionResponse = await client.tests.updateTestCaseDefinition(\n  'test_case_definition_id',\n);\n\nconsole.log(testCaseDefinitionResponse.test_case_definition_id);",
       },
+      http: {
+        example:
+          "curl https://api.retellai.com/update-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
+      },
       python: {
         method: 'tests.update_test_case_definition',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_definition_response = client.tests.update_test_case_definition(\n    test_case_definition_id="test_case_definition_id",\n)\nprint(test_case_definition_response.test_case_definition_id)',
-      },
-      http: {
-        example:
-          "curl https://api.retellai.com/update-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -2773,14 +2809,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.tests.deleteTestCaseDefinition('test_case_definition_id');",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.delete_test_case_definition',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.tests.delete_test_case_definition(\n    "test_case_definition_id",\n)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/delete-test-case-definition/$TEST_CASE_DEFINITION_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2806,14 +2842,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchTestResponse = await client.tests.createBatchTest({\n  response_engine: { llm_id: 'llm_id', type: 'retell-llm' },\n  test_case_definition_ids: ['string'],\n});\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-batch-test \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "test_case_definition_ids": [\n            "string"\n          ]\n        }\'',
+      },
       python: {
         method: 'tests.create_batch_test',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_test_response = client.tests.create_batch_test(\n    response_engine={\n        "llm_id": "llm_id",\n        "type": "retell-llm",\n    },\n    test_case_definition_ids=["string"],\n)\nprint(batch_test_response.test_case_batch_job_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/create-batch-test \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "response_engine": {\n            "llm_id": "llm_id",\n            "type": "retell-llm"\n          },\n          "test_case_definition_ids": [\n            "string"\n          ]\n        }\'',
       },
     },
   },
@@ -2836,14 +2872,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst batchTestResponse = await client.tests.getBatchTest('test_case_batch_job_id');\n\nconsole.log(batchTestResponse.test_case_batch_job_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-batch-test/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.get_batch_test',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nbatch_test_response = client.tests.get_batch_test(\n    "test_case_batch_job_id",\n)\nprint(batch_test_response.test_case_batch_job_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-batch-test/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2873,14 +2909,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.tests.listBatchTests({ type: 'retell-llm' });\n\nconsole.log(response.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-batch-tests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.list_batch_tests',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.tests.list_batch_tests(\n    type="retell-llm",\n)\nprint(response.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-batch-tests \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2903,14 +2939,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst testCaseJobResponse = await client.tests.getTestRun('test_case_job_id');\n\nconsole.log(testCaseJobResponse.test_case_definition_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-test-run/$TEST_CASE_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.get_test_run',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ntest_case_job_response = client.tests.get_test_run(\n    "test_case_job_id",\n)\nprint(test_case_job_response.test_case_definition_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/get-test-run/$TEST_CASE_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2933,14 +2969,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.tests.listTestRuns('test_case_batch_job_id');\n\nconsole.log(response.has_more);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/v2/list-test-runs/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'tests.list_test_runs',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.tests.list_test_runs(\n    test_case_batch_job_id="test_case_batch_job_id",\n)\nprint(response.has_more)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/v2/list-test-runs/$TEST_CASE_BATCH_JOB_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
       },
     },
   },
@@ -2973,14 +3009,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.playground.completion('agent_id', {\n  messages: [\n    { content: \"Hi, I'd like to check my appointment.\", role: 'user' },\n    { content: 'Sure! Could you please provide your name?', role: 'agent' },\n    { content: 'My name is John Smith.', role: 'user' },\n  ],\n});\n\nconsole.log(response.current_node_id);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/agent-playground-completion/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d "{\n          \\"messages\\": [\n            {\n              \\"content\\": \\"Hi, I\'d like to check my appointment.\\",\n              \\"role\\": \\"user\\"\n            },\n            {\n              \\"content\\": \\"Sure! Could you please provide your name?\\",\n              \\"role\\": \\"agent\\"\n            },\n            {\n              \\"content\\": \\"My name is John Smith.\\",\n              \\"role\\": \\"user\\"\n            }\n          ],\n          \\"component_id\\": \\"component_xyz789\\",\n          \\"current_node_id\\": \\"start-node-abc123\\",\n          \\"current_state\\": \\"greeting\\",\n          \\"dynamic_variables\\": {\n            \\"customer_name\\": \\"John Smith\\",\n            \\"customer_phone\\": \\"444-223-3564\\"\n          }\n        }"',
+      },
       python: {
         method: 'playground.completion',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.playground.completion(\n    agent_id="agent_id",\n    messages=[{\n        "content": "Hi, I\'d like to check my appointment.",\n        "role": "user",\n    }, {\n        "content": "Sure! Could you please provide your name?",\n        "role": "agent",\n    }, {\n        "content": "My name is John Smith.",\n        "role": "user",\n    }],\n)\nprint(response.current_node_id)',
-      },
-      http: {
-        example:
-          'curl https://api.retellai.com/agent-playground-completion/$AGENT_ID \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    --max-time 300 \\\n    -d "{\n          \\"messages\\": [\n            {\n              \\"content\\": \\"Hi, I\'d like to check my appointment.\\",\n              \\"role\\": \\"user\\"\n            },\n            {\n              \\"content\\": \\"Sure! Could you please provide your name?\\",\n              \\"role\\": \\"agent\\"\n            },\n            {\n              \\"content\\": \\"My name is John Smith.\\",\n              \\"role\\": \\"user\\"\n            }\n          ],\n          \\"component_id\\": \\"component_xyz789\\",\n          \\"current_node_id\\": \\"start-node-abc123\\",\n          \\"current_state\\": \\"greeting\\",\n          \\"dynamic_variables\\": {\n            \\"customer_name\\": \\"John Smith\\",\n            \\"customer_phone\\": \\"444-223-3564\\"\n          }\n        }"',
       },
     },
   },
@@ -3002,14 +3038,696 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst mcpToolDefinitions = await client.mcpTool.getMcpTools('oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD', {\n  mcp_id: 'mcp-server-1',\n});\n\nconsole.log(mcpToolDefinitions);",
       },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-mcp-tools/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
       python: {
         method: 'mcp_tool.get_mcp_tools',
         example:
           'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nmcp_tool_definitions = client.mcp_tool.get_mcp_tools(\n    agent_id="oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",\n    mcp_id="mcp-server-1",\n)\nprint(mcp_tool_definitions)',
       },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/create-contact',
+    httpMethod: 'post',
+    summary: '',
+    description: 'Create a new contact.',
+    stainlessPath: '(resource) contact > (method) create',
+    qualified: 'client.contact.create',
+    params: [
+      'phone_number: string;',
+      'custom_fields?: object;',
+      'do_not_call?: boolean;',
+      'first_name?: string;',
+      'last_name?: string;',
+    ],
+    response:
+      '{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }',
+    markdown:
+      "## create\n\n`client.contact.create(phone_number: string, custom_fields?: object, do_not_call?: boolean, first_name?: string, last_name?: string): { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n**post** `/create-contact`\n\nCreate a new contact.\n\n### Parameters\n\n- `phone_number: string`\n  Phone number of the contact.\n\n- `custom_fields?: object`\n  Values must match the types defined in CRM config custom fields. Set a value to null to clear it.\n\n\n- `do_not_call?: boolean`\n\n- `first_name?: string`\n  First name of the contact.\n\n- `last_name?: string`\n  Last name of the contact.\n\n### Returns\n\n- `{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n  - `contact_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `phone_number: string`\n  - `conversation_count?: number`\n  - `custom_fields?: object`\n  - `do_not_call?: boolean`\n  - `external_id?: string`\n  - `first_name?: string`\n  - `last_conversation_timestamp?: number`\n  - `last_name?: string`\n  - `user_modified_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst contactResponse = await client.contact.create({ phone_number: 'phone_number' });\n\nconsole.log(contactResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.create',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst contactResponse = await client.contact.create({ phone_number: 'phone_number' });\n\nconsole.log(contactResponse.contact_id);",
+      },
       http: {
         example:
-          'curl https://api.retellai.com/get-mcp-tools/$AGENT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+          'curl https://api.retellai.com/create-contact \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "phone_number": "phone_number"\n        }\'',
+      },
+      python: {
+        method: 'contact.create',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncontact_response = client.contact.create(\n    phone_number="phone_number",\n)\nprint(contact_response.contact_id)',
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/get-contact/{contact_id}',
+    httpMethod: 'get',
+    summary: '',
+    description: 'Retrieve a contact by ID.',
+    stainlessPath: '(resource) contact > (method) get',
+    qualified: 'client.contact.get',
+    params: ['contact_id: string;'],
+    response:
+      '{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }',
+    markdown:
+      "## get\n\n`client.contact.get(contact_id: string): { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n**get** `/get-contact/{contact_id}`\n\nRetrieve a contact by ID.\n\n### Parameters\n\n- `contact_id: string`\n\n### Returns\n\n- `{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n  - `contact_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `phone_number: string`\n  - `conversation_count?: number`\n  - `custom_fields?: object`\n  - `do_not_call?: boolean`\n  - `external_id?: string`\n  - `first_name?: string`\n  - `last_conversation_timestamp?: number`\n  - `last_name?: string`\n  - `user_modified_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst contactResponse = await client.contact.get('contact_id');\n\nconsole.log(contactResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.get',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst contactResponse = await client.contact.get('contact_id');\n\nconsole.log(contactResponse.contact_id);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-contact/$CONTACT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.get',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncontact_response = client.contact.get(\n    "contact_id",\n)\nprint(contact_response.contact_id)',
+      },
+    },
+  },
+  {
+    name: 'get-by-phone',
+    endpoint: '/get-contact-by-phone/{phone_number}',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      'Retrieve a contact by phone number. At most one contact exists per phone number in an organization.',
+    stainlessPath: '(resource) contact > (method) get-by-phone',
+    qualified: 'client.contact.getByPhone',
+    params: ['phone_number: string;'],
+    response:
+      '{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }',
+    markdown:
+      "## get-by-phone\n\n`client.contact.getByPhone(phone_number: string): { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n**get** `/get-contact-by-phone/{phone_number}`\n\nRetrieve a contact by phone number. At most one contact exists per phone number in an organization.\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n  - `contact_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `phone_number: string`\n  - `conversation_count?: number`\n  - `custom_fields?: object`\n  - `do_not_call?: boolean`\n  - `external_id?: string`\n  - `first_name?: string`\n  - `last_conversation_timestamp?: number`\n  - `last_name?: string`\n  - `user_modified_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst contactResponse = await client.contact.getByPhone('phone_number');\n\nconsole.log(contactResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.getByPhone',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst contactResponse = await client.contact.getByPhone('phone_number');\n\nconsole.log(contactResponse.contact_id);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-contact-by-phone/$PHONE_NUMBER \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.get_by_phone',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncontact_response = client.contact.get_by_phone(\n    "phone_number",\n)\nprint(contact_response.contact_id)',
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/update-contact/{contact_id}',
+    httpMethod: 'patch',
+    summary: '',
+    description: 'Update an existing contact.',
+    stainlessPath: '(resource) contact > (method) update',
+    qualified: 'client.contact.update',
+    params: [
+      'contact_id: string;',
+      'custom_fields?: object;',
+      'do_not_call?: boolean;',
+      'first_name?: string;',
+      'last_name?: string;',
+    ],
+    response:
+      '{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }',
+    markdown:
+      "## update\n\n`client.contact.update(contact_id: string, custom_fields?: object, do_not_call?: boolean, first_name?: string, last_name?: string): { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n**patch** `/update-contact/{contact_id}`\n\nUpdate an existing contact.\n\n### Parameters\n\n- `contact_id: string`\n\n- `custom_fields?: object`\n  Values must match the types defined in CRM config custom fields. Set a value to null to clear it.\n\n\n- `do_not_call?: boolean`\n\n- `first_name?: string`\n  First name of the contact.\n\n- `last_name?: string`\n  Last name of the contact.\n\n### Returns\n\n- `{ contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }`\n\n  - `contact_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `phone_number: string`\n  - `conversation_count?: number`\n  - `custom_fields?: object`\n  - `do_not_call?: boolean`\n  - `external_id?: string`\n  - `first_name?: string`\n  - `last_conversation_timestamp?: number`\n  - `last_name?: string`\n  - `user_modified_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst contactResponse = await client.contact.update('contact_id');\n\nconsole.log(contactResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.update',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst contactResponse = await client.contact.update('contact_id');\n\nconsole.log(contactResponse.contact_id);",
+      },
+      http: {
+        example:
+          "curl https://api.retellai.com/update-contact/$CONTACT_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
+      },
+      python: {
+        method: 'contact.update',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncontact_response = client.contact.update(\n    contact_id="contact_id",\n)\nprint(contact_response.contact_id)',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/delete-contact/{contact_id}',
+    httpMethod: 'delete',
+    summary: '',
+    description:
+      'Delete a contact. A contact linked to a record in a connected CRM cannot be deleted while two-way sync is active — unlink the CRM app first, otherwise the next sync would recreate it.',
+    stainlessPath: '(resource) contact > (method) delete',
+    qualified: 'client.contact.delete',
+    params: ['contact_id: string;'],
+    markdown:
+      "## delete\n\n`client.contact.delete(contact_id: string): void`\n\n**delete** `/delete-contact/{contact_id}`\n\nDelete a contact. A contact linked to a record in a connected CRM cannot be deleted while two-way sync is active — unlink the CRM app first, otherwise the next sync would recreate it.\n\n### Parameters\n\n- `contact_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.contact.delete('contact_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.delete',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.contact.delete('contact_id');",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-contact/$CONTACT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.delete',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.contact.delete(\n    "contact_id",\n)',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/list-contacts',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      'List contacts, newest conversation first by default, with the total count of matches alongside the page. Page through results with `pagination_key`; `skip` is available for offset-style paging but is slower on large contact sets and can repeat or miss rows as contacts are updated.',
+    stainlessPath: '(resource) contact > (method) list',
+    qualified: 'client.contact.list',
+    params: [
+      "filter_criteria?: { contact_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; custom_fields?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; do_not_call?: { op: 'eq'; type: 'boolean'; value: boolean; }; external_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'pr' | 'np'; type: 'present'; }; last_conversation_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; phone_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; };",
+      'limit?: number;',
+      'pagination_key?: string;',
+      'search_query?: string;',
+      'skip?: number;',
+      "sort_order?: 'asc' | 'desc';",
+    ],
+    response:
+      '{ has_more?: boolean; items?: { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }[]; pagination_key?: string; total?: number; }',
+    markdown:
+      "## list\n\n`client.contact.list(filter_criteria?: { contact_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; custom_fields?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; do_not_call?: { op: 'eq'; type: 'boolean'; value: boolean; }; external_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'pr' | 'np'; type: 'present'; }; last_conversation_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; phone_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; }, limit?: number, pagination_key?: string, search_query?: string, skip?: number, sort_order?: 'asc' | 'desc'): { has_more?: boolean; items?: contact_response[]; pagination_key?: string; total?: number; }`\n\n**post** `/list-contacts`\n\nList contacts, newest conversation first by default, with the total count of matches alongside the page. Page through results with `pagination_key`; `skip` is available for offset-style paging but is slower on large contact sets and can repeat or miss rows as contacts are updated.\n\n### Parameters\n\n- `filter_criteria?: { contact_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; custom_fields?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]; do_not_call?: { op: 'eq'; type: 'boolean'; value: boolean; }; external_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'pr' | 'np'; type: 'present'; }; last_conversation_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; phone_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }; }`\n  Filter criteria for contacts. All conditions are implicitly connected with AND. first_name and last_name are not filterable here; use search_query to match on those.\n  - `contact_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n  - `custom_fields?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; key?: string; } | { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; key?: string; } | { op: 'eq'; type: 'boolean'; value: boolean; key?: string; } | { op: 'bt'; type: 'range'; value: number[]; key?: string; } | { op: 'in'; type: 'enum'; value: string[]; key?: string; } | { op: 'pr' | 'np'; type: 'present'; key?: string; }[]`\n    Filter by custom contact fields defined in CRM config.\n  - `do_not_call?: { op: 'eq'; type: 'boolean'; value: boolean; }`\n    Filter by whether the contact is marked do-not-call.\n  - `external_id?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; } | { op: 'pr' | 'np'; type: 'present'; }`\n    Filter by the record id in the connected CRM. Use a `present` filter to separate synced from unsynced contacts.\n  - `last_conversation_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter by when the contact was last spoken to, in epoch milliseconds.\n  - `phone_number?: { op: 'eq' | 'ne' | 'sw' | 'ew' | 'co'; type: 'string'; value: string; }`\n    Filter by phone number. Stored in E.164, so an `eq` filter needs the full number.\n\n- `limit?: number`\n  Maximum number of contacts to return.\n\n- `pagination_key?: string`\n  Base64url-encoded pagination key from a previous response.\n\n- `search_query?: string`\n  Case-insensitive substring match against phone number, first name, last name, external ID, and custom field values. This is the only way to match on a contact's name.\n\n\n- `skip?: number`\n  Number of records to skip for offset-based pagination.\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort contacts by `last_conversation_timestamp` in ascending or descending order. Contacts that have never been contacted sort as if their timestamp were 0.\n\n\n### Returns\n\n- `{ has_more?: boolean; items?: { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }[]; pagination_key?: string; total?: number; }`\n\n  - `has_more?: boolean`\n  - `items?: { contact_id: string; created_timestamp: number; org_id: string; phone_number: string; conversation_count?: number; custom_fields?: object; do_not_call?: boolean; external_id?: string; first_name?: string; last_conversation_timestamp?: number; last_name?: string; user_modified_timestamp?: number; }[]`\n  - `pagination_key?: string`\n  - `total?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst contacts = await client.contact.list();\n\nconsole.log(contacts);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.list',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst contacts = await client.contact.list();\n\nconsole.log(contacts.has_more);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/list-contacts \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.list',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncontacts = client.contact.list()\nprint(contacts.has_more)',
+      },
+    },
+  },
+  {
+    name: 'list-conversations',
+    endpoint: '/list-contact-conversations/{contact_id}',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      "List a contact's conversations (inbound calls, outbound calls, and chats) merged into a single timeline, most recent first. Results are matched by the contact's phone number. Use the returned `pagination_key` to fetch the next page.\n",
+    stainlessPath: '(resource) contact > (method) list-conversations',
+    qualified: 'client.contact.listConversations',
+    params: ['contact_id: string;', 'limit?: number;', 'pagination_key?: string;'],
+    response:
+      "{ has_more?: boolean; items?: { call_id: string; type: 'call'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; } | { chat_id: string; type: 'chat'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; }[]; pagination_key?: string; }",
+    markdown:
+      "## list-conversations\n\n`client.contact.listConversations(contact_id: string, limit?: number, pagination_key?: string): { has_more?: boolean; items?: object | object[]; pagination_key?: string; }`\n\n**get** `/list-contact-conversations/{contact_id}`\n\nList a contact's conversations (inbound calls, outbound calls, and chats) merged into a single timeline, most recent first. Results are matched by the contact's phone number. Use the returned `pagination_key` to fetch the next page.\n\n\n### Parameters\n\n- `contact_id: string`\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { call_id: string; type: 'call'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; } | { chat_id: string; type: 'chat'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { call_id: string; type: 'call'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; } | { chat_id: string; type: 'chat'; direction?: 'inbound' | 'outbound'; disconnection_reason?: string; duration_ms?: number; sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown'; start_timestamp?: number; successful?: boolean; summary?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.contact.listConversations('contact_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.listConversations',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.contact.listConversations('contact_id');\n\nconsole.log(response.has_more);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/list-contact-conversations/$CONTACT_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.list_conversations',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.contact.list_conversations(\n    contact_id="contact_id",\n)\nprint(response.has_more)',
+      },
+    },
+  },
+  {
+    name: 'backfill-analysis-data',
+    endpoint: '/backfill-contact-analysis-data',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      'Trigger a backfill job that re-applies analysis data mappings to contacts using historical call data. Only one backfill job can run per organization at a time.',
+    stainlessPath: '(resource) contact > (method) backfill-analysis-data',
+    qualified: 'client.contact.backfillAnalysisData',
+    params: [
+      'backfill_attributes: string[];',
+      "backfill_call_filter?: { agent?: { agent_id: string; version?: number[]; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; };",
+    ],
+    response:
+      "{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }",
+    markdown:
+      "## backfill-analysis-data\n\n`client.contact.backfillAnalysisData(backfill_attributes: string[], backfill_call_filter?: { agent?: { agent_id: string; version?: number[]; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; }): { status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n**post** `/backfill-contact-analysis-data`\n\nTrigger a backfill job that re-applies analysis data mappings to contacts using historical call data. Only one backfill job can run per organization at a time.\n\n### Parameters\n\n- `backfill_attributes: string[]`\n  Contact fields to recompute. Each one must still exist as a contact field and have an analysis data mapping configured, otherwise the request is rejected rather than running a job that writes nothing.\n\n- `backfill_call_filter?: { agent?: { agent_id: string; version?: number[]; }[]; start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }; }`\n  Optional call filter to scope which calls are processed. Supports agent and start_timestamp from the standard call filter.\n  - `agent?: { agent_id: string; version?: number[]; }[]`\n    Filter calls by agent. Agents are OR-connected.\n  - `start_timestamp?: { op: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le'; type: 'number'; value: number; } | { op: 'bt'; type: 'range'; value: number[]; }`\n    Filter calls by start timestamp (epoch ms).\n\n### Returns\n\n- `{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n  - `status: 'queued' | 'running' | 'idle'`\n  - `failed?: number`\n  - `start_timestamp?: number`\n  - `succeeded?: number`\n  - `triggered_by?: 'manual' | 'cron'`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.contact.backfillAnalysisData({ backfill_attributes: ['string'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.backfillAnalysisData',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.contact.backfillAnalysisData({ backfill_attributes: ['string'] });\n\nconsole.log(response.status);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/backfill-contact-analysis-data \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "backfill_attributes": [\n            "string"\n          ]\n        }\'',
+      },
+      python: {
+        method: 'contact.backfill_analysis_data',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.contact.backfill_analysis_data(\n    backfill_attributes=["string"],\n)\nprint(response.status)',
+      },
+    },
+  },
+  {
+    name: 'get-backfill-job-status',
+    endpoint: '/get-backfill-contact-job-status',
+    httpMethod: 'get',
+    summary: '',
+    description: 'Get the status of the contact analysis data backfill job.',
+    stainlessPath: '(resource) contact > (method) get-backfill-job-status',
+    qualified: 'client.contact.getBackfillJobStatus',
+    response:
+      "{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }",
+    markdown:
+      "## get-backfill-job-status\n\n`client.contact.getBackfillJobStatus(): { status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n**get** `/get-backfill-contact-job-status`\n\nGet the status of the contact analysis data backfill job.\n\n### Returns\n\n- `{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n  - `status: 'queued' | 'running' | 'idle'`\n  - `failed?: number`\n  - `start_timestamp?: number`\n  - `succeeded?: number`\n  - `triggered_by?: 'manual' | 'cron'`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.contact.getBackfillJobStatus();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contact.getBackfillJobStatus',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.contact.getBackfillJobStatus();\n\nconsole.log(response.status);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-backfill-contact-job-status \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'contact.get_backfill_job_status',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.contact.get_backfill_job_status()\nprint(response.status)',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/create-app',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      'Create an App: the connection to one external system (a CRM, calendar, support desk, and so on), holding its credentials and settings. Providers that authenticate with a key, token, or refresh token can be connected in this one call by passing auth_config; the credential is stored encrypted and never returned. Up to 20 apps per provider.',
+    stainlessPath: '(resource) app > (method) create',
+    qualified: 'client.app.create',
+    params: [
+      'provider: string;',
+      "type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication';",
+      "auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; };",
+      'crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; };',
+      'name?: string;',
+      'tenant_id?: string;',
+      'tenant_url?: string;',
+    ],
+    response:
+      "{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }",
+    markdown:
+      "## create\n\n`client.app.create(provider: string, type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication', auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; }, crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }, name?: string, tenant_id?: string, tenant_url?: string): { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: object | object | object | object | object; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: object; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n**post** `/create-app`\n\nCreate an App: the connection to one external system (a CRM, calendar, support desk, and so on), holding its credentials and settings. Providers that authenticate with a key, token, or refresh token can be connected in this one call by passing auth_config; the credential is stored encrypted and never returned. Up to 20 apps per provider.\n\n### Parameters\n\n- `provider: string`\n  Provider name. Must be valid for the App's type; the supported providers per type are listed by list-app-templates.\n\n- `type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'`\n  App integration category.\n\n- `auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; }`\n\n- `crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }`\n  - `inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]`\n    Field mappings applied when syncing CRM records into Retell contacts. Must include phone_number, which is the field the two systems are matched on.\n  - `outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]`\n    Field mappings applied when writing Retell contact changes back to the CRM.\n  - `sync_conversation_activity?: boolean`\n    Whether to push call/chat activity to the external CRM. Opt-in — defaults to false when unset.\n  - `sync_new_contacts?: boolean`\n    Whether to create a CRM record after a conversation when the contact is not yet linked to one.\n\n- `name?: string`\n  Display name.\n\n- `tenant_id?: string`\n  Sub-account id, for providers that scope requests by a sub-account id on a shared host.\n\n- `tenant_url?: string`\n  Per-tenant API base URL.\n\n### Returns\n\n- `{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n  - `app_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `provider: string`\n  - `type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'`\n  - `user_modified_timestamp: number`\n  - `auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }`\n  - `connection_status?: 'not_connected' | 'connected' | 'error'`\n  - `crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }`\n  - `name?: string`\n  - `tenant_id?: string`\n  - `tenant_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst appResponse = await client.app.create({ provider: 'provider', type: 'crm' });\n\nconsole.log(appResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.create',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst appResponse = await client.app.create({ provider: 'provider', type: 'crm' });\n\nconsole.log(appResponse.app_id);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/create-app \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $RETELL_API_KEY" \\\n    -d \'{\n          "provider": "provider",\n          "type": "crm"\n        }\'',
+      },
+      python: {
+        method: 'app.create',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\napp_response = client.app.create(\n    provider="provider",\n    type="crm",\n)\nprint(app_response.app_id)',
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/get-app/{app_id}',
+    httpMethod: 'get',
+    summary: '',
+    description: 'Get an App by id.',
+    stainlessPath: '(resource) app > (method) get',
+    qualified: 'client.app.get',
+    params: ['app_id: string;'],
+    response:
+      "{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }",
+    markdown:
+      "## get\n\n`client.app.get(app_id: string): { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: object | object | object | object | object; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: object; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n**get** `/get-app/{app_id}`\n\nGet an App by id.\n\n### Parameters\n\n- `app_id: string`\n\n### Returns\n\n- `{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n  - `app_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `provider: string`\n  - `type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'`\n  - `user_modified_timestamp: number`\n  - `auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }`\n  - `connection_status?: 'not_connected' | 'connected' | 'error'`\n  - `crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }`\n  - `name?: string`\n  - `tenant_id?: string`\n  - `tenant_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst appResponse = await client.app.get('app_id');\n\nconsole.log(appResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.get',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst appResponse = await client.app.get('app_id');\n\nconsole.log(appResponse.app_id);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-app/$APP_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'app.get',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\napp_response = client.app.get(\n    "app_id",\n)\nprint(app_response.app_id)',
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/update-app/{app_id}',
+    httpMethod: 'patch',
+    summary: '',
+    description:
+      'Partially update an App. Omitted fields remain unchanged. Updating auth_config invalidates the cached provider token immediately.',
+    stainlessPath: '(resource) app > (method) update',
+    qualified: 'client.app.update',
+    params: [
+      'app_id: string;',
+      "auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; };",
+      'crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; };',
+      'name?: string;',
+      'tenant_id?: string;',
+      'tenant_url?: string;',
+    ],
+    response:
+      "{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }",
+    markdown:
+      "## update\n\n`client.app.update(app_id: string, auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; }, crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }, name?: string, tenant_id?: string, tenant_url?: string): { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: object | object | object | object | object; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: object; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n**patch** `/update-app/{app_id}`\n\nPartially update an App. Omitted fields remain unchanged. Updating auth_config invalidates the cached provider token immediately.\n\n### Parameters\n\n- `app_id: string`\n\n- `auth_config?: { client_id: string; client_secret: string; type: 'oauth2'; } | { api_key: string; type: 'api_key'; } | { access_token: string; type: 'access_token'; } | { password: string; type: 'basic'; username: string; } | { refresh_token: string; type: 'refresh_token'; }`\n\n- `crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }`\n  - `inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]`\n    Field mappings applied when syncing CRM records into Retell contacts. Must include phone_number, which is the field the two systems are matched on.\n  - `outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]`\n    Field mappings applied when writing Retell contact changes back to the CRM.\n  - `sync_conversation_activity?: boolean`\n    Whether to push call/chat activity to the external CRM. Opt-in — defaults to false when unset.\n  - `sync_new_contacts?: boolean`\n    Whether to create a CRM record after a conversation when the contact is not yet linked to one.\n\n- `name?: string`\n\n- `tenant_id?: string`\n  Sub-account id, for providers that scope requests by a sub-account id on a shared host.\n\n- `tenant_url?: string`\n  Per-tenant API base URL.\n\n### Returns\n\n- `{ app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }`\n\n  - `app_id: string`\n  - `created_timestamp: number`\n  - `org_id: string`\n  - `provider: string`\n  - `type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'`\n  - `user_modified_timestamp: number`\n  - `auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }`\n  - `connection_status?: 'not_connected' | 'connected' | 'error'`\n  - `crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }`\n  - `name?: string`\n  - `tenant_id?: string`\n  - `tenant_url?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst appResponse = await client.app.update('app_id');\n\nconsole.log(appResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.update',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst appResponse = await client.app.update('app_id');\n\nconsole.log(appResponse.app_id);",
+      },
+      http: {
+        example:
+          "curl https://api.retellai.com/update-app/$APP_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
+      },
+      python: {
+        method: 'app.update',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\napp_response = client.app.update(\n    app_id="app_id",\n)\nprint(app_response.app_id)',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/delete-app/{app_id}',
+    httpMethod: 'delete',
+    summary: '',
+    description:
+      'Delete an App. Fails when agents or knowledge bases still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.',
+    stainlessPath: '(resource) app > (method) delete',
+    qualified: 'client.app.delete',
+    params: ['app_id: string;', 'force_delete?: boolean;'],
+    markdown:
+      "## delete\n\n`client.app.delete(app_id: string, force_delete?: boolean): void`\n\n**delete** `/delete-app/{app_id}`\n\nDelete an App. Fails when agents or knowledge bases still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.\n\n### Parameters\n\n- `app_id: string`\n\n- `force_delete?: boolean`\n  Delete even when the App is still referenced.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.app.delete('app_id')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.delete',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.app.delete('app_id');",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/delete-app/$APP_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'app.delete',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.app.delete(\n    app_id="app_id",\n)',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/list-apps',
+    httpMethod: 'get',
+    summary: '',
+    description: 'List Apps in the organization (paginated).',
+    stainlessPath: '(resource) app > (method) list',
+    qualified: 'client.app.list',
+    params: ['limit?: number;', 'pagination_key?: string;', "sort_order?: 'ascending' | 'descending';"],
+    response:
+      "{ has_more?: boolean; items?: { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: object | object | object | object | object; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: object; name?: string; tenant_id?: string; tenant_url?: string; }[]; pagination_key?: string; }",
+    markdown:
+      "## list\n\n`client.app.list(limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: app_response[]; pagination_key?: string; }`\n\n**get** `/list-apps`\n\nList Apps in the organization (paginated).\n\n### Parameters\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: object | object | object | object | object; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: object; name?: string; tenant_id?: string; tenant_url?: string; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { app_id: string; created_timestamp: number; org_id: string; provider: string; type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication'; user_modified_timestamp: number; auth_config?: { client_id: string; type: 'oauth2'; } | { type: 'api_key'; } | { type: 'access_token'; } | { type: 'basic'; username: string; } | { type: 'refresh_token'; }; connection_status?: 'not_connected' | 'connected' | 'error'; crm_config?: { inbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; outbound_sync_mappings?: { external_field_name: string; field_name: string; }[]; sync_conversation_activity?: boolean; sync_new_contacts?: boolean; }; name?: string; tenant_id?: string; tenant_url?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst apps = await client.app.list();\n\nconsole.log(apps);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.list',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst apps = await client.app.list();\n\nconsole.log(apps.has_more);",
+      },
+      http: {
+        example: 'curl https://api.retellai.com/list-apps \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'app.list',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\napps = client.app.list()\nprint(apps.has_more)',
+      },
+    },
+  },
+  {
+    name: 'list-usages',
+    endpoint: '/list-app-usages/{app_id}',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      'List the agents and knowledge bases referencing an App, most recently configured first by default.',
+    stainlessPath: '(resource) app > (method) list-usages',
+    qualified: 'client.app.listUsages',
+    params: [
+      'app_id: string;',
+      'limit?: number;',
+      'pagination_key?: string;',
+      "sort_order?: 'ascending' | 'descending';",
+    ],
+    response:
+      "{ has_more?: boolean; items?: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]; pagination_key?: string; }",
+    markdown:
+      "## list-usages\n\n`client.app.listUsages(app_id: string, limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more?: boolean; items?: object | object[]; pagination_key?: string; }`\n\n**get** `/list-app-usages/{app_id}`\n\nList the agents and knowledge bases referencing an App, most recently configured first by default.\n\n### Parameters\n\n- `app_id: string`\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more?: boolean; items?: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]; pagination_key?: string; }`\n\n  - `has_more?: boolean`\n  - `items?: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.app.listUsages('app_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.listUsages',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.app.listUsages('app_id');\n\nconsole.log(response.has_more);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/list-app-usages/$APP_ID \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'app.list_usages',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.app.list_usages(\n    app_id="app_id",\n)\nprint(response.has_more)',
+      },
+    },
+  },
+  {
+    name: 'test-auth',
+    endpoint: '/test-app-auth/{app_id}',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      "Probe the App's stored credentials by making a minimal authenticated call to the provider. Returns success=true on a successful round-trip, and records the outcome on the App's connection_status either way.",
+    stainlessPath: '(resource) app > (method) test-auth',
+    qualified: 'client.app.testAuth',
+    params: ['app_id: string;'],
+    response: '{ success: boolean; }',
+    markdown:
+      "## test-auth\n\n`client.app.testAuth(app_id: string): { success: boolean; }`\n\n**post** `/test-app-auth/{app_id}`\n\nProbe the App's stored credentials by making a minimal authenticated call to the provider. Returns success=true on a successful round-trip, and records the outcome on the App's connection_status either way.\n\n### Parameters\n\n- `app_id: string`\n\n### Returns\n\n- `{ success: boolean; }`\n\n  - `success: boolean`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.app.testAuth('app_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.app.testAuth',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.app.testAuth('app_id');\n\nconsole.log(response.success);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/test-app-auth/$APP_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'app.test_auth',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.app.test_auth(\n    "app_id",\n)\nprint(response.success)',
+      },
+    },
+  },
+  {
+    name: 'get-config',
+    endpoint: '/get-crm-config',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      "Get the organization's CRM configuration: which CRM app is linked, the custom contact fields defined for it, and how post-call analysis data is written back to contacts. Returns an empty configuration when nothing has been set up yet.",
+    stainlessPath: '(resource) crm > (method) get-config',
+    qualified: 'client.crm.getConfig',
+    response:
+      "{ org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]; custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; last_sync_timestamp?: number; }",
+    markdown:
+      "## get-config\n\n`client.crm.getConfig(): { org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: object[]; custom_fields?: object[]; last_sync_timestamp?: number; }`\n\n**get** `/get-crm-config`\n\nGet the organization's CRM configuration: which CRM app is linked, the custom contact fields defined for it, and how post-call analysis data is written back to contacts. Returns an empty configuration when nothing has been set up yet.\n\n### Returns\n\n- `{ org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]; custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; last_sync_timestamp?: number; }`\n\n  - `org_id: string`\n  - `app_id?: string`\n  - `contact_columns_order?: string[]`\n  - `crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]`\n  - `custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]`\n  - `last_sync_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst crmConfig = await client.crm.getConfig();\n\nconsole.log(crmConfig);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.crm.getConfig',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst crmConfig = await client.crm.getConfig();\n\nconsole.log(crmConfig.org_id);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-crm-config \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'crm.get_config',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncrm_config = client.crm.get_config()\nprint(crm_config.org_id)',
+      },
+    },
+  },
+  {
+    name: 'update-config',
+    endpoint: '/update-crm-config',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      "Update the organization's CRM configuration. Omitted fields stay as they are; a field that is sent replaces its stored value in full.",
+    stainlessPath: '(resource) crm > (method) update-config',
+    qualified: 'client.crm.updateConfig',
+    params: [
+      'app_id?: string;',
+      'contact_columns_order?: string[];',
+      "crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[];",
+      "custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[];",
+    ],
+    response:
+      "{ org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]; custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; last_sync_timestamp?: number; }",
+    markdown:
+      "## update-config\n\n`client.crm.updateConfig(app_id?: string, contact_columns_order?: string[], crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[], custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]): { org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: object[]; custom_fields?: object[]; last_sync_timestamp?: number; }`\n\n**post** `/update-crm-config`\n\nUpdate the organization's CRM configuration. Omitted fields stay as they are; a field that is sent replaces its stored value in full.\n\n### Parameters\n\n- `app_id?: string`\n  ID of the CRM app to link. Pass null to unlink, which stops syncing. Changing it resets the sync cursor, so the next sync re-reads every contact from the new CRM.\n\n- `contact_columns_order?: string[]`\n  Preferred display order of contact fields, for clients that render contacts as a table. Not used by the API itself.\n\n- `crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]`\n  Replaces the stored list.\n\n- `custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]`\n  Replaces the stored list. Names must be snake_case and cannot collide with a built-in contact field or start with `contact`/`external`. Removing a field that an analysis data mapping still targets is rejected — send crm_analysis_data_mappings in the same request to retarget or drop those mappings.\n\n### Returns\n\n- `{ org_id: string; app_id?: string; contact_columns_order?: string[]; crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]; custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; last_sync_timestamp?: number; }`\n\n  - `org_id: string`\n  - `app_id?: string`\n  - `contact_columns_order?: string[]`\n  - `crm_analysis_data_mappings?: { analysis_data_name: string; field_name: string; update_mode: 'overwrite' | 'fill_if_empty' | 'merge'; }[]`\n  - `custom_fields?: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]`\n  - `last_sync_timestamp?: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst crmConfig = await client.crm.updateConfig();\n\nconsole.log(crmConfig);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.crm.updateConfig',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst crmConfig = await client.crm.updateConfig();\n\nconsole.log(crmConfig.org_id);",
+      },
+      http: {
+        example:
+          "curl https://api.retellai.com/update-crm-config \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $RETELL_API_KEY\" \\\n    -d '{}'",
+      },
+      python: {
+        method: 'crm.update_config',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\ncrm_config = client.crm.update_config()\nprint(crm_config.org_id)',
+      },
+    },
+  },
+  {
+    name: 'run-sync-job',
+    endpoint: '/run-sync-job',
+    httpMethod: 'post',
+    summary: '',
+    description:
+      'Start a contact sync with the linked CRM app immediately, instead of waiting for the scheduled sync. One sync runs per organization at a time: starting another while one is in flight is rejected. Poll get-sync-job-status for progress.',
+    stainlessPath: '(resource) crm > (method) run-sync-job',
+    qualified: 'client.crm.runSyncJob',
+    response:
+      "{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }",
+    markdown:
+      "## run-sync-job\n\n`client.crm.runSyncJob(): { status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n**post** `/run-sync-job`\n\nStart a contact sync with the linked CRM app immediately, instead of waiting for the scheduled sync. One sync runs per organization at a time: starting another while one is in flight is rejected. Poll get-sync-job-status for progress.\n\n### Returns\n\n- `{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n  - `status: 'queued' | 'running' | 'idle'`\n  - `failed?: number`\n  - `start_timestamp?: number`\n  - `succeeded?: number`\n  - `triggered_by?: 'manual' | 'cron'`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.crm.runSyncJob();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.crm.runSyncJob',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.crm.runSyncJob();\n\nconsole.log(response.status);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/run-sync-job \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'crm.run_sync_job',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.crm.run_sync_job()\nprint(response.status)',
+      },
+    },
+  },
+  {
+    name: 'get-sync-job-status',
+    endpoint: '/get-sync-job-status',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      "Get the status of the organization's contact sync, whether it was started manually or by the schedule. Returns status `idle` when no sync is running.",
+    stainlessPath: '(resource) crm > (method) get-sync-job-status',
+    qualified: 'client.crm.getSyncJobStatus',
+    response:
+      "{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }",
+    markdown:
+      "## get-sync-job-status\n\n`client.crm.getSyncJobStatus(): { status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n**get** `/get-sync-job-status`\n\nGet the status of the organization's contact sync, whether it was started manually or by the schedule. Returns status `idle` when no sync is running.\n\n### Returns\n\n- `{ status: 'queued' | 'running' | 'idle'; failed?: number; start_timestamp?: number; succeeded?: number; triggered_by?: 'manual' | 'cron'; }`\n\n  - `status: 'queued' | 'running' | 'idle'`\n  - `failed?: number`\n  - `start_timestamp?: number`\n  - `succeeded?: number`\n  - `triggered_by?: 'manual' | 'cron'`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.crm.getSyncJobStatus();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.crm.getSyncJobStatus',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.crm.getSyncJobStatus();\n\nconsole.log(response.status);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-sync-job-status \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'crm.get_sync_job_status',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.crm.get_sync_job_status()\nprint(response.status)',
+      },
+    },
+  },
+  {
+    name: 'get-schema',
+    endpoint: '/get-crm-schema',
+    httpMethod: 'get',
+    summary: '',
+    description:
+      'Get the contact schema of the connected CRM: the fields available on its contact object, which are the values that sync mappings can reference.',
+    stainlessPath: '(resource) crm > (method) get-schema',
+    qualified: 'client.crm.getSchema',
+    params: ['app_id?: string;'],
+    response:
+      "{ fields: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; provider: string; }",
+    markdown:
+      "## get-schema\n\n`client.crm.getSchema(app_id?: string): { fields: object[]; provider: string; }`\n\n**get** `/get-crm-schema`\n\nGet the contact schema of the connected CRM: the fields available on its contact object, which are the values that sync mappings can reference.\n\n### Parameters\n\n- `app_id?: string`\n  ID of the CRM app to read the schema from. Defaults to the app linked in the organization's CRM configuration. Naming a different app additionally requires the App.Read scope.\n\n### Returns\n\n- `{ fields: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]; provider: string; }`\n\n  - `fields: { name: string; type: 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'enum'; description?: string; label?: string; options?: string[]; }[]`\n  - `provider: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.crm.getSchema();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.crm.getSchema',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.crm.getSchema();\n\nconsole.log(response.provider);",
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/get-crm-schema \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+      python: {
+        method: 'crm.get_schema',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.crm.get_schema()\nprint(response.provider)',
       },
     },
   },

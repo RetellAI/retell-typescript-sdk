@@ -141,7 +141,7 @@ describe('resource conversationFlowComponent', () => {
           response_variables: { user_name: 'data.user.name' },
           speak_after_execution: true,
           speak_during_execution: true,
-          timeout_ms: 0,
+          timeout_ms: 1000,
           tool_id: 'tool_001',
         },
       ],

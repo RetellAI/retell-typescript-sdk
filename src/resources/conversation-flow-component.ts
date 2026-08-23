@@ -2141,7 +2141,9 @@ export namespace ConversationFlowComponentResponse {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -6641,7 +6643,9 @@ export namespace ConversationFlowComponentResponse {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -10790,7 +10794,9 @@ export namespace ConversationFlowComponentCreateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -15290,7 +15296,9 @@ export namespace ConversationFlowComponentCreateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 
@@ -19459,7 +19467,9 @@ export namespace ConversationFlowComponentUpdateParams {
       keep_current_language?: boolean;
 
       /**
-       * If true, keep the current voice when swapping agents. Defaults to false.
+       * If true, keep the current voice and ambient sound settings when swapping agents.
+       * Otherwise, use the destination agent's voice and ambient sound settings.
+       * Defaults to false.
        */
       keep_current_voice?: boolean;
 
@@ -23959,7 +23969,9 @@ export namespace ConversationFlowComponentUpdateParams {
     keep_current_language?: boolean;
 
     /**
-     * If true, keep the current voice when swapping agents. Defaults to false.
+     * If true, keep the current voice and ambient sound settings when swapping agents.
+     * Otherwise, use the destination agent's voice and ambient sound settings.
+     * Defaults to false.
      */
     keep_current_voice?: boolean;
 

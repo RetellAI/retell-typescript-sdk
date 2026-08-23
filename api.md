@@ -65,6 +65,7 @@ Types:
 - <code><a href="./src/resources/agent.ts">AgentListResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentCreateVersionResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentGetVersionsResponse</a></code>
+- <code><a href="./src/resources/agent.ts">AgentListVersionsResponse</a></code>
 
 Methods:
 
@@ -76,6 +77,7 @@ Methods:
 - <code title="post /create-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">createVersion</a>(agentID, { ...params }) -> AgentCreateVersionResponse</code>
 - <code title="delete /delete-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">deleteVersion</a>(agentID, { ...params }) -> void</code>
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentID) -> AgentGetVersionsResponse</code>
+- <code title="get /list-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">listVersions</a>(agentID, { ...params }) -> AgentListVersionsResponse</code>
 - <code title="post /publish-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentID, { ...params }) -> void</code>
 
 # ChatAgent
@@ -112,7 +114,7 @@ Methods:
 - <code title="get /get-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">retrieve</a>(llmID, { ...params }) -> LlmResponse</code>
 - <code title="patch /update-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">update</a>(llmID, { ...params }) -> LlmResponse</code>
 - <code title="get /v2/list-retell-llms">client.llm.<a href="./src/resources/llm.ts">list</a>({ ...params }) -> LlmListResponse</code>
-- <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmID) -> void</code>
+- <code title="delete /delete-retell-llm/{llm_id}">client.llm.<a href="./src/resources/llm.ts">delete</a>(llmID, { ...params }) -> void</code>
 
 # ConversationFlow
 
@@ -127,7 +129,7 @@ Methods:
 - <code title="get /get-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">retrieve</a>(conversationFlowID, { ...params }) -> ConversationFlowResponse</code>
 - <code title="patch /update-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">update</a>(conversationFlowID, { ...params }) -> ConversationFlowResponse</code>
 - <code title="get /v2/list-conversation-flows">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">list</a>({ ...params }) -> ConversationFlowListResponse</code>
-- <code title="delete /delete-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">delete</a>(conversationFlowID) -> void</code>
+- <code title="delete /delete-conversation-flow/{conversation_flow_id}">client.conversationFlow.<a href="./src/resources/conversation-flow.ts">delete</a>(conversationFlowID, { ...params }) -> void</code>
 
 # ConversationFlowComponent
 
@@ -260,3 +262,61 @@ Types:
 Methods:
 
 - <code title="get /get-mcp-tools/{agent_id}">client.mcpTool.<a href="./src/resources/mcp-tool.ts">getMcpTools</a>(agentID, { ...params }) -> McpToolGetMcpToolsResponse</code>
+
+# Contact
+
+Types:
+
+- <code><a href="./src/resources/contact.ts">ContactResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactListResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactBackfillAnalysisDataResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactGetBackfillJobStatusResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactListConversationsResponse</a></code>
+
+Methods:
+
+- <code title="post /create-contact">client.contact.<a href="./src/resources/contact.ts">create</a>({ ...params }) -> ContactResponse</code>
+- <code title="patch /update-contact/{contact_id}">client.contact.<a href="./src/resources/contact.ts">update</a>(contactID, { ...params }) -> ContactResponse</code>
+- <code title="post /list-contacts">client.contact.<a href="./src/resources/contact.ts">list</a>({ ...params }) -> ContactListResponse</code>
+- <code title="delete /delete-contact/{contact_id}">client.contact.<a href="./src/resources/contact.ts">delete</a>(contactID) -> void</code>
+- <code title="post /backfill-contact-analysis-data">client.contact.<a href="./src/resources/contact.ts">backfillAnalysisData</a>({ ...params }) -> ContactBackfillAnalysisDataResponse</code>
+- <code title="get /get-contact/{contact_id}">client.contact.<a href="./src/resources/contact.ts">get</a>(contactID) -> ContactResponse</code>
+- <code title="get /get-backfill-contact-job-status">client.contact.<a href="./src/resources/contact.ts">getBackfillJobStatus</a>() -> ContactGetBackfillJobStatusResponse</code>
+- <code title="get /get-contact-by-phone/{phone_number}">client.contact.<a href="./src/resources/contact.ts">getByPhone</a>(phoneNumber) -> ContactResponse</code>
+- <code title="get /list-contact-conversations/{contact_id}">client.contact.<a href="./src/resources/contact.ts">listConversations</a>(contactID, { ...params }) -> ContactListConversationsResponse</code>
+
+# App
+
+Types:
+
+- <code><a href="./src/resources/app.ts">AppResponse</a></code>
+- <code><a href="./src/resources/app.ts">AppListResponse</a></code>
+- <code><a href="./src/resources/app.ts">AppListUsagesResponse</a></code>
+- <code><a href="./src/resources/app.ts">AppTestAuthResponse</a></code>
+
+Methods:
+
+- <code title="post /create-app">client.app.<a href="./src/resources/app.ts">create</a>({ ...params }) -> AppResponse</code>
+- <code title="patch /update-app/{app_id}">client.app.<a href="./src/resources/app.ts">update</a>(appID, { ...params }) -> AppResponse</code>
+- <code title="get /list-apps">client.app.<a href="./src/resources/app.ts">list</a>({ ...params }) -> AppListResponse</code>
+- <code title="delete /delete-app/{app_id}">client.app.<a href="./src/resources/app.ts">delete</a>(appID, { ...params }) -> void</code>
+- <code title="get /get-app/{app_id}">client.app.<a href="./src/resources/app.ts">get</a>(appID) -> AppResponse</code>
+- <code title="get /list-app-usages/{app_id}">client.app.<a href="./src/resources/app.ts">listUsages</a>(appID, { ...params }) -> AppListUsagesResponse</code>
+- <code title="post /test-app-auth/{app_id}">client.app.<a href="./src/resources/app.ts">testAuth</a>(appID) -> AppTestAuthResponse</code>
+
+# CRM
+
+Types:
+
+- <code><a href="./src/resources/crm.ts">CRMConfig</a></code>
+- <code><a href="./src/resources/crm.ts">CRMGetSchemaResponse</a></code>
+- <code><a href="./src/resources/crm.ts">CRMGetSyncJobStatusResponse</a></code>
+- <code><a href="./src/resources/crm.ts">CRMRunSyncJobResponse</a></code>
+
+Methods:
+
+- <code title="get /get-crm-config">client.crm.<a href="./src/resources/crm.ts">getConfig</a>() -> CRMConfig</code>
+- <code title="get /get-crm-schema">client.crm.<a href="./src/resources/crm.ts">getSchema</a>({ ...params }) -> CRMGetSchemaResponse</code>
+- <code title="get /get-sync-job-status">client.crm.<a href="./src/resources/crm.ts">getSyncJobStatus</a>() -> CRMGetSyncJobStatusResponse</code>
+- <code title="post /run-sync-job">client.crm.<a href="./src/resources/crm.ts">runSyncJob</a>() -> CRMRunSyncJobResponse</code>
+- <code title="post /update-crm-config">client.crm.<a href="./src/resources/crm.ts">updateConfig</a>({ ...params }) -> CRMConfig</code>
