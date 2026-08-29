@@ -2240,7 +2240,7 @@ export namespace ConversationFlowResponse {
         name: string;
 
         /**
-         * Post call analysis setting for the agent swap.
+         * Post Call Extraction setting for the agent swap.
          */
         post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -6746,7 +6746,7 @@ export namespace ConversationFlowResponse {
       edge: AgentSwapNode.Edge;
 
       /**
-       * Post call analysis setting for the agent swap
+       * Post Call Extraction setting for the agent swap
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -10899,7 +10899,7 @@ export namespace ConversationFlowResponse {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -15405,7 +15405,7 @@ export namespace ConversationFlowResponse {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post call analysis setting for the agent swap
+     * Post Call Extraction setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -19619,7 +19619,7 @@ export namespace ConversationFlowCreateParams {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -24125,7 +24125,7 @@ export namespace ConversationFlowCreateParams {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post call analysis setting for the agent swap
+     * Post Call Extraction setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -27937,7 +27937,7 @@ export namespace ConversationFlowCreateParams {
         name: string;
 
         /**
-         * Post call analysis setting for the agent swap.
+         * Post Call Extraction setting for the agent swap.
          */
         post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -32443,7 +32443,7 @@ export namespace ConversationFlowCreateParams {
       edge: AgentSwapNode.Edge;
 
       /**
-       * Post call analysis setting for the agent swap
+       * Post Call Extraction setting for the agent swap
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -37053,7 +37053,7 @@ export namespace ConversationFlowUpdateParams {
         name: string;
 
         /**
-         * Post call analysis setting for the agent swap.
+         * Post Call Extraction setting for the agent swap.
          */
         post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -41559,7 +41559,7 @@ export namespace ConversationFlowUpdateParams {
       edge: AgentSwapNode.Edge;
 
       /**
-       * Post call analysis setting for the agent swap
+       * Post Call Extraction setting for the agent swap
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -45712,7 +45712,7 @@ export namespace ConversationFlowUpdateParams {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -50218,7 +50218,7 @@ export namespace ConversationFlowUpdateParams {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post call analysis setting for the agent swap
+     * Post Call Extraction setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 

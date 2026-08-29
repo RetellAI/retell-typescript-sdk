@@ -7,7 +7,7 @@ import { RequestOptions } from '../internal/request-options';
 export class CRM extends APIResource {
   /**
    * Get the organization's CRM configuration: which CRM app is linked, the custom
-   * contact fields defined for it, and how post-call analysis data is written back
+   * contact fields defined for it, and how Post Call Extraction data is written back
    * to contacts. Returns an empty configuration when nothing has been set up yet.
    */
   getConfig(options?: RequestOptions): APIPromise<CRMConfig> {
@@ -78,7 +78,7 @@ export interface CRMConfig {
 export namespace CRMConfig {
   export interface CRMAnalysisDataMapping {
     /**
-     * Name of the post-call analysis field to read the value from. A value that does
+     * Name of the Post Call Extraction field to read the value from. A value that does
      * not match the contact field's type is skipped rather than failing the
      * conversation.
      */
@@ -240,7 +240,7 @@ export interface CRMUpdateConfigParams {
 export namespace CRMUpdateConfigParams {
   export interface CRMAnalysisDataMapping {
     /**
-     * Name of the post-call analysis field to read the value from. A value that does
+     * Name of the Post Call Extraction field to read the value from. A value that does
      * not match the contact field's type is skipped rather than failing the
      * conversation.
      */

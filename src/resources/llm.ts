@@ -761,7 +761,7 @@ export namespace LlmResponse {
     name: string;
 
     /**
-     * Post call analysis setting for the agent swap.
+     * Post Call Extraction setting for the agent swap.
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -2073,7 +2073,7 @@ export namespace LlmResponse {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -3419,7 +3419,7 @@ export namespace LlmCreateParams {
     name: string;
 
     /**
-     * Post call analysis setting for the agent swap.
+     * Post Call Extraction setting for the agent swap.
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -4731,7 +4731,7 @@ export namespace LlmCreateParams {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -6079,7 +6079,7 @@ export namespace LlmUpdateParams {
     name: string;
 
     /**
-     * Post call analysis setting for the agent swap.
+     * Post Call Extraction setting for the agent swap.
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -7391,7 +7391,7 @@ export namespace LlmUpdateParams {
       name: string;
 
       /**
-       * Post call analysis setting for the agent swap.
+       * Post Call Extraction setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 

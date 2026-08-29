@@ -262,7 +262,7 @@ export namespace ContactListConversationsResponse {
     duration_ms?: number;
 
     /**
-     * User sentiment from post-call analysis.
+     * User sentiment from Post Call Extraction.
      */
     sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
 
@@ -272,12 +272,12 @@ export namespace ContactListConversationsResponse {
     start_timestamp?: number;
 
     /**
-     * Whether the call was deemed successful by post-call analysis.
+     * Whether the call was deemed successful by Post Call Extraction.
      */
     successful?: boolean;
 
     /**
-     * Post-call analysis summary.
+     * Post Call Extraction summary.
      */
     summary?: string;
   }
@@ -303,7 +303,7 @@ export namespace ContactListConversationsResponse {
     duration_ms?: number;
 
     /**
-     * User sentiment from post-chat analysis.
+     * User sentiment from Post Chat Extraction.
      */
     sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
 
@@ -313,12 +313,12 @@ export namespace ContactListConversationsResponse {
     start_timestamp?: number;
 
     /**
-     * Whether the chat was deemed successful by post-chat analysis.
+     * Whether the chat was deemed successful by Post Chat Extraction.
      */
     successful?: boolean;
 
     /**
-     * Post-chat analysis summary.
+     * Post Chat Extraction summary.
      */
     summary?: string;
   }

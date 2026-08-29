@@ -148,7 +148,7 @@ export class Chat extends APIResource {
   }
 
   /**
-   * Rerun post-chat analysis for a specific chat. This operation incurs charges.
+   * Rerun Post Chat Extraction for a specific chat. This operation incurs charges.
    *
    * @example
    * ```ts
@@ -184,9 +184,9 @@ export interface ChatResponse {
   chat_status: 'ongoing' | 'ended' | 'error';
 
   /**
-   * Post chat analysis that includes information such as sentiment, status, summary,
-   * and custom defined data to extract. Available after chat ends. Subscribe to
-   * `chat_analyzed` webhook event type to receive it once ready.
+   * Post Chat Extraction that includes information such as sentiment, status,
+   * summary, and custom defined data to extract. Available after chat ends.
+   * Subscribe to `chat_analyzed` webhook event type to receive it once ready.
    */
   chat_analysis?: ChatResponse.ChatAnalysis;
 
@@ -258,9 +258,9 @@ export interface ChatResponse {
 
 export namespace ChatResponse {
   /**
-   * Post chat analysis that includes information such as sentiment, status, summary,
-   * and custom defined data to extract. Available after chat ends. Subscribe to
-   * `chat_analyzed` webhook event type to receive it once ready.
+   * Post Chat Extraction that includes information such as sentiment, status,
+   * summary, and custom defined data to extract. Available after chat ends.
+   * Subscribe to `chat_analyzed` webhook event type to receive it once ready.
    */
   export interface ChatAnalysis {
     /**
@@ -276,7 +276,7 @@ export namespace ChatResponse {
 
     /**
      * Custom analysis data that was extracted based on the schema defined in chat
-     * agent post chat analysis data. Can be empty if nothing is specified.
+     * agent Post Chat Extraction data. Can be empty if nothing is specified.
      */
     custom_analysis_data?: unknown;
 

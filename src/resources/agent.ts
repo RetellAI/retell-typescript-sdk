@@ -619,7 +619,7 @@ export interface AgentResponse {
   pii_config?: AgentResponse.PiiConfig;
 
   /**
-   * Post call analysis data to extract from the call. This data will augment the
+   * Post Call Extraction data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
@@ -632,7 +632,7 @@ export interface AgentResponse {
   > | null;
 
   /**
-   * The model to use for post call analysis. Default to gpt-4.1.
+   * The model to use for Post Call Extraction. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -1178,7 +1178,7 @@ export namespace AgentResponse {
   }
 
   /**
-   * System preset for post-call analysis (voice agents). Use in
+   * System preset for Post Call Extraction (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {
@@ -1797,7 +1797,7 @@ export interface AgentCreateParams {
   pii_config?: AgentCreateParams.PiiConfig;
 
   /**
-   * Post call analysis data to extract from the call. This data will augment the
+   * Post Call Extraction data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
@@ -1810,7 +1810,7 @@ export interface AgentCreateParams {
   > | null;
 
   /**
-   * The model to use for post call analysis. Default to gpt-4.1.
+   * The model to use for Post Call Extraction. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -2356,7 +2356,7 @@ export namespace AgentCreateParams {
   }
 
   /**
-   * System preset for post-call analysis (voice agents). Use in
+   * System preset for Post Call Extraction (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {
@@ -2876,7 +2876,7 @@ export interface AgentUpdateParams {
   pii_config?: AgentUpdateParams.PiiConfig;
 
   /**
-   * Body param: Post call analysis data to extract from the call. This data will
+   * Body param: Post Call Extraction data to extract from the call. This data will
    * augment the pre-defined variables extracted in the call analysis. This will be
    * available after the call ends.
    */
@@ -2889,7 +2889,7 @@ export interface AgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for post call analysis. Default to gpt-4.1.
+   * Body param: The model to use for Post Call Extraction. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -3412,7 +3412,7 @@ export namespace AgentUpdateParams {
   }
 
   /**
-   * System preset for post-call analysis (voice agents). Use in
+   * System preset for Post Call Extraction (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {
