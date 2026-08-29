@@ -990,7 +990,7 @@ export namespace ChatListParams {
     /**
      * Filter by chat ID.
      */
-    chat_id?: FilterCriteria.ChatID;
+    chat_id?: FilterCriteria.StringFilter | FilterCriteria.EnumFilter;
 
     chat_status?: FilterCriteria.ChatStatus;
 
@@ -1075,10 +1075,7 @@ export namespace ChatListParams {
       value: Array<string>;
     }
 
-    /**
-     * Filter by chat ID.
-     */
-    export interface ChatID {
+    export interface StringFilter {
       /**
        * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
        */
@@ -1087,6 +1084,17 @@ export namespace ChatListParams {
       type: 'string';
 
       value: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     export interface ChatStatus {

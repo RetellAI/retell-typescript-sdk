@@ -2011,6 +2011,9 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -2051,6 +2054,9 @@ export namespace ConversationFlowComponentResponse {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book
@@ -8673,6 +8679,9 @@ export namespace ConversationFlowComponentResponse {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -8718,6 +8727,9 @@ export namespace ConversationFlowComponentResponse {
     tool_id?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book
@@ -10664,6 +10676,9 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -10704,6 +10719,9 @@ export namespace ConversationFlowComponentCreateParams {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book
@@ -17326,6 +17344,9 @@ export namespace ConversationFlowComponentCreateParams {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -17371,6 +17392,9 @@ export namespace ConversationFlowComponentCreateParams {
     tool_id?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book
@@ -19337,6 +19361,9 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -19377,6 +19404,9 @@ export namespace ConversationFlowComponentUpdateParams {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book
@@ -25965,6 +25995,9 @@ export namespace ConversationFlowComponentUpdateParams {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -26010,6 +26043,9 @@ export namespace ConversationFlowComponentUpdateParams {
     tool_id?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book

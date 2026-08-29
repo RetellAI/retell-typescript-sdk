@@ -668,6 +668,9 @@ export namespace LlmResponse {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -708,6 +711,9 @@ export namespace LlmResponse {
     timezone?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book
@@ -1980,6 +1986,9 @@ export namespace LlmResponse {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -2020,6 +2029,9 @@ export namespace LlmResponse {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book
@@ -3326,6 +3338,9 @@ export namespace LlmCreateParams {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -3366,6 +3381,9 @@ export namespace LlmCreateParams {
     timezone?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book
@@ -4638,6 +4656,9 @@ export namespace LlmCreateParams {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -4678,6 +4699,9 @@ export namespace LlmCreateParams {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book
@@ -5986,6 +6010,9 @@ export namespace LlmUpdateParams {
     }
   }
 
+  /**
+   * @deprecated
+   */
   export interface CheckAvailabilityCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to check
@@ -6026,6 +6053,9 @@ export namespace LlmUpdateParams {
     timezone?: string;
   }
 
+  /**
+   * @deprecated
+   */
   export interface BookAppointmentCalTool {
     /**
      * Cal.com Api key that have access to the cal.com event you want to book
@@ -7298,6 +7328,9 @@ export namespace LlmUpdateParams {
       }
     }
 
+    /**
+     * @deprecated
+     */
     export interface CheckAvailabilityCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to check
@@ -7338,6 +7371,9 @@ export namespace LlmUpdateParams {
       timezone?: string;
     }
 
+    /**
+     * @deprecated
+     */
     export interface BookAppointmentCalTool {
       /**
        * Cal.com Api key that have access to the cal.com event you want to book

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Retell from 'retell-sdk';
+import Retell, { toFile } from 'retell-sdk';
 
 const client = new Retell({
   apiKey: 'YOUR_RETELL_API_KEY',
@@ -28,6 +28,7 @@ describe('resource contact', () => {
       do_not_call: true,
       first_name: 'first_name',
       last_name: 'last_name',
+      tags: ['P'],
     });
   });
 
@@ -95,6 +96,11 @@ describe('resource contact', () => {
               type: 'string',
               value: 'value',
             },
+            tags: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
           },
           limit: 1,
           pagination_key: 'pagination_key',
@@ -147,6 +153,31 @@ describe('resource contact', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('createImport: only required params', async () => {
+    const responsePromise = client.contact.createImport({
+      column_mapping: [{ external_field_name: 'external_field_name', field_name: 'field_name' }],
+      upload_id: 'upload_26f1cbdf5713',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createImport: required and optional params', async () => {
+    const response = await client.contact.createImport({
+      column_mapping: [{ external_field_name: 'external_field_name', field_name: 'field_name' }],
+      upload_id: 'upload_26f1cbdf5713',
+      default_country: 'se',
+      tags: ['P'],
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.contact.get('contact_id');
     const rawResponse = await responsePromise.asResponse();
@@ -183,6 +214,18 @@ describe('resource contact', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getImport', async () => {
+    const responsePromise = client.contact.getImport();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('listConversations', async () => {
     const responsePromise = client.contact.listConversations('contact_id');
     const rawResponse = await responsePromise.asResponse();
@@ -204,5 +247,26 @@ describe('resource contact', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('uploadImportFile: only required params', async () => {
+    const responsePromise = client.contact.uploadImportFile({
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('uploadImportFile: required and optional params', async () => {
+    const response = await client.contact.uploadImportFile({
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+    });
   });
 });

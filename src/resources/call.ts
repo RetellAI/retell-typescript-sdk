@@ -1542,6 +1542,19 @@ export interface WebCallResponse {
   end_timestamp?: number;
 
   /**
+   * Public side of the gateway instance handling this call, for diagnostics only —
+   * the client's media address comes from the SDP answer's ICE candidates. `gateway`
+   * transport only.
+   */
+  gateway_ip?: string;
+
+  /**
+   * ICE servers the client must configure before creating its PeerConnection — they
+   * cannot be added afterwards. `gateway` transport only.
+   */
+  ice_servers?: Array<WebCallResponse.IceServer>;
+
+  /**
    * URL to the knowledge base retrieved contents of the call. Available after call
    * ends if the call utilizes knowledge base feature. It consists of the respond id
    * and the retrieved contents related to that response. It's already rendered in
@@ -1673,6 +1686,15 @@ export interface WebCallResponse {
    * transfer call ends.
    */
   transfer_end_timestamp?: number;
+
+  /**
+   * Which media stack issued the access_token, and therefore where the client
+   * signals. The two tokens are indistinguishable, so a client must read this rather
+   * than infer it. `gateway` clients address Retell itself; `livekit` clients
+   * connect to the returned `url`. Optional only because a server predating the
+   * field omits it during a rollout; treat absent as `livekit`.
+   */
+  transport?: 'livekit' | 'gateway';
 }
 
 export namespace WebCallResponse {
@@ -1757,6 +1779,14 @@ export namespace WebCallResponse {
        */
       unit_price?: number;
     }
+  }
+
+  export interface IceServer {
+    urls: string | Array<string>;
+
+    credential?: string;
+
+    username?: string;
   }
 
   /**
@@ -2748,6 +2778,19 @@ export namespace CallListResponse {
     end_timestamp?: number;
 
     /**
+     * Public side of the gateway instance handling this call, for diagnostics only —
+     * the client's media address comes from the SDP answer's ICE candidates. `gateway`
+     * transport only.
+     */
+    gateway_ip?: string;
+
+    /**
+     * ICE servers the client must configure before creating its PeerConnection — they
+     * cannot be added afterwards. `gateway` transport only.
+     */
+    ice_servers?: Array<V3WebCallResponse.IceServer>;
+
+    /**
      * URL to the knowledge base retrieved contents of the call. Available after call
      * ends if the call utilizes knowledge base feature. It consists of the respond id
      * and the retrieved contents related to that response. It's already rendered in
@@ -2838,6 +2881,15 @@ export namespace CallListResponse {
      * transfer call ends.
      */
     transfer_end_timestamp?: number;
+
+    /**
+     * Which media stack issued the access_token, and therefore where the client
+     * signals. The two tokens are indistinguishable, so a client must read this rather
+     * than infer it. `gateway` clients address Retell itself; `livekit` clients
+     * connect to the returned `url`. Optional only because a server predating the
+     * field omits it during a rollout; treat absent as `livekit`.
+     */
+    transport?: 'livekit' | 'gateway';
   }
 
   export namespace V3WebCallResponse {
@@ -2922,6 +2974,14 @@ export namespace CallListResponse {
          */
         unit_price?: number;
       }
+    }
+
+    export interface IceServer {
+      urls: string | Array<string>;
+
+      credential?: string;
+
+      username?: string;
     }
 
     /**
@@ -5696,6 +5756,8 @@ export namespace CallCreatePhoneCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**
@@ -7086,6 +7148,8 @@ export namespace CallCreateWebCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**
@@ -8476,6 +8540,8 @@ export namespace CallRegisterPhoneCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**

@@ -2,8 +2,10 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { type Uploadable } from '../core/uploads';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
+import { multipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
 
 export class Contact extends APIResource {
@@ -62,6 +64,19 @@ export class Contact extends APIResource {
   }
 
   /**
+   * Start an incremental contact import from an uploaded CSV: creates new contacts
+   * and updates existing ones matched by phone number. Mapped columns overwrite the
+   * matched contact's fields; unmapped columns are ignored. Runs asynchronously —
+   * poll get-contact-import for progress.
+   */
+  createImport(
+    body: ContactCreateImportParams,
+    options?: RequestOptions,
+  ): APIPromise<ContactCreateImportResponse> {
+    return this._client.post('/create-contact-import', { body, ...options });
+  }
+
+  /**
    * Retrieve a contact by ID.
    */
   get(contactID: string, options?: RequestOptions): APIPromise<ContactResponse> {
@@ -84,6 +99,13 @@ export class Contact extends APIResource {
   }
 
   /**
+   * Status and counts for the org's current or latest contact import.
+   */
+  getImport(options?: RequestOptions): APIPromise<ContactGetImportResponse> {
+    return this._client.get('/get-contact-import', options);
+  }
+
+  /**
    * List a contact's conversations (inbound calls, outbound calls, and chats) merged
    * into a single timeline, most recent first. Results are matched by the contact's
    * phone number. Use the returned `pagination_key` to fetch the next page.
@@ -94,6 +116,20 @@ export class Contact extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ContactListConversationsResponse> {
     return this._client.get(path`/list-contact-conversations/${contactID}`, { query, ...options });
+  }
+
+  /**
+   * Upload a CSV file for a contact import. The file is stored privately and
+   * referenced by the returned upload_id in create-contact-import.
+   */
+  uploadImportFile(
+    body: ContactUploadImportFileParams,
+    options?: RequestOptions,
+  ): APIPromise<ContactUploadImportFileResponse> {
+    return this._client.post(
+      '/upload-contact-import-file',
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
@@ -154,6 +190,11 @@ export interface ContactResponse {
   last_name?: string;
 
   /**
+   * Tags assigned to the contact.
+   */
+  tags?: Array<string>;
+
+  /**
    * Epoch milliseconds when the contact was last modified.
    */
   user_modified_timestamp?: number;
@@ -200,7 +241,57 @@ export interface ContactBackfillAnalysisDataResponse {
   triggered_by?: 'manual' | 'cron';
 }
 
+export interface ContactCreateImportResponse {
+  status: 'queued' | 'running' | 'idle';
+
+  /**
+   * Number of items that errored so far.
+   */
+  failed?: number;
+
+  /**
+   * Epoch milliseconds when the job started.
+   */
+  start_timestamp?: number;
+
+  /**
+   * Number of items processed successfully so far.
+   */
+  succeeded?: number;
+
+  /**
+   * Whether the job was started by an explicit API call (`manual`) or by the
+   * scheduled sync (`cron`).
+   */
+  triggered_by?: 'manual' | 'cron';
+}
+
 export interface ContactGetBackfillJobStatusResponse {
+  status: 'queued' | 'running' | 'idle';
+
+  /**
+   * Number of items that errored so far.
+   */
+  failed?: number;
+
+  /**
+   * Epoch milliseconds when the job started.
+   */
+  start_timestamp?: number;
+
+  /**
+   * Number of items processed successfully so far.
+   */
+  succeeded?: number;
+
+  /**
+   * Whether the job was started by an explicit API call (`manual`) or by the
+   * scheduled sync (`cron`).
+   */
+  triggered_by?: 'manual' | 'cron';
+}
+
+export interface ContactGetImportResponse {
   status: 'queued' | 'running' | 'idle';
 
   /**
@@ -324,6 +415,12 @@ export namespace ContactListConversationsResponse {
   }
 }
 
+export interface ContactUploadImportFileResponse {
+  file_name?: string;
+
+  upload_id?: string;
+}
+
 export interface ContactCreateParams {
   /**
    * Phone number of the contact.
@@ -347,6 +444,11 @@ export interface ContactCreateParams {
    * Last name of the contact.
    */
   last_name?: string;
+
+  /**
+   * Full set of tags for the contact.
+   */
+  tags?: Array<string>;
 }
 
 export interface ContactUpdateParams {
@@ -367,6 +469,11 @@ export interface ContactUpdateParams {
    * Last name of the contact.
    */
   last_name?: string;
+
+  /**
+   * Full replacement set of tags for the contact.
+   */
+  tags?: Array<string>;
 }
 
 export interface ContactListParams {
@@ -448,6 +555,11 @@ export namespace ContactListParams {
      * number.
      */
     phone_number?: FilterCriteria.PhoneNumber;
+
+    /**
+     * Match contacts that have any of the listed tags.
+     */
+    tags?: FilterCriteria.Tags;
   }
 
   export namespace FilterCriteria {
@@ -628,6 +740,20 @@ export namespace ContactListParams {
 
       value: string;
     }
+
+    /**
+     * Match contacts that have any of the listed tags.
+     */
+    export interface Tags {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+    }
   }
 }
 
@@ -704,6 +830,47 @@ export namespace ContactBackfillAnalysisDataParams {
   }
 }
 
+export interface ContactCreateImportParams {
+  /**
+   * CSV headers mapped to contact fields. field_name is the contact field and
+   * external_field_name is the CSV header. Exactly one mapping must target
+   * phone_number. Unmapped columns are ignored.
+   */
+  column_mapping: Array<ContactCreateImportParams.ColumnMapping>;
+
+  /**
+   * Id returned by upload-contact-import-file.
+   */
+  upload_id: string;
+
+  /**
+   * Country for parsing phone numbers without a country code. Defaults to US.
+   */
+  default_country?: string;
+
+  /**
+   * Tags added to every contact in this import. Existing tags are preserved. Omit to
+   * leave tags unchanged.
+   */
+  tags?: Array<string>;
+}
+
+export namespace ContactCreateImportParams {
+  export interface ColumnMapping {
+    /**
+     * Field on the CRM's contact object to map to. A name that does not exist there
+     * surfaces as an error on the sync job rather than at configuration time.
+     */
+    external_field_name: string;
+
+    /**
+     * Retell contact field, built-in or custom, to map. Types must be compatible with
+     * the CRM field on both sides of the sync.
+     */
+    field_name: string;
+  }
+}
+
 export interface ContactListConversationsParams {
   /**
    * Maximum number of items to return.
@@ -716,17 +883,26 @@ export interface ContactListConversationsParams {
   pagination_key?: string;
 }
 
+export interface ContactUploadImportFileParams {
+  file: Uploadable;
+}
+
 export declare namespace Contact {
   export {
     type ContactResponse as ContactResponse,
     type ContactListResponse as ContactListResponse,
     type ContactBackfillAnalysisDataResponse as ContactBackfillAnalysisDataResponse,
+    type ContactCreateImportResponse as ContactCreateImportResponse,
     type ContactGetBackfillJobStatusResponse as ContactGetBackfillJobStatusResponse,
+    type ContactGetImportResponse as ContactGetImportResponse,
     type ContactListConversationsResponse as ContactListConversationsResponse,
+    type ContactUploadImportFileResponse as ContactUploadImportFileResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
     type ContactBackfillAnalysisDataParams as ContactBackfillAnalysisDataParams,
+    type ContactCreateImportParams as ContactCreateImportParams,
     type ContactListConversationsParams as ContactListConversationsParams,
+    type ContactUploadImportFileParams as ContactUploadImportFileParams,
   };
 }

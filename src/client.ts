@@ -30,6 +30,8 @@ import {
   AgentListVersionsParams,
   AgentListVersionsResponse,
   AgentPublishParams,
+  AgentRepairParams,
+  AgentRepairResponse,
   AgentResponse,
   AgentRetrieveParams,
   AgentUpdateParams,
@@ -46,6 +48,7 @@ import {
   AppTestAuthResponse,
   AppUpdateParams,
 } from './resources/app';
+import { Asset, AssetCreateParams, AssetCreateResponse } from './resources/asset';
 import { BatchCall, BatchCallCreateBatchCallParams, BatchCallResponse } from './resources/batch-call';
 import {
   Call,
@@ -91,14 +94,19 @@ import {
   Contact,
   ContactBackfillAnalysisDataParams,
   ContactBackfillAnalysisDataResponse,
+  ContactCreateImportParams,
+  ContactCreateImportResponse,
   ContactCreateParams,
   ContactGetBackfillJobStatusResponse,
+  ContactGetImportResponse,
   ContactListConversationsParams,
   ContactListConversationsResponse,
   ContactListParams,
   ContactListResponse,
   ContactResponse,
   ContactUpdateParams,
+  ContactUploadImportFileParams,
+  ContactUploadImportFileResponse,
 } from './resources/contact';
 import {
   ConversationFlow,
@@ -923,6 +931,7 @@ export class Retell {
   conversationFlowComponent: API.ConversationFlowComponent = new API.ConversationFlowComponent(this);
   knowledgeBase: API.KnowledgeBase = new API.KnowledgeBase(this);
   voice: API.Voice = new API.Voice(this);
+  asset: API.Asset = new API.Asset(this);
   concurrency: API.Concurrency = new API.Concurrency(this);
   identity: API.Identity = new API.Identity(this);
   exportRequest: API.ExportRequest = new API.ExportRequest(this);
@@ -945,6 +954,7 @@ Retell.ConversationFlow = ConversationFlow;
 Retell.ConversationFlowComponent = ConversationFlowComponent;
 Retell.KnowledgeBase = KnowledgeBase;
 Retell.Voice = Voice;
+Retell.Asset = Asset;
 Retell.Concurrency = Concurrency;
 Retell.Identity = Identity;
 Retell.ExportRequest = ExportRequest;
@@ -1003,6 +1013,7 @@ export declare namespace Retell {
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
+    type AgentRepairResponse as AgentRepairResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
@@ -1011,6 +1022,7 @@ export declare namespace Retell {
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
     type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
+    type AgentRepairParams as AgentRepairParams,
   };
 
   export {
@@ -1078,6 +1090,12 @@ export declare namespace Retell {
     type VoiceSearchParams as VoiceSearchParams,
   };
 
+  export {
+    Asset as Asset,
+    type AssetCreateResponse as AssetCreateResponse,
+    type AssetCreateParams as AssetCreateParams,
+  };
+
   export { Concurrency as Concurrency, type ConcurrencyRetrieveResponse as ConcurrencyRetrieveResponse };
 
   export { Identity as Identity, type IdentityRetrieveResponse as IdentityRetrieveResponse };
@@ -1128,13 +1146,18 @@ export declare namespace Retell {
     type ContactResponse as ContactResponse,
     type ContactListResponse as ContactListResponse,
     type ContactBackfillAnalysisDataResponse as ContactBackfillAnalysisDataResponse,
+    type ContactCreateImportResponse as ContactCreateImportResponse,
     type ContactGetBackfillJobStatusResponse as ContactGetBackfillJobStatusResponse,
+    type ContactGetImportResponse as ContactGetImportResponse,
     type ContactListConversationsResponse as ContactListConversationsResponse,
+    type ContactUploadImportFileResponse as ContactUploadImportFileResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
     type ContactBackfillAnalysisDataParams as ContactBackfillAnalysisDataParams,
+    type ContactCreateImportParams as ContactCreateImportParams,
     type ContactListConversationsParams as ContactListConversationsParams,
+    type ContactUploadImportFileParams as ContactUploadImportFileParams,
   };
 
   export {

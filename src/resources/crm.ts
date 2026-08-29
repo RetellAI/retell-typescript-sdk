@@ -65,6 +65,11 @@ export interface CRMConfig {
    */
   contact_columns_order?: Array<string>;
 
+  /**
+   * Tags available to contacts in this organization.
+   */
+  contact_tags?: Array<string>;
+
   crm_analysis_data_mappings?: Array<CRMConfig.CRMAnalysisDataMapping>;
 
   custom_fields?: Array<CRMConfig.CustomField>;

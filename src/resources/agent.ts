@@ -157,8 +157,7 @@ export class Agent extends APIResource {
   }
 
   /**
-   * List stored versions of a voice or chat agent with pagination. Root-level data
-   * such as assigned tags is not included.
+   * List stored versions of a voice or chat agent with pagination.
    *
    * @example
    * ```ts
@@ -189,6 +188,31 @@ export class Agent extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * Remove references to resources that no longer exist in your workspace from an
+   * agent draft version and its response engine — tools whose app connection has
+   * been deleted, unknown knowledge bases, and deleted shared components — and remap
+   * voices that are no longer accessible to a default voice. If the agent's response
+   * engine version has been published, the engine is left untouched and only
+   * agent-level references are repaired. Repairing an agent with nothing to fix is a
+   * no-op.
+   *
+   * @example
+   * ```ts
+   * const response = await client.agent.repair(
+   *   '16b980523634a6dc504898cda492e939',
+   * );
+   * ```
+   */
+  repair(
+    agentID: string,
+    params: AgentRepairParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AgentRepairResponse> {
+    const { version } = params ?? {};
+    return this._client.post(path`/repair-agent/${agentID}`, { query: { version }, ...options });
   }
 }
 
@@ -762,6 +786,8 @@ export interface AgentResponse {
     | 's1'
     | 's2-pro'
     | 's2.1-pro'
+    | 'inworld-tts-2'
+    | 'inworld-tts-2-flash'
     | null;
 
   /**
@@ -1401,6 +1427,8 @@ export namespace AgentListVersionsResponse {
   }
 }
 
+export type AgentRepairResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
+
 export interface AgentCreateParams {
   /**
    * The Response Engine to attach to the agent. It is used to generate responses for
@@ -1940,6 +1968,8 @@ export interface AgentCreateParams {
     | 's1'
     | 's2-pro'
     | 's2.1-pro'
+    | 'inworld-tts-2'
+    | 'inworld-tts-2-flash'
     | null;
 
   /**
@@ -3042,6 +3072,8 @@ export interface AgentUpdateParams {
     | 's1'
     | 's2-pro'
     | 's2.1-pro'
+    | 'inworld-tts-2'
+    | 'inworld-tts-2-flash'
     | null;
 
   /**
@@ -3673,6 +3705,14 @@ export interface AgentPublishParams {
   version_title?: string;
 }
 
+export interface AgentRepairParams {
+  /**
+   * Optional version of the agent to repair. Default to latest version. Published
+   * versions are immutable and cannot be repaired.
+   */
+  version?: string | number;
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
@@ -3680,6 +3720,7 @@ export declare namespace Agent {
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
+    type AgentRepairResponse as AgentRepairResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
@@ -3688,5 +3729,6 @@ export declare namespace Agent {
     type AgentDeleteVersionParams as AgentDeleteVersionParams,
     type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
+    type AgentRepairParams as AgentRepairParams,
   };
 }
