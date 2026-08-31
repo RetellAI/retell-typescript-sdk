@@ -275,9 +275,9 @@ export namespace LlmResponse {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -673,7 +673,7 @@ export namespace LlmResponse {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to check
+     * Cal.com Api key that has access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -687,9 +687,9 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -716,7 +716,7 @@ export namespace LlmResponse {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to book
+     * Cal.com Api key that has access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -730,9 +730,9 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -821,9 +821,9 @@ export namespace LlmResponse {
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -919,8 +919,8 @@ export namespace LlmResponse {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -1000,7 +1000,7 @@ export namespace LlmResponse {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -1045,7 +1045,7 @@ export namespace LlmResponse {
 
   export namespace CustomTool {
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -1079,8 +1079,8 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -1146,8 +1146,8 @@ export namespace LlmResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -1306,9 +1306,9 @@ export namespace LlmResponse {
   export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -1345,9 +1345,9 @@ export namespace LlmResponse {
   export interface CancelTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -1490,8 +1490,8 @@ export namespace LlmResponse {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * Name of the state, must be unique for each state. Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -1552,7 +1552,7 @@ export namespace LlmResponse {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -1564,7 +1564,7 @@ export namespace LlmResponse {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -1593,9 +1593,9 @@ export namespace LlmResponse {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -1991,7 +1991,7 @@ export namespace LlmResponse {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to check
+       * Cal.com Api key that has access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -2005,9 +2005,9 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -2034,7 +2034,7 @@ export namespace LlmResponse {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to book
+       * Cal.com Api key that has access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -2048,9 +2048,9 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -2139,9 +2139,9 @@ export namespace LlmResponse {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -2237,8 +2237,8 @@ export namespace LlmResponse {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2318,7 +2318,7 @@ export namespace LlmResponse {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -2363,7 +2363,7 @@ export namespace LlmResponse {
 
     export namespace CustomTool {
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -2397,8 +2397,8 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2464,8 +2464,8 @@ export namespace LlmResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2624,9 +2624,9 @@ export namespace LlmResponse {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -2663,9 +2663,9 @@ export namespace LlmResponse {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -2945,9 +2945,9 @@ export namespace LlmCreateParams {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -3343,7 +3343,7 @@ export namespace LlmCreateParams {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to check
+     * Cal.com Api key that has access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -3357,9 +3357,9 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -3386,7 +3386,7 @@ export namespace LlmCreateParams {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to book
+     * Cal.com Api key that has access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -3400,9 +3400,9 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -3491,9 +3491,9 @@ export namespace LlmCreateParams {
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -3589,8 +3589,8 @@ export namespace LlmCreateParams {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -3670,7 +3670,7 @@ export namespace LlmCreateParams {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -3715,7 +3715,7 @@ export namespace LlmCreateParams {
 
   export namespace CustomTool {
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -3749,8 +3749,8 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -3816,8 +3816,8 @@ export namespace LlmCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -3976,9 +3976,9 @@ export namespace LlmCreateParams {
   export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -4015,9 +4015,9 @@ export namespace LlmCreateParams {
   export interface CancelTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -4160,8 +4160,8 @@ export namespace LlmCreateParams {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * Name of the state, must be unique for each state. Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -4222,7 +4222,7 @@ export namespace LlmCreateParams {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -4234,7 +4234,7 @@ export namespace LlmCreateParams {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -4263,9 +4263,9 @@ export namespace LlmCreateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -4661,7 +4661,7 @@ export namespace LlmCreateParams {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to check
+       * Cal.com Api key that has access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -4675,9 +4675,9 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -4704,7 +4704,7 @@ export namespace LlmCreateParams {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to book
+       * Cal.com Api key that has access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -4718,9 +4718,9 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -4809,9 +4809,9 @@ export namespace LlmCreateParams {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -4907,8 +4907,8 @@ export namespace LlmCreateParams {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -4988,7 +4988,7 @@ export namespace LlmCreateParams {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -5033,7 +5033,7 @@ export namespace LlmCreateParams {
 
     export namespace CustomTool {
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -5067,8 +5067,8 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -5134,8 +5134,8 @@ export namespace LlmCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -5294,9 +5294,9 @@ export namespace LlmCreateParams {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -5333,9 +5333,9 @@ export namespace LlmCreateParams {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -5617,9 +5617,9 @@ export namespace LlmUpdateParams {
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6015,7 +6015,7 @@ export namespace LlmUpdateParams {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to check
+     * Cal.com Api key that has access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -6029,9 +6029,9 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6058,7 +6058,7 @@ export namespace LlmUpdateParams {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that have access to the cal.com event you want to book
+     * Cal.com Api key that has access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -6072,9 +6072,9 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6163,9 +6163,9 @@ export namespace LlmUpdateParams {
   export interface PressDigitTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6261,8 +6261,8 @@ export namespace LlmUpdateParams {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -6342,7 +6342,7 @@ export namespace LlmUpdateParams {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -6387,7 +6387,7 @@ export namespace LlmUpdateParams {
 
   export namespace CustomTool {
     /**
-     * The parameters the functions accepts, described as a JSON Schema object. See
+     * The parameters the function accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -6421,8 +6421,8 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -6488,8 +6488,8 @@ export namespace LlmUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -6648,9 +6648,9 @@ export namespace LlmUpdateParams {
   export interface BridgeTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6687,9 +6687,9 @@ export namespace LlmUpdateParams {
   export interface CancelTransferTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
+     * time (general tools + state tools + state transitions). Must consist of a-z,
+     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+     * space allowed).
      */
     name: string;
 
@@ -6832,8 +6832,8 @@ export namespace LlmUpdateParams {
 
   export interface State {
     /**
-     * Name of the state, must be unique for each state. Must be consisted of a-z, A-Z,
-     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * Name of the state, must be unique for each state. Must consist of a-z, A-Z, 0-9,
+     * or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -6894,7 +6894,7 @@ export namespace LlmUpdateParams {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -6906,7 +6906,7 @@ export namespace LlmUpdateParams {
       /**
        * Describes what parameters you want to extract out when the transition changes.
        * The parameters extracted here can be referenced in prompts & function
-       * descriptions of later states via dynamic variables. The parameters the functions
+       * descriptions of later states via dynamic variables. The parameters the function
        * accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format.
@@ -6935,9 +6935,9 @@ export namespace LlmUpdateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -7333,7 +7333,7 @@ export namespace LlmUpdateParams {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to check
+       * Cal.com Api key that has access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -7347,9 +7347,9 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -7376,7 +7376,7 @@ export namespace LlmUpdateParams {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that have access to the cal.com event you want to book
+       * Cal.com Api key that has access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -7390,9 +7390,9 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -7481,9 +7481,9 @@ export namespace LlmUpdateParams {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -7579,8 +7579,8 @@ export namespace LlmUpdateParams {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -7660,7 +7660,7 @@ export namespace LlmUpdateParams {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -7705,7 +7705,7 @@ export namespace LlmUpdateParams {
 
     export namespace CustomTool {
       /**
-       * The parameters the functions accepts, described as a JSON Schema object. See
+       * The parameters the function accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -7739,8 +7739,8 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -7806,8 +7806,8 @@ export namespace LlmUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
-       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
+       * or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -7966,9 +7966,9 @@ export namespace LlmUpdateParams {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 
@@ -8005,9 +8005,9 @@ export namespace LlmUpdateParams {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
+       * time (general tools + state tools + state transitions). Must consist of a-z,
+       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
+       * space allowed).
        */
       name: string;
 

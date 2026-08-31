@@ -487,7 +487,7 @@ export interface ChatAgentResponse {
 
   /**
    * The webhook for agent to listen to chat events. See what events it would get at
-   * [webhook doc](/features/webhook). If set, will binds webhook events for this
+   * [webhook doc](/features/webhook). If set, will bind webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
    * agent. Set to `null` to remove webhook url from this agent.
    */
@@ -1124,7 +1124,7 @@ export interface ChatAgentCreateParams {
 
   /**
    * The webhook for agent to listen to chat events. See what events it would get at
-   * [webhook doc](/features/webhook). If set, will binds webhook events for this
+   * [webhook doc](/features/webhook). If set, will bind webhook events for this
    * agent to the specified url, and will ignore the account level webhook for this
    * agent. Set to `null` to remove webhook url from this agent.
    */
@@ -1724,7 +1724,7 @@ export interface ChatAgentUpdateParams {
 
   /**
    * Body param: The webhook for agent to listen to chat events. See what events it
-   * would get at [webhook doc](/features/webhook). If set, will binds webhook events
+   * would get at [webhook doc](/features/webhook). If set, will bind webhook events
    * for this agent to the specified url, and will ignore the account level webhook
    * for this agent. Set to `null` to remove webhook url from this agent.
    */

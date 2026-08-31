@@ -688,7 +688,7 @@ export interface PhoneNumberImportParams {
 
   /**
    * The termination uri to uniquely identify your elastic SIP trunk. This is used
-   * for outbound calls. For Twilio elastic SIP trunks it always end with
+   * for outbound calls. For Twilio elastic SIP trunks it always ends with
    * ".pstn.twilio.com".
    */
   termination_uri: string;
