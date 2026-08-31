@@ -421,9 +421,9 @@ export interface TestListBatchTestsResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<BatchTestResponse>;
+  items: Array<BatchTestResponse>;
 
   /**
    * Pagination key for the next page.
@@ -435,9 +435,9 @@ export interface TestListTestCaseDefinitionsResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<TestCaseDefinitionResponse>;
+  items: Array<TestCaseDefinitionResponse>;
 
   /**
    * Pagination key for the next page.
@@ -449,9 +449,9 @@ export interface TestListTestRunsResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<TestCaseJobResponse>;
+  items: Array<TestCaseJobResponse>;
 
   /**
    * Pagination key for the next page.

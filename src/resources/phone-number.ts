@@ -332,9 +332,9 @@ export interface PhoneNumberListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<PhoneNumberResponse>;
+  items: Array<PhoneNumberResponse>;
 
   /**
    * Pagination key for the next page.

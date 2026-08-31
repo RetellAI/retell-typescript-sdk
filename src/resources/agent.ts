@@ -643,7 +643,7 @@ export interface AgentResponse {
   pii_config?: AgentResponse.PiiConfig;
 
   /**
-   * Post Call Extraction data to extract from the call. This data will augment the
+   * Post call analysis data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
@@ -656,7 +656,7 @@ export interface AgentResponse {
   > | null;
 
   /**
-   * The model to use for Post Call Extraction. Default to gpt-4.1.
+   * The model to use for post call analysis. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -779,6 +779,7 @@ export interface AgentResponse {
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
+    | 'sonic-3.6'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
@@ -1204,7 +1205,7 @@ export namespace AgentResponse {
   }
 
   /**
-   * System preset for Post Call Extraction (voice agents). Use in
+   * System preset for post-call analysis (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {
@@ -1330,9 +1331,9 @@ export interface AgentListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<AgentListResponse.Item>;
+  items: Array<AgentListResponse.Item>;
 
   /**
    * Pagination key for the next page.
@@ -1383,9 +1384,9 @@ export interface AgentListVersionsResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<AgentListVersionsResponse.Item>;
+  items: Array<AgentListVersionsResponse.Item>;
 
   /**
    * Pagination key for the next page.
@@ -1825,7 +1826,7 @@ export interface AgentCreateParams {
   pii_config?: AgentCreateParams.PiiConfig;
 
   /**
-   * Post Call Extraction data to extract from the call. This data will augment the
+   * Post call analysis data to extract from the call. This data will augment the
    * pre-defined variables extracted in the call analysis. This will be available
    * after the call ends.
    */
@@ -1838,7 +1839,7 @@ export interface AgentCreateParams {
   > | null;
 
   /**
-   * The model to use for Post Call Extraction. Default to gpt-4.1.
+   * The model to use for post call analysis. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -1961,6 +1962,7 @@ export interface AgentCreateParams {
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
+    | 'sonic-3.6'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
@@ -2386,7 +2388,7 @@ export namespace AgentCreateParams {
   }
 
   /**
-   * System preset for Post Call Extraction (voice agents). Use in
+   * System preset for post-call analysis (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {
@@ -2906,7 +2908,7 @@ export interface AgentUpdateParams {
   pii_config?: AgentUpdateParams.PiiConfig;
 
   /**
-   * Body param: Post Call Extraction data to extract from the call. This data will
+   * Body param: Post call analysis data to extract from the call. This data will
    * augment the pre-defined variables extracted in the call analysis. This will be
    * available after the call ends.
    */
@@ -2919,7 +2921,7 @@ export interface AgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for Post Call Extraction. Default to gpt-4.1.
+   * Body param: The model to use for post call analysis. Default to gpt-4.1.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -3065,6 +3067,7 @@ export interface AgentUpdateParams {
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
+    | 'sonic-3.6'
     | 'tts-1'
     | 'gpt-4o-mini-tts'
     | 'speech-02-turbo'
@@ -3444,7 +3447,7 @@ export namespace AgentUpdateParams {
   }
 
   /**
-   * System preset for Post Call Extraction (voice agents). Use in
+   * System preset for post-call analysis (voice agents). Use in
    * post_call_analysis_data to override prompts or mark fields optional.
    */
   export interface CallPresetAnalysisData {

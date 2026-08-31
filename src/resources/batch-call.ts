@@ -606,7 +606,7 @@ export namespace BatchCallCreateBatchCallParams {
         pii_config?: Agent.PiiConfig;
 
         /**
-         * Post Call Extraction data to extract from the call. This data will augment the
+         * Post call analysis data to extract from the call. This data will augment the
          * pre-defined variables extracted in the call analysis. This will be available
          * after the call ends.
          */
@@ -619,7 +619,7 @@ export namespace BatchCallCreateBatchCallParams {
         > | null;
 
         /**
-         * The model to use for Post Call Extraction. Default to gpt-4.1.
+         * The model to use for post call analysis. Default to gpt-4.1.
          */
         post_call_analysis_model?:
           | 'gpt-4.1'
@@ -758,6 +758,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'sonic-3'
           | 'sonic-3-latest'
           | 'sonic-3.5'
+          | 'sonic-3.6'
           | 'tts-1'
           | 'gpt-4o-mini-tts'
           | 'speech-02-turbo'
@@ -1137,7 +1138,7 @@ export namespace BatchCallCreateBatchCallParams {
         }
 
         /**
-         * System preset for Post Call Extraction (voice agents). Use in
+         * System preset for post-call analysis (voice agents). Use in
          * post_call_analysis_data to override prompts or mark fields optional.
          */
         export interface CallPresetAnalysisData {

@@ -409,7 +409,7 @@ export interface ChatAgentResponse {
   pii_config?: ChatAgentResponse.PiiConfig;
 
   /**
-   * Post Chat Extraction data to extract from the chat. This data will augment the
+   * Post chat analysis data to extract from the chat. This data will augment the
    * pre-defined variables extracted in the chat analysis. This will be available
    * after the chat ends.
    */
@@ -422,7 +422,7 @@ export interface ChatAgentResponse {
   > | null;
 
   /**
-   * The model to use for Post Chat Extraction. Default to gpt-4.1.
+   * The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -759,7 +759,7 @@ export namespace ChatAgentResponse {
   }
 
   /**
-   * System preset for Post Chat Extraction (chat agents). Use in
+   * System preset for post-chat analysis (chat agents). Use in
    * post_chat_analysis_data to override prompts or mark fields optional.
    */
   export interface ChatPresetAnalysisData {
@@ -796,9 +796,9 @@ export interface ChatAgentListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ChatAgentListResponse.Item>;
+  items: Array<ChatAgentListResponse.Item>;
 
   /**
    * Pagination key for the next page.
@@ -1051,7 +1051,7 @@ export interface ChatAgentCreateParams {
   pii_config?: ChatAgentCreateParams.PiiConfig;
 
   /**
-   * Post Chat Extraction data to extract from the chat. This data will augment the
+   * Post chat analysis data to extract from the chat. This data will augment the
    * pre-defined variables extracted in the chat analysis. This will be available
    * after the chat ends.
    */
@@ -1064,7 +1064,7 @@ export interface ChatAgentCreateParams {
   > | null;
 
   /**
-   * The model to use for Post Chat Extraction. Default to gpt-4.1.
+   * The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -1396,7 +1396,7 @@ export namespace ChatAgentCreateParams {
   }
 
   /**
-   * System preset for Post Chat Extraction (chat agents). Use in
+   * System preset for post-chat analysis (chat agents). Use in
    * post_chat_analysis_data to override prompts or mark fields optional.
    */
   export interface ChatPresetAnalysisData {
@@ -1640,7 +1640,7 @@ export interface ChatAgentUpdateParams {
   pii_config?: ChatAgentUpdateParams.PiiConfig;
 
   /**
-   * Body param: Post Chat Extraction data to extract from the chat. This data will
+   * Body param: Post chat analysis data to extract from the chat. This data will
    * augment the pre-defined variables extracted in the chat analysis. This will be
    * available after the chat ends.
    */
@@ -1653,7 +1653,7 @@ export interface ChatAgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for Post Chat Extraction. Default to gpt-4.1.
+   * Body param: The model to use for post chat analysis. Default to gpt-4.1.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -1950,7 +1950,7 @@ export namespace ChatAgentUpdateParams {
   }
 
   /**
-   * System preset for Post Chat Extraction (chat agents). Use in
+   * System preset for post-chat analysis (chat agents). Use in
    * post_chat_analysis_data to override prompts or mark fields optional.
    */
   export interface ChatPresetAnalysisData {

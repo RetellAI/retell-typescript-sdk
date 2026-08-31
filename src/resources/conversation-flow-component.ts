@@ -2110,7 +2110,7 @@ export namespace ConversationFlowComponentResponse {
       name: string;
 
       /**
-       * Post Call Extraction setting for the agent swap.
+       * Post call analysis setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -6616,7 +6616,7 @@ export namespace ConversationFlowComponentResponse {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post Call Extraction setting for the agent swap
+     * Post call analysis setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -8780,9 +8780,9 @@ export interface ConversationFlowComponentListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ConversationFlowComponentResponse>;
+  items: Array<ConversationFlowComponentResponse>;
 
   /**
    * Pagination key for the next page.
@@ -10775,7 +10775,7 @@ export namespace ConversationFlowComponentCreateParams {
       name: string;
 
       /**
-       * Post Call Extraction setting for the agent swap.
+       * Post call analysis setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -15281,7 +15281,7 @@ export namespace ConversationFlowComponentCreateParams {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post Call Extraction setting for the agent swap
+     * Post call analysis setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -19460,7 +19460,7 @@ export namespace ConversationFlowComponentUpdateParams {
       name: string;
 
       /**
-       * Post Call Extraction setting for the agent swap.
+       * Post call analysis setting for the agent swap.
        */
       post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 
@@ -23966,7 +23966,7 @@ export namespace ConversationFlowComponentUpdateParams {
     edge: AgentSwapNode.Edge;
 
     /**
-     * Post Call Extraction setting for the agent swap
+     * Post call analysis setting for the agent swap
      */
     post_call_analysis_setting: 'both_agents' | 'only_destination_agent';
 

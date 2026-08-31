@@ -201,12 +201,15 @@ export interface ContactResponse {
 }
 
 export interface ContactListResponse {
-  has_more?: boolean;
+  /**
+   * Whether more results are available.
+   */
+  has_more: boolean;
 
-  items?: Array<ContactResponse>;
+  items: Array<ContactResponse>;
 
   /**
-   * Base64url-encoded pagination key for the next page.
+   * Pagination key for the next page.
    */
   pagination_key?: string;
 
@@ -318,15 +321,14 @@ export interface ContactGetImportResponse {
 
 export interface ContactListConversationsResponse {
   /**
-   * Whether more conversations exist beyond the returned window.
+   * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ContactListConversationsResponse.ContactCall | ContactListConversationsResponse.ContactChat>;
+  items: Array<ContactListConversationsResponse.ContactCall | ContactListConversationsResponse.ContactChat>;
 
   /**
-   * Base64url-encoded pagination key. Pass as `pagination_key` query parameter to
-   * fetch the next page.
+   * Pagination key for the next page.
    */
   pagination_key?: string;
 }
@@ -353,7 +355,7 @@ export namespace ContactListConversationsResponse {
     duration_ms?: number;
 
     /**
-     * User sentiment from Post Call Extraction.
+     * User sentiment from post-call analysis.
      */
     sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
 
@@ -363,12 +365,12 @@ export namespace ContactListConversationsResponse {
     start_timestamp?: number;
 
     /**
-     * Whether the call was deemed successful by Post Call Extraction.
+     * Whether the call was deemed successful by post-call analysis.
      */
     successful?: boolean;
 
     /**
-     * Post Call Extraction summary.
+     * Post-call analysis summary.
      */
     summary?: string;
   }
@@ -394,7 +396,7 @@ export namespace ContactListConversationsResponse {
     duration_ms?: number;
 
     /**
-     * User sentiment from Post Chat Extraction.
+     * User sentiment from post-chat analysis.
      */
     sentiment?: 'Negative' | 'Positive' | 'Neutral' | 'Unknown';
 
@@ -404,12 +406,12 @@ export namespace ContactListConversationsResponse {
     start_timestamp?: number;
 
     /**
-     * Whether the chat was deemed successful by Post Chat Extraction.
+     * Whether the chat was deemed successful by post-chat analysis.
      */
     successful?: boolean;
 
     /**
-     * Post Chat Extraction summary.
+     * Post-chat analysis summary.
      */
     summary?: string;
   }
@@ -797,7 +799,7 @@ export namespace ContactBackfillAnalysisDataParams {
       agent_id: string;
 
       /**
-       * Specific versions to filter on. If not provided, all versions are included.
+       * Specific versions to filter on. If omitted or empty, all versions are included.
        */
       version?: Array<number>;
     }

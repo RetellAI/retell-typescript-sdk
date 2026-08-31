@@ -129,7 +129,7 @@ export class Call extends APIResource {
   }
 
   /**
-   * Rerun Post Call Extraction for a specific call. This operation incurs charges.
+   * Rerun post-call analysis for a specific call. This operation incurs charges.
    *
    * @example
    * ```ts
@@ -260,9 +260,9 @@ export interface PhoneCallResponse {
   agent_tag?: string | null;
 
   /**
-   * Post Call Extraction that includes information such as sentiment, status,
-   * summary, and custom defined data to extract. Available after call ends.
-   * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   call_analysis?: PhoneCallResponse.CallAnalysis;
 
@@ -481,9 +481,9 @@ export interface PhoneCallResponse {
 
 export namespace PhoneCallResponse {
   /**
-   * Post Call Extraction that includes information such as sentiment, status,
-   * summary, and custom defined data to extract. Available after call ends.
-   * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   export interface CallAnalysis {
     /**
@@ -499,7 +499,7 @@ export namespace PhoneCallResponse {
 
     /**
      * Custom analysis data that was extracted based on the schema defined in agent
-     * Post Call Extraction data. Can be empty if nothing is specified.
+     * post call analysis data. Can be empty if nothing is specified.
      */
     custom_analysis_data?: unknown;
 
@@ -1462,9 +1462,9 @@ export interface WebCallResponse {
   agent_tag?: string | null;
 
   /**
-   * Post Call Extraction that includes information such as sentiment, status,
-   * summary, and custom defined data to extract. Available after call ends.
-   * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   call_analysis?: WebCallResponse.CallAnalysis;
 
@@ -1699,9 +1699,9 @@ export interface WebCallResponse {
 
 export namespace WebCallResponse {
   /**
-   * Post Call Extraction that includes information such as sentiment, status,
-   * summary, and custom defined data to extract. Available after call ends.
-   * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+   * Post call analysis that includes information such as sentiment, status, summary,
+   * and custom defined data to extract. Available after call ends. Subscribe to
+   * `call_analyzed` webhook event type to receive it once ready.
    */
   export interface CallAnalysis {
     /**
@@ -1717,7 +1717,7 @@ export namespace WebCallResponse {
 
     /**
      * Custom analysis data that was extracted based on the schema defined in agent
-     * Post Call Extraction data. Can be empty if nothing is specified.
+     * post call analysis data. Can be empty if nothing is specified.
      */
     custom_analysis_data?: unknown;
 
@@ -2625,9 +2625,9 @@ export interface CallListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<CallListResponse.V3WebCallResponse | CallListResponse.V3PhoneCallResponse>;
+  items: Array<CallListResponse.V3WebCallResponse | CallListResponse.V3PhoneCallResponse>;
 
   /**
    * Pagination key for the next page.
@@ -2698,9 +2698,9 @@ export namespace CallListResponse {
     agent_tag?: string | null;
 
     /**
-     * Post Call Extraction that includes information such as sentiment, status,
-     * summary, and custom defined data to extract. Available after call ends.
-     * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
      */
     call_analysis?: V3WebCallResponse.CallAnalysis;
 
@@ -2894,9 +2894,9 @@ export namespace CallListResponse {
 
   export namespace V3WebCallResponse {
     /**
-     * Post Call Extraction that includes information such as sentiment, status,
-     * summary, and custom defined data to extract. Available after call ends.
-     * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
      */
     export interface CallAnalysis {
       /**
@@ -2912,7 +2912,7 @@ export namespace CallListResponse {
 
       /**
        * Custom analysis data that was extracted based on the schema defined in agent
-       * Post Call Extraction data. Can be empty if nothing is specified.
+       * post call analysis data. Can be empty if nothing is specified.
        */
       custom_analysis_data?: unknown;
 
@@ -3453,9 +3453,9 @@ export namespace CallListResponse {
     agent_tag?: string | null;
 
     /**
-     * Post Call Extraction that includes information such as sentiment, status,
-     * summary, and custom defined data to extract. Available after call ends.
-     * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
      */
     call_analysis?: V3PhoneCallResponse.CallAnalysis;
 
@@ -3633,9 +3633,9 @@ export namespace CallListResponse {
 
   export namespace V3PhoneCallResponse {
     /**
-     * Post Call Extraction that includes information such as sentiment, status,
-     * summary, and custom defined data to extract. Available after call ends.
-     * Subscribe to `call_analyzed` webhook event type to receive it once ready.
+     * Post call analysis that includes information such as sentiment, status, summary,
+     * and custom defined data to extract. Available after call ends. Subscribe to
+     * `call_analyzed` webhook event type to receive it once ready.
      */
     export interface CallAnalysis {
       /**
@@ -3651,7 +3651,7 @@ export namespace CallListResponse {
 
       /**
        * Custom analysis data that was extracted based on the schema defined in agent
-       * Post Call Extraction data. Can be empty if nothing is specified.
+       * post call analysis data. Can be empty if nothing is specified.
        */
       custom_analysis_data?: unknown;
 
@@ -4341,7 +4341,7 @@ export namespace CallListParams {
       agent_id: string;
 
       /**
-       * Specific versions to filter on. If not provided, all versions are included.
+       * Specific versions to filter on. If omitted or empty, all versions are included.
        */
       version?: Array<number>;
     }
@@ -5597,7 +5597,7 @@ export namespace CallCreatePhoneCallParams {
       pii_config?: Agent.PiiConfig;
 
       /**
-       * Post Call Extraction data to extract from the call. This data will augment the
+       * Post call analysis data to extract from the call. This data will augment the
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
@@ -5610,7 +5610,7 @@ export namespace CallCreatePhoneCallParams {
       > | null;
 
       /**
-       * The model to use for Post Call Extraction. Default to gpt-4.1.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -5749,6 +5749,7 @@ export namespace CallCreatePhoneCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -6128,7 +6129,7 @@ export namespace CallCreatePhoneCallParams {
       }
 
       /**
-       * System preset for Post Call Extraction (voice agents). Use in
+       * System preset for post-call analysis (voice agents). Use in
        * post_call_analysis_data to override prompts or mark fields optional.
        */
       export interface CallPresetAnalysisData {
@@ -6989,7 +6990,7 @@ export namespace CallCreateWebCallParams {
       pii_config?: Agent.PiiConfig;
 
       /**
-       * Post Call Extraction data to extract from the call. This data will augment the
+       * Post call analysis data to extract from the call. This data will augment the
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
@@ -7002,7 +7003,7 @@ export namespace CallCreateWebCallParams {
       > | null;
 
       /**
-       * The model to use for Post Call Extraction. Default to gpt-4.1.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -7141,6 +7142,7 @@ export namespace CallCreateWebCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -7520,7 +7522,7 @@ export namespace CallCreateWebCallParams {
       }
 
       /**
-       * System preset for Post Call Extraction (voice agents). Use in
+       * System preset for post-call analysis (voice agents). Use in
        * post_call_analysis_data to override prompts or mark fields optional.
        */
       export interface CallPresetAnalysisData {
@@ -8381,7 +8383,7 @@ export namespace CallRegisterPhoneCallParams {
       pii_config?: Agent.PiiConfig;
 
       /**
-       * Post Call Extraction data to extract from the call. This data will augment the
+       * Post call analysis data to extract from the call. This data will augment the
        * pre-defined variables extracted in the call analysis. This will be available
        * after the call ends.
        */
@@ -8394,7 +8396,7 @@ export namespace CallRegisterPhoneCallParams {
       > | null;
 
       /**
-       * The model to use for Post Call Extraction. Default to gpt-4.1.
+       * The model to use for post call analysis. Default to gpt-4.1.
        */
       post_call_analysis_model?:
         | 'gpt-4.1'
@@ -8533,6 +8535,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -8912,7 +8915,7 @@ export namespace CallRegisterPhoneCallParams {
       }
 
       /**
-       * System preset for Post Call Extraction (voice agents). Use in
+       * System preset for post-call analysis (voice agents). Use in
        * post_call_analysis_data to override prompts or mark fields optional.
        */
       export interface CallPresetAnalysisData {
