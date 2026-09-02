@@ -688,7 +688,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -725,7 +725,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -1409,7 +1409,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -1446,7 +1446,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -1618,9 +1618,9 @@ export namespace ConversationFlowComponentResponse {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2016,7 +2016,7 @@ export namespace ConversationFlowComponentResponse {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to check
+       * Cal.com Api key that have access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -2030,9 +2030,9 @@ export namespace ConversationFlowComponentResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2059,7 +2059,7 @@ export namespace ConversationFlowComponentResponse {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to book
+       * Cal.com Api key that have access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -2073,9 +2073,9 @@ export namespace ConversationFlowComponentResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2164,9 +2164,9 @@ export namespace ConversationFlowComponentResponse {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2262,8 +2262,8 @@ export namespace ConversationFlowComponentResponse {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2343,7 +2343,7 @@ export namespace ConversationFlowComponentResponse {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -2388,7 +2388,7 @@ export namespace ConversationFlowComponentResponse {
 
     export namespace CustomTool {
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -2422,8 +2422,8 @@ export namespace ConversationFlowComponentResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2489,8 +2489,8 @@ export namespace ConversationFlowComponentResponse {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -2649,9 +2649,9 @@ export namespace ConversationFlowComponentResponse {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2688,9 +2688,9 @@ export namespace ConversationFlowComponentResponse {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -2930,7 +2930,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -2967,7 +2967,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -3410,7 +3410,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -3447,7 +3447,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -3897,7 +3897,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -3934,7 +3934,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -4571,7 +4571,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -4608,7 +4608,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -5043,7 +5043,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -5080,7 +5080,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -5472,7 +5472,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -5509,7 +5509,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -5914,7 +5914,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -5951,7 +5951,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -6485,7 +6485,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -6522,7 +6522,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -6852,7 +6852,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -6889,7 +6889,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -7341,7 +7341,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -7378,7 +7378,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -7814,7 +7814,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -7851,7 +7851,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -8027,7 +8027,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -8064,7 +8064,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -8304,7 +8304,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -8341,7 +8341,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -8522,8 +8522,8 @@ export namespace ConversationFlowComponentResponse {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-     * or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -8603,7 +8603,7 @@ export namespace ConversationFlowComponentResponse {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -8653,7 +8653,7 @@ export namespace ConversationFlowComponentResponse {
 
   export namespace CustomTool {
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -8684,7 +8684,7 @@ export namespace ConversationFlowComponentResponse {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to check
+     * Cal.com Api key that have access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -8698,9 +8698,9 @@ export namespace ConversationFlowComponentResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -8732,7 +8732,7 @@ export namespace ConversationFlowComponentResponse {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to book
+     * Cal.com Api key that have access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -8746,9 +8746,9 @@ export namespace ConversationFlowComponentResponse {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -9353,7 +9353,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -9390,7 +9390,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -10074,7 +10074,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -10111,7 +10111,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -10283,9 +10283,9 @@ export namespace ConversationFlowComponentCreateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -10681,7 +10681,7 @@ export namespace ConversationFlowComponentCreateParams {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to check
+       * Cal.com Api key that have access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -10695,9 +10695,9 @@ export namespace ConversationFlowComponentCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -10724,7 +10724,7 @@ export namespace ConversationFlowComponentCreateParams {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to book
+       * Cal.com Api key that have access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -10738,9 +10738,9 @@ export namespace ConversationFlowComponentCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -10829,9 +10829,9 @@ export namespace ConversationFlowComponentCreateParams {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -10927,8 +10927,8 @@ export namespace ConversationFlowComponentCreateParams {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -11008,7 +11008,7 @@ export namespace ConversationFlowComponentCreateParams {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -11053,7 +11053,7 @@ export namespace ConversationFlowComponentCreateParams {
 
     export namespace CustomTool {
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -11087,8 +11087,8 @@ export namespace ConversationFlowComponentCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -11154,8 +11154,8 @@ export namespace ConversationFlowComponentCreateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -11314,9 +11314,9 @@ export namespace ConversationFlowComponentCreateParams {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -11353,9 +11353,9 @@ export namespace ConversationFlowComponentCreateParams {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -11595,7 +11595,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -11632,7 +11632,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -12075,7 +12075,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -12112,7 +12112,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -12562,7 +12562,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -12599,7 +12599,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -13236,7 +13236,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -13273,7 +13273,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -13708,7 +13708,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -13745,7 +13745,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -14137,7 +14137,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -14174,7 +14174,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -14579,7 +14579,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -14616,7 +14616,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -15150,7 +15150,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -15187,7 +15187,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -15517,7 +15517,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -15554,7 +15554,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -16006,7 +16006,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -16043,7 +16043,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -16479,7 +16479,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -16516,7 +16516,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -16692,7 +16692,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -16729,7 +16729,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -16969,7 +16969,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -17006,7 +17006,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -17187,8 +17187,8 @@ export namespace ConversationFlowComponentCreateParams {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-     * or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -17268,7 +17268,7 @@ export namespace ConversationFlowComponentCreateParams {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -17318,7 +17318,7 @@ export namespace ConversationFlowComponentCreateParams {
 
   export namespace CustomTool {
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -17349,7 +17349,7 @@ export namespace ConversationFlowComponentCreateParams {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to check
+     * Cal.com Api key that have access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -17363,9 +17363,9 @@ export namespace ConversationFlowComponentCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -17397,7 +17397,7 @@ export namespace ConversationFlowComponentCreateParams {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to book
+     * Cal.com Api key that have access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -17411,9 +17411,9 @@ export namespace ConversationFlowComponentCreateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -18038,7 +18038,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -18075,7 +18075,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -18759,7 +18759,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -18796,7 +18796,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -18968,9 +18968,9 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface EndCallTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -19366,7 +19366,7 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     export interface CheckAvailabilityCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to check
+       * Cal.com Api key that have access to the cal.com event you want to check
        * availability for.
        */
       cal_api_key: string;
@@ -19380,9 +19380,9 @@ export namespace ConversationFlowComponentUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -19409,7 +19409,7 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     export interface BookAppointmentCalTool {
       /**
-       * Cal.com Api key that has access to the cal.com event you want to book
+       * Cal.com Api key that have access to the cal.com event you want to book
        * appointment.
        */
       cal_api_key: string;
@@ -19423,9 +19423,9 @@ export namespace ConversationFlowComponentUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -19514,9 +19514,9 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface PressDigitTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -19612,8 +19612,8 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface CustomTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -19693,7 +19693,7 @@ export namespace ConversationFlowComponentUpdateParams {
       parameter_type?: 'json' | 'form';
 
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -19738,7 +19738,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export namespace CustomTool {
       /**
-       * The parameters the function accepts, described as a JSON Schema object. See
+       * The parameters the functions accepts, described as a JSON Schema object. See
        * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
        * documentation about the format. Omitting parameters defines a function with an
        * empty parameter list.
@@ -19772,8 +19772,8 @@ export namespace ConversationFlowComponentUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -19839,8 +19839,8 @@ export namespace ConversationFlowComponentUpdateParams {
 
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-       * or contain underscores and dashes, with a maximum length of 64 (no space
+       * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+       * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
        * allowed).
        */
       name: string;
@@ -19999,9 +19999,9 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface BridgeTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -20038,9 +20038,9 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface CancelTransferTool {
       /**
        * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must consist of a-z,
-       * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-       * space allowed).
+       * time (general tools + state tools + state transitions). Must be consisted of
+       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+       * (no space allowed).
        */
       name: string;
 
@@ -20280,7 +20280,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -20317,7 +20317,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -20760,7 +20760,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -20797,7 +20797,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -21247,7 +21247,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -21284,7 +21284,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -21921,7 +21921,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -21958,7 +21958,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -22393,7 +22393,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -22430,7 +22430,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -22822,7 +22822,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -22859,7 +22859,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -23264,7 +23264,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -23301,7 +23301,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -23835,7 +23835,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -23872,7 +23872,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -24202,7 +24202,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -24239,7 +24239,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -24691,7 +24691,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -24728,7 +24728,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -25164,7 +25164,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -25201,7 +25201,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -25377,7 +25377,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -25414,7 +25414,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -25654,7 +25654,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface NegativeFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | NegativeFinetuneExample.UnionMember0
@@ -25691,7 +25691,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface PositiveFinetuneExample {
         /**
-         * Fine tune the transition condition to this global node
+         * Find tune the transition condition to this global node
          */
         transcript: Array<
           | PositiveFinetuneExample.UnionMember0
@@ -25838,8 +25838,8 @@ export namespace ConversationFlowComponentUpdateParams {
   export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state edges). Must consist of a-z, A-Z, 0-9,
-     * or contain underscores and dashes, with a maximum length of 64 (no space
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
      * allowed).
      */
     name: string;
@@ -25919,7 +25919,7 @@ export namespace ConversationFlowComponentUpdateParams {
     parameter_type?: 'json' | 'form';
 
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -25969,7 +25969,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
   export namespace CustomTool {
     /**
-     * The parameters the function accepts, described as a JSON Schema object. See
+     * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
@@ -26000,7 +26000,7 @@ export namespace ConversationFlowComponentUpdateParams {
    */
   export interface CheckAvailabilityCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to check
+     * Cal.com Api key that have access to the cal.com event you want to check
      * availability for.
      */
     cal_api_key: string;
@@ -26014,9 +26014,9 @@ export namespace ConversationFlowComponentUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 
@@ -26048,7 +26048,7 @@ export namespace ConversationFlowComponentUpdateParams {
    */
   export interface BookAppointmentCalTool {
     /**
-     * Cal.com Api key that has access to the cal.com event you want to book
+     * Cal.com Api key that have access to the cal.com event you want to book
      * appointment.
      */
     cal_api_key: string;
@@ -26062,9 +26062,9 @@ export namespace ConversationFlowComponentUpdateParams {
 
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must consist of a-z,
-     * A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64 (no
-     * space allowed).
+     * time (general tools + state tools + state transitions). Must be consisted of
+     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
+     * (no space allowed).
      */
     name: string;
 

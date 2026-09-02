@@ -273,8 +273,8 @@ export interface KnowledgeBaseCreateParams {
   knowledge_base_urls?: Array<string>;
 
   /**
-   * Maximum number of characters per chunk when splitting knowledge base content.
-   * Default is 2000. Immutable after creation.
+   * Maximum number of characters per chunk when splitting knowledge base. Default
+   * is 2000. content. Immutable after creation.
    */
   max_chunk_size?: number;
 

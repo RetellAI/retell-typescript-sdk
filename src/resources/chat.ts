@@ -1000,12 +1000,13 @@ export namespace ChatListParams {
     chat_successful?: FilterCriteria.ChatSuccessful;
 
     /**
-     * Filter by combined cost of the chat.
+     * Filter by total chat cost in cents.
      */
     combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by custom analysis data fields.
+     * Filter by custom post-chat analysis outputs. Each filter `key` matches the
+     * configured output's `name`.
      */
     custom_analysis_data?: Array<
       | FilterCriteria.StringFilter
@@ -1017,7 +1018,10 @@ export namespace ChatListParams {
     >;
 
     /**
-     * Filter by custom attributes fields.
+     * Filter by organization-level attributes that attach business context to chats,
+     * such as customer tier or campaign, so chats can be organized and filtered
+     * consistently in Chat History. Use the attribute ID as `key` and the chat's
+     * attribute value as `value`.
      */
     custom_attributes?: Array<
       | FilterCriteria.StringFilter

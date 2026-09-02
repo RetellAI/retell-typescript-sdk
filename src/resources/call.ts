@@ -341,7 +341,7 @@ export interface PhoneCallResponse {
 
   /**
    * URL to the knowledge base retrieved contents of the call. Available after call
-   * ends if the call utilizes knowledge base feature. It consists of the response id
+   * ends if the call utilizes knowledge base feature. It consists of the respond id
    * and the retrieved contents related to that response. It's already rendered in
    * call history tab of dashboard, and you can also manually download and check
    * against the transcript to view the knowledge base retrieval results.
@@ -504,7 +504,7 @@ export namespace PhoneCallResponse {
     custom_analysis_data?: unknown;
 
     /**
-     * Whether the call entered voicemail.
+     * Whether the call is entered voicemail.
      */
     in_voicemail?: boolean;
 
@@ -583,7 +583,7 @@ export namespace PhoneCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -604,8 +604,8 @@ export namespace PhoneCallResponse {
 
     /**
      * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-     * received) tracking of the call. Only populated for calls that use S2S model like
-     * Realtime API.
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
     s2s?: Latency.S2s;
 
@@ -712,7 +712,7 @@ export namespace PhoneCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -853,8 +853,8 @@ export namespace PhoneCallResponse {
 
     /**
      * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-     * received) tracking of the call. Only populated for calls that use S2S model like
-     * Realtime API.
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
     export interface S2s {
       /**
@@ -1078,7 +1078,7 @@ export namespace PhoneCallResponse {
     new_node_name: string;
 
     /**
-     * This is the result of a node transition.
+     * This is result of a node transition
      */
     role: 'node_transition';
 
@@ -1323,7 +1323,7 @@ export namespace PhoneCallResponse {
     new_node_name: string;
 
     /**
-     * This is the result of a node transition.
+     * This is result of a node transition
      */
     role: 'node_transition';
 
@@ -1542,21 +1542,8 @@ export interface WebCallResponse {
   end_timestamp?: number;
 
   /**
-   * Public side of the gateway instance handling this call, for diagnostics only —
-   * the client's media address comes from the SDP answer's ICE candidates. `gateway`
-   * transport only.
-   */
-  gateway_ip?: string;
-
-  /**
-   * ICE servers the client must configure before creating its PeerConnection — they
-   * cannot be added afterwards. `gateway` transport only.
-   */
-  ice_servers?: Array<WebCallResponse.IceServer>;
-
-  /**
    * URL to the knowledge base retrieved contents of the call. Available after call
-   * ends if the call utilizes knowledge base feature. It consists of the response id
+   * ends if the call utilizes knowledge base feature. It consists of the respond id
    * and the retrieved contents related to that response. It's already rendered in
    * call history tab of dashboard, and you can also manually download and check
    * against the transcript to view the knowledge base retrieval results.
@@ -1686,15 +1673,6 @@ export interface WebCallResponse {
    * transfer call ends.
    */
   transfer_end_timestamp?: number;
-
-  /**
-   * Which media stack issued the access_token, and therefore where the client
-   * signals. The two tokens are indistinguishable, so a client must read this rather
-   * than infer it. `gateway` clients address Retell itself; `livekit` clients
-   * connect to the returned `url`. Optional only because a server predating the
-   * field omits it during a rollout; treat absent as `livekit`.
-   */
-  transport?: 'livekit' | 'gateway';
 }
 
 export namespace WebCallResponse {
@@ -1722,7 +1700,7 @@ export namespace WebCallResponse {
     custom_analysis_data?: unknown;
 
     /**
-     * Whether the call entered voicemail.
+     * Whether the call is entered voicemail.
      */
     in_voicemail?: boolean;
 
@@ -1781,14 +1759,6 @@ export namespace WebCallResponse {
     }
   }
 
-  export interface IceServer {
-    urls: string | Array<string>;
-
-    credential?: string;
-
-    username?: string;
-  }
-
   /**
    * Latency tracking of the call, available after call ends. Not all fields here
    * will be available, as it depends on the type of call and feature used.
@@ -1809,7 +1779,7 @@ export namespace WebCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -1830,8 +1800,8 @@ export namespace WebCallResponse {
 
     /**
      * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-     * received) tracking of the call. Only populated for calls that use S2S model like
-     * Realtime API.
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
     s2s?: Latency.S2s;
 
@@ -1938,7 +1908,7 @@ export namespace WebCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -2079,8 +2049,8 @@ export namespace WebCallResponse {
 
     /**
      * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-     * received) tracking of the call. Only populated for calls that use S2S model like
-     * Realtime API.
+     * received) tracking of the call. Only populated for calls that uses S2S model
+     * like Realtime API.
      */
     export interface S2s {
       /**
@@ -2304,7 +2274,7 @@ export namespace WebCallResponse {
     new_node_name: string;
 
     /**
-     * This is the result of a node transition.
+     * This is result of a node transition
      */
     role: 'node_transition';
 
@@ -2538,7 +2508,7 @@ export namespace WebCallResponse {
     new_node_name: string;
 
     /**
-     * This is the result of a node transition.
+     * This is result of a node transition
      */
     role: 'node_transition';
 
@@ -2778,21 +2748,8 @@ export namespace CallListResponse {
     end_timestamp?: number;
 
     /**
-     * Public side of the gateway instance handling this call, for diagnostics only —
-     * the client's media address comes from the SDP answer's ICE candidates. `gateway`
-     * transport only.
-     */
-    gateway_ip?: string;
-
-    /**
-     * ICE servers the client must configure before creating its PeerConnection — they
-     * cannot be added afterwards. `gateway` transport only.
-     */
-    ice_servers?: Array<V3WebCallResponse.IceServer>;
-
-    /**
      * URL to the knowledge base retrieved contents of the call. Available after call
-     * ends if the call utilizes knowledge base feature. It consists of the response id
+     * ends if the call utilizes knowledge base feature. It consists of the respond id
      * and the retrieved contents related to that response. It's already rendered in
      * call history tab of dashboard, and you can also manually download and check
      * against the transcript to view the knowledge base retrieval results.
@@ -2881,15 +2838,6 @@ export namespace CallListResponse {
      * transfer call ends.
      */
     transfer_end_timestamp?: number;
-
-    /**
-     * Which media stack issued the access_token, and therefore where the client
-     * signals. The two tokens are indistinguishable, so a client must read this rather
-     * than infer it. `gateway` clients address Retell itself; `livekit` clients
-     * connect to the returned `url`. Optional only because a server predating the
-     * field omits it during a rollout; treat absent as `livekit`.
-     */
-    transport?: 'livekit' | 'gateway';
   }
 
   export namespace V3WebCallResponse {
@@ -2917,7 +2865,7 @@ export namespace CallListResponse {
       custom_analysis_data?: unknown;
 
       /**
-       * Whether the call entered voicemail.
+       * Whether the call is entered voicemail.
        */
       in_voicemail?: boolean;
 
@@ -2976,14 +2924,6 @@ export namespace CallListResponse {
       }
     }
 
-    export interface IceServer {
-      urls: string | Array<string>;
-
-      credential?: string;
-
-      username?: string;
-    }
-
     /**
      * Latency tracking of the call, available after call ends. Not all fields here
      * will be available, as it depends on the type of call and feature used.
@@ -3004,7 +2944,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -3025,8 +2965,8 @@ export namespace CallListResponse {
 
       /**
        * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-       * received) tracking of the call. Only populated for calls that use S2S model like
-       * Realtime API.
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
        */
       s2s?: Latency.S2s;
 
@@ -3133,7 +3073,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -3274,8 +3214,8 @@ export namespace CallListResponse {
 
       /**
        * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-       * received) tracking of the call. Only populated for calls that use S2S model like
-       * Realtime API.
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
        */
       export interface S2s {
         /**
@@ -3534,7 +3474,7 @@ export namespace CallListResponse {
 
     /**
      * URL to the knowledge base retrieved contents of the call. Available after call
-     * ends if the call utilizes knowledge base feature. It consists of the response id
+     * ends if the call utilizes knowledge base feature. It consists of the respond id
      * and the retrieved contents related to that response. It's already rendered in
      * call history tab of dashboard, and you can also manually download and check
      * against the transcript to view the knowledge base retrieval results.
@@ -3656,7 +3596,7 @@ export namespace CallListResponse {
       custom_analysis_data?: unknown;
 
       /**
-       * Whether the call entered voicemail.
+       * Whether the call is entered voicemail.
        */
       in_voicemail?: boolean;
 
@@ -3735,7 +3675,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -3756,8 +3696,8 @@ export namespace CallListResponse {
 
       /**
        * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-       * received) tracking of the call. Only populated for calls that use S2S model like
-       * Realtime API.
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
        */
       s2s?: Latency.S2s;
 
@@ -3864,7 +3804,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -4005,8 +3945,8 @@ export namespace CallListResponse {
 
       /**
        * Speech-to-speech latency (from requesting responses of a S2S model to first byte
-       * received) tracking of the call. Only populated for calls that use S2S model like
-       * Realtime API.
+       * received) tracking of the call. Only populated for calls that uses S2S model
+       * like Realtime API.
        */
       export interface S2s {
         /**
@@ -4232,12 +4172,13 @@ export namespace CallListParams {
     call_type?: FilterCriteria.CallType;
 
     /**
-     * Filter by combined cost of the call.
+     * Filter by total call cost in cents.
      */
     combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by custom analysis data fields.
+     * Filter by custom post-call analysis outputs. Each filter `key` matches the
+     * configured output's `name`.
      */
     custom_analysis_data?: Array<
       | FilterCriteria.StringFilter
@@ -4249,7 +4190,10 @@ export namespace CallListParams {
     >;
 
     /**
-     * Filter by custom attributes fields.
+     * Filter by organization-level attributes that attach business context to calls,
+     * such as customer tier or campaign, so calls can be organized and filtered
+     * consistently in Call History. Use the attribute ID as `key` and the call's
+     * attribute value as `value`.
      */
     custom_attributes?: Array<
       | FilterCriteria.StringFilter
@@ -4272,7 +4216,8 @@ export namespace CallListParams {
     duration_ms?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by dynamic variables.
+     * Filter by dynamic variables stored on the call. Each filter `key` matches a
+     * dynamic-variable name.
      */
     dynamic_variables?: Array<
       | FilterCriteria.StringFilter
@@ -4284,7 +4229,7 @@ export namespace CallListParams {
     >;
 
     /**
-     * Filter by end-to-end latency p50.
+     * Filter by per-call p50 end-to-end latency in milliseconds.
      */
     e2e_latency_p50?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
@@ -4304,7 +4249,8 @@ export namespace CallListParams {
     in_voicemail?: FilterCriteria.InVoicemail;
 
     /**
-     * Filter by metadata fields.
+     * Filter by values stored in the call's `metadata`. Each filter `key` matches a
+     * top-level metadata key.
      */
     metadata?: Array<
       | FilterCriteria.StringFilter
@@ -5671,7 +5617,7 @@ export namespace CallCreatePhoneCallParams {
         | Agent.ResponseEngineConversationFlow;
 
       /**
-       * Controls how responsive the agent is. Value ranging from [0,1]. Lower value
+       * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
        * means less responsive agent (wait more, respond slower), while higher value
        * means faster exchanges (respond when it can). If unset, default value 1 will
        * apply.
@@ -5814,7 +5760,7 @@ export namespace CallCreatePhoneCallParams {
 
       /**
        * The webhook for agent to listen to call events. See what events it would get at
-       * [webhook doc](/features/webhook). If set, will bind webhook events for this
+       * [webhook doc](/features/webhook). If set, will binds webhook events for this
        * agent to the specified url, and will ignore the account level webhook for this
        * agent. Set to `null` to remove webhook url from this agent.
        */
@@ -7064,7 +7010,7 @@ export namespace CallCreateWebCallParams {
         | Agent.ResponseEngineConversationFlow;
 
       /**
-       * Controls how responsive the agent is. Value ranging from [0,1]. Lower value
+       * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
        * means less responsive agent (wait more, respond slower), while higher value
        * means faster exchanges (respond when it can). If unset, default value 1 will
        * apply.
@@ -7207,7 +7153,7 @@ export namespace CallCreateWebCallParams {
 
       /**
        * The webhook for agent to listen to call events. See what events it would get at
-       * [webhook doc](/features/webhook). If set, will bind webhook events for this
+       * [webhook doc](/features/webhook). If set, will binds webhook events for this
        * agent to the specified url, and will ignore the account level webhook for this
        * agent. Set to `null` to remove webhook url from this agent.
        */
@@ -8457,7 +8403,7 @@ export namespace CallRegisterPhoneCallParams {
         | Agent.ResponseEngineConversationFlow;
 
       /**
-       * Controls how responsive the agent is. Value ranging from [0,1]. Lower value
+       * Controls how responsive is the agent. Value ranging from [0,1]. Lower value
        * means less responsive agent (wait more, respond slower), while higher value
        * means faster exchanges (respond when it can). If unset, default value 1 will
        * apply.
@@ -8600,7 +8546,7 @@ export namespace CallRegisterPhoneCallParams {
 
       /**
        * The webhook for agent to listen to call events. See what events it would get at
-       * [webhook doc](/features/webhook). If set, will bind webhook events for this
+       * [webhook doc](/features/webhook). If set, will binds webhook events for this
        * agent to the specified url, and will ignore the account level webhook for this
        * agent. Set to `null` to remove webhook url from this agent.
        */
