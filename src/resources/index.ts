@@ -47,11 +47,13 @@ export {
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
+  type CallCreateWebV3Response,
   type CallUpdateLiveResponse,
   type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
+  type CallCreateWebV3Params,
   type CallRegisterPhoneCallParams,
   type CallUpdateLiveParams,
 } from './call';

@@ -184,6 +184,11 @@ export interface ChatResponse {
   chat_status: 'ongoing' | 'ended' | 'error';
 
   /**
+   * Tag pointing at the agent version used for this chat
+   */
+  agent_tag?: string | null;
+
+  /**
    * Post chat analysis that includes information such as sentiment, status, summary,
    * and custom defined data to extract. Available after chat ends. Subscribe to
    * `chat_analyzed` webhook event type to receive it once ready.

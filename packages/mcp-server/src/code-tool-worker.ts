@@ -110,6 +110,7 @@ const fuse = new Fuse(
   [
     'client.call.createPhoneCall',
     'client.call.createWebCall',
+    'client.call.createWebV3',
     'client.call.delete',
     'client.call.list',
     'client.call.registerPhoneCall',
