@@ -47,12 +47,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v2/create-web-call',
   },
   {
-    clientCallName: 'client.call.createWebV3',
-    fullyQualifiedName: 'call.createWebV3',
-    httpMethod: 'post',
-    httpPath: '/v3/create-web-call',
-  },
-  {
     clientCallName: 'client.call.registerPhoneCall',
     fullyQualifiedName: 'call.registerPhoneCall',
     httpMethod: 'post',

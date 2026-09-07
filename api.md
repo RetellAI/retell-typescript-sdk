@@ -6,7 +6,6 @@ Types:
 - <code><a href="./src/resources/call.ts">PhoneCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">WebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
-- <code><a href="./src/resources/call.ts">CallCreateWebV3Response</a></code>
 - <code><a href="./src/resources/call.ts">CallUpdateLiveResponse</a></code>
 
 Methods:
@@ -17,7 +16,6 @@ Methods:
 - <code title="delete /v2/delete-call/{call_id}">client.call.<a href="./src/resources/call.ts">delete</a>(callID) -> void</code>
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
-- <code title="post /v3/create-web-call">client.call.<a href="./src/resources/call.ts">createWebV3</a>({ ...params }) -> CallCreateWebV3Response</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="put /rerun-call-analysis/{call_id}">client.call.<a href="./src/resources/call.ts">rerunAnalysis</a>(callID) -> CallResponse</code>
 - <code title="post /v2/stop-call/{call_id}">client.call.<a href="./src/resources/call.ts">stop</a>(callID) -> void</code>
