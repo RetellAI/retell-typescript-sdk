@@ -47,6 +47,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v2/create-web-call',
   },
   {
+    clientCallName: 'client.call.listenLive',
+    fullyQualifiedName: 'call.listenLive',
+    httpMethod: 'post',
+    httpPath: '/v2/listen-live-call/{call_id}',
+  },
+  {
     clientCallName: 'client.call.registerPhoneCall',
     fullyQualifiedName: 'call.registerPhoneCall',
     httpMethod: 'post',
@@ -63,6 +69,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'call.stop',
     httpMethod: 'post',
     httpPath: '/v2/stop-call/{call_id}',
+  },
+  {
+    clientCallName: 'client.call.takeOverLive',
+    fullyQualifiedName: 'call.takeOverLive',
+    httpMethod: 'post',
+    httpPath: '/v2/take-over-live-call/{call_id}',
   },
   {
     clientCallName: 'client.call.updateLive',

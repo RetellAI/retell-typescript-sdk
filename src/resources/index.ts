@@ -47,12 +47,15 @@ export {
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
+  type CallListenLiveResponse,
+  type CallTakeOverLiveResponse,
   type CallUpdateLiveResponse,
   type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
   type CallRegisterPhoneCallParams,
+  type CallTakeOverLiveParams,
   type CallUpdateLiveParams,
 } from './call';
 export {

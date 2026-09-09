@@ -856,7 +856,9 @@ export namespace BatchCallCreateBatchCallParams {
         export interface CustomSttConfig {
           /**
            * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-           * 500 for Soniox, 100 for AssemblyAI.
+           * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
+           * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
+           * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
            */
           endpointing_ms: number;
 
