@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/call.ts">CallResponse</a></code>
+- <code><a href="./src/resources/call.ts">CreateWebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">PhoneCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">WebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
@@ -17,7 +18,7 @@ Methods:
 - <code title="post /v3/list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
 - <code title="delete /v2/delete-call/{call_id}">client.call.<a href="./src/resources/call.ts">delete</a>(callID) -> void</code>
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
-- <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
+- <code title="post /v3/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> CreateWebCallResponse</code>
 - <code title="post /v2/listen-live-call/{call_id}">client.call.<a href="./src/resources/call.ts">listenLive</a>(callID) -> CallListenLiveResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="put /rerun-call-analysis/{call_id}">client.call.<a href="./src/resources/call.ts">rerunAnalysis</a>(callID) -> CallResponse</code>

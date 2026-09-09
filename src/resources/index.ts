@@ -44,6 +44,7 @@ export {
 export {
   Call,
   type CallResponse,
+  type CreateWebCallResponse,
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,

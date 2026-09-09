@@ -97,12 +97,18 @@ export class Call extends APIResource {
   }
 
   /**
-   * Create a new web call
+   * Create a new web call and return browser connection details.
    *
-   * @deprecated
+   * @example
+   * ```ts
+   * const createWebCallResponse =
+   *   await client.call.createWebCall({
+   *     agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *   });
+   * ```
    */
-  createWebCall(body: CallCreateWebCallParams, options?: RequestOptions): APIPromise<WebCallResponse> {
-    return this._client.post('/v2/create-web-call', { body, ...options });
+  createWebCall(body: CallCreateWebCallParams, options?: RequestOptions): APIPromise<CreateWebCallResponse> {
+    return this._client.post('/v3/create-web-call', { body, ...options });
   }
 
   /**
@@ -226,6 +232,43 @@ export class Call extends APIResource {
 }
 
 export type CallResponse = WebCallResponse | PhoneCallResponse;
+
+export interface CreateWebCallResponse {
+  /**
+   * Token authorizing this browser to join the web call. Pass it to your frontend.
+   */
+  access_token: string;
+
+  /**
+   * Unique identifier for the web call.
+   */
+  call_id: string;
+
+  /**
+   * Unix epoch ms when the access_token expires.
+   */
+  expires_at: number;
+
+  /**
+   * ICE servers to configure before the browser creates its peer connection.
+   */
+  ice_servers: Array<CreateWebCallResponse.IceServer>;
+
+  /**
+   * Connection transport to select in the web client.
+   */
+  transport: 'gateway';
+}
+
+export namespace CreateWebCallResponse {
+  export interface IceServer {
+    urls: string | Array<string>;
+
+    credential?: string;
+
+    username?: string;
+  }
+}
 
 export interface PhoneCallResponse {
   /**
@@ -9446,6 +9489,7 @@ export namespace CallUpdateLiveParams {
 export declare namespace Call {
   export {
     type CallResponse as CallResponse,
+    type CreateWebCallResponse as CreateWebCallResponse,
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,

@@ -44,7 +44,7 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.call.createWebCall',
     fullyQualifiedName: 'call.createWebCall',
     httpMethod: 'post',
-    httpPath: '/v2/create-web-call',
+    httpPath: '/v3/create-web-call',
   },
   {
     clientCallName: 'client.call.listenLive',
