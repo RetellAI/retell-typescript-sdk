@@ -52,10 +52,6 @@ export class Contact extends APIResource {
     });
   }
 
-  /**
-   * Trigger a backfill job that re-applies analysis data mappings to contacts using
-   * historical call data. Only one backfill job can run per organization at a time.
-   */
   backfillAnalysisData(
     body: ContactBackfillAnalysisDataParams,
     options?: RequestOptions,
@@ -760,25 +756,12 @@ export namespace ContactListParams {
 }
 
 export interface ContactBackfillAnalysisDataParams {
-  /**
-   * Contact fields to recompute. Each one must still exist as a contact field and
-   * have an analysis data mapping configured, otherwise the request is rejected
-   * rather than running a job that writes nothing.
-   */
   backfill_attributes: Array<string>;
 
-  /**
-   * Optional call filter to scope which calls are processed. Supports agent and
-   * start_timestamp from the standard call filter.
-   */
   backfill_call_filter?: ContactBackfillAnalysisDataParams.BackfillCallFilter;
 }
 
 export namespace ContactBackfillAnalysisDataParams {
-  /**
-   * Optional call filter to scope which calls are processed. Supports agent and
-   * start_timestamp from the standard call filter.
-   */
   export interface BackfillCallFilter {
     /**
      * Filter calls by agent. Agents are OR-connected.

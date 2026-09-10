@@ -345,6 +345,11 @@ export namespace ConversationFlowResponse {
       always_edge?: ConversationNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: ConversationNode.DisplayPosition;
@@ -394,6 +399,13 @@ export namespace ConversationFlowResponse {
       responsiveness?: number | null;
 
       skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       voice_speed?: number | null;
     }
@@ -498,6 +510,22 @@ export namespace ConversationFlowResponse {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -1052,6 +1080,11 @@ export namespace ConversationFlowResponse {
       always_edge?: SubagentNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: SubagentNode.DisplayPosition;
@@ -1101,6 +1134,13 @@ export namespace ConversationFlowResponse {
       responsiveness?: number | null;
 
       skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       /**
        * The tool ids of the tools defined in main conversation flow or component that
@@ -1219,6 +1259,22 @@ export namespace ConversationFlowResponse {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -9016,6 +9072,11 @@ export namespace ConversationFlowResponse {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: ConversationNode.DisplayPosition;
@@ -9065,6 +9126,13 @@ export namespace ConversationFlowResponse {
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     voice_speed?: number | null;
   }
@@ -9169,6 +9237,22 @@ export namespace ConversationFlowResponse {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
@@ -9723,6 +9807,11 @@ export namespace ConversationFlowResponse {
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: SubagentNode.DisplayPosition;
@@ -9772,6 +9861,13 @@ export namespace ConversationFlowResponse {
     responsiveness?: number | null;
 
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     /**
      * The tool ids of the tools defined in main conversation flow or component that
@@ -9890,6 +9986,22 @@ export namespace ConversationFlowResponse {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
@@ -17748,6 +17860,11 @@ export namespace ConversationFlowCreateParams {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: ConversationNode.DisplayPosition;
@@ -17797,6 +17914,13 @@ export namespace ConversationFlowCreateParams {
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     voice_speed?: number | null;
   }
@@ -17901,6 +18025,22 @@ export namespace ConversationFlowCreateParams {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
@@ -18455,6 +18595,11 @@ export namespace ConversationFlowCreateParams {
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: SubagentNode.DisplayPosition;
@@ -18504,6 +18649,13 @@ export namespace ConversationFlowCreateParams {
     responsiveness?: number | null;
 
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     /**
      * The tool ids of the tools defined in main conversation flow or component that
@@ -18622,6 +18774,22 @@ export namespace ConversationFlowCreateParams {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
@@ -26072,6 +26240,11 @@ export namespace ConversationFlowCreateParams {
       always_edge?: ConversationNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: ConversationNode.DisplayPosition;
@@ -26121,6 +26294,13 @@ export namespace ConversationFlowCreateParams {
       responsiveness?: number | null;
 
       skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       voice_speed?: number | null;
     }
@@ -26225,6 +26405,22 @@ export namespace ConversationFlowCreateParams {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -26779,6 +26975,11 @@ export namespace ConversationFlowCreateParams {
       always_edge?: SubagentNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: SubagentNode.DisplayPosition;
@@ -26828,6 +27029,13 @@ export namespace ConversationFlowCreateParams {
       responsiveness?: number | null;
 
       skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       /**
        * The tool ids of the tools defined in main conversation flow or component that
@@ -26946,6 +27154,22 @@ export namespace ConversationFlowCreateParams {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -35206,6 +35430,11 @@ export namespace ConversationFlowUpdateParams {
       always_edge?: ConversationNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: ConversationNode.DisplayPosition;
@@ -35255,6 +35484,13 @@ export namespace ConversationFlowUpdateParams {
       responsiveness?: number | null;
 
       skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       voice_speed?: number | null;
     }
@@ -35359,6 +35595,22 @@ export namespace ConversationFlowUpdateParams {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -35913,6 +36165,11 @@ export namespace ConversationFlowUpdateParams {
       always_edge?: SubagentNode.AlwaysEdge;
 
       /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+      /**
        * Position for frontend display
        */
       display_position?: SubagentNode.DisplayPosition;
@@ -35962,6 +36219,13 @@ export namespace ConversationFlowUpdateParams {
       responsiveness?: number | null;
 
       skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+      /**
+       * Balance between speed and accuracy. Fast optimizes for speed using the provider
+       * configuration, accurate optimizes for accuracy using the provider configuration,
+       * and custom uses custom_stt_config.
+       */
+      stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
       /**
        * The tool ids of the tools defined in main conversation flow or component that
@@ -36080,6 +36344,22 @@ export namespace ConversationFlowUpdateParams {
 
           type: 'prompt';
         }
+      }
+
+      /**
+       * Custom transcription settings. Required when stt_mode is custom.
+       */
+      export interface CustomSttConfig {
+        /**
+         * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+         * 500 for Soniox, and 100 for AssemblyAI.
+         */
+        endpointing_ms: number;
+
+        /**
+         * ASR provider name.
+         */
+        provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
       }
 
       /**
@@ -43877,6 +44157,11 @@ export namespace ConversationFlowUpdateParams {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: ConversationNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: ConversationNode.DisplayPosition;
@@ -43926,6 +44211,13 @@ export namespace ConversationFlowUpdateParams {
     responsiveness?: number | null;
 
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     voice_speed?: number | null;
   }
@@ -44030,6 +44322,22 @@ export namespace ConversationFlowUpdateParams {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
@@ -44584,6 +44892,11 @@ export namespace ConversationFlowUpdateParams {
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    custom_stt_config?: SubagentNode.CustomSttConfig | null;
+
+    /**
      * Position for frontend display
      */
     display_position?: SubagentNode.DisplayPosition;
@@ -44633,6 +44946,13 @@ export namespace ConversationFlowUpdateParams {
     responsiveness?: number | null;
 
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Balance between speed and accuracy. Fast optimizes for speed using the provider
+     * configuration, accurate optimizes for accuracy using the provider configuration,
+     * and custom uses custom_stt_config.
+     */
+    stt_mode?: 'fast' | 'accurate' | 'custom' | null;
 
     /**
      * The tool ids of the tools defined in main conversation flow or component that
@@ -44751,6 +45071,22 @@ export namespace ConversationFlowUpdateParams {
 
         type: 'prompt';
       }
+    }
+
+    /**
+     * Custom transcription settings. Required when stt_mode is custom.
+     */
+    export interface CustomSttConfig {
+      /**
+       * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
+       * 500 for Soniox, and 100 for AssemblyAI.
+       */
+      endpointing_ms: number;
+
+      /**
+       * ASR provider name.
+       */
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
     }
 
     /**
