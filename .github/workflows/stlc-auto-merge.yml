@@ -13,40 +13,63 @@ on:
         description: 'Optional PR number to evaluate'
         required: false
 
+concurrency:
+  group: sdk-auto-merge
+  cancel-in-progress: false
+
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
   checks: read
   statuses: read
   actions: read
 
 jobs:
   auto-merge:
-    if: github.repository == 'RetellAI/retell-typescript-sdk'
+    if: github.repository == 'RetellAI/retell-typescript-sdk' && github.ref == 'refs/heads/main' && vars.SDK_RELEASES_ENABLED == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
-      GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
     steps:
+      - name: Mint SDK automation token
+        id: sdk-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.DOCS_SYNC_APP_CLIENT_ID }}
+          private-key: ${{ secrets.DOCS_MANAGER_PVT_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: retell-typescript-sdk
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Merge qualifying green PRs
         shell: bash
+        env:
+          MERGE_TOKEN: ${{ steps.sdk-token.outputs.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_PR: ${{ github.event.pull_request.number }}
+          INPUT_PR: ${{ inputs.pr_number }}
         run: |
           set -euo pipefail
 
-          pr_numbers=()
-          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
-            pr_numbers+=("${{ github.event.pull_request.number }}")
-          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.pr_number }}" ]; then
-            pr_numbers+=("${{ inputs.pr_number }}")
+          if [ "$EVENT_NAME" = "pull_request_target" ]; then
+            numbers="$EVENT_PR"
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "$INPUT_PR" ]; then
+            numbers="$INPUT_PR"
           else
-            while IFS= read -r number; do
-              pr_numbers+=("$number")
-            done < <(gh pr list --repo "$REPO" --base main --state open --json number --jq '.[].number')
+            numbers=$(gh pr list --repo "$REPO" --base main --state open --limit 1000 --json number --jq '.[].number')
           fi
 
-          for pr in "${pr_numbers[@]}"; do
+          while IFS= read -r pr; do
+            [ -n "$pr" ] || continue
+            if [[ ! "$pr" =~ ^[1-9][0-9]*$ ]]; then
+              echo "::error::Invalid PR number."
+              exit 1
+            fi
             echo "Evaluating PR #$pr"
-            pr_json=$(gh pr view "$pr" --repo "$REPO" --json title,isDraft,headRefName,headRefOid,headRepository,isCrossRepository,baseRefName,mergeStateStatus)
+            pr_json=$(gh pr view "$pr" --repo "$REPO" --json state,title,isDraft,headRefName,headRefOid,headRepository,isCrossRepository,baseRefName,mergeStateStatus)
             title=$(jq -r '.title' <<<"$pr_json")
             is_draft=$(jq -r '.isDraft' <<<"$pr_json")
             head_ref=$(jq -r '.headRefName' <<<"$pr_json")
@@ -55,7 +78,7 @@ jobs:
             is_cross_repository=$(jq -r '.isCrossRepository' <<<"$pr_json")
             base_ref=$(jq -r '.baseRefName' <<<"$pr_json")
 
-            if [ "$base_ref" != "main" ] || [ "$is_draft" = "true" ]; then
+            if [ "$(jq -r .state <<<"$pr_json")" != "OPEN" ] || [ "$base_ref" != "main" ] || [ "$is_draft" = "true" ]; then
               echo "Skipping PR #$pr: not a ready PR to main."
               continue
             fi
@@ -75,14 +98,21 @@ jobs:
               continue
             fi
 
-            check_runs=$(gh api "/repos/$REPO/commits/$head_sha/check-runs?per_page=100")
-            check_count=$(jq '.total_count' <<<"$check_runs")
+            ci_runs=$(gh api "/repos/$REPO/actions/workflows/ci.yml/runs?head_sha=$head_sha&event=push&per_page=1")
+            if ! jq -e '.workflow_runs[0] | .status == "completed" and .conclusion == "success"' <<<"$ci_runs" >/dev/null; then
+              echo "Skipping PR #$pr: push CI has not passed for $head_sha."
+              continue
+            fi
+
+            check_pages=$(gh api --paginate --slurp "/repos/$REPO/commits/$head_sha/check-runs?filter=latest&per_page=100")
+            check_runs=$(jq '[.[].check_runs[] | select(.name != "auto-merge" or .app.slug != "github-actions")]' <<<"$check_pages")
+            check_count=$(jq 'length' <<<"$check_runs")
             if [ "$check_count" -eq 0 ]; then
               echo "Skipping PR #$pr: no check runs found yet."
               continue
             fi
 
-            bad_checks=$(jq '[.check_runs[] | select(.status != "completed" or (.conclusion != "success" and .conclusion != "neutral" and .conclusion != "skipped"))] | length' <<<"$check_runs")
+            bad_checks=$(jq '[.[] | select(.status != "completed" or (.conclusion != "success" and .conclusion != "neutral" and .conclusion != "skipped"))] | length' <<<"$check_runs")
             if [ "$bad_checks" -ne 0 ]; then
               echo "Skipping PR #$pr: checks are pending or failed."
               continue
@@ -97,9 +127,6 @@ jobs:
             fi
 
             echo "Merging PR #$pr with ${merge_flag}."
-            if gh pr merge "$pr" --repo "$REPO" "$merge_flag" --delete-branch --match-head-commit "$head_sha"; then
-              echo "Merged PR #$pr."
-            else
-              echo "Skipping PR #$pr: GitHub did not consider it mergeable yet."
-            fi
-          done
+            GH_TOKEN="$MERGE_TOKEN" gh pr merge "$pr" --repo "$REPO" "$merge_flag" --delete-branch --match-head-commit "$head_sha"
+            echo "Merged PR #$pr."
+          done <<<"$numbers"
