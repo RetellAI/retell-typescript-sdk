@@ -49,6 +49,7 @@ describe('resource conversationFlow', () => {
             transition_condition: { prompt: 'prompt', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
+          custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
           display_position: { x: 0, y: 0 },
           edges: [
             {
@@ -100,6 +101,7 @@ describe('resource conversationFlow', () => {
             transition_condition: { prompt: 'prompt', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
+          stt_mode: 'fast',
           voice_speed: 0.5,
         },
       ],
@@ -123,6 +125,7 @@ describe('resource conversationFlow', () => {
                 transition_condition: { prompt: 'prompt', type: 'prompt' },
                 destination_node_id: 'destination_node_id',
               },
+              custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
               display_position: { x: 0, y: 0 },
               edges: [
                 {
@@ -176,6 +179,7 @@ describe('resource conversationFlow', () => {
                 transition_condition: { prompt: 'prompt', type: 'prompt' },
                 destination_node_id: 'destination_node_id',
               },
+              stt_mode: 'fast',
               voice_speed: 0.5,
             },
           ],
