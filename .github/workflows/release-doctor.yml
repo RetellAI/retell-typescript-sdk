@@ -12,13 +12,13 @@ jobs:
     if: github.repository == 'RetellAI/retell-typescript-sdk' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please') || github.head_ref == 'next')
 
     steps:
-      - name: Check release authentication configuration
-        env:
-          HAS_APP_CLIENT_ID: ${{ secrets.DOCS_SYNC_APP_CLIENT_ID != '' }}
-          HAS_APP_PRIVATE_KEY: ${{ secrets.DOCS_SYNC_APP_PRIVATE_KEY != '' }}
-        run: |
-          if [ "$HAS_APP_CLIENT_ID" != "true" ] || [ "$HAS_APP_PRIVATE_KEY" != "true" ]; then
-            echo "::error::Configure DOCS_SYNC_APP_CLIENT_ID and DOCS_SYNC_APP_PRIVATE_KEY for SDK releases."
-            exit 1
-          fi
-          echo "GitHub App credentials are configured; the release workflow validates installation access when it mints a token."
+      - name: Validate SDK GitHub App access
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.DOCS_SYNC_APP_CLIENT_ID }}
+          private-key: ${{ secrets.DOCS_MANAGER_PVT_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: retell-typescript-sdk
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
