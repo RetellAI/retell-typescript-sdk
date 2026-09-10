@@ -1,5 +1,35 @@
 # Changelog
 
+## [5.65.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.64.0...v5.65.0) (2026-09-10)
+
+
+### Features
+
+* **api:** api update ([6961ac3](https://github.com/RetellAI/retell-typescript-sdk/commit/6961ac3f70869f8e78def6bd608f6c5b30b7d5c6))
+* **api:** api update ([878de3b](https://github.com/RetellAI/retell-typescript-sdk/commit/878de3bd5dfbe4279b4fa4d01ea30687741cf0b5))
+* **api:** api update ([54b3a6f](https://github.com/RetellAI/retell-typescript-sdk/commit/54b3a6fd5a0ff38e65964c18e97e9deb0e06c3bc))
+* **api:** api update ([70d94a4](https://github.com/RetellAI/retell-typescript-sdk/commit/70d94a45d1767c7ac4bea9742b09dca2738ebdc6))
+* **api:** api update ([e83dac5](https://github.com/RetellAI/retell-typescript-sdk/commit/e83dac54bb5aff20599a67aa94c0243749ee6fcc))
+* **api:** api update ([54451f1](https://github.com/RetellAI/retell-typescript-sdk/commit/54451f11cb11300e165d08bd1ca82f4938047a2a))
+* **api:** api update ([5124fc5](https://github.com/RetellAI/retell-typescript-sdk/commit/5124fc578764a5da4e7121cc53ee34e9b21a7f8d))
+* **api:** release accumulated SDK updates ([#502](https://github.com/RetellAI/retell-typescript-sdk/issues/502)) ([dcda233](https://github.com/RetellAI/retell-typescript-sdk/commit/dcda2333781a60f49f656eb40cfbfad290ccf133))
+
+
+### Bug Fixes
+
+* **ci:** restore SDK releases with the existing GitHub App ([#503](https://github.com/RetellAI/retell-typescript-sdk/issues/503)) ([947e953](https://github.com/RetellAI/retell-typescript-sdk/commit/947e953d0d7955c224be509e1ac54d5d8b6357e8))
+
+
+### Chores
+
+* preserve production workflow files ([5907ea0](https://github.com/RetellAI/retell-typescript-sdk/commit/5907ea02e4d358dd8829df1b2a83dea0c5705d6e))
+
+
+### Documentation
+
+* overhaul guide for browser web calls; simplify setup and clarify transcript/audio features ([1edf26a](https://github.com/RetellAI/retell-typescript-sdk/commit/1edf26a1b707033c5166fca01babfdf7a3156d3a))
+* remove `create-web-v3` endpoint from config and map exclusion reasoning ([c4ec913](https://github.com/RetellAI/retell-typescript-sdk/commit/c4ec913625e9127a43777e67f330a4d96e0f5e64))
+
 ## [5.64.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.63.0...v5.64.0) (2026-08-23)
 
 
