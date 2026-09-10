@@ -134,15 +134,15 @@ export interface KnowledgeBaseResponse {
    * - `error`: Initial indexing failed. Source metadata may be incomplete.
    * - `refreshing_in_progress`: An existing knowledge base is being updated. This
    *   includes indexing newly added sources or running a manual or automatic refresh
-   *   that re-indexes URLs, Google Drive files, and pages from auto-crawling paths.
-   *   Previously indexed sources remain available during the update, and the source
-   *   list may change when it finishes.
+   *   that re-indexes URLs, Google Drive files, Microsoft OneDrive files, and pages
+   *   from auto-crawling paths. Previously indexed sources remain available during
+   *   the update, and the source list may change when it finishes.
    */
   status: 'in_progress' | 'complete' | 'error' | 'refreshing_in_progress';
 
   /**
-   * Whether to enable auto refresh for the knowledge base urls. If set to true, will
-   * retrieve the data from the specified url every 12 hours.
+   * Whether eligible URL and connected-file sources refresh automatically on a daily
+   * cadence.
    */
   enable_auto_refresh?: boolean;
 
@@ -251,8 +251,8 @@ export interface KnowledgeBaseCreateParams {
   knowledge_base_name: string;
 
   /**
-   * Whether to enable auto refresh for the knowledge base urls. If set to true, will
-   * retrieve the data from the specified url every 12 hours.
+   * Whether to refresh eligible URL and connected-file sources automatically on a
+   * daily cadence.
    */
   enable_auto_refresh?: boolean;
 

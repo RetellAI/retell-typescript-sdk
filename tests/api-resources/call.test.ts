@@ -528,6 +528,18 @@ describe('resource call', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('listenLive', async () => {
+    const responsePromise = client.call.listenLive('119c3f8e47135a29e65947eeb34cf12d');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('registerPhoneCall: only required params', async () => {
     const responsePromise = client.call.registerPhoneCall({ agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD' });
     const rawResponse = await responsePromise.asResponse();
@@ -704,6 +716,27 @@ describe('resource call', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('takeOverLive: only required params', async () => {
+    const responsePromise = client.call.takeOverLive('119c3f8e47135a29e65947eeb34cf12d', {
+      participant_id: 'listener_a1b2c3d4e5f6g7h8i9j0',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('takeOverLive: required and optional params', async () => {
+    const response = await client.call.takeOverLive('119c3f8e47135a29e65947eeb34cf12d', {
+      participant_id: 'listener_a1b2c3d4e5f6g7h8i9j0',
+    });
   });
 
   // Mock server tests are disabled

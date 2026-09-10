@@ -184,6 +184,11 @@ export interface ChatResponse {
   chat_status: 'ongoing' | 'ended' | 'error';
 
   /**
+   * Tag pointing at the agent version used for this chat
+   */
+  agent_tag?: string | null;
+
+  /**
    * Post chat analysis that includes information such as sentiment, status, summary,
    * and custom defined data to extract. Available after chat ends. Subscribe to
    * `chat_analyzed` webhook event type to receive it once ready.
@@ -580,9 +585,9 @@ export interface ChatListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ChatListResponse.Item>;
+  items: Array<ChatListResponse.Item>;
 
   /**
    * Pagination key for the next page.
@@ -990,7 +995,7 @@ export namespace ChatListParams {
     /**
      * Filter by chat ID.
      */
-    chat_id?: FilterCriteria.ChatID;
+    chat_id?: FilterCriteria.StringFilter | FilterCriteria.EnumFilter;
 
     chat_status?: FilterCriteria.ChatStatus;
 
@@ -1000,12 +1005,13 @@ export namespace ChatListParams {
     chat_successful?: FilterCriteria.ChatSuccessful;
 
     /**
-     * Filter by combined cost of the chat.
+     * Filter by total chat cost in cents.
      */
     combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by custom analysis data fields.
+     * Filter by custom post-chat analysis outputs. Each filter `key` matches the
+     * configured output's `name`.
      */
     custom_analysis_data?: Array<
       | FilterCriteria.StringFilter
@@ -1017,7 +1023,10 @@ export namespace ChatListParams {
     >;
 
     /**
-     * Filter by custom attributes fields.
+     * Filter by organization-level attributes that attach business context to chats,
+     * such as customer tier or campaign, so chats can be organized and filtered
+     * consistently in Chat History. Use the attribute ID as `key` and the chat's
+     * attribute value as `value`.
      */
     custom_attributes?: Array<
       | FilterCriteria.StringFilter
@@ -1056,7 +1065,7 @@ export namespace ChatListParams {
       agent_id: string;
 
       /**
-       * Specific versions to filter on. If not provided, all versions are included.
+       * Specific versions to filter on. If omitted or empty, all versions are included.
        */
       version?: Array<number>;
     }
@@ -1075,10 +1084,7 @@ export namespace ChatListParams {
       value: Array<string>;
     }
 
-    /**
-     * Filter by chat ID.
-     */
-    export interface ChatID {
+    export interface StringFilter {
       /**
        * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
        */
@@ -1087,6 +1093,17 @@ export namespace ChatListParams {
       type: 'string';
 
       value: string;
+    }
+
+    export interface EnumFilter {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     export interface ChatStatus {

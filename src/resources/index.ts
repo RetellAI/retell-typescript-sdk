@@ -7,6 +7,7 @@ export {
   type AgentCreateVersionResponse,
   type AgentGetVersionsResponse,
   type AgentListVersionsResponse,
+  type AgentRepairResponse,
   type AgentCreateParams,
   type AgentRetrieveParams,
   type AgentUpdateParams,
@@ -15,6 +16,7 @@ export {
   type AgentDeleteVersionParams,
   type AgentListVersionsParams,
   type AgentPublishParams,
+  type AgentRepairParams,
 } from './agent';
 export {
   App,
@@ -28,6 +30,7 @@ export {
   type AppDeleteParams,
   type AppListUsagesParams,
 } from './app';
+export { Asset, type AssetCreateResponse, type AssetCreateParams } from './asset';
 export { BatchCall, type BatchCallResponse, type BatchCallCreateBatchCallParams } from './batch-call';
 export {
   CRM,
@@ -41,15 +44,19 @@ export {
 export {
   Call,
   type CallResponse,
+  type CreateWebCallResponse,
   type PhoneCallResponse,
   type WebCallResponse,
   type CallListResponse,
+  type CallListenLiveResponse,
+  type CallTakeOverLiveResponse,
   type CallUpdateLiveResponse,
   type CallUpdateParams,
   type CallListParams,
   type CallCreatePhoneCallParams,
   type CallCreateWebCallParams,
   type CallRegisterPhoneCallParams,
+  type CallTakeOverLiveParams,
   type CallUpdateLiveParams,
 } from './call';
 export {
@@ -83,13 +90,18 @@ export {
   type ContactResponse,
   type ContactListResponse,
   type ContactBackfillAnalysisDataResponse,
+  type ContactCreateImportResponse,
   type ContactGetBackfillJobStatusResponse,
+  type ContactGetImportResponse,
   type ContactListConversationsResponse,
+  type ContactUploadImportFileResponse,
   type ContactCreateParams,
   type ContactUpdateParams,
   type ContactListParams,
   type ContactBackfillAnalysisDataParams,
+  type ContactCreateImportParams,
   type ContactListConversationsParams,
+  type ContactUploadImportFileParams,
 } from './contact';
 export {
   ConversationFlow,

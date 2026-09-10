@@ -796,9 +796,9 @@ export interface ChatAgentListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ChatAgentListResponse.Item>;
+  items: Array<ChatAgentListResponse.Item>;
 
   /**
    * Pagination key for the next page.

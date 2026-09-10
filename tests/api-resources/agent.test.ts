@@ -304,4 +304,28 @@ describe('resource agent', () => {
       version_title: 'Hotfix',
     });
   });
+
+  // Mock server tests are disabled
+  test.skip('repair', async () => {
+    const responsePromise = client.agent.repair('16b980523634a6dc504898cda492e939');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('repair: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.agent.repair(
+        '16b980523634a6dc504898cda492e939',
+        { version: 'latest_published' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
 });

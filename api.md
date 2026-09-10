@@ -3,9 +3,12 @@
 Types:
 
 - <code><a href="./src/resources/call.ts">CallResponse</a></code>
+- <code><a href="./src/resources/call.ts">CreateWebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">PhoneCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">WebCallResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallListResponse</a></code>
+- <code><a href="./src/resources/call.ts">CallListenLiveResponse</a></code>
+- <code><a href="./src/resources/call.ts">CallTakeOverLiveResponse</a></code>
 - <code><a href="./src/resources/call.ts">CallUpdateLiveResponse</a></code>
 
 Methods:
@@ -15,10 +18,12 @@ Methods:
 - <code title="post /v3/list-calls">client.call.<a href="./src/resources/call.ts">list</a>({ ...params }) -> CallListResponse</code>
 - <code title="delete /v2/delete-call/{call_id}">client.call.<a href="./src/resources/call.ts">delete</a>(callID) -> void</code>
 - <code title="post /v2/create-phone-call">client.call.<a href="./src/resources/call.ts">createPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
-- <code title="post /v2/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> WebCallResponse</code>
+- <code title="post /v3/create-web-call">client.call.<a href="./src/resources/call.ts">createWebCall</a>({ ...params }) -> CreateWebCallResponse</code>
+- <code title="post /v2/listen-live-call/{call_id}">client.call.<a href="./src/resources/call.ts">listenLive</a>(callID) -> CallListenLiveResponse</code>
 - <code title="post /v2/register-phone-call">client.call.<a href="./src/resources/call.ts">registerPhoneCall</a>({ ...params }) -> PhoneCallResponse</code>
 - <code title="put /rerun-call-analysis/{call_id}">client.call.<a href="./src/resources/call.ts">rerunAnalysis</a>(callID) -> CallResponse</code>
 - <code title="post /v2/stop-call/{call_id}">client.call.<a href="./src/resources/call.ts">stop</a>(callID) -> void</code>
+- <code title="post /v2/take-over-live-call/{call_id}">client.call.<a href="./src/resources/call.ts">takeOverLive</a>(callID, { ...params }) -> CallTakeOverLiveResponse</code>
 - <code title="patch /v2/update-live-call/{call_id}">client.call.<a href="./src/resources/call.ts">updateLive</a>(callID, { ...params }) -> CallUpdateLiveResponse</code>
 
 # Chat
@@ -66,6 +71,7 @@ Types:
 - <code><a href="./src/resources/agent.ts">AgentCreateVersionResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentGetVersionsResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListVersionsResponse</a></code>
+- <code><a href="./src/resources/agent.ts">AgentRepairResponse</a></code>
 
 Methods:
 
@@ -79,6 +85,7 @@ Methods:
 - <code title="get /get-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">getVersions</a>(agentID) -> AgentGetVersionsResponse</code>
 - <code title="get /list-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">listVersions</a>(agentID, { ...params }) -> AgentListVersionsResponse</code>
 - <code title="post /publish-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentID, { ...params }) -> void</code>
+- <code title="post /repair-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">repair</a>(agentID, { ...params }) -> AgentRepairResponse</code>
 
 # ChatAgent
 
@@ -178,6 +185,16 @@ Methods:
 - <code title="post /clone-voice">client.voice.<a href="./src/resources/voice.ts">clone</a>({ ...params }) -> VoiceResponse</code>
 - <code title="post /search-community-voice">client.voice.<a href="./src/resources/voice.ts">search</a>({ ...params }) -> VoiceSearchResponse</code>
 
+# Asset
+
+Types:
+
+- <code><a href="./src/resources/asset.ts">AssetCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /create-asset">client.asset.<a href="./src/resources/asset.ts">create</a>({ ...params }) -> AssetCreateResponse</code>
+
 # Concurrency
 
 Types:
@@ -270,8 +287,11 @@ Types:
 - <code><a href="./src/resources/contact.ts">ContactResponse</a></code>
 - <code><a href="./src/resources/contact.ts">ContactListResponse</a></code>
 - <code><a href="./src/resources/contact.ts">ContactBackfillAnalysisDataResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactCreateImportResponse</a></code>
 - <code><a href="./src/resources/contact.ts">ContactGetBackfillJobStatusResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactGetImportResponse</a></code>
 - <code><a href="./src/resources/contact.ts">ContactListConversationsResponse</a></code>
+- <code><a href="./src/resources/contact.ts">ContactUploadImportFileResponse</a></code>
 
 Methods:
 
@@ -280,10 +300,13 @@ Methods:
 - <code title="post /list-contacts">client.contact.<a href="./src/resources/contact.ts">list</a>({ ...params }) -> ContactListResponse</code>
 - <code title="delete /delete-contact/{contact_id}">client.contact.<a href="./src/resources/contact.ts">delete</a>(contactID) -> void</code>
 - <code title="post /backfill-contact-analysis-data">client.contact.<a href="./src/resources/contact.ts">backfillAnalysisData</a>({ ...params }) -> ContactBackfillAnalysisDataResponse</code>
+- <code title="post /create-contact-import">client.contact.<a href="./src/resources/contact.ts">createImport</a>({ ...params }) -> ContactCreateImportResponse</code>
 - <code title="get /get-contact/{contact_id}">client.contact.<a href="./src/resources/contact.ts">get</a>(contactID) -> ContactResponse</code>
 - <code title="get /get-backfill-contact-job-status">client.contact.<a href="./src/resources/contact.ts">getBackfillJobStatus</a>() -> ContactGetBackfillJobStatusResponse</code>
 - <code title="get /get-contact-by-phone/{phone_number}">client.contact.<a href="./src/resources/contact.ts">getByPhone</a>(phoneNumber) -> ContactResponse</code>
+- <code title="get /get-contact-import">client.contact.<a href="./src/resources/contact.ts">getImport</a>() -> ContactGetImportResponse</code>
 - <code title="get /list-contact-conversations/{contact_id}">client.contact.<a href="./src/resources/contact.ts">listConversations</a>(contactID, { ...params }) -> ContactListConversationsResponse</code>
+- <code title="post /upload-contact-import-file">client.contact.<a href="./src/resources/contact.ts">uploadImportFile</a>({ ...params }) -> ContactUploadImportFileResponse</code>
 
 # App
 

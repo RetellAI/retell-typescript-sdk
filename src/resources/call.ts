@@ -97,17 +97,34 @@ export class Call extends APIResource {
   }
 
   /**
-   * Create a new web call
+   * Create a new web call and return browser connection details.
    *
    * @example
    * ```ts
-   * const webCallResponse = await client.call.createWebCall({
-   *   agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
-   * });
+   * const createWebCallResponse =
+   *   await client.call.createWebCall({
+   *     agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
+   *   });
    * ```
    */
-  createWebCall(body: CallCreateWebCallParams, options?: RequestOptions): APIPromise<WebCallResponse> {
-    return this._client.post('/v2/create-web-call', { body, ...options });
+  createWebCall(body: CallCreateWebCallParams, options?: RequestOptions): APIPromise<CreateWebCallResponse> {
+    return this._client.post('/v3/create-web-call', { body, ...options });
+  }
+
+  /**
+   * Mint a subscribe-only access token for an in-progress call so a client can
+   * listen to live audio. The returned token grants join + subscribe on the call's
+   * existing audio room; it cannot publish. The call must be in ONGOING status.
+   *
+   * @example
+   * ```ts
+   * const response = await client.call.listenLive(
+   *   '119c3f8e47135a29e65947eeb34cf12d',
+   * );
+   * ```
+   */
+  listenLive(callID: string, options?: RequestOptions): APIPromise<CallListenLiveResponse> {
+    return this._client.post(path`/v2/listen-live-call/${callID}`, options);
   }
 
   /**
@@ -158,6 +175,27 @@ export class Call extends APIResource {
   }
 
   /**
+   * Take over an in-progress call from the AI agent. The agent stops responding and
+   * the specified live-listen participant is allowed to speak directly to the
+   * caller. The call must be in ONGOING status.
+   *
+   * @example
+   * ```ts
+   * const response = await client.call.takeOverLive(
+   *   '119c3f8e47135a29e65947eeb34cf12d',
+   *   { participant_id: 'listener_a1b2c3d4e5f6g7h8i9j0' },
+   * );
+   * ```
+   */
+  takeOverLive(
+    callID: string,
+    body: CallTakeOverLiveParams,
+    options?: RequestOptions,
+  ): APIPromise<CallTakeOverLiveResponse> {
+    return this._client.post(path`/v2/take-over-live-call/${callID}`, { body, ...options });
+  }
+
+  /**
    * Update an ongoing call at runtime. Supports overriding dynamic variables,
    * metadata, and the data storage setting on the running call, and controlling the
    * live agent (inject context, trigger a response). These overrides take effect
@@ -194,6 +232,43 @@ export class Call extends APIResource {
 }
 
 export type CallResponse = WebCallResponse | PhoneCallResponse;
+
+export interface CreateWebCallResponse {
+  /**
+   * Token authorizing this browser to join the web call. Pass it to your frontend.
+   */
+  access_token: string;
+
+  /**
+   * Unique identifier for the web call.
+   */
+  call_id: string;
+
+  /**
+   * Unix epoch ms when the access_token expires.
+   */
+  expires_at: number;
+
+  /**
+   * ICE servers to configure before the browser creates its peer connection.
+   */
+  ice_servers: Array<CreateWebCallResponse.IceServer>;
+
+  /**
+   * Connection transport to select in the web client.
+   */
+  transport: 'gateway';
+}
+
+export namespace CreateWebCallResponse {
+  export interface IceServer {
+    urls: string | Array<string>;
+
+    credential?: string;
+
+    username?: string;
+  }
+}
 
 export interface PhoneCallResponse {
   /**
@@ -2595,9 +2670,9 @@ export interface CallListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<CallListResponse.V3WebCallResponse | CallListResponse.V3PhoneCallResponse>;
+  items: Array<CallListResponse.V3WebCallResponse | CallListResponse.V3PhoneCallResponse>;
 
   /**
    * Pagination key for the next page.
@@ -4071,6 +4146,76 @@ export namespace CallListResponse {
   }
 }
 
+export interface CallListenLiveResponse {
+  /**
+   * Subscribe-only JWT scoped to the call's room. Cannot publish. Listener
+   * participant is hidden from other participants.
+   */
+  access_token: string;
+
+  /**
+   * Unix epoch ms when the access_token expires.
+   */
+  expires_at: number;
+
+  /**
+   * Identity this listener joins as, and the value to hand back to
+   * /v2/take-over-live-call. Returned on both transports; a `livekit` client can
+   * equally read it off its own room object, a `gateway` one has no equivalent to
+   * read.
+   */
+  participant_id: string;
+
+  /**
+   * Room name to join. Always the call's original room — does not follow warm
+   * transfers.
+   */
+  room_name: string;
+
+  /**
+   * Public side of the gateway instance handling this call, for diagnostics only —
+   * the client's media address comes from the SDP answer's ICE candidates. `gateway`
+   * transport only.
+   */
+  gateway_ip?: string;
+
+  /**
+   * ICE servers the client must configure before creating its PeerConnection — they
+   * cannot be added afterwards. `gateway` transport only.
+   */
+  ice_servers?: Array<CallListenLiveResponse.IceServer>;
+
+  /**
+   * Which media stack issued the access_token, and therefore where the client
+   * signals. The two tokens are indistinguishable, so a client must read this rather
+   * than infer it. `gateway` clients address Retell itself; `livekit` clients
+   * connect to the returned `url`. Optional only because a server predating the
+   * field omits it during a rollout; treat absent as `livekit`.
+   */
+  transport?: 'livekit' | 'gateway';
+
+  /**
+   * Server URL the client should connect to with the access_token. Present only when
+   * `transport` is `livekit`; a `gateway` listener signals to Retell and needs no
+   * address.
+   */
+  url?: string;
+}
+
+export namespace CallListenLiveResponse {
+  export interface IceServer {
+    urls: string | Array<string>;
+
+    credential?: string;
+
+    username?: string;
+  }
+}
+
+export interface CallTakeOverLiveResponse {
+  success: boolean;
+}
+
 export interface CallUpdateLiveResponse {
   success: boolean;
 }
@@ -4172,12 +4317,13 @@ export namespace CallListParams {
     call_type?: FilterCriteria.CallType;
 
     /**
-     * Filter by combined cost of the call.
+     * Filter by total call cost in cents.
      */
     combined_cost?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by custom analysis data fields.
+     * Filter by custom post-call analysis outputs. Each filter `key` matches the
+     * configured output's `name`.
      */
     custom_analysis_data?: Array<
       | FilterCriteria.StringFilter
@@ -4189,7 +4335,10 @@ export namespace CallListParams {
     >;
 
     /**
-     * Filter by custom attributes fields.
+     * Filter by organization-level attributes that attach business context to calls,
+     * such as customer tier or campaign, so calls can be organized and filtered
+     * consistently in Call History. Use the attribute ID as `key` and the call's
+     * attribute value as `value`.
      */
     custom_attributes?: Array<
       | FilterCriteria.StringFilter
@@ -4212,7 +4361,8 @@ export namespace CallListParams {
     duration_ms?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
     /**
-     * Filter by dynamic variables.
+     * Filter by dynamic variables stored on the call. Each filter `key` matches a
+     * dynamic-variable name.
      */
     dynamic_variables?: Array<
       | FilterCriteria.StringFilter
@@ -4224,7 +4374,7 @@ export namespace CallListParams {
     >;
 
     /**
-     * Filter by end-to-end latency p50.
+     * Filter by per-call p50 end-to-end latency in milliseconds.
      */
     e2e_latency_p50?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
@@ -4244,7 +4394,8 @@ export namespace CallListParams {
     in_voicemail?: FilterCriteria.InVoicemail;
 
     /**
-     * Filter by metadata fields.
+     * Filter by values stored in the call's `metadata`. Each filter `key` matches a
+     * top-level metadata key.
      */
     metadata?: Array<
       | FilterCriteria.StringFilter
@@ -4281,7 +4432,7 @@ export namespace CallListParams {
       agent_id: string;
 
       /**
-       * Specific versions to filter on. If not provided, all versions are included.
+       * Specific versions to filter on. If omitted or empty, all versions are included.
        */
       version?: Array<number>;
     }
@@ -5689,6 +5840,7 @@ export namespace CallCreatePhoneCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -5696,6 +5848,8 @@ export namespace CallCreatePhoneCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**
@@ -5784,7 +5938,9 @@ export namespace CallCreatePhoneCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox, 100 for AssemblyAI.
+         * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
+         * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
+         * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
          */
         endpointing_ms: number;
 
@@ -7079,6 +7235,7 @@ export namespace CallCreateWebCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -7086,6 +7243,8 @@ export namespace CallCreateWebCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**
@@ -7174,7 +7333,9 @@ export namespace CallCreateWebCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox, 100 for AssemblyAI.
+         * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
+         * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
+         * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
          */
         endpointing_ms: number;
 
@@ -8469,6 +8630,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'sonic-3'
         | 'sonic-3-latest'
         | 'sonic-3.5'
+        | 'sonic-3.6'
         | 'tts-1'
         | 'gpt-4o-mini-tts'
         | 'speech-02-turbo'
@@ -8476,6 +8638,8 @@ export namespace CallRegisterPhoneCallParams {
         | 's1'
         | 's2-pro'
         | 's2.1-pro'
+        | 'inworld-tts-2'
+        | 'inworld-tts-2-flash'
         | null;
 
       /**
@@ -8564,7 +8728,9 @@ export namespace CallRegisterPhoneCallParams {
       export interface CustomSttConfig {
         /**
          * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-         * 500 for Soniox, 100 for AssemblyAI.
+         * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
+         * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
+         * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
          */
         endpointing_ms: number;
 
@@ -9243,6 +9409,14 @@ export namespace CallRegisterPhoneCallParams {
   }
 }
 
+export interface CallTakeOverLiveParams {
+  /**
+   * The id of the live-listen participant to upgrade, obtained when joining via
+   * /v2/listen-live-call.
+   */
+  participant_id: string;
+}
+
 export interface CallUpdateLiveParams {
   /**
    * Live agent control. At least one of `additional_context` or `trigger_response`
@@ -9315,15 +9489,19 @@ export namespace CallUpdateLiveParams {
 export declare namespace Call {
   export {
     type CallResponse as CallResponse,
+    type CreateWebCallResponse as CreateWebCallResponse,
     type PhoneCallResponse as PhoneCallResponse,
     type WebCallResponse as WebCallResponse,
     type CallListResponse as CallListResponse,
+    type CallListenLiveResponse as CallListenLiveResponse,
+    type CallTakeOverLiveResponse as CallTakeOverLiveResponse,
     type CallUpdateLiveResponse as CallUpdateLiveResponse,
     type CallUpdateParams as CallUpdateParams,
     type CallListParams as CallListParams,
     type CallCreatePhoneCallParams as CallCreatePhoneCallParams,
     type CallCreateWebCallParams as CallCreateWebCallParams,
     type CallRegisterPhoneCallParams as CallRegisterPhoneCallParams,
+    type CallTakeOverLiveParams as CallTakeOverLiveParams,
     type CallUpdateLiveParams as CallUpdateLiveParams,
   };
 }

@@ -44,7 +44,13 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.call.createWebCall',
     fullyQualifiedName: 'call.createWebCall',
     httpMethod: 'post',
-    httpPath: '/v2/create-web-call',
+    httpPath: '/v3/create-web-call',
+  },
+  {
+    clientCallName: 'client.call.listenLive',
+    fullyQualifiedName: 'call.listenLive',
+    httpMethod: 'post',
+    httpPath: '/v2/listen-live-call/{call_id}',
   },
   {
     clientCallName: 'client.call.registerPhoneCall',
@@ -63,6 +69,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'call.stop',
     httpMethod: 'post',
     httpPath: '/v2/stop-call/{call_id}',
+  },
+  {
+    clientCallName: 'client.call.takeOverLive',
+    fullyQualifiedName: 'call.takeOverLive',
+    httpMethod: 'post',
+    httpPath: '/v2/take-over-live-call/{call_id}',
   },
   {
     clientCallName: 'client.call.updateLive',
@@ -219,6 +231,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'agent.publish',
     httpMethod: 'post',
     httpPath: '/publish-agent-version/{agent_id}',
+  },
+  {
+    clientCallName: 'client.agent.repair',
+    fullyQualifiedName: 'agent.repair',
+    httpMethod: 'post',
+    httpPath: '/repair-agent/{agent_id}',
   },
   {
     clientCallName: 'client.chatAgent.create',
@@ -431,6 +449,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/search-community-voice',
   },
   {
+    clientCallName: 'client.asset.create',
+    fullyQualifiedName: 'asset.create',
+    httpMethod: 'post',
+    httpPath: '/create-asset',
+  },
+  {
     clientCallName: 'client.concurrency.retrieve',
     fullyQualifiedName: 'concurrency.retrieve',
     httpMethod: 'get',
@@ -557,6 +581,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/backfill-contact-analysis-data',
   },
   {
+    clientCallName: 'client.contact.createImport',
+    fullyQualifiedName: 'contact.createImport',
+    httpMethod: 'post',
+    httpPath: '/create-contact-import',
+  },
+  {
     clientCallName: 'client.contact.get',
     fullyQualifiedName: 'contact.get',
     httpMethod: 'get',
@@ -575,10 +605,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-contact-by-phone/{phone_number}',
   },
   {
+    clientCallName: 'client.contact.getImport',
+    fullyQualifiedName: 'contact.getImport',
+    httpMethod: 'get',
+    httpPath: '/get-contact-import',
+  },
+  {
     clientCallName: 'client.contact.listConversations',
     fullyQualifiedName: 'contact.listConversations',
     httpMethod: 'get',
     httpPath: '/list-contact-conversations/{contact_id}',
+  },
+  {
+    clientCallName: 'client.contact.uploadImportFile',
+    fullyQualifiedName: 'contact.uploadImportFile',
+    httpMethod: 'post',
+    httpPath: '/upload-contact-import-file',
   },
   {
     clientCallName: 'client.app.create',

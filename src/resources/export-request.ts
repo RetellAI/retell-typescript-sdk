@@ -20,9 +20,9 @@ export interface ExportRequestListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<ExportRequestListResponse.Item>;
+  items: Array<ExportRequestListResponse.Item>;
 
   /**
    * Pagination key for the next page.

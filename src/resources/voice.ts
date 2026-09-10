@@ -53,7 +53,7 @@ export interface VoiceResponse {
   /**
    * Indicates the provider of voice.
    */
-  provider: 'elevenlabs' | 'openai' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
+  provider: 'elevenlabs' | 'openai' | 'cartesia' | 'minimax' | 'fish_audio' | 'inworld' | 'platform';
 
   /**
    * Unique id for the voice.
@@ -133,7 +133,7 @@ export interface VoiceAddResourceParams {
   /**
    * Voice provider to add the voice from.
    */
-  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio' | 'inworld';
 }
 
 export interface VoiceCloneParams {
@@ -151,7 +151,7 @@ export interface VoiceCloneParams {
   /**
    * Voice provider to use for cloning.
    */
-  voice_provider: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform';
+  voice_provider: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio' | 'platform' | 'inworld';
 }
 
 export interface VoiceSearchParams {
@@ -163,7 +163,7 @@ export interface VoiceSearchParams {
   /**
    * Voice provider to search.
    */
-  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio';
+  voice_provider?: 'elevenlabs' | 'cartesia' | 'minimax' | 'fish_audio' | 'inworld';
 }
 
 export declare namespace Voice {

@@ -9,10 +9,10 @@ import { path } from '../internal/utils/path';
 export class App extends APIResource {
   /**
    * Create an App: the connection to one external system (a CRM, calendar, support
-   * desk, and so on), holding its credentials and settings. Providers that
-   * authenticate with a key, token, or refresh token can be connected in this one
-   * call by passing auth_config; the credential is stored encrypted and never
-   * returned. Up to 20 apps per provider.
+   * desk, and so on), holding its credentials and settings. Providers with
+   * caller-managed credentials accept auth_config. Providers using the OAuth
+   * callback must omit auth_config and be authorized through connect-app.
+   * Credentials are stored encrypted and never returned. Up to 20 apps per provider.
    */
   create(body: AppCreateParams, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.post('/create-app', { body, ...options });
@@ -20,7 +20,9 @@ export class App extends APIResource {
 
   /**
    * Partially update an App. Omitted fields remain unchanged. Updating auth_config
-   * invalidates the cached provider token immediately.
+   * or tenant metadata invalidates the cached provider token immediately. Providers
+   * using the OAuth callback reject auth_config and must be reauthorized through
+   * connect-app.
    */
   update(appID: string, body: AppUpdateParams, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.patch(path`/update-app/${appID}`, { body, ...options });
@@ -128,8 +130,15 @@ export interface AppResponse {
   tenant_id?: string;
 
   /**
+   * Microsoft OneDrive account type discovered during OAuth.
+   */
+  tenant_type?: 'business' | 'personal';
+
+  /**
    * Per-tenant API base URL. Set by providers with per-org hosts; omitted by
-   * providers on a single global host.
+   * providers on a single global host. For OneDrive for Business, this is the
+   * tenant's -my.sharepoint.com origin used by File Picker v8; personal OneDrive
+   * omits it.
    */
   tenant_url?: string;
 }
@@ -219,9 +228,9 @@ export interface AppListResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<AppResponse>;
+  items: Array<AppResponse>;
 
   /**
    * Pagination key for the next page.
@@ -233,9 +242,9 @@ export interface AppListUsagesResponse {
   /**
    * Whether more results are available.
    */
-  has_more?: boolean;
+  has_more: boolean;
 
-  items?: Array<AppListUsagesResponse.AgentAppUsage | AppListUsagesResponse.KnowledgeBaseAppUsage>;
+  items: Array<AppListUsagesResponse.AgentAppUsage | AppListUsagesResponse.KnowledgeBaseAppUsage>;
 
   /**
    * Pagination key for the next page.
@@ -298,12 +307,14 @@ export interface AppCreateParams {
    */
   type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication';
 
+  /**
+   * Caller-managed credentials. Providers using the OAuth callback reject
+   * auth_config and must be authorized through connect-app.
+   */
   auth_config?:
     | AppCreateParams.OAuthConfigRequest
     | AppCreateParams.APIKeyAuthConfigRequest
-    | AppCreateParams.AccessTokenAuthConfigRequest
-    | AppCreateParams.BasicAuthConfigRequest
-    | AppCreateParams.RefreshTokenAuthConfigRequest;
+    | AppCreateParams.BasicAuthConfigRequest;
 
   crm_config?: AppCreateParams.CRMConfig;
 
@@ -345,17 +356,6 @@ export namespace AppCreateParams {
     type: 'api_key';
   }
 
-  export interface AccessTokenAuthConfigRequest {
-    /**
-     * OAuth-obtained access token used directly as a static bearer secret; stored
-     * encrypted at rest. An alternative to the OAuth connect flow, which persists the
-     * same config.
-     */
-    access_token: string;
-
-    type: 'access_token';
-  }
-
   export interface BasicAuthConfigRequest {
     /**
      * Password credential; stored encrypted at rest.
@@ -365,16 +365,6 @@ export namespace AppCreateParams {
     type: 'basic';
 
     username: string;
-  }
-
-  export interface RefreshTokenAuthConfigRequest {
-    /**
-     * OAuth refresh token; stored encrypted at rest. An alternative to the OAuth
-     * connect flow, which persists the same config.
-     */
-    refresh_token: string;
-
-    type: 'refresh_token';
   }
 
   export interface CRMConfig {
@@ -434,12 +424,14 @@ export namespace AppCreateParams {
 }
 
 export interface AppUpdateParams {
+  /**
+   * Caller-managed credentials. Providers using the OAuth callback reject
+   * auth_config and must be authorized through connect-app.
+   */
   auth_config?:
     | AppUpdateParams.OAuthConfigRequest
     | AppUpdateParams.APIKeyAuthConfigRequest
-    | AppUpdateParams.AccessTokenAuthConfigRequest
-    | AppUpdateParams.BasicAuthConfigRequest
-    | AppUpdateParams.RefreshTokenAuthConfigRequest;
+    | AppUpdateParams.BasicAuthConfigRequest;
 
   crm_config?: AppUpdateParams.CRMConfig;
 
@@ -478,17 +470,6 @@ export namespace AppUpdateParams {
     type: 'api_key';
   }
 
-  export interface AccessTokenAuthConfigRequest {
-    /**
-     * OAuth-obtained access token used directly as a static bearer secret; stored
-     * encrypted at rest. An alternative to the OAuth connect flow, which persists the
-     * same config.
-     */
-    access_token: string;
-
-    type: 'access_token';
-  }
-
   export interface BasicAuthConfigRequest {
     /**
      * Password credential; stored encrypted at rest.
@@ -498,16 +479,6 @@ export namespace AppUpdateParams {
     type: 'basic';
 
     username: string;
-  }
-
-  export interface RefreshTokenAuthConfigRequest {
-    /**
-     * OAuth refresh token; stored encrypted at rest. An alternative to the OAuth
-     * connect flow, which persists the same config.
-     */
-    refresh_token: string;
-
-    type: 'refresh_token';
   }
 
   export interface CRMConfig {
