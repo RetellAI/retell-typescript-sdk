@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "@retell-ai/mcp-server",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "The official MCP Server for the Retell API",
   "author": {
     "name": "Retell",
