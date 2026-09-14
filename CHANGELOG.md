@@ -1,5 +1,21 @@
 # Changelog
 
+## [6.0.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.66.1...v6.0.0) (2026-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** sync removed endpoints from retell-backend
+
+### Features
+
+* **api:** sync removed endpoints from retell-backend ([ff9272c](https://github.com/RetellAI/retell-typescript-sdk/commit/ff9272c9b5ce6950410ae5bac3d3f181e2464b40))
+
+
+### Chores
+
+* preserve production workflow files ([3611793](https://github.com/RetellAI/retell-typescript-sdk/commit/36117936543634a5eed7713bc400f21311994986))
+
 ## [5.66.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.66.0...v5.66.1) (2026-09-11)
 
 
