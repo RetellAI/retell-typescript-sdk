@@ -152,7 +152,7 @@ describe('resource batchCall', () => {
               begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['string'],
-              model: 'gpt-4.1',
+              model: 'gpt-5.6-terra',
               model_high_priority: true,
               model_temperature: 0,
               s2s_model: 'gpt-realtime-1.5',

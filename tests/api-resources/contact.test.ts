@@ -24,11 +24,11 @@ describe('resource contact', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.contact.create({
       phone_number: 'phone_number',
+      contact_tags: ['P'],
       custom_fields: {},
       do_not_call: true,
       first_name: 'first_name',
       last_name: 'last_name',
-      tags: ['P'],
     });
   });
 
@@ -68,6 +68,11 @@ describe('resource contact', () => {
               type: 'string',
               value: 'value',
             },
+            contact_tags: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
             custom_fields: [
               {
                 op: 'eq',
@@ -95,11 +100,6 @@ describe('resource contact', () => {
               op: 'eq',
               type: 'string',
               value: 'value',
-            },
-            tags: {
-              op: 'in',
-              type: 'enum',
-              value: ['string'],
             },
           },
           limit: 1,
@@ -172,8 +172,8 @@ describe('resource contact', () => {
     const response = await client.contact.createImport({
       column_mapping: [{ external_field_name: 'external_field_name', field_name: 'field_name' }],
       upload_id: 'upload_26f1cbdf5713',
+      contact_tags: ['P'],
       default_country: 'se',
-      tags: ['P'],
     });
   });
 

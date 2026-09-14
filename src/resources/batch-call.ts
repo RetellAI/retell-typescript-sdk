@@ -619,7 +619,7 @@ export namespace BatchCallCreateBatchCallParams {
         > | null;
 
         /**
-         * The model to use for post call analysis. Default to gpt-4.1.
+         * The model to use for post call analysis. Default to gpt-5.6-terra.
          */
         post_call_analysis_model?:
           | 'gpt-4.1'
@@ -645,6 +645,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.5-flash'
           | 'gemini-3.5-flash-lite'
           | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
           | null;
 
         /**
@@ -1402,7 +1404,9 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gemini-3.1-flash-lite'
             | 'gemini-3.5-flash'
             | 'gemini-3.5-flash-lite'
-            | 'gemini-3.6-flash';
+            | 'gemini-3.6-flash'
+            | 'gemini-3.7-flash'
+            | 'gemini-3.8-flash';
 
           /**
            * Type of model choice
@@ -1449,7 +1453,7 @@ export namespace BatchCallCreateBatchCallParams {
         knowledge_base_ids?: Array<string> | null;
 
         /**
-         * Select the underlying text LLM. If not set, would default to gpt-4.1.
+         * Select the underlying text LLM. If not set, would default to gpt-5.6-terra.
          */
         model?:
           | 'gpt-4.1'
@@ -1475,6 +1479,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.5-flash'
           | 'gemini-3.5-flash-lite'
           | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
           | null;
 
         /**

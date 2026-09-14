@@ -215,12 +215,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/delete-agent-version/{agent_id}',
   },
   {
-    clientCallName: 'client.agent.getVersions',
-    fullyQualifiedName: 'agent.getVersions',
-    httpMethod: 'get',
-    httpPath: '/get-agent-versions/{agent_id}',
-  },
-  {
     clientCallName: 'client.agent.listVersions',
     fullyQualifiedName: 'agent.listVersions',
     httpMethod: 'get',
@@ -279,12 +273,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'chatAgent.deleteVersion',
     httpMethod: 'delete',
     httpPath: '/delete-agent-version/{agent_id}',
-  },
-  {
-    clientCallName: 'client.chatAgent.getVersions',
-    fullyQualifiedName: 'chatAgent.getVersions',
-    httpMethod: 'get',
-    httpPath: '/get-chat-agent-versions/{agent_id}',
   },
   {
     clientCallName: 'client.chatAgent.publish',
