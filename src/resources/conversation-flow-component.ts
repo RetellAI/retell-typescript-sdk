@@ -180,11 +180,7 @@ export interface ConversationFlowComponentResponse {
   /**
    * Tools available within the component
    */
-  tools?: Array<
-    | ConversationFlowComponentResponse.CustomTool
-    | ConversationFlowComponentResponse.CheckAvailabilityCalTool
-    | ConversationFlowComponentResponse.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowComponentResponse.Tool> | null;
 }
 
 export namespace ConversationFlowComponentResponse {
@@ -832,7 +828,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -1019,8 +1017,6 @@ export namespace ConversationFlowComponentResponse {
     tools?: Array<
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
       | SubagentNode.AgentSwapTool
       | SubagentNode.PressDigitTool
       | SubagentNode.SendSMSTool
@@ -1581,7 +1577,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -2065,92 +2063,6 @@ export namespace ConversationFlowComponentResponse {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
@@ -3110,7 +3022,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -3590,7 +3504,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -4077,7 +3993,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -4751,7 +4669,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -5199,7 +5119,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -5628,7 +5550,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -6070,7 +5994,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -6641,7 +6567,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -7032,7 +6960,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -7521,7 +7451,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -8207,7 +8139,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -8484,7 +8418,9 @@ export namespace ConversationFlowComponentResponse {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -8575,7 +8511,7 @@ export namespace ConversationFlowComponentResponse {
     }
   }
 
-  export interface CustomTool {
+  export interface Tool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -8664,7 +8600,7 @@ export namespace ConversationFlowComponentResponse {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: CustomTool.Parameters;
+    parameters?: Tool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -8707,7 +8643,7 @@ export namespace ConversationFlowComponentResponse {
     tool_id?: string;
   }
 
-  export namespace CustomTool {
+  export namespace Tool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -8733,102 +8669,6 @@ export namespace ConversationFlowComponentResponse {
        */
       required?: Array<string>;
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
   }
 }
 
@@ -8901,11 +8741,7 @@ export interface ConversationFlowComponentCreateParams {
   /**
    * Tools available within the component
    */
-  tools?: Array<
-    | ConversationFlowComponentCreateParams.CustomTool
-    | ConversationFlowComponentCreateParams.CheckAvailabilityCalTool
-    | ConversationFlowComponentCreateParams.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowComponentCreateParams.Tool> | null;
 }
 
 export namespace ConversationFlowComponentCreateParams {
@@ -9553,7 +9389,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -9740,8 +9578,6 @@ export namespace ConversationFlowComponentCreateParams {
     tools?: Array<
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
       | SubagentNode.AgentSwapTool
       | SubagentNode.PressDigitTool
       | SubagentNode.SendSMSTool
@@ -10302,7 +10138,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -10786,92 +10624,6 @@ export namespace ConversationFlowComponentCreateParams {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
@@ -11831,7 +11583,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -12311,7 +12065,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -12798,7 +12554,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -13472,7 +13230,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -13920,7 +13680,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -14349,7 +14111,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -14791,7 +14555,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -15362,7 +15128,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -15753,7 +15521,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -16242,7 +16012,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -16928,7 +16700,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -17205,7 +16979,9 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -17296,7 +17072,7 @@ export namespace ConversationFlowComponentCreateParams {
     }
   }
 
-  export interface CustomTool {
+  export interface Tool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -17385,7 +17161,7 @@ export namespace ConversationFlowComponentCreateParams {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: CustomTool.Parameters;
+    parameters?: Tool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -17428,7 +17204,7 @@ export namespace ConversationFlowComponentCreateParams {
     tool_id?: string;
   }
 
-  export namespace CustomTool {
+  export namespace Tool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -17454,102 +17230,6 @@ export namespace ConversationFlowComponentCreateParams {
        */
       required?: Array<string>;
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
   }
 }
 
@@ -17608,11 +17288,7 @@ export interface ConversationFlowComponentUpdateParams {
   /**
    * Tools available within the component
    */
-  tools?: Array<
-    | ConversationFlowComponentUpdateParams.CustomTool
-    | ConversationFlowComponentUpdateParams.CheckAvailabilityCalTool
-    | ConversationFlowComponentUpdateParams.BookAppointmentCalTool
-  > | null;
+  tools?: Array<ConversationFlowComponentUpdateParams.Tool> | null;
 }
 
 export namespace ConversationFlowComponentUpdateParams {
@@ -18294,7 +17970,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -18481,8 +18159,6 @@ export namespace ConversationFlowComponentUpdateParams {
     tools?: Array<
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
-      | SubagentNode.CheckAvailabilityCalTool
-      | SubagentNode.BookAppointmentCalTool
       | SubagentNode.AgentSwapTool
       | SubagentNode.PressDigitTool
       | SubagentNode.SendSMSTool
@@ -19043,7 +18719,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -19527,92 +19205,6 @@ export namespace ConversationFlowComponentUpdateParams {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
@@ -20572,7 +20164,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -21052,7 +20646,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -21539,7 +21135,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -22213,7 +21811,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -22661,7 +22261,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -23090,7 +22692,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -23532,7 +23136,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -24103,7 +23709,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -24494,7 +24102,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -24983,7 +24593,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -25669,7 +25281,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -25946,7 +25560,9 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gemini-3.1-flash-lite'
         | 'gemini-3.5-flash'
         | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash';
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash';
 
       /**
        * Type of model choice
@@ -26003,7 +25619,7 @@ export namespace ConversationFlowComponentUpdateParams {
     }
   }
 
-  export interface CustomTool {
+  export interface Tool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -26092,7 +25708,7 @@ export namespace ConversationFlowComponentUpdateParams {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: CustomTool.Parameters;
+    parameters?: Tool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -26135,7 +25751,7 @@ export namespace ConversationFlowComponentUpdateParams {
     tool_id?: string;
   }
 
-  export namespace CustomTool {
+  export namespace Tool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -26161,102 +25777,6 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       required?: Array<string>;
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-
-    /**
-     * Unique identifier for the tool
-     */
-    tool_id?: string;
   }
 }
 

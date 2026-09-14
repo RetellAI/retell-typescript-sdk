@@ -150,15 +150,6 @@ export class ChatAgent extends APIResource {
   }
 
   /**
-   * Get chat agent versions. Large version histories may be truncated.
-   *
-   * @deprecated
-   */
-  getVersions(agentID: string, options?: RequestOptions): APIPromise<ChatAgentGetVersionsResponse> {
-    return this._client.get(path`/get-chat-agent-versions/${agentID}`, options);
-  }
-
-  /**
    * Publish an existing draft version in place.
    *
    * @example
@@ -422,7 +413,7 @@ export interface ChatAgentResponse {
   > | null;
 
   /**
-   * The model to use for post chat analysis. Default to gpt-4.1.
+   * The model to use for post chat analysis. Default to gpt-5.6-terra.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -448,6 +439,8 @@ export interface ChatAgentResponse {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -843,8 +836,6 @@ export namespace ChatAgentListResponse {
 
 export type ChatAgentCreateVersionResponse = AgentAPI.AgentResponse | ChatAgentResponse;
 
-export type ChatAgentGetVersionsResponse = Array<ChatAgentResponse>;
-
 export interface ChatAgentCreateParams {
   /**
    * The Response Engine to attach to the agent. It is used to generate responses for
@@ -1064,7 +1055,7 @@ export interface ChatAgentCreateParams {
   > | null;
 
   /**
-   * The model to use for post chat analysis. Default to gpt-4.1.
+   * The model to use for post chat analysis. Default to gpt-5.6-terra.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -1090,6 +1081,8 @@ export interface ChatAgentCreateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -1653,7 +1646,7 @@ export interface ChatAgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for post chat analysis. Default to gpt-4.1.
+   * Body param: The model to use for post chat analysis. Default to gpt-5.6-terra.
    */
   post_chat_analysis_model?:
     | 'gpt-4.1'
@@ -1679,6 +1672,8 @@ export interface ChatAgentUpdateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -2110,7 +2105,6 @@ export declare namespace ChatAgent {
     type ChatAgentResponse as ChatAgentResponse,
     type ChatAgentListResponse as ChatAgentListResponse,
     type ChatAgentCreateVersionResponse as ChatAgentCreateVersionResponse,
-    type ChatAgentGetVersionsResponse as ChatAgentGetVersionsResponse,
     type ChatAgentCreateParams as ChatAgentCreateParams,
     type ChatAgentRetrieveParams as ChatAgentRetrieveParams,
     type ChatAgentUpdateParams as ChatAgentUpdateParams,

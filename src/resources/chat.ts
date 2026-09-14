@@ -988,6 +988,11 @@ export namespace ChatListParams {
     agent?: Array<FilterCriteria.Agent>;
 
     /**
+     * Filter by the agent's phone number for SMS chats.
+     */
+    agent_number?: FilterCriteria.AgentNumber;
+
+    /**
      * Filter by agent environment tag(s) (e.g. "prod", "staging").
      */
     agent_tag?: FilterCriteria.AgentTag;
@@ -1003,6 +1008,8 @@ export namespace ChatListParams {
      * Filter by whether the chat was successful.
      */
     chat_successful?: FilterCriteria.ChatSuccessful;
+
+    chat_type?: FilterCriteria.ChatType;
 
     /**
      * Filter by total chat cost in cents.
@@ -1037,6 +1044,10 @@ export namespace ChatListParams {
       | FilterCriteria.PresentFilter
     >;
 
+    data_storage_setting?: FilterCriteria.DataStorageSetting;
+
+    direction?: FilterCriteria.Direction;
+
     disconnection_reason?: FilterCriteria.DisconnectionReason;
 
     /**
@@ -1054,6 +1065,11 @@ export namespace ChatListParams {
      */
     start_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
 
+    /**
+     * Filter by the user's phone number for SMS chats.
+     */
+    user_number?: FilterCriteria.UserNumber;
+
     user_sentiment?: FilterCriteria.UserSentiment;
   }
 
@@ -1068,6 +1084,20 @@ export namespace ChatListParams {
        * Specific versions to filter on. If omitted or empty, all versions are included.
        */
       version?: Array<number>;
+    }
+
+    /**
+     * Filter by the agent's phone number for SMS chats.
+     */
+    export interface AgentNumber {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
     }
 
     /**
@@ -1128,6 +1158,17 @@ export namespace ChatListParams {
       value: boolean;
     }
 
+    export interface ChatType {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'api_chat' | 'sms_chat'>;
+    }
+
     export interface NumberFilter {
       /**
        * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
@@ -1342,6 +1383,28 @@ export namespace ChatListParams {
        * The field name to filter on.
        */
       key?: string;
+    }
+
+    export interface DataStorageSetting {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'everything' | 'everything_except_pii' | 'basic_attributes_only'>;
+    }
+
+    export interface Direction {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'inbound' | 'outbound'>;
     }
 
     export interface DisconnectionReason {
@@ -1466,6 +1529,20 @@ export namespace ChatListParams {
        * [lower_bound, upper_bound]
        */
       value: Array<number>;
+    }
+
+    /**
+     * Filter by the user's phone number for SMS chats.
+     */
+    export interface UserNumber {
+      /**
+       * eq: equal, ne: not equal, sw: starts with, ew: ends with, co: contains
+       */
+      op: 'eq' | 'ne' | 'sw' | 'ew' | 'co';
+
+      type: 'string';
+
+      value: string;
     }
 
     export interface UserSentiment {

@@ -228,6 +228,13 @@ export interface CRMUpdateConfigParams {
   contact_columns_order?: Array<string>;
 
   /**
+   * Replaces the organization's available contact tags. Tags are trimmed and
+   * deduplicated. Omit to leave unchanged, or send null or an empty array to clear
+   * the list. Does not change tags already assigned to contacts.
+   */
+  contact_tags?: Array<string> | null;
+
+  /**
    * Replaces the stored list.
    */
   crm_analysis_data_mappings?: Array<CRMUpdateConfigParams.CRMAnalysisDataMapping>;

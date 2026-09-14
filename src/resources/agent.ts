@@ -148,15 +148,6 @@ export class Agent extends APIResource {
   }
 
   /**
-   * Get agent versions. Large version histories may be truncated.
-   *
-   * @deprecated
-   */
-  getVersions(agentID: string, options?: RequestOptions): APIPromise<AgentGetVersionsResponse> {
-    return this._client.get(path`/get-agent-versions/${agentID}`, options);
-  }
-
-  /**
    * List stored versions of a voice or chat agent with pagination.
    *
    * @example
@@ -656,7 +647,7 @@ export interface AgentResponse {
   > | null;
 
   /**
-   * The model to use for post call analysis. Default to gpt-4.1.
+   * The model to use for post call analysis. Default to gpt-5.6-terra.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -682,6 +673,8 @@ export interface AgentResponse {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -1380,8 +1373,6 @@ export namespace AgentListResponse {
 
 export type AgentCreateVersionResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
 
-export type AgentGetVersionsResponse = Array<AgentResponse>;
-
 export interface AgentListVersionsResponse {
   /**
    * Whether more results are available.
@@ -1841,7 +1832,7 @@ export interface AgentCreateParams {
   > | null;
 
   /**
-   * The model to use for post call analysis. Default to gpt-4.1.
+   * The model to use for post call analysis. Default to gpt-5.6-terra.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -1867,6 +1858,8 @@ export interface AgentCreateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -2925,7 +2918,7 @@ export interface AgentUpdateParams {
   > | null;
 
   /**
-   * Body param: The model to use for post call analysis. Default to gpt-4.1.
+   * Body param: The model to use for post call analysis. Default to gpt-5.6-terra.
    */
   post_call_analysis_model?:
     | 'gpt-4.1'
@@ -2951,6 +2944,8 @@ export interface AgentUpdateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -3727,7 +3722,6 @@ export declare namespace Agent {
     type AgentResponse as AgentResponse,
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
-    type AgentGetVersionsResponse as AgentGetVersionsResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentRepairResponse as AgentRepairResponse,
     type AgentCreateParams as AgentCreateParams,

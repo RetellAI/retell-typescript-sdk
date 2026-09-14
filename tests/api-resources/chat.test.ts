@@ -74,6 +74,11 @@ describe('resource chat', () => {
         {
           filter_criteria: {
             agent: [{ agent_id: 'x', version: [0] }],
+            agent_number: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
+            },
             agent_tag: {
               op: 'in',
               type: 'enum',
@@ -93,6 +98,11 @@ describe('resource chat', () => {
               op: 'eq',
               type: 'boolean',
               value: true,
+            },
+            chat_type: {
+              op: 'in',
+              type: 'enum',
+              value: ['api_chat'],
             },
             combined_cost: {
               op: 'eq',
@@ -115,6 +125,16 @@ describe('resource chat', () => {
                 key: 'key',
               },
             ],
+            data_storage_setting: {
+              op: 'in',
+              type: 'enum',
+              value: ['everything'],
+            },
+            direction: {
+              op: 'in',
+              type: 'enum',
+              value: ['inbound'],
+            },
             disconnection_reason: {
               op: 'in',
               type: 'enum',
@@ -134,6 +154,11 @@ describe('resource chat', () => {
               op: 'eq',
               type: 'number',
               value: 0,
+            },
+            user_number: {
+              op: 'eq',
+              type: 'string',
+              value: 'value',
             },
             user_sentiment: {
               op: 'in',

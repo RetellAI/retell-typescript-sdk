@@ -151,6 +151,11 @@ export interface ContactResponse {
   phone_number: string;
 
   /**
+   * Tags assigned to the contact.
+   */
+  contact_tags?: Array<string>;
+
+  /**
    * Number of conversations (calls and chats) associated with this contact.
    */
   conversation_count?: number;
@@ -184,11 +189,6 @@ export interface ContactResponse {
    * Last name of the contact.
    */
   last_name?: string;
-
-  /**
-   * Tags assigned to the contact.
-   */
-  tags?: Array<string>;
 
   /**
    * Epoch milliseconds when the contact was last modified.
@@ -426,6 +426,11 @@ export interface ContactCreateParams {
   phone_number: string;
 
   /**
+   * Full set of tags for the contact.
+   */
+  contact_tags?: Array<string>;
+
+  /**
    * Values must match the types defined in CRM config custom fields. Set a value to
    * null to clear it.
    */
@@ -442,15 +447,15 @@ export interface ContactCreateParams {
    * Last name of the contact.
    */
   last_name?: string;
-
-  /**
-   * Full set of tags for the contact.
-   */
-  tags?: Array<string>;
 }
 
 export interface ContactUpdateParams {
   /**
+   * Full replacement set of tags for the contact.
+   */
+  contact_tags?: Array<string>;
+
+  /**
    * Values must match the types defined in CRM config custom fields. Set a value to
    * null to clear it.
    */
@@ -467,11 +472,6 @@ export interface ContactUpdateParams {
    * Last name of the contact.
    */
   last_name?: string;
-
-  /**
-   * Full replacement set of tags for the contact.
-   */
-  tags?: Array<string>;
 }
 
 export interface ContactListParams {
@@ -521,6 +521,11 @@ export namespace ContactListParams {
     contact_id?: FilterCriteria.ContactID;
 
     /**
+     * Match contacts that have any of the listed tags.
+     */
+    contact_tags?: FilterCriteria.ContactTags;
+
+    /**
      * Filter by custom contact fields defined in CRM config.
      */
     custom_fields?: Array<
@@ -553,11 +558,6 @@ export namespace ContactListParams {
      * number.
      */
     phone_number?: FilterCriteria.PhoneNumber;
-
-    /**
-     * Match contacts that have any of the listed tags.
-     */
-    tags?: FilterCriteria.Tags;
   }
 
   export namespace FilterCriteria {
@@ -570,6 +570,20 @@ export namespace ContactListParams {
       type: 'string';
 
       value: string;
+    }
+
+    /**
+     * Match contacts that have any of the listed tags.
+     */
+    export interface ContactTags {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
     }
 
     export interface StringFilter {
@@ -738,20 +752,6 @@ export namespace ContactListParams {
 
       value: string;
     }
-
-    /**
-     * Match contacts that have any of the listed tags.
-     */
-    export interface Tags {
-      /**
-       * in: value is one of the listed values
-       */
-      op: 'in';
-
-      type: 'enum';
-
-      value: Array<string>;
-    }
   }
 }
 
@@ -829,15 +829,15 @@ export interface ContactCreateImportParams {
   upload_id: string;
 
   /**
-   * Country for parsing phone numbers without a country code. Defaults to US.
-   */
-  default_country?: string;
-
-  /**
    * Tags added to every contact in this import. Existing tags are preserved. Omit to
    * leave tags unchanged.
    */
-  tags?: Array<string>;
+  contact_tags?: Array<string>;
+
+  /**
+   * Country for parsing phone numbers without a country code. Defaults to US.
+   */
+  default_country?: string;
 }
 
 export namespace ContactCreateImportParams {

@@ -143,8 +143,6 @@ export interface LlmResponse {
   general_tools?: Array<
     | LlmResponse.EndCallTool
     | LlmResponse.TransferCallTool
-    | LlmResponse.CheckAvailabilityCalTool
-    | LlmResponse.BookAppointmentCalTool
     | LlmResponse.AgentSwapTool
     | LlmResponse.PressDigitTool
     | LlmResponse.SendSMSTool
@@ -183,7 +181,7 @@ export interface LlmResponse {
   mcps?: Array<LlmResponse.Mcp> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-4.1.
+   * Select the underlying text LLM. If not set, would default to gpt-5.6-terra.
    */
   model?:
     | 'gpt-4.1'
@@ -209,6 +207,8 @@ export interface LlmResponse {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -666,92 +666,6 @@ export namespace LlmResponse {
         type?: 'static_message';
       }
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
   }
 
   export interface AgentSwapTool {
@@ -1519,8 +1433,6 @@ export namespace LlmResponse {
     tools?: Array<
       | State.EndCallTool
       | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
       | State.AgentSwapTool
       | State.PressDigitTool
       | State.SendSMSTool
@@ -1984,92 +1896,6 @@ export namespace LlmResponse {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
@@ -2823,8 +2649,6 @@ export interface LlmCreateParams {
   general_tools?: Array<
     | LlmCreateParams.EndCallTool
     | LlmCreateParams.TransferCallTool
-    | LlmCreateParams.CheckAvailabilityCalTool
-    | LlmCreateParams.BookAppointmentCalTool
     | LlmCreateParams.AgentSwapTool
     | LlmCreateParams.PressDigitTool
     | LlmCreateParams.SendSMSTool
@@ -2858,7 +2682,7 @@ export interface LlmCreateParams {
   mcps?: Array<LlmCreateParams.Mcp> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-4.1.
+   * Select the underlying text LLM. If not set, would default to gpt-5.6-terra.
    */
   model?:
     | 'gpt-4.1'
@@ -2884,6 +2708,8 @@ export interface LlmCreateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -3336,92 +3162,6 @@ export namespace LlmCreateParams {
         type?: 'static_message';
       }
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
   }
 
   export interface AgentSwapTool {
@@ -4189,8 +3929,6 @@ export namespace LlmCreateParams {
     tools?: Array<
       | State.EndCallTool
       | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
       | State.AgentSwapTool
       | State.PressDigitTool
       | State.SendSMSTool
@@ -4654,92 +4392,6 @@ export namespace LlmCreateParams {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
@@ -5494,8 +5146,6 @@ export interface LlmUpdateParams {
   general_tools?: Array<
     | LlmUpdateParams.EndCallTool
     | LlmUpdateParams.TransferCallTool
-    | LlmUpdateParams.CheckAvailabilityCalTool
-    | LlmUpdateParams.BookAppointmentCalTool
     | LlmUpdateParams.AgentSwapTool
     | LlmUpdateParams.PressDigitTool
     | LlmUpdateParams.SendSMSTool
@@ -5530,7 +5180,7 @@ export interface LlmUpdateParams {
 
   /**
    * Body param: Select the underlying text LLM. If not set, would default to
-   * gpt-4.1.
+   * gpt-5.6-terra.
    */
   model?:
     | 'gpt-4.1'
@@ -5556,6 +5206,8 @@ export interface LlmUpdateParams {
     | 'gemini-3.5-flash'
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
+    | 'gemini-3.7-flash'
+    | 'gemini-3.8-flash'
     | null;
 
   /**
@@ -6008,92 +5660,6 @@ export namespace LlmUpdateParams {
         type?: 'static_message';
       }
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface CheckAvailabilityCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to check
-     * availability for.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to check
-     * availability for. Can be a number or a dynamic variable in the format
-     * `{{variable_name}}` that will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'check_availability_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when checking availability, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
-  }
-
-  /**
-   * @deprecated
-   */
-  export interface BookAppointmentCalTool {
-    /**
-     * Cal.com Api key that have access to the cal.com event you want to book
-     * appointment.
-     */
-    cal_api_key: string;
-
-    /**
-     * Cal.com event type id number for the cal.com event you want to book appointment.
-     * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-     * will be resolved at runtime.
-     */
-    event_type_id: number | string;
-
-    /**
-     * Name of the tool. Must be unique within all tools available to LLM at any given
-     * time (general tools + state tools + state transitions). Must be consisted of
-     * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-     * (no space allowed).
-     */
-    name: string;
-
-    type: 'book_appointment_cal';
-
-    /**
-     * Describes what the tool does, sometimes can also include information about when
-     * to call the tool.
-     */
-    description?: string;
-
-    /**
-     * Timezone to be used when booking appointment, must be in
-     * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-     * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-     * resolved at runtime. If not specified, will check if user specified timezone in
-     * call, and if not, will use the timezone of the Retell servers.
-     */
-    timezone?: string;
   }
 
   export interface AgentSwapTool {
@@ -6861,8 +6427,6 @@ export namespace LlmUpdateParams {
     tools?: Array<
       | State.EndCallTool
       | State.TransferCallTool
-      | State.CheckAvailabilityCalTool
-      | State.BookAppointmentCalTool
       | State.AgentSwapTool
       | State.PressDigitTool
       | State.SendSMSTool
@@ -7326,92 +6890,6 @@ export namespace LlmUpdateParams {
           type?: 'static_message';
         }
       }
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface CheckAvailabilityCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to check
-       * availability for.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to check
-       * availability for. Can be a number or a dynamic variable in the format
-       * `{{variable_name}}` that will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'check_availability_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when checking availability, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
-    }
-
-    /**
-     * @deprecated
-     */
-    export interface BookAppointmentCalTool {
-      /**
-       * Cal.com Api key that have access to the cal.com event you want to book
-       * appointment.
-       */
-      cal_api_key: string;
-
-      /**
-       * Cal.com event type id number for the cal.com event you want to book appointment.
-       * Can be a number or a dynamic variable in the format `{{variable_name}}` that
-       * will be resolved at runtime.
-       */
-      event_type_id: number | string;
-
-      /**
-       * Name of the tool. Must be unique within all tools available to LLM at any given
-       * time (general tools + state tools + state transitions). Must be consisted of
-       * a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64
-       * (no space allowed).
-       */
-      name: string;
-
-      type: 'book_appointment_cal';
-
-      /**
-       * Describes what the tool does, sometimes can also include information about when
-       * to call the tool.
-       */
-      description?: string;
-
-      /**
-       * Timezone to be used when booking appointment, must be in
-       * [IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-       * Can also be a dynamic variable in the format `{{variable_name}}` that will be
-       * resolved at runtime. If not specified, will check if user specified timezone in
-       * call, and if not, will use the timezone of the Retell servers.
-       */
-      timezone?: string;
     }
 
     export interface AgentSwapTool {
