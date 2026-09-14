@@ -1,0 +1,159 @@
+name: Deploy MCP server to ECS
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'packages/mcp-server/**'
+      - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/deploy-mcp-server.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-mcp-server-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  AWS_REGION: us-west-2
+  ECR_REPOSITORY: retell-mcp-server
+  ECS_CLUSTER: retell-mcp-server
+  ECS_SERVICE: retell-mcp-server-service
+  CONTAINER_NAME: retell-mcp-server
+  MCP_HEALTH_URL: https://mcp.retellai.com/health
+  TASK_CPU: '1024'
+  TASK_MEMORY: '4096'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    if: github.repository == 'RetellAI/retell-typescript-sdk'
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          mask-aws-account-id: 'no'
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Ensure ECR repository and log group exist
+        run: |
+          aws ecr describe-repositories --repository-names "$ECR_REPOSITORY" >/dev/null 2>&1 || \
+            aws ecr create-repository --repository-name "$ECR_REPOSITORY" --image-scanning-configuration scanOnPush=true
+
+          aws logs describe-log-groups --log-group-name-prefix /ecs/retell-mcp-server \
+            --query 'logGroups[?logGroupName==`/ecs/retell-mcp-server`].logGroupName' \
+            --output text | grep -q '^/ecs/retell-mcp-server$' || \
+            aws logs create-log-group --log-group-name /ecs/retell-mcp-server
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+          DOCKER_BUILDKIT: '1'
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build --platform linux/amd64 -f packages/mcp-server/Dockerfile -t "$IMAGE_URI" .
+          docker push "$IMAGE_URI"
+          echo "image=$IMAGE_URI" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Amazon ECS task definition
+        id: task-def
+        env:
+          IMAGE_URI: ${{ steps.build-image.outputs.image }}
+          ECS_TASK_EXECUTION_ROLE_ARN: ${{ secrets.ECS_TASK_EXECUTION_ROLE_ARN }}
+        run: |
+          TASK_DEFINITION="$RUNNER_TEMP/task-def-mcp-server.json"
+
+          if [ -z "$ECS_TASK_EXECUTION_ROLE_ARN" ]; then
+            echo "ECS_TASK_EXECUTION_ROLE_ARN secret must be configured in the production environment." >&2
+            exit 1
+          fi
+
+          cat > "$TASK_DEFINITION" <<JSON
+          {
+            "family": "retell-mcp-server",
+            "taskRoleArn": "$ECS_TASK_EXECUTION_ROLE_ARN",
+            "executionRoleArn": "$ECS_TASK_EXECUTION_ROLE_ARN",
+            "networkMode": "awsvpc",
+            "containerDefinitions": [
+              {
+                "name": "$CONTAINER_NAME",
+                "image": "$IMAGE_URI",
+                "cpu": 0,
+                "portMappings": [
+                  {
+                    "name": "retell-mcp-server-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                  }
+                ],
+                "essential": true,
+                "command": ["--transport=http", "--port=3000"],
+                "environment": [],
+                "secrets": [],
+                "logConfiguration": {
+                  "logDriver": "awslogs",
+                  "options": {
+                    "awslogs-group": "/ecs/retell-mcp-server",
+                    "awslogs-region": "$AWS_REGION",
+                    "awslogs-stream-prefix": "ecs"
+                  }
+                },
+                "healthCheck": {
+                  "command": ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"],
+                  "interval": 30,
+                  "timeout": 5,
+                  "retries": 3,
+                  "startPeriod": 30
+                }
+              }
+            ],
+            "requiresCompatibilities": ["FARGATE"],
+            "cpu": "$TASK_CPU",
+            "memory": "$TASK_MEMORY",
+            "runtimePlatform": {
+              "cpuArchitecture": "X86_64",
+              "operatingSystemFamily": "LINUX"
+            }
+          }
+          JSON
+
+          echo "task-definition=$TASK_DEFINITION" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Smoke test health endpoint
+        run: |
+          for attempt in 1 2 3 4 5; do
+            if curl -fsS "$MCP_HEALTH_URL"; then
+              exit 0
+            fi
+            sleep 12
+          done
+          exit 1
