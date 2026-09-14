@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.0.0...v6.0.1) (2026-09-14)
+
+
+### Chores
+
+* preserve production workflow files ([e4958e5](https://github.com/RetellAI/retell-typescript-sdk/commit/e4958e5bfeb7940c56b0a4a83bf6153677059487))
+* **sdks:** refresh generated assets ([dea746a](https://github.com/RetellAI/retell-typescript-sdk/commit/dea746a6f9d81016abee3584ea5a1fb239e23a59))
+
 ## [6.0.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v5.66.1...v6.0.0) (2026-09-14)
 
 
