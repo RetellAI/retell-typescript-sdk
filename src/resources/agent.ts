@@ -344,6 +344,15 @@ export interface AgentResponse {
   call_screening_option?: AgentResponse.CallScreeningOption | null;
 
   /**
+   * Contact memory settings for phone calls and SMS chats. Creating an agent
+   * defaults enable_update to false and enable_read to true. Updates only change the
+   * supplied flags; omitted flags stay unchanged and an empty object has no effect.
+   * Set a flag to false to disable it. The configuration cannot be cleared. Existing
+   * agents without this configuration have both disabled.
+   */
+  contact_memory_config?: AgentResponse.ContactMemoryConfig;
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   custom_stt_config?: AgentResponse.CustomSttConfig | null;
@@ -381,6 +390,14 @@ export interface AgentResponse {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, the agent recognizes requests to stop calling or contacting the
+   * user, confirms once, and on a clear yes ends the call with disconnection reason
+   * user_requested_dnc and sets do_not_call to true on the contact for the user's
+   * phone number. If unset, default value false will apply.
+   */
+  enable_dnc_detection?: boolean;
 
   /**
    * If set to true, the agent will dynamically adjust how quickly it responds based
@@ -664,9 +681,16 @@ export interface AgentResponse {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -676,6 +700,26 @@ export interface AgentResponse {
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
     | null;
+
+  /**
+   * Integration (Agent Functions) tools run as a dependency graph during teardown,
+   * after post-call analysis. Each tool can be gated by a condition. On calls the
+   * graph is stopped after five minutes so teardown can finish. Set to null to
+   * clear.
+   */
+  post_session_tools?: Array<
+    AgentResponse.AppTool | AgentResponse.CustomTool | AgentResponse.CodeTool | AgentResponse.SendSMSTool
+  > | null;
+
+  /**
+   * Integration (Agent Functions) tools run as a dependency graph during session
+   * setup, before the agent's first message. Outputs are injected as dynamic
+   * variables. On calls the graph gets one minute unless an outbound caller will be
+   * dialed after setup, in which case it gets five minutes. Past that session
+   * initialization continues and any remaining tools finish in the background, so
+   * their outputs no longer reach the agent's prompt. Set to null to clear.
+   */
+  pre_session_tools?: Array<AgentResponse.AppTool | AgentResponse.CustomTool | AgentResponse.CodeTool> | null;
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -754,12 +798,6 @@ export interface AgentResponse {
   vocab_specialization?: 'general' | 'medical';
 
   /**
-   * Controls the emotional tone of the agent's voice. Currently supported for
-   * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
-   */
-  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
-
-  /**
    * Select the voice model used for the selected voice. Each provider has a set of
    * available voice models. Set to null to remove voice model selection, and default
    * ones will apply. Check out dashboard for more details of each voice model.
@@ -769,6 +807,7 @@ export interface AgentResponse {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
@@ -911,21 +950,45 @@ export namespace AgentResponse {
   }
 
   /**
+   * Contact memory settings for phone calls and SMS chats. Creating an agent
+   * defaults enable_update to false and enable_read to true. Updates only change the
+   * supplied flags; omitted flags stay unchanged and an empty object has no effect.
+   * Set a flag to false to disable it. The configuration cannot be cleared. Existing
+   * agents without this configuration have both disabled.
+   */
+  export interface ContactMemoryConfig {
+    /**
+     * Automatically add saved contact memory to the agent prompt. Skippable nodes can
+     * use answers from the current conversation even when this setting is disabled.
+     * Contact dynamic variables, including contact_memory, remain available regardless
+     * of this setting.
+     */
+    enable_read?: boolean;
+
+    /**
+     * Rewrite the contact memory after each conversation. Requires storing
+     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     */
+    enable_update?: boolean;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
     /**
      * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-     * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
-     * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
-     * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
+     * 500 for Soniox, 100 for AssemblyAI, 100 for Muse. For AssemblyAI, this sets
+     * min_turn_silence (100-3000 ms). max_turn_silence adds half of this value,
+     * rounded to the nearest millisecond and bounded to 500-1000 ms, with a total cap
+     * of 3000 ms. Muse detects turn ends itself and ignores this value.
      */
     endpointing_ms: number;
 
     /**
      * ASR provider name.
      */
-    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
   }
 
   /**
@@ -1230,6 +1293,1034 @@ export namespace AgentResponse {
      * required.
      */
     required?: boolean;
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: AppTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CustomTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CodeTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
+
+    type: 'send_sms';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: SendSMSTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      text?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
   }
 
   export interface PronunciationDictionary {
@@ -1534,6 +2625,15 @@ export interface AgentCreateParams {
   call_screening_option?: AgentCreateParams.CallScreeningOption | null;
 
   /**
+   * Contact memory settings for phone calls and SMS chats. Creating an agent
+   * defaults enable_update to false and enable_read to true. Updates only change the
+   * supplied flags; omitted flags stay unchanged and an empty object has no effect.
+   * Set a flag to false to disable it. The configuration cannot be cleared. Existing
+   * agents without this configuration have both disabled.
+   */
+  contact_memory_config?: AgentCreateParams.ContactMemoryConfig;
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   custom_stt_config?: AgentCreateParams.CustomSttConfig | null;
@@ -1571,6 +2671,14 @@ export interface AgentCreateParams {
    * will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * If set to true, the agent recognizes requests to stop calling or contacting the
+   * user, confirms once, and on a clear yes ends the call with disconnection reason
+   * user_requested_dnc and sets do_not_call to true on the contact for the user's
+   * phone number. If unset, default value false will apply.
+   */
+  enable_dnc_detection?: boolean;
 
   /**
    * If set to true, the agent will dynamically adjust how quickly it responds based
@@ -1849,9 +2957,16 @@ export interface AgentCreateParams {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -1861,6 +2976,31 @@ export interface AgentCreateParams {
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
     | null;
+
+  /**
+   * Integration (Agent Functions) tools run as a dependency graph during teardown,
+   * after post-call analysis. Each tool can be gated by a condition. On calls the
+   * graph is stopped after five minutes so teardown can finish. Set to null to
+   * clear.
+   */
+  post_session_tools?: Array<
+    | AgentCreateParams.AppTool
+    | AgentCreateParams.CustomTool
+    | AgentCreateParams.CodeTool
+    | AgentCreateParams.SendSMSTool
+  > | null;
+
+  /**
+   * Integration (Agent Functions) tools run as a dependency graph during session
+   * setup, before the agent's first message. Outputs are injected as dynamic
+   * variables. On calls the graph gets one minute unless an outbound caller will be
+   * dialed after setup, in which case it gets five minutes. Past that session
+   * initialization continues and any remaining tools finish in the background, so
+   * their outputs no longer reach the agent's prompt. Set to null to clear.
+   */
+  pre_session_tools?: Array<
+    AgentCreateParams.AppTool | AgentCreateParams.CustomTool | AgentCreateParams.CodeTool
+  > | null;
 
   /**
    * A list of words / phrases and their pronunciation to be used to guide the audio
@@ -1939,12 +3079,6 @@ export interface AgentCreateParams {
   vocab_specialization?: 'general' | 'medical';
 
   /**
-   * Controls the emotional tone of the agent's voice. Currently supported for
-   * Cartesia and Minimax TTS providers. If unset, no emotion will be used.
-   */
-  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
-
-  /**
    * Select the voice model used for the selected voice. Each provider has a set of
    * available voice models. Set to null to remove voice model selection, and default
    * ones will apply. Check out dashboard for more details of each voice model.
@@ -1954,6 +3088,7 @@ export interface AgentCreateParams {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
@@ -2096,21 +3231,45 @@ export namespace AgentCreateParams {
   }
 
   /**
+   * Contact memory settings for phone calls and SMS chats. Creating an agent
+   * defaults enable_update to false and enable_read to true. Updates only change the
+   * supplied flags; omitted flags stay unchanged and an empty object has no effect.
+   * Set a flag to false to disable it. The configuration cannot be cleared. Existing
+   * agents without this configuration have both disabled.
+   */
+  export interface ContactMemoryConfig {
+    /**
+     * Automatically add saved contact memory to the agent prompt. Skippable nodes can
+     * use answers from the current conversation even when this setting is disabled.
+     * Contact dynamic variables, including contact_memory, remain available regardless
+     * of this setting.
+     */
+    enable_read?: boolean;
+
+    /**
+     * Rewrite the contact memory after each conversation. Requires storing
+     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     */
+    enable_update?: boolean;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
     /**
      * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-     * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
-     * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
-     * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
+     * 500 for Soniox, 100 for AssemblyAI, 100 for Muse. For AssemblyAI, this sets
+     * min_turn_silence (100-3000 ms). max_turn_silence adds half of this value,
+     * rounded to the nearest millisecond and bounded to 500-1000 ms, with a total cap
+     * of 3000 ms. Muse detects turn ends itself and ignores this value.
      */
     endpointing_ms: number;
 
     /**
      * ASR provider name.
      */
-    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
   }
 
   /**
@@ -2417,6 +3576,1034 @@ export namespace AgentCreateParams {
     required?: boolean;
   }
 
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: AppTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CustomTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CodeTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
+
+    type: 'send_sms';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: SendSMSTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      text?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
   export interface PronunciationDictionary {
     /**
      * The phonetic alphabet to use. MiniMax speech-02-turbo supports IPA and Pinyin.
@@ -2617,6 +4804,15 @@ export interface AgentUpdateParams {
   call_screening_option?: AgentUpdateParams.CallScreeningOption | null;
 
   /**
+   * Body param: Contact memory settings for phone calls and SMS chats. Creating an
+   * agent defaults enable_update to false and enable_read to true. Updates only
+   * change the supplied flags; omitted flags stay unchanged and an empty object has
+   * no effect. Set a flag to false to disable it. The configuration cannot be
+   * cleared. Existing agents without this configuration have both disabled.
+   */
+  contact_memory_config?: AgentUpdateParams.ContactMemoryConfig;
+
+  /**
    * Body param: Custom STT configuration. Only used when stt_mode is set to custom.
    */
   custom_stt_config?: AgentUpdateParams.CustomSttConfig | null;
@@ -2654,6 +4850,14 @@ export interface AgentUpdateParams {
    * set, agent will not backchannel.
    */
   enable_backchannel?: boolean;
+
+  /**
+   * Body param: If set to true, the agent recognizes requests to stop calling or
+   * contacting the user, confirms once, and on a clear yes ends the call with
+   * disconnection reason user_requested_dnc and sets do_not_call to true on the
+   * contact for the user's phone number. If unset, default value false will apply.
+   */
+  enable_dnc_detection?: boolean;
 
   /**
    * Body param: If set to true, the agent will dynamically adjust how quickly it
@@ -2935,9 +5139,16 @@ export interface AgentUpdateParams {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -2947,6 +5158,31 @@ export interface AgentUpdateParams {
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
     | null;
+
+  /**
+   * Body param: Integration (Agent Functions) tools run as a dependency graph during
+   * teardown, after post-call analysis. Each tool can be gated by a condition. On
+   * calls the graph is stopped after five minutes so teardown can finish. Set to
+   * null to clear.
+   */
+  post_session_tools?: Array<
+    | AgentUpdateParams.AppTool
+    | AgentUpdateParams.CustomTool
+    | AgentUpdateParams.CodeTool
+    | AgentUpdateParams.SendSMSTool
+  > | null;
+
+  /**
+   * Body param: Integration (Agent Functions) tools run as a dependency graph during
+   * session setup, before the agent's first message. Outputs are injected as dynamic
+   * variables. On calls the graph gets one minute unless an outbound caller will be
+   * dialed after setup, in which case it gets five minutes. Past that session
+   * initialization continues and any remaining tools finish in the background, so
+   * their outputs no longer reach the agent's prompt. Set to null to clear.
+   */
+  pre_session_tools?: Array<
+    AgentUpdateParams.AppTool | AgentUpdateParams.CustomTool | AgentUpdateParams.CodeTool
+  > | null;
 
   /**
    * Body param: A list of words / phrases and their pronunciation to be used to
@@ -3040,13 +5276,6 @@ export interface AgentUpdateParams {
   vocab_specialization?: 'general' | 'medical';
 
   /**
-   * Body param: Controls the emotional tone of the agent's voice. Currently
-   * supported for Cartesia and Minimax TTS providers. If unset, no emotion will be
-   * used.
-   */
-  voice_emotion?: 'calm' | 'sympathetic' | 'happy' | 'sad' | 'angry' | 'fearful' | 'surprised' | null;
-
-  /**
    * Body param: Unique voice id used for the agent. Find list of available voices
    * and their preview in Dashboard.
    */
@@ -3063,6 +5292,7 @@ export interface AgentUpdateParams {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
     | 'sonic-3.5'
@@ -3159,21 +5389,45 @@ export namespace AgentUpdateParams {
   }
 
   /**
+   * Contact memory settings for phone calls and SMS chats. Creating an agent
+   * defaults enable_update to false and enable_read to true. Updates only change the
+   * supplied flags; omitted flags stay unchanged and an empty object has no effect.
+   * Set a flag to false to disable it. The configuration cannot be cleared. Existing
+   * agents without this configuration have both disabled.
+   */
+  export interface ContactMemoryConfig {
+    /**
+     * Automatically add saved contact memory to the agent prompt. Skippable nodes can
+     * use answers from the current conversation even when this setting is disabled.
+     * Contact dynamic variables, including contact_memory, remain available regardless
+     * of this setting.
+     */
+    enable_read?: boolean;
+
+    /**
+     * Rewrite the contact memory after each conversation. Requires storing
+     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     */
+    enable_update?: boolean;
+  }
+
+  /**
    * Custom STT configuration. Only used when stt_mode is set to custom.
    */
   export interface CustomSttConfig {
     /**
      * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-     * 500 for Soniox, 100 for AssemblyAI. For AssemblyAI, this sets min_turn_silence
-     * (100-3000 ms). max_turn_silence adds half of this value, rounded to the nearest
-     * millisecond and bounded to 500-1000 ms, with a total cap of 3000 ms.
+     * 500 for Soniox, 100 for AssemblyAI, 100 for Muse. For AssemblyAI, this sets
+     * min_turn_silence (100-3000 ms). max_turn_silence adds half of this value,
+     * rounded to the nearest millisecond and bounded to 500-1000 ms, with a total cap
+     * of 3000 ms. Muse detects turn ends itself and ignores this value.
      */
     endpointing_ms: number;
 
     /**
      * ASR provider name.
      */
-    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+    provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
   }
 
   /**
@@ -3478,6 +5732,1034 @@ export namespace AgentUpdateParams {
      * required.
      */
     required?: boolean;
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: AppTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CustomTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: CodeTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CodeTool {
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface SendSMSTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges).
+     */
+    name: string;
+
+    sms_content:
+      | SendSMSTool.SMSContentPredefined
+      | SendSMSTool.SMSContentInferred
+      | SendSMSTool.SMSContentTemplate;
+
+    type: 'send_sms';
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    condition?: SendSMSTool.Condition;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    description?: string;
+
+    /**
+     * Describes what to say before sending the SMS. Only applicable when
+     * speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * If true, the agent will speak a short line before sending the SMS. If omitted,
+     * defaults to true (same as end_call / transfer_call tools).
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace SendSMSTool {
+    export interface SMSContentPredefined {
+      /**
+       * The static message to be sent in the SMS. Can contain dynamic variables.
+       */
+      text?: string;
+
+      type?: 'predefined';
+    }
+
+    export interface SMSContentInferred {
+      /**
+       * The prompt to be used to help infer the SMS content. The model will take the
+       * global prompt, the call transcript, and this prompt together to deduce the right
+       * message to send. Can contain dynamic variables.
+       */
+      prompt?: string;
+
+      type?: 'inferred';
+    }
+
+    export interface SMSContentTemplate {
+      /**
+       * The template to use for the SMS content. "info_collection" sends a predefined
+       * message requesting information from the user.
+       */
+      template: 'info_collection';
+
+      type: 'template';
+    }
+
+    /**
+     * Optional gate; the step only runs when the condition holds. Defaults to always
+     * running.
+     */
+    export interface Condition {
+      equations: Array<Condition.Equation>;
+
+      operator: '||' | '&&';
+
+      type: 'equation';
+    }
+
+    export namespace Condition {
+      export interface Equation {
+        /**
+         * Left side of the equation
+         */
+        left: string;
+
+        operator:
+          | '=='
+          | '!='
+          | '>'
+          | '>='
+          | '<'
+          | '<='
+          | 'contains'
+          | 'not_contains'
+          | 'exists'
+          | 'not_exist';
+
+        /**
+         * Right side of the equation. The right side of the equation not required when
+         * "exists" or "not_exist" are selected.
+         */
+        right?: string;
+      }
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CustomTool {
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'custom';
+
+    /**
+     * Describes what the tool does, sometimes can also include information about when
+     * to call the tool.
+     */
+    url: string;
+
+    /**
+     * If set to true, the parameters will be passed as root level JSON object instead
+     * of nested under "args".
+     */
+    args_at_root?: boolean;
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing. Useful when the tool takes a noticeable amount of time to prevent
+     * silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true. Can write what to say or even provide
+     * examples. The default is "The message you will say to callee when calling this
+     * tool. Make sure it fits into the conversation smoothly.".
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Headers to add to the request.
+     */
+    headers?: { [key: string]: string };
+
+    /**
+     * Maximum number of times to retry the request after a failed attempt, from 0 (no
+     * retry) to 5. Retries happen on any failure, with exponential backoff between
+     * attempts; the backoff delay is not configurable. `timeout_ms` applies per
+     * attempt rather than as a budget across all attempts, so an attempt that times
+     * out is still retried and the worst-case total duration is `timeout_ms`
+     * multiplied by (`max_retry` + 1) as well as any latency incurred by the
+     * exponential backoff + jitter between each retry. Only the final attempt's result
+     * is reported to the agent. Because retries repeat the request, only set this
+     * above 0 if your endpoint is idempotent — a retried request may be processed more
+     * than once. Defaults to 0 (no retry).
+     */
+    max_retry?: number;
+
+    /**
+     * Method to use for the request, default to POST.
+     */
+    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+    /**
+     * How the tool's `parameters` are authored and shown in the dashboard editor —
+     * "form" for the visual parameter builder, "json" for a raw JSON Schema. Both
+     * produce the same `parameters` schema; this does not change how the request body
+     * is encoded (see `args_at_root`).
+     */
+    parameter_type?: 'json' | 'form';
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    parameters?: CustomTool.Parameters;
+
+    /**
+     * Query parameters to append to the request URL.
+     */
+    query_params?: { [key: string]: string };
+
+    /**
+     * A mapping of variable names to JSON paths in the response body. These values
+     * will be extracted from the response and made available as dynamic variables for
+     * use.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained. Usually this needs to get turned on so user can
+     * get update for the function call.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the function. Recommend to turn on if your function call
+     * takes over 1s (including network) to complete, so that your agent remains
+     * responsive.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the tool can run before it's considered
+     * timeout. If the tool times out, the agent would have that info. The minimum
+     * value allowed is 1000 ms (1 s), and maximum value allowed is 600,000 ms (10
+     * min). By default, this is set to 120,000 ms (2 min).
+     */
+    timeout_ms?: number;
+  }
+
+  export namespace CustomTool {
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface CodeTool {
+    /**
+     * JavaScript code to execute in the sandbox.
+     */
+    code: string;
+
+    /**
+     * Name of the tool. Must be unique within all tools available to LLM at any given
+     * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
+     * 0-9, or contain underscores and dashes, with a maximum length of 64 (no space
+     * allowed).
+     */
+    name: string;
+
+    type: 'code';
+
+    /**
+     * Names of tools that must run before this one.
+     */
+    depends_on?: Array<string>;
+
+    /**
+     * Describes what this tool does and when to call this tool.
+     */
+    description?: string;
+
+    /**
+     * If true, play a typing sound on the agent audio track while this tool is
+     * executing.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * The description for the sentence agent say during execution. Only applicable
+     * when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * A mapping of variable names to JSON paths in the code execution result. These
+     * mapped values will be extracted and added as dynamic variables.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Determines whether the agent would call LLM another time and speak when the
+     * result of function is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Determines whether the agent would say sentence like "One moment, let me check
+     * that." when executing the tool.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * The maximum time in milliseconds the code can run before it's considered
+     * timeout. Defaults to 30,000 ms (30 s).
+     */
+    timeout_ms?: number;
   }
 
   export interface PronunciationDictionary {

@@ -24,7 +24,8 @@ describe('resource contact', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.contact.create({
       phone_number: 'phone_number',
-      contact_tags: ['P'],
+      contact_memory: 'contact_memory',
+      contact_tag_ids: ['string'],
       custom_fields: {},
       do_not_call: true,
       first_name: 'first_name',
@@ -62,13 +63,14 @@ describe('resource contact', () => {
     await expect(
       client.contact.list(
         {
+          excluded_contact_ids: ['string'],
           filter_criteria: {
             contact_id: {
               op: 'eq',
               type: 'string',
               value: 'value',
             },
-            contact_tags: {
+            contact_tag_ids: {
               op: 'in',
               type: 'enum',
               value: ['string'],
@@ -127,7 +129,7 @@ describe('resource contact', () => {
 
   // Mock server tests are disabled
   test.skip('backfillAnalysisData: only required params', async () => {
-    const responsePromise = client.contact.backfillAnalysisData({ backfill_attributes: ['string'] });
+    const responsePromise = client.contact.backfillAnalysisData({ backfill_attributes: ['contact_memory'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -140,7 +142,7 @@ describe('resource contact', () => {
   // Mock server tests are disabled
   test.skip('backfillAnalysisData: required and optional params', async () => {
     const response = await client.contact.backfillAnalysisData({
-      backfill_attributes: ['string'],
+      backfill_attributes: ['contact_memory'],
       backfill_call_filter: {
         agent: [{ agent_id: 'x', version: [0] }],
         start_timestamp: {

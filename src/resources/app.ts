@@ -12,7 +12,8 @@ export class App extends APIResource {
    * desk, and so on), holding its credentials and settings. Providers with
    * caller-managed credentials accept auth_config. Providers using the OAuth
    * callback must omit auth_config and be authorized through connect-app.
-   * Credentials are stored encrypted and never returned. Up to 20 apps per provider.
+   * Credentials are stored encrypted and never returned. Up to 20 apps per provider
+   * by default, unless a custom limit is configured for the organization.
    */
   create(body: AppCreateParams, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.post('/create-app', { body, ...options });
@@ -57,6 +58,26 @@ export class App extends APIResource {
    */
   get(appID: string, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.get(path`/get-app/${appID}`, options);
+  }
+
+  /**
+   * One round of multi-step schema resolution for an app tool template against a
+   * connected App. parameters is the input parameters resolved so far, with
+   * properties configured by const or description, and is empty on the first call.
+   * Returns the next input_schema to fill; complete marks the last round (it may
+   * accompany the final input_schema) and may include an optional response_schema.
+   * Input-schema property descriptions provide the default text for LLM inference,
+   * and each property's default_input_mode ("const" or "description") is the input
+   * mode to preselect for it. A property may also carry extra_info ({ text?, link?
+   * }), guidance to render under its editor, e.g. a docs link on how to find an id.
+   * Used by the tool config UI.
+   */
+  getToolSchema(
+    appID: string,
+    body: AppGetToolSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<AppGetToolSchemaResponse> {
+    return this._client.post(path`/get-app-tool-schema/${appID}`, { body, ...options });
   }
 
   /**
@@ -171,7 +192,8 @@ export namespace AppResponse {
   export interface CRMConfig {
     /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
-     * include phone_number, which is the field the two systems are matched on.
+     * include phone_number, which is the field the two systems are matched on. A
+     * do_not_call mapping can mark contacts as do-not-call but never clears the flag.
      */
     inbound_sync_mappings?: Array<CRMConfig.InboundSyncMapping>;
 
@@ -236,6 +258,80 @@ export interface AppListResponse {
    * Pagination key for the next page.
    */
   pagination_key?: string;
+}
+
+export interface AppGetToolSchemaResponse {
+  complete: boolean;
+
+  /**
+   * The parameters the functions accepts, described as a JSON Schema object. See
+   * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+   * documentation about the format. Omitting parameters defines a function with an
+   * empty parameter list.
+   */
+  input_schema?: AppGetToolSchemaResponse.InputSchema;
+
+  /**
+   * The parameters the functions accepts, described as a JSON Schema object. See
+   * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+   * documentation about the format. Omitting parameters defines a function with an
+   * empty parameter list.
+   */
+  response_schema?: AppGetToolSchemaResponse.ResponseSchema;
+}
+
+export namespace AppGetToolSchemaResponse {
+  /**
+   * The parameters the functions accepts, described as a JSON Schema object. See
+   * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+   * documentation about the format. Omitting parameters defines a function with an
+   * empty parameter list.
+   */
+  export interface InputSchema {
+    /**
+     * The value of properties is an object, where each key is the name of a property
+     * and each value is a schema used to validate that property.
+     */
+    properties: unknown;
+
+    /**
+     * Type must be "object" for a JSON Schema object.
+     */
+    type: 'object';
+
+    /**
+     * List of names of required property when generating this parameter. LLM will do
+     * its best to generate the required properties in its function arguments. Property
+     * must exist in properties.
+     */
+    required?: Array<string>;
+  }
+
+  /**
+   * The parameters the functions accepts, described as a JSON Schema object. See
+   * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+   * documentation about the format. Omitting parameters defines a function with an
+   * empty parameter list.
+   */
+  export interface ResponseSchema {
+    /**
+     * The value of properties is an object, where each key is the name of a property
+     * and each value is a schema used to validate that property.
+     */
+    properties: unknown;
+
+    /**
+     * Type must be "object" for a JSON Schema object.
+     */
+    type: 'object';
+
+    /**
+     * List of names of required property when generating this parameter. LLM will do
+     * its best to generate the required properties in its function arguments. Property
+     * must exist in properties.
+     */
+    required?: Array<string>;
+  }
 }
 
 export interface AppListUsagesResponse {
@@ -370,7 +466,8 @@ export namespace AppCreateParams {
   export interface CRMConfig {
     /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
-     * include phone_number, which is the field the two systems are matched on.
+     * include phone_number, which is the field the two systems are matched on. A
+     * do_not_call mapping can mark contacts as do-not-call but never clears the flag.
      */
     inbound_sync_mappings?: Array<CRMConfig.InboundSyncMapping>;
 
@@ -484,7 +581,8 @@ export namespace AppUpdateParams {
   export interface CRMConfig {
     /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
-     * include phone_number, which is the field the two systems are matched on.
+     * include phone_number, which is the field the two systems are matched on. A
+     * do_not_call mapping can mark contacts as do-not-call but never clears the flag.
      */
     inbound_sync_mappings?: Array<CRMConfig.InboundSyncMapping>;
 
@@ -561,6 +659,46 @@ export interface AppDeleteParams {
   force_delete?: boolean;
 }
 
+export interface AppGetToolSchemaParams {
+  /**
+   * The app tool template name (the provider's catalog tool name).
+   */
+  app_tool_template_name: string;
+
+  /**
+   * The input parameters resolved so far; empty on the first call.
+   */
+  parameters?: Array<AppGetToolSchemaParams.Parameter>;
+}
+
+export namespace AppGetToolSchemaParams {
+  /**
+   * The parameters the functions accepts, described as a JSON Schema object. See
+   * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+   * documentation about the format. Omitting parameters defines a function with an
+   * empty parameter list.
+   */
+  export interface Parameter {
+    /**
+     * The value of properties is an object, where each key is the name of a property
+     * and each value is a schema used to validate that property.
+     */
+    properties: unknown;
+
+    /**
+     * Type must be "object" for a JSON Schema object.
+     */
+    type: 'object';
+
+    /**
+     * List of names of required property when generating this parameter. LLM will do
+     * its best to generate the required properties in its function arguments. Property
+     * must exist in properties.
+     */
+    required?: Array<string>;
+  }
+}
+
 export interface AppListUsagesParams {
   /**
    * Maximum number of items to return.
@@ -582,12 +720,14 @@ export declare namespace App {
   export {
     type AppResponse as AppResponse,
     type AppListResponse as AppListResponse,
+    type AppGetToolSchemaResponse as AppGetToolSchemaResponse,
     type AppListUsagesResponse as AppListUsagesResponse,
     type AppTestAuthResponse as AppTestAuthResponse,
     type AppCreateParams as AppCreateParams,
     type AppUpdateParams as AppUpdateParams,
     type AppListParams as AppListParams,
     type AppDeleteParams as AppDeleteParams,
+    type AppGetToolSchemaParams as AppGetToolSchemaParams,
     type AppListUsagesParams as AppListUsagesParams,
   };
 }

@@ -20,6 +20,11 @@ export interface IdentityRetrieveResponse {
   api_key_name: string | null;
 
   /**
+   * ID of the org that owns the API key.
+   */
+  org_id: string;
+
+  /**
    * Display name of the org.
    */
   org_name: string;

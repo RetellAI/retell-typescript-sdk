@@ -232,6 +232,7 @@ describe('resource chat', () => {
     const response = await client.chat.createSMSChat({
       from_number: '+12137771234',
       to_number: '+14155551234',
+      honor_internal_dnc: true,
       metadata: {},
       override_agent_id: 'oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD',
       override_agent_version: 'latest_published',
