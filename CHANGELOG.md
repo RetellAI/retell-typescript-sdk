@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.1.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.1.0...v6.1.1) (2026-10-05)
+
+
+### Bug Fixes
+
+* **sdks:** re-anchor custom-code seals on staging main ([a2cd316](https://github.com/RetellAI/retell-typescript-sdk/commit/a2cd316f130cd40c910c8835ede93b88a74720e4))
+
+
+### Chores
+
+* preserve production workflow files ([51296bc](https://github.com/RetellAI/retell-typescript-sdk/commit/51296bc17f4e919ce815f2ca7951d7da24afec33))
+
 ## [6.1.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.0.1...v6.1.0) (2026-10-05)
 
 
