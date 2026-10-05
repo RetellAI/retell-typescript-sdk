@@ -180,7 +180,9 @@ export interface ConversationFlowComponentResponse {
   /**
    * Tools available within the component
    */
-  tools?: Array<ConversationFlowComponentResponse.Tool> | null;
+  tools?: Array<
+    ConversationFlowComponentResponse.CustomTool | ConversationFlowComponentResponse.AppTool
+  > | null;
 }
 
 export namespace ConversationFlowComponentResponse {
@@ -202,6 +204,10 @@ export namespace ConversationFlowComponentResponse {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -216,6 +222,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<ConversationNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ConversationNode.ElseEdge;
 
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
@@ -258,7 +269,18 @@ export namespace ConversationFlowComponentResponse {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -295,6 +317,10 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -378,14 +404,15 @@ export namespace ConversationFlowComponentResponse {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -397,6 +424,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -457,6 +491,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -622,9 +661,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -650,6 +690,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -820,9 +911,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -843,6 +941,11 @@ export namespace ConversationFlowComponentResponse {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -939,6 +1042,10 @@ export namespace ConversationFlowComponentResponse {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -953,6 +1060,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<SubagentNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: SubagentNode.ElseEdge;
 
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
@@ -995,7 +1107,18 @@ export namespace ConversationFlowComponentResponse {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -1026,6 +1149,7 @@ export namespace ConversationFlowComponentResponse {
       | SubagentNode.BridgeTransferTool
       | SubagentNode.CancelTransferTool
       | SubagentNode.McpTool
+      | SubagentNode.AppTool
     > | null;
 
     voice_speed?: number | null;
@@ -1044,6 +1168,10 @@ export namespace ConversationFlowComponentResponse {
       type: 'prompt';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -1127,14 +1255,15 @@ export namespace ConversationFlowComponentResponse {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -1146,6 +1275,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -1206,6 +1342,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -1371,9 +1512,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -1399,6 +1541,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -1569,9 +1762,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -1592,6 +1792,11 @@ export namespace ConversationFlowComponentResponse {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -1679,6 +1884,12 @@ export namespace ConversationFlowComponentResponse {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -2122,6 +2333,14 @@ export namespace ConversationFlowComponentResponse {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -2758,6 +2977,154 @@ export namespace ConversationFlowComponentResponse {
        */
       speak_during_execution?: boolean;
     }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
+    }
   }
 
   export interface EndNode {
@@ -2770,6 +3137,12 @@ export namespace ConversationFlowComponentResponse {
      * Type of the node
      */
     type: 'end';
+
+    /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Position for frontend display
@@ -2808,9 +3181,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -2836,6 +3210,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -3014,9 +3439,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3071,6 +3503,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<FunctionNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: FunctionNode.ElseEdge;
 
     /**
@@ -3107,6 +3544,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -3167,6 +3611,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -3290,9 +3739,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -3318,6 +3768,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -3496,9 +3997,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -3548,6 +4056,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<CodeNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: CodeNode.ElseEdge;
 
     /**
@@ -3596,6 +4109,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -3656,6 +4176,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -3779,9 +4304,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -3807,6 +4333,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -3985,9 +4562,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -4015,6 +4599,10 @@ export namespace ConversationFlowComponentResponse {
      */
     id: string;
 
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     edge: TransferCallNode.Edge;
 
     transfer_destination:
@@ -4070,6 +4658,10 @@ export namespace ConversationFlowComponentResponse {
   }
 
   export namespace TransferCallNode {
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -4455,9 +5047,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -4483,6 +5076,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -4661,9 +5305,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -4710,6 +5361,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: PressDigitNode.ElseEdge;
 
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
@@ -4746,6 +5402,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -4806,6 +5469,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -4929,9 +5597,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -4957,6 +5626,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -5111,9 +5831,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5141,6 +5868,11 @@ export namespace ConversationFlowComponentResponse {
      */
     id: string;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge: BranchNode.ElseEdge;
 
     /**
@@ -5168,6 +5900,11 @@ export namespace ConversationFlowComponentResponse {
   }
 
   export namespace BranchNode {
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -5251,6 +5988,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -5360,9 +6104,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -5388,6 +6133,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -5542,9 +6338,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -5572,6 +6375,10 @@ export namespace ConversationFlowComponentResponse {
      */
     id: string;
 
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     failed_edge: SMSNode.FailedEdge;
 
     instruction:
@@ -5579,6 +6386,9 @@ export namespace ConversationFlowComponentResponse {
       | SMSNode.NodeInstructionStaticText
       | SMSNode.SMSInstructionTemplate;
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     success_edge: SMSNode.SuccessEdge;
 
     /**
@@ -5602,6 +6412,10 @@ export namespace ConversationFlowComponentResponse {
   }
 
   export namespace SMSNode {
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     export interface FailedEdge {
       /**
        * Unique identifier for the edge
@@ -5637,7 +6451,7 @@ export namespace ConversationFlowComponentResponse {
         type: 'equation';
 
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt?: 'Failed to send';
       }
@@ -5671,7 +6485,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface UnionMember2 {
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt: 'Failed to send';
 
@@ -5716,6 +6530,9 @@ export namespace ConversationFlowComponentResponse {
       type: 'template';
     }
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     export interface SuccessEdge {
       /**
        * Unique identifier for the edge
@@ -5751,7 +6568,7 @@ export namespace ConversationFlowComponentResponse {
         type: 'equation';
 
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt?: 'Sent successfully';
       }
@@ -5785,7 +6602,7 @@ export namespace ConversationFlowComponentResponse {
 
       export interface UnionMember2 {
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt: 'Sent successfully';
 
@@ -5804,9 +6621,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -5832,6 +6650,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -5986,9 +6855,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -6035,6 +6911,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
 
     /**
@@ -6194,6 +7075,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -6254,6 +7142,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -6377,9 +7270,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -6405,6 +7299,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -6559,9 +7504,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -6650,6 +7602,14 @@ export namespace ConversationFlowComponentResponse {
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -6746,9 +7706,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -6774,6 +7735,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -6952,9 +7964,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -7009,6 +8028,11 @@ export namespace ConversationFlowComponentResponse {
 
     edges?: Array<McpNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: McpNode.ElseEdge;
 
     /**
@@ -7054,6 +8078,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -7114,6 +8145,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -7237,9 +8273,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -7265,6 +8302,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -7443,9 +8531,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -7603,6 +8698,13 @@ export namespace ConversationFlowComponentResponse {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -7712,9 +8814,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -7740,6 +8843,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -7925,9 +9079,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -7953,6 +9108,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -8131,9 +9337,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -8204,9 +9417,10 @@ export namespace ConversationFlowComponentResponse {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -8232,6 +9446,57 @@ export namespace ConversationFlowComponentResponse {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -8410,9 +9675,16 @@ export namespace ConversationFlowComponentResponse {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -8511,7 +9783,7 @@ export namespace ConversationFlowComponentResponse {
     }
   }
 
-  export interface Tool {
+  export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -8600,7 +9872,7 @@ export namespace ConversationFlowComponentResponse {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: Tool.Parameters;
+    parameters?: CustomTool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -8643,7 +9915,7 @@ export namespace ConversationFlowComponentResponse {
     tool_id?: string;
   }
 
-  export namespace Tool {
+  export namespace CustomTool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -8651,6 +9923,159 @@ export namespace ConversationFlowComponentResponse {
      * empty parameter list.
      */
     export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * Unique identifier for the tool
+     */
+    tool_id?: string;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
       /**
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
@@ -8741,7 +10166,9 @@ export interface ConversationFlowComponentCreateParams {
   /**
    * Tools available within the component
    */
-  tools?: Array<ConversationFlowComponentCreateParams.Tool> | null;
+  tools?: Array<
+    ConversationFlowComponentCreateParams.CustomTool | ConversationFlowComponentCreateParams.AppTool
+  > | null;
 }
 
 export namespace ConversationFlowComponentCreateParams {
@@ -8763,6 +10190,10 @@ export namespace ConversationFlowComponentCreateParams {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -8777,6 +10208,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<ConversationNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ConversationNode.ElseEdge;
 
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
@@ -8819,7 +10255,18 @@ export namespace ConversationFlowComponentCreateParams {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -8856,6 +10303,10 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -8939,14 +10390,15 @@ export namespace ConversationFlowComponentCreateParams {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -8958,6 +10410,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -9018,6 +10477,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -9183,9 +10647,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -9211,6 +10676,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -9381,9 +10897,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -9404,6 +10927,11 @@ export namespace ConversationFlowComponentCreateParams {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -9500,6 +11028,10 @@ export namespace ConversationFlowComponentCreateParams {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -9514,6 +11046,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<SubagentNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: SubagentNode.ElseEdge;
 
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
@@ -9556,7 +11093,18 @@ export namespace ConversationFlowComponentCreateParams {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -9587,6 +11135,7 @@ export namespace ConversationFlowComponentCreateParams {
       | SubagentNode.BridgeTransferTool
       | SubagentNode.CancelTransferTool
       | SubagentNode.McpTool
+      | SubagentNode.AppTool
     > | null;
 
     voice_speed?: number | null;
@@ -9605,6 +11154,10 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'prompt';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -9688,14 +11241,15 @@ export namespace ConversationFlowComponentCreateParams {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -9707,6 +11261,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -9767,6 +11328,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -9932,9 +11498,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -9960,6 +11527,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -10130,9 +11748,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -10153,6 +11778,11 @@ export namespace ConversationFlowComponentCreateParams {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -10240,6 +11870,12 @@ export namespace ConversationFlowComponentCreateParams {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -10683,6 +12319,14 @@ export namespace ConversationFlowComponentCreateParams {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -11319,6 +12963,154 @@ export namespace ConversationFlowComponentCreateParams {
        */
       speak_during_execution?: boolean;
     }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
+    }
   }
 
   export interface EndNode {
@@ -11331,6 +13123,12 @@ export namespace ConversationFlowComponentCreateParams {
      * Type of the node
      */
     type: 'end';
+
+    /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Position for frontend display
@@ -11369,9 +13167,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -11397,6 +13196,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -11575,9 +13425,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -11632,6 +13489,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<FunctionNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: FunctionNode.ElseEdge;
 
     /**
@@ -11668,6 +13530,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -11728,6 +13597,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -11851,9 +13725,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -11879,6 +13754,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -12057,9 +13983,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -12109,6 +14042,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<CodeNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: CodeNode.ElseEdge;
 
     /**
@@ -12157,6 +14095,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -12217,6 +14162,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -12340,9 +14290,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -12368,6 +14319,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -12546,9 +14548,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -12576,6 +14585,10 @@ export namespace ConversationFlowComponentCreateParams {
      */
     id: string;
 
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     edge: TransferCallNode.Edge;
 
     transfer_destination:
@@ -12631,6 +14644,10 @@ export namespace ConversationFlowComponentCreateParams {
   }
 
   export namespace TransferCallNode {
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -13016,9 +15033,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -13044,6 +15062,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -13222,9 +15291,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -13271,6 +15347,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: PressDigitNode.ElseEdge;
 
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
@@ -13307,6 +15388,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -13367,6 +15455,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -13490,9 +15583,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -13518,6 +15612,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -13672,9 +15817,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -13702,6 +15854,11 @@ export namespace ConversationFlowComponentCreateParams {
      */
     id: string;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge: BranchNode.ElseEdge;
 
     /**
@@ -13729,6 +15886,11 @@ export namespace ConversationFlowComponentCreateParams {
   }
 
   export namespace BranchNode {
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -13812,6 +15974,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -13921,9 +16090,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -13949,6 +16119,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -14103,9 +16324,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -14133,6 +16361,10 @@ export namespace ConversationFlowComponentCreateParams {
      */
     id: string;
 
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     failed_edge: SMSNode.FailedEdge;
 
     instruction:
@@ -14140,6 +16372,9 @@ export namespace ConversationFlowComponentCreateParams {
       | SMSNode.NodeInstructionStaticText
       | SMSNode.SMSInstructionTemplate;
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     success_edge: SMSNode.SuccessEdge;
 
     /**
@@ -14163,6 +16398,10 @@ export namespace ConversationFlowComponentCreateParams {
   }
 
   export namespace SMSNode {
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     export interface FailedEdge {
       /**
        * Unique identifier for the edge
@@ -14198,7 +16437,7 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'equation';
 
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt?: 'Failed to send';
       }
@@ -14232,7 +16471,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface UnionMember2 {
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt: 'Failed to send';
 
@@ -14277,6 +16516,9 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'template';
     }
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     export interface SuccessEdge {
       /**
        * Unique identifier for the edge
@@ -14312,7 +16554,7 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'equation';
 
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt?: 'Sent successfully';
       }
@@ -14346,7 +16588,7 @@ export namespace ConversationFlowComponentCreateParams {
 
       export interface UnionMember2 {
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt: 'Sent successfully';
 
@@ -14365,9 +16607,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -14393,6 +16636,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -14547,9 +16841,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -14596,6 +16897,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
 
     /**
@@ -14755,6 +17061,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -14815,6 +17128,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -14938,9 +17256,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -14966,6 +17285,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -15120,9 +17490,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -15211,6 +17588,14 @@ export namespace ConversationFlowComponentCreateParams {
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -15307,9 +17692,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -15335,6 +17721,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -15513,9 +17950,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -15570,6 +18014,11 @@ export namespace ConversationFlowComponentCreateParams {
 
     edges?: Array<McpNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: McpNode.ElseEdge;
 
     /**
@@ -15615,6 +18064,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -15675,6 +18131,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -15798,9 +18259,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -15826,6 +18288,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -16004,9 +18517,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -16164,6 +18684,13 @@ export namespace ConversationFlowComponentCreateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -16273,9 +18800,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -16301,6 +18829,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -16486,9 +19065,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -16514,6 +19094,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -16692,9 +19323,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -16765,9 +19403,10 @@ export namespace ConversationFlowComponentCreateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -16793,6 +19432,57 @@ export namespace ConversationFlowComponentCreateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -16971,9 +19661,16 @@ export namespace ConversationFlowComponentCreateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -17072,7 +19769,7 @@ export namespace ConversationFlowComponentCreateParams {
     }
   }
 
-  export interface Tool {
+  export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -17161,7 +19858,7 @@ export namespace ConversationFlowComponentCreateParams {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: Tool.Parameters;
+    parameters?: CustomTool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -17204,7 +19901,7 @@ export namespace ConversationFlowComponentCreateParams {
     tool_id?: string;
   }
 
-  export namespace Tool {
+  export namespace CustomTool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -17212,6 +19909,159 @@ export namespace ConversationFlowComponentCreateParams {
      * empty parameter list.
      */
     export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * Unique identifier for the tool
+     */
+    tool_id?: string;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
       /**
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.
@@ -17288,7 +20138,9 @@ export interface ConversationFlowComponentUpdateParams {
   /**
    * Tools available within the component
    */
-  tools?: Array<ConversationFlowComponentUpdateParams.Tool> | null;
+  tools?: Array<
+    ConversationFlowComponentUpdateParams.CustomTool | ConversationFlowComponentUpdateParams.AppTool
+  > | null;
 }
 
 export namespace ConversationFlowComponentUpdateParams {
@@ -17344,6 +20196,10 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
@@ -17358,6 +20214,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<ConversationNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ConversationNode.ElseEdge;
 
     finetune_conversation_examples?: Array<ConversationNode.FinetuneConversationExample>;
@@ -17400,7 +20261,18 @@ export namespace ConversationFlowComponentUpdateParams {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: ConversationNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -17437,6 +20309,10 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -17520,14 +20396,15 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -17539,6 +20416,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -17599,6 +20483,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -17764,9 +20653,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -17792,6 +20682,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -17962,9 +20903,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -17985,6 +20933,11 @@ export namespace ConversationFlowComponentUpdateParams {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -18081,6 +21034,10 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     allow_dtmf_interruption?: boolean | null;
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     always_edge?: SubagentNode.AlwaysEdge;
 
     /**
@@ -18095,6 +21052,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<SubagentNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: SubagentNode.ElseEdge;
 
     finetune_conversation_examples?: Array<SubagentNode.FinetuneConversationExample>;
@@ -18137,7 +21099,18 @@ export namespace ConversationFlowComponentUpdateParams {
 
     responsiveness?: number | null;
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     skip_response_edge?: SubagentNode.SkipResponseEdge;
+
+    /**
+     * Allow skipping this node when its questions are already answered in the current
+     * conversation or in saved contact memory when memory reading is enabled.
+     */
+    skippable?: boolean;
 
     /**
      * Balance between speed and accuracy. Fast optimizes for speed using the provider
@@ -18168,6 +21141,7 @@ export namespace ConversationFlowComponentUpdateParams {
       | SubagentNode.BridgeTransferTool
       | SubagentNode.CancelTransferTool
       | SubagentNode.McpTool
+      | SubagentNode.AppTool
     > | null;
 
     voice_speed?: number | null;
@@ -18186,6 +21160,10 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'prompt';
     }
 
+    /**
+     * For conversation and subagent nodes, transitions unconditionally after the user
+     * responds. Use as the node's only outgoing edge.
+     */
     export interface AlwaysEdge {
       /**
        * Unique identifier for the edge
@@ -18269,14 +21247,15 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface CustomSttConfig {
       /**
        * Endpointing timeout in milliseconds. Minimum is 100 for Azure, 10 for Deepgram,
-       * 500 for Soniox, and 100 for AssemblyAI.
+       * 500 for Soniox, 100 for AssemblyAI, and 100 for Muse. Muse detects turn ends
+       * itself and ignores this value.
        */
       endpointing_ms: number;
 
       /**
        * ASR provider name.
        */
-      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai';
+      provider: 'azure' | 'deepgram' | 'soniox' | 'assemblyai' | 'muse';
     }
 
     /**
@@ -18288,6 +21267,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -18348,6 +21334,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -18513,9 +21504,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -18541,6 +21533,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -18711,9 +21754,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -18734,6 +21784,11 @@ export namespace ConversationFlowComponentUpdateParams {
       high_priority?: boolean;
     }
 
+    /**
+     * For conversation and subagent nodes, transitions after the agent finishes
+     * speaking, without waiting for a user response. Use as the node's only outgoing
+     * edge.
+     */
     export interface SkipResponseEdge {
       /**
        * Unique identifier for the edge
@@ -18821,6 +21876,12 @@ export namespace ConversationFlowComponentUpdateParams {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -19264,6 +22325,14 @@ export namespace ConversationFlowComponentUpdateParams {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -19900,6 +22969,154 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       speak_during_execution?: boolean;
     }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
+    }
   }
 
   export interface EndNode {
@@ -19912,6 +23129,12 @@ export namespace ConversationFlowComponentUpdateParams {
      * Type of the node
      */
     type: 'end';
+
+    /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
 
     /**
      * Position for frontend display
@@ -19950,9 +23173,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -19978,6 +23202,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -20156,9 +23431,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -20213,6 +23495,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<FunctionNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: FunctionNode.ElseEdge;
 
     /**
@@ -20249,6 +23536,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -20309,6 +23603,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -20432,9 +23731,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -20460,6 +23760,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -20638,9 +23989,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -20690,6 +24048,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<CodeNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: CodeNode.ElseEdge;
 
     /**
@@ -20738,6 +24101,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -20798,6 +24168,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -20921,9 +24296,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -20949,6 +24325,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -21127,9 +24554,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -21157,6 +24591,10 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     id: string;
 
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     edge: TransferCallNode.Edge;
 
     transfer_destination:
@@ -21212,6 +24650,10 @@ export namespace ConversationFlowComponentUpdateParams {
   }
 
   export namespace TransferCallNode {
+    /**
+     * Transition followed by a transfer_call or agent_swap node when the transfer
+     * fails. Evaluated after the transfer attempt finishes.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -21597,9 +25039,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -21625,6 +25068,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -21803,9 +25297,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -21852,6 +25353,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<PressDigitNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: PressDigitNode.ElseEdge;
 
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
@@ -21888,6 +25394,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -21948,6 +25461,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -22071,9 +25589,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -22099,6 +25618,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -22253,9 +25823,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -22283,6 +25860,11 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     id: string;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge: BranchNode.ElseEdge;
 
     /**
@@ -22310,6 +25892,11 @@ export namespace ConversationFlowComponentUpdateParams {
   }
 
   export namespace BranchNode {
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -22393,6 +25980,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -22502,9 +26096,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -22530,6 +26125,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -22684,9 +26330,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -22714,6 +26367,10 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     id: string;
 
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     failed_edge: SMSNode.FailedEdge;
 
     instruction:
@@ -22721,6 +26378,9 @@ export namespace ConversationFlowComponentUpdateParams {
       | SMSNode.NodeInstructionStaticText
       | SMSNode.SMSInstructionTemplate;
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     success_edge: SMSNode.SuccessEdge;
 
     /**
@@ -22744,6 +26404,10 @@ export namespace ConversationFlowComponentUpdateParams {
   }
 
   export namespace SMSNode {
+    /**
+     * Transition followed by an SMS node when generating the message content or
+     * sending the message fails.
+     */
     export interface FailedEdge {
       /**
        * Unique identifier for the edge
@@ -22779,7 +26443,7 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'equation';
 
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt?: 'Failed to send';
       }
@@ -22813,7 +26477,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface UnionMember2 {
         /**
-         * Must be "failed to send" for SMS failed edge
+         * Must be "Failed to send" for SMS failed edge
          */
         prompt: 'Failed to send';
 
@@ -22858,6 +26522,9 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'template';
     }
 
+    /**
+     * Transition followed by an SMS node after the send operation reports success.
+     */
     export interface SuccessEdge {
       /**
        * Unique identifier for the edge
@@ -22893,7 +26560,7 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'equation';
 
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt?: 'Sent successfully';
       }
@@ -22927,7 +26594,7 @@ export namespace ConversationFlowComponentUpdateParams {
 
       export interface UnionMember2 {
         /**
-         * Must be "sent successfully" for SMS success edge
+         * Must be "Sent successfully" for SMS success edge
          */
         prompt: 'Sent successfully';
 
@@ -22946,9 +26613,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -22974,6 +26642,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -23128,9 +26847,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -23177,6 +26903,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<ExtractDynamicVariablesNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: ExtractDynamicVariablesNode.ElseEdge;
 
     /**
@@ -23336,6 +27067,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -23396,6 +27134,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -23519,9 +27262,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -23547,6 +27291,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -23701,9 +27496,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -23792,6 +27594,14 @@ export namespace ConversationFlowComponentUpdateParams {
      * If true, will speak during execution
      */
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -23888,9 +27698,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -23916,6 +27727,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -24094,9 +27956,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -24151,6 +28020,11 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edges?: Array<McpNode.Edge>;
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     else_edge?: McpNode.ElseEdge;
 
     /**
@@ -24196,6 +28070,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -24256,6 +28137,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * Fallback transition used when no conditional edge or global-node condition
+     * matches. Evaluated at the same point as the node's conditional edges; for
+     * conversation and subagent nodes, an unmatched user response follows this edge.
+     */
     export interface ElseEdge {
       /**
        * Unique identifier for the edge
@@ -24379,9 +28265,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -24407,6 +28294,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -24585,9 +28523,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -24745,6 +28690,13 @@ export namespace ConversationFlowComponentUpdateParams {
       y?: number;
     }
 
+    /**
+     * A connection between conversation-flow nodes. When used in a node's edges array,
+     * transitions when its condition matches. Equation conditions compare dynamic
+     * variables and are checked in array order; the first match wins. If no equation
+     * matches, the LLM evaluates prompt conditions against the conversation and
+     * selects a matching transition, if any.
+     */
     export interface Edge {
       /**
        * Unique identifier for the edge
@@ -24854,9 +28806,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -24882,6 +28835,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -25067,9 +29071,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -25095,6 +29100,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -25273,9 +29329,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -25346,9 +29409,10 @@ export namespace ConversationFlowComponentUpdateParams {
 
     export interface GlobalNodeSetting {
       /**
-       * Condition for global node activation, cannot be empty
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts a typed prompt or equation condition.
        */
-      condition: string;
+      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -25374,6 +29438,57 @@ export namespace ConversationFlowComponentUpdateParams {
     }
 
     export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
       export interface GoBackCondition {
         /**
          * Unique identifier for the edge
@@ -25552,9 +29667,16 @@ export namespace ConversationFlowComponentUpdateParams {
         | 'gpt-5.5'
         | 'gpt-5.6-terra'
         | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
         | 'claude-4.5-sonnet'
         | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
         | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
         | 'claude-4.5-haiku'
         | 'gemini-3.0-flash'
         | 'gemini-3.1-flash-lite'
@@ -25619,7 +29741,7 @@ export namespace ConversationFlowComponentUpdateParams {
     }
   }
 
-  export interface Tool {
+  export interface CustomTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
      * time (general tools + state tools + state edges). Must be consisted of a-z, A-Z,
@@ -25708,7 +29830,7 @@ export namespace ConversationFlowComponentUpdateParams {
      * documentation about the format. Omitting parameters defines a function with an
      * empty parameter list.
      */
-    parameters?: Tool.Parameters;
+    parameters?: CustomTool.Parameters;
 
     /**
      * Query parameters to append to the request URL.
@@ -25751,7 +29873,7 @@ export namespace ConversationFlowComponentUpdateParams {
     tool_id?: string;
   }
 
-  export namespace Tool {
+  export namespace CustomTool {
     /**
      * The parameters the functions accepts, described as a JSON Schema object. See
      * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
@@ -25759,6 +29881,159 @@ export namespace ConversationFlowComponentUpdateParams {
      * empty parameter list.
      */
     export interface Parameters {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+
+    /**
+     * Unique identifier for the tool
+     */
+    tool_id?: string;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
       /**
        * The value of properties is an object, where each key is the name of a property
        * and each value is a schema used to validate that property.

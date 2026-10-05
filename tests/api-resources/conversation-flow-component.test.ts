@@ -41,7 +41,7 @@ describe('resource conversationFlowComponent', () => {
           allow_dtmf_interruption: true,
           always_edge: {
             id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
+            transition_condition: { prompt: 'x', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
@@ -49,13 +49,13 @@ describe('resource conversationFlowComponent', () => {
           edges: [
             {
               id: 'id',
-              transition_condition: { prompt: 'prompt', type: 'prompt' },
+              transition_condition: { prompt: 'x', type: 'prompt' },
               destination_node_id: 'destination_node_id',
             },
           ],
           else_edge: {
             id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
+            transition_condition: { prompt: 'x', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
           finetune_conversation_examples: [{ id: 'id', transcript: [{ content: 'content', role: 'agent' }] }],
@@ -67,12 +67,12 @@ describe('resource conversationFlowComponent', () => {
             },
           ],
           global_node_setting: {
-            condition: 'condition',
+            condition: 'x',
             cool_down: 1,
             go_back_conditions: [
               {
                 id: 'id',
-                transition_condition: { prompt: 'prompt', type: 'prompt' },
+                transition_condition: { prompt: 'x', type: 'prompt' },
                 destination_node_id: 'destination_node_id',
               },
             ],
@@ -93,9 +93,10 @@ describe('resource conversationFlowComponent', () => {
           responsiveness: 0,
           skip_response_edge: {
             id: 'id',
-            transition_condition: { prompt: 'prompt', type: 'prompt' },
+            transition_condition: { prompt: 'x', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
+          skippable: true,
           stt_mode: 'fast',
           voice_speed: 0.5,
         },

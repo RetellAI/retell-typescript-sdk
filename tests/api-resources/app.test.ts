@@ -114,6 +114,34 @@ describe('resource app', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getToolSchema: only required params', async () => {
+    const responsePromise = client.app.getToolSchema('app_id', {
+      app_tool_template_name: 'app_tool_template_name',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getToolSchema: required and optional params', async () => {
+    const response = await client.app.getToolSchema('app_id', {
+      app_tool_template_name: 'app_tool_template_name',
+      parameters: [
+        {
+          properties: {},
+          type: 'object',
+          required: ['string'],
+        },
+      ],
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('listUsages', async () => {
     const responsePromise = client.app.listUsages('app_id');
     const rawResponse = await responsePromise.asResponse();

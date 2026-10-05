@@ -52,6 +52,17 @@ export class CRM extends APIResource {
 }
 
 export interface CRMConfig {
+  /**
+   * Workspace-shared memory rewrite prompt. Null uses the built-in preset. Supports
+   * conversation dynamic variables using {{variable_name}}.
+   */
+  contact_memory_update_prompt: string | null;
+
+  /**
+   * Built-in memory rewrite prompt.
+   */
+  default_contact_memory_update_prompt: string;
+
   org_id: string;
 
   /**
@@ -68,7 +79,7 @@ export interface CRMConfig {
   /**
    * Tags available to contacts in this organization.
    */
-  contact_tags?: Array<string>;
+  contact_tags?: Array<CRMConfig.ContactTag>;
 
   crm_analysis_data_mappings?: Array<CRMConfig.CRMAnalysisDataMapping>;
 
@@ -81,6 +92,18 @@ export interface CRMConfig {
 }
 
 export namespace CRMConfig {
+  export interface ContactTag {
+    /**
+     * Unique identifier for the tag.
+     */
+    id: string;
+
+    /**
+     * Human-readable label for the tag.
+     */
+    label: string;
+  }
+
   export interface CRMAnalysisDataMapping {
     /**
      * Name of the post-call analysis field to read the value from. A value that does
@@ -228,11 +251,18 @@ export interface CRMUpdateConfigParams {
   contact_columns_order?: Array<string>;
 
   /**
-   * Replaces the organization's available contact tags. Tags are trimmed and
-   * deduplicated. Omit to leave unchanged, or send null or an empty array to clear
-   * the list. Does not change tags already assigned to contacts.
+   * Workspace-shared memory rewrite prompt. Pass null to restore the built-in
+   * preset. Supports conversation dynamic variables using {{variable_name}}.
    */
-  contact_tags?: Array<string> | null;
+  contact_memory_update_prompt?: string | null;
+
+  /**
+   * Replaces the organization's available contact tags. Tag IDs must be unique
+   * 32-character hexadecimal strings and labels are trimmed. Omit to leave
+   * unchanged, or send null or an empty array to clear the list. Does not change
+   * tags already assigned to contacts.
+   */
+  contact_tags?: Array<CRMUpdateConfigParams.ContactTag> | null;
 
   /**
    * Replaces the stored list.
@@ -250,6 +280,15 @@ export interface CRMUpdateConfigParams {
 }
 
 export namespace CRMUpdateConfigParams {
+  export interface ContactTag {
+    id: string;
+
+    /**
+     * Human-readable label for the tag.
+     */
+    label: string;
+  }
+
   export interface CRMAnalysisDataMapping {
     /**
      * Name of the post-call analysis field to read the value from. A value that does

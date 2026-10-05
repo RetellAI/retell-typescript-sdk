@@ -11,6 +11,13 @@ import { path } from '../internal/utils/path';
 export class Contact extends APIResource {
   /**
    * Create a new contact.
+   *
+   * @example
+   * ```ts
+   * const contactResponse = await client.contact.create({
+   *   phone_number: 'phone_number',
+   * });
+   * ```
    */
   create(body: ContactCreateParams, options?: RequestOptions): APIPromise<ContactResponse> {
     return this._client.post('/create-contact', { body, ...options });
@@ -18,6 +25,13 @@ export class Contact extends APIResource {
 
   /**
    * Update an existing contact.
+   *
+   * @example
+   * ```ts
+   * const contactResponse = await client.contact.update(
+   *   'contact_id',
+   * );
+   * ```
    */
   update(
     contactID: string,
@@ -28,10 +42,15 @@ export class Contact extends APIResource {
   }
 
   /**
-   * List contacts, newest conversation first by default, with the total count of
-   * matches alongside the page. Page through results with `pagination_key`; `skip`
-   * is available for offset-style paging but is slower on large contact sets and can
-   * repeat or miss rows as contacts are updated.
+   * List contacts, newest created first by default, with the total count of matches
+   * alongside the page. Page through results with `pagination_key`; `skip` is
+   * available for offset-style paging but is slower on large contact sets and can
+   * repeat or miss rows as contacts are added or deleted.
+   *
+   * @example
+   * ```ts
+   * const contacts = await client.contact.list();
+   * ```
    */
   list(
     body: ContactListParams | null | undefined = {},
@@ -44,6 +63,11 @@ export class Contact extends APIResource {
    * Delete a contact. A contact linked to a record in a connected CRM cannot be
    * deleted while two-way sync is active — unlink the CRM app first, otherwise the
    * next sync would recreate it.
+   *
+   * @example
+   * ```ts
+   * await client.contact.delete('contact_id');
+   * ```
    */
   delete(contactID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/delete-contact/${contactID}`, {
@@ -52,6 +76,24 @@ export class Contact extends APIResource {
     });
   }
 
+  /**
+   * Trigger a backfill job that re-applies analysis data mappings to contacts using
+   * historical call and SMS chat data. Only one backfill job can run per
+   * organization at a time. Select contact_memory to rewrite memory from matching
+   * ended phone calls and SMS chats in chronological order, one conversation at a
+   * time, with no conversation-count cap. Backfill starts with the contact's
+   * existing memory. Each rewrite builds on the previous result, and the final
+   * successful result is saved once per contact. When mapped analysis fields and
+   * contact_memory are selected together, they are saved together in one contact
+   * update. Memory rewrites use the currently stored contact fields.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contact.backfillAnalysisData({
+   *   backfill_attributes: ['contact_memory'],
+   * });
+   * ```
+   */
   backfillAnalysisData(
     body: ContactBackfillAnalysisDataParams,
     options?: RequestOptions,
@@ -64,6 +106,19 @@ export class Contact extends APIResource {
    * and updates existing ones matched by phone number. Mapped columns overwrite the
    * matched contact's fields; unmapped columns are ignored. Runs asynchronously —
    * poll get-contact-import for progress.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contact.createImport({
+   *   column_mapping: [
+   *     {
+   *       external_field_name: 'external_field_name',
+   *       field_name: 'field_name',
+   *     },
+   *   ],
+   *   upload_id: 'upload_26f1cbdf5713',
+   * });
+   * ```
    */
   createImport(
     body: ContactCreateImportParams,
@@ -74,6 +129,13 @@ export class Contact extends APIResource {
 
   /**
    * Retrieve a contact by ID.
+   *
+   * @example
+   * ```ts
+   * const contactResponse = await client.contact.get(
+   *   'contact_id',
+   * );
+   * ```
    */
   get(contactID: string, options?: RequestOptions): APIPromise<ContactResponse> {
     return this._client.get(path`/get-contact/${contactID}`, options);
@@ -81,6 +143,12 @@ export class Contact extends APIResource {
 
   /**
    * Get the status of the contact analysis data backfill job.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.contact.getBackfillJobStatus();
+   * ```
    */
   getBackfillJobStatus(options?: RequestOptions): APIPromise<ContactGetBackfillJobStatusResponse> {
     return this._client.get('/get-backfill-contact-job-status', options);
@@ -89,6 +157,13 @@ export class Contact extends APIResource {
   /**
    * Retrieve a contact by phone number. At most one contact exists per phone number
    * in an organization.
+   *
+   * @example
+   * ```ts
+   * const contactResponse = await client.contact.getByPhone(
+   *   'phone_number',
+   * );
+   * ```
    */
   getByPhone(phoneNumber: string, options?: RequestOptions): APIPromise<ContactResponse> {
     return this._client.get(path`/get-contact-by-phone/${phoneNumber}`, options);
@@ -96,6 +171,11 @@ export class Contact extends APIResource {
 
   /**
    * Status and counts for the org's current or latest contact import.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contact.getImport();
+   * ```
    */
   getImport(options?: RequestOptions): APIPromise<ContactGetImportResponse> {
     return this._client.get('/get-contact-import', options);
@@ -105,6 +185,13 @@ export class Contact extends APIResource {
    * List a contact's conversations (inbound calls, outbound calls, and chats) merged
    * into a single timeline, most recent first. Results are matched by the contact's
    * phone number. Use the returned `pagination_key` to fetch the next page.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contact.listConversations(
+   *   'contact_id',
+   * );
+   * ```
    */
   listConversations(
     contactID: string,
@@ -117,6 +204,13 @@ export class Contact extends APIResource {
   /**
    * Upload a CSV file for a contact import. The file is stored privately and
    * referenced by the returned upload_id in create-contact-import.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contact.uploadImportFile({
+   *   file: fs.createReadStream('path/to/file'),
+   * });
+   * ```
    */
   uploadImportFile(
     body: ContactUploadImportFileParams,
@@ -151,9 +245,16 @@ export interface ContactResponse {
   phone_number: string;
 
   /**
-   * Tags assigned to the contact.
+   * Running brief shared across this contact's phone calls and SMS chats. Omitted
+   * when unset.
    */
-  contact_tags?: Array<string>;
+  contact_memory?: string;
+
+  /**
+   * Assigned tag IDs and labels from the organization's CRM config. IDs absent from
+   * the config are omitted.
+   */
+  contact_tags?: Array<ContactResponse.ContactTag>;
 
   /**
    * Number of conversations (calls and chats) associated with this contact.
@@ -194,6 +295,20 @@ export interface ContactResponse {
    * Epoch milliseconds when the contact was last modified.
    */
   user_modified_timestamp?: number;
+}
+
+export namespace ContactResponse {
+  export interface ContactTag {
+    /**
+     * Unique identifier for the tag.
+     */
+    id: string;
+
+    /**
+     * Human-readable label for the tag.
+     */
+    label: string;
+  }
 }
 
 export interface ContactListResponse {
@@ -426,9 +541,14 @@ export interface ContactCreateParams {
   phone_number: string;
 
   /**
-   * Full set of tags for the contact.
+   * Contact memory text.
    */
-  contact_tags?: Array<string>;
+  contact_memory?: string | null;
+
+  /**
+   * Full set of tag IDs for the contact.
+   */
+  contact_tag_ids?: Array<string>;
 
   /**
    * Values must match the types defined in CRM config custom fields. Set a value to
@@ -451,9 +571,14 @@ export interface ContactCreateParams {
 
 export interface ContactUpdateParams {
   /**
-   * Full replacement set of tags for the contact.
+   * Contact memory text. Pass null to clear.
    */
-  contact_tags?: Array<string>;
+  contact_memory?: string | null;
+
+  /**
+   * Full replacement set of tag IDs for the contact.
+   */
+  contact_tag_ids?: Array<string>;
 
   /**
    * Values must match the types defined in CRM config custom fields. Set a value to
@@ -475,6 +600,11 @@ export interface ContactUpdateParams {
 }
 
 export interface ContactListParams {
+  /**
+   * Contact IDs to leave out of both the results and `total`.
+   */
+  excluded_contact_ids?: Array<string>;
+
   /**
    * Filter criteria for contacts. All conditions are implicitly connected with AND.
    * first_name and last_name are not filterable here; use search_query to match on
@@ -505,8 +635,8 @@ export interface ContactListParams {
   skip?: number;
 
   /**
-   * Sort contacts by `last_conversation_timestamp` in ascending or descending order.
-   * Contacts that have never been contacted sort as if their timestamp were 0.
+   * Sort contacts by `created_timestamp` in ascending or descending order (newest
+   * first by default). Ties are broken by contact ID in the same direction.
    */
   sort_order?: 'asc' | 'desc';
 }
@@ -521,9 +651,9 @@ export namespace ContactListParams {
     contact_id?: FilterCriteria.ContactID;
 
     /**
-     * Match contacts that have any of the listed tags.
+     * Match contacts that have any of the listed tag IDs.
      */
-    contact_tags?: FilterCriteria.ContactTags;
+    contact_tag_ids?: FilterCriteria.ContactTagIDs;
 
     /**
      * Filter by custom contact fields defined in CRM config.
@@ -573,9 +703,9 @@ export namespace ContactListParams {
     }
 
     /**
-     * Match contacts that have any of the listed tags.
+     * Match contacts that have any of the listed tag IDs.
      */
-    export interface ContactTags {
+    export interface ContactTagIDs {
       /**
        * in: value is one of the listed values
        */
@@ -756,20 +886,37 @@ export namespace ContactListParams {
 }
 
 export interface ContactBackfillAnalysisDataParams {
+  /**
+   * Contact fields to recompute. Each one must still exist as a contact field and
+   * have an analysis data mapping configured, except for the built-in contact_memory
+   * attribute, which requires no mapping and supports requests on its own or
+   * alongside mapped fields. Memory backfill skips conversations without retained
+   * transcripts.
+   */
   backfill_attributes: Array<string>;
 
+  /**
+   * Optional filter to scope which conversations are processed. Supports agent and
+   * start_timestamp from the standard call filter. The same filter applies to phone
+   * calls and SMS chats for both analysis data mappings and contact_memory.
+   */
   backfill_call_filter?: ContactBackfillAnalysisDataParams.BackfillCallFilter;
 }
 
 export namespace ContactBackfillAnalysisDataParams {
+  /**
+   * Optional filter to scope which conversations are processed. Supports agent and
+   * start_timestamp from the standard call filter. The same filter applies to phone
+   * calls and SMS chats for both analysis data mappings and contact_memory.
+   */
   export interface BackfillCallFilter {
     /**
-     * Filter calls by agent. Agents are OR-connected.
+     * Filter conversations by agent. Agents are OR-connected.
      */
     agent?: Array<BackfillCallFilter.Agent>;
 
     /**
-     * Filter calls by start timestamp (epoch ms).
+     * Filter conversations by start timestamp (epoch ms).
      */
     start_timestamp?: BackfillCallFilter.NumberFilter | BackfillCallFilter.RangeFilter;
   }
@@ -829,8 +976,9 @@ export interface ContactCreateImportParams {
   upload_id: string;
 
   /**
-   * Tags added to every contact in this import. Existing tags are preserved. Omit to
-   * leave tags unchanged.
+   * Tag labels added to every contact in this import. Labels are trimmed and
+   * deduplicated. New labels are added to the org's CRM config with generated tag
+   * IDs.
    */
   contact_tags?: Array<string>;
 

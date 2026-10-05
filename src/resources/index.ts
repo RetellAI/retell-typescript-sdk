@@ -21,12 +21,14 @@ export {
   App,
   type AppResponse,
   type AppListResponse,
+  type AppGetToolSchemaResponse,
   type AppListUsagesResponse,
   type AppTestAuthResponse,
   type AppCreateParams,
   type AppUpdateParams,
   type AppListParams,
   type AppDeleteParams,
+  type AppGetToolSchemaParams,
   type AppListUsagesParams,
 } from './app';
 export { Asset, type AssetCreateResponse, type AssetCreateParams } from './asset';

@@ -152,6 +152,7 @@ export interface LlmResponse {
     | LlmResponse.BridgeTransferTool
     | LlmResponse.CancelTransferTool
     | LlmResponse.McpTool
+    | LlmResponse.AppTool
   > | null;
 
   /**
@@ -198,9 +199,16 @@ export interface LlmResponse {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -284,6 +292,12 @@ export namespace LlmResponse {
     type: 'end_call';
 
     /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -725,6 +739,14 @@ export namespace LlmResponse {
     keep_current_voice?: boolean;
 
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -1362,6 +1384,154 @@ export namespace LlmResponse {
     speak_during_execution?: boolean;
   }
 
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
   /**
    * Knowledge base configuration for RAG retrieval.
    */
@@ -1442,6 +1612,7 @@ export namespace LlmResponse {
       | State.BridgeTransferTool
       | State.CancelTransferTool
       | State.McpTool
+      | State.AppTool
     >;
   }
 
@@ -1512,6 +1683,12 @@ export namespace LlmResponse {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -1955,6 +2132,14 @@ export namespace LlmResponse {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -2591,6 +2776,154 @@ export namespace LlmResponse {
        */
       speak_during_execution?: boolean;
     }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
+    }
   }
 }
 
@@ -2658,6 +2991,7 @@ export interface LlmCreateParams {
     | LlmCreateParams.BridgeTransferTool
     | LlmCreateParams.CancelTransferTool
     | LlmCreateParams.McpTool
+    | LlmCreateParams.AppTool
   > | null;
 
   /**
@@ -2699,9 +3033,16 @@ export interface LlmCreateParams {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -2780,6 +3121,12 @@ export namespace LlmCreateParams {
     type: 'end_call';
 
     /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -3221,6 +3568,14 @@ export namespace LlmCreateParams {
     keep_current_voice?: boolean;
 
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -3858,6 +4213,154 @@ export namespace LlmCreateParams {
     speak_during_execution?: boolean;
   }
 
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
   /**
    * Knowledge base configuration for RAG retrieval.
    */
@@ -3938,6 +4441,7 @@ export namespace LlmCreateParams {
       | State.BridgeTransferTool
       | State.CancelTransferTool
       | State.McpTool
+      | State.AppTool
     >;
   }
 
@@ -4008,6 +4512,12 @@ export namespace LlmCreateParams {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -4451,6 +4961,14 @@ export namespace LlmCreateParams {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -5087,6 +5605,154 @@ export namespace LlmCreateParams {
        */
       speak_during_execution?: boolean;
     }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
+    }
   }
 }
 
@@ -5155,6 +5821,7 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.BridgeTransferTool
     | LlmUpdateParams.CancelTransferTool
     | LlmUpdateParams.McpTool
+    | LlmUpdateParams.AppTool
   > | null;
 
   /**
@@ -5197,9 +5864,16 @@ export interface LlmUpdateParams {
     | 'gpt-5.5'
     | 'gpt-5.6-terra'
     | 'gpt-5.6-luna'
+    | 'gpt-6-astra'
+    | 'gpt-6-sol'
+    | 'gpt-6.1-sol'
+    | 'gpt-6-luna'
     | 'claude-4.5-sonnet'
     | 'claude-4.6-sonnet'
+    | 'claude-5-opus'
+    | 'claude-5.5-opus'
     | 'claude-5-sonnet'
+    | 'claude-5.5-sonnet'
     | 'claude-4.5-haiku'
     | 'gemini-3.0-flash'
     | 'gemini-3.1-flash-lite'
@@ -5278,6 +5952,12 @@ export namespace LlmUpdateParams {
     type: 'end_call';
 
     /**
+     * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+     * must start with X- or x-. Supports dynamic variables.
+     */
+    custom_sip_headers?: { [key: string]: string };
+
+    /**
      * Describes what the tool does, sometimes can also include information about when
      * to call the tool.
      */
@@ -5719,6 +6399,14 @@ export namespace LlmUpdateParams {
     keep_current_voice?: boolean;
 
     speak_during_execution?: boolean;
+
+    /**
+     * If true, restart the max call duration timer at the swap using the destination
+     * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+     * Otherwise, the timer already running is left unchanged. Voice calls only.
+     * Defaults to false.
+     */
+    use_swap_agent_max_duration?: boolean;
 
     /**
      * Webhook setting for the agent swap, defaults to only source.
@@ -6356,6 +7044,154 @@ export namespace LlmUpdateParams {
     speak_during_execution?: boolean;
   }
 
+  export interface AppTool {
+    /**
+     * The connection (App) this tool runs against. Must be a connection in the
+     * organization whose provider matches this tool's provider.
+     */
+    app_id: string;
+
+    /**
+     * Name of the catalog template within the provider, as listed by
+     * list-app-templates.
+     */
+    app_tool_template_name: string;
+
+    /**
+     * Name of the tool. Must be unique within the phase's tools; referenced by
+     * depends_on.
+     */
+    name: string;
+
+    /**
+     * Provider of the connection. Must match the connection's provider; supported
+     * providers are listed by list-app-templates.
+     */
+    provider: string;
+
+    type: 'integration_app';
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Overrides the catalog template's LLM-facing description.
+     */
+    description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, play a typing sound on the agent audio track while this
+     * tool is executing. Useful when the tool takes a noticeable amount of time to
+     * prevent silence on the call.
+     */
+    enable_typing_sound?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. The message for the agent to speak when executing the tool. Only
+     * applicable when speak_during_execution is true.
+     */
+    execution_message_description?: string;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Type of execution message. "prompt" means the agent will use
+     * execution_message_description as a prompt to generate the message. "static_text"
+     * means the agent will speak the execution_message_description directly. Defaults
+     * to "prompt".
+     */
+    execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * What the agent and the transcript see of the tool's response. Omit to send the
+     * full response. Does not affect response_variables, which are always extracted
+     * from the raw response.
+     */
+    output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+    /**
+     * The resolved input parameters, in order. Properties may pin a value with const
+     * (including {{variable}} references) or provide a description for LLM inference.
+     * Each property may also record selected*input_mode, the editor mode the user
+     * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+     * "description_preset"); it is stored and returned as-is, used only by the tool
+     * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+     * require a non-empty const, and description\__ modes must omit const entirely.
+     * Each parameter's required list must match the schema returned by the
+     * corresponding step of the get-app-tool-schema loop.
+     */
+    parameters?: Array<AppTool.Parameter>;
+
+    /**
+     * Mapping of a dynamic-variable name to the response field (dot-path) it is
+     * populated from. Missing paths are ignored.
+     */
+    response_variables?: { [key: string]: string };
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. Determines whether the agent would call LLM another time and speak
+     * when the result of the tool is obtained.
+     */
+    speak_after_execution?: boolean;
+
+    /**
+     * Only applies to during conversation functions; ignored by the pre/post
+     * conversation. If true, will speak during execution.
+     */
+    speak_during_execution?: boolean;
+  }
+
+  export namespace AppTool {
+    export interface UnionMember0 {
+      mode: 'all';
+
+      /**
+       * Not used at runtime; stored and returned as-is for the UI.
+       */
+      fields?: Array<string>;
+    }
+
+    export interface UnionMember1 {
+      /**
+       * The only response fields the agent and the transcript see, as dot-paths into the
+       * response schema returned by get-app-tool-schema. Everything else is dropped.
+       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+       * element-wise (deals.properties.amount keeps that field on every deal), while
+       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+       * that match nothing contribute nothing.
+       */
+      fields: Array<string>;
+
+      mode: 'subset';
+    }
+
+    /**
+     * The parameters the functions accepts, described as a JSON Schema object. See
+     * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+     * documentation about the format. Omitting parameters defines a function with an
+     * empty parameter list.
+     */
+    export interface Parameter {
+      /**
+       * The value of properties is an object, where each key is the name of a property
+       * and each value is a schema used to validate that property.
+       */
+      properties: unknown;
+
+      /**
+       * Type must be "object" for a JSON Schema object.
+       */
+      type: 'object';
+
+      /**
+       * List of names of required property when generating this parameter. LLM will do
+       * its best to generate the required properties in its function arguments. Property
+       * must exist in properties.
+       */
+      required?: Array<string>;
+    }
+  }
+
   /**
    * Knowledge base configuration for RAG retrieval.
    */
@@ -6436,6 +7272,7 @@ export namespace LlmUpdateParams {
       | State.BridgeTransferTool
       | State.CancelTransferTool
       | State.McpTool
+      | State.AppTool
     >;
   }
 
@@ -6506,6 +7343,12 @@ export namespace LlmUpdateParams {
       name: string;
 
       type: 'end_call';
+
+      /**
+       * Custom SIP headers sent on the outgoing BYE when ending the call. Header names
+       * must start with X- or x-. Supports dynamic variables.
+       */
+      custom_sip_headers?: { [key: string]: string };
 
       /**
        * Describes what the tool does, sometimes can also include information about when
@@ -6949,6 +7792,14 @@ export namespace LlmUpdateParams {
       keep_current_voice?: boolean;
 
       speak_during_execution?: boolean;
+
+      /**
+       * If true, restart the max call duration timer at the swap using the destination
+       * agent's max_call_duration_ms, capped so the whole call never exceeds 2 hours.
+       * Otherwise, the timer already running is left unchanged. Voice calls only.
+       * Defaults to false.
+       */
+      use_swap_agent_max_duration?: boolean;
 
       /**
        * Webhook setting for the agent swap, defaults to only source.
@@ -7584,6 +8435,154 @@ export namespace LlmUpdateParams {
        * responsive.
        */
       speak_during_execution?: boolean;
+    }
+
+    export interface AppTool {
+      /**
+       * The connection (App) this tool runs against. Must be a connection in the
+       * organization whose provider matches this tool's provider.
+       */
+      app_id: string;
+
+      /**
+       * Name of the catalog template within the provider, as listed by
+       * list-app-templates.
+       */
+      app_tool_template_name: string;
+
+      /**
+       * Name of the tool. Must be unique within the phase's tools; referenced by
+       * depends_on.
+       */
+      name: string;
+
+      /**
+       * Provider of the connection. Must match the connection's provider; supported
+       * providers are listed by list-app-templates.
+       */
+      provider: string;
+
+      type: 'integration_app';
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Overrides the catalog template's LLM-facing description.
+       */
+      description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, play a typing sound on the agent audio track while this
+       * tool is executing. Useful when the tool takes a noticeable amount of time to
+       * prevent silence on the call.
+       */
+      enable_typing_sound?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. The message for the agent to speak when executing the tool. Only
+       * applicable when speak_during_execution is true.
+       */
+      execution_message_description?: string;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Type of execution message. "prompt" means the agent will use
+       * execution_message_description as a prompt to generate the message. "static_text"
+       * means the agent will speak the execution_message_description directly. Defaults
+       * to "prompt".
+       */
+      execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * What the agent and the transcript see of the tool's response. Omit to send the
+       * full response. Does not affect response_variables, which are always extracted
+       * from the raw response.
+       */
+      output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
+
+      /**
+       * The resolved input parameters, in order. Properties may pin a value with const
+       * (including {{variable}} references) or provide a description for LLM inference.
+       * Each property may also record selected*input_mode, the editor mode the user
+       * selected ("const_enum", "const_boolean", "const_value", "description_custom", or
+       * "description_preset"); it is stored and returned as-is, used only by the tool
+       * config UI. Omit the key when no mode is recorded; when set, const*_ modes
+       * require a non-empty const, and description\__ modes must omit const entirely.
+       * Each parameter's required list must match the schema returned by the
+       * corresponding step of the get-app-tool-schema loop.
+       */
+      parameters?: Array<AppTool.Parameter>;
+
+      /**
+       * Mapping of a dynamic-variable name to the response field (dot-path) it is
+       * populated from. Missing paths are ignored.
+       */
+      response_variables?: { [key: string]: string };
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. Determines whether the agent would call LLM another time and speak
+       * when the result of the tool is obtained.
+       */
+      speak_after_execution?: boolean;
+
+      /**
+       * Only applies to during conversation functions; ignored by the pre/post
+       * conversation. If true, will speak during execution.
+       */
+      speak_during_execution?: boolean;
+    }
+
+    export namespace AppTool {
+      export interface UnionMember0 {
+        mode: 'all';
+
+        /**
+         * Not used at runtime; stored and returned as-is for the UI.
+         */
+        fields?: Array<string>;
+      }
+
+      export interface UnionMember1 {
+        /**
+         * The only response fields the agent and the transcript see, as dot-paths into the
+         * response schema returned by get-app-tool-schema. Everything else is dropped.
+         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
+         * element-wise (deals.properties.amount keeps that field on every deal), while
+         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
+         * that match nothing contribute nothing.
+         */
+        fields: Array<string>;
+
+        mode: 'subset';
+      }
+
+      /**
+       * The parameters the functions accepts, described as a JSON Schema object. See
+       * [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+       * documentation about the format. Omitting parameters defines a function with an
+       * empty parameter list.
+       */
+      export interface Parameter {
+        /**
+         * The value of properties is an object, where each key is the name of a property
+         * and each value is a schema used to validate that property.
+         */
+        properties: unknown;
+
+        /**
+         * Type must be "object" for a JSON Schema object.
+         */
+        type: 'object';
+
+        /**
+         * List of names of required property when generating this parameter. LLM will do
+         * its best to generate the required properties in its function arguments. Property
+         * must exist in properties.
+         */
+        required?: Array<string>;
+      }
     }
   }
 }

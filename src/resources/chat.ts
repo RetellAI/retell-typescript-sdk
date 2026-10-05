@@ -238,11 +238,72 @@ export interface ChatResponse {
   metadata?: unknown;
 
   /**
+   * Tool call invocations and results of integration tools run after post-chat
+   * analysis (post-session). Stored separately from the main transcript. Available
+   * after chat ends if post-session integration tools ran.
+   */
+  post_session_message_with_tool_calls?: Array<
+    | ChatResponse.MessageBase
+    | ChatResponse.ToolCallInvocationMessageBase
+    | ChatResponse.ToolCallResultMessageBase
+    | ChatResponse.NodeTransitionMessageBase
+    | ChatResponse.StateTransitionMessageBase
+    | ChatResponse.InjectedMessageBase
+    | ChatResponse.SMSMessageBase
+  >;
+
+  /**
+   * Tool call invocations and results of integration tools run before the chat's
+   * first message (pre-session). Stored separately from the main transcript.
+   * Available once pre-session integration tools have run (from the chat's first
+   * turn).
+   */
+  pre_session_message_with_tool_calls?: Array<
+    | ChatResponse.MessageBase
+    | ChatResponse.ToolCallInvocationMessageBase
+    | ChatResponse.ToolCallResultMessageBase
+    | ChatResponse.NodeTransitionMessageBase
+    | ChatResponse.StateTransitionMessageBase
+    | ChatResponse.InjectedMessageBase
+    | ChatResponse.SMSMessageBase
+  >;
+
+  /**
    * Add optional dynamic variables in key value pairs of string that injects into
    * your Response Engine prompt and tool description. Only applicable for Response
    * Engine.
    */
   retell_llm_dynamic_variables?: { [key: string]: string };
+
+  /**
+   * Post-session integration tool call invocations and results, without PII.
+   * Available after chat ends if post-session integration tools ran and PII
+   * scrubbing is enabled.
+   */
+  scrubbed_post_session_message_with_tool_calls?: Array<
+    | ChatResponse.MessageBase
+    | ChatResponse.ToolCallInvocationMessageBase
+    | ChatResponse.ToolCallResultMessageBase
+    | ChatResponse.NodeTransitionMessageBase
+    | ChatResponse.StateTransitionMessageBase
+    | ChatResponse.InjectedMessageBase
+    | ChatResponse.SMSMessageBase
+  >;
+
+  /**
+   * Pre-session integration tool call invocations and results, without PII.
+   * Available after chat ends if pre-session integration tools ran and PII scrubbing
+   * is enabled.
+   */
+  scrubbed_pre_session_message_with_tool_calls?: Array<
+    | ChatResponse.MessageBase
+    | ChatResponse.ToolCallInvocationMessageBase
+    | ChatResponse.ToolCallResultMessageBase
+    | ChatResponse.NodeTransitionMessageBase
+    | ChatResponse.StateTransitionMessageBase
+    | ChatResponse.InjectedMessageBase
+    | ChatResponse.SMSMessageBase
+  >;
 
   /**
    * Begin timestamp (milliseconds since epoch) of the chat. Available after chat
@@ -324,6 +385,1018 @@ export namespace ChatResponse {
        * Unit price of the product in cents per second.
        */
       unit_price?: number;
+    }
+  }
+
+  export interface MessageBase {
+    /**
+     * Content of the message
+     */
+    content: string;
+
+    /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface ToolCallInvocationMessageBase {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+  }
+
+  export interface ToolCallResultMessageBase {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionMessageBase {
+    /**
+     * This is a node transition.
+     */
+    role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former node id
+     */
+    former_node_id?: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New node id
+     */
+    new_node_id?: string;
+
+    /**
+     * New node name
+     */
+    new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface StateTransitionMessageBase {
+    /**
+     * This is a state transition.
+     */
+    role: 'state_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former state name
+     */
+    former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New state name
+     */
+    new_state_name?: string;
+  }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface MessageBase {
+    /**
+     * Content of the message
+     */
+    content: string;
+
+    /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface ToolCallInvocationMessageBase {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+  }
+
+  export interface ToolCallResultMessageBase {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionMessageBase {
+    /**
+     * This is a node transition.
+     */
+    role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former node id
+     */
+    former_node_id?: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New node id
+     */
+    new_node_id?: string;
+
+    /**
+     * New node name
+     */
+    new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface StateTransitionMessageBase {
+    /**
+     * This is a state transition.
+     */
+    role: 'state_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former state name
+     */
+    former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New state name
+     */
+    new_state_name?: string;
+  }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface MessageBase {
+    /**
+     * Content of the message
+     */
+    content: string;
+
+    /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface ToolCallInvocationMessageBase {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+  }
+
+  export interface ToolCallResultMessageBase {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionMessageBase {
+    /**
+     * This is a node transition.
+     */
+    role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former node id
+     */
+    former_node_id?: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New node id
+     */
+    new_node_id?: string;
+
+    /**
+     * New node name
+     */
+    new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface StateTransitionMessageBase {
+    /**
+     * This is a state transition.
+     */
+    role: 'state_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former state name
+     */
+    former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New state name
+     */
+    new_state_name?: string;
+  }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface MessageBase {
+    /**
+     * Content of the message
+     */
+    content: string;
+
+    /**
+     * Documents whether this message is sent by agent or user.
+     */
+    role: 'agent' | 'user';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments received with this message (MMS). Display only; a textual
+     * summary of each attachment is already included in content. Response only —
+     * supplying it in a request has no effect and is silently ignored. Omitted from
+     * PII-scrubbed messages.
+     */
+    multimedia?: Array<MessageBase.Multimedia>;
+  }
+
+  export namespace MessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface ToolCallInvocationMessageBase {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the function in this tool call.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+  }
+
+  export interface ToolCallResultMessageBase {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionMessageBase {
+    /**
+     * This is a node transition.
+     */
+    role: 'node_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former node id
+     */
+    former_node_id?: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New node id
+     */
+    new_node_id?: string;
+
+    /**
+     * New node name
+     */
+    new_node_name?: string;
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface StateTransitionMessageBase {
+    /**
+     * This is a state transition.
+     */
+    role: 'state_transition';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Former state name
+     */
+    former_state_name?: string;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * New state name
+     */
+    new_state_name?: string;
+  }
+
+  export interface InjectedMessageBase {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+  }
+
+  export interface SMSMessageBase {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message exchanged during the call (for example received from the user).
+     * Woven into the transcript and shown to the agent, but not part of the spoken
+     * conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Create timestamp of the message
+     */
+    created_timestamp?: number;
+
+    /**
+     * Unique id of the message
+     */
+    message_id?: string;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSMessageBase.Multimedia>;
+  }
+
+  export namespace SMSMessageBase {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
     }
   }
 
@@ -1418,6 +2491,7 @@ export namespace ChatListParams {
       value: Array<
         | 'user_hangup'
         | 'agent_hangup'
+        | 'user_requested_dnc'
         | 'call_transfer'
         | 'voicemail_reached'
         | 'ivr_reached'
@@ -1426,6 +2500,8 @@ export namespace ChatListParams {
         | 'concurrency_limit_reached'
         | 'no_concurrency_fallback'
         | 'no_valid_payment'
+        | 'credit_exhausted'
+        | 'budget_reached'
         | 'scam_detected'
         | 'dial_busy'
         | 'dial_failed'
@@ -1435,6 +2511,7 @@ export namespace ChatListParams {
         | 'telephony_provider_unavailable'
         | 'sip_routing_error'
         | 'marked_as_spam'
+        | 'network_blocked'
         | 'user_declined'
         | 'error_llm_websocket_open'
         | 'error_llm_websocket_lost_connection'
@@ -1581,6 +2658,12 @@ export interface ChatCreateSMSChatParams {
    * The phone number to send SMS to in E.164 format
    */
   to_number: string;
+
+  /**
+   * If true, the chat is rejected with a 400 error when the contact for to_number is
+   * marked do_not_call. If omitted, the default value is false.
+   */
+  honor_internal_dnc?: boolean;
 
   /**
    * An arbitrary object for storage purpose only. You can put anything here like
