@@ -355,6 +355,16 @@ export namespace BatchCallCreateBatchCallParams {
         data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
         /**
+         * Controls the enhancement level for background voice cancellation. Set to 0 to
+         * bypass background voice cancellation without BVC charges. Value ranging from
+         * [0,1]. Only applicable when denoising_mode is
+         * noise-and-background-speech-cancellation. Defaults to 0.8 if no value is
+         * configured. Set to null to clear the configured value. Omitting this field
+         * preserves the existing value.
+         */
+        denoising_enhancement_level?: number | null;
+
+        /**
          * If set, determines what denoising mode to use. Use "no-denoise" to bypass all
          * audio denoising. Default to noise-cancellation.
          */
@@ -795,6 +805,8 @@ export namespace BatchCallCreateBatchCallParams {
           | 'eleven_flash_v2_5'
           | 'eleven_multilingual_v2'
           | 'eleven_v3'
+          | 'eleven_v3_conversational'
+          | 'eleven_v4'
           | 'eleven_v4_turbo'
           | 'sonic-3'
           | 'sonic-3-latest'
@@ -2429,7 +2441,7 @@ export namespace BatchCallCreateBatchCallParams {
         /**
          * The model choice for the conversation flow.
          */
-        model_choice?: ConversationFlow.ModelChoice;
+        model_choice?: ConversationFlow.ModelChoiceCascading | ConversationFlow.ModelChoiceS2S;
 
         /**
          * Controls the randomness of the model's responses. Lower values make responses
@@ -2465,10 +2477,7 @@ export namespace BatchCallCreateBatchCallParams {
           top_k?: number;
         }
 
-        /**
-         * The model choice for the conversation flow.
-         */
-        export interface ModelChoice {
+        export interface ModelChoiceCascading {
           /**
            * The LLM model to use
            */
@@ -2515,6 +2524,24 @@ export namespace BatchCallCreateBatchCallParams {
            * Whether to use high priority pool with more dedicated resource, default false
            */
           high_priority?: boolean;
+        }
+
+        export interface ModelChoiceS2S {
+          /**
+           * The speech-to-speech model to use
+           */
+          model:
+            | 'gpt-realtime-2.1'
+            | 'gpt-realtime-2.1-mini'
+            | 'gpt-realtime-2'
+            | 'gpt-realtime-1.5'
+            | 'gpt-realtime'
+            | 'gpt-realtime-mini';
+
+          /**
+           * Type of model choice
+           */
+          type: 's2s';
         }
       }
 
