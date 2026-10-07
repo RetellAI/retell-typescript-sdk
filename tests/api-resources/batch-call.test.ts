@@ -49,6 +49,7 @@ describe('resource batchCall', () => {
               custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
               data_storage_retention_days: 30,
               data_storage_setting: 'everything',
+              denoising_enhancement_level: 0.8,
               denoising_mode: 'noise-cancellation',
               enable_backchannel: true,
               enable_dnc_detection: false,

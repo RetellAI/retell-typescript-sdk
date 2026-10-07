@@ -44,6 +44,7 @@ describe('resource conversationFlowComponent', () => {
             transition_condition: { prompt: 'x', type: 'prompt' },
             destination_node_id: 'destination_node_id',
           },
+          boosted_keywords: ['string'],
           custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
           display_position: { x: 0, y: 0 },
           edges: [

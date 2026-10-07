@@ -211,6 +211,14 @@ export namespace ConversationFlowComponentResponse {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
+
+    /**
      * Custom transcription settings. Required when stt_mode is custom.
      */
     custom_stt_config?: ConversationNode.CustomSttConfig | null;
@@ -662,9 +670,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -731,6 +744,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -1047,6 +1118,14 @@ export namespace ConversationFlowComponentResponse {
      * responds. Use as the node's only outgoing edge.
      */
     always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
 
     /**
      * Custom transcription settings. Required when stt_mode is custom.
@@ -1513,9 +1592,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -1582,6 +1666,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -3182,9 +3324,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -3251,6 +3398,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -3740,9 +3945,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -3809,6 +4019,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -4305,9 +4573,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -4374,6 +4647,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -5048,9 +5379,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -5117,6 +5453,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -5598,9 +5992,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -5667,6 +6066,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -6105,9 +6562,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -6174,6 +6636,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -6622,9 +7142,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -6691,6 +7216,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -7271,9 +7854,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -7340,6 +7928,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -7707,9 +8353,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -7776,6 +8427,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -8274,9 +8983,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -8343,6 +9057,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -8815,9 +9587,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -8884,6 +9661,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -9080,9 +9915,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -9149,6 +9989,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -9418,9 +10316,14 @@ export namespace ConversationFlowComponentResponse {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -9487,6 +10390,64 @@ export namespace ConversationFlowComponentResponse {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -10197,6 +11158,14 @@ export namespace ConversationFlowComponentCreateParams {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
+
+    /**
      * Custom transcription settings. Required when stt_mode is custom.
      */
     custom_stt_config?: ConversationNode.CustomSttConfig | null;
@@ -10648,9 +11617,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -10717,6 +11691,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -11033,6 +12065,14 @@ export namespace ConversationFlowComponentCreateParams {
      * responds. Use as the node's only outgoing edge.
      */
     always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
 
     /**
      * Custom transcription settings. Required when stt_mode is custom.
@@ -11499,9 +12539,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -11568,6 +12613,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -13168,9 +14271,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -13237,6 +14345,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -13726,9 +14892,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -13795,6 +14966,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -14291,9 +15520,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -14360,6 +15594,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -15034,9 +16326,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -15103,6 +16400,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -15584,9 +16939,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -15653,6 +17013,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -16091,9 +17509,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -16160,6 +17583,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -16608,9 +18089,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -16677,6 +18163,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -17257,9 +18801,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -17326,6 +18875,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -17693,9 +19300,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -17762,6 +19374,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -18260,9 +19930,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -18329,6 +20004,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -18801,9 +20534,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -18870,6 +20608,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -19066,9 +20862,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -19135,6 +20936,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -19404,9 +21263,14 @@ export namespace ConversationFlowComponentCreateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -19473,6 +21337,64 @@ export namespace ConversationFlowComponentCreateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -20203,6 +22125,14 @@ export namespace ConversationFlowComponentUpdateParams {
     always_edge?: ConversationNode.AlwaysEdge;
 
     /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
+
+    /**
      * Custom transcription settings. Required when stt_mode is custom.
      */
     custom_stt_config?: ConversationNode.CustomSttConfig | null;
@@ -20654,9 +22584,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -20723,6 +22658,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -21039,6 +23032,14 @@ export namespace ConversationFlowComponentUpdateParams {
      * responds. Use as the node's only outgoing edge.
      */
     always_edge?: SubagentNode.AlwaysEdge;
+
+    /**
+     * If set, replaces the agent-level boosted_keywords while this node is active. Set
+     * to an empty list to disable boosted keywords for this node. Entries may
+     * reference dynamic variables with `{{variable}}` syntax, resolved when the node
+     * is entered.
+     */
+    boosted_keywords?: Array<string> | null;
 
     /**
      * Custom transcription settings. Required when stt_mode is custom.
@@ -21505,9 +23506,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -21574,6 +23580,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -23174,9 +25238,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -23243,6 +25312,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -23732,9 +25859,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -23801,6 +25933,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -24297,9 +26487,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -24366,6 +26561,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -25040,9 +27293,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -25109,6 +27367,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -25590,9 +27906,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -25659,6 +27980,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -26097,9 +28476,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -26166,6 +28550,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -26614,9 +29056,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -26683,6 +29130,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -27263,9 +29768,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -27332,6 +29842,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -27699,9 +30267,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -27768,6 +30341,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -28266,9 +30897,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -28335,6 +30971,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -28807,9 +31501,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -28876,6 +31575,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -29072,9 +31829,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -29141,6 +31903,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 
@@ -29410,9 +32230,14 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface GlobalNodeSetting {
       /**
        * Condition for global node activation. A string is a prompt condition and cannot
-       * be empty. Also accepts a typed prompt or equation condition.
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
        */
-      condition: string | GlobalNodeSetting.PromptCondition | GlobalNodeSetting.EquationCondition;
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
 
       /**
        * The same global node won't be triggered again within the next N node
@@ -29479,6 +32304,64 @@ export namespace ConversationFlowComponentUpdateParams {
            * "exists" or "not_exist" are selected.
            */
           right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
         }
       }
 

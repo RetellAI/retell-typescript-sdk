@@ -378,6 +378,16 @@ export interface AgentResponse {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
+   * Controls the enhancement level for background voice cancellation. Set to 0 to
+   * bypass background voice cancellation without BVC charges. Value ranging from
+   * [0,1]. Only applicable when denoising_mode is
+   * noise-and-background-speech-cancellation. Defaults to 0.8 if no value is
+   * configured. Set to null to clear the configured value. Omitting this field
+   * preserves the existing value.
+   */
+  denoising_enhancement_level?: number | null;
+
+  /**
    * If set, determines what denoising mode to use. Use "no-denoise" to bypass all
    * audio denoising. Default to noise-cancellation.
    */
@@ -807,6 +817,8 @@ export interface AgentResponse {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v3_conversational'
+    | 'eleven_v4'
     | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
@@ -2659,6 +2671,16 @@ export interface AgentCreateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
+   * Controls the enhancement level for background voice cancellation. Set to 0 to
+   * bypass background voice cancellation without BVC charges. Value ranging from
+   * [0,1]. Only applicable when denoising_mode is
+   * noise-and-background-speech-cancellation. Defaults to 0.8 if no value is
+   * configured. Set to null to clear the configured value. Omitting this field
+   * preserves the existing value.
+   */
+  denoising_enhancement_level?: number | null;
+
+  /**
    * If set, determines what denoising mode to use. Use "no-denoise" to bypass all
    * audio denoising. Default to noise-cancellation.
    */
@@ -3088,6 +3110,8 @@ export interface AgentCreateParams {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v3_conversational'
+    | 'eleven_v4'
     | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
@@ -4838,6 +4862,16 @@ export interface AgentUpdateParams {
   data_storage_setting?: 'everything' | 'everything_except_pii' | 'basic_attributes_only';
 
   /**
+   * Body param: Controls the enhancement level for background voice cancellation.
+   * Set to 0 to bypass background voice cancellation without BVC charges. Value
+   * ranging from [0,1]. Only applicable when denoising_mode is
+   * noise-and-background-speech-cancellation. Defaults to 0.8 if no value is
+   * configured. Set to null to clear the configured value. Omitting this field
+   * preserves the existing value.
+   */
+  denoising_enhancement_level?: number | null;
+
+  /**
    * Body param: If set, determines what denoising mode to use. Use "no-denoise" to
    * bypass all audio denoising. Default to noise-cancellation.
    */
@@ -5292,6 +5326,8 @@ export interface AgentUpdateParams {
     | 'eleven_flash_v2_5'
     | 'eleven_multilingual_v2'
     | 'eleven_v3'
+    | 'eleven_v3_conversational'
+    | 'eleven_v4'
     | 'eleven_v4_turbo'
     | 'sonic-3'
     | 'sonic-3-latest'
