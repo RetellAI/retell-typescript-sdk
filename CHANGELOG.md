@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.2.0](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.1.1...v6.2.0) (2026-10-07)
+
+
+### Features
+
+* **api:** sync OpenAPI from retell-backend ([a4bffb6](https://github.com/RetellAI/retell-typescript-sdk/commit/a4bffb61048329d1fedf3849f989a249f6fa8a60))
+
+
+### Chores
+
+* preserve production workflow files ([5eaff9c](https://github.com/RetellAI/retell-typescript-sdk/commit/5eaff9c1a54b699ef2902d55a6c83b6ac4ec05fc))
+
 ## [6.1.1](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.1.0...v6.1.1) (2026-10-05)
 
 
