@@ -118,8 +118,25 @@ jobs:
             git commit -m "chore: preserve production workflow files"
           fi
 
-      - name: Push release branch on production
+      - name: Check whether promotion is needed
         if: steps.diff.outputs.synced == 'false'
+        id: promotion
+        run: |
+          set -euo pipefail
+          commit_messages=$(git log --format=%B production/main..HEAD)
+          # Production-only changes survive the merge and must not count as SDK updates.
+          merged_tree=$(git merge-tree --write-tree production/main HEAD)
+          if git diff --quiet production/main "$merged_tree" && \
+            ! grep -Eq '^Release-As: [0-9]+\.[0-9]+\.[0-9]+([+-][[:alnum:].-]+)?[[:space:]]*$' <<< "$commit_messages"
+          then
+            echo "Prepared SDK matches production and has no reserved release; nothing to promote."
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push release branch on production
+        if: steps.promotion.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ steps.sdk-token.outputs.token }}
         run: |
@@ -134,7 +151,7 @@ jobs:
           git push --force-with-lease production HEAD:refs/heads/stainless-release
 
       - name: Open or update the release PR on production
-        if: steps.diff.outputs.synced == 'false'
+        if: steps.promotion.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ steps.sdk-token.outputs.token }}
           APP_SLUG: ${{ steps.sdk-token.outputs.app-slug }}
