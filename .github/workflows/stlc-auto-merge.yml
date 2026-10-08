@@ -7,11 +7,17 @@ on:
   workflow_run:
     workflows: ['CI', 'Release Doctor']
     types: [completed]
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
     inputs:
       pr_number:
         description: 'Optional PR number to evaluate'
         required: false
+      release_now:
+        description: 'Bypass the 24-hour interval; all checks still apply'
+        type: boolean
+        default: false
 
 concurrency:
   group: sdk-auto-merge
@@ -40,9 +46,21 @@ jobs:
           client-id: ${{ secrets.DOCS_SYNC_APP_CLIENT_ID }}
           private-key: ${{ secrets.DOCS_MANAGER_PVT_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: retell-typescript-sdk
+          repositories: |
+            docs
+            retell-typescript-sdk
+            retell-python-sdk
           permission-contents: write
           permission-pull-requests: write
+
+      - name: Checkout shared release policy
+        uses: actions/checkout@v4
+        with:
+          repository: RetellAI/docs
+          ref: main
+          path: .release-policy
+          token: ${{ steps.sdk-token.outputs.token }}
+          persist-credentials: false
 
       - name: Merge qualifying green PRs
         shell: bash
@@ -51,6 +69,8 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           EVENT_PR: ${{ github.event.pull_request.number }}
           INPUT_PR: ${{ inputs.pr_number }}
+          RELEASE_NOW: ${{ inputs.release_now || false }}
+          SDK_ACTIONS_READ_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
 
@@ -112,7 +132,7 @@ jobs:
               continue
             fi
 
-            bad_checks=$(jq '[.[] | select(.status != "completed" or (.conclusion != "success" and .conclusion != "neutral" and .conclusion != "skipped"))] | length' <<<"$check_runs")
+            bad_checks=$(jq '[.[] | select(.status != "completed" or (.conclusion != "success" and .conclusion != "skipped"))] | length' <<<"$check_runs")
             if [ "$bad_checks" -ne 0 ]; then
               echo "Skipping PR #$pr: checks are pending or failed."
               continue
@@ -124,6 +144,26 @@ jobs:
             if [ "$status_count" -gt 0 ] && [ "$status_state" != "success" ]; then
               echo "Skipping PR #$pr: commit statuses are $status_state."
               continue
+            fi
+
+            if [ "$merge_flag" = "--merge" ]; then
+              policy=$(GH_TOKEN="$MERGE_TOKEN" python3 .release-policy/script/sdk_release_policy.py frozen --repo "$REPO")
+              if grep -qx 'frozen=true' <<< "$policy"; then
+                echo "Skipping PR #$pr: finish the current version release first."
+                continue
+              fi
+            fi
+
+            if [ "$merge_flag" = "--squash" ]; then
+              policy_args=(ready --repo "$REPO" --pr "$pr")
+              if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$RELEASE_NOW" = "true" ]; then
+                policy_args+=(--force)
+              fi
+              policy=$(GH_TOKEN="$MERGE_TOKEN" python3 .release-policy/script/sdk_release_policy.py "${policy_args[@]}")
+              echo "$policy"
+              if ! grep -qx 'ready=true' <<< "$policy"; then
+                continue
+              fi
             fi
 
             echo "Merging PR #$pr with ${merge_flag}."

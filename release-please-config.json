@@ -30,7 +30,8 @@
     },
     {
       "type": "chore",
-      "section": "Chores"
+      "section": "Chores",
+      "hidden": true
     },
     {
       "type": "docs",
