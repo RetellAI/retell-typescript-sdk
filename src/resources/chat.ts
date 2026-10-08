@@ -2492,6 +2492,7 @@ export namespace ChatListParams {
         | 'user_hangup'
         | 'agent_hangup'
         | 'user_requested_dnc'
+        | 'user_requested_callback'
         | 'call_transfer'
         | 'voicemail_reached'
         | 'ivr_reached'
