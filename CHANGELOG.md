@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.2.5](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.4...v6.2.5) (2026-10-09)
+
+
+### Bug Fixes
+
+* **api:** Add name character and length requirements to AppTool and SendSMSTool tool names. ([6465e7d](https://github.com/RetellAI/retell-typescript-sdk/commit/6465e7dc5c7a5bc17efa2b10b7d532e4a97ef7e7))
+
+
+### Chores
+
+* **sdks:** refresh generated assets ([62da336](https://github.com/RetellAI/retell-typescript-sdk/commit/62da3364f5f2bd2c9fb76b2ecee282010b17342b))
+
 ## [6.2.4](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.3...v6.2.4) (2026-10-08)
 
 
