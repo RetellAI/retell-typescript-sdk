@@ -1153,7 +1153,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -1172,6 +1174,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1347,7 +1358,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -1366,6 +1379,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1541,7 +1563,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -1560,6 +1584,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1735,7 +1768,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -1754,6 +1789,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -1929,7 +1973,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -1948,6 +1994,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -2174,7 +2229,9 @@ export namespace PhoneCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -2193,6 +2250,15 @@ export namespace PhoneCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -3190,7 +3256,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -3209,6 +3277,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -3384,7 +3461,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -3403,6 +3482,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -3578,7 +3666,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -3597,6 +3687,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -3772,7 +3871,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -3791,6 +3892,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -3966,7 +4076,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -3985,6 +4097,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
@@ -4200,7 +4321,9 @@ export namespace WebCallResponse {
     arguments: string;
 
     /**
-     * Name of the function in this tool call.
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
      */
     name: string;
 
@@ -4219,6 +4342,15 @@ export namespace WebCallResponse {
      * internally to maintain reasoning chain in multi-turn function calling.
      */
     thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
   }
 
   export interface ToolCallResultUtterance {
