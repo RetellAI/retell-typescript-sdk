@@ -456,6 +456,7 @@ export interface ChatAgentResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -1912,6 +1913,11 @@ export namespace ChatAgentListResponse {
      * update or creation if no updates available.
      */
     user_modified_timestamp: number;
+
+    /**
+     * Whether the agent is a transfer agent used for agentic warm transfer.
+     */
+    is_transfer_agent?: boolean;
   }
 
   export namespace Item {
@@ -2187,6 +2193,7 @@ export interface ChatAgentCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -3867,6 +3874,7 @@ export interface ChatAgentUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -5324,6 +5332,11 @@ export namespace ChatAgentListParams {
     channel?: FilterCriteria.Channel;
 
     /**
+     * Filter by whether the agent is a transfer agent.
+     */
+    is_transfer_agent?: FilterCriteria.IsTransferAgent;
+
+    /**
      * Case-insensitive substring search over agent name, plus substring search over
      * agent id.
      */
@@ -5340,6 +5353,17 @@ export namespace ChatAgentListParams {
       type: 'string';
 
       value: 'voice' | 'chat';
+    }
+
+    /**
+     * Filter by whether the agent is a transfer agent.
+     */
+    export interface IsTransferAgent {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
     }
   }
 }

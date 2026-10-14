@@ -684,6 +684,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-argon'
           | null;
 
         /**
@@ -2519,7 +2520,8 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gemini-3.5-flash-lite'
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
-            | 'gemini-3.8-flash';
+            | 'gemini-3.8-flash'
+            | 'gemini-4-argon';
 
           /**
            * Type of model choice
@@ -2618,6 +2620,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-argon'
           | null;
 
         /**

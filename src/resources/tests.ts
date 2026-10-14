@@ -241,7 +241,8 @@ export interface TestCaseDefinitionResponse {
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash';
+    | 'gemini-3.8-flash'
+    | 'gemini-4-argon';
 
   /**
    * Array of metric names to evaluate
@@ -579,7 +580,8 @@ export interface TestCreateTestCaseDefinitionParams {
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash';
+    | 'gemini-3.8-flash'
+    | 'gemini-4-argon';
 
   /**
    * Mock tool calls for testing
@@ -791,7 +793,8 @@ export interface TestUpdateTestCaseDefinitionParams {
     | 'gemini-3.5-flash-lite'
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash';
+    | 'gemini-3.8-flash'
+    | 'gemini-4-argon';
 
   /**
    * Array of metric names to evaluate

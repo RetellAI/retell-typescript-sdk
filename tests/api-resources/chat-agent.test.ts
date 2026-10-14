@@ -190,6 +190,11 @@ describe('resource chatAgent', () => {
               type: 'string',
               value: 'voice',
             },
+            is_transfer_agent: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
             query: 'query',
           },
         },
