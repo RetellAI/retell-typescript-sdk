@@ -422,13 +422,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: '',
     description:
-      'Take over an in-progress call from the AI agent. The agent stops responding and the specified live-listen participant is allowed to speak directly to the caller. The call must be in ONGOING status.',
+      'Take over an in-progress call from the AI agent. The agent stops responding and the specified live-listen participant is allowed to speak directly to the caller. The call must be in ONGOING status. Gateway calls cannot be taken over while a PCI session is active.',
     stainlessPath: '(resource) call > (method) take-over-live',
     qualified: 'client.call.takeOverLive',
     params: ['call_id: string;', 'participant_id: string;'],
     response: '{ success: boolean; }',
     markdown:
-      "## take-over-live\n\n`client.call.takeOverLive(call_id: string, participant_id: string): { success: boolean; }`\n\n**post** `/v2/take-over-live-call/{call_id}`\n\nTake over an in-progress call from the AI agent. The agent stops responding and the specified live-listen participant is allowed to speak directly to the caller. The call must be in ONGOING status.\n\n### Parameters\n\n- `call_id: string`\n\n- `participant_id: string`\n  The id of the live-listen participant to upgrade, obtained when joining via /v2/listen-live-call.\n\n### Returns\n\n- `{ success: boolean; }`\n\n  - `success: boolean`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.call.takeOverLive('119c3f8e47135a29e65947eeb34cf12d', { participant_id: 'listener_a1b2c3d4e5f6g7h8i9j0' });\n\nconsole.log(response);\n```",
+      "## take-over-live\n\n`client.call.takeOverLive(call_id: string, participant_id: string): { success: boolean; }`\n\n**post** `/v2/take-over-live-call/{call_id}`\n\nTake over an in-progress call from the AI agent. The agent stops responding and the specified live-listen participant is allowed to speak directly to the caller. The call must be in ONGOING status. Gateway calls cannot be taken over while a PCI session is active.\n\n### Parameters\n\n- `call_id: string`\n\n- `participant_id: string`\n  The id of the live-listen participant to upgrade, obtained when joining via /v2/listen-live-call.\n\n### Returns\n\n- `{ success: boolean; }`\n\n  - `success: boolean`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.call.takeOverLive('119c3f8e47135a29e65947eeb34cf12d', { participant_id: 'listener_a1b2c3d4e5f6g7h8i9j0' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.call.takeOverLive',
