@@ -37,6 +37,7 @@ describe('resource conversationFlow', () => {
         model: 'gpt-4.1',
         type: 'cascading',
         high_priority: true,
+        ultrafast: true,
       },
       nodes: [
         {
@@ -92,6 +93,7 @@ describe('resource conversationFlow', () => {
             model: 'gpt-4.1',
             type: 'cascading',
             high_priority: true,
+            ultrafast: true,
           },
           name: 'name',
           reminder_max_count: 0,
@@ -172,6 +174,7 @@ describe('resource conversationFlow', () => {
                 model: 'gpt-4.1',
                 type: 'cascading',
                 high_priority: true,
+                ultrafast: true,
               },
               name: 'name',
               reminder_max_count: 0,

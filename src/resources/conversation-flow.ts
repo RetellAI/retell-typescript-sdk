@@ -1142,6 +1142,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -2064,6 +2071,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -3807,6 +3821,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -4428,6 +4449,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -5056,6 +5084,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -5862,6 +5897,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -6451,6 +6493,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -7021,6 +7070,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -7601,6 +7657,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -8313,6 +8376,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -8836,6 +8906,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -9466,6 +9543,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -10398,6 +10482,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -10799,6 +10890,13 @@ export namespace ConversationFlowResponse {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -11281,6 +11379,13 @@ export namespace ConversationFlowResponse {
      * Whether to use high priority pool with more dedicated resource, default false
      */
     high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
   }
 
   export interface ModelChoiceS2S {
@@ -12125,6 +12230,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -13047,6 +13159,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -14790,6 +14909,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -15411,6 +15537,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -16039,6 +16172,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -16845,6 +16985,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -17434,6 +17581,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -18004,6 +18158,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -18584,6 +18745,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -19296,6 +19464,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -19819,6 +19994,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -20449,6 +20631,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -21381,6 +21570,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -21782,6 +21978,13 @@ export namespace ConversationFlowResponse {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -22323,6 +22526,13 @@ export namespace ConversationFlowCreateParams {
      * Whether to use high priority pool with more dedicated resource, default false
      */
     high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
   }
 
   export interface ModelChoiceS2S {
@@ -23167,6 +23377,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -24089,6 +24306,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -25832,6 +26056,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -26453,6 +26684,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -27081,6 +27319,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -27887,6 +28132,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -28476,6 +28728,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -29046,6 +29305,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -29626,6 +29892,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -30338,6 +30611,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -30861,6 +31141,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -31491,6 +31778,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -32423,6 +32717,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -32824,6 +33125,13 @@ export namespace ConversationFlowCreateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -33719,6 +34027,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -34641,6 +34956,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -36384,6 +36706,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -37005,6 +37334,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -37633,6 +37969,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -38439,6 +38782,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -39028,6 +39378,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -39598,6 +39955,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -40178,6 +40542,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -40890,6 +41261,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -41413,6 +41791,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -42043,6 +42428,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -42975,6 +43367,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -43376,6 +43775,13 @@ export namespace ConversationFlowCreateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -45195,6 +45601,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -46117,6 +46530,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
 
       /**
@@ -47860,6 +48280,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -48481,6 +48908,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -49109,6 +49543,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -49915,6 +50356,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -50504,6 +50952,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -51074,6 +51529,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -51654,6 +52116,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -52366,6 +52835,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -52889,6 +53365,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -53519,6 +54002,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -54451,6 +54941,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -54852,6 +55349,13 @@ export namespace ConversationFlowUpdateParams {
          * Whether to use high priority pool with more dedicated resource, default false
          */
         high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
       }
     }
 
@@ -55334,6 +55838,13 @@ export namespace ConversationFlowUpdateParams {
      * Whether to use high priority pool with more dedicated resource, default false
      */
     high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
   }
 
   export interface ModelChoiceS2S {
@@ -56178,6 +56689,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -57100,6 +57618,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
 
     /**
@@ -58843,6 +59368,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -59464,6 +59996,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -60092,6 +60631,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -60898,6 +61444,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -61487,6 +62040,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -62057,6 +62617,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -62637,6 +63204,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -63349,6 +63923,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -63872,6 +64453,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -64502,6 +65090,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -65434,6 +66029,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 
@@ -65835,6 +66437,13 @@ export namespace ConversationFlowUpdateParams {
        * Whether to use high priority pool with more dedicated resource, default false
        */
       high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
     }
   }
 

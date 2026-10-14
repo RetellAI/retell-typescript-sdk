@@ -216,7 +216,7 @@ export namespace BatchCallCreateBatchCallParams {
       /**
        * Override Retell LLM configuration settings. Only applicable when using Retell
        * LLM as the response engine. Supported attributes - model, s2s_model,
-       * model_temperature, model_high_priority, tool_call_strict_mode,
+       * model_temperature, model_high_priority, model_ultrafast, tool_call_strict_mode,
        * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
        * begin_message.
        */
@@ -2532,6 +2532,13 @@ export namespace BatchCallCreateBatchCallParams {
            * Whether to use high priority pool with more dedicated resource, default false
            */
           high_priority?: boolean;
+
+          /**
+           * Whether to use the ultrafast tier for much faster response generation, default
+           * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+           * precedence over high_priority.
+           */
+          ultrafast?: boolean;
         }
 
         export interface ModelChoiceS2S {
@@ -2556,7 +2563,7 @@ export namespace BatchCallCreateBatchCallParams {
       /**
        * Override Retell LLM configuration settings. Only applicable when using Retell
        * LLM as the response engine. Supported attributes - model, s2s_model,
-       * model_temperature, model_high_priority, tool_call_strict_mode,
+       * model_temperature, model_high_priority, model_ultrafast, tool_call_strict_mode,
        * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
        * begin_message.
        */
@@ -2637,6 +2644,14 @@ export namespace BatchCallCreateBatchCallParams {
          * recommended.
          */
         model_temperature?: number;
+
+        /**
+         * If set to true, will use the ultrafast tier for much faster response generation,
+         * default to false. Only supported by gpt-6.1-sol on voice agents; ignored
+         * otherwise. Takes precedence over model_high_priority. This feature comes with a
+         * higher cost.
+         */
+        model_ultrafast?: boolean | null;
 
         /**
          * Select the underlying speech to speech model. Can only set this or model, not

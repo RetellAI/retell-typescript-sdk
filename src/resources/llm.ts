@@ -235,6 +235,14 @@ export interface LlmResponse {
   model_temperature?: number;
 
   /**
+   * If set to true, will use the ultrafast tier for much faster response generation,
+   * default to false. Only supported by gpt-6.1-sol on voice agents; ignored
+   * otherwise. Takes precedence over model_high_priority. This feature comes with a
+   * higher cost.
+   */
+  model_ultrafast?: boolean | null;
+
+  /**
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
@@ -3075,6 +3083,14 @@ export interface LlmCreateParams {
   model_temperature?: number;
 
   /**
+   * If set to true, will use the ultrafast tier for much faster response generation,
+   * default to false. Only supported by gpt-6.1-sol on voice agents; ignored
+   * otherwise. Takes precedence over model_high_priority. This feature comes with a
+   * higher cost.
+   */
+  model_ultrafast?: boolean | null;
+
+  /**
    * Select the underlying speech to speech model. Can only set this or model, not
    * both.
    */
@@ -5910,6 +5926,14 @@ export interface LlmUpdateParams {
    * lower value is recommended.
    */
   model_temperature?: number;
+
+  /**
+   * Body param: If set to true, will use the ultrafast tier for much faster response
+   * generation, default to false. Only supported by gpt-6.1-sol on voice agents;
+   * ignored otherwise. Takes precedence over model_high_priority. This feature comes
+   * with a higher cost.
+   */
+  model_ultrafast?: boolean | null;
 
   /**
    * Body param: Select the underlying speech to speech model. Can only set this or

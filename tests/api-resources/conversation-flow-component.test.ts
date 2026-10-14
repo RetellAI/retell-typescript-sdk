@@ -87,6 +87,7 @@ describe('resource conversationFlowComponent', () => {
             model: 'gpt-4.1',
             type: 'cascading',
             high_priority: true,
+            ultrafast: true,
           },
           name: 'name',
           reminder_max_count: 0,
