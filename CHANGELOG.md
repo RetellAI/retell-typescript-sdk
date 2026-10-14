@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.2.6](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.5...v6.2.6) (2026-10-13)
+
+
+### Bug Fixes
+
+* **api:** Add the new `type` field to tool call invocation messages and document known values. ([4548800](https://github.com/RetellAI/retell-typescript-sdk/commit/45488009d281c2f2db5768aa9fa0d3d36f327fb5))
+* **api:** Clarify that `name` contains the configured tool or node name, not the tool kind. ([4548800](https://github.com/RetellAI/retell-typescript-sdk/commit/45488009d281c2f2db5768aa9fa0d3d36f327fb5))
+* **api:** Remove gpt-4.1-nano and claude-4.5-sonnet from LLM model enums. ([09f0a88](https://github.com/RetellAI/retell-typescript-sdk/commit/09f0a8801b16ef931386ddfaae73240a4003ec45))
+
 ## [6.2.5](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.4...v6.2.5) (2026-10-09)
 
 
