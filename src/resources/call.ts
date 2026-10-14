@@ -723,7 +723,7 @@ export namespace PhoneCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -852,7 +852,7 @@ export namespace PhoneCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -2826,7 +2826,7 @@ export namespace WebCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -2955,7 +2955,7 @@ export namespace WebCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrieval to all
+     * Knowledge base latency (from the triggering of knowledge base retrival to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -4838,7 +4838,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -4967,7 +4967,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -5574,7 +5574,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -5703,7 +5703,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrieval to all
+       * Knowledge base latency (from the triggering of knowledge base retrival to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -7607,6 +7607,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**
@@ -9442,7 +9443,8 @@ export namespace CallCreatePhoneCallParams {
           | 'gemini-3.5-flash-lite'
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash';
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
 
         /**
          * Type of model choice
@@ -9541,6 +9543,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**
@@ -10145,6 +10148,7 @@ export namespace CallCreateWebCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**
@@ -11980,7 +11984,8 @@ export namespace CallCreateWebCallParams {
           | 'gemini-3.5-flash-lite'
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash';
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
 
         /**
          * Type of model choice
@@ -12079,6 +12084,7 @@ export namespace CallCreateWebCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**
@@ -12683,6 +12689,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**
@@ -14518,7 +14525,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'gemini-3.5-flash-lite'
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash';
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
 
         /**
          * Type of model choice
@@ -14617,6 +14625,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-argon'
         | null;
 
       /**

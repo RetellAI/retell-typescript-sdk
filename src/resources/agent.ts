@@ -496,6 +496,11 @@ export interface AgentResponse {
   is_published?: boolean;
 
   /**
+   * Whether the agent is a transfer agent used for agentic warm transfer.
+   */
+  is_transfer_agent?: boolean;
+
+  /**
    * If this option is set, the call will try to detect IVR in the first 3 minutes of
    * the call. Actions defined will be applied when the IVR is detected. Set this to
    * null to disable IVR detection.
@@ -708,6 +713,7 @@ export interface AgentResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -2466,6 +2472,11 @@ export namespace AgentListResponse {
      * update or creation if no updates available.
      */
     user_modified_timestamp: number;
+
+    /**
+     * Whether the agent is a transfer agent used for agentic warm transfer.
+     */
+    is_transfer_agent?: boolean;
   }
 
   export namespace Item {
@@ -2787,6 +2798,14 @@ export interface AgentCreateParams {
   interruption_sensitivity?: number;
 
   /**
+   * Whether to create the agent as a transfer agent for agentic warm transfer. You
+   * can only set this field when creating the agent. The response engine must also
+   * be configured for transfer use with is_transfer_llm or is_transfer_cf. Custom
+   * LLM agents cannot be transfer agents.
+   */
+  is_transfer_agent?: boolean;
+
+  /**
    * If this option is set, the call will try to detect IVR in the first 3 minutes of
    * the call. Actions defined will be applied when the IVR is detected. Set this to
    * null to disable IVR detection.
@@ -2999,6 +3018,7 @@ export interface AgentCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -5196,6 +5216,7 @@ export interface AgentUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -6974,6 +6995,11 @@ export namespace AgentListParams {
     channel?: FilterCriteria.Channel;
 
     /**
+     * Filter by whether the agent is a transfer agent.
+     */
+    is_transfer_agent?: FilterCriteria.IsTransferAgent;
+
+    /**
      * Case-insensitive substring search over agent name, plus substring search over
      * agent id.
      */
@@ -6990,6 +7016,17 @@ export namespace AgentListParams {
       type: 'string';
 
       value: 'voice' | 'chat';
+    }
+
+    /**
+     * Filter by whether the agent is a transfer agent.
+     */
+    export interface IsTransferAgent {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
     }
   }
 }

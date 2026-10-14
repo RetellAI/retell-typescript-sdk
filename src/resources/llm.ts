@@ -216,6 +216,7 @@ export interface LlmResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -3055,6 +3056,7 @@ export interface LlmCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
@@ -5891,6 +5893,7 @@ export interface LlmUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-argon'
     | null;
 
   /**
