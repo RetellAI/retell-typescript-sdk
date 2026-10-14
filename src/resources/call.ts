@@ -723,7 +723,7 @@ export namespace PhoneCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * Knowledge base latency (from the triggering of knowledge base retrieval to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -852,7 +852,7 @@ export namespace PhoneCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * Knowledge base latency (from the triggering of knowledge base retrieval to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -2826,7 +2826,7 @@ export namespace WebCallResponse {
     e2e?: Latency.E2E;
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * Knowledge base latency (from the triggering of knowledge base retrieval to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -2955,7 +2955,7 @@ export namespace WebCallResponse {
     }
 
     /**
-     * Knowledge base latency (from the triggering of knowledge base retrival to all
+     * Knowledge base latency (from the triggering of knowledge base retrieval to all
      * relevant context received) tracking of the call. Only populated when using
      * knowledge base feature for the agent of the call.
      */
@@ -4838,7 +4838,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * Knowledge base latency (from the triggering of knowledge base retrieval to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -4967,7 +4967,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * Knowledge base latency (from the triggering of knowledge base retrieval to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -5574,7 +5574,7 @@ export namespace CallListResponse {
       e2e?: Latency.E2E;
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * Knowledge base latency (from the triggering of knowledge base retrieval to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
@@ -5703,7 +5703,7 @@ export namespace CallListResponse {
       }
 
       /**
-       * Knowledge base latency (from the triggering of knowledge base retrival to all
+       * Knowledge base latency (from the triggering of knowledge base retrieval to all
        * relevant context received) tracking of the call. Only populated when using
        * knowledge base feature for the agent of the call.
        */
