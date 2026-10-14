@@ -7122,7 +7122,9 @@ export namespace CallCreatePhoneCallParams {
   export interface AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     agent?: AgentOverride.Agent;
 
@@ -7147,7 +7149,9 @@ export namespace CallCreatePhoneCallParams {
   export namespace AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     export interface Agent {
       /**
@@ -9656,7 +9660,9 @@ export namespace CallCreateWebCallParams {
   export interface AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     agent?: AgentOverride.Agent;
 
@@ -9681,7 +9687,9 @@ export namespace CallCreateWebCallParams {
   export namespace AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     export interface Agent {
       /**
@@ -12190,7 +12198,9 @@ export namespace CallRegisterPhoneCallParams {
   export interface AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     agent?: AgentOverride.Agent;
 
@@ -12215,7 +12225,9 @@ export namespace CallRegisterPhoneCallParams {
   export namespace AgentOverride {
     /**
      * Override agent configuration settings. Any properties specified here will
-     * override the base agent configuration for this call.
+     * override the base agent configuration for this call. If a Retell LLM or
+     * Conversation Flow response engine is specified without a version, it uses the
+     * latest version.
      */
     export interface Agent {
       /**
