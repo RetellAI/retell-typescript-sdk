@@ -177,7 +177,8 @@ export class Call extends APIResource {
   /**
    * Take over an in-progress call from the AI agent. The agent stops responding and
    * the specified live-listen participant is allowed to speak directly to the
-   * caller. The call must be in ONGOING status.
+   * caller. The call must be in ONGOING status. Gateway calls cannot be taken over
+   * while a PCI session is active.
    *
    * @example
    * ```ts
