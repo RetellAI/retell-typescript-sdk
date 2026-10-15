@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.2.7](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.6...v6.2.7) (2026-10-15)
+
+
+### Bug Fixes
+
+* **api:** Add a 409 Conflict response for takeOverLiveCall when a PCI session is active. ([750c1a7](https://github.com/RetellAI/retell-typescript-sdk/commit/750c1a7b66483dee4bd2b611b9f9f8c2a6b5cdba))
+* **api:** Add is_transfer_agent to agent create requests, agent responses, and agent list filters. ([e6c5420](https://github.com/RetellAI/retell-typescript-sdk/commit/e6c542012552bf595d83f46fdf1f53bd266685c2))
+* **api:** Add model_ultrafast and ultrafast override fields to Retell LLM configurations. ([6b64fed](https://github.com/RetellAI/retell-typescript-sdk/commit/6b64fed698daab4008e6da49238c3cdf36cf52eb))
+* **api:** api update ([ca490ed](https://github.com/RetellAI/retell-typescript-sdk/commit/ca490eda511bd172e82395189ae8349109fc5b10))
+* **api:** Clarify that AgentOverrideRequest uses the latest version when no response-engine version is provided. ([d100462](https://github.com/RetellAI/retell-typescript-sdk/commit/d100462f0b50c6bf75ccc07fc6dd7ff22467b7d2))
+
 ## [6.2.6](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.5...v6.2.6) (2026-10-13)
 
 
