@@ -2698,6 +2698,26 @@ export namespace ConversationFlowResponse {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -2733,6 +2753,33 @@ export namespace ConversationFlowResponse {
           template: 'info_collection';
 
           type: 'template';
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
@@ -7120,6 +7167,18 @@ export namespace ConversationFlowResponse {
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
     }
 
     export namespace SMSNode {
@@ -7664,6 +7723,33 @@ export namespace ConversationFlowResponse {
          * precedence over high_priority.
          */
         ultrafast?: boolean;
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -13786,6 +13872,23 @@ export namespace ConversationFlowResponse {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SendSMSTool.DestinationCustomerNumber | SendSMSTool.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+      /**
+       * Whether the agent should speak after the SMS tool finishes execution.
+       */
+      speak_after_execution?: boolean;
+
+      /**
        * If true, the agent will speak a short line before sending the SMS. If omitted,
        * defaults to true (same as end_call / transfer_call tools).
        */
@@ -13821,6 +13924,33 @@ export namespace ConversationFlowResponse {
         template: 'info_collection';
 
         type: 'template';
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -18208,6 +18338,18 @@ export namespace ConversationFlowResponse {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * SMS destination number configuration. If omitted, the message is sent to the
+     * customer number on the call.
+     */
+    sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+    /**
+     * SMS sender number configuration. If omitted, the message is sent from the
+     * agent's phone number.
+     */
+    sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
   }
 
   export namespace SMSNode {
@@ -18752,6 +18894,33 @@ export namespace ConversationFlowResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    export interface DestinationCustomerNumber {
+      type: 'customer_number';
+    }
+
+    export interface DestinationPhoneNumber {
+      /**
+       * Destination phone number in E.164 format.
+       */
+      phone_number: string;
+
+      type: 'phone_number';
+
+      /**
+       * If true, skip E.164 validation for this phone number (same semantics as
+       * transfer_call ignore_e164_validation).
+       */
+      ignore_e164_validation?: boolean;
+    }
+
+    export interface SenderCurrentNumber {
+      type: 'current_number';
+    }
+
+    export interface SenderRetellLongCode {
+      type: 'retell_long_code';
     }
   }
 
@@ -24933,6 +25102,23 @@ export namespace ConversationFlowCreateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SendSMSTool.DestinationCustomerNumber | SendSMSTool.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+      /**
+       * Whether the agent should speak after the SMS tool finishes execution.
+       */
+      speak_after_execution?: boolean;
+
+      /**
        * If true, the agent will speak a short line before sending the SMS. If omitted,
        * defaults to true (same as end_call / transfer_call tools).
        */
@@ -24968,6 +25154,33 @@ export namespace ConversationFlowCreateParams {
         template: 'info_collection';
 
         type: 'template';
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -29355,6 +29568,18 @@ export namespace ConversationFlowCreateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * SMS destination number configuration. If omitted, the message is sent to the
+     * customer number on the call.
+     */
+    sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+    /**
+     * SMS sender number configuration. If omitted, the message is sent from the
+     * agent's phone number.
+     */
+    sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
   }
 
   export namespace SMSNode {
@@ -29899,6 +30124,33 @@ export namespace ConversationFlowCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    export interface DestinationCustomerNumber {
+      type: 'customer_number';
+    }
+
+    export interface DestinationPhoneNumber {
+      /**
+       * Destination phone number in E.164 format.
+       */
+      phone_number: string;
+
+      type: 'phone_number';
+
+      /**
+       * If true, skip E.164 validation for this phone number (same semantics as
+       * transfer_call ignore_e164_validation).
+       */
+      ignore_e164_validation?: boolean;
+    }
+
+    export interface SenderCurrentNumber {
+      type: 'current_number';
+    }
+
+    export interface SenderRetellLongCode {
+      type: 'retell_long_code';
     }
   }
 
@@ -35583,6 +35835,26 @@ export namespace ConversationFlowCreateParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -35618,6 +35890,33 @@ export namespace ConversationFlowCreateParams {
           template: 'info_collection';
 
           type: 'template';
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
@@ -40005,6 +40304,18 @@ export namespace ConversationFlowCreateParams {
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
     }
 
     export namespace SMSNode {
@@ -40549,6 +40860,33 @@ export namespace ConversationFlowCreateParams {
          * precedence over high_priority.
          */
         ultrafast?: boolean;
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -47157,6 +47495,26 @@ export namespace ConversationFlowUpdateParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -47192,6 +47550,33 @@ export namespace ConversationFlowUpdateParams {
           template: 'info_collection';
 
           type: 'template';
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
@@ -51579,6 +51964,18 @@ export namespace ConversationFlowUpdateParams {
        * Optional name for display purposes
        */
       name?: string;
+
+      /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
     }
 
     export namespace SMSNode {
@@ -52123,6 +52520,33 @@ export namespace ConversationFlowUpdateParams {
          * precedence over high_priority.
          */
         ultrafast?: boolean;
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -58245,6 +58669,23 @@ export namespace ConversationFlowUpdateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * SMS destination number configuration. If omitted, the message is sent to the
+       * customer number on the call.
+       */
+      sms_destination?: SendSMSTool.DestinationCustomerNumber | SendSMSTool.DestinationPhoneNumber | unknown;
+
+      /**
+       * SMS sender number configuration. If omitted, the message is sent from the
+       * agent's phone number.
+       */
+      sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+      /**
+       * Whether the agent should speak after the SMS tool finishes execution.
+       */
+      speak_after_execution?: boolean;
+
+      /**
        * If true, the agent will speak a short line before sending the SMS. If omitted,
        * defaults to true (same as end_call / transfer_call tools).
        */
@@ -58280,6 +58721,33 @@ export namespace ConversationFlowUpdateParams {
         template: 'info_collection';
 
         type: 'template';
+      }
+
+      export interface DestinationCustomerNumber {
+        type: 'customer_number';
+      }
+
+      export interface DestinationPhoneNumber {
+        /**
+         * Destination phone number in E.164 format.
+         */
+        phone_number: string;
+
+        type: 'phone_number';
+
+        /**
+         * If true, skip E.164 validation for this phone number (same semantics as
+         * transfer_call ignore_e164_validation).
+         */
+        ignore_e164_validation?: boolean;
+      }
+
+      export interface SenderCurrentNumber {
+        type: 'current_number';
+      }
+
+      export interface SenderRetellLongCode {
+        type: 'retell_long_code';
       }
     }
 
@@ -62667,6 +63135,18 @@ export namespace ConversationFlowUpdateParams {
      * Optional name for display purposes
      */
     name?: string;
+
+    /**
+     * SMS destination number configuration. If omitted, the message is sent to the
+     * customer number on the call.
+     */
+    sms_destination?: SMSNode.DestinationCustomerNumber | SMSNode.DestinationPhoneNumber | unknown;
+
+    /**
+     * SMS sender number configuration. If omitted, the message is sent from the
+     * agent's phone number.
+     */
+    sms_sender?: SMSNode.SenderCurrentNumber | SMSNode.SenderRetellLongCode | unknown;
   }
 
   export namespace SMSNode {
@@ -63211,6 +63691,33 @@ export namespace ConversationFlowUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    export interface DestinationCustomerNumber {
+      type: 'customer_number';
+    }
+
+    export interface DestinationPhoneNumber {
+      /**
+       * Destination phone number in E.164 format.
+       */
+      phone_number: string;
+
+      type: 'phone_number';
+
+      /**
+       * If true, skip E.164 validation for this phone number (same semantics as
+       * transfer_call ignore_e164_validation).
+       */
+      ignore_e164_validation?: boolean;
+    }
+
+    export interface SenderCurrentNumber {
+      type: 'current_number';
+    }
+
+    export interface SenderRetellLongCode {
+      type: 'retell_long_code';
     }
   }
 
