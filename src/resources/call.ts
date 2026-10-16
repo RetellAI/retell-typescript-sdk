@@ -177,8 +177,8 @@ export class Call extends APIResource {
   /**
    * Take over an in-progress call from the AI agent. The agent stops responding and
    * the specified live-listen participant is allowed to speak directly to the
-   * caller. The call must be in ONGOING status. Gateway calls cannot be taken over
-   * while a PCI session is active.
+   * caller. The call must be in ONGOING status. Calls cannot be taken over while a
+   * PCI session is active.
    *
    * @example
    * ```ts
@@ -7405,10 +7405,7 @@ export namespace CallCreatePhoneCallParams {
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
        * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
-       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
-       * as a scalar, and is stored and returned as the ten locales it used to mean. It
-       * must not appear inside the array form. Send an explicit locale array instead. If
-       * unset, defaults to `en-US`.
+       * `["en-US","es-ES"]`). If unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -7474,7 +7471,6 @@ export namespace CallCreatePhoneCallParams {
         | 'ur-IN'
         | 'yue-CN'
         | 'uk-UA'
-        | 'multi'
         | Array<
             | 'en-US'
             | 'en-IN'
@@ -8747,6 +8743,26 @@ export namespace CallCreatePhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -8821,6 +8837,33 @@ export namespace CallCreatePhoneCallParams {
              */
             right?: string;
           }
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
@@ -9961,10 +10004,7 @@ export namespace CallCreateWebCallParams {
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
        * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
-       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
-       * as a scalar, and is stored and returned as the ten locales it used to mean. It
-       * must not appear inside the array form. Send an explicit locale array instead. If
-       * unset, defaults to `en-US`.
+       * `["en-US","es-ES"]`). If unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -10030,7 +10070,6 @@ export namespace CallCreateWebCallParams {
         | 'ur-IN'
         | 'yue-CN'
         | 'uk-UA'
-        | 'multi'
         | Array<
             | 'en-US'
             | 'en-IN'
@@ -11303,6 +11342,26 @@ export namespace CallCreateWebCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -11377,6 +11436,33 @@ export namespace CallCreateWebCallParams {
              */
             right?: string;
           }
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
@@ -12517,10 +12603,7 @@ export namespace CallRegisterPhoneCallParams {
       /**
        * Specifies what language(s) the agent will operate in. Accepts either a single
        * locale (e.g. `en-US`) or an array of locales for multilingual agents (e.g.
-       * `["en-US","es-ES"]`). The scalar value `multi` is deprecated but still accepted
-       * as a scalar, and is stored and returned as the ten locales it used to mean. It
-       * must not appear inside the array form. Send an explicit locale array instead. If
-       * unset, defaults to `en-US`.
+       * `["en-US","es-ES"]`). If unset, defaults to `en-US`.
        */
       language?:
         | 'en-US'
@@ -12586,7 +12669,6 @@ export namespace CallRegisterPhoneCallParams {
         | 'ur-IN'
         | 'yue-CN'
         | 'uk-UA'
-        | 'multi'
         | Array<
             | 'en-US'
             | 'en-IN'
@@ -13859,6 +13941,26 @@ export namespace CallRegisterPhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * SMS destination number configuration. If omitted, the message is sent to the
+         * customer number on the call.
+         */
+        sms_destination?:
+          | SendSMSTool.DestinationCustomerNumber
+          | SendSMSTool.DestinationPhoneNumber
+          | unknown;
+
+        /**
+         * SMS sender number configuration. If omitted, the message is sent from the
+         * agent's phone number.
+         */
+        sms_sender?: SendSMSTool.SenderCurrentNumber | SendSMSTool.SenderRetellLongCode | unknown;
+
+        /**
+         * Whether the agent should speak after the SMS tool finishes execution.
+         */
+        speak_after_execution?: boolean;
+
+        /**
          * If true, the agent will speak a short line before sending the SMS. If omitted,
          * defaults to true (same as end_call / transfer_call tools).
          */
@@ -13933,6 +14035,33 @@ export namespace CallRegisterPhoneCallParams {
              */
             right?: string;
           }
+        }
+
+        export interface DestinationCustomerNumber {
+          type: 'customer_number';
+        }
+
+        export interface DestinationPhoneNumber {
+          /**
+           * Destination phone number in E.164 format.
+           */
+          phone_number: string;
+
+          type: 'phone_number';
+
+          /**
+           * If true, skip E.164 validation for this phone number (same semantics as
+           * transfer_call ignore_e164_validation).
+           */
+          ignore_e164_validation?: boolean;
+        }
+
+        export interface SenderCurrentNumber {
+          type: 'current_number';
+        }
+
+        export interface SenderRetellLongCode {
+          type: 'retell_long_code';
         }
       }
 
