@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.2.8](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.7...v6.2.8) (2026-10-17)
+
+
+### Bug Fixes
+
+* **api:** Add SMS sender and destination options, plus `speak_after_execution`, to SMS tools and nodes. ([e67af52](https://github.com/RetellAI/retell-typescript-sdk/commit/e67af5215eeb72b172ff5547c7c9c82ecb98f960))
+* **api:** Clarify chart type behavior and revise the live-call takeover description for PCI sessions. ([e67af52](https://github.com/RetellAI/retell-typescript-sdk/commit/e67af5215eeb72b172ff5547c7c9c82ecb98f960))
+* **api:** Remove the deprecated `multi` scalar from agent language fields; use a locale or locale array instead. ([e67af52](https://github.com/RetellAI/retell-typescript-sdk/commit/e67af5215eeb72b172ff5547c7c9c82ecb98f960))
+
 ## [6.2.7](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.6...v6.2.7) (2026-10-15)
 
 
