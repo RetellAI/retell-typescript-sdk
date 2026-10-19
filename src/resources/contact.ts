@@ -601,7 +601,7 @@ export interface ContactUpdateParams {
 
 export interface ContactListParams {
   /**
-   * Contact IDs to leave out of both the results and `total`.
+   * Contact IDs to leave out of both the results and `total`, at most 1,000.
    */
   excluded_contact_ids?: Array<string>;
 
