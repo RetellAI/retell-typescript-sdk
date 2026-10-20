@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.9](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.8...v6.2.9) (2026-10-20)
+
+
+### Bug Fixes
+
+* **api:** Clarify that excluded_contact_ids accepts at most 1,000 contact IDs. ([221af37](https://github.com/RetellAI/retell-typescript-sdk/commit/221af3725e8e57a4a51f8895ca75ac09d93a7ee7))
+
 ## [6.2.8](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.7...v6.2.8) (2026-10-17)
 
 
