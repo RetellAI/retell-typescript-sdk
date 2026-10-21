@@ -85,6 +85,7 @@ describe('resource chatAgent', () => {
             {
               properties: {},
               type: 'object',
+              additionalProperties: true,
               required: ['string'],
             },
           ],
@@ -110,6 +111,7 @@ describe('resource chatAgent', () => {
             {
               properties: {},
               type: 'object',
+              additionalProperties: true,
               required: ['string'],
             },
           ],

@@ -328,6 +328,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],
@@ -353,6 +354,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],
@@ -570,6 +572,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],
@@ -595,6 +598,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],
@@ -821,6 +825,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],
@@ -846,6 +851,7 @@ describe('resource call', () => {
                 {
                   properties: {},
                   type: 'object',
+                  additionalProperties: true,
                   required: ['string'],
                 },
               ],

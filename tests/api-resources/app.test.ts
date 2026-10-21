@@ -135,6 +135,7 @@ describe('resource app', () => {
         {
           properties: {},
           type: 'object',
+          additionalProperties: true,
           required: ['string'],
         },
       ],

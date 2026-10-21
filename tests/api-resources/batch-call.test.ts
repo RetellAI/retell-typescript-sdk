@@ -124,6 +124,7 @@ describe('resource batchCall', () => {
                     {
                       properties: {},
                       type: 'object',
+                      additionalProperties: true,
                       required: ['string'],
                     },
                   ],
@@ -149,6 +150,7 @@ describe('resource batchCall', () => {
                     {
                       properties: {},
                       type: 'object',
+                      additionalProperties: true,
                       required: ['string'],
                     },
                   ],

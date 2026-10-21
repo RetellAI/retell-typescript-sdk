@@ -1029,6 +1029,12 @@ export namespace ChatAgentResponse {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -1232,6 +1238,12 @@ export namespace ChatAgentResponse {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -1675,6 +1687,12 @@ export namespace ChatAgentResponse {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -1833,6 +1851,12 @@ export namespace ChatAgentResponse {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -2801,6 +2825,12 @@ export namespace ChatAgentCreateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -3004,6 +3034,12 @@ export namespace ChatAgentCreateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -3447,6 +3483,12 @@ export namespace ChatAgentCreateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -3605,6 +3647,12 @@ export namespace ChatAgentCreateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -4489,6 +4537,12 @@ export namespace ChatAgentUpdateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -4692,6 +4746,12 @@ export namespace ChatAgentUpdateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -5135,6 +5195,12 @@ export namespace ChatAgentUpdateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -5293,6 +5359,12 @@ export namespace ChatAgentUpdateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do

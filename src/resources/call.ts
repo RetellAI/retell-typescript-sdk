@@ -8365,6 +8365,12 @@ export namespace CallCreatePhoneCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -8568,6 +8574,12 @@ export namespace CallCreatePhoneCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do
@@ -9014,6 +9026,12 @@ export namespace CallCreatePhoneCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -9172,6 +9190,12 @@ export namespace CallCreatePhoneCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do
@@ -11284,6 +11308,12 @@ export namespace CallCreateWebCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -11487,6 +11517,12 @@ export namespace CallCreateWebCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do
@@ -11933,6 +11969,12 @@ export namespace CallCreateWebCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -12091,6 +12133,12 @@ export namespace CallCreateWebCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do
@@ -14203,6 +14251,12 @@ export namespace CallRegisterPhoneCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -14406,6 +14460,12 @@ export namespace CallRegisterPhoneCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do
@@ -14852,6 +14912,12 @@ export namespace CallRegisterPhoneCallParams {
           type: 'object';
 
           /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
            * List of names of required property when generating this parameter. LLM will do
            * its best to generate the required properties in its function arguments. Property
            * must exist in properties.
@@ -15010,6 +15076,12 @@ export namespace CallRegisterPhoneCallParams {
            * Type must be "object" for a JSON Schema object.
            */
           type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
 
           /**
            * List of names of required property when generating this parameter. LLM will do

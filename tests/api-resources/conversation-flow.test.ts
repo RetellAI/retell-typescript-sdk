@@ -222,6 +222,7 @@ describe('resource conversationFlow', () => {
               parameters: {
                 properties: {},
                 type: 'object',
+                additionalProperties: true,
                 required: ['string'],
               },
               query_params: { page: '1', sort: 'asc' },
@@ -293,6 +294,7 @@ describe('resource conversationFlow', () => {
           parameters: {
             properties: {},
             type: 'object',
+            additionalProperties: true,
             required: ['string'],
           },
           query_params: { page: '1', sort: 'asc' },
