@@ -270,11 +270,11 @@ export interface LlmResponse {
   starting_state?: string | null;
 
   /**
-   * States of the LLM. This is to help reduce prompt length and tool choices when
-   * the call can be broken into distinct states. With shorter prompts and less
-   * tools, the LLM can better focus and follow the rules, minimizing hallucination.
-   * If this field is not set, the agent would only have general prompt and general
-   * tools (essentially one state).
+   * @deprecated States of the LLM. This is to help reduce prompt length and tool
+   * choices when the call can be broken into distinct states. With shorter prompts
+   * and less tools, the LLM can better focus and follow the rules, minimizing
+   * hallucination. If this field is not set, the agent would only have general
+   * prompt and general tools (essentially one state).
    */
   states?: Array<LlmResponse.State> | null;
 
@@ -3362,11 +3362,11 @@ export interface LlmCreateParams {
   starting_state?: string | null;
 
   /**
-   * States of the LLM. This is to help reduce prompt length and tool choices when
-   * the call can be broken into distinct states. With shorter prompts and less
-   * tools, the LLM can better focus and follow the rules, minimizing hallucination.
-   * If this field is not set, the agent would only have general prompt and general
-   * tools (essentially one state).
+   * @deprecated States of the LLM. This is to help reduce prompt length and tool
+   * choices when the call can be broken into distinct states. With shorter prompts
+   * and less tools, the LLM can better focus and follow the rules, minimizing
+   * hallucination. If this field is not set, the agent would only have general
+   * prompt and general tools (essentially one state).
    */
   states?: Array<LlmCreateParams.State> | null;
 
@@ -6451,11 +6451,11 @@ export interface LlmUpdateParams {
   starting_state?: string | null;
 
   /**
-   * Body param: States of the LLM. This is to help reduce prompt length and tool
-   * choices when the call can be broken into distinct states. With shorter prompts
-   * and less tools, the LLM can better focus and follow the rules, minimizing
-   * hallucination. If this field is not set, the agent would only have general
-   * prompt and general tools (essentially one state).
+   * @deprecated Body param: States of the LLM. This is to help reduce prompt length
+   * and tool choices when the call can be broken into distinct states. With shorter
+   * prompts and less tools, the LLM can better focus and follow the rules,
+   * minimizing hallucination. If this field is not set, the agent would only have
+   * general prompt and general tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
 
