@@ -11,7 +11,6 @@ describe('resource conversationFlow', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.conversationFlow.create({
-      model_choice: { model: 'gpt-4.1', type: 'cascading' },
       nodes: [
         {
           id: 'start',
@@ -33,12 +32,6 @@ describe('resource conversationFlow', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.conversationFlow.create({
-      model_choice: {
-        model: 'gpt-4.1',
-        type: 'cascading',
-        high_priority: true,
-        ultrafast: true,
-      },
       nodes: [
         {
           id: 'start',
@@ -95,6 +88,7 @@ describe('resource conversationFlow', () => {
             high_priority: true,
             ultrafast: true,
           },
+          model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
           name: 'name',
           reminder_max_count: 0,
           reminder_trigger_ms: 1,
@@ -176,6 +170,7 @@ describe('resource conversationFlow', () => {
                 high_priority: true,
                 ultrafast: true,
               },
+              model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
               name: 'name',
               reminder_max_count: 0,
               reminder_trigger_ms: 1,
@@ -254,6 +249,22 @@ describe('resource conversationFlow', () => {
           timeout_ms: 0,
         },
       ],
+      model_choice: {
+        model: 'gpt-4.1',
+        type: 'cascading',
+        high_priority: true,
+        ultrafast: true,
+      },
+      model_config: {
+        backup: {
+          model: 'gpt-4.1',
+          kick_in_timeout_ms: 300,
+          tier: 'standard',
+        },
+        primary: { model: 'gpt-4.1', tier: 'standard' },
+        temperature: 0,
+        type: 'cascading',
+      },
       model_temperature: 0.7,
       notes: [
         {

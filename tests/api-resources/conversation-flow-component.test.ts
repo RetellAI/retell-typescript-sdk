@@ -89,6 +89,7 @@ describe('resource conversationFlowComponent', () => {
             high_priority: true,
             ultrafast: true,
           },
+          model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
           name: 'name',
           reminder_max_count: 0,
           reminder_trigger_ms: 1,

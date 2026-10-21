@@ -256,7 +256,17 @@ export namespace ConversationFlowComponentResponse {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ConversationNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ConversationNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -963,6 +973,11 @@ export namespace ConversationFlowComponentResponse {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -1017,6 +1032,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -1172,7 +1243,17 @@ export namespace ConversationFlowComponentResponse {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SubagentNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -1892,6 +1973,11 @@ export namespace ConversationFlowComponentResponse {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -1946,6 +2032,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -3359,7 +3501,17 @@ export namespace ConversationFlowComponentResponse {
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: EndNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EndNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -3686,6 +3838,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -3741,6 +3898,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface FunctionNode {
@@ -3794,7 +4007,17 @@ export namespace ConversationFlowComponentResponse {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: FunctionNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: FunctionNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -4314,6 +4537,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -4369,6 +4597,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CodeNode {
@@ -4417,7 +4701,17 @@ export namespace ConversationFlowComponentResponse {
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CodeNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -4949,6 +5243,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -5004,6 +5303,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface TransferCallNode {
@@ -5057,7 +5412,17 @@ export namespace ConversationFlowComponentResponse {
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: TransferCallNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: TransferCallNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -5762,6 +6127,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -5817,6 +6187,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface PressDigitNode {
@@ -5855,7 +6281,17 @@ export namespace ConversationFlowComponentResponse {
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: PressDigitNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: PressDigitNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -6358,6 +6794,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -6413,6 +6854,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface BranchNode {
@@ -6444,7 +6941,17 @@ export namespace ConversationFlowComponentResponse {
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BranchNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BranchNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -6935,6 +7442,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -6990,6 +7502,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface SMSNode {
@@ -7026,7 +7594,17 @@ export namespace ConversationFlowComponentResponse {
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SMSNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SMSNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -7534,6 +8112,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -7588,6 +8171,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     export interface DestinationCustomerNumber {
@@ -7659,7 +8298,17 @@ export namespace ConversationFlowComponentResponse {
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ExtractDynamicVariablesNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ExtractDynamicVariablesNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -8280,6 +8929,11 @@ export namespace ConversationFlowComponentResponse {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -8334,6 +8988,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -8393,7 +9103,17 @@ export namespace ConversationFlowComponentResponse {
      */
     keep_current_voice?: boolean;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: AgentSwapNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: AgentSwapNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -8810,6 +9530,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -8864,6 +9589,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -8921,7 +9702,17 @@ export namespace ConversationFlowComponentResponse {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: McpNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: McpNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -9447,6 +10238,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -9501,6 +10297,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -10059,7 +10911,17 @@ export namespace ConversationFlowComponentResponse {
      */
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BridgeTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -10386,6 +11248,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -10441,6 +11308,62 @@ export namespace ConversationFlowComponentResponse {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CancelTransferNode {
@@ -10467,7 +11390,17 @@ export namespace ConversationFlowComponentResponse {
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CancelTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -10794,6 +11727,11 @@ export namespace ConversationFlowComponentResponse {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -10848,6 +11786,62 @@ export namespace ConversationFlowComponentResponse {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -11388,7 +12382,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ConversationNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ConversationNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -12095,6 +13099,11 @@ export namespace ConversationFlowComponentCreateParams {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -12149,6 +13158,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -12304,7 +13369,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SubagentNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -13024,6 +14099,11 @@ export namespace ConversationFlowComponentCreateParams {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -13078,6 +14158,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -14491,7 +15627,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: EndNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EndNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -14818,6 +15964,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -14873,6 +16024,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface FunctionNode {
@@ -14926,7 +16133,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: FunctionNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: FunctionNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -15446,6 +16663,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -15501,6 +16723,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CodeNode {
@@ -15549,7 +16827,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CodeNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -16081,6 +17369,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -16136,6 +17429,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface TransferCallNode {
@@ -16189,7 +17538,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: TransferCallNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: TransferCallNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -16894,6 +18253,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -16949,6 +18313,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface PressDigitNode {
@@ -16987,7 +18407,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: PressDigitNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: PressDigitNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -17490,6 +18920,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -17545,6 +18980,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface BranchNode {
@@ -17576,7 +19067,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BranchNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BranchNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -18067,6 +19568,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -18122,6 +19628,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface SMSNode {
@@ -18158,7 +19720,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SMSNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SMSNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -18666,6 +20238,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -18720,6 +20297,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     export interface DestinationCustomerNumber {
@@ -18791,7 +20424,17 @@ export namespace ConversationFlowComponentCreateParams {
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ExtractDynamicVariablesNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ExtractDynamicVariablesNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -19412,6 +21055,11 @@ export namespace ConversationFlowComponentCreateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -19466,6 +21114,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -19525,7 +21229,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     keep_current_voice?: boolean;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: AgentSwapNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: AgentSwapNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -19942,6 +21656,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -19996,6 +21715,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -20053,7 +21828,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: McpNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: McpNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -20579,6 +22364,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -20633,6 +22423,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -21191,7 +23037,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BridgeTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -21518,6 +23374,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -21573,6 +23434,62 @@ export namespace ConversationFlowComponentCreateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CancelTransferNode {
@@ -21599,7 +23516,17 @@ export namespace ConversationFlowComponentCreateParams {
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CancelTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -21926,6 +23853,11 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -21980,6 +23912,62 @@ export namespace ConversationFlowComponentCreateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -22540,7 +24528,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ConversationNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ConversationNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -23247,6 +25245,11 @@ export namespace ConversationFlowComponentUpdateParams {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -23301,6 +25304,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -23456,7 +25515,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     knowledge_base_ids?: Array<string> | null;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SubagentNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SubagentNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -24176,6 +26245,11 @@ export namespace ConversationFlowComponentUpdateParams {
       top_k?: number;
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -24230,6 +26304,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     /**
@@ -25643,7 +27773,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: EndNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EndNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -25970,6 +28110,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -26025,6 +28170,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface FunctionNode {
@@ -26078,7 +28279,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: FunctionNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: FunctionNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -26598,6 +28809,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -26653,6 +28869,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CodeNode {
@@ -26701,7 +28973,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CodeNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CodeNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -27233,6 +29515,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -27288,6 +29575,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface TransferCallNode {
@@ -27341,7 +29684,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: TransferCallNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: TransferCallNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -28046,6 +30399,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -28101,6 +30459,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface PressDigitNode {
@@ -28139,7 +30553,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: PressDigitNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: PressDigitNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -28642,6 +31066,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -28697,6 +31126,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface BranchNode {
@@ -28728,7 +31213,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BranchNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BranchNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -29219,6 +31714,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -29274,6 +31774,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface SMSNode {
@@ -29310,7 +31866,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: SMSNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: SMSNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -29818,6 +32384,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -29872,6 +32443,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
 
     export interface DestinationCustomerNumber {
@@ -29943,7 +32570,17 @@ export namespace ConversationFlowComponentUpdateParams {
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: ExtractDynamicVariablesNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: ExtractDynamicVariablesNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -30564,6 +33201,11 @@ export namespace ConversationFlowComponentUpdateParams {
       }
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -30618,6 +33260,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -30677,7 +33375,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     keep_current_voice?: boolean;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: AgentSwapNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: AgentSwapNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -31094,6 +33802,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -31148,6 +33861,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -31205,7 +33974,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: McpNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: McpNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -31731,6 +34510,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -31785,6 +34569,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
@@ -32343,7 +35183,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: BridgeTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: BridgeTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -32670,6 +35520,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -32725,6 +35580,62 @@ export namespace ConversationFlowComponentUpdateParams {
        */
       ultrafast?: boolean;
     }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
   }
 
   export interface CancelTransferNode {
@@ -32751,7 +35662,17 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     model_choice?: CancelTransferNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: CancelTransferNode.NodeModelConfig | unknown;
 
     /**
      * Optional name for display purposes
@@ -33078,6 +35999,11 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'static_text';
     }
 
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
     export interface ModelChoice {
       /**
        * The LLM model to use
@@ -33132,6 +36058,62 @@ export namespace ConversationFlowComponentUpdateParams {
        * precedence over high_priority.
        */
       ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
     }
   }
 
