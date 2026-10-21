@@ -51,9 +51,10 @@ export interface VoiceResponse {
   gender: 'male' | 'female';
 
   /**
-   * Indicates the provider of voice.
+   * Indicates the provider of voice. `xai` voices can only be used with the
+   * `grok-voice-3.0` speech-to-speech model.
    */
-  provider: 'elevenlabs' | 'openai' | 'cartesia' | 'minimax' | 'fish_audio' | 'inworld' | 'platform';
+  provider: 'elevenlabs' | 'openai' | 'cartesia' | 'minimax' | 'fish_audio' | 'inworld' | 'platform' | 'xai';
 
   /**
    * Unique id for the voice.
@@ -74,6 +75,11 @@ export interface VoiceResponse {
    * Age annotation of the voice.
    */
   age?: string;
+
+  /**
+   * URL to the avatar image of the voice.
+   */
+  avatar_url?: string;
 
   /**
    * URL to the preview audio of the voice.

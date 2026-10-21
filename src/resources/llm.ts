@@ -256,6 +256,7 @@ export interface LlmResponse {
     | 'gpt-realtime-1.5'
     | 'gpt-realtime'
     | 'gpt-realtime-mini'
+    | 'grok-voice-3.0'
     | null;
 
   /**
@@ -1791,7 +1792,8 @@ export namespace LlmResponse {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 
@@ -3378,6 +3380,7 @@ export interface LlmCreateParams {
     | 'gpt-realtime-1.5'
     | 'gpt-realtime'
     | 'gpt-realtime-mini'
+    | 'grok-voice-3.0'
     | null;
 
   /**
@@ -4908,7 +4911,8 @@ export namespace LlmCreateParams {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 
@@ -6497,6 +6501,7 @@ export interface LlmUpdateParams {
     | 'gpt-realtime-1.5'
     | 'gpt-realtime'
     | 'gpt-realtime-mini'
+    | 'grok-voice-3.0'
     | null;
 
   /**
@@ -8027,7 +8032,8 @@ export namespace LlmUpdateParams {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 

@@ -12510,7 +12510,8 @@ export namespace ConversationFlowResponse {
       | 'gpt-realtime-2'
       | 'gpt-realtime-1.5'
       | 'gpt-realtime'
-      | 'gpt-realtime-mini';
+      | 'gpt-realtime-mini'
+      | 'grok-voice-3.0';
 
     /**
      * Type of model choice
@@ -12667,7 +12668,8 @@ export namespace ConversationFlowResponse {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 
@@ -48779,7 +48781,8 @@ export namespace ConversationFlowCreateParams {
       | 'gpt-realtime-2'
       | 'gpt-realtime-1.5'
       | 'gpt-realtime'
-      | 'gpt-realtime-mini';
+      | 'gpt-realtime-mini'
+      | 'grok-voice-3.0';
 
     /**
      * Type of model choice
@@ -48936,7 +48939,8 @@ export namespace ConversationFlowCreateParams {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 
@@ -61709,7 +61713,8 @@ export namespace ConversationFlowUpdateParams {
       | 'gpt-realtime-2'
       | 'gpt-realtime-1.5'
       | 'gpt-realtime'
-      | 'gpt-realtime-mini';
+      | 'gpt-realtime-mini'
+      | 'grok-voice-3.0';
 
     /**
      * Type of model choice
@@ -61866,7 +61871,8 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-realtime-2'
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
-        | 'gpt-realtime-mini';
+        | 'gpt-realtime-mini'
+        | 'grok-voice-3.0';
     }
   }
 
