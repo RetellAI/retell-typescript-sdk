@@ -141,6 +141,7 @@ describe('resource conversationFlowComponent', () => {
           parameters: {
             properties: {},
             type: 'object',
+            additionalProperties: true,
             required: ['string'],
           },
           query_params: { page: '1', sort: 'asc' },

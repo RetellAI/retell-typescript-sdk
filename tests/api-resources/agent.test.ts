@@ -122,6 +122,7 @@ describe('resource agent', () => {
             {
               properties: {},
               type: 'object',
+              additionalProperties: true,
               required: ['string'],
             },
           ],
@@ -147,6 +148,7 @@ describe('resource agent', () => {
             {
               properties: {},
               type: 'object',
+              additionalProperties: true,
               required: ['string'],
             },
           ],

@@ -2937,6 +2937,12 @@ export namespace ConversationFlowComponentResponse {
         type: 'object';
 
         /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
+
+        /**
          * List of names of required property when generating this parameter. LLM will do
          * its best to generate the required properties in its function arguments. Property
          * must exist in properties.
@@ -3461,6 +3467,12 @@ export namespace ConversationFlowComponentResponse {
          * Type must be "object" for a JSON Schema object.
          */
         type: 'object';
+
+        /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
 
         /**
          * List of names of required property when generating this parameter. LLM will do
@@ -12074,6 +12086,12 @@ export namespace ConversationFlowComponentResponse {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -12226,6 +12244,12 @@ export namespace ConversationFlowComponentResponse {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -15063,6 +15087,12 @@ export namespace ConversationFlowComponentCreateParams {
         type: 'object';
 
         /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
+
+        /**
          * List of names of required property when generating this parameter. LLM will do
          * its best to generate the required properties in its function arguments. Property
          * must exist in properties.
@@ -15587,6 +15617,12 @@ export namespace ConversationFlowComponentCreateParams {
          * Type must be "object" for a JSON Schema object.
          */
         type: 'object';
+
+        /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
 
         /**
          * List of names of required property when generating this parameter. LLM will do
@@ -24200,6 +24236,12 @@ export namespace ConversationFlowComponentCreateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -24352,6 +24394,12 @@ export namespace ConversationFlowComponentCreateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do
@@ -27209,6 +27257,12 @@ export namespace ConversationFlowComponentUpdateParams {
         type: 'object';
 
         /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
+
+        /**
          * List of names of required property when generating this parameter. LLM will do
          * its best to generate the required properties in its function arguments. Property
          * must exist in properties.
@@ -27733,6 +27787,12 @@ export namespace ConversationFlowComponentUpdateParams {
          * Type must be "object" for a JSON Schema object.
          */
         type: 'object';
+
+        /**
+         * On an integration function's response schema, false means the output fields are
+         * fixed to properties and no others can be added.
+         */
+        additionalProperties?: boolean;
 
         /**
          * List of names of required property when generating this parameter. LLM will do
@@ -36312,6 +36372,12 @@ export namespace ConversationFlowComponentUpdateParams {
       type: 'object';
 
       /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
+
+      /**
        * List of names of required property when generating this parameter. LLM will do
        * its best to generate the required properties in its function arguments. Property
        * must exist in properties.
@@ -36464,6 +36530,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type must be "object" for a JSON Schema object.
        */
       type: 'object';
+
+      /**
+       * On an integration function's response schema, false means the output fields are
+       * fixed to properties and no others can be added.
+       */
+      additionalProperties?: boolean;
 
       /**
        * List of names of required property when generating this parameter. LLM will do

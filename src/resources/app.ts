@@ -70,7 +70,8 @@ export class App extends APIResource {
    * and each property's default_input_mode ("const" or "description") is the input
    * mode to preselect for it. A property may also carry extra_info ({ text?, link?
    * }), guidance to render under its editor, e.g. a docs link on how to find an id.
-   * Used by the tool config UI.
+   * Used by the tool config UI. enum_labels maps enum values to display labels;
+   * forbid_literal_const allows only description or a {{variable}}.
    */
   getToolSchema(
     appID: string,
@@ -300,6 +301,12 @@ export namespace AppGetToolSchemaResponse {
     type: 'object';
 
     /**
+     * On an integration function's response schema, false means the output fields are
+     * fixed to properties and no others can be added.
+     */
+    additionalProperties?: boolean;
+
+    /**
      * List of names of required property when generating this parameter. LLM will do
      * its best to generate the required properties in its function arguments. Property
      * must exist in properties.
@@ -324,6 +331,12 @@ export namespace AppGetToolSchemaResponse {
      * Type must be "object" for a JSON Schema object.
      */
     type: 'object';
+
+    /**
+     * On an integration function's response schema, false means the output fields are
+     * fixed to properties and no others can be added.
+     */
+    additionalProperties?: boolean;
 
     /**
      * List of names of required property when generating this parameter. LLM will do
@@ -689,6 +702,12 @@ export namespace AppGetToolSchemaParams {
      * Type must be "object" for a JSON Schema object.
      */
     type: 'object';
+
+    /**
+     * On an integration function's response schema, false means the output fields are
+     * fixed to properties and no others can be added.
+     */
+    additionalProperties?: boolean;
 
     /**
      * List of names of required property when generating this parameter. LLM will do
