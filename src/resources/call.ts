@@ -9553,7 +9553,8 @@ export namespace CallCreatePhoneCallParams {
           | 'gpt-realtime-2'
           | 'gpt-realtime-1.5'
           | 'gpt-realtime'
-          | 'gpt-realtime-mini';
+          | 'gpt-realtime-mini'
+          | 'grok-voice-3.0';
 
         /**
          * Type of model choice
@@ -9710,7 +9711,8 @@ export namespace CallCreatePhoneCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
@@ -9822,6 +9824,7 @@ export namespace CallCreatePhoneCallParams {
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
         | 'gpt-realtime-mini'
+        | 'grok-voice-3.0'
         | null;
 
       /**
@@ -10002,7 +10005,8 @@ export namespace CallCreatePhoneCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
@@ -12496,7 +12500,8 @@ export namespace CallCreateWebCallParams {
           | 'gpt-realtime-2'
           | 'gpt-realtime-1.5'
           | 'gpt-realtime'
-          | 'gpt-realtime-mini';
+          | 'gpt-realtime-mini'
+          | 'grok-voice-3.0';
 
         /**
          * Type of model choice
@@ -12653,7 +12658,8 @@ export namespace CallCreateWebCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
@@ -12765,6 +12771,7 @@ export namespace CallCreateWebCallParams {
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
         | 'gpt-realtime-mini'
+        | 'grok-voice-3.0'
         | null;
 
       /**
@@ -12945,7 +12952,8 @@ export namespace CallCreateWebCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
@@ -15439,7 +15447,8 @@ export namespace CallRegisterPhoneCallParams {
           | 'gpt-realtime-2'
           | 'gpt-realtime-1.5'
           | 'gpt-realtime'
-          | 'gpt-realtime-mini';
+          | 'gpt-realtime-mini'
+          | 'grok-voice-3.0';
 
         /**
          * Type of model choice
@@ -15596,7 +15605,8 @@ export namespace CallRegisterPhoneCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
@@ -15708,6 +15718,7 @@ export namespace CallRegisterPhoneCallParams {
         | 'gpt-realtime-1.5'
         | 'gpt-realtime'
         | 'gpt-realtime-mini'
+        | 'grok-voice-3.0'
         | null;
 
       /**
@@ -15888,7 +15899,8 @@ export namespace CallRegisterPhoneCallParams {
             | 'gpt-realtime-2'
             | 'gpt-realtime-1.5'
             | 'gpt-realtime'
-            | 'gpt-realtime-mini';
+            | 'gpt-realtime-mini'
+            | 'grok-voice-3.0';
         }
       }
     }
