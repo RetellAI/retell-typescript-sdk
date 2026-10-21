@@ -1,20 +1,61 @@
 name: Release Please
+
 on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
+concurrency:
+  group: sdk-release-please
+  cancel-in-progress: false
+
+permissions: {}
 
 jobs:
   release-please:
-    if: github.repository == 'RetellAI/retell-typescript-sdk'
+    name: release please
     runs-on: ubuntu-latest
+    if: github.repository == 'RetellAI/retell-typescript-sdk' && github.ref == 'refs/heads/main' && vars.SDK_RELEASES_ENABLED == 'true'
+
+    timeout-minutes: 10
 
     steps:
+      - name: Mint SDK automation token
+        id: sdk-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.DOCS_SYNC_APP_CLIENT_ID }}
+          private-key: ${{ secrets.DOCS_MANAGER_PVT_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            docs
+            retell-typescript-sdk
+            retell-python-sdk
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
+      - name: Checkout shared release policy
+        uses: actions/checkout@v4
+        with:
+          repository: RetellAI/docs
+          ref: main
+          path: .release-policy
+          token: ${{ steps.sdk-token.outputs.token }}
+          persist-credentials: false
+
+      - name: Check whether release notes are frozen
+        id: policy
+        env:
+          GH_TOKEN: ${{ steps.sdk-token.outputs.token }}
+        run: python3 .release-policy/script/sdk_release_policy.py frozen --repo "${{ github.repository }}"
+
       - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
         id: release
+        if: steps.policy.outputs.frozen != 'true'
         with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.sdk-token.outputs.token }}
+          skip-github-pull-request: ${{ steps.policy.outputs.refresh != 'true' }}
