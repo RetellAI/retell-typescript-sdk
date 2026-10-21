@@ -207,6 +207,16 @@ describe('resource batchCall', () => {
                 high_priority: true,
                 ultrafast: true,
               },
+              model_config: {
+                backup: {
+                  model: 'gpt-4.1',
+                  kick_in_timeout_ms: 300,
+                  tier: 'standard',
+                },
+                primary: { model: 'gpt-4.1', tier: 'standard' },
+                temperature: 0,
+                type: 'cascading',
+              },
               model_temperature: 0.7,
               start_speaker: 'agent',
               tool_call_strict_mode: true,
@@ -217,6 +227,16 @@ describe('resource batchCall', () => {
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['string'],
               model: 'gpt-5.6-terra',
+              model_config: {
+                backup: {
+                  model: 'gpt-4.1',
+                  kick_in_timeout_ms: 300,
+                  tier: 'standard',
+                },
+                primary: { model: 'gpt-4.1', tier: 'standard' },
+                temperature: 0,
+                type: 'cascading',
+              },
               model_high_priority: true,
               model_temperature: 0,
               model_ultrafast: true,

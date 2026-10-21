@@ -182,7 +182,7 @@ export interface LlmResponse {
   mcps?: Array<LlmResponse.Mcp> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-5.6-terra.
+   * @deprecated Available LLM models for agents.
    */
   model?:
     | 'gpt-4.1'
@@ -220,31 +220,34 @@ export interface LlmResponse {
     | null;
 
   /**
-   * If set to true, will use high priority pool with more dedicated resource to
-   * ensure lower and more consistent latency, default to false. This feature usually
-   * comes with a higher cost.
+   * Model settings for the response engine. type decides which models primary and
+   * backup accept. On update, each top-level key replaces the current one and
+   * omitted keys are kept; set backup to null to remove it. Changing type requires
+   * primary and clears backup, while temperature carries over. In agent_override,
+   * type is required whenever primary is set, and backup cannot be removed.
+   */
+  model_config?: LlmResponse.CascadingModelConfig | LlmResponse.S2SModelConfig;
+
+  /**
+   * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
+   * model_config is set.
    */
   model_high_priority?: boolean | null;
 
   /**
-   * If set, will control the randomness of the response. Value ranging from [0,1].
-   * Lower value means more deterministic, while higher value means more random. If
-   * unset, default value 0 will apply. Note that for tool calling, a lower value is
-   * recommended.
+   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
+   * is set.
    */
   model_temperature?: number;
 
   /**
-   * If set to true, will use the ultrafast tier for much faster response generation,
-   * default to false. Only supported by gpt-6.1-sol on voice agents; ignored
-   * otherwise. Takes precedence over model_high_priority. This feature comes with a
-   * higher cost.
+   * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
+   * model_config is set.
    */
   model_ultrafast?: boolean | null;
 
   /**
-   * Select the underlying speech to speech model. Can only set this or model, not
-   * both.
+   * @deprecated The speech-to-speech model to use
    */
   s2s_model?:
     | 'gpt-realtime-2.1'
@@ -1625,6 +1628,159 @@ export namespace LlmResponse {
      * Default to 120,000 ms (2 minutes).
      */
     timeout_ms?: number;
+  }
+
+  export interface CascadingModelConfig {
+    /**
+     * A text LLM that runs alongside the primary and takes over when the primary is
+     * slow.
+     */
+    backup?: CascadingModelConfig.BackupModelRef | unknown;
+
+    primary?: CascadingModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a text LLM with a separate voice. This is the default type.
+     */
+    type?: 'cascading';
+  }
+
+  export namespace CascadingModelConfig {
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+  }
+
+  export interface S2SModelConfig {
+    primary?: S2SModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a speech-to-speech model.
+     */
+    type?: 's2s';
+  }
+
+  export namespace S2SModelConfig {
+    export interface Primary {
+      /**
+       * The speech-to-speech model to use
+       */
+      model:
+        | 'gpt-realtime-2.1'
+        | 'gpt-realtime-2.1-mini'
+        | 'gpt-realtime-2'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini';
+    }
   }
 
   export interface State {
@@ -3118,7 +3274,7 @@ export interface LlmCreateParams {
   mcps?: Array<LlmCreateParams.Mcp> | null;
 
   /**
-   * Select the underlying text LLM. If not set, would default to gpt-5.6-terra.
+   * @deprecated Available LLM models for agents.
    */
   model?:
     | 'gpt-4.1'
@@ -3156,31 +3312,34 @@ export interface LlmCreateParams {
     | null;
 
   /**
-   * If set to true, will use high priority pool with more dedicated resource to
-   * ensure lower and more consistent latency, default to false. This feature usually
-   * comes with a higher cost.
+   * Model settings for the response engine. type decides which models primary and
+   * backup accept. On update, each top-level key replaces the current one and
+   * omitted keys are kept; set backup to null to remove it. Changing type requires
+   * primary and clears backup, while temperature carries over. In agent_override,
+   * type is required whenever primary is set, and backup cannot be removed.
+   */
+  model_config?: LlmCreateParams.CascadingModelConfig | LlmCreateParams.S2SModelConfig;
+
+  /**
+   * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
+   * model_config is set.
    */
   model_high_priority?: boolean | null;
 
   /**
-   * If set, will control the randomness of the response. Value ranging from [0,1].
-   * Lower value means more deterministic, while higher value means more random. If
-   * unset, default value 0 will apply. Note that for tool calling, a lower value is
-   * recommended.
+   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
+   * is set.
    */
   model_temperature?: number;
 
   /**
-   * If set to true, will use the ultrafast tier for much faster response generation,
-   * default to false. Only supported by gpt-6.1-sol on voice agents; ignored
-   * otherwise. Takes precedence over model_high_priority. This feature comes with a
-   * higher cost.
+   * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
+   * model_config is set.
    */
   model_ultrafast?: boolean | null;
 
   /**
-   * Select the underlying speech to speech model. Can only set this or model, not
-   * both.
+   * @deprecated The speech-to-speech model to use
    */
   s2s_model?:
     | 'gpt-realtime-2.1'
@@ -4556,6 +4715,159 @@ export namespace LlmCreateParams {
      * Default to 120,000 ms (2 minutes).
      */
     timeout_ms?: number;
+  }
+
+  export interface CascadingModelConfig {
+    /**
+     * A text LLM that runs alongside the primary and takes over when the primary is
+     * slow.
+     */
+    backup?: CascadingModelConfig.BackupModelRef | unknown;
+
+    primary?: CascadingModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a text LLM with a separate voice. This is the default type.
+     */
+    type?: 'cascading';
+  }
+
+  export namespace CascadingModelConfig {
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+  }
+
+  export interface S2SModelConfig {
+    primary?: S2SModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a speech-to-speech model.
+     */
+    type?: 's2s';
+  }
+
+  export namespace S2SModelConfig {
+    export interface Primary {
+      /**
+       * The speech-to-speech model to use
+       */
+      model:
+        | 'gpt-realtime-2.1'
+        | 'gpt-realtime-2.1-mini'
+        | 'gpt-realtime-2'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini';
+    }
   }
 
   export interface State {
@@ -6050,8 +6362,7 @@ export interface LlmUpdateParams {
   mcps?: Array<LlmUpdateParams.Mcp> | null;
 
   /**
-   * Body param: Select the underlying text LLM. If not set, would default to
-   * gpt-5.6-terra.
+   * @deprecated Body param: Available LLM models for agents.
    */
   model?:
     | 'gpt-4.1'
@@ -6089,31 +6400,35 @@ export interface LlmUpdateParams {
     | null;
 
   /**
-   * Body param: If set to true, will use high priority pool with more dedicated
-   * resource to ensure lower and more consistent latency, default to false. This
-   * feature usually comes with a higher cost.
+   * Body param: Model settings for the response engine. type decides which models
+   * primary and backup accept. On update, each top-level key replaces the current
+   * one and omitted keys are kept; set backup to null to remove it. Changing type
+   * requires primary and clears backup, while temperature carries over. In
+   * agent_override, type is required whenever primary is set, and backup cannot be
+   * removed.
+   */
+  model_config?: LlmUpdateParams.CascadingModelConfig | LlmUpdateParams.S2SModelConfig;
+
+  /**
+   * @deprecated Body param: Deprecated, use model_config.primary.tier fast. Ignored
+   * when model_config is set.
    */
   model_high_priority?: boolean | null;
 
   /**
-   * Body param: If set, will control the randomness of the response. Value ranging
-   * from [0,1]. Lower value means more deterministic, while higher value means more
-   * random. If unset, default value 0 will apply. Note that for tool calling, a
-   * lower value is recommended.
+   * @deprecated Body param: Deprecated, use model_config.temperature. Ignored when
+   * model_config is set.
    */
   model_temperature?: number;
 
   /**
-   * Body param: If set to true, will use the ultrafast tier for much faster response
-   * generation, default to false. Only supported by gpt-6.1-sol on voice agents;
-   * ignored otherwise. Takes precedence over model_high_priority. This feature comes
-   * with a higher cost.
+   * @deprecated Body param: Deprecated, use model_config.primary.tier ultrafast.
+   * Ignored when model_config is set.
    */
   model_ultrafast?: boolean | null;
 
   /**
-   * Body param: Select the underlying speech to speech model. Can only set this or
-   * model, not both.
+   * @deprecated Body param: The speech-to-speech model to use
    */
   s2s_model?:
     | 'gpt-realtime-2.1'
@@ -7489,6 +7804,159 @@ export namespace LlmUpdateParams {
      * Default to 120,000 ms (2 minutes).
      */
     timeout_ms?: number;
+  }
+
+  export interface CascadingModelConfig {
+    /**
+     * A text LLM that runs alongside the primary and takes over when the primary is
+     * slow.
+     */
+    backup?: CascadingModelConfig.BackupModelRef | unknown;
+
+    primary?: CascadingModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a text LLM with a separate voice. This is the default type.
+     */
+    type?: 'cascading';
+  }
+
+  export namespace CascadingModelConfig {
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+  }
+
+  export interface S2SModelConfig {
+    primary?: S2SModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a speech-to-speech model.
+     */
+    type?: 's2s';
+  }
+
+  export namespace S2SModelConfig {
+    export interface Primary {
+      /**
+       * The speech-to-speech model to use
+       */
+      model:
+        | 'gpt-realtime-2.1'
+        | 'gpt-realtime-2.1-mini'
+        | 'gpt-realtime-2'
+        | 'gpt-realtime-1.5'
+        | 'gpt-realtime'
+        | 'gpt-realtime-mini';
+    }
   }
 
   export interface State {
