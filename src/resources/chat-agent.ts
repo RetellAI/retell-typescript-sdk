@@ -1968,6 +1968,11 @@ export namespace ChatAgentListResponse {
     channel: 'voice' | 'chat';
 
     /**
+     * Whether the agent is currently suspended.
+     */
+    is_suspended: boolean;
+
+    /**
      * Authoritative root tags for this agent, keyed by tag name.
      */
     tags: { [key: string]: Item.Tags };
