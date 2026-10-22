@@ -34,7 +34,8 @@ export class PhoneNumber extends APIResource {
   }
 
   /**
-   * Update agent bound to a purchased phone number
+   * Update settings for a phone number. SIP codec preferences apply only to custom
+   * phone numbers.
    *
    * @example
    * ```ts
@@ -318,6 +319,14 @@ export namespace PhoneNumberResponse {
     auth_username?: string | null;
 
     /**
+     * SIP codec preferences for custom phone numbers only, used for inbound and
+     * outbound gateway calls. Retell-managed Twilio and Telnyx phone numbers do not
+     * support this setting. An empty list uses the gateway's default codecs. Codec
+     * names are extensible and are not limited to the examples.
+     */
+    codecs?: Array<string>;
+
+    /**
      * The termination URI for the SIP trunk for the phone number.
      */
     termination_uri?: string | null;
@@ -500,6 +509,14 @@ export interface PhoneNumberUpdateParams {
    * number.
    */
   auth_username?: string;
+
+  /**
+   * SIP codec preferences for custom phone numbers only, used for inbound and
+   * outbound gateway calls. Retell-managed Twilio and Telnyx phone numbers do not
+   * support this setting. An empty list uses the gateway's default codecs. Codec
+   * names are extensible and are not limited to the examples.
+   */
+  codecs?: Array<string>;
 
   /**
    * When inbound call concurrency is reached and a slot does not free up after
@@ -709,6 +726,14 @@ export interface PhoneNumberImportParams {
    * not set or empty, calls to all countries are allowed.
    */
   allowed_outbound_country_list?: Array<string> | null;
+
+  /**
+   * SIP codec preferences for custom phone numbers only, used for inbound and
+   * outbound gateway calls. Retell-managed Twilio and Telnyx phone numbers do not
+   * support this setting. An empty list uses the gateway's default codecs. Codec
+   * names are extensible and are not limited to the examples.
+   */
+  codecs?: Array<string>;
 
   /**
    * If true, E.164 validation for phone_number is skipped. This is useful for

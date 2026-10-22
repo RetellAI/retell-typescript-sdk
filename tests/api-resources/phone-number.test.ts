@@ -105,6 +105,7 @@ describe('resource phoneNumber', () => {
       termination_uri: 'someuri.pstn.twilio.com',
       allowed_inbound_country_list: ['US', 'CA', 'GB'],
       allowed_outbound_country_list: ['US', 'CA'],
+      codecs: ['PCMU', 'PCMA', 'G.722'],
       ignore_e164_validation: true,
       inbound_agents: [
         {
