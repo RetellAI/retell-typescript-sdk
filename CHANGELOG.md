@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.2.10](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.9...v6.2.10) (2026-10-22)
+
+
+### Bug Fixes
+
+* **api:** Add additionalProperties to integration response schemas and document enum_labels and forbid_literal_const for app tool schema resolution. ([f959bfd](https://github.com/RetellAI/retell-typescript-sdk/commit/f959bfda32a1c3f3ff3ff149d7576e9a7eb73d9f))
+* **api:** Add avatar_url to voice objects and update the provider description. ([06fbc6f](https://github.com/RetellAI/retell-typescript-sdk/commit/06fbc6ff8f274a2da45b955ef6c7df0f8ac4921f))
+* **api:** Add grok-voice-3.0 to S2S model enums and allow xai voice providers. ([06fbc6f](https://github.com/RetellAI/retell-typescript-sdk/commit/06fbc6ff8f274a2da45b955ef6c7df0f8ac4921f))
+* **api:** Add model_config to agent overrides, Retell LLM overrides, conversation flow overrides, and node definitions. ([f800e8a](https://github.com/RetellAI/retell-typescript-sdk/commit/f800e8a3130b9899ecbcb468e926018d8c9bca82))
+* **api:** Add SipCodecList to custom phone number import and update requests, and to phone number responses. ([1124b1c](https://github.com/RetellAI/retell-typescript-sdk/commit/1124b1cf3638dd1b234c41f1a66c51099095987f))
+* **api:** Deprecate model_choice, model_temperature, model, s2s_model, model_high_priority, and model_ultrafast in favor of model_config. ([f800e8a](https://github.com/RetellAI/retell-typescript-sdk/commit/f800e8a3130b9899ecbcb468e926018d8c9bca82))
+* **api:** Deprecate the states field in the Retell LLM schema. ([70b9e40](https://github.com/RetellAI/retell-typescript-sdk/commit/70b9e400038f8a702108300aeac2f0ec11e8147e))
+
 ## [6.2.9](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.8...v6.2.9) (2026-10-20)
 
 
