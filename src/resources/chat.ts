@@ -129,7 +129,7 @@ export class Chat extends APIResource {
    * ```
    */
   createSMSChat(body: ChatCreateSMSChatParams, options?: RequestOptions): APIPromise<ChatResponse> {
-    return this._client.post('/create-sms-chat', { body, ...options });
+    return this._client.post('/create-sms-chat', { body, maxRetries: 0, ...options });
   }
 
   /**

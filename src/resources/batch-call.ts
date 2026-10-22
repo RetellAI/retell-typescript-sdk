@@ -24,6 +24,7 @@ export class BatchCall extends APIResource {
     return this._client.post('/create-batch-call', {
       body,
       timeout: (this._client as any)._options.timeout ?? 300000,
+      maxRetries: 0,
       ...options,
     });
   }
