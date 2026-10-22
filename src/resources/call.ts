@@ -92,6 +92,7 @@ export class Call extends APIResource {
     return this._client.post('/v2/create-phone-call', {
       body,
       timeout: (this._client as any)._options.timeout ?? 120000,
+      maxRetries: 0,
       ...options,
     });
   }
