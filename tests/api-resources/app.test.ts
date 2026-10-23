@@ -74,6 +74,7 @@ describe('resource app', () => {
         {
           limit: 1000,
           pagination_key: 'pagination_key',
+          privacy_scope: 'standard',
           sort_order: 'ascending',
         },
         { path: '/_stainless_unknown_path' },
