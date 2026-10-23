@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.2.11](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.10...v6.2.11) (2026-10-23)
+
+
+### Bug Fixes
+
+* **api:** Add is_suspended to AgentListItemResponse and require it in list results. ([6c20585](https://github.com/RetellAI/retell-typescript-sdk/commit/6c2058546f41dbedf297f34bf10546c5719b1ca7))
+* **sdks:** disable retries for outbound creation methods ([0da5bbb](https://github.com/RetellAI/retell-typescript-sdk/commit/0da5bbb928a1b962a99c01fdb5de4a70d3b19acc))
+* **sdks:** honor Python request option defaults ([b9471b9](https://github.com/RetellAI/retell-typescript-sdk/commit/b9471b9457b311cf0664765e8ddc0410e25aa6ad))
+
 ## [6.2.10](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.9...v6.2.10) (2026-10-22)
 
 
