@@ -660,6 +660,12 @@ export interface AppListParams {
   pagination_key?: string;
 
   /**
+   * Only include functions with this scope and apps providing them. Omit to include
+   * all scopes.
+   */
+  privacy_scope?: 'standard' | 'pci';
+
+  /**
    * Sort order for results.
    */
   sort_order?: 'ascending' | 'descending';
