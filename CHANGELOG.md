@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.12](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.11...v6.2.12) (2026-10-24)
+
+
+### Bug Fixes
+
+* **api:** Add the privacy_scope query parameter to listApps and document the PrivacyScope enum. ([5bf7a7a](https://github.com/RetellAI/retell-typescript-sdk/commit/5bf7a7ad74ba12e13b09dc64c1665eb49b7bdfaf))
+
 ## [6.2.11](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.10...v6.2.11) (2026-10-23)
 
 
