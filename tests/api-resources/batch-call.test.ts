@@ -200,6 +200,13 @@ describe('resource batchCall', () => {
               webhook_url: 'https://webhook-url-here',
             },
             conversation_flow: {
+              backup_model: {
+                model: 'gpt-4.1',
+                type: 'cascading',
+                backup_kick_in_timeout: 300,
+                high_priority: true,
+                ultrafast: true,
+              },
               begin_after_user_silence_ms: 2000,
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['kb_001', 'kb_002'],
@@ -224,6 +231,13 @@ describe('resource batchCall', () => {
               tool_call_strict_mode: true,
             },
             retell_llm: {
+              backup_model: {
+                model: 'gpt-4.1',
+                type: 'cascading',
+                backup_kick_in_timeout: 300,
+                high_priority: true,
+                ultrafast: true,
+              },
               begin_after_user_silence_ms: 2000,
               begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',
               kb_config: { filter_score: 0.6, top_k: 3 },
