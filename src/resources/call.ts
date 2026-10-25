@@ -11144,6 +11144,13 @@ export namespace CallCreatePhoneCallParams {
      */
     export interface ConversationFlow {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: ConversationFlow.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -11195,6 +11202,73 @@ export namespace CallCreatePhoneCallParams {
     }
 
     export namespace ConversationFlow {
+      /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -11307,6 +11381,10 @@ export namespace CallCreatePhoneCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.
@@ -11450,6 +11528,13 @@ export namespace CallCreatePhoneCallParams {
      */
     export interface RetellLlm {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: RetellLlm.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -11567,6 +11652,73 @@ export namespace CallCreatePhoneCallParams {
 
     export namespace RetellLlm {
       /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
+      /**
        * Knowledge base configuration for RAG retrieval.
        */
       export interface KBConfig {
@@ -11603,6 +11755,10 @@ export namespace CallCreatePhoneCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.
@@ -14095,6 +14251,13 @@ export namespace CallCreateWebCallParams {
      */
     export interface ConversationFlow {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: ConversationFlow.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -14146,6 +14309,73 @@ export namespace CallCreateWebCallParams {
     }
 
     export namespace ConversationFlow {
+      /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -14258,6 +14488,10 @@ export namespace CallCreateWebCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.
@@ -14401,6 +14635,13 @@ export namespace CallCreateWebCallParams {
      */
     export interface RetellLlm {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: RetellLlm.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -14518,6 +14759,73 @@ export namespace CallCreateWebCallParams {
 
     export namespace RetellLlm {
       /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
+      /**
        * Knowledge base configuration for RAG retrieval.
        */
       export interface KBConfig {
@@ -14554,6 +14862,10 @@ export namespace CallCreateWebCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.
@@ -17046,6 +17358,13 @@ export namespace CallRegisterPhoneCallParams {
      */
     export interface ConversationFlow {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: ConversationFlow.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -17097,6 +17416,73 @@ export namespace CallRegisterPhoneCallParams {
     }
 
     export namespace ConversationFlow {
+      /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -17209,6 +17595,10 @@ export namespace CallRegisterPhoneCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.
@@ -17352,6 +17742,13 @@ export namespace CallRegisterPhoneCallParams {
      */
     export interface RetellLlm {
       /**
+       * Replace backup model configuration for this call only. Omit to inherit the saved
+       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
+       * in a supplied configuration defaults to 1500 milliseconds.
+       */
+      backup_model?: RetellLlm.BackupModelChoice | unknown;
+
+      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -17469,6 +17866,73 @@ export namespace CallRegisterPhoneCallParams {
 
     export namespace RetellLlm {
       /**
+       * Backup models are supported only for call agents. Response engines with a backup
+       * model cannot be used by chat agents.
+       */
+      export interface BackupModelChoice {
+        /**
+         * The LLM model to use
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Type of model choice
+         */
+        type: 'cascading';
+
+        /**
+         * Duration in milliseconds to prefer primary model output while both models run
+         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+         * 1500 when omitted.
+         */
+        backup_kick_in_timeout?: number;
+
+        /**
+         * Whether to use high priority pool with more dedicated resource, default false
+         */
+        high_priority?: boolean;
+
+        /**
+         * Whether to use the ultrafast tier for much faster response generation, default
+         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+         * precedence over high_priority.
+         */
+        ultrafast?: boolean;
+      }
+
+      /**
        * Knowledge base configuration for RAG retrieval.
        */
       export interface KBConfig {
@@ -17505,6 +17969,10 @@ export namespace CallRegisterPhoneCallParams {
       }
 
       export namespace CascadingModelConfig {
+        /**
+         * Backup models are supported only for call agents. Response engines with a backup
+         * model cannot be used by chat agents.
+         */
         export interface BackupModelRef {
           /**
            * Available LLM models for agents.

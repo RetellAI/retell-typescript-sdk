@@ -104,6 +104,12 @@ export interface LlmResponse {
   llm_id: string;
 
   /**
+   * @deprecated Backup models are supported only for call agents. Response engines
+   * with a backup model cannot be used by chat agents.
+   */
+  backup_model?: unknown | LlmResponse.BackupModelChoice;
+
+  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -293,6 +299,73 @@ export interface LlmResponse {
 }
 
 export namespace LlmResponse {
+  /**
+   * Backup models are supported only for call agents. Response engines with a backup
+   * model cannot be used by chat agents.
+   */
+  export interface BackupModelChoice {
+    /**
+     * The LLM model to use
+     */
+    model:
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
+      | 'gpt-5.4'
+      | 'gpt-5.4-mini'
+      | 'gpt-5.4-nano'
+      | 'gpt-5.5'
+      | 'gpt-5.6-terra'
+      | 'gpt-5.6-luna'
+      | 'gpt-6-astra'
+      | 'gpt-6-sol'
+      | 'gpt-6.1-sol'
+      | 'gpt-6-luna'
+      | 'claude-4.6-sonnet'
+      | 'claude-5-opus'
+      | 'claude-5.5-opus'
+      | 'claude-5-sonnet'
+      | 'claude-5.5-sonnet'
+      | 'claude-5.5-haiku'
+      | 'claude-4.5-haiku'
+      | 'gemini-3.0-flash'
+      | 'gemini-3.1-flash-lite'
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash'
+      | 'gemini-3.7-flash'
+      | 'gemini-3.8-flash'
+      | 'gemini-4-argon';
+
+    /**
+     * Type of model choice
+     */
+    type: 'cascading';
+
+    /**
+     * Duration in milliseconds to prefer primary model output while both models run
+     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+     * 1500 when omitted.
+     */
+    backup_kick_in_timeout?: number;
+
+    /**
+     * Whether to use high priority pool with more dedicated resource, default false
+     */
+    high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
+  }
+
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -1666,6 +1739,10 @@ export namespace LlmResponse {
   }
 
   export namespace CascadingModelConfig {
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
     export interface BackupModelRef {
       /**
        * Available LLM models for agents.
@@ -3234,6 +3311,12 @@ export interface LlmListResponse {
 
 export interface LlmCreateParams {
   /**
+   * @deprecated Backup models are supported only for call agents. Response engines
+   * with a backup model cannot be used by chat agents.
+   */
+  backup_model?: unknown | LlmCreateParams.BackupModelChoice;
+
+  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -3413,6 +3496,73 @@ export interface LlmCreateParams {
 }
 
 export namespace LlmCreateParams {
+  /**
+   * Backup models are supported only for call agents. Response engines with a backup
+   * model cannot be used by chat agents.
+   */
+  export interface BackupModelChoice {
+    /**
+     * The LLM model to use
+     */
+    model:
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
+      | 'gpt-5.4'
+      | 'gpt-5.4-mini'
+      | 'gpt-5.4-nano'
+      | 'gpt-5.5'
+      | 'gpt-5.6-terra'
+      | 'gpt-5.6-luna'
+      | 'gpt-6-astra'
+      | 'gpt-6-sol'
+      | 'gpt-6.1-sol'
+      | 'gpt-6-luna'
+      | 'claude-4.6-sonnet'
+      | 'claude-5-opus'
+      | 'claude-5.5-opus'
+      | 'claude-5-sonnet'
+      | 'claude-5.5-sonnet'
+      | 'claude-5.5-haiku'
+      | 'claude-4.5-haiku'
+      | 'gemini-3.0-flash'
+      | 'gemini-3.1-flash-lite'
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash'
+      | 'gemini-3.7-flash'
+      | 'gemini-3.8-flash'
+      | 'gemini-4-argon';
+
+    /**
+     * Type of model choice
+     */
+    type: 'cascading';
+
+    /**
+     * Duration in milliseconds to prefer primary model output while both models run
+     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+     * 1500 when omitted.
+     */
+    backup_kick_in_timeout?: number;
+
+    /**
+     * Whether to use high priority pool with more dedicated resource, default false
+     */
+    high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
+  }
+
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -4786,6 +4936,10 @@ export namespace LlmCreateParams {
   }
 
   export namespace CascadingModelConfig {
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
     export interface BackupModelRef {
       /**
        * Available LLM models for agents.
@@ -6353,6 +6507,12 @@ export interface LlmUpdateParams {
   version?: number;
 
   /**
+   * @deprecated Body param: Backup models are supported only for call agents.
+   * Response engines with a backup model cannot be used by chat agents.
+   */
+  backup_model?: unknown | LlmUpdateParams.BackupModelChoice;
+
+  /**
    * Body param: If set, the AI will begin the conversation after waiting for the
    * user for the duration (in milliseconds) specified by this attribute. This only
    * applies if the agent is configured to wait for the user to speak first. If not
@@ -6534,6 +6694,73 @@ export interface LlmUpdateParams {
 }
 
 export namespace LlmUpdateParams {
+  /**
+   * Backup models are supported only for call agents. Response engines with a backup
+   * model cannot be used by chat agents.
+   */
+  export interface BackupModelChoice {
+    /**
+     * The LLM model to use
+     */
+    model:
+      | 'gpt-4.1'
+      | 'gpt-4.1-mini'
+      | 'gpt-5'
+      | 'gpt-5-mini'
+      | 'gpt-5-nano'
+      | 'gpt-5.1'
+      | 'gpt-5.2'
+      | 'gpt-5.4'
+      | 'gpt-5.4-mini'
+      | 'gpt-5.4-nano'
+      | 'gpt-5.5'
+      | 'gpt-5.6-terra'
+      | 'gpt-5.6-luna'
+      | 'gpt-6-astra'
+      | 'gpt-6-sol'
+      | 'gpt-6.1-sol'
+      | 'gpt-6-luna'
+      | 'claude-4.6-sonnet'
+      | 'claude-5-opus'
+      | 'claude-5.5-opus'
+      | 'claude-5-sonnet'
+      | 'claude-5.5-sonnet'
+      | 'claude-5.5-haiku'
+      | 'claude-4.5-haiku'
+      | 'gemini-3.0-flash'
+      | 'gemini-3.1-flash-lite'
+      | 'gemini-3.5-flash'
+      | 'gemini-3.5-flash-lite'
+      | 'gemini-3.6-flash'
+      | 'gemini-3.7-flash'
+      | 'gemini-3.8-flash'
+      | 'gemini-4-argon';
+
+    /**
+     * Type of model choice
+     */
+    type: 'cascading';
+
+    /**
+     * Duration in milliseconds to prefer primary model output while both models run
+     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
+     * 1500 when omitted.
+     */
+    backup_kick_in_timeout?: number;
+
+    /**
+     * Whether to use high priority pool with more dedicated resource, default false
+     */
+    high_priority?: boolean;
+
+    /**
+     * Whether to use the ultrafast tier for much faster response generation, default
+     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+     * precedence over high_priority.
+     */
+    ultrafast?: boolean;
+  }
+
   export interface EndCallTool {
     /**
      * Name of the tool. Must be unique within all tools available to LLM at any given
@@ -7907,6 +8134,10 @@ export namespace LlmUpdateParams {
   }
 
   export namespace CascadingModelConfig {
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
     export interface BackupModelRef {
       /**
        * Available LLM models for agents.
