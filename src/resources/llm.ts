@@ -224,7 +224,8 @@ export interface LlmResponse {
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
    * primary and clears backup, while temperature carries over. In agent_override,
-   * type is required whenever primary is set, and backup cannot be removed.
+   * type is required whenever primary is set; setting backup to null disables it for
+   * that call only.
    */
   model_config?: LlmResponse.CascadingModelConfig | LlmResponse.S2SModelConfig;
 
@@ -3348,7 +3349,8 @@ export interface LlmCreateParams {
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
    * primary and clears backup, while temperature carries over. In agent_override,
-   * type is required whenever primary is set, and backup cannot be removed.
+   * type is required whenever primary is set; setting backup to null disables it for
+   * that call only.
    */
   model_config?: LlmCreateParams.CascadingModelConfig | LlmCreateParams.S2SModelConfig;
 
@@ -6468,8 +6470,8 @@ export interface LlmUpdateParams {
    * primary and backup accept. On update, each top-level key replaces the current
    * one and omitted keys are kept; set backup to null to remove it. Changing type
    * requires primary and clears backup, while temperature carries over. In
-   * agent_override, type is required whenever primary is set, and backup cannot be
-   * removed.
+   * agent_override, type is required whenever primary is set; setting backup to null
+   * disables it for that call only.
    */
   model_config?: LlmUpdateParams.CascadingModelConfig | LlmUpdateParams.S2SModelConfig;
 

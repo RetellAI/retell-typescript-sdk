@@ -1125,6 +1125,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -1145,6 +1147,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -1171,6 +1245,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -1185,6 +1261,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -1330,6 +1461,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -1350,6 +1483,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -1376,6 +1581,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -1390,6 +1597,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -1535,6 +1797,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -1555,6 +1819,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -1581,6 +1917,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -1595,6 +1933,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -1740,6 +2133,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -1760,6 +2155,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -1786,6 +2253,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -1800,6 +2269,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -1945,6 +2469,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -1965,6 +2491,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -1991,6 +2589,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -2005,6 +2605,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -2161,6 +2816,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<TranscriptObject.Word>;
+
+    metadata?: TranscriptObject.Metadata;
   }
 
   export namespace TranscriptObject {
@@ -2182,6 +2839,78 @@ export namespace PhoneCallResponse {
        */
       word?: string;
     }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface Utterance {
@@ -2201,6 +2930,8 @@ export namespace PhoneCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -2221,6 +2952,78 @@ export namespace PhoneCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -2247,6 +3050,8 @@ export namespace PhoneCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -2261,6 +3066,61 @@ export namespace PhoneCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -3228,6 +4088,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -3248,6 +4110,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -3274,6 +4208,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -3288,6 +4224,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -3433,6 +4424,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -3453,6 +4446,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -3479,6 +4544,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -3493,6 +4560,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -3638,6 +4760,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -3658,6 +4782,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -3684,6 +4880,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -3698,6 +4896,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -3843,6 +5096,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -3863,6 +5118,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -3889,6 +5216,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -3903,6 +5232,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -4048,6 +5432,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -4068,6 +5454,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -4094,6 +5552,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -4108,6 +5568,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -4253,6 +5768,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<TranscriptObject.Word>;
+
+    metadata?: TranscriptObject.Metadata;
   }
 
   export namespace TranscriptObject {
@@ -4274,6 +5791,78 @@ export namespace WebCallResponse {
        */
       word?: string;
     }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface Utterance {
@@ -4293,6 +5882,8 @@ export namespace WebCallResponse {
      * not guaranteed to be accurate, it's more like an approximation.
      */
     words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
   }
 
   export namespace Utterance {
@@ -4313,6 +5904,78 @@ export namespace WebCallResponse {
        * Word transcript (with punctuation if applicable).
        */
       word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
     }
   }
 
@@ -4339,6 +6002,8 @@ export namespace WebCallResponse {
      */
     tool_call_id: string;
 
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
     /**
      * Optional thought signature from Google Gemini thinking models. This is used
      * internally to maintain reasoning chain in multi-turn function calling.
@@ -4353,6 +6018,61 @@ export namespace WebCallResponse {
      * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
      */
     type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
   }
 
   export interface ToolCallResultUtterance {
@@ -7134,8 +8854,8 @@ export namespace CallCreatePhoneCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
@@ -7143,8 +8863,9 @@ export namespace CallCreatePhoneCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -9418,8 +11139,8 @@ export namespace CallCreatePhoneCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     export interface ConversationFlow {
       /**
@@ -9450,7 +11171,8 @@ export namespace CallCreatePhoneCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: ConversationFlow.CascadingModelConfig | ConversationFlow.S2SModelConfig;
 
@@ -9722,8 +11444,9 @@ export namespace CallCreatePhoneCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     export interface RetellLlm {
       /**
@@ -9793,7 +11516,8 @@ export namespace CallCreatePhoneCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig;
 
@@ -10081,8 +11805,8 @@ export namespace CallCreateWebCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
@@ -10090,8 +11814,9 @@ export namespace CallCreateWebCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -12365,8 +14090,8 @@ export namespace CallCreateWebCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     export interface ConversationFlow {
       /**
@@ -12397,7 +14122,8 @@ export namespace CallCreateWebCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: ConversationFlow.CascadingModelConfig | ConversationFlow.S2SModelConfig;
 
@@ -12669,8 +14395,9 @@ export namespace CallCreateWebCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     export interface RetellLlm {
       /**
@@ -12740,7 +14467,8 @@ export namespace CallCreateWebCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig;
 
@@ -13028,8 +14756,8 @@ export namespace CallRegisterPhoneCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     conversation_flow?: AgentOverride.ConversationFlow;
 
@@ -13037,8 +14765,9 @@ export namespace CallRegisterPhoneCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     retell_llm?: AgentOverride.RetellLlm;
   }
@@ -15312,8 +17041,8 @@ export namespace CallRegisterPhoneCallParams {
      * Override conversation flow configuration settings. Only applicable when using
      * conversation flow as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms. A model_config override cannot remove the backup
-     * model.
+     * begin_after_user_silence_ms. A model_config override can set backup to null to
+     * remove it for this call.
      */
     export interface ConversationFlow {
       /**
@@ -15344,7 +17073,8 @@ export namespace CallRegisterPhoneCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: ConversationFlow.CascadingModelConfig | ConversationFlow.S2SModelConfig;
 
@@ -15616,8 +17346,9 @@ export namespace CallRegisterPhoneCallParams {
      * Override Retell LLM configuration settings. Only applicable when using Retell
      * LLM as the response engine. Supported attributes - model_config,
      * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-     * begin_after_user_silence_ms, begin_message. A model_config override cannot
-     * remove the backup model or switch a speech-to-speech LLM to a cascading model.
+     * begin_after_user_silence_ms, begin_message. A model_config override can set
+     * backup to null to remove it for this call, but cannot switch a speech-to-speech
+     * LLM to a cascading model.
      */
     export interface RetellLlm {
       /**
@@ -15687,7 +17418,8 @@ export namespace CallRegisterPhoneCallParams {
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
        * primary and clears backup, while temperature carries over. In agent_override,
-       * type is required whenever primary is set, and backup cannot be removed.
+       * type is required whenever primary is set; setting backup to null disables it for
+       * that call only.
        */
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig;
 
