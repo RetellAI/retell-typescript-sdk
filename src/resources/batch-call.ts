@@ -1322,6 +1322,12 @@ export namespace BatchCallCreateBatchCallParams {
           execution_message_type?: 'prompt' | 'static_text';
 
           /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
+
+          /**
            * What the agent and the transcript see of the tool's response. Omit to send the
            * full response. Does not affect response_variables, which are always extracted
            * from the raw response.
@@ -1518,6 +1524,12 @@ export namespace BatchCallCreateBatchCallParams {
            * to "prompt".
            */
           execution_message_type?: 'prompt' | 'static_text';
+
+          /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
 
           /**
            * Headers to add to the request.
@@ -1719,6 +1731,12 @@ export namespace BatchCallCreateBatchCallParams {
            * to "prompt".
            */
           execution_message_type?: 'prompt' | 'static_text';
+
+          /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
 
           /**
            * A mapping of variable names to JSON paths in the code execution result. These
@@ -2022,6 +2040,12 @@ export namespace BatchCallCreateBatchCallParams {
           execution_message_type?: 'prompt' | 'static_text';
 
           /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
+
+          /**
            * What the agent and the transcript see of the tool's response. Omit to send the
            * full response. Does not affect response_variables, which are always extracted
            * from the raw response.
@@ -2173,6 +2197,12 @@ export namespace BatchCallCreateBatchCallParams {
            * to "prompt".
            */
           execution_message_type?: 'prompt' | 'static_text';
+
+          /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
 
           /**
            * Headers to add to the request.
@@ -2329,6 +2359,12 @@ export namespace BatchCallCreateBatchCallParams {
            * to "prompt".
            */
           execution_message_type?: 'prompt' | 'static_text';
+
+          /**
+           * Dynamic variable to store execution status as "success" or "failure". Tools
+           * skipped by conditions or dependencies leave it unchanged.
+           */
+          execution_status_variable?: string;
 
           /**
            * A mapping of variable names to JSON paths in the code execution result. These

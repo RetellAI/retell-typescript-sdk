@@ -1378,6 +1378,12 @@ export namespace AgentResponse {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -1574,6 +1580,12 @@ export namespace AgentResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -1775,6 +1787,12 @@ export namespace AgentResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These
@@ -2075,6 +2093,12 @@ export namespace AgentResponse {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -2226,6 +2250,12 @@ export namespace AgentResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -2382,6 +2412,12 @@ export namespace AgentResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These
@@ -3757,6 +3793,12 @@ export namespace AgentCreateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -3953,6 +3995,12 @@ export namespace AgentCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -4154,6 +4202,12 @@ export namespace AgentCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These
@@ -4454,6 +4508,12 @@ export namespace AgentCreateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -4605,6 +4665,12 @@ export namespace AgentCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -4761,6 +4827,12 @@ export namespace AgentCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These
@@ -5995,6 +6067,12 @@ export namespace AgentUpdateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -6191,6 +6269,12 @@ export namespace AgentUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -6392,6 +6476,12 @@ export namespace AgentUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These
@@ -6692,6 +6782,12 @@ export namespace AgentUpdateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * What the agent and the transcript see of the tool's response. Omit to send the
      * full response. Does not affect response_variables, which are always extracted
      * from the raw response.
@@ -6843,6 +6939,12 @@ export namespace AgentUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * Headers to add to the request.
@@ -6999,6 +7101,12 @@ export namespace AgentUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * A mapping of variable names to JSON paths in the code execution result. These

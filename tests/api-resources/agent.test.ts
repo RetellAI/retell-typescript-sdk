@@ -117,6 +117,7 @@ describe('resource agent', () => {
           enable_typing_sound: true,
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
+          execution_status_variable: 'execution_status_variable',
           output_selection: { mode: 'all', fields: ['string'] },
           parameters: [
             {
@@ -143,6 +144,7 @@ describe('resource agent', () => {
           enable_typing_sound: true,
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
+          execution_status_variable: 'execution_status_variable',
           output_selection: { mode: 'all', fields: ['string'] },
           parameters: [
             {
