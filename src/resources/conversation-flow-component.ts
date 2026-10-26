@@ -2842,6 +2842,12 @@ export namespace ConversationFlowComponentResponse {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
@@ -2991,6 +2997,12 @@ export namespace ConversationFlowComponentResponse {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * A mapping of variable names to JSON paths in the code execution result. These
@@ -3297,6 +3309,12 @@ export namespace ConversationFlowComponentResponse {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * The input schema of the MCP tool.
        */
       input_schema?: { [key: string]: string };
@@ -3385,6 +3403,12 @@ export namespace ConversationFlowComponentResponse {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * What the agent and the transcript see of the tool's response. Omit to send the
@@ -4706,6 +4730,12 @@ export namespace ConversationFlowComponentResponse {
      * If true, play a typing sound while code executes.
      */
     enable_typing_sound?: boolean;
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -9705,6 +9735,12 @@ export namespace ConversationFlowComponentResponse {
      */
     enable_typing_sound?: boolean;
 
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -11986,6 +12022,12 @@ export namespace ConversationFlowComponentResponse {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * Headers to add to the request.
      */
     headers?: { [key: string]: string };
@@ -12157,6 +12199,12 @@ export namespace ConversationFlowComponentResponse {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * What the agent and the transcript see of the tool's response. Omit to send the
@@ -14992,6 +15040,12 @@ export namespace ConversationFlowComponentCreateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
@@ -15141,6 +15195,12 @@ export namespace ConversationFlowComponentCreateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * A mapping of variable names to JSON paths in the code execution result. These
@@ -15447,6 +15507,12 @@ export namespace ConversationFlowComponentCreateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * The input schema of the MCP tool.
        */
       input_schema?: { [key: string]: string };
@@ -15535,6 +15601,12 @@ export namespace ConversationFlowComponentCreateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * What the agent and the transcript see of the tool's response. Omit to send the
@@ -16856,6 +16928,12 @@ export namespace ConversationFlowComponentCreateParams {
      * If true, play a typing sound while code executes.
      */
     enable_typing_sound?: boolean;
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -21855,6 +21933,12 @@ export namespace ConversationFlowComponentCreateParams {
      */
     enable_typing_sound?: boolean;
 
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -24136,6 +24220,12 @@ export namespace ConversationFlowComponentCreateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * Headers to add to the request.
      */
     headers?: { [key: string]: string };
@@ -24307,6 +24397,12 @@ export namespace ConversationFlowComponentCreateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * What the agent and the transcript see of the tool's response. Omit to send the
@@ -27162,6 +27258,12 @@ export namespace ConversationFlowComponentUpdateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * Headers to add to the request.
        */
       headers?: { [key: string]: string };
@@ -27311,6 +27413,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * A mapping of variable names to JSON paths in the code execution result. These
@@ -27617,6 +27725,12 @@ export namespace ConversationFlowComponentUpdateParams {
       execution_message_type?: 'prompt' | 'static_text';
 
       /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
+
+      /**
        * The input schema of the MCP tool.
        */
       input_schema?: { [key: string]: string };
@@ -27705,6 +27819,12 @@ export namespace ConversationFlowComponentUpdateParams {
        * to "prompt".
        */
       execution_message_type?: 'prompt' | 'static_text';
+
+      /**
+       * Dynamic variable to store execution status as "success" or "failure". Tools
+       * skipped by conditions or dependencies leave it unchanged.
+       */
+      execution_status_variable?: string;
 
       /**
        * What the agent and the transcript see of the tool's response. Omit to send the
@@ -29026,6 +29146,12 @@ export namespace ConversationFlowComponentUpdateParams {
      * If true, play a typing sound while code executes.
      */
     enable_typing_sound?: boolean;
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     finetune_transition_examples?: Array<CodeNode.FinetuneTransitionExample>;
 
@@ -34025,6 +34151,12 @@ export namespace ConversationFlowComponentUpdateParams {
      */
     enable_typing_sound?: boolean;
 
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
     finetune_transition_examples?: Array<McpNode.FinetuneTransitionExample>;
 
     global_node_setting?: McpNode.GlobalNodeSetting;
@@ -36272,6 +36404,12 @@ export namespace ConversationFlowComponentUpdateParams {
     execution_message_type?: 'prompt' | 'static_text';
 
     /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
+
+    /**
      * Headers to add to the request.
      */
     headers?: { [key: string]: string };
@@ -36443,6 +36581,12 @@ export namespace ConversationFlowComponentUpdateParams {
      * to "prompt".
      */
     execution_message_type?: 'prompt' | 'static_text';
+
+    /**
+     * Dynamic variable to store execution status as "success" or "failure". Tools
+     * skipped by conditions or dependencies leave it unchanged.
+     */
+    execution_status_variable?: string;
 
     /**
      * What the agent and the transcript see of the tool's response. Omit to send the

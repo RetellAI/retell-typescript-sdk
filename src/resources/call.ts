@@ -9966,6 +9966,12 @@ export namespace CallCreatePhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -10162,6 +10168,12 @@ export namespace CallCreatePhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -10363,6 +10375,12 @@ export namespace CallCreatePhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These
@@ -10666,6 +10684,12 @@ export namespace CallCreatePhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -10817,6 +10841,12 @@ export namespace CallCreatePhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -10973,6 +11003,12 @@ export namespace CallCreatePhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These
@@ -13073,6 +13109,12 @@ export namespace CallCreateWebCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -13269,6 +13311,12 @@ export namespace CallCreateWebCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -13470,6 +13518,12 @@ export namespace CallCreateWebCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These
@@ -13773,6 +13827,12 @@ export namespace CallCreateWebCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -13924,6 +13984,12 @@ export namespace CallCreateWebCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -14080,6 +14146,12 @@ export namespace CallCreateWebCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These
@@ -16180,6 +16252,12 @@ export namespace CallRegisterPhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -16376,6 +16454,12 @@ export namespace CallRegisterPhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -16577,6 +16661,12 @@ export namespace CallRegisterPhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These
@@ -16880,6 +16970,12 @@ export namespace CallRegisterPhoneCallParams {
         execution_message_type?: 'prompt' | 'static_text';
 
         /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
+
+        /**
          * What the agent and the transcript see of the tool's response. Omit to send the
          * full response. Does not affect response_variables, which are always extracted
          * from the raw response.
@@ -17031,6 +17127,12 @@ export namespace CallRegisterPhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * Headers to add to the request.
@@ -17187,6 +17289,12 @@ export namespace CallRegisterPhoneCallParams {
          * to "prompt".
          */
         execution_message_type?: 'prompt' | 'static_text';
+
+        /**
+         * Dynamic variable to store execution status as "success" or "failure". Tools
+         * skipped by conditions or dependencies leave it unchanged.
+         */
+        execution_status_variable?: string;
 
         /**
          * A mapping of variable names to JSON paths in the code execution result. These

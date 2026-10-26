@@ -134,6 +134,7 @@ describe('resource conversationFlowComponent', () => {
           enable_typing_sound: true,
           execution_message_description: 'execution_message_description',
           execution_message_type: 'prompt',
+          execution_status_variable: 'execution_status_variable',
           headers: { Authorization: 'Bearer 1234567890' },
           max_retry: 0,
           method: 'GET',
