@@ -173,6 +173,7 @@ const fuse = new Fuse(
     'client.knowledgeBase.delete',
     'client.knowledgeBase.deleteSource',
     'client.knowledgeBase.list',
+    'client.knowledgeBase.refresh',
     'client.knowledgeBase.retrieve',
     'client.voice.addResource',
     'client.voice.clone',

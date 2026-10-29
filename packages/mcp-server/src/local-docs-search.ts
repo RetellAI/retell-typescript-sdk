@@ -2428,6 +2428,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'refresh',
+    endpoint: '/refresh-knowledge-base/{knowledge_base_id}',
+    httpMethod: 'post',
+    summary: '',
+    description: 'Manually refresh a knowledge base',
+    stainlessPath: '(resource) knowledge_base > (method) refresh',
+    qualified: 'client.knowledgeBase.refresh',
+    params: ['knowledge_base_id: string;'],
+    markdown:
+      "## refresh\n\n`client.knowledgeBase.refresh(knowledge_base_id: string): void`\n\n**post** `/refresh-knowledge-base/{knowledge_base_id}`\n\nManually refresh a knowledge base\n\n### Parameters\n\n- `knowledge_base_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.knowledgeBase.refresh('knowledge_base_1234567890')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.knowledgeBase.refresh',
+        example:
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.knowledgeBase.refresh('knowledge_base_1234567890');",
+      },
+      python: {
+        method: 'knowledge_base.refresh',
+        example:
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nclient.knowledge_base.refresh(\n    "knowledge_base_1234567890",\n)',
+      },
+      http: {
+        example:
+          'curl https://api.retellai.com/refresh-knowledge-base/$KNOWLEDGE_BASE_ID \\\n    -X POST \\\n    -H "Authorization: Bearer $RETELL_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'add-resource',
     endpoint: '/add-community-voice',
     httpMethod: 'post',

@@ -407,6 +407,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/delete-knowledge-base-source/{knowledge_base_id}/source/{source_id}',
   },
   {
+    clientCallName: 'client.knowledgeBase.refresh',
+    fullyQualifiedName: 'knowledgeBase.refresh',
+    httpMethod: 'post',
+    httpPath: '/refresh-knowledge-base/{knowledge_base_id}',
+  },
+  {
     clientCallName: 'client.voice.retrieve',
     fullyQualifiedName: 'voice.retrieve',
     httpMethod: 'get',
