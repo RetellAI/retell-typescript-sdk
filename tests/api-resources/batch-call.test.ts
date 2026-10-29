@@ -230,7 +230,6 @@ describe('resource batchCall', () => {
               },
               model_temperature: 0.7,
               start_speaker: 'agent',
-              tool_call_strict_mode: true,
             },
             retell_llm: {
               backup_model: {
@@ -260,7 +259,6 @@ describe('resource batchCall', () => {
               model_ultrafast: true,
               s2s_model: 'gpt-realtime-1.5',
               start_speaker: 'user',
-              tool_call_strict_mode: true,
             },
           },
           custom_sip_headers: { 'X-Custom-Header': 'Custom Value' },

@@ -434,7 +434,6 @@ describe('resource call', () => {
           },
           model_temperature: 0.7,
           start_speaker: 'agent',
-          tool_call_strict_mode: true,
         },
         retell_llm: {
           backup_model: {
@@ -464,7 +463,6 @@ describe('resource call', () => {
           model_ultrafast: true,
           s2s_model: 'gpt-realtime-1.5',
           start_speaker: 'user',
-          tool_call_strict_mode: true,
         },
       },
       custom_sip_headers: { 'X-Custom-Header': 'Custom Value' },
@@ -694,7 +692,6 @@ describe('resource call', () => {
           },
           model_temperature: 0.7,
           start_speaker: 'agent',
-          tool_call_strict_mode: true,
         },
         retell_llm: {
           backup_model: {
@@ -724,7 +721,6 @@ describe('resource call', () => {
           model_ultrafast: true,
           s2s_model: 'gpt-realtime-1.5',
           start_speaker: 'user',
-          tool_call_strict_mode: true,
         },
       },
       agent_version: 'latest_published',
@@ -963,7 +959,6 @@ describe('resource call', () => {
           },
           model_temperature: 0.7,
           start_speaker: 'agent',
-          tool_call_strict_mode: true,
         },
         retell_llm: {
           backup_model: {
@@ -993,7 +988,6 @@ describe('resource call', () => {
           model_ultrafast: true,
           s2s_model: 'gpt-realtime-1.5',
           start_speaker: 'user',
-          tool_call_strict_mode: true,
         },
       },
       agent_version: 'latest_published',
