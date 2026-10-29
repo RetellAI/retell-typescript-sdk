@@ -111,6 +111,23 @@ export class KnowledgeBase extends APIResource {
       options,
     );
   }
+
+  /**
+   * Manually refresh a knowledge base
+   *
+   * @example
+   * ```ts
+   * await client.knowledgeBase.refresh(
+   *   'knowledge_base_1234567890',
+   * );
+   * ```
+   */
+  refresh(knowledgeBaseID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/refresh-knowledge-base/${knowledgeBaseID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
 }
 
 export interface KnowledgeBaseResponse {

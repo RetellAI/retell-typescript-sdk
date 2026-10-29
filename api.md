@@ -164,6 +164,7 @@ Methods:
 - <code title="delete /delete-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">delete</a>(knowledgeBaseID) -> void</code>
 - <code title="post /add-knowledge-base-sources/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">addSources</a>(knowledgeBaseID, { ...params }) -> KnowledgeBaseResponse</code>
 - <code title="delete /delete-knowledge-base-source/{knowledge_base_id}/source/{source_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">deleteSource</a>(sourceID, { ...params }) -> KnowledgeBaseResponse</code>
+- <code title="post /refresh-knowledge-base/{knowledge_base_id}">client.knowledgeBase.<a href="./src/resources/knowledge-base.ts">refresh</a>(knowledgeBaseID) -> void</code>
 
 # Voice
 

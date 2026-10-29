@@ -101,4 +101,16 @@ describe('resource knowledgeBase', () => {
       knowledge_base_id: 'kb_1234567890',
     });
   });
+
+  // Mock server tests are disabled
+  test.skip('refresh', async () => {
+    const responsePromise = client.knowledgeBase.refresh('knowledge_base_1234567890');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });
