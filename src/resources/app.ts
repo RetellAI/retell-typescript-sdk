@@ -84,6 +84,17 @@ export class App extends APIResource {
   }
 
   /**
+   * List the static catalog of available integration apps — provider, display name,
+   * description, and the tools each exposes. Not the organization's connected Apps.
+   */
+  listTemplates(
+    query: AppListTemplatesParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AppListTemplatesResponse> {
+    return this._client.get('/list-app-templates', { query, ...options });
+  }
+
+  /**
    * List the agents and knowledge bases referencing an App, most recently configured
    * first by default.
    */
@@ -346,6 +357,67 @@ export namespace AppGetToolSchemaResponse {
      * must exist in properties.
      */
     required?: Array<string>;
+  }
+}
+
+export interface AppListTemplatesResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more: boolean;
+
+  items: Array<AppListTemplatesResponse.Item>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export namespace AppListTemplatesResponse {
+  export interface Item {
+    description: string;
+
+    display_name: string;
+
+    /**
+     * Provider name. Must be valid for the App's type; the supported providers per
+     * type are listed by list-app-templates.
+     */
+    provider: string;
+
+    tools: Array<Item.Tool>;
+
+    /**
+     * App integration category.
+     */
+    type: 'crm' | 'calendar' | 'knowledge_base' | 'support' | 'communication';
+  }
+
+  export namespace Item {
+    export interface Tool {
+      /**
+       * Also the LLM-facing description when used as a mid-call tool.
+       */
+      description: string;
+
+      display_name: string;
+
+      /**
+       * Unique tool name within the provider.
+       */
+      name: string;
+
+      /**
+       * Privacy scope of an integration function.
+       */
+      privacy_scope: 'standard' | 'pci';
+
+      /**
+       * Per-invocation timeout for this tool, in milliseconds.
+       */
+      timeout_ms: number;
+    }
   }
 }
 
@@ -726,6 +798,24 @@ export namespace AppGetToolSchemaParams {
   }
 }
 
+export interface AppListTemplatesParams {
+  /**
+   * Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Only include functions with this scope and apps providing them. Omit to include
+   * all scopes.
+   */
+  privacy_scope?: 'standard' | 'pci';
+}
+
 export interface AppListUsagesParams {
   /**
    * Maximum number of items to return.
@@ -748,6 +838,7 @@ export declare namespace App {
     type AppResponse as AppResponse,
     type AppListResponse as AppListResponse,
     type AppGetToolSchemaResponse as AppGetToolSchemaResponse,
+    type AppListTemplatesResponse as AppListTemplatesResponse,
     type AppListUsagesResponse as AppListUsagesResponse,
     type AppTestAuthResponse as AppTestAuthResponse,
     type AppCreateParams as AppCreateParams,
@@ -755,6 +846,7 @@ export declare namespace App {
     type AppListParams as AppListParams,
     type AppDeleteParams as AppDeleteParams,
     type AppGetToolSchemaParams as AppGetToolSchemaParams,
+    type AppListTemplatesParams as AppListTemplatesParams,
     type AppListUsagesParams as AppListUsagesParams,
   };
 }

@@ -312,6 +312,7 @@ Types:
 - <code><a href="./src/resources/app.ts">AppResponse</a></code>
 - <code><a href="./src/resources/app.ts">AppListResponse</a></code>
 - <code><a href="./src/resources/app.ts">AppGetToolSchemaResponse</a></code>
+- <code><a href="./src/resources/app.ts">AppListTemplatesResponse</a></code>
 - <code><a href="./src/resources/app.ts">AppListUsagesResponse</a></code>
 - <code><a href="./src/resources/app.ts">AppTestAuthResponse</a></code>
 
@@ -323,6 +324,7 @@ Methods:
 - <code title="delete /delete-app/{app_id}">client.app.<a href="./src/resources/app.ts">delete</a>(appID, { ...params }) -> void</code>
 - <code title="get /get-app/{app_id}">client.app.<a href="./src/resources/app.ts">get</a>(appID) -> AppResponse</code>
 - <code title="post /get-app-tool-schema/{app_id}">client.app.<a href="./src/resources/app.ts">getToolSchema</a>(appID, { ...params }) -> AppGetToolSchemaResponse</code>
+- <code title="get /list-app-templates">client.app.<a href="./src/resources/app.ts">listTemplates</a>({ ...params }) -> AppListTemplatesResponse</code>
 - <code title="get /list-app-usages/{app_id}">client.app.<a href="./src/resources/app.ts">listUsages</a>(appID, { ...params }) -> AppListUsagesResponse</code>
 - <code title="post /test-app-auth/{app_id}">client.app.<a href="./src/resources/app.ts">testAuth</a>(appID) -> AppTestAuthResponse</code>
 

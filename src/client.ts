@@ -43,6 +43,8 @@ import {
   AppGetToolSchemaResponse,
   AppListParams,
   AppListResponse,
+  AppListTemplatesParams,
+  AppListTemplatesResponse,
   AppListUsagesParams,
   AppListUsagesResponse,
   AppResponse,
@@ -1171,6 +1173,7 @@ export declare namespace Retell {
     type AppResponse as AppResponse,
     type AppListResponse as AppListResponse,
     type AppGetToolSchemaResponse as AppGetToolSchemaResponse,
+    type AppListTemplatesResponse as AppListTemplatesResponse,
     type AppListUsagesResponse as AppListUsagesResponse,
     type AppTestAuthResponse as AppTestAuthResponse,
     type AppCreateParams as AppCreateParams,
@@ -1178,6 +1181,7 @@ export declare namespace Retell {
     type AppListParams as AppListParams,
     type AppDeleteParams as AppDeleteParams,
     type AppGetToolSchemaParams as AppGetToolSchemaParams,
+    type AppListTemplatesParams as AppListTemplatesParams,
     type AppListUsagesParams as AppListUsagesParams,
   };
 

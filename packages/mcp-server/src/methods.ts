@@ -653,6 +653,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-app-tool-schema/{app_id}',
   },
   {
+    clientCallName: 'client.app.listTemplates',
+    fullyQualifiedName: 'app.listTemplates',
+    httpMethod: 'get',
+    httpPath: '/list-app-templates',
+  },
+  {
     clientCallName: 'client.app.listUsages',
     fullyQualifiedName: 'app.listUsages',
     httpMethod: 'get',
