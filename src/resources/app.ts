@@ -10,10 +10,11 @@ export class App extends APIResource {
   /**
    * Create an App: the connection to one external system (a CRM, calendar, support
    * desk, and so on), holding its credentials and settings. Providers with
-   * caller-managed credentials accept auth_config. Providers using the OAuth
-   * callback must omit auth_config and be authorized through connect-app.
-   * Credentials are stored encrypted and never returned. Up to 20 apps per provider
-   * by default, unless a custom limit is configured for the organization.
+   * caller-managed credentials accept auth_config. Providers using OAuth must omit
+   * auth_config and be authorized through connect-app. Providers supporting both
+   * methods, such as Cal.com, also accept caller-managed API keys. Credentials are
+   * stored encrypted and never returned. Up to 20 apps per provider by default,
+   * unless a custom limit is configured for the organization.
    */
   create(body: AppCreateParams, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.post('/create-app', { body, ...options });
@@ -21,9 +22,10 @@ export class App extends APIResource {
 
   /**
    * Partially update an App. Omitted fields remain unchanged. Updating auth_config
-   * or tenant metadata invalidates the cached provider token immediately. Providers
-   * using the OAuth callback reject auth_config and must be reauthorized through
-   * connect-app.
+   * or tenant metadata invalidates the cached provider token immediately. OAuth-only
+   * providers reject auth_config and must be reauthorized through connect-app.
+   * Providers supporting caller-managed credentials as well, such as Cal.com,
+   * continue to accept those credentials.
    */
   update(appID: string, body: AppUpdateParams, options?: RequestOptions): APIPromise<AppResponse> {
     return this._client.patch(path`/update-app/${appID}`, { body, ...options });
