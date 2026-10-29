@@ -144,6 +144,33 @@ describe('resource app', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('listTemplates', async () => {
+    const responsePromise = client.app.listTemplates();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listTemplates: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.app.listTemplates(
+        {
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          privacy_scope: 'standard',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('listUsages', async () => {
     const responsePromise = client.app.listUsages('app_id');
     const rawResponse = await responsePromise.asResponse();

@@ -22,6 +22,7 @@ export {
   type AppResponse,
   type AppListResponse,
   type AppGetToolSchemaResponse,
+  type AppListTemplatesResponse,
   type AppListUsagesResponse,
   type AppTestAuthResponse,
   type AppCreateParams,
@@ -29,6 +30,7 @@ export {
   type AppListParams,
   type AppDeleteParams,
   type AppGetToolSchemaParams,
+  type AppListTemplatesParams,
   type AppListUsagesParams,
 } from './app';
 export { Asset, type AssetCreateResponse, type AssetCreateParams } from './asset';

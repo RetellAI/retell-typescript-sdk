@@ -214,6 +214,7 @@ const fuse = new Fuse(
     'client.app.get',
     'client.app.getToolSchema',
     'client.app.list',
+    'client.app.listTemplates',
     'client.app.listUsages',
     'client.app.testAuth',
     'client.app.update',
