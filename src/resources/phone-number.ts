@@ -170,6 +170,12 @@ export interface PhoneNumberResponse {
   inbound_agents?: Array<PhoneNumberResponse.InboundAgent> | null;
 
   /**
+   * Whether inbound fallback is enabled for this phone number. When enabled, inbound
+   * calls are transferred to the fallback number.
+   */
+  inbound_fallback_enabled?: boolean;
+
+  /**
    * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
    * agent will be picked randomly for each inbound SMS, with probability
    * proportional to the weight. Total weights must add up to 1.
@@ -533,6 +539,13 @@ export interface PhoneNumberUpdateParams {
    * proportional to the weight. Total weights must add up to 1.
    */
   inbound_agents?: Array<PhoneNumberUpdateParams.InboundAgent> | null;
+
+  /**
+   * Whether to enable inbound fallback for this phone number. When enabled, inbound
+   * calls are transferred to the fallback number. Requires fallback_number to be
+   * set.
+   */
+  inbound_fallback_enabled?: boolean;
 
   /**
    * Inbound SMS agents to bind to the number with weights. If set and non-empty, one
