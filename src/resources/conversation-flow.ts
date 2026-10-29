@@ -253,12 +253,6 @@ export interface ConversationFlowResponse {
   start_speaker?: 'user' | 'agent';
 
   /**
-   * Whether to use strict mode for tool calls. Only applicable when using certain
-   * supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
-
-  /**
    * Tools available in the conversation flow.
    */
   tools?: Array<ConversationFlowResponse.CustomTool | ConversationFlowResponse.AppTool> | null;
@@ -25085,12 +25079,6 @@ export interface ConversationFlowCreateParams {
    * ID of the start node in the conversation flow.
    */
   start_node_id?: string | null;
-
-  /**
-   * Whether to use strict mode for tool calls. Only applicable when using certain
-   * supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
 
   /**
    * Tools available in the conversation flow.
@@ -49921,12 +49909,6 @@ export interface ConversationFlowUpdateParams {
    * Body param: Who starts the conversation - user or agent.
    */
   start_speaker?: 'user' | 'agent';
-
-  /**
-   * Body param: Whether to use strict mode for tool calls. Only applicable when
-   * using certain supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
 
   /**
    * Body param: Tools available in the conversation flow.

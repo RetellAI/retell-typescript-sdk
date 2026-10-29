@@ -209,19 +209,17 @@ export namespace BatchCallCreateBatchCallParams {
       /**
        * Override conversation flow configuration settings. Only applicable when using
        * conversation flow as the response engine. Supported attributes - model_config,
-       * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-       * begin_after_user_silence_ms. A model_config override can set backup to null to
-       * remove it for this call.
+       * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms. A
+       * model_config override can set backup to null to remove it for this call.
        */
       conversation_flow?: AgentOverride.ConversationFlow;
 
       /**
        * Override Retell LLM configuration settings. Only applicable when using Retell
        * LLM as the response engine. Supported attributes - model_config,
-       * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-       * begin_after_user_silence_ms, begin_message. A model_config override can set
-       * backup to null to remove it for this call, but cannot switch a speech-to-speech
-       * LLM to a cascading model.
+       * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+       * begin_message. A model_config override can set backup to null to remove it for
+       * this call, but cannot switch a speech-to-speech LLM to a cascading model.
        */
       retell_llm?: AgentOverride.RetellLlm;
     }
@@ -2531,9 +2529,8 @@ export namespace BatchCallCreateBatchCallParams {
       /**
        * Override conversation flow configuration settings. Only applicable when using
        * conversation flow as the response engine. Supported attributes - model_config,
-       * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-       * begin_after_user_silence_ms. A model_config override can set backup to null to
-       * remove it for this call.
+       * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms. A
+       * model_config override can set backup to null to remove it for this call.
        */
       export interface ConversationFlow {
         /**
@@ -2586,12 +2583,6 @@ export namespace BatchCallCreateBatchCallParams {
          * Who starts the conversation - user or agent.
          */
         start_speaker?: 'user' | 'agent';
-
-        /**
-         * Whether to use strict mode for tool calls. Only applicable when using certain
-         * supported models.
-         */
-        tool_call_strict_mode?: boolean | null;
       }
 
       export namespace ConversationFlow {
@@ -2918,10 +2909,9 @@ export namespace BatchCallCreateBatchCallParams {
       /**
        * Override Retell LLM configuration settings. Only applicable when using Retell
        * LLM as the response engine. Supported attributes - model_config,
-       * tool_call_strict_mode, knowledge_base_ids, kb_config, start_speaker,
-       * begin_after_user_silence_ms, begin_message. A model_config override can set
-       * backup to null to remove it for this call, but cannot switch a speech-to-speech
-       * LLM to a cascading model.
+       * knowledge_base_ids, kb_config, start_speaker, begin_after_user_silence_ms,
+       * begin_message. A model_config override can set backup to null to remove it for
+       * this call, but cannot switch a speech-to-speech LLM to a cascading model.
        */
       export interface RetellLlm {
         /**
@@ -3040,12 +3030,6 @@ export namespace BatchCallCreateBatchCallParams {
          * 'agent'.
          */
         start_speaker?: 'user' | 'agent';
-
-        /**
-         * Whether to use strict mode for tool calls. Only applicable when using certain
-         * supported models.
-         */
-        tool_call_strict_mode?: boolean | null;
       }
 
       export namespace RetellLlm {

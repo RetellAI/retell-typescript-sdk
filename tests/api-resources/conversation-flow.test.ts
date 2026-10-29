@@ -278,7 +278,6 @@ describe('resource conversationFlow', () => {
         },
       ],
       start_node_id: 'start',
-      tool_call_strict_mode: true,
       tools: [
         {
           name: 'get_customer_info',

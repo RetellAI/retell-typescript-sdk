@@ -288,12 +288,6 @@ export interface LlmResponse {
   states?: Array<LlmResponse.State> | null;
 
   /**
-   * Whether to use strict mode for tool calls. Only applicable when using certain
-   * supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
-
-  /**
    * Version of the Retell LLM Response Engine.
    */
   version?: number;
@@ -3540,12 +3534,6 @@ export interface LlmCreateParams {
    * prompt and general tools (essentially one state).
    */
   states?: Array<LlmCreateParams.State> | null;
-
-  /**
-   * Whether to use strict mode for tool calls. Only applicable when using certain
-   * supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
 }
 
 export namespace LlmCreateParams {
@@ -6790,12 +6778,6 @@ export interface LlmUpdateParams {
    * general prompt and general tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
-
-  /**
-   * Body param: Whether to use strict mode for tool calls. Only applicable when
-   * using certain supported models.
-   */
-  tool_call_strict_mode?: boolean | null;
 }
 
 export namespace LlmUpdateParams {
