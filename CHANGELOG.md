@@ -1,5 +1,25 @@
 # Changelog
 
+## [6.2.15](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.14...v6.2.15) (2026-10-30)
+
+
+### Bug Fixes
+
+* **api:** Add a knowledge base refresh method for POST /refresh-knowledge-base/{knowledge_base_id}. ([f352928](https://github.com/RetellAI/retell-typescript-sdk/commit/f352928f4e47a2838bdae0958504b5bb3b66a1d4))
+* **api:** Add drama-3 as a selectable voice model option. ([15ffd1a](https://github.com/RetellAI/retell-typescript-sdk/commit/15ffd1aaee462cc9360abaff96008ce30a393bc6))
+* **api:** Add duplex as a response engine model type with a gpt-live-1 primary model, a text LLM backend, optional backup, and voice_prompt up to 15,000 tokens. ([74583c9](https://github.com/RetellAI/retell-typescript-sdk/commit/74583c92e7ed2b7598a79d7d835a387996ace148))
+* **api:** Add list-templates to the app resource, calling get /list-app-templates to list the catalog of available integration app templates. ([a64c93d](https://github.com/RetellAI/retell-typescript-sdk/commit/a64c93d429f16bf75f64e1ff309ba97b4f101556))
+* **api:** Add on_hold_music to cold transfer options, with custom_on_hold_music_asset_id required when on_hold_music is custom. ([22ea1e0](https://github.com/RetellAI/retell-typescript-sdk/commit/22ea1e0ea9e7d0ec4119018529dee28548c5357b))
+* **api:** Add the optional inbound_fallback_enabled boolean to phone number objects and phone number update requests. ([a0e9bb9](https://github.com/RetellAI/retell-typescript-sdk/commit/a0e9bb9788f39dbba3ab140b5ee830665207d189))
+* **api:** Add the optional privacy scope, limit, and pagination key query parameters to the list-app-templates request. ([a64c93d](https://github.com/RetellAI/retell-typescript-sdk/commit/a64c93d429f16bf75f64e1ff309ba97b4f101556))
+* **api:** Clarify createApp docs that providers supporting both OAuth and caller-managed credentials, such as Cal.com, also accept API keys. ([30b350d](https://github.com/RetellAI/retell-typescript-sdk/commit/30b350da8f70da73bd18d0613bd153642495b81f))
+* **api:** Clarify updateApp docs that OAuth-only providers reject auth_config, while providers like Cal.com still accept caller-managed credentials. ([30b350d](https://github.com/RetellAI/retell-typescript-sdk/commit/30b350da8f70da73bd18d0613bd153642495b81f))
+* **api:** Duplex is for Retell LLMs only and requires backend and voice_prompt. ([74583c9](https://github.com/RetellAI/retell-typescript-sdk/commit/74583c92e7ed2b7598a79d7d835a387996ace148))
+* **api:** In duplex, tools' speak_during_execution is ignored and speak_after_execution is always on. ([74583c9](https://github.com/RetellAI/retell-typescript-sdk/commit/74583c92e7ed2b7598a79d7d835a387996ace148))
+* **api:** Remove tool_call_strict_mode from Retell LLM and conversation flow settings, including call-level overrides. ([2a86fa0](https://github.com/RetellAI/retell-typescript-sdk/commit/2a86fa08727835978d4d23fb13b96a3a6a978186))
+* **api:** Return a knowledge base source-addition quota error for 429 responses from knowledge base creation and source addition. ([f352928](https://github.com/RetellAI/retell-typescript-sdk/commit/f352928f4e47a2838bdae0958504b5bb3b66a1d4))
+* **api:** Update requests with inbound_fallback_enabled true require fallback_number to be set. ([a0e9bb9](https://github.com/RetellAI/retell-typescript-sdk/commit/a0e9bb9788f39dbba3ab140b5ee830665207d189))
+
 ## [6.2.14](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.13...v6.2.14) (2026-10-27)
 
 
