@@ -2324,6 +2324,20 @@ export namespace ConversationFlowComponentResponse {
         cold_transfer_mode?: 'sip_refer' | 'sip_invite';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
+         * The music to play while the caller is being transferred. If omitted, preserves
+         * the existing transfer audio behavior. Use `custom` together with
+         * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring. Requires the telephony side to support caller id override. Retell
          * Twilio numbers support this option. This parameter takes effect only when
@@ -5611,6 +5625,20 @@ export namespace ConversationFlowComponentResponse {
        * call.
        */
       cold_transfer_mode?: 'sip_refer' | 'sip_invite';
+
+      /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
+       * The music to play while the caller is being transferred. If omitted, preserves
+       * the existing transfer audio behavior. Use `custom` together with
+       * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -14550,6 +14578,20 @@ export namespace ConversationFlowComponentCreateParams {
         cold_transfer_mode?: 'sip_refer' | 'sip_invite';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
+         * The music to play while the caller is being transferred. If omitted, preserves
+         * the existing transfer audio behavior. Use `custom` together with
+         * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring. Requires the telephony side to support caller id override. Retell
          * Twilio numbers support this option. This parameter takes effect only when
@@ -17837,6 +17879,20 @@ export namespace ConversationFlowComponentCreateParams {
        * call.
        */
       cold_transfer_mode?: 'sip_refer' | 'sip_invite';
+
+      /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
+       * The music to play while the caller is being transferred. If omitted, preserves
+       * the existing transfer audio behavior. Use `custom` together with
+       * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
@@ -26796,6 +26852,20 @@ export namespace ConversationFlowComponentUpdateParams {
         cold_transfer_mode?: 'sip_refer' | 'sip_invite';
 
         /**
+         * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+         * `custom`. Must reference an audio asset owned by the organization (see
+         * create-asset).
+         */
+        custom_on_hold_music_asset_id?: string;
+
+        /**
+         * The music to play while the caller is being transferred. If omitted, preserves
+         * the existing transfer audio behavior. Use `custom` together with
+         * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+         */
+        on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
+
+        /**
          * If set to true, will show transferee (the user, not the AI agent) as caller when
          * transferring. Requires the telephony side to support caller id override. Retell
          * Twilio numbers support this option. This parameter takes effect only when
@@ -30083,6 +30153,20 @@ export namespace ConversationFlowComponentUpdateParams {
        * call.
        */
       cold_transfer_mode?: 'sip_refer' | 'sip_invite';
+
+      /**
+       * Asset ID of the uploaded hold music to play. Required when `on_hold_music` is
+       * `custom`. Must reference an audio asset owned by the organization (see
+       * create-asset).
+       */
+      custom_on_hold_music_asset_id?: string;
+
+      /**
+       * The music to play while the caller is being transferred. If omitted, preserves
+       * the existing transfer audio behavior. Use `custom` together with
+       * `custom_on_hold_music_asset_id` to play an uploaded audio asset.
+       */
+      on_hold_music?: 'none' | 'relaxing_sound' | 'uplifting_beats' | 'ringtone' | 'custom';
 
       /**
        * If set to true, will show transferee (the user, not the AI agent) as caller when
