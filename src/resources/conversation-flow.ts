@@ -208,7 +208,10 @@ export interface ConversationFlowResponse {
    * type is required whenever primary is set; setting backup to null disables it for
    * that call only.
    */
-  model_config?: ConversationFlowResponse.CascadingModelConfig | ConversationFlowResponse.S2SModelConfig;
+  model_config?:
+    | ConversationFlowResponse.CascadingModelConfig
+    | ConversationFlowResponse.S2SModelConfig
+    | ConversationFlowResponse.DuplexModelConfig;
 
   /**
    * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
@@ -12853,6 +12856,159 @@ export namespace ConversationFlowResponse {
     }
   }
 
+  /**
+   * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
+   * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
+   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
+   * since the voice model covers the wait itself, and speak_after_execution is
+   * always on.
+   */
+  export interface DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    backend?: DuplexModelConfig.Backend;
+
+    /**
+     * A backup for the backend model.
+     */
+    backup?: DuplexModelConfig.BackupModelRef | unknown;
+
+    primary?: DuplexModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a full-duplex voice model with a cascading backend.
+     */
+    type?: 'duplex';
+
+    /**
+     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
+     * backend's prompt.
+     */
+    voice_prompt?: string;
+  }
+
+  export namespace DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    export interface Backend {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      model: 'gpt-live-1';
+    }
+  }
+
   export interface ConversationNode {
     /**
      * Unique identifier for the node
@@ -25118,7 +25274,8 @@ export interface ConversationFlowCreateParams {
    */
   model_config?:
     | ConversationFlowCreateParams.CascadingModelConfig
-    | ConversationFlowCreateParams.S2SModelConfig;
+    | ConversationFlowCreateParams.S2SModelConfig
+    | ConversationFlowCreateParams.DuplexModelConfig;
 
   /**
    * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
@@ -49500,6 +49657,159 @@ export namespace ConversationFlowCreateParams {
     }
   }
 
+  /**
+   * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
+   * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
+   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
+   * since the voice model covers the wait itself, and speak_after_execution is
+   * always on.
+   */
+  export interface DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    backend?: DuplexModelConfig.Backend;
+
+    /**
+     * A backup for the backend model.
+     */
+    backup?: DuplexModelConfig.BackupModelRef | unknown;
+
+    primary?: DuplexModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a full-duplex voice model with a cascading backend.
+     */
+    type?: 'duplex';
+
+    /**
+     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
+     * backend's prompt.
+     */
+    voice_prompt?: string;
+  }
+
+  export namespace DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    export interface Backend {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      model: 'gpt-live-1';
+    }
+  }
+
   export interface Note {
     /**
      * Unique identifier for the note.
@@ -49978,7 +50288,8 @@ export interface ConversationFlowUpdateParams {
    */
   model_config?:
     | ConversationFlowUpdateParams.CascadingModelConfig
-    | ConversationFlowUpdateParams.S2SModelConfig;
+    | ConversationFlowUpdateParams.S2SModelConfig
+    | ConversationFlowUpdateParams.DuplexModelConfig;
 
   /**
    * @deprecated Body param: Deprecated, use model_config.temperature. Ignored when
@@ -62620,6 +62931,159 @@ export namespace ConversationFlowUpdateParams {
         | 'gpt-realtime'
         | 'gpt-realtime-mini'
         | 'grok-voice-3.0';
+    }
+  }
+
+  /**
+   * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
+   * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
+   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
+   * since the voice model covers the wait itself, and speak_after_execution is
+   * always on.
+   */
+  export interface DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    backend?: DuplexModelConfig.Backend;
+
+    /**
+     * A backup for the backend model.
+     */
+    backup?: DuplexModelConfig.BackupModelRef | unknown;
+
+    primary?: DuplexModelConfig.Primary;
+
+    /**
+     * Randomness of the response, from 0 to 1. Defaults to 0; a lower value is
+     * recommended for tool calling.
+     */
+    temperature?: number;
+
+    /**
+     * Runs a full-duplex voice model with a cascading backend.
+     */
+    type?: 'duplex';
+
+    /**
+     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
+     * backend's prompt.
+     */
+    voice_prompt?: string;
+  }
+
+  export namespace DuplexModelConfig {
+    /**
+     * The text LLM that answers the voice model's delegations.
+     */
+    export interface Backend {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    /**
+     * Backup models are supported only for call agents. Response engines with a backup
+     * model cannot be used by chat agents.
+     */
+    export interface BackupModelRef {
+      /**
+       * Available LLM models for agents.
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * How long to prefer the primary model's output while both models run, in
+       * milliseconds. Defaults to 1500.
+       */
+      kick_in_timeout_ms?: number;
+
+      /**
+       * Capacity tier for a model. standard is always available. fast draws from
+       * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+       * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+       * and a tier the model does not offer is rejected.
+       */
+      tier?: 'standard' | 'fast' | 'ultrafast';
+    }
+
+    export interface Primary {
+      model: 'gpt-live-1';
     }
   }
 
