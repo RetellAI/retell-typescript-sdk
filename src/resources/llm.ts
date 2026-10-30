@@ -294,6 +294,13 @@ export interface LlmResponse {
    * Version of the Retell LLM Response Engine.
    */
   version?: number;
+
+  /**
+   * Prompt for the voice model when model_config.type is duplex, at most 15,000
+   * tokens. Required for duplex, where general_prompt is the backend's prompt. Kept
+   * when you switch models.
+   */
+  voice_prompt?: string | null;
 }
 
 export namespace LlmResponse {
@@ -1917,9 +1924,9 @@ export namespace LlmResponse {
   /**
    * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
    * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-   * since the voice model covers the wait itself, and speak_after_execution is
-   * always on.
+   * Requires backend, and the Retell LLM's voice_prompt. Tools'
+   * speak_during_execution is ignored, since the voice model covers the wait itself,
+   * and speak_after_execution is always on.
    */
   export interface DuplexModelConfig {
     /**
@@ -1944,12 +1951,6 @@ export namespace LlmResponse {
      * Runs a full-duplex voice model with a cascading backend.
      */
     type?: 'duplex';
-
-    /**
-     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-     * backend's prompt.
-     */
-    voice_prompt?: string;
   }
 
   export namespace DuplexModelConfig {
@@ -3721,6 +3722,13 @@ export interface LlmCreateParams {
    * prompt and general tools (essentially one state).
    */
   states?: Array<LlmCreateParams.State> | null;
+
+  /**
+   * Prompt for the voice model when model_config.type is duplex, at most 15,000
+   * tokens. Required for duplex, where general_prompt is the backend's prompt. Kept
+   * when you switch models.
+   */
+  voice_prompt?: string | null;
 }
 
 export namespace LlmCreateParams {
@@ -5344,9 +5352,9 @@ export namespace LlmCreateParams {
   /**
    * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
    * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-   * since the voice model covers the wait itself, and speak_after_execution is
-   * always on.
+   * Requires backend, and the Retell LLM's voice_prompt. Tools'
+   * speak_during_execution is ignored, since the voice model covers the wait itself,
+   * and speak_after_execution is always on.
    */
   export interface DuplexModelConfig {
     /**
@@ -5371,12 +5379,6 @@ export namespace LlmCreateParams {
      * Runs a full-duplex voice model with a cascading backend.
      */
     type?: 'duplex';
-
-    /**
-     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-     * backend's prompt.
-     */
-    voice_prompt?: string;
   }
 
   export namespace DuplexModelConfig {
@@ -7149,6 +7151,13 @@ export interface LlmUpdateParams {
    * general prompt and general tools (essentially one state).
    */
   states?: Array<LlmUpdateParams.State> | null;
+
+  /**
+   * Body param: Prompt for the voice model when model_config.type is duplex, at most
+   * 15,000 tokens. Required for duplex, where general_prompt is the backend's
+   * prompt. Kept when you switch models.
+   */
+  voice_prompt?: string | null;
 }
 
 export namespace LlmUpdateParams {
@@ -8772,9 +8781,9 @@ export namespace LlmUpdateParams {
   /**
    * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
    * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-   * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-   * since the voice model covers the wait itself, and speak_after_execution is
-   * always on.
+   * Requires backend, and the Retell LLM's voice_prompt. Tools'
+   * speak_during_execution is ignored, since the voice model covers the wait itself,
+   * and speak_after_execution is always on.
    */
   export interface DuplexModelConfig {
     /**
@@ -8799,12 +8808,6 @@ export namespace LlmUpdateParams {
      * Runs a full-duplex voice model with a cascading backend.
      */
     type?: 'duplex';
-
-    /**
-     * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-     * backend's prompt.
-     */
-    voice_prompt?: string;
   }
 
   export namespace DuplexModelConfig {

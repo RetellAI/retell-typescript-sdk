@@ -11556,9 +11556,9 @@ export namespace CallCreatePhoneCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -11583,12 +11583,6 @@ export namespace CallCreatePhoneCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
@@ -12080,9 +12074,9 @@ export namespace CallCreatePhoneCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -12107,12 +12101,6 @@ export namespace CallCreatePhoneCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
@@ -15002,9 +14990,9 @@ export namespace CallCreateWebCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -15029,12 +15017,6 @@ export namespace CallCreateWebCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
@@ -15526,9 +15508,9 @@ export namespace CallCreateWebCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -15553,12 +15535,6 @@ export namespace CallCreateWebCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
@@ -18448,9 +18424,9 @@ export namespace CallRegisterPhoneCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -18475,12 +18451,6 @@ export namespace CallRegisterPhoneCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
@@ -18972,9 +18942,9 @@ export namespace CallRegisterPhoneCallParams {
       /**
        * Retell LLMs only. A full-duplex voice model talks to the user and delegates to a
        * cascading backend model, which runs the LLM's prompt, tools and knowledge base.
-       * Requires backend and voice_prompt. Tools' speak_during_execution is ignored,
-       * since the voice model covers the wait itself, and speak_after_execution is
-       * always on.
+       * Requires backend, and the Retell LLM's voice_prompt. Tools'
+       * speak_during_execution is ignored, since the voice model covers the wait itself,
+       * and speak_after_execution is always on.
        */
       export interface DuplexModelConfig {
         /**
@@ -18999,12 +18969,6 @@ export namespace CallRegisterPhoneCallParams {
          * Runs a full-duplex voice model with a cascading backend.
          */
         type?: 'duplex';
-
-        /**
-         * The voice model's prompt, at most 15,000 tokens. The LLM's general_prompt is the
-         * backend's prompt.
-         */
-        voice_prompt?: string;
       }
 
       export namespace DuplexModelConfig {
