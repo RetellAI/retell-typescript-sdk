@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.2.16](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.15...v6.2.16) (2026-10-31)
+
+
+### Bug Fixes
+
+* **api:** Add voice_prompt to Retell LLM settings, required when model_config type is duplex. ([3cf0c84](https://github.com/RetellAI/retell-typescript-sdk/commit/3cf0c845c1ca85ac01ee423b4729c7601426c7ab))
+* **api:** Remove voice_prompt from duplex model_config settings. ([3cf0c84](https://github.com/RetellAI/retell-typescript-sdk/commit/3cf0c845c1ca85ac01ee423b4729c7601426c7ab))
+
 ## [6.2.15](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.14...v6.2.15) (2026-10-30)
 
 
