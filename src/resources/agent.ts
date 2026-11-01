@@ -981,8 +981,9 @@ export namespace AgentResponse {
     enable_read?: boolean;
 
     /**
-     * Rewrite the contact memory after each conversation. Requires storing
-     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     * Rewrite the contact memory after each conversation. Cannot be enabled for
+     * payment agents. Requires storing conversation data. Chat agents must also have
+     * end_chat_after_silence_ms set.
      */
     enable_update?: boolean;
   }
@@ -3398,8 +3399,9 @@ export namespace AgentCreateParams {
     enable_read?: boolean;
 
     /**
-     * Rewrite the contact memory after each conversation. Requires storing
-     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     * Rewrite the contact memory after each conversation. Cannot be enabled for
+     * payment agents. Requires storing conversation data. Chat agents must also have
+     * end_chat_after_silence_ms set.
      */
     enable_update?: boolean;
   }
@@ -5674,8 +5676,9 @@ export namespace AgentUpdateParams {
     enable_read?: boolean;
 
     /**
-     * Rewrite the contact memory after each conversation. Requires storing
-     * conversation data. Chat agents must also have end_chat_after_silence_ms set.
+     * Rewrite the contact memory after each conversation. Cannot be enabled for
+     * payment agents. Requires storing conversation data. Chat agents must also have
+     * end_chat_after_silence_ms set.
      */
     enable_update?: boolean;
   }
