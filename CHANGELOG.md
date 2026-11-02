@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.17](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.16...v6.2.17) (2026-11-02)
+
+
+### Bug Fixes
+
+* **api:** Add TextUtterance with required role and content fields, separate from utterances that include word timestamps. ([7d6bb30](https://github.com/RetellAI/retell-typescript-sdk/commit/7d6bb3055ba14542f44a8ede9555ac071ae4fb6a))
+
 ## [6.2.16](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.15...v6.2.16) (2026-10-31)
 
 
