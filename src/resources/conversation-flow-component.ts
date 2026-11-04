@@ -3429,9 +3429,10 @@ export namespace ConversationFlowComponentResponse {
       execution_status_variable?: string;
 
       /**
-       * What the agent and the transcript see of the tool's response. Omit to send the
-       * full response. Does not affect response_variables, which are always extracted
-       * from the raw response.
+       * Which fields of a successful JSON tool response the agent and the transcript
+       * see. Omit to keep all fields. Does not affect response_variables, which are
+       * always extracted from the raw response. Non-JSON responses and failed tool
+       * results are not filtered. Response size limits still apply.
        */
       output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -3481,11 +3482,11 @@ export namespace ConversationFlowComponentResponse {
       export interface UnionMember1 {
         /**
          * The only response fields the agent and the transcript see, as dot-paths into the
-         * response schema returned by get-app-tool-schema. Everything else is dropped.
-         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-         * element-wise (deals.properties.amount keeps that field on every deal), while
-         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-         * that match nothing contribute nothing.
+         * response (for app tools, the response schema returned by get-app-tool-schema).
+         * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+         * segment traverses arrays element-wise (deals.properties.amount keeps that field
+         * on every deal), while key[n] selects one element (deals[0].id keeps only the
+         * first deal's id); paths that match nothing contribute nothing.
          */
         fields: Array<string>;
 
@@ -12263,9 +12264,10 @@ export namespace ConversationFlowComponentResponse {
     execution_status_variable?: string;
 
     /**
-     * What the agent and the transcript see of the tool's response. Omit to send the
-     * full response. Does not affect response_variables, which are always extracted
-     * from the raw response.
+     * Which fields of a successful JSON tool response the agent and the transcript
+     * see. Omit to keep all fields. Does not affect response_variables, which are
+     * always extracted from the raw response. Non-JSON responses and failed tool
+     * results are not filtered. Response size limits still apply.
      */
     output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -12320,11 +12322,11 @@ export namespace ConversationFlowComponentResponse {
     export interface UnionMember1 {
       /**
        * The only response fields the agent and the transcript see, as dot-paths into the
-       * response schema returned by get-app-tool-schema. Everything else is dropped.
-       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-       * element-wise (deals.properties.amount keeps that field on every deal), while
-       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-       * that match nothing contribute nothing.
+       * response (for app tools, the response schema returned by get-app-tool-schema).
+       * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+       * segment traverses arrays element-wise (deals.properties.amount keeps that field
+       * on every deal), while key[n] selects one element (deals[0].id keeps only the
+       * first deal's id); paths that match nothing contribute nothing.
        */
       fields: Array<string>;
 
@@ -15683,9 +15685,10 @@ export namespace ConversationFlowComponentCreateParams {
       execution_status_variable?: string;
 
       /**
-       * What the agent and the transcript see of the tool's response. Omit to send the
-       * full response. Does not affect response_variables, which are always extracted
-       * from the raw response.
+       * Which fields of a successful JSON tool response the agent and the transcript
+       * see. Omit to keep all fields. Does not affect response_variables, which are
+       * always extracted from the raw response. Non-JSON responses and failed tool
+       * results are not filtered. Response size limits still apply.
        */
       output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -15735,11 +15738,11 @@ export namespace ConversationFlowComponentCreateParams {
       export interface UnionMember1 {
         /**
          * The only response fields the agent and the transcript see, as dot-paths into the
-         * response schema returned by get-app-tool-schema. Everything else is dropped.
-         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-         * element-wise (deals.properties.amount keeps that field on every deal), while
-         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-         * that match nothing contribute nothing.
+         * response (for app tools, the response schema returned by get-app-tool-schema).
+         * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+         * segment traverses arrays element-wise (deals.properties.amount keeps that field
+         * on every deal), while key[n] selects one element (deals[0].id keeps only the
+         * first deal's id); paths that match nothing contribute nothing.
          */
         fields: Array<string>;
 
@@ -24517,9 +24520,10 @@ export namespace ConversationFlowComponentCreateParams {
     execution_status_variable?: string;
 
     /**
-     * What the agent and the transcript see of the tool's response. Omit to send the
-     * full response. Does not affect response_variables, which are always extracted
-     * from the raw response.
+     * Which fields of a successful JSON tool response the agent and the transcript
+     * see. Omit to keep all fields. Does not affect response_variables, which are
+     * always extracted from the raw response. Non-JSON responses and failed tool
+     * results are not filtered. Response size limits still apply.
      */
     output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -24574,11 +24578,11 @@ export namespace ConversationFlowComponentCreateParams {
     export interface UnionMember1 {
       /**
        * The only response fields the agent and the transcript see, as dot-paths into the
-       * response schema returned by get-app-tool-schema. Everything else is dropped.
-       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-       * element-wise (deals.properties.amount keeps that field on every deal), while
-       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-       * that match nothing contribute nothing.
+       * response (for app tools, the response schema returned by get-app-tool-schema).
+       * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+       * segment traverses arrays element-wise (deals.properties.amount keeps that field
+       * on every deal), while key[n] selects one element (deals[0].id keeps only the
+       * first deal's id); paths that match nothing contribute nothing.
        */
       fields: Array<string>;
 
@@ -27957,9 +27961,10 @@ export namespace ConversationFlowComponentUpdateParams {
       execution_status_variable?: string;
 
       /**
-       * What the agent and the transcript see of the tool's response. Omit to send the
-       * full response. Does not affect response_variables, which are always extracted
-       * from the raw response.
+       * Which fields of a successful JSON tool response the agent and the transcript
+       * see. Omit to keep all fields. Does not affect response_variables, which are
+       * always extracted from the raw response. Non-JSON responses and failed tool
+       * results are not filtered. Response size limits still apply.
        */
       output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -28009,11 +28014,11 @@ export namespace ConversationFlowComponentUpdateParams {
       export interface UnionMember1 {
         /**
          * The only response fields the agent and the transcript see, as dot-paths into the
-         * response schema returned by get-app-tool-schema. Everything else is dropped.
-         * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-         * element-wise (deals.properties.amount keeps that field on every deal), while
-         * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-         * that match nothing contribute nothing.
+         * response (for app tools, the response schema returned by get-app-tool-schema).
+         * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+         * segment traverses arrays element-wise (deals.properties.amount keeps that field
+         * on every deal), while key[n] selects one element (deals[0].id keeps only the
+         * first deal's id); paths that match nothing contribute nothing.
          */
         fields: Array<string>;
 
@@ -36757,9 +36762,10 @@ export namespace ConversationFlowComponentUpdateParams {
     execution_status_variable?: string;
 
     /**
-     * What the agent and the transcript see of the tool's response. Omit to send the
-     * full response. Does not affect response_variables, which are always extracted
-     * from the raw response.
+     * Which fields of a successful JSON tool response the agent and the transcript
+     * see. Omit to keep all fields. Does not affect response_variables, which are
+     * always extracted from the raw response. Non-JSON responses and failed tool
+     * results are not filtered. Response size limits still apply.
      */
     output_selection?: AppTool.UnionMember0 | AppTool.UnionMember1;
 
@@ -36814,11 +36820,11 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface UnionMember1 {
       /**
        * The only response fields the agent and the transcript see, as dot-paths into the
-       * response schema returned by get-app-tool-schema. Everything else is dropped.
-       * Selecting a parent keeps its whole subtree. A plain segment traverses arrays
-       * element-wise (deals.properties.amount keeps that field on every deal), while
-       * key[n] selects one element (deals[0].id keeps only the first deal's id); paths
-       * that match nothing contribute nothing.
+       * response (for app tools, the response schema returned by get-app-tool-schema).
+       * Everything else is dropped. Selecting a parent keeps its whole subtree. A plain
+       * segment traverses arrays element-wise (deals.properties.amount keeps that field
+       * on every deal), while key[n] selects one element (deals[0].id keeps only the
+       * first deal's id); paths that match nothing contribute nothing.
        */
       fields: Array<string>;
 
