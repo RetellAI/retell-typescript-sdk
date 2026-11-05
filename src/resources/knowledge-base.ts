@@ -132,6 +132,12 @@ export class KnowledgeBase extends APIResource {
 
 export interface KnowledgeBaseResponse {
   /**
+   * Effective rolling 30-day ingestion limits. Each KB has an independent budget.
+   * Lifetime fill allowance and structural source-count caps are separate.
+   */
+  ingestion_limits: KnowledgeBaseResponse.IngestionLimits;
+
+  /**
    * Unique id of the knowledge base.
    */
   knowledge_base_id: string;
@@ -140,6 +146,22 @@ export interface KnowledgeBaseResponse {
    * Name of the knowledge base. Must be less than 40 characters.
    */
   knowledge_base_name: string;
+
+  /**
+   * Ingestion quota available to this knowledge base at response time. Includes
+   * unused lifetime fill allowance plus remaining rolling 30-day per-KB capacity.
+   * Pending reservations already consume capacity. Default per-KB rolling limits are
+   * 25 files, 50 texts, and 200 URLs; organization-specific increases are reflected
+   * in these counts. Legacy knowledge bases without fill allowance receive rolling
+   * capacity only. Deleting sources does not restore ingestion quota. These counts
+   * do not include the separate limits on how many sources a KB can hold, and do not
+   * guarantee a concurrent request will succeed. Create and add-source responses
+   * include reservations for accepted sources; background discovery and processing
+   * may change the counts. Returns null if current usage cannot be read. Null means
+   * unavailable, not zero remaining capacity. Configured ingestion_limits are still
+   * returned. Quota enforcement remains required for ingestion requests.
+   */
+  remaining_ingestion_quota: KnowledgeBaseResponse.RemainingIngestionQuota | null;
 
   /**
    * Current processing state of the knowledge base:
@@ -192,6 +214,58 @@ export interface KnowledgeBaseResponse {
 }
 
 export namespace KnowledgeBaseResponse {
+  /**
+   * Effective rolling 30-day ingestion limits. Each KB has an independent budget.
+   * Lifetime fill allowance and structural source-count caps are separate.
+   */
+  export interface IngestionLimits {
+    /**
+     * Shared limit for uploaded documents and all connected-file sources.
+     */
+    files: number;
+
+    /**
+     * Limit for pasted-text sources.
+     */
+    texts: number;
+
+    /**
+     * Limit for URL sources.
+     */
+    urls: number;
+  }
+
+  /**
+   * Ingestion quota available to this knowledge base at response time. Includes
+   * unused lifetime fill allowance plus remaining rolling 30-day per-KB capacity.
+   * Pending reservations already consume capacity. Default per-KB rolling limits are
+   * 25 files, 50 texts, and 200 URLs; organization-specific increases are reflected
+   * in these counts. Legacy knowledge bases without fill allowance receive rolling
+   * capacity only. Deleting sources does not restore ingestion quota. These counts
+   * do not include the separate limits on how many sources a KB can hold, and do not
+   * guarantee a concurrent request will succeed. Create and add-source responses
+   * include reservations for accepted sources; background discovery and processing
+   * may change the counts. Returns null if current usage cannot be read. Null means
+   * unavailable, not zero remaining capacity. Configured ingestion_limits are still
+   * returned. Quota enforcement remains required for ingestion requests.
+   */
+  export interface RemainingIngestionQuota {
+    /**
+     * Remaining additions in the shared uploaded-file and connector bucket.
+     */
+    files: number;
+
+    /**
+     * Remaining pasted-text additions.
+     */
+    texts: number;
+
+    /**
+     * Remaining URL additions.
+     */
+    urls: number;
+  }
+
   export interface KnowledgeBaseSourceDocument {
     /**
      * File size in bytes.
