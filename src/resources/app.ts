@@ -39,8 +39,9 @@ export class App extends APIResource {
   }
 
   /**
-   * Delete an App. Fails when agents or knowledge bases still reference it, unless
-   * force_delete is set. If a CRM config is linked to this App, the link is cleared.
+   * Delete an App. Fails when agents, knowledge bases, or alert rules still
+   * reference it, unless force_delete is set. If a CRM config is linked to this App,
+   * the link is cleared.
    */
   delete(
     appID: string,
@@ -95,8 +96,8 @@ export class App extends APIResource {
   }
 
   /**
-   * List the agents and knowledge bases referencing an App, most recently configured
-   * first by default.
+   * List the agents, knowledge bases, and alert rules referencing an App, most
+   * recently configured first by default.
    */
   listUsages(
     appID: string,
@@ -427,7 +428,11 @@ export interface AppListUsagesResponse {
    */
   has_more: boolean;
 
-  items: Array<AppListUsagesResponse.AgentAppUsage | AppListUsagesResponse.KnowledgeBaseAppUsage>;
+  items: Array<
+    | AppListUsagesResponse.AgentAppUsage
+    | AppListUsagesResponse.KnowledgeBaseAppUsage
+    | AppListUsagesResponse.AlertRuleAppUsage
+  >;
 
   /**
    * Pagination key for the next page.
@@ -471,6 +476,22 @@ export namespace AppListUsagesResponse {
      * Current knowledge base name; omitted if it was deleted.
      */
     knowledge_base_name?: string;
+  }
+
+  export interface AlertRuleAppUsage {
+    alert_rule_id: string;
+
+    /**
+     * When this reference was last recorded, in milliseconds.
+     */
+    configured_timestamp: number;
+
+    type: 'alert_rule';
+
+    /**
+     * Current alert rule name; omitted if it was deleted.
+     */
+    alert_rule_name?: string;
   }
 }
 

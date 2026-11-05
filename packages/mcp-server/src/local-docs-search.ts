@@ -3676,12 +3676,12 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'delete',
     summary: '',
     description:
-      'Delete an App. Fails when agents or knowledge bases still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.',
+      'Delete an App. Fails when agents, knowledge bases, or alert rules still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.',
     stainlessPath: '(resource) app > (method) delete',
     qualified: 'client.app.delete',
     params: ['app_id: string;', 'force_delete?: boolean;'],
     markdown:
-      "## delete\n\n`client.app.delete(app_id: string, force_delete?: boolean): void`\n\n**delete** `/delete-app/{app_id}`\n\nDelete an App. Fails when agents or knowledge bases still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.\n\n### Parameters\n\n- `app_id: string`\n\n- `force_delete?: boolean`\n  Delete even when the App is still referenced.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.app.delete('app_id')\n```",
+      "## delete\n\n`client.app.delete(app_id: string, force_delete?: boolean): void`\n\n**delete** `/delete-app/{app_id}`\n\nDelete an App. Fails when agents, knowledge bases, or alert rules still reference it, unless force_delete is set. If a CRM config is linked to this App, the link is cleared.\n\n### Parameters\n\n- `app_id: string`\n\n- `force_delete?: boolean`\n  Delete even when the App is still referenced.\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.app.delete('app_id')\n```",
     perLanguage: {
       typescript: {
         method: 'client.app.delete',
@@ -3739,7 +3739,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: '',
     description:
-      'List the agents and knowledge bases referencing an App, most recently configured first by default.',
+      'List the agents, knowledge bases, and alert rules referencing an App, most recently configured first by default.',
     stainlessPath: '(resource) app > (method) list-usages',
     qualified: 'client.app.listUsages',
     params: [
@@ -3749,9 +3749,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "sort_order?: 'ascending' | 'descending';",
     ],
     response:
-      "{ has_more: boolean; items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]; pagination_key?: string; }",
+      "{ has_more: boolean; items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; } | { alert_rule_id: string; configured_timestamp: number; type: 'alert_rule'; alert_rule_name?: string; }[]; pagination_key?: string; }",
     markdown:
-      "## list-usages\n\n`client.app.listUsages(app_id: string, limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more: boolean; items: object | object[]; pagination_key?: string; }`\n\n**get** `/list-app-usages/{app_id}`\n\nList the agents and knowledge bases referencing an App, most recently configured first by default.\n\n### Parameters\n\n- `app_id: string`\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more: boolean; items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]; pagination_key?: string; }`\n\n  - `has_more: boolean`\n  - `items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.app.listUsages('app_id');\n\nconsole.log(response);\n```",
+      "## list-usages\n\n`client.app.listUsages(app_id: string, limit?: number, pagination_key?: string, sort_order?: 'ascending' | 'descending'): { has_more: boolean; items: object | object | object[]; pagination_key?: string; }`\n\n**get** `/list-app-usages/{app_id}`\n\nList the agents, knowledge bases, and alert rules referencing an App, most recently configured first by default.\n\n### Parameters\n\n- `app_id: string`\n\n- `limit?: number`\n  Maximum number of items to return.\n\n- `pagination_key?: string`\n  Pagination key for fetching the next page.\n\n- `sort_order?: 'ascending' | 'descending'`\n  Sort order for results.\n\n### Returns\n\n- `{ has_more: boolean; items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; } | { alert_rule_id: string; configured_timestamp: number; type: 'alert_rule'; alert_rule_name?: string; }[]; pagination_key?: string; }`\n\n  - `has_more: boolean`\n  - `items: { agent_id: string; agent_versions: number[]; configured_timestamp: number; type: 'agent'; agent_name?: string; } | { configured_timestamp: number; knowledge_base_id: string; type: 'knowledge_base'; knowledge_base_name?: string; } | { alert_rule_id: string; configured_timestamp: number; type: 'alert_rule'; alert_rule_name?: string; }[]`\n  - `pagination_key?: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.app.listUsages('app_id');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.app.listUsages',
