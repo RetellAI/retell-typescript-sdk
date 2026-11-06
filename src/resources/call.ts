@@ -619,26 +619,6 @@ export interface PhoneCallResponse {
    * transfer call ends.
    */
   transfer_end_timestamp?: number;
-
-  /**
-   * Spans of the call with no user or agent speech and no call event (start of a
-   * DTMF entry, SMS, node transition, tool call start or result, or injected
-   * message), minus the first 10 seconds of each such gap. A tool call's run time
-   * counts as silence, since no LLM or TTS is working then. Payment time is not
-   * included. LLM, TTS, realtime (speech-to-speech) model time and the LLM token
-   * surcharge are not billed over these spans. Other products, such as the voice
-   * engine, and full-duplex (GPT Live) voice models are still billed over them. Each
-   * product's reduction is rounded down to whole seconds. Times are in milliseconds
-   * from the start of the call. Only present when such spans occurred.
-   */
-  unbilled_response_periods?: Array<PhoneCallResponse.UnbilledResponsePeriod>;
-
-  /**
-   * Total seconds of `unbilled_response_periods`, rounded down. See
-   * `unbilled_response_periods` for what is and is not billed over them. Only
-   * present when `unbilled_response_periods` is present.
-   */
-  unbilled_response_seconds?: number;
 }
 
 export namespace PhoneCallResponse {
@@ -3268,26 +3248,6 @@ export namespace PhoneCallResponse {
      */
     time_sec: number;
   }
-
-  export interface UnbilledResponsePeriod {
-    /**
-     * End of the span in milliseconds from call start.
-     */
-    end_ms: number;
-
-    /**
-     * Start of the span in milliseconds from call start.
-     */
-    start_ms: number;
-
-    /**
-     * The engine that ran during the span. A span is split where an agent swap changes
-     * the engine. `cascading` credits LLM and TTS time, `s2s` credits the realtime
-     * model's time, and `duplex` credits only the backend model's time, because the
-     * duplex voice model is still billed in full. Absent when the engine is not known.
-     */
-    type?: 'cascading' | 's2s' | 'duplex';
-  }
 }
 
 export interface WebCallResponse {
@@ -3622,26 +3582,6 @@ export interface WebCallResponse {
    * transfer call ends.
    */
   transfer_end_timestamp?: number;
-
-  /**
-   * Spans of the call with no user or agent speech and no call event (start of a
-   * DTMF entry, SMS, node transition, tool call start or result, or injected
-   * message), minus the first 10 seconds of each such gap. A tool call's run time
-   * counts as silence, since no LLM or TTS is working then. Payment time is not
-   * included. LLM, TTS, realtime (speech-to-speech) model time and the LLM token
-   * surcharge are not billed over these spans. Other products, such as the voice
-   * engine, and full-duplex (GPT Live) voice models are still billed over them. Each
-   * product's reduction is rounded down to whole seconds. Times are in milliseconds
-   * from the start of the call. Only present when such spans occurred.
-   */
-  unbilled_response_periods?: Array<WebCallResponse.UnbilledResponsePeriod>;
-
-  /**
-   * Total seconds of `unbilled_response_periods`, rounded down. See
-   * `unbilled_response_periods` for what is and is not billed over them. Only
-   * present when `unbilled_response_periods` is present.
-   */
-  unbilled_response_seconds?: number;
 }
 
 export namespace WebCallResponse {
@@ -6260,26 +6200,6 @@ export namespace WebCallResponse {
      */
     time_sec: number;
   }
-
-  export interface UnbilledResponsePeriod {
-    /**
-     * End of the span in milliseconds from call start.
-     */
-    end_ms: number;
-
-    /**
-     * Start of the span in milliseconds from call start.
-     */
-    start_ms: number;
-
-    /**
-     * The engine that ran during the span. A span is split where an agent swap changes
-     * the engine. `cascading` credits LLM and TTS time, `s2s` credits the realtime
-     * model's time, and `duplex` credits only the backend model's time, because the
-     * duplex voice model is still billed in full. Absent when the engine is not known.
-     */
-    type?: 'cascading' | 's2s' | 'duplex';
-  }
 }
 
 export interface CallListResponse {
@@ -6534,26 +6454,6 @@ export namespace CallListResponse {
      * transfer call ends.
      */
     transfer_end_timestamp?: number;
-
-    /**
-     * Spans of the call with no user or agent speech and no call event (start of a
-     * DTMF entry, SMS, node transition, tool call start or result, or injected
-     * message), minus the first 10 seconds of each such gap. A tool call's run time
-     * counts as silence, since no LLM or TTS is working then. Payment time is not
-     * included. LLM, TTS, realtime (speech-to-speech) model time and the LLM token
-     * surcharge are not billed over these spans. Other products, such as the voice
-     * engine, and full-duplex (GPT Live) voice models are still billed over them. Each
-     * product's reduction is rounded down to whole seconds. Times are in milliseconds
-     * from the start of the call. Only present when such spans occurred.
-     */
-    unbilled_response_periods?: Array<V3WebCallResponse.UnbilledResponsePeriod>;
-
-    /**
-     * Total seconds of `unbilled_response_periods`, rounded down. See
-     * `unbilled_response_periods` for what is and is not billed over them. Only
-     * present when `unbilled_response_periods` is present.
-     */
-    unbilled_response_seconds?: number;
   }
 
   export namespace V3WebCallResponse {
@@ -7042,26 +6942,6 @@ export namespace CallListResponse {
        */
       values: Array<number>;
     }
-
-    export interface UnbilledResponsePeriod {
-      /**
-       * End of the span in milliseconds from call start.
-       */
-      end_ms: number;
-
-      /**
-       * Start of the span in milliseconds from call start.
-       */
-      start_ms: number;
-
-      /**
-       * The engine that ran during the span. A span is split where an agent swap changes
-       * the engine. `cascading` credits LLM and TTS time, `s2s` credits the realtime
-       * model's time, and `duplex` credits only the backend model's time, because the
-       * duplex voice model is still billed in full. Absent when the engine is not known.
-       */
-      type?: 'cascading' | 's2s' | 'duplex';
-    }
   }
 
   export interface V3PhoneCallResponse {
@@ -7310,26 +7190,6 @@ export namespace CallListResponse {
      * transfer call ends.
      */
     transfer_end_timestamp?: number;
-
-    /**
-     * Spans of the call with no user or agent speech and no call event (start of a
-     * DTMF entry, SMS, node transition, tool call start or result, or injected
-     * message), minus the first 10 seconds of each such gap. A tool call's run time
-     * counts as silence, since no LLM or TTS is working then. Payment time is not
-     * included. LLM, TTS, realtime (speech-to-speech) model time and the LLM token
-     * surcharge are not billed over these spans. Other products, such as the voice
-     * engine, and full-duplex (GPT Live) voice models are still billed over them. Each
-     * product's reduction is rounded down to whole seconds. Times are in milliseconds
-     * from the start of the call. Only present when such spans occurred.
-     */
-    unbilled_response_periods?: Array<V3PhoneCallResponse.UnbilledResponsePeriod>;
-
-    /**
-     * Total seconds of `unbilled_response_periods`, rounded down. See
-     * `unbilled_response_periods` for what is and is not billed over them. Only
-     * present when `unbilled_response_periods` is present.
-     */
-    unbilled_response_seconds?: number;
   }
 
   export namespace V3PhoneCallResponse {
@@ -7828,26 +7688,6 @@ export namespace CallListResponse {
        * Twilio call sid.
        */
       twilio_call_sid?: string;
-    }
-
-    export interface UnbilledResponsePeriod {
-      /**
-       * End of the span in milliseconds from call start.
-       */
-      end_ms: number;
-
-      /**
-       * Start of the span in milliseconds from call start.
-       */
-      start_ms: number;
-
-      /**
-       * The engine that ran during the span. A span is split where an agent swap changes
-       * the engine. `cascading` credits LLM and TTS time, `s2s` credits the realtime
-       * model's time, and `duplex` credits only the backend model's time, because the
-       * duplex voice model is still billed in full. Absent when the engine is not known.
-       */
-      type?: 'cascading' | 's2s' | 'duplex';
     }
   }
 }
