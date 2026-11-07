@@ -344,7 +344,8 @@ export interface ContactBackfillAnalysisDataResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 
@@ -369,7 +370,8 @@ export interface ContactCreateImportResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 
@@ -394,7 +396,8 @@ export interface ContactGetBackfillJobStatusResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 
@@ -419,7 +422,8 @@ export interface ContactGetImportResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 
