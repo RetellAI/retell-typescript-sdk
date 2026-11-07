@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.2.19](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.18...v6.2.19) (2026-11-07)
+
+
+### Bug Fixes
+
+* **api:** Add bandwidth as a number_provider option for phone number purchase requests. ([a967bb2](https://github.com/RetellAI/retell-typescript-sdk/commit/a967bb26c80c0b733f1524f5fea7b597a03fb124))
+* **api:** Add retell-bandwidth as a phone_number_type value. ([a967bb2](https://github.com/RetellAI/retell-typescript-sdk/commit/a967bb26c80c0b733f1524f5fea7b597a03fb124))
+* **api:** Document that Bandwidth numbers only support UDP transport. ([a967bb2](https://github.com/RetellAI/retell-typescript-sdk/commit/a967bb26c80c0b733f1524f5fea7b597a03fb124))
+* **api:** Remove unbilled_response_periods and unbilled_response_seconds from call cost objects. ([05755fb](https://github.com/RetellAI/retell-typescript-sdk/commit/05755fbf571a8daae1297d3cba0015b4ed27ca52))
+
 ## [6.2.18](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.17...v6.2.18) (2026-11-05)
 
 
