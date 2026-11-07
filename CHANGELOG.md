@@ -1,18 +1,19 @@
 # Changelog
 
+## [6.2.19](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.18...v6.2.19) (2026-11-07)
+
+### Highlights
+
+* Add Bandwidth phone number provider and type support.
+* Remove unbilled response period and seconds fields from call responses.
+
 ## [6.2.18](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.17...v6.2.18) (2026-11-05)
 
+### Highlights
 
-### Bug Fixes
-
-* **api:** Add required remaining_ingestion_quota, which may be null, and ingestion_limits fields to knowledge base responses. ([552eaf8](https://github.com/RetellAI/retell-typescript-sdk/commit/552eaf8995141c8706d3188426dbc079773b2469))
-* **api:** Add tell-1 to the model options. ([aeee8fb](https://github.com/RetellAI/retell-typescript-sdk/commit/aeee8fb13a3cc59b46804c4f004842f13b910c6d))
-* **api:** Add unbilled_response_periods and unbilled_response_seconds to call cost data. ([26e479f](https://github.com/RetellAI/retell-typescript-sdk/commit/26e479f3b41557bc610c308394f556f6a577b057))
-* **api:** Block deleteApp when alert rules reference the App, unless force_delete is set. ([1b14f8d](https://github.com/RetellAI/retell-typescript-sdk/commit/1b14f8d6280c0cf89f77b52767d704ec82085b67))
-* **api:** Include alert rules in listAppUsages results with alert_rule_id and alert_rule_name. ([1b14f8d](https://github.com/RetellAI/retell-typescript-sdk/commit/1b14f8d6280c0cf89f77b52767d704ec82085b67))
-* **api:** Make all fields optional in alert rule requests. ([1b14f8d](https://github.com/RetellAI/retell-typescript-sdk/commit/1b14f8d6280c0cf89f77b52767d704ec82085b67))
-* **api:** Periods list silent spans, with start and end times in milliseconds, excluded from LLM, TTS, and realtime model billing. ([26e479f](https://github.com/RetellAI/retell-typescript-sdk/commit/26e479f3b41557bc610c308394f556f6a577b057))
-* **api:** Remove tell-1 from the supported model options. ([ec0a0d4](https://github.com/RetellAI/retell-typescript-sdk/commit/ec0a0d4bfcab332084a80be1174faa83c8023723))
+* Expose unbilled response time in call costs.
+* Expose knowledge-base ingestion quotas and limits.
+* Include alert rules in app usage tracking.
 
 ## [6.2.17](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.16...v6.2.17) (2026-11-02)
 
