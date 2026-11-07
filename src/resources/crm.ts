@@ -191,7 +191,8 @@ export interface CRMGetSyncJobStatusResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 
@@ -216,7 +217,8 @@ export interface CRMRunSyncJobResponse {
   start_timestamp?: number;
 
   /**
-   * Number of items processed successfully so far.
+   * Number of items processed successfully so far. For a CSV import, rows sharing a
+   * phone number count once.
    */
   succeeded?: number;
 

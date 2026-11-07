@@ -133,7 +133,7 @@ export interface PhoneNumberResponse {
   /**
    * Type of the phone number.
    */
-  phone_number_type: 'retell-twilio' | 'retell-telnyx' | 'custom';
+  phone_number_type: 'retell-twilio' | 'retell-telnyx' | 'retell-bandwidth' | 'custom';
 
   /**
    * List of ISO 3166-1 alpha-2 country codes from which inbound calls are allowed.
@@ -414,9 +414,10 @@ export interface PhoneNumberCreateParams {
   nickname?: string;
 
   /**
-   * The provider to purchase the phone number from. Default to twilio.
+   * The provider to purchase the phone number from. Default to twilio. Bandwidth
+   * numbers only support UDP transport.
    */
-  number_provider?: 'twilio' | 'telnyx';
+  number_provider?: 'twilio' | 'telnyx' | 'bandwidth';
 
   /**
    * Outbound agents to bind to the number with weights. If set and non-empty, one
@@ -438,7 +439,7 @@ export interface PhoneNumberCreateParams {
 
   /**
    * Outbound transport protocol to use for the phone number. Valid values are "TLS",
-   * "TCP" and "UDP". Default is "TCP".
+   * "TCP" and "UDP". Default is "TCP". Bandwidth numbers only support "UDP".
    */
   transport?: string | null;
 }
