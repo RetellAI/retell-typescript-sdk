@@ -33,6 +33,7 @@ Types:
 - <code><a href="./src/resources/chat.ts">ChatResponse</a></code>
 - <code><a href="./src/resources/chat.ts">ChatListResponse</a></code>
 - <code><a href="./src/resources/chat.ts">ChatCreateChatCompletionResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatRecordMessageResponse</a></code>
 
 Methods:
 
@@ -44,6 +45,7 @@ Methods:
 - <code title="post /create-chat-completion">client.chat.<a href="./src/resources/chat.ts">createChatCompletion</a>({ ...params }) -> ChatCreateChatCompletionResponse</code>
 - <code title="post /create-sms-chat">client.chat.<a href="./src/resources/chat.ts">createSMSChat</a>({ ...params }) -> ChatResponse</code>
 - <code title="patch /end-chat/{chat_id}">client.chat.<a href="./src/resources/chat.ts">end</a>(chatID) -> void</code>
+- <code title="post /record-chat-message/{chat_id}">client.chat.<a href="./src/resources/chat.ts">recordMessage</a>(chatID, { ...params }) -> ChatRecordMessageResponse</code>
 - <code title="put /rerun-chat-analysis/{chat_id}">client.chat.<a href="./src/resources/chat.ts">rerunAnalysis</a>(chatID) -> ChatResponse</code>
 
 # PhoneNumber

@@ -130,6 +130,7 @@ export interface ConversationFlowComponentResponse {
     | ConversationFlowComponentResponse.EndNode
     | ConversationFlowComponentResponse.FunctionNode
     | ConversationFlowComponentResponse.CodeNode
+    | ConversationFlowComponentResponse.EscalateChatNode
     | ConversationFlowComponentResponse.TransferCallNode
     | ConversationFlowComponentResponse.PressDigitNode
     | ConversationFlowComponentResponse.BranchNode
@@ -1307,6 +1308,7 @@ export namespace ConversationFlowComponentResponse {
      * transfer_call, agent_swap, etc.
      */
     tools?: Array<
+      | SubagentNode.EscalateChatTool
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
       | SubagentNode.AgentSwapTool
@@ -2173,6 +2175,50 @@ export namespace ConversationFlowComponentResponse {
         prompt: 'Skip response';
 
         type: 'prompt';
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 
@@ -5306,6 +5352,553 @@ export namespace ConversationFlowComponentResponse {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6.1-terra'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
+  }
+
+  export interface EscalateChatNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    destination: EscalateChatNode.Destination;
+
+    edge: EscalateChatNode.Edge;
+
+    type: 'escalate_chat';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: EscalateChatNode.DisplayPosition;
+
+    global_node_setting?: EscalateChatNode.GlobalNodeSetting;
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    model_choice?: EscalateChatNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EscalateChatNode.NodeModelConfig | unknown;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace EscalateChatNode {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition | Edge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        prompt?: 'Escalation failed';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        prompt: 'Escalation failed';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
+       */
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
     }
 
     /**
@@ -12396,6 +12989,7 @@ export interface ConversationFlowComponentCreateParams {
     | ConversationFlowComponentCreateParams.EndNode
     | ConversationFlowComponentCreateParams.FunctionNode
     | ConversationFlowComponentCreateParams.CodeNode
+    | ConversationFlowComponentCreateParams.EscalateChatNode
     | ConversationFlowComponentCreateParams.TransferCallNode
     | ConversationFlowComponentCreateParams.PressDigitNode
     | ConversationFlowComponentCreateParams.BranchNode
@@ -13563,6 +14157,7 @@ export namespace ConversationFlowComponentCreateParams {
      * transfer_call, agent_swap, etc.
      */
     tools?: Array<
+      | SubagentNode.EscalateChatTool
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
       | SubagentNode.AgentSwapTool
@@ -14429,6 +15024,50 @@ export namespace ConversationFlowComponentCreateParams {
         prompt: 'Skip response';
 
         type: 'prompt';
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 
@@ -17562,6 +18201,553 @@ export namespace ConversationFlowComponentCreateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6.1-terra'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
+  }
+
+  export interface EscalateChatNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    destination: EscalateChatNode.Destination;
+
+    edge: EscalateChatNode.Edge;
+
+    type: 'escalate_chat';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: EscalateChatNode.DisplayPosition;
+
+    global_node_setting?: EscalateChatNode.GlobalNodeSetting;
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    model_choice?: EscalateChatNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EscalateChatNode.NodeModelConfig | unknown;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace EscalateChatNode {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition | Edge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        prompt?: 'Escalation failed';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        prompt: 'Escalation failed';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
+       */
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
     }
 
     /**
@@ -24653,6 +25839,7 @@ export interface ConversationFlowComponentUpdateParams {
     | ConversationFlowComponentUpdateParams.EndNode
     | ConversationFlowComponentUpdateParams.FunctionNode
     | ConversationFlowComponentUpdateParams.CodeNode
+    | ConversationFlowComponentUpdateParams.EscalateChatNode
     | ConversationFlowComponentUpdateParams.TransferCallNode
     | ConversationFlowComponentUpdateParams.PressDigitNode
     | ConversationFlowComponentUpdateParams.BranchNode
@@ -25839,6 +27026,7 @@ export namespace ConversationFlowComponentUpdateParams {
      * transfer_call, agent_swap, etc.
      */
     tools?: Array<
+      | SubagentNode.EscalateChatTool
       | SubagentNode.EndCallTool
       | SubagentNode.TransferCallTool
       | SubagentNode.AgentSwapTool
@@ -26705,6 +27893,50 @@ export namespace ConversationFlowComponentUpdateParams {
         prompt: 'Skip response';
 
         type: 'prompt';
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 
@@ -29838,6 +31070,553 @@ export namespace ConversationFlowComponentUpdateParams {
        * Type of instruction
        */
       type: 'static_text';
+    }
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    export interface ModelChoice {
+      /**
+       * The LLM model to use
+       */
+      model:
+        | 'gpt-4.1'
+        | 'gpt-4.1-mini'
+        | 'gpt-5'
+        | 'gpt-5-mini'
+        | 'gpt-5-nano'
+        | 'gpt-5.1'
+        | 'gpt-5.2'
+        | 'gpt-5.4'
+        | 'gpt-5.4-mini'
+        | 'gpt-5.4-nano'
+        | 'gpt-5.5'
+        | 'gpt-5.6-terra'
+        | 'gpt-5.6-luna'
+        | 'gpt-6-astra'
+        | 'gpt-6-sol'
+        | 'gpt-6.1-sol'
+        | 'gpt-6.1-terra'
+        | 'gpt-6-luna'
+        | 'claude-4.6-sonnet'
+        | 'claude-5-opus'
+        | 'claude-5.5-opus'
+        | 'claude-5-sonnet'
+        | 'claude-5.5-sonnet'
+        | 'claude-5.5-haiku'
+        | 'claude-4.5-haiku'
+        | 'gemini-3.0-flash'
+        | 'gemini-3.1-flash-lite'
+        | 'gemini-3.5-flash'
+        | 'gemini-3.5-flash-lite'
+        | 'gemini-3.6-flash'
+        | 'gemini-3.7-flash'
+        | 'gemini-3.8-flash'
+        | 'gemini-4-argon';
+
+      /**
+       * Type of model choice
+       */
+      type: 'cascading';
+
+      /**
+       * Whether to use high priority pool with more dedicated resource, default false
+       */
+      high_priority?: boolean;
+
+      /**
+       * Whether to use the ultrafast tier for much faster response generation, default
+       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
+       * precedence over high_priority.
+       */
+      ultrafast?: boolean;
+    }
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    export interface NodeModelConfig {
+      primary: NodeModelConfig.Primary;
+    }
+
+    export namespace NodeModelConfig {
+      export interface Primary {
+        /**
+         * Available LLM models for agents.
+         */
+        model:
+          | 'gpt-4.1'
+          | 'gpt-4.1-mini'
+          | 'gpt-5'
+          | 'gpt-5-mini'
+          | 'gpt-5-nano'
+          | 'gpt-5.1'
+          | 'gpt-5.2'
+          | 'gpt-5.4'
+          | 'gpt-5.4-mini'
+          | 'gpt-5.4-nano'
+          | 'gpt-5.5'
+          | 'gpt-5.6-terra'
+          | 'gpt-5.6-luna'
+          | 'gpt-6-astra'
+          | 'gpt-6-sol'
+          | 'gpt-6.1-sol'
+          | 'gpt-6.1-terra'
+          | 'gpt-6-luna'
+          | 'claude-4.6-sonnet'
+          | 'claude-5-opus'
+          | 'claude-5.5-opus'
+          | 'claude-5-sonnet'
+          | 'claude-5.5-sonnet'
+          | 'claude-5.5-haiku'
+          | 'claude-4.5-haiku'
+          | 'gemini-3.0-flash'
+          | 'gemini-3.1-flash-lite'
+          | 'gemini-3.5-flash'
+          | 'gemini-3.5-flash-lite'
+          | 'gemini-3.6-flash'
+          | 'gemini-3.7-flash'
+          | 'gemini-3.8-flash'
+          | 'gemini-4-argon';
+
+        /**
+         * Capacity tier for a model. standard is always available. fast draws from
+         * dedicated capacity for lower, steadier latency, and ultrafast is faster still on
+         * voice agents; faster tiers cost more. Each model offers its own set of tiers,
+         * and a tier the model does not offer is rejected.
+         */
+        tier?: 'standard' | 'fast' | 'ultrafast';
+      }
+    }
+  }
+
+  export interface EscalateChatNode {
+    /**
+     * Unique identifier for the node
+     */
+    id: string;
+
+    destination: EscalateChatNode.Destination;
+
+    edge: EscalateChatNode.Edge;
+
+    type: 'escalate_chat';
+
+    /**
+     * Position for frontend display
+     */
+    display_position?: EscalateChatNode.DisplayPosition;
+
+    global_node_setting?: EscalateChatNode.GlobalNodeSetting;
+
+    /**
+     * @deprecated Deprecated, use model_config. When a request sends both and they
+     * differ, the one that differs from the stored node is used, and model_config wins
+     * if both changed.
+     */
+    model_choice?: EscalateChatNode.ModelChoice;
+
+    /**
+     * Model override for this node. Only cascading flows use it.
+     */
+    model_config?: EscalateChatNode.NodeModelConfig | unknown;
+
+    /**
+     * Optional name for display purposes
+     */
+    name?: string;
+  }
+
+  export namespace EscalateChatNode {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
+
+    export interface Edge {
+      /**
+       * Unique identifier for the edge
+       */
+      id: string;
+
+      transition_condition: Edge.PromptCondition | Edge.EquationCondition | Edge.UnionMember2;
+
+      /**
+       * ID of the destination node
+       */
+      destination_node_id?: string;
+    }
+
+    export namespace Edge {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+
+        prompt?: 'Escalation failed';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface UnionMember2 {
+        prompt: 'Escalation failed';
+
+        type: 'prompt';
+      }
+    }
+
+    /**
+     * Position for frontend display
+     */
+    export interface DisplayPosition {
+      x?: number;
+
+      y?: number;
+    }
+
+    export interface GlobalNodeSetting {
+      /**
+       * Condition for global node activation. A string is a prompt condition and cannot
+       * be empty. Also accepts typed PromptCondition, EquationCondition, or
+       * EquationPromptCondition objects.
+       */
+      condition:
+        | string
+        | GlobalNodeSetting.PromptCondition
+        | GlobalNodeSetting.EquationCondition
+        | GlobalNodeSetting.EquationPromptCondition;
+
+      /**
+       * The same global node won't be triggered again within the next N node
+       * transitions.
+       */
+      cool_down?: number;
+
+      /**
+       * The conditions for global node go back. There would be no destination_node_id
+       * for these edges.
+       */
+      go_back_conditions?: Array<GlobalNodeSetting.GoBackCondition>;
+
+      /**
+       * Don't transition to this node
+       */
+      negative_finetune_examples?: Array<GlobalNodeSetting.NegativeFinetuneExample>;
+
+      /**
+       * Transition to this node
+       */
+      positive_finetune_examples?: Array<GlobalNodeSetting.PositiveFinetuneExample>;
+    }
+
+    export namespace GlobalNodeSetting {
+      export interface PromptCondition {
+        /**
+         * Prompt condition text
+         */
+        prompt: string;
+
+        type: 'prompt';
+      }
+
+      export interface EquationCondition {
+        equations: Array<EquationCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation';
+      }
+
+      export namespace EquationCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+      }
+
+      export interface EquationPromptCondition {
+        equations: Array<EquationPromptCondition.Equation>;
+
+        operator: '||' | '&&';
+
+        type: 'equation_prompt';
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        prompt_condition?: EquationPromptCondition.PromptCondition;
+      }
+
+      export namespace EquationPromptCondition {
+        export interface Equation {
+          /**
+           * Left side of the equation
+           */
+          left: string;
+
+          operator:
+            | '=='
+            | '!='
+            | '>'
+            | '>='
+            | '<'
+            | '<='
+            | 'contains'
+            | 'not_contains'
+            | 'exists'
+            | 'not_exist';
+
+          /**
+           * Right side of the equation. The right side of the equation not required when
+           * "exists" or "not_exist" are selected.
+           */
+          right?: string;
+        }
+
+        /**
+         * Optional prompt combined with the equations by operator. Omit to evaluate only
+         * equations. With no equations, only the prompt is evaluated. Deterministic
+         * matches take priority; otherwise the prompt uses normal prompt transition
+         * timing.
+         */
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+      }
+
+      /**
+       * A connection between conversation-flow nodes. When used in a node's edges array,
+       * transitions when its condition matches. Equation conditions compare dynamic
+       * variables and are checked in array order; the first match wins. If no equation
+       * matches, the LLM evaluates prompt conditions against the conversation and
+       * selects a matching transition, if any.
+       */
+      export interface GoBackCondition {
+        /**
+         * Unique identifier for the edge
+         */
+        id: string;
+
+        transition_condition: GoBackCondition.PromptCondition | GoBackCondition.EquationCondition;
+
+        /**
+         * ID of the destination node
+         */
+        destination_node_id?: string;
+      }
+
+      export namespace GoBackCondition {
+        export interface PromptCondition {
+          /**
+           * Prompt condition text
+           */
+          prompt: string;
+
+          type: 'prompt';
+        }
+
+        export interface EquationCondition {
+          equations: Array<EquationCondition.Equation>;
+
+          operator: '||' | '&&';
+
+          type: 'equation';
+        }
+
+        export namespace EquationCondition {
+          export interface Equation {
+            /**
+             * Left side of the equation
+             */
+            left: string;
+
+            operator:
+              | '=='
+              | '!='
+              | '>'
+              | '>='
+              | '<'
+              | '<='
+              | 'contains'
+              | 'not_contains'
+              | 'exists'
+              | 'not_exist';
+
+            /**
+             * Right side of the equation. The right side of the equation not required when
+             * "exists" or "not_exist" are selected.
+             */
+            right?: string;
+          }
+        }
+      }
+
+      export interface NegativeFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | NegativeFinetuneExample.UnionMember0
+          | NegativeFinetuneExample.UnionMember1
+          | NegativeFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace NegativeFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
+
+      export interface PositiveFinetuneExample {
+        /**
+         * Find tune the transition condition to this global node
+         */
+        transcript: Array<
+          | PositiveFinetuneExample.UnionMember0
+          | PositiveFinetuneExample.UnionMember1
+          | PositiveFinetuneExample.UnionMember2
+        >;
+      }
+
+      export namespace PositiveFinetuneExample {
+        export interface UnionMember0 {
+          content: string;
+
+          role: 'agent' | 'user';
+        }
+
+        export interface UnionMember1 {
+          arguments: string;
+
+          name: string;
+
+          role: 'tool_call_invocation';
+
+          tool_call_id: string;
+        }
+
+        export interface UnionMember2 {
+          content: string;
+
+          role: 'tool_call_result';
+
+          tool_call_id: string;
+        }
+      }
     }
 
     /**

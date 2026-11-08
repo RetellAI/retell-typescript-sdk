@@ -126,6 +126,7 @@ const fuse = new Fuse(
     'client.chat.delete',
     'client.chat.end',
     'client.chat.list',
+    'client.chat.recordMessage',
     'client.chat.rerunAnalysis',
     'client.chat.retrieve',
     'client.chat.update',

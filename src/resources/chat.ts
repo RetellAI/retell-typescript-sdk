@@ -148,6 +148,38 @@ export class Chat extends APIResource {
   }
 
   /**
+   * Record a user or human transfer-target message in an ongoing escalated chat. SMS
+   * chats accept only transfer_target and send SMS before recording. API chats only
+   * record; delivery is the customer's responsibility. Idempotency keys are scoped
+   * to the organization. Successful results are retained for 24 hours. Concurrent
+   * requests with the same key wait for the lock. Reusing a key after success
+   * returns 200 with the original message_id and created_timestamp, without sending
+   * again. No duplicate-key error is raised. Failures are not cached and release the
+   * lock so the same key can be retried. Each execution makes one SMS send attempt.
+   * If delivery is uncertain or processing fails after sending, a retried request
+   * can send the SMS again and cause duplicates.
+   *
+   * @example
+   * ```ts
+   * const response = await client.chat.recordMessage(
+   *   'chat_id',
+   *   {
+   *     idempotency_key: 'x',
+   *     message: 'x',
+   *     role: 'user',
+   *   },
+   * );
+   * ```
+   */
+  recordMessage(
+    chatID: string,
+    body: ChatRecordMessageParams,
+    options?: RequestOptions,
+  ): APIPromise<ChatRecordMessageResponse> {
+    return this._client.post(path`/record-chat-message/${chatID}`, { body, ...options });
+  }
+
+  /**
    * Rerun post-chat analysis for a specific chat. This operation incurs charges.
    *
    * @example
@@ -216,6 +248,11 @@ export interface ChatResponse {
    * End timestamp (milliseconds since epoch) of the chat. Available after chat ends.
    */
   end_timestamp?: number | null;
+
+  /**
+   * Whether this chat has been handed to a human.
+   */
+  is_escalated?: boolean;
 
   /**
    * Transcript of the chat weaved with tool call invocation and results.
@@ -312,7 +349,7 @@ export interface ChatResponse {
   start_timestamp?: number;
 
   /**
-   * Transcription of the chat.
+   * Transcription of the chat, including human replies labeled "Transfer Target".
    */
   transcript?: string;
 
@@ -395,14 +432,16 @@ export namespace ChatResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -419,6 +458,10 @@ export namespace ChatResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -659,14 +702,16 @@ export namespace ChatResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -683,6 +728,10 @@ export namespace ChatResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -923,14 +972,16 @@ export namespace ChatResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -947,6 +998,10 @@ export namespace ChatResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -1187,14 +1242,16 @@ export namespace ChatResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -1211,6 +1268,10 @@ export namespace ChatResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -1451,14 +1512,16 @@ export namespace ChatResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -1475,6 +1538,10 @@ export namespace ChatResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -1761,14 +1828,16 @@ export namespace ChatCreateChatCompletionResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -1785,6 +1854,10 @@ export namespace ChatCreateChatCompletionResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -2019,6 +2092,12 @@ export namespace ChatCreateChatCompletionResponse {
   }
 }
 
+export interface ChatRecordMessageResponse {
+  created_timestamp: number;
+
+  message_id: string;
+}
+
 export interface ChatCreateParams {
   /**
    * The chat agent to use for the chat.
@@ -2198,6 +2277,8 @@ export namespace ChatListParams {
      * Filter by chat end timestamp (epoch ms).
      */
     end_timestamp?: FilterCriteria.NumberFilter | FilterCriteria.RangeFilter;
+
+    is_escalated?: FilterCriteria.IsEscalated;
 
     /**
      * Filter by chat start timestamp (epoch ms).
@@ -2649,6 +2730,14 @@ export namespace ChatListParams {
       value: Array<number>;
     }
 
+    export interface IsEscalated {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: boolean;
+    }
+
     export interface NumberFilter {
       /**
        * eq: equal, ne: not equal, gt: greater than, ge: greater than or equal, lt: less
@@ -2760,15 +2849,45 @@ export interface ChatCreateSMSChatParams {
   retell_llm_dynamic_variables?: { [key: string]: string };
 }
 
+export type ChatRecordMessageParams = ChatRecordMessageParams.Variant0 | ChatRecordMessageParams.Variant1;
+
+export declare namespace ChatRecordMessageParams {
+  export interface Variant0 {
+    idempotency_key: string;
+
+    message: string;
+
+    role: 'user';
+  }
+
+  export interface Variant1 {
+    idempotency_key: string;
+
+    message: string;
+
+    role: 'transfer_target';
+
+    metadata?: Variant1.Metadata;
+  }
+
+  export namespace Variant1 {
+    export interface Metadata {
+      transfer_target_name?: string;
+    }
+  }
+}
+
 export declare namespace Chat {
   export {
     type ChatResponse as ChatResponse,
     type ChatListResponse as ChatListResponse,
     type ChatCreateChatCompletionResponse as ChatCreateChatCompletionResponse,
+    type ChatRecordMessageResponse as ChatRecordMessageResponse,
     type ChatCreateParams as ChatCreateParams,
     type ChatUpdateParams as ChatUpdateParams,
     type ChatListParams as ChatListParams,
     type ChatCreateChatCompletionParams as ChatCreateChatCompletionParams,
     type ChatCreateSMSChatParams as ChatCreateSMSChatParams,
+    type ChatRecordMessageParams as ChatRecordMessageParams,
   };
 }

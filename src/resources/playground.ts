@@ -10,6 +10,7 @@ export class Playground extends APIResource {
    * Stateless playground completion. Send the full conversation history (same shape
    * as chat completion messages) and receive only the newly generated messages.
    * Nothing is persisted server-side — the caller manages conversation state.
+   * Payment agents only support audio testing and cannot use this endpoint.
    *
    * @example
    * ```ts
@@ -96,14 +97,16 @@ export namespace PlaygroundCompletionResponse {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -120,6 +123,10 @@ export namespace PlaygroundCompletionResponse {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.
@@ -414,14 +421,16 @@ export namespace PlaygroundCompletionParams {
     content: string;
 
     /**
-     * Documents whether this message is sent by agent or user.
+     * Whether this message is sent by the AI agent, user, or human transfer target.
      */
-    role: 'agent' | 'user';
+    role: 'agent' | 'user' | 'transfer_target';
 
     /**
      * Create timestamp of the message
      */
     created_timestamp?: number;
+
+    customer_defined_metadata?: MessageBase.CustomerDefinedMetadata;
 
     /**
      * Unique id of the message
@@ -438,6 +447,10 @@ export namespace PlaygroundCompletionParams {
   }
 
   export namespace MessageBase {
+    export interface CustomerDefinedMetadata {
+      transfer_target_name?: string;
+    }
+
     export interface Multimedia {
       /**
        * URL of the multimedia attachment.

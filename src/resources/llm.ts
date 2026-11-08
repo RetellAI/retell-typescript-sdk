@@ -147,6 +147,7 @@ export interface LlmResponse {
    * - Tools of LLM (no state) = general tools
    */
   general_tools?: Array<
+    | LlmResponse.EscalateChatTool
     | LlmResponse.EndCallTool
     | LlmResponse.TransferCallTool
     | LlmResponse.AgentSwapTool
@@ -370,6 +371,50 @@ export namespace LlmResponse {
      * precedence over high_priority.
      */
     ultrafast?: boolean;
+  }
+
+  export interface EscalateChatTool {
+    destination: EscalateChatTool.Destination;
+
+    name: string;
+
+    type: 'escalate_chat';
+
+    description?: string;
+  }
+
+  export namespace EscalateChatTool {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
   }
 
   export interface EndCallTool {
@@ -2098,6 +2143,7 @@ export namespace LlmResponse {
      * - Tools of LLM = general tools + state tools + state transitions
      */
     tools?: Array<
+      | State.EscalateChatTool
       | State.EndCallTool
       | State.TransferCallTool
       | State.AgentSwapTool
@@ -2173,6 +2219,50 @@ export namespace LlmResponse {
          * must exist in properties.
          */
         required?: Array<string>;
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 
@@ -3587,6 +3677,7 @@ export interface LlmCreateParams {
    * - Tools of LLM (no state) = general tools
    */
   general_tools?: Array<
+    | LlmCreateParams.EscalateChatTool
     | LlmCreateParams.EndCallTool
     | LlmCreateParams.TransferCallTool
     | LlmCreateParams.AgentSwapTool
@@ -3800,6 +3891,50 @@ export namespace LlmCreateParams {
      * precedence over high_priority.
      */
     ultrafast?: boolean;
+  }
+
+  export interface EscalateChatTool {
+    destination: EscalateChatTool.Destination;
+
+    name: string;
+
+    type: 'escalate_chat';
+
+    description?: string;
+  }
+
+  export namespace EscalateChatTool {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
   }
 
   export interface EndCallTool {
@@ -5528,6 +5663,7 @@ export namespace LlmCreateParams {
      * - Tools of LLM = general tools + state tools + state transitions
      */
     tools?: Array<
+      | State.EscalateChatTool
       | State.EndCallTool
       | State.TransferCallTool
       | State.AgentSwapTool
@@ -5603,6 +5739,50 @@ export namespace LlmCreateParams {
          * must exist in properties.
          */
         required?: Array<string>;
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 
@@ -7018,6 +7198,7 @@ export interface LlmUpdateParams {
    * - Tools of LLM (no state) = general tools
    */
   general_tools?: Array<
+    | LlmUpdateParams.EscalateChatTool
     | LlmUpdateParams.EndCallTool
     | LlmUpdateParams.TransferCallTool
     | LlmUpdateParams.AgentSwapTool
@@ -7231,6 +7412,50 @@ export namespace LlmUpdateParams {
      * precedence over high_priority.
      */
     ultrafast?: boolean;
+  }
+
+  export interface EscalateChatTool {
+    destination: EscalateChatTool.Destination;
+
+    name: string;
+
+    type: 'escalate_chat';
+
+    description?: string;
+  }
+
+  export namespace EscalateChatTool {
+    export interface Destination {
+      destination: Destination.Destination;
+
+      type: 'webhook';
+    }
+
+    export namespace Destination {
+      export interface Destination {
+        method: 'POST' | 'PUT';
+
+        /**
+         * Customer webhook URL for transfer requests and forwarded SMS messages.
+         */
+        url: string;
+
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events. String
+         * values support dynamic variables such as {{customer_id}}, including inside
+         * nested objects and arrays. Field names and non-string values are preserved.
+         */
+        body?: { [key: string]: unknown };
+
+        headers?: { [key: string]: string };
+
+        max_retry?: number;
+
+        query_params?: { [key: string]: string };
+
+        timeout_ms?: number;
+      }
+    }
   }
 
   export interface EndCallTool {
@@ -8959,6 +9184,7 @@ export namespace LlmUpdateParams {
      * - Tools of LLM = general tools + state tools + state transitions
      */
     tools?: Array<
+      | State.EscalateChatTool
       | State.EndCallTool
       | State.TransferCallTool
       | State.AgentSwapTool
@@ -9034,6 +9260,50 @@ export namespace LlmUpdateParams {
          * must exist in properties.
          */
         required?: Array<string>;
+      }
+    }
+
+    export interface EscalateChatTool {
+      destination: EscalateChatTool.Destination;
+
+      name: string;
+
+      type: 'escalate_chat';
+
+      description?: string;
+    }
+
+    export namespace EscalateChatTool {
+      export interface Destination {
+        destination: Destination.Destination;
+
+        type: 'webhook';
+      }
+
+      export namespace Destination {
+        export interface Destination {
+          method: 'POST' | 'PUT';
+
+          /**
+           * Customer webhook URL for transfer requests and forwarded SMS messages.
+           */
+          url: string;
+
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events. String
+           * values support dynamic variables such as {{customer_id}}, including inside
+           * nested objects and arrays. Field names and non-string values are preserved.
+           */
+          body?: { [key: string]: unknown };
+
+          headers?: { [key: string]: string };
+
+          max_retry?: number;
+
+          query_params?: { [key: string]: string };
+
+          timeout_ms?: number;
+        }
       }
     }
 

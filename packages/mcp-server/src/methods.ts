@@ -131,6 +131,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/end-chat/{chat_id}',
   },
   {
+    clientCallName: 'client.chat.recordMessage',
+    fullyQualifiedName: 'chat.recordMessage',
+    httpMethod: 'post',
+    httpPath: '/record-chat-message/{chat_id}',
+  },
+  {
     clientCallName: 'client.chat.rerunAnalysis',
     fullyQualifiedName: 'chat.rerunAnalysis',
     httpMethod: 'put',

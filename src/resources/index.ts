@@ -67,11 +67,13 @@ export {
   type ChatResponse,
   type ChatListResponse,
   type ChatCreateChatCompletionResponse,
+  type ChatRecordMessageResponse,
   type ChatCreateParams,
   type ChatUpdateParams,
   type ChatListParams,
   type ChatCreateChatCompletionParams,
   type ChatCreateSMSChatParams,
+  type ChatRecordMessageParams,
 } from './chat';
 export {
   ChatAgent,
