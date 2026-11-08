@@ -150,6 +150,11 @@ describe('resource chat', () => {
               type: 'number',
               value: 0,
             },
+            is_escalated: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
             start_timestamp: {
               op: 'eq',
               type: 'number',
@@ -250,6 +255,31 @@ describe('resource chat', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('recordMessage: only required params', async () => {
+    const responsePromise = client.chat.recordMessage('chat_id', {
+      idempotency_key: 'x',
+      message: 'x',
+      role: 'user',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('recordMessage: required and optional params', async () => {
+    const response = await client.chat.recordMessage('chat_id', {
+      idempotency_key: 'x',
+      message: 'x',
+      role: 'user',
+    });
   });
 
   // Mock server tests are disabled
