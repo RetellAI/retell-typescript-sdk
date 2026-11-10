@@ -64,8 +64,9 @@ describe('resource playground', () => {
         {
           input_match_rule: { type: 'any' },
           output: 'output',
-          tool_name: 'tool_name',
+          node_id: 'node_id',
           result: true,
+          tool_name: 'tool_name',
         },
       ],
     });
