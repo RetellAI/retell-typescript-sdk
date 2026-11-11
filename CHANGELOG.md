@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.2.20](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.19...v6.2.20) (2026-11-11)
+
+### Highlights
+
+* Add escalate chat tool and flow node for human handoff.
+* Add chat message recording for user and transfer target messages.
+* Expose is_escalated on chat responses and chat filters.
+* Add tell-1 and gemini-4-carbon LLM model options.
+* Make ToolMock tool_name optional; add node_id targeting.
+
 ## [6.2.19](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.18...v6.2.19) (2026-11-07)
 
 ### Highlights
