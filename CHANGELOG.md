@@ -2,17 +2,13 @@
 
 ## [6.2.20](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.19...v6.2.20) (2026-11-11)
 
+### Highlights
 
-### Bug Fixes
-
-* **api:** Add escalate_chat tool and flow node that send escalations to a webhook destination. ([4b2a325](https://github.com/RetellAI/retell-typescript-sdk/commit/4b2a32547f3de976a9fc8b02822acb1acdc3bcde))
-* **api:** Add gemini-4-carbon as an available LLM model option for agents. ([f88ecc4](https://github.com/RetellAI/retell-typescript-sdk/commit/f88ecc42084c477baac45d91ef7bc98792084574))
-* **api:** Add is_escalated to chat responses and chat filters. ([4b2a325](https://github.com/RetellAI/retell-typescript-sdk/commit/4b2a32547f3de976a9fc8b02822acb1acdc3bcde))
-* **api:** Add optional node_id to tool mocks for matching conversation flow nodes. ([9ea8a04](https://github.com/RetellAI/retell-typescript-sdk/commit/9ea8a04395047f606fe3d5dda2d361770cab5a22))
-* **api:** Add POST /record-chat-message/{chat_id} as the record-message chat method for user and transfer_target messages. ([4b2a325](https://github.com/RetellAI/retell-typescript-sdk/commit/4b2a32547f3de976a9fc8b02822acb1acdc3bcde))
-* **api:** Add tell-1 to model options. ([9d81750](https://github.com/RetellAI/retell-typescript-sdk/commit/9d8175056bc88e5864431ec32bd9ab360e293ce0))
-* **api:** Make tool_name optional in tool mocks, matching every tool when omitted. ([9ea8a04](https://github.com/RetellAI/retell-typescript-sdk/commit/9ea8a04395047f606fe3d5dda2d361770cab5a22))
-* **api:** Require result for SMS, transfer, and escalation tool mocks; mocks without it are ignored for those calls. ([9ea8a04](https://github.com/RetellAI/retell-typescript-sdk/commit/9ea8a04395047f606fe3d5dda2d361770cab5a22))
+* Add escalate chat tool and flow node for human handoff.
+* Add chat message recording for user and transfer target messages.
+* Expose is_escalated on chat responses and chat filters.
+* Add tell-1 and gemini-4-carbon LLM model options.
+* Make ToolMock tool_name optional; add node_id targeting.
 
 ## [6.2.19](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.18...v6.2.19) (2026-11-07)
 
