@@ -305,6 +305,7 @@ export namespace ConversationFlowResponse {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -1231,6 +1232,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -1297,6 +1299,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -2236,6 +2239,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -2302,6 +2306,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -4203,6 +4208,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -4269,6 +4275,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -4906,6 +4913,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -4972,6 +4980,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -5622,6 +5631,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -5688,6 +5698,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -6171,6 +6182,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -6237,6 +6249,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -7073,6 +7086,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -7139,6 +7153,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -7744,6 +7759,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -7810,6 +7826,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -8396,6 +8413,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -8462,6 +8480,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -9070,6 +9089,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -9136,6 +9156,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -9891,6 +9912,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -9957,6 +9979,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -10496,6 +10519,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -10562,6 +10586,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -11214,6 +11239,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -11280,6 +11306,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -12228,6 +12255,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -12294,6 +12322,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -12711,6 +12740,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -12777,6 +12807,7 @@ export namespace ConversationFlowResponse {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -13285,6 +13316,7 @@ export namespace ConversationFlowResponse {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -13388,6 +13420,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -13443,6 +13476,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -13560,6 +13594,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -13613,6 +13648,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -14465,6 +14501,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -14531,6 +14568,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -15470,6 +15508,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -15536,6 +15575,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -17434,6 +17474,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -17500,6 +17541,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -18137,6 +18179,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -18203,6 +18246,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -18853,6 +18897,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -18919,6 +18964,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -19402,6 +19448,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -19468,6 +19515,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -20304,6 +20352,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -20370,6 +20419,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -20975,6 +21025,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -21041,6 +21092,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -21627,6 +21679,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -21693,6 +21746,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -22301,6 +22355,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -22367,6 +22422,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -23122,6 +23178,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -23188,6 +23245,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -23727,6 +23785,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -23793,6 +23852,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -24445,6 +24505,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -24511,6 +24572,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -25459,6 +25521,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -25525,6 +25588,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -25942,6 +26006,7 @@ export namespace ConversationFlowResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -26008,6 +26073,7 @@ export namespace ConversationFlowResponse {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -27381,6 +27447,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -27447,6 +27514,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -28386,6 +28454,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -28452,6 +28521,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -30350,6 +30420,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -30416,6 +30487,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -31053,6 +31125,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -31119,6 +31192,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -31769,6 +31843,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -31835,6 +31910,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -32318,6 +32394,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -32384,6 +32461,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -33220,6 +33298,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -33286,6 +33365,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -33891,6 +33971,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -33957,6 +34038,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -34543,6 +34625,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -34609,6 +34692,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -35217,6 +35301,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -35283,6 +35368,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -36038,6 +36124,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -36104,6 +36191,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -36643,6 +36731,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -36709,6 +36798,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -37361,6 +37451,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -37427,6 +37518,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -38375,6 +38467,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -38441,6 +38534,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -38858,6 +38952,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -38924,6 +39019,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -38979,6 +39075,7 @@ export namespace ConversationFlowCreateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -39905,6 +40002,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -39971,6 +40069,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -40910,6 +41009,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -40976,6 +41076,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -42877,6 +42978,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -42943,6 +43045,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -43580,6 +43683,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -43646,6 +43750,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -44296,6 +44401,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -44362,6 +44468,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -44845,6 +44952,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -44911,6 +45019,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -45747,6 +45856,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -45813,6 +45923,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -46418,6 +46529,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -46484,6 +46596,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -47070,6 +47183,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -47136,6 +47250,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -47744,6 +47859,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -47810,6 +47926,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -48565,6 +48682,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -48631,6 +48749,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -49170,6 +49289,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -49236,6 +49356,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -49888,6 +50009,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -49954,6 +50076,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -50902,6 +51025,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -50968,6 +51092,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -51385,6 +51510,7 @@ export namespace ConversationFlowCreateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -51451,6 +51577,7 @@ export namespace ConversationFlowCreateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -51959,6 +52086,7 @@ export namespace ConversationFlowCreateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -52062,6 +52190,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -52117,6 +52246,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -52234,6 +52364,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -52287,6 +52418,7 @@ export namespace ConversationFlowCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -52883,6 +53015,7 @@ export namespace ConversationFlowUpdateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -53809,6 +53942,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -53875,6 +54009,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -54814,6 +54949,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -54880,6 +55016,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -56781,6 +56918,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -56847,6 +56985,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -57484,6 +57623,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -57550,6 +57690,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -58200,6 +58341,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -58266,6 +58408,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -58749,6 +58892,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -58815,6 +58959,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -59651,6 +59796,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -59717,6 +59863,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -60322,6 +60469,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -60388,6 +60536,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -60974,6 +61123,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -61040,6 +61190,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -61648,6 +61799,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -61714,6 +61866,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -62469,6 +62622,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -62535,6 +62689,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -63074,6 +63229,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -63140,6 +63296,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -63792,6 +63949,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -63858,6 +64016,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -64806,6 +64965,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -64872,6 +65032,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -65289,6 +65450,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -65355,6 +65517,7 @@ export namespace ConversationFlowUpdateParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
           /**
@@ -65863,6 +66026,7 @@ export namespace ConversationFlowUpdateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
     /**
@@ -65966,6 +66130,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -66021,6 +66186,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -66138,6 +66304,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -66191,6 +66358,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -67043,6 +67211,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -67109,6 +67278,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -68048,6 +68218,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -68114,6 +68285,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -70012,6 +70184,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -70078,6 +70251,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -70715,6 +70889,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -70781,6 +70956,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -71431,6 +71607,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -71497,6 +71674,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -71980,6 +72158,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -72046,6 +72225,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -72882,6 +73062,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -72948,6 +73129,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -73553,6 +73735,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -73619,6 +73802,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -74205,6 +74389,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -74271,6 +74456,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -74879,6 +75065,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -74945,6 +75132,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -75700,6 +75888,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -75766,6 +75955,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -76305,6 +76495,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -76371,6 +76562,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -77023,6 +77215,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -77089,6 +77282,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -78037,6 +78231,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -78103,6 +78298,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
@@ -78520,6 +78716,7 @@ export namespace ConversationFlowUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
       /**
@@ -78586,6 +78783,7 @@ export namespace ConversationFlowUpdateParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-carbon'
           | 'gemini-4-argon';
 
         /**
