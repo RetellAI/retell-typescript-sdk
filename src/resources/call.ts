@@ -1163,340 +1163,11 @@ export namespace PhoneCallResponse {
       interrupt_id?: number;
 
       /**
-       * Whether the utterance is a backchannel acknowledgment.
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
        */
-      is_backchannel?: boolean;
-
-      /**
-       * Call-scoped agent response identifier, when available.
-       */
-      response_id?: number;
-    }
-
-    export namespace Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallInvocationUtterance {
-    /**
-     * Arguments for this tool call, it's a stringified JSON object.
-     */
-    arguments: string;
-
-    /**
-     * Name of the tool. This is the configured tool name, or the node name for a
-     * built-in conversation flow node, so it can contain spaces and non-ASCII
-     * characters. To identify the kind of tool, use `type`.
-     */
-    name: string;
-
-    /**
-     * This is a tool call invocation.
-     */
-    role: 'tool_call_invocation';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    metadata?: ToolCallInvocationUtterance.Metadata;
-
-    /**
-     * Optional thought signature from Google Gemini thinking models. This is used
-     * internally to maintain reasoning chain in multi-turn function calling.
-     */
-    thought_signature?: string;
-
-    /**
-     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
-     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
-     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
-     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
-     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
-     */
-    type?: string;
-  }
-
-  export namespace ToolCallInvocationUtterance {
-    export interface Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-    }
-
-    export namespace Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallResultUtterance {
-    /**
-     * Result of the tool call, can be a string, a stringified json, etc.
-     */
-    content: string;
-
-    /**
-     * This is the result of a tool call.
-     */
-    role: 'tool_call_result';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    /**
-     * Whether the tool call was successful.
-     */
-    successful?: boolean;
-  }
-
-  export interface NodeTransitionUtterance {
-    /**
-     * Former node id
-     */
-    former_node_id: string;
-
-    /**
-     * Former node name
-     */
-    former_node_name: string;
-
-    /**
-     * New node id
-     */
-    new_node_id: string;
-
-    /**
-     * New node name
-     */
-    new_node_name: string;
-
-    /**
-     * This is result of a node transition
-     */
-    role: 'node_transition';
-
-    /**
-     * How this node was reached. "global" means a global node transition,
-     * "global_go_back" means returning from a global node, "interrupt_go_back" means
-     * going back due to user interruption, and "normal" means a regular edge
-     * transition.
-     */
-    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
-  }
-
-  export interface DtmfUtterance {
-    /**
-     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
-     * "\*", "#" etc.
-     */
-    digit: string;
-
-    /**
-     * Digit pressed by the user from their phone keypad.
-     */
-    role: 'dtmf';
-  }
-
-  export interface SMSUtterance {
-    /**
-     * Text content of the SMS message.
-     */
-    content: string;
-
-    /**
-     * SMS message received from the user during the call (for example while the agent
-     * is leaving a voicemail). Not part of the spoken conversation.
-     */
-    role: 'sms';
-
-    /**
-     * Time the SMS was received, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-
-    /**
-     * Multimedia attachments (MMS). Display only; not relayed into the spoken
-     * conversation.
-     */
-    multimedia?: Array<SMSUtterance.Multimedia>;
-  }
-
-  export namespace SMSUtterance {
-    export interface Multimedia {
-      /**
-       * URL of the multimedia attachment.
-       */
-      url: string;
-
-      /**
-       * Optional textual summary of the attachment.
-       */
-      summary?: string;
-    }
-  }
-
-  export interface InjectedUtterance {
-    /**
-     * The injected context text.
-     */
-    content: string;
-
-    /**
-     * External context injected into the conversation via the update-live-call API.
-     * Not spoken by either party.
-     */
-    role: 'injected';
-
-    /**
-     * Time the context was injected, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-  }
-
-  export interface Utterance {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user' | 'transfer_target';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<Utterance.Word>;
-
-    metadata?: Utterance.Metadata;
-  }
-
-  export namespace Utterance {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-
-    export interface Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-
-      /**
-       * Custom LLM agent interruption identifier, when available.
-       */
-      interrupt_id?: number;
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -1835,340 +1506,11 @@ export namespace PhoneCallResponse {
       interrupt_id?: number;
 
       /**
-       * Whether the utterance is a backchannel acknowledgment.
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
        */
-      is_backchannel?: boolean;
-
-      /**
-       * Call-scoped agent response identifier, when available.
-       */
-      response_id?: number;
-    }
-
-    export namespace Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallInvocationUtterance {
-    /**
-     * Arguments for this tool call, it's a stringified JSON object.
-     */
-    arguments: string;
-
-    /**
-     * Name of the tool. This is the configured tool name, or the node name for a
-     * built-in conversation flow node, so it can contain spaces and non-ASCII
-     * characters. To identify the kind of tool, use `type`.
-     */
-    name: string;
-
-    /**
-     * This is a tool call invocation.
-     */
-    role: 'tool_call_invocation';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    metadata?: ToolCallInvocationUtterance.Metadata;
-
-    /**
-     * Optional thought signature from Google Gemini thinking models. This is used
-     * internally to maintain reasoning chain in multi-turn function calling.
-     */
-    thought_signature?: string;
-
-    /**
-     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
-     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
-     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
-     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
-     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
-     */
-    type?: string;
-  }
-
-  export namespace ToolCallInvocationUtterance {
-    export interface Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-    }
-
-    export namespace Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallResultUtterance {
-    /**
-     * Result of the tool call, can be a string, a stringified json, etc.
-     */
-    content: string;
-
-    /**
-     * This is the result of a tool call.
-     */
-    role: 'tool_call_result';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    /**
-     * Whether the tool call was successful.
-     */
-    successful?: boolean;
-  }
-
-  export interface NodeTransitionUtterance {
-    /**
-     * Former node id
-     */
-    former_node_id: string;
-
-    /**
-     * Former node name
-     */
-    former_node_name: string;
-
-    /**
-     * New node id
-     */
-    new_node_id: string;
-
-    /**
-     * New node name
-     */
-    new_node_name: string;
-
-    /**
-     * This is result of a node transition
-     */
-    role: 'node_transition';
-
-    /**
-     * How this node was reached. "global" means a global node transition,
-     * "global_go_back" means returning from a global node, "interrupt_go_back" means
-     * going back due to user interruption, and "normal" means a regular edge
-     * transition.
-     */
-    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
-  }
-
-  export interface DtmfUtterance {
-    /**
-     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
-     * "\*", "#" etc.
-     */
-    digit: string;
-
-    /**
-     * Digit pressed by the user from their phone keypad.
-     */
-    role: 'dtmf';
-  }
-
-  export interface SMSUtterance {
-    /**
-     * Text content of the SMS message.
-     */
-    content: string;
-
-    /**
-     * SMS message received from the user during the call (for example while the agent
-     * is leaving a voicemail). Not part of the spoken conversation.
-     */
-    role: 'sms';
-
-    /**
-     * Time the SMS was received, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-
-    /**
-     * Multimedia attachments (MMS). Display only; not relayed into the spoken
-     * conversation.
-     */
-    multimedia?: Array<SMSUtterance.Multimedia>;
-  }
-
-  export namespace SMSUtterance {
-    export interface Multimedia {
-      /**
-       * URL of the multimedia attachment.
-       */
-      url: string;
-
-      /**
-       * Optional textual summary of the attachment.
-       */
-      summary?: string;
-    }
-  }
-
-  export interface InjectedUtterance {
-    /**
-     * The injected context text.
-     */
-    content: string;
-
-    /**
-     * External context injected into the conversation via the update-live-call API.
-     * Not spoken by either party.
-     */
-    role: 'injected';
-
-    /**
-     * Time the context was injected, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-  }
-
-  export interface Utterance {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user' | 'transfer_target';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<Utterance.Word>;
-
-    metadata?: Utterance.Metadata;
-  }
-
-  export namespace Utterance {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-
-    export interface Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-
-      /**
-       * Custom LLM agent interruption identifier, when available.
-       */
-      interrupt_id?: number;
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -2505,6 +1847,699 @@ export namespace PhoneCallResponse {
        * Custom LLM agent interruption identifier, when available.
        */
       interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * Digit pressed by the user from their phone keypad.
+     */
+    role: 'dtmf';
+  }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * Digit pressed by the user from their phone keypad.
+     */
+    role: 'dtmf';
+  }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -2854,6 +2889,13 @@ export namespace PhoneCallResponse {
       interrupt_id?: number;
 
       /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
        * Whether the utterance is a backchannel acknowledgment.
        */
       is_backchannel?: boolean;
@@ -2966,6 +3008,13 @@ export namespace PhoneCallResponse {
        * Custom LLM agent interruption identifier, when available.
        */
       interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -4126,340 +4175,11 @@ export namespace WebCallResponse {
       interrupt_id?: number;
 
       /**
-       * Whether the utterance is a backchannel acknowledgment.
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
        */
-      is_backchannel?: boolean;
-
-      /**
-       * Call-scoped agent response identifier, when available.
-       */
-      response_id?: number;
-    }
-
-    export namespace Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallInvocationUtterance {
-    /**
-     * Arguments for this tool call, it's a stringified JSON object.
-     */
-    arguments: string;
-
-    /**
-     * Name of the tool. This is the configured tool name, or the node name for a
-     * built-in conversation flow node, so it can contain spaces and non-ASCII
-     * characters. To identify the kind of tool, use `type`.
-     */
-    name: string;
-
-    /**
-     * This is a tool call invocation.
-     */
-    role: 'tool_call_invocation';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    metadata?: ToolCallInvocationUtterance.Metadata;
-
-    /**
-     * Optional thought signature from Google Gemini thinking models. This is used
-     * internally to maintain reasoning chain in multi-turn function calling.
-     */
-    thought_signature?: string;
-
-    /**
-     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
-     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
-     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
-     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
-     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
-     */
-    type?: string;
-  }
-
-  export namespace ToolCallInvocationUtterance {
-    export interface Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-    }
-
-    export namespace Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallResultUtterance {
-    /**
-     * Result of the tool call, can be a string, a stringified json, etc.
-     */
-    content: string;
-
-    /**
-     * This is the result of a tool call.
-     */
-    role: 'tool_call_result';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    /**
-     * Whether the tool call was successful.
-     */
-    successful?: boolean;
-  }
-
-  export interface NodeTransitionUtterance {
-    /**
-     * Former node id
-     */
-    former_node_id: string;
-
-    /**
-     * Former node name
-     */
-    former_node_name: string;
-
-    /**
-     * New node id
-     */
-    new_node_id: string;
-
-    /**
-     * New node name
-     */
-    new_node_name: string;
-
-    /**
-     * This is result of a node transition
-     */
-    role: 'node_transition';
-
-    /**
-     * How this node was reached. "global" means a global node transition,
-     * "global_go_back" means returning from a global node, "interrupt_go_back" means
-     * going back due to user interruption, and "normal" means a regular edge
-     * transition.
-     */
-    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
-  }
-
-  export interface DtmfUtterance {
-    /**
-     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
-     * "\*", "#" etc.
-     */
-    digit: string;
-
-    /**
-     * Digit pressed by the user from their phone keypad.
-     */
-    role: 'dtmf';
-  }
-
-  export interface SMSUtterance {
-    /**
-     * Text content of the SMS message.
-     */
-    content: string;
-
-    /**
-     * SMS message received from the user during the call (for example while the agent
-     * is leaving a voicemail). Not part of the spoken conversation.
-     */
-    role: 'sms';
-
-    /**
-     * Time the SMS was received, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-
-    /**
-     * Multimedia attachments (MMS). Display only; not relayed into the spoken
-     * conversation.
-     */
-    multimedia?: Array<SMSUtterance.Multimedia>;
-  }
-
-  export namespace SMSUtterance {
-    export interface Multimedia {
-      /**
-       * URL of the multimedia attachment.
-       */
-      url: string;
-
-      /**
-       * Optional textual summary of the attachment.
-       */
-      summary?: string;
-    }
-  }
-
-  export interface InjectedUtterance {
-    /**
-     * The injected context text.
-     */
-    content: string;
-
-    /**
-     * External context injected into the conversation via the update-live-call API.
-     * Not spoken by either party.
-     */
-    role: 'injected';
-
-    /**
-     * Time the context was injected, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-  }
-
-  export interface Utterance {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user' | 'transfer_target';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<Utterance.Word>;
-
-    metadata?: Utterance.Metadata;
-  }
-
-  export namespace Utterance {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-
-    export interface Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-
-      /**
-       * Custom LLM agent interruption identifier, when available.
-       */
-      interrupt_id?: number;
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -4798,340 +4518,11 @@ export namespace WebCallResponse {
       interrupt_id?: number;
 
       /**
-       * Whether the utterance is a backchannel acknowledgment.
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
        */
-      is_backchannel?: boolean;
-
-      /**
-       * Call-scoped agent response identifier, when available.
-       */
-      response_id?: number;
-    }
-
-    export namespace Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallInvocationUtterance {
-    /**
-     * Arguments for this tool call, it's a stringified JSON object.
-     */
-    arguments: string;
-
-    /**
-     * Name of the tool. This is the configured tool name, or the node name for a
-     * built-in conversation flow node, so it can contain spaces and non-ASCII
-     * characters. To identify the kind of tool, use `type`.
-     */
-    name: string;
-
-    /**
-     * This is a tool call invocation.
-     */
-    role: 'tool_call_invocation';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    metadata?: ToolCallInvocationUtterance.Metadata;
-
-    /**
-     * Optional thought signature from Google Gemini thinking models. This is used
-     * internally to maintain reasoning chain in multi-turn function calling.
-     */
-    thought_signature?: string;
-
-    /**
-     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
-     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
-     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
-     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
-     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
-     */
-    type?: string;
-  }
-
-  export namespace ToolCallInvocationUtterance {
-    export interface Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-    }
-
-    export namespace Metadata {
-      /**
-       * Backup model that generated this tool invocation.
-       */
-      export interface BackupModelUsed {
-        /**
-         * Backup model configured for this request.
-         */
-        backup_model: string;
-
-        /**
-         * Actual selected model after routing and retries.
-         */
-        model: string;
-
-        /**
-         * Primary model configured for this request.
-         */
-        primary_model: string;
-
-        /**
-         * Why the backup won. primary_failed means primary attempts failed;
-         * preference_expired means backup was ready within the primary preference window;
-         * first_usable means backup became ready after that window and won the race.
-         */
-        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
-
-        /**
-         * Elapsed milliseconds from race start to winner selection.
-         */
-        selection_latency_ms: number;
-
-        /**
-         * Elapsed milliseconds until backup produced usable output. Omitted when
-         * unavailable.
-         */
-        backup_ready_ms?: number;
-
-        /**
-         * Elapsed milliseconds until primary produced usable output. Omitted if primary
-         * was not ready when the winner was selected.
-         */
-        primary_ready_ms?: number;
-      }
-    }
-  }
-
-  export interface ToolCallResultUtterance {
-    /**
-     * Result of the tool call, can be a string, a stringified json, etc.
-     */
-    content: string;
-
-    /**
-     * This is the result of a tool call.
-     */
-    role: 'tool_call_result';
-
-    /**
-     * Tool call id, globally unique.
-     */
-    tool_call_id: string;
-
-    /**
-     * Whether the tool call was successful.
-     */
-    successful?: boolean;
-  }
-
-  export interface NodeTransitionUtterance {
-    /**
-     * Former node id
-     */
-    former_node_id: string;
-
-    /**
-     * Former node name
-     */
-    former_node_name: string;
-
-    /**
-     * New node id
-     */
-    new_node_id: string;
-
-    /**
-     * New node name
-     */
-    new_node_name: string;
-
-    /**
-     * This is result of a node transition
-     */
-    role: 'node_transition';
-
-    /**
-     * How this node was reached. "global" means a global node transition,
-     * "global_go_back" means returning from a global node, "interrupt_go_back" means
-     * going back due to user interruption, and "normal" means a regular edge
-     * transition.
-     */
-    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
-  }
-
-  export interface DtmfUtterance {
-    /**
-     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
-     * "\*", "#" etc.
-     */
-    digit: string;
-
-    /**
-     * Digit pressed by the user from their phone keypad.
-     */
-    role: 'dtmf';
-  }
-
-  export interface SMSUtterance {
-    /**
-     * Text content of the SMS message.
-     */
-    content: string;
-
-    /**
-     * SMS message received from the user during the call (for example while the agent
-     * is leaving a voicemail). Not part of the spoken conversation.
-     */
-    role: 'sms';
-
-    /**
-     * Time the SMS was received, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-
-    /**
-     * Multimedia attachments (MMS). Display only; not relayed into the spoken
-     * conversation.
-     */
-    multimedia?: Array<SMSUtterance.Multimedia>;
-  }
-
-  export namespace SMSUtterance {
-    export interface Multimedia {
-      /**
-       * URL of the multimedia attachment.
-       */
-      url: string;
-
-      /**
-       * Optional textual summary of the attachment.
-       */
-      summary?: string;
-    }
-  }
-
-  export interface InjectedUtterance {
-    /**
-     * The injected context text.
-     */
-    content: string;
-
-    /**
-     * External context injected into the conversation via the update-live-call API.
-     * Not spoken by either party.
-     */
-    role: 'injected';
-
-    /**
-     * Time the context was injected, in seconds relative to the start of the call.
-     */
-    time_sec: number;
-  }
-
-  export interface Utterance {
-    /**
-     * Transcript of the utterances.
-     */
-    content: string;
-
-    /**
-     * Documents whether this utterance is spoken by agent or user.
-     */
-    role: 'agent' | 'user' | 'transfer_target';
-
-    /**
-     * Array of words in the utterance with the word timestamp. Useful for
-     * understanding what word was spoken at what time. Note that the word timestamp is
-     * not guaranteed to be accurate, it's more like an approximation.
-     */
-    words: Array<Utterance.Word>;
-
-    metadata?: Utterance.Metadata;
-  }
-
-  export namespace Utterance {
-    export interface Word {
-      /**
-       * End time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      end?: number;
-
-      /**
-       * Start time of the word in the call in second. This is relative audio time, not
-       * wall time.
-       */
-      start?: number;
-
-      /**
-       * Word transcript (with punctuation if applicable).
-       */
-      word?: string;
-    }
-
-    export interface Metadata {
-      /**
-       * The first backup model used in the Retell-managed response associated with this
-       * utterance, including tool-only requests. Does not imply every word was generated
-       * by the backup model. Absent when no backup was used or for backchannels.
-       */
-      backup_model_used?: Metadata.BackupModelUsed;
-
-      /**
-       * Custom LLM agent interruption identifier, when available.
-       */
-      interrupt_id?: number;
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -5468,6 +4859,699 @@ export namespace WebCallResponse {
        * Custom LLM agent interruption identifier, when available.
        */
       interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * Digit pressed by the user from their phone keypad.
+     */
+    role: 'dtmf';
+  }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
+       * Whether the utterance is a backchannel acknowledgment.
+       */
+      is_backchannel?: boolean;
+
+      /**
+       * Call-scoped agent response identifier, when available.
+       */
+      response_id?: number;
+    }
+
+    export namespace Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallInvocationUtterance {
+    /**
+     * Arguments for this tool call, it's a stringified JSON object.
+     */
+    arguments: string;
+
+    /**
+     * Name of the tool. This is the configured tool name, or the node name for a
+     * built-in conversation flow node, so it can contain spaces and non-ASCII
+     * characters. To identify the kind of tool, use `type`.
+     */
+    name: string;
+
+    /**
+     * This is a tool call invocation.
+     */
+    role: 'tool_call_invocation';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    metadata?: ToolCallInvocationUtterance.Metadata;
+
+    /**
+     * Optional thought signature from Google Gemini thinking models. This is used
+     * internally to maintain reasoning chain in multi-turn function calling.
+     */
+    thought_signature?: string;
+
+    /**
+     * Kind of tool. Known values are `custom`, `code`, `mcp`, `integration_app`,
+     * `end_call`, `transfer_call`, `bridge_transfer`, `cancel_transfer`, `agent_swap`,
+     * `press_digit`, `send_sms`, `extract_dynamic_variable`, `adjust_voice_speed`,
+     * `book_appointment_cal`, and `check_availability_cal`. New values can be added.
+     * Absent on tool calls sent by a custom LLM, and on some older calls and chats.
+     */
+    type?: string;
+  }
+
+  export namespace ToolCallInvocationUtterance {
+    export interface Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+    }
+
+    export namespace Metadata {
+      /**
+       * Backup model that generated this tool invocation.
+       */
+      export interface BackupModelUsed {
+        /**
+         * Backup model configured for this request.
+         */
+        backup_model: string;
+
+        /**
+         * Actual selected model after routing and retries.
+         */
+        model: string;
+
+        /**
+         * Primary model configured for this request.
+         */
+        primary_model: string;
+
+        /**
+         * Why the backup won. primary_failed means primary attempts failed;
+         * preference_expired means backup was ready within the primary preference window;
+         * first_usable means backup became ready after that window and won the race.
+         */
+        reason: 'primary_failed' | 'preference_expired' | 'first_usable';
+
+        /**
+         * Elapsed milliseconds from race start to winner selection.
+         */
+        selection_latency_ms: number;
+
+        /**
+         * Elapsed milliseconds until backup produced usable output. Omitted when
+         * unavailable.
+         */
+        backup_ready_ms?: number;
+
+        /**
+         * Elapsed milliseconds until primary produced usable output. Omitted if primary
+         * was not ready when the winner was selected.
+         */
+        primary_ready_ms?: number;
+      }
+    }
+  }
+
+  export interface ToolCallResultUtterance {
+    /**
+     * Result of the tool call, can be a string, a stringified json, etc.
+     */
+    content: string;
+
+    /**
+     * This is the result of a tool call.
+     */
+    role: 'tool_call_result';
+
+    /**
+     * Tool call id, globally unique.
+     */
+    tool_call_id: string;
+
+    /**
+     * Whether the tool call was successful.
+     */
+    successful?: boolean;
+  }
+
+  export interface NodeTransitionUtterance {
+    /**
+     * Former node id
+     */
+    former_node_id: string;
+
+    /**
+     * Former node name
+     */
+    former_node_name: string;
+
+    /**
+     * New node id
+     */
+    new_node_id: string;
+
+    /**
+     * New node name
+     */
+    new_node_name: string;
+
+    /**
+     * This is result of a node transition
+     */
+    role: 'node_transition';
+
+    /**
+     * How this node was reached. "global" means a global node transition,
+     * "global_go_back" means returning from a global node, "interrupt_go_back" means
+     * going back due to user interruption, and "normal" means a regular edge
+     * transition.
+     */
+    transition_type?: 'global' | 'global_go_back' | 'interrupt_go_back' | 'normal';
+  }
+
+  export interface DtmfUtterance {
+    /**
+     * The digit pressed by the user. Will be a single digit string like "1", "2", "3",
+     * "\*", "#" etc.
+     */
+    digit: string;
+
+    /**
+     * Digit pressed by the user from their phone keypad.
+     */
+    role: 'dtmf';
+  }
+
+  export interface SMSUtterance {
+    /**
+     * Text content of the SMS message.
+     */
+    content: string;
+
+    /**
+     * SMS message received from the user during the call (for example while the agent
+     * is leaving a voicemail). Not part of the spoken conversation.
+     */
+    role: 'sms';
+
+    /**
+     * Time the SMS was received, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+
+    /**
+     * Multimedia attachments (MMS). Display only; not relayed into the spoken
+     * conversation.
+     */
+    multimedia?: Array<SMSUtterance.Multimedia>;
+  }
+
+  export namespace SMSUtterance {
+    export interface Multimedia {
+      /**
+       * URL of the multimedia attachment.
+       */
+      url: string;
+
+      /**
+       * Optional textual summary of the attachment.
+       */
+      summary?: string;
+    }
+  }
+
+  export interface InjectedUtterance {
+    /**
+     * The injected context text.
+     */
+    content: string;
+
+    /**
+     * External context injected into the conversation via the update-live-call API.
+     * Not spoken by either party.
+     */
+    role: 'injected';
+
+    /**
+     * Time the context was injected, in seconds relative to the start of the call.
+     */
+    time_sec: number;
+  }
+
+  export interface Utterance {
+    /**
+     * Transcript of the utterances.
+     */
+    content: string;
+
+    /**
+     * Documents whether this utterance is spoken by agent or user.
+     */
+    role: 'agent' | 'user' | 'transfer_target';
+
+    /**
+     * Array of words in the utterance with the word timestamp. Useful for
+     * understanding what word was spoken at what time. Note that the word timestamp is
+     * not guaranteed to be accurate, it's more like an approximation.
+     */
+    words: Array<Utterance.Word>;
+
+    metadata?: Utterance.Metadata;
+  }
+
+  export namespace Utterance {
+    export interface Word {
+      /**
+       * End time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      end?: number;
+
+      /**
+       * Start time of the word in the call in second. This is relative audio time, not
+       * wall time.
+       */
+      start?: number;
+
+      /**
+       * Word transcript (with punctuation if applicable).
+       */
+      word?: string;
+    }
+
+    export interface Metadata {
+      /**
+       * The first backup model used in the Retell-managed response associated with this
+       * utterance, including tool-only requests. Does not imply every word was generated
+       * by the backup model. Absent when no backup was used or for backchannels.
+       */
+      backup_model_used?: Metadata.BackupModelUsed;
+
+      /**
+       * Custom LLM agent interruption identifier, when available.
+       */
+      interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
@@ -5806,6 +5890,13 @@ export namespace WebCallResponse {
       interrupt_id?: number;
 
       /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
+
+      /**
        * Whether the utterance is a backchannel acknowledgment.
        */
       is_backchannel?: boolean;
@@ -5918,6 +6009,13 @@ export namespace WebCallResponse {
        * Custom LLM agent interruption identifier, when available.
        */
       interrupt_id?: number;
+
+      /**
+       * Whether the user cut off this agent utterance before it finished playing. Only
+       * set for Retell LLM and conversation flow agents; absent when the agent was not
+       * interrupted.
+       */
+      interrupted?: boolean;
 
       /**
        * Whether the utterance is a backchannel acknowledgment.
