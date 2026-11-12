@@ -63,6 +63,13 @@ export interface CRMConfig {
    */
   default_contact_memory_update_prompt: string;
 
+  /**
+   * When true, calls and chats do not create or update contacts: no contact memory,
+   * analysis data or campaign outcome fields are written, and no conversation
+   * activity is pushed to the linked CRM. Existing contacts are kept.
+   */
+  opt_out_contact_sync: boolean;
+
   org_id: string;
 
   /**
@@ -279,6 +286,13 @@ export interface CRMUpdateConfigParams {
    * mappings.
    */
   custom_fields?: Array<CRMUpdateConfigParams.CustomField>;
+
+  /**
+   * Set true to stop calls and chats from creating or updating contacts, false to
+   * resume. Contacts created through the API, CSV import or the linked CRM's sync
+   * are unaffected.
+   */
+  opt_out_contact_sync?: boolean;
 }
 
 export namespace CRMUpdateConfigParams {
