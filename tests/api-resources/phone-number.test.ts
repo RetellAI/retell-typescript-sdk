@@ -128,4 +128,71 @@ describe('resource phoneNumber', () => {
       transport: 'TCP',
     });
   });
+
+  // Mock server tests are disabled
+  test.skip('search', async () => {
+    const responsePromise = client.phoneNumber.search();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('search: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.phoneNumber.search(
+        {
+          limit: 1000,
+          pagination_key: 'pagination_key',
+          sort_order: 'ascending',
+          filter_criteria: {
+            branded_call: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
+            inbound_agent_tags: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
+            inbound_agents: [{ agent_id: 'agent_id', version: [0] }],
+            outbound_agent_tags: {
+              op: 'in',
+              type: 'enum',
+              value: ['string'],
+            },
+            outbound_agents: [{ agent_id: 'agent_id', version: [0] }],
+            phone_number_type: {
+              op: 'in',
+              type: 'enum',
+              value: ['retell-twilio'],
+            },
+            query: 'query',
+            sms: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
+            spam_status: {
+              op: 'in',
+              type: 'enum',
+              value: ['clean'],
+            },
+            verified_number: {
+              op: 'eq',
+              type: 'boolean',
+              value: true,
+            },
+          },
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Retell.NotFoundError);
+  });
 });

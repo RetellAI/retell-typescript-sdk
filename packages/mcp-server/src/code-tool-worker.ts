@@ -135,6 +135,7 @@ const fuse = new Fuse(
     'client.phoneNumber.import',
     'client.phoneNumber.list',
     'client.phoneNumber.retrieve',
+    'client.phoneNumber.search',
     'client.phoneNumber.update',
     'client.agent.create',
     'client.agent.createVersion',

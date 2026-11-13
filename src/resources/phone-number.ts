@@ -115,9 +115,34 @@ export class PhoneNumber extends APIResource {
   import(body: PhoneNumberImportParams, options?: RequestOptions): APIPromise<PhoneNumberResponse> {
     return this._client.post('/import-phone-number', { body, ...options });
   }
+
+  /**
+   * List phone numbers with filters and pagination.
+   *
+   * @example
+   * ```ts
+   * const response = await client.phoneNumber.search();
+   * ```
+   */
+  search(
+    params: PhoneNumberSearchParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PhoneNumberSearchResponse> {
+    const { limit, pagination_key, sort_order, ...body } = params ?? {};
+    return this._client.post('/v2/list-phone-numbers', {
+      query: { limit, pagination_key, sort_order },
+      body,
+      ...options,
+    });
+  }
 }
 
 export interface PhoneNumberResponse {
+  /**
+   * Whether the number has a custom SMS configuration.
+   */
+  custom_sms_enabled: boolean;
+
   /**
    * Last modification timestamp (milliseconds since epoch). Either the time of last
    * update or creation if no updates available.
@@ -223,6 +248,24 @@ export interface PhoneNumberResponse {
   phone_number_pretty?: string;
 
   sip_outbound_trunk_config?: PhoneNumberResponse.SipOutboundTrunkConfig | null;
+
+  /**
+   * Whether the number can send SMS, through a custom SMS configuration or an
+   * approved A2P application. Returned only by `GET` and `POST`
+   * `/v2/list-phone-numbers`.
+   */
+  sms_enabled?: boolean;
+
+  /**
+   * Whether this number is enrolled in daily spam testing.
+   */
+  spam_check_enabled?: boolean;
+
+  /**
+   * Latest spam test result for this number. Absent until the first vendor result
+   * arrives.
+   */
+  spam_status?: 'clean' | 'spam';
 }
 
 export namespace PhoneNumberResponse {
@@ -346,6 +389,20 @@ export namespace PhoneNumberResponse {
 }
 
 export interface PhoneNumberListResponse {
+  /**
+   * Whether more results are available.
+   */
+  has_more: boolean;
+
+  items: Array<PhoneNumberResponse>;
+
+  /**
+   * Pagination key for the next page.
+   */
+  pagination_key?: string;
+}
+
+export interface PhoneNumberSearchResponse {
   /**
    * Whether more results are available.
    */
@@ -849,13 +906,197 @@ export namespace PhoneNumberImportParams {
   }
 }
 
+export interface PhoneNumberSearchParams {
+  /**
+   * Query param: Maximum number of items to return.
+   */
+  limit?: number;
+
+  /**
+   * Query param: Pagination key for fetching the next page.
+   */
+  pagination_key?: string;
+
+  /**
+   * Query param: Sort order for results.
+   */
+  sort_order?: 'ascending' | 'descending';
+
+  /**
+   * Body param: Filters for listing phone numbers. All provided filters are
+   * connected with AND.
+   */
+  filter_criteria?: PhoneNumberSearchParams.FilterCriteria;
+}
+
+export namespace PhoneNumberSearchParams {
+  /**
+   * Filters for listing phone numbers. All provided filters are connected with AND.
+   */
+  export interface FilterCriteria {
+    /**
+     * Matches numbers that have an active branded call registration.
+     */
+    branded_call?: FilterCriteria.BrandedCall;
+
+    /**
+     * Agent version tags, such as `production`. Without `inbound_agents`, matches
+     * numbers whose inbound agent is bound through one of these tags.
+     */
+    inbound_agent_tags?: FilterCriteria.InboundAgentTags;
+
+    /**
+     * Matches numbers with any listed agent among their inbound agents. For an agent
+     * with `version`, a number matches when it is bound to a listed version or to a
+     * tag in `inbound_agent_tags`.
+     */
+    inbound_agents?: Array<FilterCriteria.InboundAgent>;
+
+    /**
+     * Agent version tags, such as `production`. Without `outbound_agents`, matches
+     * numbers whose outbound agent is bound through one of these tags.
+     */
+    outbound_agent_tags?: FilterCriteria.OutboundAgentTags;
+
+    /**
+     * Matches numbers with any listed agent among their outbound agents. For an agent
+     * with `version`, a number matches when it is bound to a listed version or to a
+     * tag in `outbound_agent_tags`.
+     */
+    outbound_agents?: Array<FilterCriteria.OutboundAgent>;
+
+    phone_number_type?: FilterCriteria.PhoneNumberType;
+
+    /**
+     * Substring match against the phone number, pretty phone number, or nickname. The
+     * nickname match ignores case.
+     */
+    query?: string;
+
+    /**
+     * Matches numbers that have a custom SMS configuration or an approved A2P
+     * application.
+     */
+    sms?: FilterCriteria.SMS;
+
+    spam_status?: FilterCriteria.SpamStatus;
+
+    /**
+     * Matches numbers that have an active phone verification.
+     */
+    verified_number?: FilterCriteria.VerifiedNumber;
+  }
+
+  export namespace FilterCriteria {
+    /**
+     * Matches numbers that have an active branded call registration.
+     */
+    export interface BrandedCall {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: true;
+    }
+
+    /**
+     * Agent version tags, such as `production`. Without `inbound_agents`, matches
+     * numbers whose inbound agent is bound through one of these tags.
+     */
+    export interface InboundAgentTags {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+    }
+
+    export interface InboundAgent {
+      agent_id: string;
+
+      version?: Array<number>;
+    }
+
+    /**
+     * Agent version tags, such as `production`. Without `outbound_agents`, matches
+     * numbers whose outbound agent is bound through one of these tags.
+     */
+    export interface OutboundAgentTags {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<string>;
+    }
+
+    export interface OutboundAgent {
+      agent_id: string;
+
+      version?: Array<number>;
+    }
+
+    export interface PhoneNumberType {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'retell-twilio' | 'retell-telnyx' | 'retell-bandwidth' | 'custom'>;
+    }
+
+    /**
+     * Matches numbers that have a custom SMS configuration or an approved A2P
+     * application.
+     */
+    export interface SMS {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: true;
+    }
+
+    export interface SpamStatus {
+      /**
+       * in: value is one of the listed values
+       */
+      op: 'in';
+
+      type: 'enum';
+
+      value: Array<'clean' | 'spam' | 'unknown' | 'not_enrolled'>;
+    }
+
+    /**
+     * Matches numbers that have an active phone verification.
+     */
+    export interface VerifiedNumber {
+      op: 'eq';
+
+      type: 'boolean';
+
+      value: true;
+    }
+  }
+}
+
 export declare namespace PhoneNumber {
   export {
     type PhoneNumberResponse as PhoneNumberResponse,
     type PhoneNumberListResponse as PhoneNumberListResponse,
+    type PhoneNumberSearchResponse as PhoneNumberSearchResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
     type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
+    type PhoneNumberSearchParams as PhoneNumberSearchParams,
   };
 }

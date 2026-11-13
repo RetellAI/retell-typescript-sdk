@@ -683,6 +683,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-hydrogen'
           | 'gemini-4-carbon'
           | 'gemini-4-argon'
           | null;
@@ -1109,9 +1110,8 @@ export namespace BatchCallCreateBatchCallParams {
           type: 'string';
 
           /**
-           * Optional instruction to help decide whether this field needs to be populated in
-           * the analysis. If not set, the field is always included. If required is true,
-           * this is ignored.
+           * Instruction for deciding whether to populate this field. Only used when required
+           * is false.
            */
           conditional_prompt?: string;
 
@@ -1121,8 +1121,10 @@ export namespace BatchCallCreateBatchCallParams {
           examples?: Array<string>;
 
           /**
-           * Whether this data is required. If true and the data is not extracted, the call
-           * will be marked as unsuccessful.
+           * Whether this data is required. Defaults to true. If true and the data is not
+           * extracted, the call will be marked as unsuccessful. Set to false to let the
+           * field stay empty when the call has no applicable value; this is the "Allow empty
+           * value" setting in the dashboard.
            */
           required?: boolean;
         }
@@ -1149,15 +1151,16 @@ export namespace BatchCallCreateBatchCallParams {
           type: 'enum';
 
           /**
-           * Optional instruction to help decide whether this field needs to be populated in
-           * the analysis. If not set, the field is always included. If required is true,
-           * this is ignored.
+           * Instruction for deciding whether to populate this field. Only used when required
+           * is false.
            */
           conditional_prompt?: string;
 
           /**
-           * Whether this data is required. If true and the data is not extracted, the call
-           * will be marked as unsuccessful.
+           * Whether this data is required. Defaults to true. If true and the data is not
+           * extracted, the call will be marked as unsuccessful. Set to false to let the
+           * field stay empty when the call has no applicable value; this is the "Allow empty
+           * value" setting in the dashboard.
            */
           required?: boolean;
         }
@@ -1179,15 +1182,16 @@ export namespace BatchCallCreateBatchCallParams {
           type: 'boolean';
 
           /**
-           * Optional instruction to help decide whether this field needs to be populated in
-           * the analysis. If not set, the field is always included. If required is true,
-           * this is ignored.
+           * Instruction for deciding whether to populate this field. Only used when required
+           * is false.
            */
           conditional_prompt?: string;
 
           /**
-           * Whether this data is required. If true and the data is not extracted, the call
-           * will be marked as unsuccessful.
+           * Whether this data is required. Defaults to true. If true and the data is not
+           * extracted, the call will be marked as unsuccessful. Set to false to let the
+           * field stay empty when the call has no applicable value; this is the "Allow empty
+           * value" setting in the dashboard.
            */
           required?: boolean;
         }
@@ -1209,15 +1213,16 @@ export namespace BatchCallCreateBatchCallParams {
           type: 'number';
 
           /**
-           * Optional instruction to help decide whether this field needs to be populated in
-           * the analysis. If not set, the field is always included. If required is true,
-           * this is ignored.
+           * Instruction for deciding whether to populate this field. Only used when required
+           * is false.
            */
           conditional_prompt?: string;
 
           /**
-           * Whether this data is required. If true and the data is not extracted, the call
-           * will be marked as unsuccessful.
+           * Whether this data is required. Defaults to true. If true and the data is not
+           * extracted, the call will be marked as unsuccessful. Set to false to let the
+           * field stay empty when the call has no applicable value; this is the "Allow empty
+           * value" setting in the dashboard.
            */
           required?: boolean;
         }
@@ -1238,8 +1243,8 @@ export namespace BatchCallCreateBatchCallParams {
           type: 'system-presets';
 
           /**
-           * Optional instruction to help decide whether this field needs to be populated. If
-           * not set, the field is always included.
+           * Instruction for deciding whether to populate this field. Only used when required
+           * is false.
            */
           conditional_prompt?: string;
 
@@ -2637,6 +2642,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-hydrogen'
             | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
@@ -2718,6 +2724,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-hydrogen'
             | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
@@ -2822,6 +2829,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -2878,6 +2886,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -2996,6 +3005,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -3050,6 +3060,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -3150,6 +3161,7 @@ export namespace BatchCallCreateBatchCallParams {
           | 'gemini-3.6-flash'
           | 'gemini-3.7-flash'
           | 'gemini-3.8-flash'
+          | 'gemini-4-hydrogen'
           | 'gemini-4-carbon'
           | 'gemini-4-argon'
           | null;
@@ -3248,6 +3260,7 @@ export namespace BatchCallCreateBatchCallParams {
             | 'gemini-3.6-flash'
             | 'gemini-3.7-flash'
             | 'gemini-3.8-flash'
+            | 'gemini-4-hydrogen'
             | 'gemini-4-carbon'
             | 'gemini-4-argon';
 
@@ -3355,6 +3368,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -3411,6 +3425,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -3529,6 +3544,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
@@ -3583,6 +3599,7 @@ export namespace BatchCallCreateBatchCallParams {
               | 'gemini-3.6-flash'
               | 'gemini-3.7-flash'
               | 'gemini-3.8-flash'
+              | 'gemini-4-hydrogen'
               | 'gemini-4-carbon'
               | 'gemini-4-argon';
 
