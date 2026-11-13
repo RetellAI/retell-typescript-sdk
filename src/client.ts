@@ -180,6 +180,8 @@ import {
   PhoneNumberListParams,
   PhoneNumberListResponse,
   PhoneNumberResponse,
+  PhoneNumberSearchParams,
+  PhoneNumberSearchResponse,
   PhoneNumberUpdateParams,
 } from './resources/phone-number';
 import { Playground, PlaygroundCompletionParams, PlaygroundCompletionResponse } from './resources/playground';
@@ -1014,10 +1016,12 @@ export declare namespace Retell {
     PhoneNumber as PhoneNumber,
     type PhoneNumberResponse as PhoneNumberResponse,
     type PhoneNumberListResponse as PhoneNumberListResponse,
+    type PhoneNumberSearchResponse as PhoneNumberSearchResponse,
     type PhoneNumberCreateParams as PhoneNumberCreateParams,
     type PhoneNumberUpdateParams as PhoneNumberUpdateParams,
     type PhoneNumberListParams as PhoneNumberListParams,
     type PhoneNumberImportParams as PhoneNumberImportParams,
+    type PhoneNumberSearchParams as PhoneNumberSearchParams,
   };
 
   export {

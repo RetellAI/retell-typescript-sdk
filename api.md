@@ -54,6 +54,7 @@ Types:
 
 - <code><a href="./src/resources/phone-number.ts">PhoneNumberResponse</a></code>
 - <code><a href="./src/resources/phone-number.ts">PhoneNumberListResponse</a></code>
+- <code><a href="./src/resources/phone-number.ts">PhoneNumberSearchResponse</a></code>
 
 Methods:
 
@@ -63,6 +64,7 @@ Methods:
 - <code title="get /v2/list-phone-numbers">client.phoneNumber.<a href="./src/resources/phone-number.ts">list</a>({ ...params }) -> PhoneNumberListResponse</code>
 - <code title="delete /delete-phone-number/{phone_number}">client.phoneNumber.<a href="./src/resources/phone-number.ts">delete</a>(phoneNumber) -> void</code>
 - <code title="post /import-phone-number">client.phoneNumber.<a href="./src/resources/phone-number.ts">import</a>({ ...params }) -> PhoneNumberResponse</code>
+- <code title="post /v2/list-phone-numbers">client.phoneNumber.<a href="./src/resources/phone-number.ts">search</a>({ ...params }) -> PhoneNumberSearchResponse</code>
 
 # Agent
 

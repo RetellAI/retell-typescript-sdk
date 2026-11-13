@@ -159,10 +159,12 @@ export {
   PhoneNumber,
   type PhoneNumberResponse,
   type PhoneNumberListResponse,
+  type PhoneNumberSearchResponse,
   type PhoneNumberCreateParams,
   type PhoneNumberUpdateParams,
   type PhoneNumberListParams,
   type PhoneNumberImportParams,
+  type PhoneNumberSearchParams,
 } from './phone-number';
 export { Playground, type PlaygroundCompletionResponse, type PlaygroundCompletionParams } from './playground';
 export {

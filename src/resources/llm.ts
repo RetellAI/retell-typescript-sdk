@@ -225,6 +225,7 @@ export interface LlmResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -349,6 +350,7 @@ export namespace LlmResponse {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
@@ -1344,9 +1346,8 @@ export namespace LlmResponse {
       type: 'string';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
@@ -1356,8 +1357,10 @@ export namespace LlmResponse {
       examples?: Array<string>;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -1384,15 +1387,16 @@ export namespace LlmResponse {
       type: 'enum';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -1414,15 +1418,16 @@ export namespace LlmResponse {
       type: 'boolean';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -1444,15 +1449,16 @@ export namespace LlmResponse {
       type: 'number';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -1875,6 +1881,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -1931,6 +1938,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -2049,6 +2057,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -2103,6 +2112,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -3201,9 +3211,8 @@ export namespace LlmResponse {
         type: 'string';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
@@ -3213,8 +3222,10 @@ export namespace LlmResponse {
         examples?: Array<string>;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -3241,15 +3252,16 @@ export namespace LlmResponse {
         type: 'enum';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -3271,15 +3283,16 @@ export namespace LlmResponse {
         type: 'boolean';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -3301,15 +3314,16 @@ export namespace LlmResponse {
         type: 'number';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -3762,6 +3776,7 @@ export interface LlmCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -3881,6 +3896,7 @@ export namespace LlmCreateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
@@ -4876,9 +4892,8 @@ export namespace LlmCreateParams {
       type: 'string';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
@@ -4888,8 +4903,10 @@ export namespace LlmCreateParams {
       examples?: Array<string>;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -4916,15 +4933,16 @@ export namespace LlmCreateParams {
       type: 'enum';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -4946,15 +4964,16 @@ export namespace LlmCreateParams {
       type: 'boolean';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -4976,15 +4995,16 @@ export namespace LlmCreateParams {
       type: 'number';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -5407,6 +5427,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -5463,6 +5484,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -5581,6 +5603,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -5635,6 +5658,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -6733,9 +6757,8 @@ export namespace LlmCreateParams {
         type: 'string';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
@@ -6745,8 +6768,10 @@ export namespace LlmCreateParams {
         examples?: Array<string>;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -6773,15 +6798,16 @@ export namespace LlmCreateParams {
         type: 'enum';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -6803,15 +6829,16 @@ export namespace LlmCreateParams {
         type: 'boolean';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -6833,15 +6860,16 @@ export namespace LlmCreateParams {
         type: 'number';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -7295,6 +7323,7 @@ export interface LlmUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -7414,6 +7443,7 @@ export namespace LlmUpdateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
 
@@ -8409,9 +8439,8 @@ export namespace LlmUpdateParams {
       type: 'string';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
@@ -8421,8 +8450,10 @@ export namespace LlmUpdateParams {
       examples?: Array<string>;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -8449,15 +8480,16 @@ export namespace LlmUpdateParams {
       type: 'enum';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -8479,15 +8511,16 @@ export namespace LlmUpdateParams {
       type: 'boolean';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -8509,15 +8542,16 @@ export namespace LlmUpdateParams {
       type: 'number';
 
       /**
-       * Optional instruction to help decide whether this field needs to be populated in
-       * the analysis. If not set, the field is always included. If required is true,
-       * this is ignored.
+       * Instruction for deciding whether to populate this field. Only used when required
+       * is false.
        */
       conditional_prompt?: string;
 
       /**
-       * Whether this data is required. If true and the data is not extracted, the call
-       * will be marked as unsuccessful.
+       * Whether this data is required. Defaults to true. If true and the data is not
+       * extracted, the call will be marked as unsuccessful. Set to false to let the
+       * field stay empty when the call has no applicable value; this is the "Allow empty
+       * value" setting in the dashboard.
        */
       required?: boolean;
     }
@@ -8940,6 +8974,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -8996,6 +9031,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -9114,6 +9150,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -9168,6 +9205,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
 
@@ -10266,9 +10304,8 @@ export namespace LlmUpdateParams {
         type: 'string';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
@@ -10278,8 +10315,10 @@ export namespace LlmUpdateParams {
         examples?: Array<string>;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -10306,15 +10345,16 @@ export namespace LlmUpdateParams {
         type: 'enum';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -10336,15 +10376,16 @@ export namespace LlmUpdateParams {
         type: 'boolean';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }
@@ -10366,15 +10407,16 @@ export namespace LlmUpdateParams {
         type: 'number';
 
         /**
-         * Optional instruction to help decide whether this field needs to be populated in
-         * the analysis. If not set, the field is always included. If required is true,
-         * this is ignored.
+         * Instruction for deciding whether to populate this field. Only used when required
+         * is false.
          */
         conditional_prompt?: string;
 
         /**
-         * Whether this data is required. If true and the data is not extracted, the call
-         * will be marked as unsuccessful.
+         * Whether this data is required. Defaults to true. If true and the data is not
+         * extracted, the call will be marked as unsuccessful. Set to false to let the
+         * field stay empty when the call has no applicable value; this is the "Allow empty
+         * value" setting in the dashboard.
          */
         required?: boolean;
       }

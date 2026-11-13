@@ -179,6 +179,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/import-phone-number',
   },
   {
+    clientCallName: 'client.phoneNumber.search',
+    fullyQualifiedName: 'phoneNumber.search',
+    httpMethod: 'post',
+    httpPath: '/v2/list-phone-numbers',
+  },
+  {
     clientCallName: 'client.agent.create',
     fullyQualifiedName: 'agent.create',
     httpMethod: 'post',

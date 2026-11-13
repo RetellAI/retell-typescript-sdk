@@ -711,6 +711,7 @@ export interface AgentResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -1167,9 +1168,8 @@ export namespace AgentResponse {
     type: 'string';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
@@ -1179,8 +1179,10 @@ export namespace AgentResponse {
     examples?: Array<string>;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -1207,15 +1209,16 @@ export namespace AgentResponse {
     type: 'enum';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -1237,15 +1240,16 @@ export namespace AgentResponse {
     type: 'boolean';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -1267,15 +1271,16 @@ export namespace AgentResponse {
     type: 'number';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -1296,8 +1301,8 @@ export namespace AgentResponse {
     type: 'system-presets';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated. If
-     * not set, the field is always included.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
@@ -3128,6 +3133,7 @@ export interface AgentCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -3589,9 +3595,8 @@ export namespace AgentCreateParams {
     type: 'string';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
@@ -3601,8 +3606,10 @@ export namespace AgentCreateParams {
     examples?: Array<string>;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -3629,15 +3636,16 @@ export namespace AgentCreateParams {
     type: 'enum';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -3659,15 +3667,16 @@ export namespace AgentCreateParams {
     type: 'boolean';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -3689,15 +3698,16 @@ export namespace AgentCreateParams {
     type: 'number';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -3718,8 +3728,8 @@ export namespace AgentCreateParams {
     type: 'system-presets';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated. If
-     * not set, the field is always included.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
@@ -5433,6 +5443,7 @@ export interface AgentUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
     | null;
@@ -5870,9 +5881,8 @@ export namespace AgentUpdateParams {
     type: 'string';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
@@ -5882,8 +5892,10 @@ export namespace AgentUpdateParams {
     examples?: Array<string>;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -5910,15 +5922,16 @@ export namespace AgentUpdateParams {
     type: 'enum';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -5940,15 +5953,16 @@ export namespace AgentUpdateParams {
     type: 'boolean';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -5970,15 +5984,16 @@ export namespace AgentUpdateParams {
     type: 'number';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated in
-     * the analysis. If not set, the field is always included. If required is true,
-     * this is ignored.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
     /**
-     * Whether this data is required. If true and the data is not extracted, the call
-     * will be marked as unsuccessful.
+     * Whether this data is required. Defaults to true. If true and the data is not
+     * extracted, the call will be marked as unsuccessful. Set to false to let the
+     * field stay empty when the call has no applicable value; this is the "Allow empty
+     * value" setting in the dashboard.
      */
     required?: boolean;
   }
@@ -5999,8 +6014,8 @@ export namespace AgentUpdateParams {
     type: 'system-presets';
 
     /**
-     * Optional instruction to help decide whether this field needs to be populated. If
-     * not set, the field is always included.
+     * Instruction for deciding whether to populate this field. Only used when required
+     * is false.
      */
     conditional_prompt?: string;
 
