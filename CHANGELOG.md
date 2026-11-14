@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.2.21](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.20...v6.2.21) (2026-11-14)
+
+
+### Bug Fixes
+
+* **api:** Add gemini-4-hydrogen to agent LLM model options. ([0fb02d8](https://github.com/RetellAI/retell-typescript-sdk/commit/0fb02d879500273c0091fbcf90603c34e2773483))
+* **api:** Add opt_out_contact_sync to CRM configuration and update requests to stop calls and chats from creating or updating contacts. ([e8f9020](https://github.com/RetellAI/retell-typescript-sdk/commit/e8f9020d189ea223ea45c415e71c61f8c2f1f90f))
+* **api:** Add phone_number search method at POST /v2/list-phone-numbers, with optional filter_criteria for spam, SMS, verification, type, and agents. ([0fb02d8](https://github.com/RetellAI/retell-typescript-sdk/commit/0fb02d879500273c0091fbcf90603c34e2773483))
+* **api:** Add required custom_sms_enabled and optional sms_enabled, spam_status, and spam_check_enabled to phone number responses. ([0fb02d8](https://github.com/RetellAI/retell-typescript-sdk/commit/0fb02d879500273c0091fbcf90603c34e2773483))
+* **api:** Add the optional interrupted boolean to utterance metadata, indicating the user cut off the agent utterance; set only for Retell LLM and conversation flow agents. ([f4a5c4d](https://github.com/RetellAI/retell-typescript-sdk/commit/f4a5c4d4a5437d25905d59eb2dfc32f44cecf96a))
+
 ## [6.2.20](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.19...v6.2.20) (2026-11-11)
 
 ### Highlights
