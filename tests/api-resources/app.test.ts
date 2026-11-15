@@ -31,6 +31,7 @@ describe('resource app', () => {
         type: 'oauth2',
       },
       crm_config: {
+        contact_board_id: '269125115713',
         inbound_sync_mappings: [{ external_field_name: 'external_field_name', field_name: 'field_name' }],
         outbound_sync_mappings: [{ external_field_name: 'external_field_name', field_name: 'field_name' }],
         sync_conversation_activity: true,
