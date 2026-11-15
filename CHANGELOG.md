@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.2.21](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.20...v6.2.21) (2026-11-15)
+
+### Highlights
+
+* Add phone number search with filters and pagination.
+* Add opt_out_contact_sync to stop contact writes from calls and chats.
+* Make opt_out_contact_sync required on CRM config objects.
+* Add gemini-4-hydrogen LLM model option.
+* Add SMS and spam status fields to phone number responses.
+* Add interrupted flag to agent utterance metadata.
+
 ## [6.2.20](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.19...v6.2.20) (2026-11-11)
 
 ### Highlights
