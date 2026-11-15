@@ -206,6 +206,13 @@ export namespace AppResponse {
 
   export interface CRMConfig {
     /**
+     * Monday.com board used for contact sync. Configure after OAuth. Once phone
+     * mappings are saved, use a new connection to change the board or primary phone
+     * column. Not accepted by other providers.
+     */
+    contact_board_id?: string;
+
+    /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
      * include phone_number, which is the field the two systems are matched on. A
      * do_not_call mapping can mark contacts as do-not-call but never clears the flag.
@@ -573,6 +580,13 @@ export namespace AppCreateParams {
 
   export interface CRMConfig {
     /**
+     * Monday.com board used for contact sync. Configure after OAuth. Once phone
+     * mappings are saved, use a new connection to change the board or primary phone
+     * column. Not accepted by other providers.
+     */
+    contact_board_id?: string;
+
+    /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
      * include phone_number, which is the field the two systems are matched on. A
      * do_not_call mapping can mark contacts as do-not-call but never clears the flag.
@@ -687,6 +701,13 @@ export namespace AppUpdateParams {
   }
 
   export interface CRMConfig {
+    /**
+     * Monday.com board used for contact sync. Configure after OAuth. Once phone
+     * mappings are saved, use a new connection to change the board or primary phone
+     * column. Not accepted by other providers.
+     */
+    contact_board_id?: string;
+
     /**
      * Field mappings applied when syncing CRM records into Retell contacts. Must
      * include phone_number, which is the field the two systems are matched on. A
