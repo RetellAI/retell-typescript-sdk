@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.22](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.21...v6.2.22) (2026-11-18)
+
+### Highlights
+
+* Add Monday.com contact board ID to CRM configuration.
+* Add GPT-6.2 Astra and Sol LLM model options.
+
 ## [6.2.21](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.20...v6.2.21) (2026-11-15)
 
 ### Highlights
