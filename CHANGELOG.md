@@ -2,11 +2,10 @@
 
 ## [6.2.22](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.21...v6.2.22) (2026-11-18)
 
+### Highlights
 
-### Bug Fixes
-
-* **api:** Add gpt-6.2-astra and gpt-6.2-sol as model options. ([d26f5a4](https://github.com/RetellAI/retell-typescript-sdk/commit/d26f5a401605608ff55c09a65b9be1f5ddd618fb))
-* **api:** Add optional contact_board_id to CRM app configuration for Monday.com contact sync. ([b761898](https://github.com/RetellAI/retell-typescript-sdk/commit/b761898ccd5efb8cc73ba906fa7ea6af5b695501))
+* Add Monday.com contact board ID to CRM configuration.
+* Add GPT-6.2 Astra and Sol LLM model options.
 
 ## [6.2.21](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.20...v6.2.21) (2026-11-15)
 
