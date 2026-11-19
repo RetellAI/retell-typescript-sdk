@@ -39,6 +39,9 @@ describe('resource chatAgent', () => {
       guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
       handbook_config: {
         ai_disclosure: true,
+        conversational: { custom_prompt: 'custom_prompt' },
+        conversational_personality: true,
+        customer_support: { custom_prompt: 'custom_prompt' },
         default_personality: true,
         high_empathy: true,
         scope_boundaries: true,

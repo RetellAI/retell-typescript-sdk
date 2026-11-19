@@ -52,6 +52,7 @@ describe('resource batchCall', () => {
               denoising_enhancement_level: 0.8,
               denoising_mode: 'noise-cancellation',
               enable_backchannel: true,
+              enable_colloquial_model: true,
               enable_dnc_detection: false,
               enable_dynamic_responsiveness: true,
               enable_dynamic_voice_speed: true,
@@ -66,7 +67,9 @@ describe('resource batchCall', () => {
               },
               handbook_config: {
                 ai_disclosure: true,
+                conversational: { custom_prompt: 'custom_prompt' },
                 conversational_personality: true,
+                customer_support: { custom_prompt: 'custom_prompt' },
                 default_personality: true,
                 echo_verification: true,
                 high_empathy: true,

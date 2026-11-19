@@ -141,6 +141,7 @@ const fuse = new Fuse(
     'client.agent.createVersion',
     'client.agent.delete',
     'client.agent.deleteVersion',
+    'client.agent.getHandbookPresets',
     'client.agent.list',
     'client.agent.listVersions',
     'client.agent.publish',
