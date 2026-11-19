@@ -52,6 +52,7 @@ describe('resource agent', () => {
       denoising_enhancement_level: 0.8,
       denoising_mode: 'noise-cancellation',
       enable_backchannel: true,
+      enable_colloquial_model: true,
       enable_dnc_detection: false,
       enable_dynamic_responsiveness: true,
       enable_dynamic_voice_speed: true,
@@ -63,7 +64,9 @@ describe('resource agent', () => {
       guardrail_config: { input_topics: ['platform_integrity_jailbreaking'], output_topics: ['harassment'] },
       handbook_config: {
         ai_disclosure: true,
+        conversational: { custom_prompt: 'custom_prompt' },
         conversational_personality: true,
+        customer_support: { custom_prompt: 'custom_prompt' },
         default_personality: true,
         echo_verification: true,
         high_empathy: true,
@@ -315,6 +318,18 @@ describe('resource agent', () => {
   // Mock server tests are disabled
   test.skip('deleteVersion: required and optional params', async () => {
     const response = await client.agent.deleteVersion('agent_xxx', { version: 1 });
+  });
+
+  // Mock server tests are disabled
+  test.skip('getHandbookPresets', async () => {
+    const responsePromise = client.agent.getHandbookPresets();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // Mock server tests are disabled

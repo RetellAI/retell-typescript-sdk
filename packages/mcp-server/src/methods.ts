@@ -227,6 +227,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/delete-agent-version/{agent_id}',
   },
   {
+    clientCallName: 'client.agent.getHandbookPresets',
+    fullyQualifiedName: 'agent.getHandbookPresets',
+    httpMethod: 'get',
+    httpPath: '/get-handbook-presets',
+  },
+  {
     clientCallName: 'client.agent.listVersions',
     fullyQualifiedName: 'agent.listVersions',
     httpMethod: 'get',

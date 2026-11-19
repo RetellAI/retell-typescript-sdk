@@ -73,6 +73,7 @@ Types:
 - <code><a href="./src/resources/agent.ts">AgentResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentCreateVersionResponse</a></code>
+- <code><a href="./src/resources/agent.ts">AgentGetHandbookPresetsResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentListVersionsResponse</a></code>
 - <code><a href="./src/resources/agent.ts">AgentRepairResponse</a></code>
 
@@ -85,6 +86,7 @@ Methods:
 - <code title="delete /delete-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">delete</a>(agentID) -> void</code>
 - <code title="post /create-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">createVersion</a>(agentID, { ...params }) -> AgentCreateVersionResponse</code>
 - <code title="delete /delete-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">deleteVersion</a>(agentID, { ...params }) -> void</code>
+- <code title="get /get-handbook-presets">client.agent.<a href="./src/resources/agent.ts">getHandbookPresets</a>() -> AgentGetHandbookPresetsResponse</code>
 - <code title="get /list-agent-versions/{agent_id}">client.agent.<a href="./src/resources/agent.ts">listVersions</a>(agentID, { ...params }) -> AgentListVersionsResponse</code>
 - <code title="post /publish-agent-version/{agent_id}">client.agent.<a href="./src/resources/agent.ts">publish</a>(agentID, { ...params }) -> void</code>
 - <code title="post /repair-agent/{agent_id}">client.agent.<a href="./src/resources/agent.ts">repair</a>(agentID, { ...params }) -> AgentRepairResponse</code>

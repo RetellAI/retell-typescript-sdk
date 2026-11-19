@@ -5,6 +5,7 @@ export {
   type AgentResponse,
   type AgentListResponse,
   type AgentCreateVersionResponse,
+  type AgentGetHandbookPresetsResponse,
   type AgentListVersionsResponse,
   type AgentRepairResponse,
   type AgentCreateParams,

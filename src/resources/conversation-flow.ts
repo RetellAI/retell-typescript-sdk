@@ -12950,8 +12950,9 @@ export namespace ConversationFlowResponse {
       query_params?: { [key: string]: string };
 
       /**
-       * Maximum time to wait for a connection to be established (in milliseconds).
-       * Default to 120,000 ms (2 minutes).
+       * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+       * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+       * 600,000. Default to 60,000 ms (1 minute).
        */
       timeout_ms?: number;
     }
@@ -13373,8 +13374,9 @@ export namespace ConversationFlowResponse {
     query_params?: { [key: string]: string };
 
     /**
-     * Maximum time to wait for a connection to be established (in milliseconds).
-     * Default to 120,000 ms (2 minutes).
+     * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+     * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+     * 600,000. Default to 60,000 ms (1 minute).
      */
     timeout_ms?: number;
   }
@@ -52032,8 +52034,9 @@ export namespace ConversationFlowCreateParams {
       query_params?: { [key: string]: string };
 
       /**
-       * Maximum time to wait for a connection to be established (in milliseconds).
-       * Default to 120,000 ms (2 minutes).
+       * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+       * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+       * 600,000. Default to 60,000 ms (1 minute).
        */
       timeout_ms?: number;
     }
@@ -52455,8 +52458,9 @@ export namespace ConversationFlowCreateParams {
     query_params?: { [key: string]: string };
 
     /**
-     * Maximum time to wait for a connection to be established (in milliseconds).
-     * Default to 120,000 ms (2 minutes).
+     * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+     * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+     * 600,000. Default to 60,000 ms (1 minute).
      */
     timeout_ms?: number;
   }
@@ -66088,8 +66092,9 @@ export namespace ConversationFlowUpdateParams {
       query_params?: { [key: string]: string };
 
       /**
-       * Maximum time to wait for a connection to be established (in milliseconds).
-       * Default to 120,000 ms (2 minutes).
+       * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+       * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+       * 600,000. Default to 60,000 ms (1 minute).
        */
       timeout_ms?: number;
     }
@@ -66511,8 +66516,9 @@ export namespace ConversationFlowUpdateParams {
     query_params?: { [key: string]: string };
 
     /**
-     * Maximum time to wait for a connection to be established (in milliseconds).
-     * Default to 120,000 ms (2 minutes).
+     * Maximum time to wait for an MCP tool call to return (in milliseconds). Values
+     * below 60,000 are treated as 60,000, and values above 600,000 are treated as
+     * 600,000. Default to 60,000 ms (1 minute).
      */
     timeout_ms?: number;
   }
