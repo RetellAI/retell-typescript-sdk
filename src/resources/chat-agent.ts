@@ -664,6 +664,8 @@ export namespace ChatAgentResponse {
      * Stay within prompt/context scope, don't invent details.
      */
     scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+
+    [k: string]: unknown;
   }
 
   export namespace HandbookConfig {
@@ -2573,6 +2575,8 @@ export namespace ChatAgentCreateParams {
      * Stay within prompt/context scope, don't invent details.
      */
     scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+
+    [k: string]: unknown;
   }
 
   export namespace HandbookConfig {
@@ -4394,6 +4398,8 @@ export namespace ChatAgentUpdateParams {
      * Stay within prompt/context scope, don't invent details.
      */
     scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+
+    [k: string]: unknown;
   }
 
   export namespace HandbookConfig {
