@@ -227,6 +227,7 @@ export interface LlmResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
@@ -354,6 +355,7 @@ export namespace LlmResponse {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-neon'
       | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
@@ -1888,6 +1890,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -1947,6 +1950,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -2068,6 +2072,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -2125,6 +2130,7 @@ export namespace LlmResponse {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -3791,6 +3797,7 @@ export interface LlmCreateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
@@ -3913,6 +3920,7 @@ export namespace LlmCreateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-neon'
       | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
@@ -5447,6 +5455,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -5506,6 +5515,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -5627,6 +5637,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -5684,6 +5695,7 @@ export namespace LlmCreateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -7351,6 +7363,7 @@ export interface LlmUpdateParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon'
@@ -7473,6 +7486,7 @@ export namespace LlmUpdateParams {
       | 'gemini-3.6-flash'
       | 'gemini-3.7-flash'
       | 'gemini-3.8-flash'
+      | 'gemini-4-neon'
       | 'gemini-4-hydrogen'
       | 'gemini-4-carbon'
       | 'gemini-4-argon';
@@ -9007,6 +9021,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -9066,6 +9081,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -9187,6 +9203,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';
@@ -9244,6 +9261,7 @@ export namespace LlmUpdateParams {
         | 'gemini-3.6-flash'
         | 'gemini-3.7-flash'
         | 'gemini-3.8-flash'
+        | 'gemini-4-neon'
         | 'gemini-4-hydrogen'
         | 'gemini-4-carbon'
         | 'gemini-4-argon';

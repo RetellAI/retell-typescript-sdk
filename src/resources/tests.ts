@@ -246,6 +246,7 @@ export interface TestCaseDefinitionResponse {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon';
@@ -599,6 +600,7 @@ export interface TestCreateTestCaseDefinitionParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon';
@@ -826,6 +828,7 @@ export interface TestUpdateTestCaseDefinitionParams {
     | 'gemini-3.6-flash'
     | 'gemini-3.7-flash'
     | 'gemini-3.8-flash'
+    | 'gemini-4-neon'
     | 'gemini-4-hydrogen'
     | 'gemini-4-carbon'
     | 'gemini-4-argon';
