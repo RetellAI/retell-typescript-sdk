@@ -9742,7 +9742,7 @@ export namespace CallCreatePhoneCallParams {
         /**
          * When asked, acknowledge being a virtual assistant.
          */
-        ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+        ai_disclosure?: HandbookConfig.AIDisclosure;
 
         /**
          * Conversational handbook.
@@ -9750,67 +9750,53 @@ export namespace CallCreatePhoneCallParams {
         conversational?: HandbookConfig.Conversational;
 
         /**
-         * Legacy name for conversational. Cannot be sent together with conversational. For
-         * compatibility, true also enables enable_colloquial_model when that field is
-         * omitted.
-         */
-        conversational_personality?: boolean;
-
-        /**
          * Customer Support handbook.
          */
         customer_support?: HandbookConfig.CustomerSupport;
 
         /**
-         * Legacy name for customer_support. Cannot be sent together with customer_support.
-         */
-        default_personality?: boolean;
-
-        /**
          * Repeat back and confirm important details (voice only).
          */
-        echo_verification?: boolean | HandbookConfig.HandbookEntryConfig;
+        echo_verification?: HandbookConfig.EchoVerification;
 
         /**
          * Warm acknowledgment of caller concerns.
          */
-        high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+        high_empathy?: HandbookConfig.HighEmpathy;
 
         /**
          * Spell using NATO phonetic alphabet style (voice only).
          */
-        nato_phonetic_alphabet?: boolean | HandbookConfig.HandbookEntryConfig;
+        nato_phonetic_alphabet?: HandbookConfig.NatoPhoneticAlphabet;
 
         /**
          * Sprinkle natural speech fillers like "um", "you know" for a more human,
          * conversational tone.
          */
-        natural_filler_words?: boolean | HandbookConfig.HandbookEntryConfig;
+        natural_filler_words?: HandbookConfig.NaturalFillerWords;
 
         /**
          * Stay within prompt/context scope, don't invent details.
          */
-        scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+        scope_boundaries?: HandbookConfig.ScopeBoundaries;
 
         /**
          * Treat near-match similar words as same entity to reduce impact of transcription
          * error (voice only).
          */
-        smart_matching?: boolean | HandbookConfig.HandbookEntryConfig;
+        smart_matching?: HandbookConfig.SmartMatching;
 
         /**
          * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        speech_normalization?: boolean | HandbookConfig.HandbookEntryConfig;
+        speech_normalization?: HandbookConfig.SpeechNormalization;
       }
 
       export namespace HandbookConfig {
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * When asked, acknowledge being a virtual assistant.
          */
-        export interface HandbookEntryConfig {
+        export interface AIDisclosure {
           custom_prompt?: string | null;
         }
 
@@ -9829,65 +9815,53 @@ export namespace CallCreatePhoneCallParams {
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Repeat back and confirm important details (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface EchoVerification {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Warm acknowledgment of caller concerns.
          */
-        export interface HandbookEntryConfig {
+        export interface HighEmpathy {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Spell using NATO phonetic alphabet style (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface NatoPhoneticAlphabet {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
          */
-        export interface HandbookEntryConfig {
+        export interface NaturalFillerWords {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Stay within prompt/context scope, don't invent details.
          */
-        export interface HandbookEntryConfig {
+        export interface ScopeBoundaries {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SmartMatching {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SpeechNormalization {
           custom_prompt?: string | null;
         }
       }
@@ -13370,7 +13344,7 @@ export namespace CallCreateWebCallParams {
         /**
          * When asked, acknowledge being a virtual assistant.
          */
-        ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+        ai_disclosure?: HandbookConfig.AIDisclosure;
 
         /**
          * Conversational handbook.
@@ -13378,67 +13352,53 @@ export namespace CallCreateWebCallParams {
         conversational?: HandbookConfig.Conversational;
 
         /**
-         * Legacy name for conversational. Cannot be sent together with conversational. For
-         * compatibility, true also enables enable_colloquial_model when that field is
-         * omitted.
-         */
-        conversational_personality?: boolean;
-
-        /**
          * Customer Support handbook.
          */
         customer_support?: HandbookConfig.CustomerSupport;
 
         /**
-         * Legacy name for customer_support. Cannot be sent together with customer_support.
-         */
-        default_personality?: boolean;
-
-        /**
          * Repeat back and confirm important details (voice only).
          */
-        echo_verification?: boolean | HandbookConfig.HandbookEntryConfig;
+        echo_verification?: HandbookConfig.EchoVerification;
 
         /**
          * Warm acknowledgment of caller concerns.
          */
-        high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+        high_empathy?: HandbookConfig.HighEmpathy;
 
         /**
          * Spell using NATO phonetic alphabet style (voice only).
          */
-        nato_phonetic_alphabet?: boolean | HandbookConfig.HandbookEntryConfig;
+        nato_phonetic_alphabet?: HandbookConfig.NatoPhoneticAlphabet;
 
         /**
          * Sprinkle natural speech fillers like "um", "you know" for a more human,
          * conversational tone.
          */
-        natural_filler_words?: boolean | HandbookConfig.HandbookEntryConfig;
+        natural_filler_words?: HandbookConfig.NaturalFillerWords;
 
         /**
          * Stay within prompt/context scope, don't invent details.
          */
-        scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+        scope_boundaries?: HandbookConfig.ScopeBoundaries;
 
         /**
          * Treat near-match similar words as same entity to reduce impact of transcription
          * error (voice only).
          */
-        smart_matching?: boolean | HandbookConfig.HandbookEntryConfig;
+        smart_matching?: HandbookConfig.SmartMatching;
 
         /**
          * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        speech_normalization?: boolean | HandbookConfig.HandbookEntryConfig;
+        speech_normalization?: HandbookConfig.SpeechNormalization;
       }
 
       export namespace HandbookConfig {
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * When asked, acknowledge being a virtual assistant.
          */
-        export interface HandbookEntryConfig {
+        export interface AIDisclosure {
           custom_prompt?: string | null;
         }
 
@@ -13457,65 +13417,53 @@ export namespace CallCreateWebCallParams {
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Repeat back and confirm important details (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface EchoVerification {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Warm acknowledgment of caller concerns.
          */
-        export interface HandbookEntryConfig {
+        export interface HighEmpathy {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Spell using NATO phonetic alphabet style (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface NatoPhoneticAlphabet {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
          */
-        export interface HandbookEntryConfig {
+        export interface NaturalFillerWords {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Stay within prompt/context scope, don't invent details.
          */
-        export interface HandbookEntryConfig {
+        export interface ScopeBoundaries {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SmartMatching {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SpeechNormalization {
           custom_prompt?: string | null;
         }
       }
@@ -16996,7 +16944,7 @@ export namespace CallRegisterPhoneCallParams {
         /**
          * When asked, acknowledge being a virtual assistant.
          */
-        ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+        ai_disclosure?: HandbookConfig.AIDisclosure;
 
         /**
          * Conversational handbook.
@@ -17004,67 +16952,53 @@ export namespace CallRegisterPhoneCallParams {
         conversational?: HandbookConfig.Conversational;
 
         /**
-         * Legacy name for conversational. Cannot be sent together with conversational. For
-         * compatibility, true also enables enable_colloquial_model when that field is
-         * omitted.
-         */
-        conversational_personality?: boolean;
-
-        /**
          * Customer Support handbook.
          */
         customer_support?: HandbookConfig.CustomerSupport;
 
         /**
-         * Legacy name for customer_support. Cannot be sent together with customer_support.
-         */
-        default_personality?: boolean;
-
-        /**
          * Repeat back and confirm important details (voice only).
          */
-        echo_verification?: boolean | HandbookConfig.HandbookEntryConfig;
+        echo_verification?: HandbookConfig.EchoVerification;
 
         /**
          * Warm acknowledgment of caller concerns.
          */
-        high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+        high_empathy?: HandbookConfig.HighEmpathy;
 
         /**
          * Spell using NATO phonetic alphabet style (voice only).
          */
-        nato_phonetic_alphabet?: boolean | HandbookConfig.HandbookEntryConfig;
+        nato_phonetic_alphabet?: HandbookConfig.NatoPhoneticAlphabet;
 
         /**
          * Sprinkle natural speech fillers like "um", "you know" for a more human,
          * conversational tone.
          */
-        natural_filler_words?: boolean | HandbookConfig.HandbookEntryConfig;
+        natural_filler_words?: HandbookConfig.NaturalFillerWords;
 
         /**
          * Stay within prompt/context scope, don't invent details.
          */
-        scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+        scope_boundaries?: HandbookConfig.ScopeBoundaries;
 
         /**
          * Treat near-match similar words as same entity to reduce impact of transcription
          * error (voice only).
          */
-        smart_matching?: boolean | HandbookConfig.HandbookEntryConfig;
+        smart_matching?: HandbookConfig.SmartMatching;
 
         /**
          * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        speech_normalization?: boolean | HandbookConfig.HandbookEntryConfig;
+        speech_normalization?: HandbookConfig.SpeechNormalization;
       }
 
       export namespace HandbookConfig {
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * When asked, acknowledge being a virtual assistant.
          */
-        export interface HandbookEntryConfig {
+        export interface AIDisclosure {
           custom_prompt?: string | null;
         }
 
@@ -17083,65 +17017,53 @@ export namespace CallRegisterPhoneCallParams {
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Repeat back and confirm important details (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface EchoVerification {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Warm acknowledgment of caller concerns.
          */
-        export interface HandbookEntryConfig {
+        export interface HighEmpathy {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Spell using NATO phonetic alphabet style (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface NatoPhoneticAlphabet {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Sprinkle natural speech fillers like "um", "you know" for a more human,
+         * conversational tone.
          */
-        export interface HandbookEntryConfig {
+        export interface NaturalFillerWords {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Stay within prompt/context scope, don't invent details.
          */
-        export interface HandbookEntryConfig {
+        export interface ScopeBoundaries {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Treat near-match similar words as same entity to reduce impact of transcription
+         * error (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SmartMatching {
           custom_prompt?: string | null;
         }
 
         /**
-         * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-         * use the Retell-provided prompt. An empty string intentionally injects no prompt
-         * for this handbook.
+         * Convert numbers/dates/currency to spoken forms (voice only).
          */
-        export interface HandbookEntryConfig {
+        export interface SpeechNormalization {
           custom_prompt?: string | null;
         }
       }
