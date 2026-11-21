@@ -1,5 +1,24 @@
 # Changelog
 
+## [6.2.23](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.22...v6.2.23) (2026-11-21)
+
+
+### nit
+
+* **api:** Polish API documentation ([34b4fd1](https://github.com/RetellAI/retell-typescript-sdk/commit/34b4fd1338decfa917c74a0165e493a5a5a72868))
+
+
+### Bug Fixes
+
+* **api:** Accept unsupported fields in chat handbook configurations and ignore them. ([ce21c0d](https://github.com/RetellAI/retell-typescript-sdk/commit/ce21c0d4e33956036808b4bbf8b30ac7bfa6286d))
+* **api:** Add gemini-4-neon as an available LLM model option. ([48ac28f](https://github.com/RetellAI/retell-typescript-sdk/commit/48ac28f26a3ae8be7f2879e0236a3b22f5c6848b))
+* **api:** Add get-handbook-presets agent method for GET /get-handbook-presets, returning Retell-provided handbook prompts. ([309654f](https://github.com/RetellAI/retell-typescript-sdk/commit/309654f6e39d96a83edcce366f050765a6eea6ca))
+* **api:** Add independently selectable handbook prompts with optional custom_prompt; legacy boolean toggles remain accepted in requests. ([309654f](https://github.com/RetellAI/retell-typescript-sdk/commit/309654f6e39d96a83edcce366f050765a6eea6ca))
+* **api:** Add optional enable_colloquial_model boolean to voice agents, defaulting to false and unsupported for speech-to-speech engines. ([309654f](https://github.com/RetellAI/retell-typescript-sdk/commit/309654f6e39d96a83edcce366f050765a6eea6ca))
+* **api:** Reject unsupported handbook fields in chat agent configurations instead of accepting and ignoring them. ([75e127e](https://github.com/RetellAI/retell-typescript-sdk/commit/75e127e7006aa3783967948a6ac952fc9d9710ce))
+* **api:** Remove default_personality and conversational_personality from voice and chat handbook configs. ([b6eeff3](https://github.com/RetellAI/retell-typescript-sdk/commit/b6eeff3352ae85b99c8dd2f17e708b9319de9baf))
+* **api:** Remove the LegacyBooleanOrHandbookEntryConfig schema; handbook options now accept only handbook entry objects. ([b6eeff3](https://github.com/RetellAI/retell-typescript-sdk/commit/b6eeff3352ae85b99c8dd2f17e708b9319de9baf))
+
 ## [6.2.22](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.21...v6.2.22) (2026-11-18)
 
 ### Highlights
