@@ -633,7 +633,7 @@ export namespace ChatAgentResponse {
     /**
      * When asked, acknowledge being a virtual assistant.
      */
-    ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+    ai_disclosure?: HandbookConfig.AIDisclosure;
 
     /**
      * Conversational handbook.
@@ -641,39 +641,26 @@ export namespace ChatAgentResponse {
     conversational?: HandbookConfig.Conversational;
 
     /**
-     * Legacy name for conversational. Cannot be sent together with conversational.
-     * Colloquial rewriting is not available for chat.
-     */
-    conversational_personality?: boolean;
-
-    /**
      * Customer Support handbook.
      */
     customer_support?: HandbookConfig.CustomerSupport;
 
     /**
-     * Legacy name for customer_support. Cannot be sent together with customer_support.
-     */
-    default_personality?: boolean;
-
-    /**
      * Warm acknowledgment of caller concerns.
      */
-    high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+    high_empathy?: HandbookConfig.HighEmpathy;
 
     /**
      * Stay within prompt/context scope, don't invent details.
      */
-    scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+    scope_boundaries?: HandbookConfig.ScopeBoundaries;
   }
 
   export namespace HandbookConfig {
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * When asked, acknowledge being a virtual assistant.
      */
-    export interface HandbookEntryConfig {
+    export interface AIDisclosure {
       custom_prompt?: string | null;
     }
 
@@ -692,20 +679,16 @@ export namespace ChatAgentResponse {
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Warm acknowledgment of caller concerns.
      */
-    export interface HandbookEntryConfig {
+    export interface HighEmpathy {
       custom_prompt?: string | null;
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Stay within prompt/context scope, don't invent details.
      */
-    export interface HandbookEntryConfig {
+    export interface ScopeBoundaries {
       custom_prompt?: string | null;
     }
   }
@@ -2543,7 +2526,7 @@ export namespace ChatAgentCreateParams {
     /**
      * When asked, acknowledge being a virtual assistant.
      */
-    ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+    ai_disclosure?: HandbookConfig.AIDisclosure;
 
     /**
      * Conversational handbook.
@@ -2551,39 +2534,26 @@ export namespace ChatAgentCreateParams {
     conversational?: HandbookConfig.Conversational;
 
     /**
-     * Legacy name for conversational. Cannot be sent together with conversational.
-     * Colloquial rewriting is not available for chat.
-     */
-    conversational_personality?: boolean;
-
-    /**
      * Customer Support handbook.
      */
     customer_support?: HandbookConfig.CustomerSupport;
 
     /**
-     * Legacy name for customer_support. Cannot be sent together with customer_support.
-     */
-    default_personality?: boolean;
-
-    /**
      * Warm acknowledgment of caller concerns.
      */
-    high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+    high_empathy?: HandbookConfig.HighEmpathy;
 
     /**
      * Stay within prompt/context scope, don't invent details.
      */
-    scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+    scope_boundaries?: HandbookConfig.ScopeBoundaries;
   }
 
   export namespace HandbookConfig {
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * When asked, acknowledge being a virtual assistant.
      */
-    export interface HandbookEntryConfig {
+    export interface AIDisclosure {
       custom_prompt?: string | null;
     }
 
@@ -2602,20 +2572,16 @@ export namespace ChatAgentCreateParams {
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Warm acknowledgment of caller concerns.
      */
-    export interface HandbookEntryConfig {
+    export interface HighEmpathy {
       custom_prompt?: string | null;
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Stay within prompt/context scope, don't invent details.
      */
-    export interface HandbookEntryConfig {
+    export interface ScopeBoundaries {
       custom_prompt?: string | null;
     }
   }
@@ -4365,7 +4331,7 @@ export namespace ChatAgentUpdateParams {
     /**
      * When asked, acknowledge being a virtual assistant.
      */
-    ai_disclosure?: boolean | HandbookConfig.HandbookEntryConfig;
+    ai_disclosure?: HandbookConfig.AIDisclosure;
 
     /**
      * Conversational handbook.
@@ -4373,39 +4339,26 @@ export namespace ChatAgentUpdateParams {
     conversational?: HandbookConfig.Conversational;
 
     /**
-     * Legacy name for conversational. Cannot be sent together with conversational.
-     * Colloquial rewriting is not available for chat.
-     */
-    conversational_personality?: boolean;
-
-    /**
      * Customer Support handbook.
      */
     customer_support?: HandbookConfig.CustomerSupport;
 
     /**
-     * Legacy name for customer_support. Cannot be sent together with customer_support.
-     */
-    default_personality?: boolean;
-
-    /**
      * Warm acknowledgment of caller concerns.
      */
-    high_empathy?: boolean | HandbookConfig.HandbookEntryConfig;
+    high_empathy?: HandbookConfig.HighEmpathy;
 
     /**
      * Stay within prompt/context scope, don't invent details.
      */
-    scope_boundaries?: boolean | HandbookConfig.HandbookEntryConfig;
+    scope_boundaries?: HandbookConfig.ScopeBoundaries;
   }
 
   export namespace HandbookConfig {
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * When asked, acknowledge being a virtual assistant.
      */
-    export interface HandbookEntryConfig {
+    export interface AIDisclosure {
       custom_prompt?: string | null;
     }
 
@@ -4424,20 +4377,16 @@ export namespace ChatAgentUpdateParams {
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Warm acknowledgment of caller concerns.
      */
-    export interface HandbookEntryConfig {
+    export interface HighEmpathy {
       custom_prompt?: string | null;
     }
 
     /**
-     * Configuration for an enabled handbook. Omit custom_prompt or set it to null to
-     * use the Retell-provided prompt. An empty string intentionally injects no prompt
-     * for this handbook.
+     * Stay within prompt/context scope, don't invent details.
      */
-    export interface HandbookEntryConfig {
+    export interface ScopeBoundaries {
       custom_prompt?: string | null;
     }
   }
