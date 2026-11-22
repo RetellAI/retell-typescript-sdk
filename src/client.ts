@@ -25,6 +25,7 @@ import {
   AgentCreateVersionResponse,
   AgentDeleteVersionParams,
   AgentGetHandbookPresetsResponse,
+  AgentGetRootResponse,
   AgentListParams,
   AgentListResponse,
   AgentListVersionsParams,
@@ -35,6 +36,8 @@ import {
   AgentResponse,
   AgentRetrieveParams,
   AgentUpdateParams,
+  AgentUpdateRootParams,
+  AgentUpdateRootResponse,
 } from './resources/agent';
 import {
   App,
@@ -1031,8 +1034,10 @@ export declare namespace Retell {
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetHandbookPresetsResponse as AgentGetHandbookPresetsResponse,
+    type AgentGetRootResponse as AgentGetRootResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentRepairResponse as AgentRepairResponse,
+    type AgentUpdateRootResponse as AgentUpdateRootResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
@@ -1042,6 +1047,7 @@ export declare namespace Retell {
     type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
     type AgentRepairParams as AgentRepairParams,
+    type AgentUpdateRootParams as AgentUpdateRootParams,
   };
 
   export {
