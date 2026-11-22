@@ -233,6 +233,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/get-handbook-presets',
   },
   {
+    clientCallName: 'client.agent.getRoot',
+    fullyQualifiedName: 'agent.getRoot',
+    httpMethod: 'get',
+    httpPath: '/get-agent-root/{agent_id}',
+  },
+  {
     clientCallName: 'client.agent.listVersions',
     fullyQualifiedName: 'agent.listVersions',
     httpMethod: 'get',
@@ -249,6 +255,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'agent.repair',
     httpMethod: 'post',
     httpPath: '/repair-agent/{agent_id}',
+  },
+  {
+    clientCallName: 'client.agent.updateRoot',
+    fullyQualifiedName: 'agent.updateRoot',
+    httpMethod: 'patch',
+    httpPath: '/update-agent-root/{agent_id}',
   },
   {
     clientCallName: 'client.chatAgent.create',

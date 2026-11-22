@@ -160,6 +160,19 @@ export class Agent extends APIResource {
   }
 
   /**
+   * Get the settings and status that apply to all versions of an agent, such as its
+   * environment tags.
+   *
+   * @example
+   * ```ts
+   * const response = await client.agent.getRoot('agent_xxx');
+   * ```
+   */
+  getRoot(agentID: string, options?: RequestOptions): APIPromise<AgentGetRootResponse> {
+    return this._client.get(path`/get-agent-root/${agentID}`, options);
+  }
+
+  /**
    * List stored versions of a voice or chat agent with pagination.
    *
    * @example
@@ -216,6 +229,31 @@ export class Agent extends APIResource {
   ): APIPromise<AgentRepairResponse> {
     const { version } = params ?? {};
     return this._client.post(path`/repair-agent/${agentID}`, { query: { version }, ...options });
+  }
+
+  /**
+   * Change settings that apply to all versions of an agent, such as its environment
+   * tags.
+   *
+   * @example
+   * ```ts
+   * const response = await client.agent.updateRoot('agent_xxx');
+   * ```
+   */
+  updateRoot(
+    agentID: string,
+    params: AgentUpdateRootParams,
+    options?: RequestOptions,
+  ): APIPromise<AgentUpdateRootResponse> {
+    const { 'If-Match': ifMatch, ...body } = params;
+    return this._client.patch(path`/update-agent-root/${agentID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(ifMatch != null ? { 'If-Match': ifMatch } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 }
 
@@ -2757,6 +2795,44 @@ export interface AgentGetHandbookPresetsResponse {
   speech_normalization: string;
 }
 
+export interface AgentGetRootResponse {
+  /**
+   * Unique id of the agent.
+   */
+  agent_id: string;
+
+  /**
+   * Whether the agent is currently suspended.
+   */
+  is_suspended: boolean;
+
+  /**
+   * Environment tags for this agent, keyed by tag name. Every agent has prod and
+   * staging tags.
+   */
+  tags: { [key: string]: AgentGetRootResponse.Tags };
+
+  /**
+   * User modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  user_modified_timestamp: number;
+}
+
+export namespace AgentGetRootResponse {
+  export interface Tags {
+    /**
+     * Dynamic variable values supplied when a call uses this tag.
+     */
+    dynamic_variables?: { [key: string]: string };
+
+    /**
+     * Version that the tag points to. Absent when the tag follows the latest version.
+     */
+    version?: number;
+  }
+}
+
 export interface AgentListVersionsResponse {
   /**
    * Whether more results are available.
@@ -2806,6 +2882,44 @@ export namespace AgentListVersionsResponse {
 }
 
 export type AgentRepairResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
+
+export interface AgentUpdateRootResponse {
+  /**
+   * Unique id of the agent.
+   */
+  agent_id: string;
+
+  /**
+   * Whether the agent is currently suspended.
+   */
+  is_suspended: boolean;
+
+  /**
+   * Environment tags for this agent, keyed by tag name. Every agent has prod and
+   * staging tags.
+   */
+  tags: { [key: string]: AgentUpdateRootResponse.Tags };
+
+  /**
+   * User modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  user_modified_timestamp: number;
+}
+
+export namespace AgentUpdateRootResponse {
+  export interface Tags {
+    /**
+     * Dynamic variable values supplied when a call uses this tag.
+     */
+    dynamic_variables?: { [key: string]: string };
+
+    /**
+     * Version that the tag points to. Absent when the tag follows the latest version.
+     */
+    version?: number;
+  }
+}
 
 export interface AgentCreateParams {
   /**
@@ -7791,14 +7905,114 @@ export interface AgentRepairParams {
   version?: string | number;
 }
 
+export interface AgentUpdateRootParams {
+  /**
+   * Body param: Environment tags to add, change, or delete, keyed by tag name. Set a
+   * tag to an object to add or change it, or to null to delete it. Tags you leave
+   * out stay as they are. The prod and staging tags cannot be deleted. An agent can
+   * have up to 10 tags. Tag names must be 1-20 characters, start with a lowercase
+   * letter, use only lowercase letters, digits, underscores, or hyphens, and cannot
+   * be "latest", "latest_published", or "v" followed only by digits, such as "v2".
+   */
+  tags?: AgentUpdateRootParams.Tags;
+
+  /**
+   * Header param: ETag from an earlier get-agent-root or update-agent-root response.
+   * If the agent changed since then, the update returns 412 and changes nothing.
+   */
+  'If-Match'?: string;
+}
+
+export namespace AgentUpdateRootParams {
+  /**
+   * Environment tags to add, change, or delete, keyed by tag name. Set a tag to an
+   * object to add or change it, or to null to delete it. Tags you leave out stay as
+   * they are. The prod and staging tags cannot be deleted. An agent can have up to
+   * 10 tags. Tag names must be 1-20 characters, start with a lowercase letter, use
+   * only lowercase letters, digits, underscores, or hyphens, and cannot be "latest",
+   * "latest_published", or "v" followed only by digits, such as "v2".
+   */
+  export interface Tags {
+    prod?: Tags.Prod;
+
+    staging?: Tags.Staging;
+
+    [k: string]: Tags.AgentRootTagUpdate | unknown | Tags.Prod | undefined;
+  }
+
+  export namespace Tags {
+    export interface Prod {
+      /**
+       * Dynamic variable values supplied when a call uses this tag. Replaces all of the
+       * tag's current values. Set to null to remove them. If omitted, the tag keeps its
+       * current values.
+       */
+      dynamic_variables?: { [key: string]: string } | null;
+
+      /**
+       * Version for the tag to point to. Set to null to make the tag follow the latest
+       * version. If omitted, the tag keeps its current version.
+       */
+      version?: number | null;
+    }
+
+    export interface Staging {
+      /**
+       * Dynamic variable values supplied when a call uses this tag. Replaces all of the
+       * tag's current values. Set to null to remove them. If omitted, the tag keeps its
+       * current values.
+       */
+      dynamic_variables?: { [key: string]: string } | null;
+
+      /**
+       * Version for the tag to point to. Set to null to make the tag follow the latest
+       * version. If omitted, the tag keeps its current version.
+       */
+      version?: number | null;
+    }
+
+    export interface AgentRootTagUpdate {
+      /**
+       * Dynamic variable values supplied when a call uses this tag. Replaces all of the
+       * tag's current values. Set to null to remove them. If omitted, the tag keeps its
+       * current values.
+       */
+      dynamic_variables?: { [key: string]: string } | null;
+
+      /**
+       * Version for the tag to point to. Set to null to make the tag follow the latest
+       * version. If omitted, the tag keeps its current version.
+       */
+      version?: number | null;
+    }
+  }
+
+  export interface AgentRootTagUpdate {
+    /**
+     * Dynamic variable values supplied when a call uses this tag. Replaces all of the
+     * tag's current values. Set to null to remove them. If omitted, the tag keeps its
+     * current values.
+     */
+    dynamic_variables?: { [key: string]: string } | null;
+
+    /**
+     * Version for the tag to point to. Set to null to make the tag follow the latest
+     * version. If omitted, the tag keeps its current version.
+     */
+    version?: number | null;
+  }
+}
+
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetHandbookPresetsResponse as AgentGetHandbookPresetsResponse,
+    type AgentGetRootResponse as AgentGetRootResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentRepairResponse as AgentRepairResponse,
+    type AgentUpdateRootResponse as AgentUpdateRootResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
@@ -7808,5 +8022,6 @@ export declare namespace Agent {
     type AgentListVersionsParams as AgentListVersionsParams,
     type AgentPublishParams as AgentPublishParams,
     type AgentRepairParams as AgentRepairParams,
+    type AgentUpdateRootParams as AgentUpdateRootParams,
   };
 }

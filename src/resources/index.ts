@@ -6,8 +6,10 @@ export {
   type AgentListResponse,
   type AgentCreateVersionResponse,
   type AgentGetHandbookPresetsResponse,
+  type AgentGetRootResponse,
   type AgentListVersionsResponse,
   type AgentRepairResponse,
+  type AgentUpdateRootResponse,
   type AgentCreateParams,
   type AgentRetrieveParams,
   type AgentUpdateParams,
@@ -17,6 +19,7 @@ export {
   type AgentListVersionsParams,
   type AgentPublishParams,
   type AgentRepairParams,
+  type AgentUpdateRootParams,
 } from './agent';
 export {
   App,
