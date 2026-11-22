@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.2.23](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.22...v6.2.23) (2026-11-22)
+
+### Highlights
+
+* Add handbook presets endpoint returning Retell-provided handbook prompts.
+* Add colloquial response rewriting option for agent create and update.
+* Allow custom handbook prompts up to 10,000 characters; booleans still work.
+* Add conversational and customer support handbook settings.
+* Add gemini-4-neon LLM model option.
+
 ## [6.2.22](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.21...v6.2.22) (2026-11-18)
 
 ### Highlights
