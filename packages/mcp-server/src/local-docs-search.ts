@@ -2590,12 +2590,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/refresh-knowledge-base/{knowledge_base_id}',
     httpMethod: 'post',
     summary: '',
-    description: 'Manually refresh a knowledge base',
+    description:
+      'Manually refresh a knowledge base. Refreshes do not consume ingestion quota, including URLs discovered through auto-crawling paths. Refreshes the refreshable sources present when background processing begins.',
     stainlessPath: '(resource) knowledge_base > (method) refresh',
     qualified: 'client.knowledgeBase.refresh',
     params: ['knowledge_base_id: string;'],
     markdown:
-      "## refresh\n\n`client.knowledgeBase.refresh(knowledge_base_id: string): void`\n\n**post** `/refresh-knowledge-base/{knowledge_base_id}`\n\nManually refresh a knowledge base\n\n### Parameters\n\n- `knowledge_base_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.knowledgeBase.refresh('knowledge_base_1234567890')\n```",
+      "## refresh\n\n`client.knowledgeBase.refresh(knowledge_base_id: string): void`\n\n**post** `/refresh-knowledge-base/{knowledge_base_id}`\n\nManually refresh a knowledge base. Refreshes do not consume ingestion quota, including URLs discovered through auto-crawling paths. Refreshes the refreshable sources present when background processing begins.\n\n### Parameters\n\n- `knowledge_base_id: string`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nawait client.knowledgeBase.refresh('knowledge_base_1234567890')\n```",
     perLanguage: {
       typescript: {
         method: 'client.knowledgeBase.refresh',

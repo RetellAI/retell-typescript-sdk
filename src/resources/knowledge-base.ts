@@ -113,7 +113,9 @@ export class KnowledgeBase extends APIResource {
   }
 
   /**
-   * Manually refresh a knowledge base
+   * Manually refresh a knowledge base. Refreshes do not consume ingestion quota,
+   * including URLs discovered through auto-crawling paths. Refreshes the refreshable
+   * sources present when background processing begins.
    *
    * @example
    * ```ts
