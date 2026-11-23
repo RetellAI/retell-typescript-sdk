@@ -1501,17 +1501,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     params: ['agent_id: string;'],
     response: '{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }',
     markdown:
-      "## get-root\n\n`client.agent.getRoot(agent_id: string): { agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n**get** `/get-agent-root/{agent_id}`\n\nGet the settings and status that apply to all versions of an agent, such as its environment tags.\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n  - `agent_id: string`\n  - `is_suspended: boolean`\n  - `tags: object`\n  - `user_modified_timestamp: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst response = await client.agent.getRoot('agent_xxx');\n\nconsole.log(response);\n```",
+      "## get-root\n\n`client.agent.getRoot(agent_id: string): { agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n**get** `/get-agent-root/{agent_id}`\n\nGet the settings and status that apply to all versions of an agent, such as its environment tags.\n\n### Parameters\n\n- `agent_id: string`\n\n### Returns\n\n- `{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n  - `agent_id: string`\n  - `is_suspended: boolean`\n  - `tags: object`\n  - `user_modified_timestamp: number`\n\n### Example\n\n```typescript\nimport Retell from 'retell-sdk';\n\nconst client = new Retell();\n\nconst agentRootResponse = await client.agent.getRoot('agent_xxx');\n\nconsole.log(agentRootResponse);\n```",
     perLanguage: {
       typescript: {
         method: 'client.agent.getRoot',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.agent.getRoot('agent_xxx');\n\nconsole.log(response.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentRootResponse = await client.agent.getRoot('agent_xxx');\n\nconsole.log(agentRootResponse.agent_id);",
       },
       python: {
         method: 'agent.get_root',
         example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.agent.get_root(\n    "agent_xxx",\n)\nprint(response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_root_response = client.agent.get_root(\n    "agent_xxx",\n)\nprint(agent_root_response.agent_id)',
       },
       http: {
         example:
@@ -1534,17 +1534,17 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: '{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }',
     markdown:
-      '## update-root\n\n`client.agent.updateRoot(agent_id: string, tags?: { prod?: { dynamic_variables?: object; version?: number; }; staging?: { dynamic_variables?: object; version?: number; }; }, If-Match?: string): { agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n**patch** `/update-agent-root/{agent_id}`\n\nChange settings that apply to all versions of an agent, such as its environment tags.\n\n### Parameters\n\n- `agent_id: string`\n\n- `tags?: { prod?: { dynamic_variables?: object; version?: number; }; staging?: { dynamic_variables?: object; version?: number; }; }`\n  Environment tags to add, change, or delete, keyed by tag name. Set a tag to an object to add or change it, or to null to delete it. Tags you leave out stay as they are. The prod and staging tags cannot be deleted. An agent can have up to 10 tags. Tag names must be 1-20 characters, start with a lowercase letter, use only lowercase letters, digits, underscores, or hyphens, and cannot be "latest", "latest_published", or "v" followed only by digits, such as "v2".\n  - `prod?: { dynamic_variables?: object; version?: number; }`\n  - `staging?: { dynamic_variables?: object; version?: number; }`\n\n- `If-Match?: string`\n\n### Returns\n\n- `{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n  - `agent_id: string`\n  - `is_suspended: boolean`\n  - `tags: object`\n  - `user_modified_timestamp: number`\n\n### Example\n\n```typescript\nimport Retell from \'retell-sdk\';\n\nconst client = new Retell();\n\nconst response = await client.agent.updateRoot(\'agent_xxx\');\n\nconsole.log(response);\n```',
+      '## update-root\n\n`client.agent.updateRoot(agent_id: string, tags?: { prod?: { dynamic_variables?: object; version?: number; }; staging?: { dynamic_variables?: object; version?: number; }; }, If-Match?: string): { agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n**patch** `/update-agent-root/{agent_id}`\n\nChange settings that apply to all versions of an agent, such as its environment tags.\n\n### Parameters\n\n- `agent_id: string`\n\n- `tags?: { prod?: { dynamic_variables?: object; version?: number; }; staging?: { dynamic_variables?: object; version?: number; }; }`\n  Environment tags to add, change, or delete, keyed by tag name. Set a tag to an object to add or change it, or to null to delete it. Tags you leave out stay as they are. The prod and staging tags cannot be deleted. An agent can have up to 10 tags. Tag names must be 1-20 characters, start with a lowercase letter, use only lowercase letters, digits, underscores, or hyphens, and cannot be "latest", "latest_published", or "v" followed only by digits, such as "v2".\n  - `prod?: { dynamic_variables?: object; version?: number; }`\n  - `staging?: { dynamic_variables?: object; version?: number; }`\n\n- `If-Match?: string`\n\n### Returns\n\n- `{ agent_id: string; is_suspended: boolean; tags: object; user_modified_timestamp: number; }`\n\n  - `agent_id: string`\n  - `is_suspended: boolean`\n  - `tags: object`\n  - `user_modified_timestamp: number`\n\n### Example\n\n```typescript\nimport Retell from \'retell-sdk\';\n\nconst client = new Retell();\n\nconst agentRootResponse = await client.agent.updateRoot(\'agent_xxx\');\n\nconsole.log(agentRootResponse);\n```',
     perLanguage: {
       typescript: {
         method: 'client.agent.updateRoot',
         example:
-          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.agent.updateRoot('agent_xxx');\n\nconsole.log(response.agent_id);",
+          "import Retell from 'retell-sdk';\n\nconst client = new Retell({\n  apiKey: process.env['RETELL_API_KEY'], // This is the default and can be omitted\n});\n\nconst agentRootResponse = await client.agent.updateRoot('agent_xxx');\n\nconsole.log(agentRootResponse.agent_id);",
       },
       python: {
         method: 'agent.update_root',
         example:
-          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.agent.update_root(\n    agent_id="agent_xxx",\n)\nprint(response.agent_id)',
+          'import os\nfrom retell import Retell\n\nclient = Retell(\n    api_key=os.environ.get("RETELL_API_KEY"),  # This is the default and can be omitted\n)\nagent_root_response = client.agent.update_root(\n    agent_id="agent_xxx",\n)\nprint(agent_root_response.agent_id)',
       },
       http: {
         example:

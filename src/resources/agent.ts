@@ -165,10 +165,12 @@ export class Agent extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.agent.getRoot('agent_xxx');
+   * const agentRootResponse = await client.agent.getRoot(
+   *   'agent_xxx',
+   * );
    * ```
    */
-  getRoot(agentID: string, options?: RequestOptions): APIPromise<AgentGetRootResponse> {
+  getRoot(agentID: string, options?: RequestOptions): APIPromise<AgentRootResponse> {
     return this._client.get(path`/get-agent-root/${agentID}`, options);
   }
 
@@ -237,14 +239,16 @@ export class Agent extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.agent.updateRoot('agent_xxx');
+   * const agentRootResponse = await client.agent.updateRoot(
+   *   'agent_xxx',
+   * );
    * ```
    */
   updateRoot(
     agentID: string,
     params: AgentUpdateRootParams,
     options?: RequestOptions,
-  ): APIPromise<AgentUpdateRootResponse> {
+  ): APIPromise<AgentRootResponse> {
     const { 'If-Match': ifMatch, ...body } = params;
     return this._client.patch(path`/update-agent-root/${agentID}`, {
       body,
@@ -2706,6 +2710,44 @@ export namespace AgentResponse {
   }
 }
 
+export interface AgentRootResponse {
+  /**
+   * Unique id of the agent.
+   */
+  agent_id: string;
+
+  /**
+   * Whether the agent is currently suspended.
+   */
+  is_suspended: boolean;
+
+  /**
+   * Environment tags for this agent, keyed by tag name. Every agent has prod and
+   * staging tags.
+   */
+  tags: { [key: string]: AgentRootResponse.Tags };
+
+  /**
+   * User modification timestamp (milliseconds since epoch). Either the time of last
+   * update or creation if no updates available.
+   */
+  user_modified_timestamp: number;
+}
+
+export namespace AgentRootResponse {
+  export interface Tags {
+    /**
+     * Dynamic variable values supplied when a call uses this tag.
+     */
+    dynamic_variables?: { [key: string]: string };
+
+    /**
+     * Version that the tag points to. Absent when the tag follows the latest version.
+     */
+    version?: number;
+  }
+}
+
 export interface AgentListResponse {
   /**
    * Whether more results are available.
@@ -2795,44 +2837,6 @@ export interface AgentGetHandbookPresetsResponse {
   speech_normalization: string;
 }
 
-export interface AgentGetRootResponse {
-  /**
-   * Unique id of the agent.
-   */
-  agent_id: string;
-
-  /**
-   * Whether the agent is currently suspended.
-   */
-  is_suspended: boolean;
-
-  /**
-   * Environment tags for this agent, keyed by tag name. Every agent has prod and
-   * staging tags.
-   */
-  tags: { [key: string]: AgentGetRootResponse.Tags };
-
-  /**
-   * User modification timestamp (milliseconds since epoch). Either the time of last
-   * update or creation if no updates available.
-   */
-  user_modified_timestamp: number;
-}
-
-export namespace AgentGetRootResponse {
-  export interface Tags {
-    /**
-     * Dynamic variable values supplied when a call uses this tag.
-     */
-    dynamic_variables?: { [key: string]: string };
-
-    /**
-     * Version that the tag points to. Absent when the tag follows the latest version.
-     */
-    version?: number;
-  }
-}
-
 export interface AgentListVersionsResponse {
   /**
    * Whether more results are available.
@@ -2882,44 +2886,6 @@ export namespace AgentListVersionsResponse {
 }
 
 export type AgentRepairResponse = AgentResponse | ChatAgentAPI.ChatAgentResponse;
-
-export interface AgentUpdateRootResponse {
-  /**
-   * Unique id of the agent.
-   */
-  agent_id: string;
-
-  /**
-   * Whether the agent is currently suspended.
-   */
-  is_suspended: boolean;
-
-  /**
-   * Environment tags for this agent, keyed by tag name. Every agent has prod and
-   * staging tags.
-   */
-  tags: { [key: string]: AgentUpdateRootResponse.Tags };
-
-  /**
-   * User modification timestamp (milliseconds since epoch). Either the time of last
-   * update or creation if no updates available.
-   */
-  user_modified_timestamp: number;
-}
-
-export namespace AgentUpdateRootResponse {
-  export interface Tags {
-    /**
-     * Dynamic variable values supplied when a call uses this tag.
-     */
-    dynamic_variables?: { [key: string]: string };
-
-    /**
-     * Version that the tag points to. Absent when the tag follows the latest version.
-     */
-    version?: number;
-  }
-}
 
 export interface AgentCreateParams {
   /**
@@ -8006,13 +7972,12 @@ export namespace AgentUpdateRootParams {
 export declare namespace Agent {
   export {
     type AgentResponse as AgentResponse,
+    type AgentRootResponse as AgentRootResponse,
     type AgentListResponse as AgentListResponse,
     type AgentCreateVersionResponse as AgentCreateVersionResponse,
     type AgentGetHandbookPresetsResponse as AgentGetHandbookPresetsResponse,
-    type AgentGetRootResponse as AgentGetRootResponse,
     type AgentListVersionsResponse as AgentListVersionsResponse,
     type AgentRepairResponse as AgentRepairResponse,
-    type AgentUpdateRootResponse as AgentUpdateRootResponse,
     type AgentCreateParams as AgentCreateParams,
     type AgentRetrieveParams as AgentRetrieveParams,
     type AgentUpdateParams as AgentUpdateParams,
