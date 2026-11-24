@@ -83,12 +83,6 @@ describe('resource conversationFlowComponent', () => {
           interruption_sensitivity: 0,
           kb_config: { filter_score: 0.6, top_k: 3 },
           knowledge_base_ids: ['kb_001', 'kb_002'],
-          model_choice: {
-            model: 'gpt-4.1',
-            type: 'cascading',
-            high_priority: true,
-            ultrafast: true,
-          },
           model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
           name: 'name',
           reminder_max_count: 0,

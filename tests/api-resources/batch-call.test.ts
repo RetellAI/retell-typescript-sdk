@@ -205,22 +205,9 @@ describe('resource batchCall', () => {
               webhook_url: 'https://webhook-url-here',
             },
             conversation_flow: {
-              backup_model: {
-                model: 'gpt-4.1',
-                type: 'cascading',
-                backup_kick_in_timeout: 300,
-                high_priority: true,
-                ultrafast: true,
-              },
               begin_after_user_silence_ms: 2000,
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['kb_001', 'kb_002'],
-              model_choice: {
-                model: 'gpt-4.1',
-                type: 'cascading',
-                high_priority: true,
-                ultrafast: true,
-              },
               model_config: {
                 backup: {
                   model: 'gpt-4.1',
@@ -231,22 +218,13 @@ describe('resource batchCall', () => {
                 temperature: 0,
                 type: 'cascading',
               },
-              model_temperature: 0.7,
               start_speaker: 'agent',
             },
             retell_llm: {
-              backup_model: {
-                model: 'gpt-4.1',
-                type: 'cascading',
-                backup_kick_in_timeout: 300,
-                high_priority: true,
-                ultrafast: true,
-              },
               begin_after_user_silence_ms: 2000,
               begin_message: 'Hey I am a virtual assistant calling from Retell Hospital.',
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['string'],
-              model: 'gpt-5.6-terra',
               model_config: {
                 backup: {
                   model: 'gpt-4.1',
@@ -257,10 +235,6 @@ describe('resource batchCall', () => {
                 temperature: 0,
                 type: 'cascading',
               },
-              model_high_priority: true,
-              model_temperature: 0,
-              model_ultrafast: true,
-              s2s_model: 'gpt-realtime-1.5',
               start_speaker: 'user',
             },
           },

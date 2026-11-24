@@ -104,12 +104,6 @@ export interface LlmResponse {
   llm_id: string;
 
   /**
-   * @deprecated Backup models are supported only for call agents. Response engines
-   * with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | LlmResponse.BackupModelChoice;
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -189,51 +183,6 @@ export interface LlmResponse {
   mcps?: Array<LlmResponse.Mcp> | null;
 
   /**
-   * @deprecated Available LLM models for agents.
-   */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'gpt-5.5'
-    | 'gpt-5.6-terra'
-    | 'gpt-5.6-luna'
-    | 'gpt-6.2-astra'
-    | 'gpt-6.2-sol'
-    | 'gpt-6-astra'
-    | 'gpt-6-sol'
-    | 'gpt-6.1-sol'
-    | 'gpt-6.1-terra'
-    | 'gpt-6-luna'
-    | 'tell-1'
-    | 'claude-4.6-sonnet'
-    | 'claude-5-opus'
-    | 'claude-5.5-opus'
-    | 'claude-5-sonnet'
-    | 'claude-5.5-sonnet'
-    | 'claude-5.5-haiku'
-    | 'claude-4.5-haiku'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | 'gemini-3.5-flash'
-    | 'gemini-3.5-flash-lite'
-    | 'gemini-3.6-flash'
-    | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash'
-    | 'gemini-4-neon'
-    | 'gemini-4-hydrogen'
-    | 'gemini-4-carbon'
-    | 'gemini-4-argon'
-    | null;
-
-  /**
    * Model settings for the response engine. type decides which models primary and
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -245,37 +194,6 @@ export interface LlmResponse {
     | LlmResponse.CascadingModelConfig
     | LlmResponse.S2SModelConfig
     | LlmResponse.DuplexModelConfig;
-
-  /**
-   * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
-   * model_config is set.
-   */
-  model_high_priority?: boolean | null;
-
-  /**
-   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-   * is set.
-   */
-  model_temperature?: number;
-
-  /**
-   * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
-   * model_config is set.
-   */
-  model_ultrafast?: boolean | null;
-
-  /**
-   * @deprecated The speech-to-speech model to use
-   */
-  s2s_model?:
-    | 'gpt-realtime-2.1'
-    | 'gpt-realtime-2.1-mini'
-    | 'gpt-realtime-2'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | 'grok-voice-3.0'
-    | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -311,80 +229,6 @@ export interface LlmResponse {
 }
 
 export namespace LlmResponse {
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
@@ -3739,12 +3583,6 @@ export interface LlmListResponse {
 
 export interface LlmCreateParams {
   /**
-   * @deprecated Backup models are supported only for call agents. Response engines
-   * with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | LlmCreateParams.BackupModelChoice;
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -3819,51 +3657,6 @@ export interface LlmCreateParams {
   mcps?: Array<LlmCreateParams.Mcp> | null;
 
   /**
-   * @deprecated Available LLM models for agents.
-   */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'gpt-5.5'
-    | 'gpt-5.6-terra'
-    | 'gpt-5.6-luna'
-    | 'gpt-6.2-astra'
-    | 'gpt-6.2-sol'
-    | 'gpt-6-astra'
-    | 'gpt-6-sol'
-    | 'gpt-6.1-sol'
-    | 'gpt-6.1-terra'
-    | 'gpt-6-luna'
-    | 'tell-1'
-    | 'claude-4.6-sonnet'
-    | 'claude-5-opus'
-    | 'claude-5.5-opus'
-    | 'claude-5-sonnet'
-    | 'claude-5.5-sonnet'
-    | 'claude-5.5-haiku'
-    | 'claude-4.5-haiku'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | 'gemini-3.5-flash'
-    | 'gemini-3.5-flash-lite'
-    | 'gemini-3.6-flash'
-    | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash'
-    | 'gemini-4-neon'
-    | 'gemini-4-hydrogen'
-    | 'gemini-4-carbon'
-    | 'gemini-4-argon'
-    | null;
-
-  /**
    * Model settings for the response engine. type decides which models primary and
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -3875,37 +3668,6 @@ export interface LlmCreateParams {
     | LlmCreateParams.CascadingModelConfig
     | LlmCreateParams.S2SModelConfig
     | LlmCreateParams.DuplexModelConfig;
-
-  /**
-   * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
-   * model_config is set.
-   */
-  model_high_priority?: boolean | null;
-
-  /**
-   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-   * is set.
-   */
-  model_temperature?: number;
-
-  /**
-   * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
-   * model_config is set.
-   */
-  model_ultrafast?: boolean | null;
-
-  /**
-   * @deprecated The speech-to-speech model to use
-   */
-  s2s_model?:
-    | 'gpt-realtime-2.1'
-    | 'gpt-realtime-2.1-mini'
-    | 'gpt-realtime-2'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | 'grok-voice-3.0'
-    | null;
 
   /**
    * The speaker who starts the conversation. Required. Must be either 'user' or
@@ -3936,80 +3698,6 @@ export interface LlmCreateParams {
 }
 
 export namespace LlmCreateParams {
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
@@ -7363,12 +7051,6 @@ export interface LlmUpdateParams {
   version?: number;
 
   /**
-   * @deprecated Body param: Backup models are supported only for call agents.
-   * Response engines with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | LlmUpdateParams.BackupModelChoice;
-
-  /**
    * Body param: If set, the AI will begin the conversation after waiting for the
    * user for the duration (in milliseconds) specified by this attribute. This only
    * applies if the agent is configured to wait for the user to speak first. If not
@@ -7445,51 +7127,6 @@ export interface LlmUpdateParams {
   mcps?: Array<LlmUpdateParams.Mcp> | null;
 
   /**
-   * @deprecated Body param: Available LLM models for agents.
-   */
-  model?:
-    | 'gpt-4.1'
-    | 'gpt-4.1-mini'
-    | 'gpt-5'
-    | 'gpt-5-mini'
-    | 'gpt-5-nano'
-    | 'gpt-5.1'
-    | 'gpt-5.2'
-    | 'gpt-5.4'
-    | 'gpt-5.4-mini'
-    | 'gpt-5.4-nano'
-    | 'gpt-5.5'
-    | 'gpt-5.6-terra'
-    | 'gpt-5.6-luna'
-    | 'gpt-6.2-astra'
-    | 'gpt-6.2-sol'
-    | 'gpt-6-astra'
-    | 'gpt-6-sol'
-    | 'gpt-6.1-sol'
-    | 'gpt-6.1-terra'
-    | 'gpt-6-luna'
-    | 'tell-1'
-    | 'claude-4.6-sonnet'
-    | 'claude-5-opus'
-    | 'claude-5.5-opus'
-    | 'claude-5-sonnet'
-    | 'claude-5.5-sonnet'
-    | 'claude-5.5-haiku'
-    | 'claude-4.5-haiku'
-    | 'gemini-3.0-flash'
-    | 'gemini-3.1-flash-lite'
-    | 'gemini-3.5-flash'
-    | 'gemini-3.5-flash-lite'
-    | 'gemini-3.6-flash'
-    | 'gemini-3.7-flash'
-    | 'gemini-3.8-flash'
-    | 'gemini-4-neon'
-    | 'gemini-4-hydrogen'
-    | 'gemini-4-carbon'
-    | 'gemini-4-argon'
-    | null;
-
-  /**
    * Body param: Model settings for the response engine. type decides which models
    * primary and backup accept. On update, each top-level key replaces the current
    * one and omitted keys are kept; set backup to null to remove it. Changing type
@@ -7501,37 +7138,6 @@ export interface LlmUpdateParams {
     | LlmUpdateParams.CascadingModelConfig
     | LlmUpdateParams.S2SModelConfig
     | LlmUpdateParams.DuplexModelConfig;
-
-  /**
-   * @deprecated Body param: Deprecated, use model_config.primary.tier fast. Ignored
-   * when model_config is set.
-   */
-  model_high_priority?: boolean | null;
-
-  /**
-   * @deprecated Body param: Deprecated, use model_config.temperature. Ignored when
-   * model_config is set.
-   */
-  model_temperature?: number;
-
-  /**
-   * @deprecated Body param: Deprecated, use model_config.primary.tier ultrafast.
-   * Ignored when model_config is set.
-   */
-  model_ultrafast?: boolean | null;
-
-  /**
-   * @deprecated Body param: The speech-to-speech model to use
-   */
-  s2s_model?:
-    | 'gpt-realtime-2.1'
-    | 'gpt-realtime-2.1-mini'
-    | 'gpt-realtime-2'
-    | 'gpt-realtime-1.5'
-    | 'gpt-realtime'
-    | 'gpt-realtime-mini'
-    | 'grok-voice-3.0'
-    | null;
 
   /**
    * Body param: The speaker who starts the conversation. Required. Must be either
@@ -7562,80 +7168,6 @@ export interface LlmUpdateParams {
 }
 
 export namespace LlmUpdateParams {
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
