@@ -166,15 +166,13 @@ export interface AppResponse {
   tenant_id?: string;
 
   /**
-   * Microsoft OneDrive account type discovered during OAuth.
+   * Account type discovered during OAuth.
    */
   tenant_type?: 'business' | 'personal';
 
   /**
    * Per-tenant API base URL. Set by providers with per-org hosts; omitted by
-   * providers on a single global host. For OneDrive for Business, this is the
-   * tenant's -my.sharepoint.com origin used by File Picker v8; personal OneDrive
-   * omits it.
+   * providers on a single global host.
    */
   tenant_url?: string;
 }
