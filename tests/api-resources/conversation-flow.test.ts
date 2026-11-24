@@ -82,12 +82,6 @@ describe('resource conversationFlow', () => {
           interruption_sensitivity: 0,
           kb_config: { filter_score: 0.6, top_k: 3 },
           knowledge_base_ids: ['kb_001', 'kb_002'],
-          model_choice: {
-            model: 'gpt-4.1',
-            type: 'cascading',
-            high_priority: true,
-            ultrafast: true,
-          },
           model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
           name: 'name',
           reminder_max_count: 0,
@@ -104,7 +98,6 @@ describe('resource conversationFlow', () => {
         },
       ],
       start_speaker: 'agent',
-      backup_model: {},
       begin_after_user_silence_ms: 2000,
       begin_tag_display_position: { x: 100, y: 200 },
       components: [
@@ -165,12 +158,6 @@ describe('resource conversationFlow', () => {
               interruption_sensitivity: 0,
               kb_config: { filter_score: 0.6, top_k: 3 },
               knowledge_base_ids: ['kb_001', 'kb_002'],
-              model_choice: {
-                model: 'gpt-4.1',
-                type: 'cascading',
-                high_priority: true,
-                ultrafast: true,
-              },
               model_config: { primary: { model: 'gpt-4.1', tier: 'standard' } },
               name: 'name',
               reminder_max_count: 0,
@@ -252,12 +239,6 @@ describe('resource conversationFlow', () => {
           timeout_ms: 0,
         },
       ],
-      model_choice: {
-        model: 'gpt-4.1',
-        type: 'cascading',
-        high_priority: true,
-        ultrafast: true,
-      },
       model_config: {
         backup: {
           model: 'gpt-4.1',
@@ -268,7 +249,6 @@ describe('resource conversationFlow', () => {
         temperature: 0,
         type: 'cascading',
       },
-      model_temperature: 0.7,
       notes: [
         {
           id: 'note_abc123',

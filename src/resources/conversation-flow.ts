@@ -134,12 +134,6 @@ export interface ConversationFlowResponse {
   version: number;
 
   /**
-   * @deprecated Backup models are supported only for call agents. Response engines
-   * with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | ConversationFlowResponse.BackupModelChoice;
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -196,11 +190,6 @@ export interface ConversationFlowResponse {
   mcps?: Array<ConversationFlowResponse.Mcp> | null;
 
   /**
-   * @deprecated Deprecated, use model_config. Ignored when model_config is set.
-   */
-  model_choice?: ConversationFlowResponse.ModelChoiceCascading | ConversationFlowResponse.ModelChoiceS2S;
-
-  /**
    * Model settings for the response engine. type decides which models primary and
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -212,12 +201,6 @@ export interface ConversationFlowResponse {
     | ConversationFlowResponse.CascadingModelConfig
     | ConversationFlowResponse.S2SModelConfig
     | ConversationFlowResponse.DuplexModelConfig;
-
-  /**
-   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-   * is set.
-   */
-  model_temperature?: number | null;
 
   /**
    * Array of nodes in the conversation flow.
@@ -263,80 +246,6 @@ export interface ConversationFlowResponse {
 }
 
 export namespace ConversationFlowResponse {
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
   /**
    * Display position for the begin tag in the frontend.
    */
@@ -475,13 +384,6 @@ export namespace ConversationFlowResponse {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ConversationNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -1194,74 +1096,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -1476,13 +1310,6 @@ export namespace ConversationFlowResponse {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SubagentNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -2206,74 +2033,6 @@ export namespace ConversationFlowResponse {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -3883,13 +3642,6 @@ export namespace ConversationFlowResponse {
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EndNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: EndNode.NodeModelConfig | unknown;
@@ -4220,74 +3972,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -4401,13 +4085,6 @@ export namespace ConversationFlowResponse {
       global_node_setting?: FunctionNode.GlobalNodeSetting;
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: FunctionNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -4933,74 +4610,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -5115,13 +4724,6 @@ export namespace ConversationFlowResponse {
       global_node_setting?: CodeNode.GlobalNodeSetting;
 
       instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CodeNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -5659,74 +5261,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -5814,13 +5348,6 @@ export namespace ConversationFlowResponse {
       display_position?: EscalateChatNode.DisplayPosition;
 
       global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EscalateChatNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -6248,74 +5775,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -6429,13 +5888,6 @@ export namespace ConversationFlowResponse {
        * What to say when transferring the call, only used when speak during execution
        */
       instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -7160,74 +6612,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -7326,13 +6710,6 @@ export namespace ConversationFlowResponse {
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: PressDigitNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -7841,74 +7218,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -8000,13 +7309,6 @@ export namespace ConversationFlowResponse {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -8503,74 +7805,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -8667,13 +7901,6 @@ export namespace ConversationFlowResponse {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -9187,74 +8414,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -9385,13 +8544,6 @@ export namespace ConversationFlowResponse {
       finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
       global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -10022,74 +9174,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -10208,13 +9292,6 @@ export namespace ConversationFlowResponse {
        * Defaults to false.
        */
       keep_current_voice?: boolean;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -10637,74 +9714,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -10827,13 +9836,6 @@ export namespace ConversationFlowResponse {
        * What to say when calling the function, only used when speak during execution
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: McpNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -11362,74 +10364,6 @@ export namespace ConversationFlowResponse {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -12052,13 +10986,6 @@ export namespace ConversationFlowResponse {
       instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BridgeTransferNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -12389,74 +11316,6 @@ export namespace ConversationFlowResponse {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -12543,13 +11402,6 @@ export namespace ConversationFlowResponse {
        * speak_during_execution is true.
        */
       instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CancelTransferNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -12879,74 +11731,6 @@ export namespace ConversationFlowResponse {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -13472,88 +12256,6 @@ export namespace ConversationFlowResponse {
     timeout_ms?: number;
   }
 
-  export interface ModelChoiceCascading {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
-  export interface ModelChoiceS2S {
-    /**
-     * The speech-to-speech model to use
-     */
-    model:
-      | 'gpt-realtime-2.1'
-      | 'gpt-realtime-2.1-mini'
-      | 'gpt-realtime-2'
-      | 'gpt-realtime-1.5'
-      | 'gpt-realtime'
-      | 'gpt-realtime-mini'
-      | 'grok-voice-3.0';
-
-    /**
-     * Type of model choice
-     */
-    type: 's2s';
-  }
-
   export interface CascadingModelConfig {
     /**
      * A text LLM that runs alongside the primary and takes over when the primary is
@@ -13954,13 +12656,6 @@ export namespace ConversationFlowResponse {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ConversationNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -14673,74 +13368,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -14955,13 +13582,6 @@ export namespace ConversationFlowResponse {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SubagentNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -15685,74 +14305,6 @@ export namespace ConversationFlowResponse {
        * Max number of knowledge base chunks to retrieve
        */
       top_k?: number;
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -17359,13 +15911,6 @@ export namespace ConversationFlowResponse {
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EndNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: EndNode.NodeModelConfig | unknown;
@@ -17696,74 +16241,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -17877,13 +16354,6 @@ export namespace ConversationFlowResponse {
     global_node_setting?: FunctionNode.GlobalNodeSetting;
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: FunctionNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -18409,74 +16879,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -18591,13 +16993,6 @@ export namespace ConversationFlowResponse {
     global_node_setting?: CodeNode.GlobalNodeSetting;
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CodeNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -19135,74 +17530,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -19290,13 +17617,6 @@ export namespace ConversationFlowResponse {
     display_position?: EscalateChatNode.DisplayPosition;
 
     global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EscalateChatNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -19724,74 +18044,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -19905,13 +18157,6 @@ export namespace ConversationFlowResponse {
      * What to say when transferring the call, only used when speak during execution
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -20636,74 +18881,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -20802,13 +18979,6 @@ export namespace ConversationFlowResponse {
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: PressDigitNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -21317,74 +19487,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -21476,13 +19578,6 @@ export namespace ConversationFlowResponse {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -21979,74 +20074,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -22143,13 +20170,6 @@ export namespace ConversationFlowResponse {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -22663,74 +20683,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -22861,13 +20813,6 @@ export namespace ConversationFlowResponse {
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -23498,74 +21443,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -23684,13 +21561,6 @@ export namespace ConversationFlowResponse {
      * Defaults to false.
      */
     keep_current_voice?: boolean;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -24113,74 +21983,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -24303,13 +22105,6 @@ export namespace ConversationFlowResponse {
      * What to say when calling the function, only used when speak during execution
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: McpNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -24838,74 +22633,6 @@ export namespace ConversationFlowResponse {
        * Type of instruction
        */
       type: 'static_text';
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -25528,13 +23255,6 @@ export namespace ConversationFlowResponse {
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BridgeTransferNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -25865,74 +23585,6 @@ export namespace ConversationFlowResponse {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -26019,13 +23671,6 @@ export namespace ConversationFlowResponse {
      * speak_during_execution is true.
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CancelTransferNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -26355,74 +24000,6 @@ export namespace ConversationFlowResponse {
        * Type of instruction
        */
       type: 'static_text';
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -26915,12 +24492,6 @@ export interface ConversationFlowCreateParams {
   start_speaker: 'user' | 'agent';
 
   /**
-   * @deprecated Backup models are supported only for call agents. Response engines
-   * with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | ConversationFlowCreateParams.BackupModelChoice;
-
-  /**
    * If set, the AI will begin the conversation after waiting for the user for the
    * duration (in milliseconds) specified by this attribute. This only applies if the
    * agent is configured to wait for the user to speak first. If not set, the agent
@@ -26977,13 +24548,6 @@ export interface ConversationFlowCreateParams {
   mcps?: Array<ConversationFlowCreateParams.Mcp> | null;
 
   /**
-   * @deprecated Deprecated, use model_config. Ignored when model_config is set.
-   */
-  model_choice?:
-    | ConversationFlowCreateParams.ModelChoiceCascading
-    | ConversationFlowCreateParams.ModelChoiceS2S;
-
-  /**
    * Model settings for the response engine. type decides which models primary and
    * backup accept. On update, each top-level key replaces the current one and
    * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -26995,12 +24559,6 @@ export interface ConversationFlowCreateParams {
     | ConversationFlowCreateParams.CascadingModelConfig
     | ConversationFlowCreateParams.S2SModelConfig
     | ConversationFlowCreateParams.DuplexModelConfig;
-
-  /**
-   * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-   * is set.
-   */
-  model_temperature?: number | null;
 
   /**
    * Visual annotations displayed on the flow canvas.
@@ -27088,13 +24646,6 @@ export namespace ConversationFlowCreateParams {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ConversationNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -27807,74 +25358,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -28089,13 +25572,6 @@ export namespace ConversationFlowCreateParams {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SubagentNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -28819,74 +26295,6 @@ export namespace ConversationFlowCreateParams {
        * Max number of knowledge base chunks to retrieve
        */
       top_k?: number;
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -30493,13 +27901,6 @@ export namespace ConversationFlowCreateParams {
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EndNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: EndNode.NodeModelConfig | unknown;
@@ -30830,74 +28231,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -31011,13 +28344,6 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: FunctionNode.GlobalNodeSetting;
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: FunctionNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -31543,74 +28869,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -31725,13 +28983,6 @@ export namespace ConversationFlowCreateParams {
     global_node_setting?: CodeNode.GlobalNodeSetting;
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CodeNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -32269,74 +29520,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -32424,13 +29607,6 @@ export namespace ConversationFlowCreateParams {
     display_position?: EscalateChatNode.DisplayPosition;
 
     global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EscalateChatNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -32858,74 +30034,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -33039,13 +30147,6 @@ export namespace ConversationFlowCreateParams {
      * What to say when transferring the call, only used when speak during execution
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -33770,74 +30871,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -33936,13 +30969,6 @@ export namespace ConversationFlowCreateParams {
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: PressDigitNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -34451,74 +31477,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -34610,13 +31568,6 @@ export namespace ConversationFlowCreateParams {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -35113,74 +32064,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -35277,13 +32160,6 @@ export namespace ConversationFlowCreateParams {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -35797,74 +32673,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -35995,13 +32803,6 @@ export namespace ConversationFlowCreateParams {
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -36632,74 +33433,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -36818,13 +33551,6 @@ export namespace ConversationFlowCreateParams {
      * Defaults to false.
      */
     keep_current_voice?: boolean;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -37247,74 +33973,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -37437,13 +34095,6 @@ export namespace ConversationFlowCreateParams {
      * What to say when calling the function, only used when speak during execution
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: McpNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -37972,74 +34623,6 @@ export namespace ConversationFlowCreateParams {
        * Type of instruction
        */
       type: 'static_text';
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -38662,13 +35245,6 @@ export namespace ConversationFlowCreateParams {
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BridgeTransferNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -38999,74 +35575,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -39153,13 +35661,6 @@ export namespace ConversationFlowCreateParams {
      * speak_during_execution is true.
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CancelTransferNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -39492,74 +35993,6 @@ export namespace ConversationFlowCreateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -39621,80 +36054,6 @@ export namespace ConversationFlowCreateParams {
         tier?: 'standard' | 'fast' | 'ultrafast';
       }
     }
-  }
-
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
   }
 
   /**
@@ -39835,13 +36194,6 @@ export namespace ConversationFlowCreateParams {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ConversationNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -40554,74 +36906,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -40836,13 +37120,6 @@ export namespace ConversationFlowCreateParams {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SubagentNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -41566,74 +37843,6 @@ export namespace ConversationFlowCreateParams {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -43243,13 +39452,6 @@ export namespace ConversationFlowCreateParams {
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EndNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: EndNode.NodeModelConfig | unknown;
@@ -43580,74 +39782,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -43761,13 +39895,6 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: FunctionNode.GlobalNodeSetting;
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: FunctionNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -44293,74 +40420,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -44475,13 +40534,6 @@ export namespace ConversationFlowCreateParams {
       global_node_setting?: CodeNode.GlobalNodeSetting;
 
       instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CodeNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -45019,74 +41071,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -45174,13 +41158,6 @@ export namespace ConversationFlowCreateParams {
       display_position?: EscalateChatNode.DisplayPosition;
 
       global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EscalateChatNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -45608,74 +41585,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -45789,13 +41698,6 @@ export namespace ConversationFlowCreateParams {
        * What to say when transferring the call, only used when speak during execution
        */
       instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -46520,74 +42422,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -46686,13 +42520,6 @@ export namespace ConversationFlowCreateParams {
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: PressDigitNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -47201,74 +43028,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -47360,13 +43119,6 @@ export namespace ConversationFlowCreateParams {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -47863,74 +43615,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -48027,13 +43711,6 @@ export namespace ConversationFlowCreateParams {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -48547,74 +44224,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -48745,13 +44354,6 @@ export namespace ConversationFlowCreateParams {
       finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
       global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -49382,74 +44984,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -49568,13 +45102,6 @@ export namespace ConversationFlowCreateParams {
        * Defaults to false.
        */
       keep_current_voice?: boolean;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -49997,74 +45524,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -50187,13 +45646,6 @@ export namespace ConversationFlowCreateParams {
        * What to say when calling the function, only used when speak during execution
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: McpNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -50722,74 +46174,6 @@ export namespace ConversationFlowCreateParams {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -51412,13 +46796,6 @@ export namespace ConversationFlowCreateParams {
       instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BridgeTransferNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -51749,74 +47126,6 @@ export namespace ConversationFlowCreateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -51903,13 +47212,6 @@ export namespace ConversationFlowCreateParams {
        * speak_during_execution is true.
        */
       instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CancelTransferNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -52239,74 +47541,6 @@ export namespace ConversationFlowCreateParams {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -52830,88 +48064,6 @@ export namespace ConversationFlowCreateParams {
      * 600,000. Default to 60,000 ms (1 minute).
      */
     timeout_ms?: number;
-  }
-
-  export interface ModelChoiceCascading {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
-  export interface ModelChoiceS2S {
-    /**
-     * The speech-to-speech model to use
-     */
-    model:
-      | 'gpt-realtime-2.1'
-      | 'gpt-realtime-2.1-mini'
-      | 'gpt-realtime-2'
-      | 'gpt-realtime-1.5'
-      | 'gpt-realtime'
-      | 'gpt-realtime-mini'
-      | 'grok-voice-3.0';
-
-    /**
-     * Type of model choice
-     */
-    type: 's2s';
   }
 
   export interface CascadingModelConfig {
@@ -53644,12 +48796,6 @@ export interface ConversationFlowUpdateParams {
   version?: number;
 
   /**
-   * @deprecated Body param: Backup models are supported only for call agents.
-   * Response engines with a backup model cannot be used by chat agents.
-   */
-  backup_model?: unknown | ConversationFlowUpdateParams.BackupModelChoice;
-
-  /**
    * Body param: If set, the AI will begin the conversation after waiting for the
    * user for the duration (in milliseconds) specified by this attribute. This only
    * applies if the agent is configured to wait for the user to speak first. If not
@@ -53707,14 +48853,6 @@ export interface ConversationFlowUpdateParams {
   mcps?: Array<ConversationFlowUpdateParams.Mcp> | null;
 
   /**
-   * @deprecated Body param: Deprecated, use model_config. Ignored when model_config
-   * is set.
-   */
-  model_choice?:
-    | ConversationFlowUpdateParams.ModelChoiceCascading
-    | ConversationFlowUpdateParams.ModelChoiceS2S;
-
-  /**
    * Body param: Model settings for the response engine. type decides which models
    * primary and backup accept. On update, each top-level key replaces the current
    * one and omitted keys are kept; set backup to null to remove it. Changing type
@@ -53726,12 +48864,6 @@ export interface ConversationFlowUpdateParams {
     | ConversationFlowUpdateParams.CascadingModelConfig
     | ConversationFlowUpdateParams.S2SModelConfig
     | ConversationFlowUpdateParams.DuplexModelConfig;
-
-  /**
-   * @deprecated Body param: Deprecated, use model_config.temperature. Ignored when
-   * model_config is set.
-   */
-  model_temperature?: number | null;
 
   /**
    * Body param: Array of nodes in the conversation flow.
@@ -53777,80 +48909,6 @@ export interface ConversationFlowUpdateParams {
 }
 
 export namespace ConversationFlowUpdateParams {
-  /**
-   * Backup models are supported only for call agents. Response engines with a backup
-   * model cannot be used by chat agents.
-   */
-  export interface BackupModelChoice {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Duration in milliseconds to prefer primary model output while both models run
-     * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-     * 1500 when omitted.
-     */
-    backup_kick_in_timeout?: number;
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
   /**
    * Display position for the begin tag in the frontend.
    */
@@ -53989,13 +49047,6 @@ export namespace ConversationFlowUpdateParams {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ConversationNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -54708,74 +49759,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -54990,13 +49973,6 @@ export namespace ConversationFlowUpdateParams {
        * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
        */
       knowledge_base_ids?: Array<string> | null;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SubagentNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -55720,74 +50696,6 @@ export namespace ConversationFlowUpdateParams {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -57397,13 +52305,6 @@ export namespace ConversationFlowUpdateParams {
       instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EndNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: EndNode.NodeModelConfig | unknown;
@@ -57734,74 +52635,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -57915,13 +52748,6 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: FunctionNode.GlobalNodeSetting;
 
       instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: FunctionNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -58447,74 +53273,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -58629,13 +53387,6 @@ export namespace ConversationFlowUpdateParams {
       global_node_setting?: CodeNode.GlobalNodeSetting;
 
       instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CodeNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -59173,74 +53924,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -59328,13 +54011,6 @@ export namespace ConversationFlowUpdateParams {
       display_position?: EscalateChatNode.DisplayPosition;
 
       global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: EscalateChatNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -59762,74 +54438,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -59943,13 +54551,6 @@ export namespace ConversationFlowUpdateParams {
        * What to say when transferring the call, only used when speak during execution
        */
       instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: TransferCallNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -60674,74 +55275,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -60840,13 +55373,6 @@ export namespace ConversationFlowUpdateParams {
       finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
       global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: PressDigitNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -61355,74 +55881,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -61514,13 +55972,6 @@ export namespace ConversationFlowUpdateParams {
       finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
       global_node_setting?: BranchNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BranchNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -62017,74 +56468,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -62181,13 +56564,6 @@ export namespace ConversationFlowUpdateParams {
       display_position?: SMSNode.DisplayPosition;
 
       global_node_setting?: SMSNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: SMSNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -62701,74 +57077,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -62899,13 +57207,6 @@ export namespace ConversationFlowUpdateParams {
       finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
       global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -63536,74 +57837,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -63722,13 +57955,6 @@ export namespace ConversationFlowUpdateParams {
        * Defaults to false.
        */
       keep_current_voice?: boolean;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: AgentSwapNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -64151,74 +58377,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -64341,13 +58499,6 @@ export namespace ConversationFlowUpdateParams {
        * What to say when calling the function, only used when speak during execution
        */
       instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: McpNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -64876,74 +59027,6 @@ export namespace ConversationFlowUpdateParams {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -65566,13 +59649,6 @@ export namespace ConversationFlowUpdateParams {
       instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: BridgeTransferNode.ModelChoice;
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -65903,74 +59979,6 @@ export namespace ConversationFlowUpdateParams {
       }
 
       /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      /**
        * Model override for this node. Only cascading flows use it.
        */
       export interface NodeModelConfig {
@@ -66057,13 +60065,6 @@ export namespace ConversationFlowUpdateParams {
        * speak_during_execution is true.
        */
       instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      model_choice?: CancelTransferNode.ModelChoice;
 
       /**
        * Model override for this node. Only cascading flows use it.
@@ -66393,74 +60394,6 @@ export namespace ConversationFlowUpdateParams {
          * Type of instruction
          */
         type: 'static_text';
-      }
-
-      /**
-       * @deprecated Deprecated, use model_config. When a request sends both and they
-       * differ, the one that differs from the stored node is used, and model_config wins
-       * if both changed.
-       */
-      export interface ModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
       }
 
       /**
@@ -66986,88 +60919,6 @@ export namespace ConversationFlowUpdateParams {
     timeout_ms?: number;
   }
 
-  export interface ModelChoiceCascading {
-    /**
-     * The LLM model to use
-     */
-    model:
-      | 'gpt-4.1'
-      | 'gpt-4.1-mini'
-      | 'gpt-5'
-      | 'gpt-5-mini'
-      | 'gpt-5-nano'
-      | 'gpt-5.1'
-      | 'gpt-5.2'
-      | 'gpt-5.4'
-      | 'gpt-5.4-mini'
-      | 'gpt-5.4-nano'
-      | 'gpt-5.5'
-      | 'gpt-5.6-terra'
-      | 'gpt-5.6-luna'
-      | 'gpt-6.2-astra'
-      | 'gpt-6.2-sol'
-      | 'gpt-6-astra'
-      | 'gpt-6-sol'
-      | 'gpt-6.1-sol'
-      | 'gpt-6.1-terra'
-      | 'gpt-6-luna'
-      | 'tell-1'
-      | 'claude-4.6-sonnet'
-      | 'claude-5-opus'
-      | 'claude-5.5-opus'
-      | 'claude-5-sonnet'
-      | 'claude-5.5-sonnet'
-      | 'claude-5.5-haiku'
-      | 'claude-4.5-haiku'
-      | 'gemini-3.0-flash'
-      | 'gemini-3.1-flash-lite'
-      | 'gemini-3.5-flash'
-      | 'gemini-3.5-flash-lite'
-      | 'gemini-3.6-flash'
-      | 'gemini-3.7-flash'
-      | 'gemini-3.8-flash'
-      | 'gemini-4-neon'
-      | 'gemini-4-hydrogen'
-      | 'gemini-4-carbon'
-      | 'gemini-4-argon';
-
-    /**
-     * Type of model choice
-     */
-    type: 'cascading';
-
-    /**
-     * Whether to use high priority pool with more dedicated resource, default false
-     */
-    high_priority?: boolean;
-
-    /**
-     * Whether to use the ultrafast tier for much faster response generation, default
-     * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-     * precedence over high_priority.
-     */
-    ultrafast?: boolean;
-  }
-
-  export interface ModelChoiceS2S {
-    /**
-     * The speech-to-speech model to use
-     */
-    model:
-      | 'gpt-realtime-2.1'
-      | 'gpt-realtime-2.1-mini'
-      | 'gpt-realtime-2'
-      | 'gpt-realtime-1.5'
-      | 'gpt-realtime'
-      | 'gpt-realtime-mini'
-      | 'grok-voice-3.0';
-
-    /**
-     * Type of model choice
-     */
-    type: 's2s';
-  }
-
   export interface CascadingModelConfig {
     /**
      * A text LLM that runs alongside the primary and takes over when the primary is
@@ -67468,13 +61319,6 @@ export namespace ConversationFlowUpdateParams {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ConversationNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -68187,74 +62031,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -68469,13 +62245,6 @@ export namespace ConversationFlowUpdateParams {
      * Knowledge base IDs for RAG (Retrieval-Augmented Generation).
      */
     knowledge_base_ids?: Array<string> | null;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SubagentNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -69199,74 +62968,6 @@ export namespace ConversationFlowUpdateParams {
        * Max number of knowledge base chunks to retrieve
        */
       top_k?: number;
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -70873,13 +64574,6 @@ export namespace ConversationFlowUpdateParams {
     instruction?: EndNode.NodeInstructionPrompt | EndNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EndNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: EndNode.NodeModelConfig | unknown;
@@ -71210,74 +64904,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -71391,13 +65017,6 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: FunctionNode.GlobalNodeSetting;
 
     instruction?: FunctionNode.NodeInstructionPrompt | FunctionNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: FunctionNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -71923,74 +65542,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -72105,13 +65656,6 @@ export namespace ConversationFlowUpdateParams {
     global_node_setting?: CodeNode.GlobalNodeSetting;
 
     instruction?: CodeNode.NodeInstructionPrompt | CodeNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CodeNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -72649,74 +66193,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -72804,13 +66280,6 @@ export namespace ConversationFlowUpdateParams {
     display_position?: EscalateChatNode.DisplayPosition;
 
     global_node_setting?: EscalateChatNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: EscalateChatNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -73238,74 +66707,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -73419,13 +66820,6 @@ export namespace ConversationFlowUpdateParams {
      * What to say when transferring the call, only used when speak during execution
      */
     instruction?: TransferCallNode.NodeInstructionPrompt | TransferCallNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: TransferCallNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -74150,74 +67544,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -74316,13 +67642,6 @@ export namespace ConversationFlowUpdateParams {
     finetune_transition_examples?: Array<PressDigitNode.FinetuneTransitionExample>;
 
     global_node_setting?: PressDigitNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: PressDigitNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -74831,74 +68150,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -74990,13 +68241,6 @@ export namespace ConversationFlowUpdateParams {
     finetune_transition_examples?: Array<BranchNode.FinetuneTransitionExample>;
 
     global_node_setting?: BranchNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BranchNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -75493,74 +68737,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -75657,13 +68833,6 @@ export namespace ConversationFlowUpdateParams {
     display_position?: SMSNode.DisplayPosition;
 
     global_node_setting?: SMSNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: SMSNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -76177,74 +69346,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -76375,13 +69476,6 @@ export namespace ConversationFlowUpdateParams {
     finetune_transition_examples?: Array<ExtractDynamicVariablesNode.FinetuneTransitionExample>;
 
     global_node_setting?: ExtractDynamicVariablesNode.GlobalNodeSetting;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: ExtractDynamicVariablesNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -77012,74 +70106,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -77198,13 +70224,6 @@ export namespace ConversationFlowUpdateParams {
      * Defaults to false.
      */
     keep_current_voice?: boolean;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: AgentSwapNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -77627,74 +70646,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -77817,13 +70768,6 @@ export namespace ConversationFlowUpdateParams {
      * What to say when calling the function, only used when speak during execution
      */
     instruction?: McpNode.NodeInstructionPrompt | McpNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: McpNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -78352,74 +71296,6 @@ export namespace ConversationFlowUpdateParams {
        * Type of instruction
        */
       type: 'static_text';
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**
@@ -79042,13 +71918,6 @@ export namespace ConversationFlowUpdateParams {
     instruction?: BridgeTransferNode.NodeInstructionPrompt | BridgeTransferNode.NodeInstructionStaticText;
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: BridgeTransferNode.ModelChoice;
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     model_config?: BridgeTransferNode.NodeModelConfig | unknown;
@@ -79379,74 +72248,6 @@ export namespace ConversationFlowUpdateParams {
     }
 
     /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
-    }
-
-    /**
      * Model override for this node. Only cascading flows use it.
      */
     export interface NodeModelConfig {
@@ -79533,13 +72334,6 @@ export namespace ConversationFlowUpdateParams {
      * speak_during_execution is true.
      */
     instruction?: CancelTransferNode.NodeInstructionPrompt | CancelTransferNode.NodeInstructionStaticText;
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    model_choice?: CancelTransferNode.ModelChoice;
 
     /**
      * Model override for this node. Only cascading flows use it.
@@ -79869,74 +72663,6 @@ export namespace ConversationFlowUpdateParams {
        * Type of instruction
        */
       type: 'static_text';
-    }
-
-    /**
-     * @deprecated Deprecated, use model_config. When a request sends both and they
-     * differ, the one that differs from the stored node is used, and model_config wins
-     * if both changed.
-     */
-    export interface ModelChoice {
-      /**
-       * The LLM model to use
-       */
-      model:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon';
-
-      /**
-       * Type of model choice
-       */
-      type: 'cascading';
-
-      /**
-       * Whether to use high priority pool with more dedicated resource, default false
-       */
-      high_priority?: boolean;
-
-      /**
-       * Whether to use the ultrafast tier for much faster response generation, default
-       * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-       * precedence over high_priority.
-       */
-      ultrafast?: boolean;
     }
 
     /**

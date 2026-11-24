@@ -11397,13 +11397,6 @@ export namespace CallCreatePhoneCallParams {
      */
     export interface ConversationFlow {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: ConversationFlow.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -11422,11 +11415,6 @@ export namespace CallCreatePhoneCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Deprecated, use model_config. Ignored when model_config is set.
-       */
-      model_choice?: ConversationFlow.ModelChoiceCascading | ConversationFlow.ModelChoiceS2S;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -11440,92 +11428,12 @@ export namespace CallCreatePhoneCallParams {
         | ConversationFlow.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number | null;
-
-      /**
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
     }
 
     export namespace ConversationFlow {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -11539,88 +11447,6 @@ export namespace CallCreatePhoneCallParams {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      export interface ModelChoiceCascading {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      export interface ModelChoiceS2S {
-        /**
-         * The speech-to-speech model to use
-         */
-        model:
-          | 'gpt-realtime-2.1'
-          | 'gpt-realtime-2.1-mini'
-          | 'gpt-realtime-2'
-          | 'gpt-realtime-1.5'
-          | 'gpt-realtime'
-          | 'gpt-realtime-mini'
-          | 'grok-voice-3.0';
-
-        /**
-         * Type of model choice
-         */
-        type: 's2s';
       }
 
       export interface CascadingModelConfig {
@@ -11964,13 +11790,6 @@ export namespace CallCreatePhoneCallParams {
      */
     export interface RetellLlm {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: RetellLlm.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -11995,51 +11814,6 @@ export namespace CallCreatePhoneCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Available LLM models for agents.
-       */
-      model?:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon'
-        | null;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -12050,37 +11824,6 @@ export namespace CallCreatePhoneCallParams {
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig | RetellLlm.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
-       * model_config is set.
-       */
-      model_high_priority?: boolean | null;
-
-      /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number;
-
-      /**
-       * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
-       * model_config is set.
-       */
-      model_ultrafast?: boolean | null;
-
-      /**
-       * @deprecated The speech-to-speech model to use
-       */
-      s2s_model?:
-        | 'gpt-realtime-2.1'
-        | 'gpt-realtime-2.1-mini'
-        | 'gpt-realtime-2'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | 'grok-voice-3.0'
-        | null;
-
-      /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
        * 'agent'.
        */
@@ -12088,80 +11831,6 @@ export namespace CallCreatePhoneCallParams {
     }
 
     export namespace RetellLlm {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -15025,13 +14694,6 @@ export namespace CallCreateWebCallParams {
      */
     export interface ConversationFlow {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: ConversationFlow.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -15050,11 +14712,6 @@ export namespace CallCreateWebCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Deprecated, use model_config. Ignored when model_config is set.
-       */
-      model_choice?: ConversationFlow.ModelChoiceCascading | ConversationFlow.ModelChoiceS2S;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -15068,92 +14725,12 @@ export namespace CallCreateWebCallParams {
         | ConversationFlow.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number | null;
-
-      /**
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
     }
 
     export namespace ConversationFlow {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -15167,88 +14744,6 @@ export namespace CallCreateWebCallParams {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      export interface ModelChoiceCascading {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      export interface ModelChoiceS2S {
-        /**
-         * The speech-to-speech model to use
-         */
-        model:
-          | 'gpt-realtime-2.1'
-          | 'gpt-realtime-2.1-mini'
-          | 'gpt-realtime-2'
-          | 'gpt-realtime-1.5'
-          | 'gpt-realtime'
-          | 'gpt-realtime-mini'
-          | 'grok-voice-3.0';
-
-        /**
-         * Type of model choice
-         */
-        type: 's2s';
       }
 
       export interface CascadingModelConfig {
@@ -15592,13 +15087,6 @@ export namespace CallCreateWebCallParams {
      */
     export interface RetellLlm {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: RetellLlm.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -15623,51 +15111,6 @@ export namespace CallCreateWebCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Available LLM models for agents.
-       */
-      model?:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon'
-        | null;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -15678,37 +15121,6 @@ export namespace CallCreateWebCallParams {
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig | RetellLlm.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
-       * model_config is set.
-       */
-      model_high_priority?: boolean | null;
-
-      /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number;
-
-      /**
-       * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
-       * model_config is set.
-       */
-      model_ultrafast?: boolean | null;
-
-      /**
-       * @deprecated The speech-to-speech model to use
-       */
-      s2s_model?:
-        | 'gpt-realtime-2.1'
-        | 'gpt-realtime-2.1-mini'
-        | 'gpt-realtime-2'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | 'grok-voice-3.0'
-        | null;
-
-      /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
        * 'agent'.
        */
@@ -15716,80 +15128,6 @@ export namespace CallCreateWebCallParams {
     }
 
     export namespace RetellLlm {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -18651,13 +17989,6 @@ export namespace CallRegisterPhoneCallParams {
      */
     export interface ConversationFlow {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: ConversationFlow.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -18676,11 +18007,6 @@ export namespace CallRegisterPhoneCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Deprecated, use model_config. Ignored when model_config is set.
-       */
-      model_choice?: ConversationFlow.ModelChoiceCascading | ConversationFlow.ModelChoiceS2S;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -18694,92 +18020,12 @@ export namespace CallRegisterPhoneCallParams {
         | ConversationFlow.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number | null;
-
-      /**
        * Who starts the conversation - user or agent.
        */
       start_speaker?: 'user' | 'agent';
     }
 
     export namespace ConversationFlow {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
@@ -18793,88 +18039,6 @@ export namespace CallRegisterPhoneCallParams {
          * Max number of knowledge base chunks to retrieve
          */
         top_k?: number;
-      }
-
-      export interface ModelChoiceCascading {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
-      export interface ModelChoiceS2S {
-        /**
-         * The speech-to-speech model to use
-         */
-        model:
-          | 'gpt-realtime-2.1'
-          | 'gpt-realtime-2.1-mini'
-          | 'gpt-realtime-2'
-          | 'gpt-realtime-1.5'
-          | 'gpt-realtime'
-          | 'gpt-realtime-mini'
-          | 'grok-voice-3.0';
-
-        /**
-         * Type of model choice
-         */
-        type: 's2s';
       }
 
       export interface CascadingModelConfig {
@@ -19218,13 +18382,6 @@ export namespace CallRegisterPhoneCallParams {
      */
     export interface RetellLlm {
       /**
-       * Replace backup model configuration for this call only. Omit to inherit the saved
-       * configuration, or set null to disable backup. An omitted backup_kick_in_timeout
-       * in a supplied configuration defaults to 1500 milliseconds.
-       */
-      backup_model?: RetellLlm.BackupModelChoice | unknown;
-
-      /**
        * If set, the AI will begin the conversation after waiting for the user for the
        * duration (in milliseconds) specified by this attribute. This only applies if the
        * agent is configured to wait for the user to speak first. If not set, the agent
@@ -19249,51 +18406,6 @@ export namespace CallRegisterPhoneCallParams {
       knowledge_base_ids?: Array<string> | null;
 
       /**
-       * @deprecated Available LLM models for agents.
-       */
-      model?:
-        | 'gpt-4.1'
-        | 'gpt-4.1-mini'
-        | 'gpt-5'
-        | 'gpt-5-mini'
-        | 'gpt-5-nano'
-        | 'gpt-5.1'
-        | 'gpt-5.2'
-        | 'gpt-5.4'
-        | 'gpt-5.4-mini'
-        | 'gpt-5.4-nano'
-        | 'gpt-5.5'
-        | 'gpt-5.6-terra'
-        | 'gpt-5.6-luna'
-        | 'gpt-6.2-astra'
-        | 'gpt-6.2-sol'
-        | 'gpt-6-astra'
-        | 'gpt-6-sol'
-        | 'gpt-6.1-sol'
-        | 'gpt-6.1-terra'
-        | 'gpt-6-luna'
-        | 'tell-1'
-        | 'claude-4.6-sonnet'
-        | 'claude-5-opus'
-        | 'claude-5.5-opus'
-        | 'claude-5-sonnet'
-        | 'claude-5.5-sonnet'
-        | 'claude-5.5-haiku'
-        | 'claude-4.5-haiku'
-        | 'gemini-3.0-flash'
-        | 'gemini-3.1-flash-lite'
-        | 'gemini-3.5-flash'
-        | 'gemini-3.5-flash-lite'
-        | 'gemini-3.6-flash'
-        | 'gemini-3.7-flash'
-        | 'gemini-3.8-flash'
-        | 'gemini-4-neon'
-        | 'gemini-4-hydrogen'
-        | 'gemini-4-carbon'
-        | 'gemini-4-argon'
-        | null;
-
-      /**
        * Model settings for the response engine. type decides which models primary and
        * backup accept. On update, each top-level key replaces the current one and
        * omitted keys are kept; set backup to null to remove it. Changing type requires
@@ -19304,37 +18416,6 @@ export namespace CallRegisterPhoneCallParams {
       model_config?: RetellLlm.CascadingModelConfig | RetellLlm.S2SModelConfig | RetellLlm.DuplexModelConfig;
 
       /**
-       * @deprecated Deprecated, use model_config.primary.tier fast. Ignored when
-       * model_config is set.
-       */
-      model_high_priority?: boolean | null;
-
-      /**
-       * @deprecated Deprecated, use model_config.temperature. Ignored when model_config
-       * is set.
-       */
-      model_temperature?: number;
-
-      /**
-       * @deprecated Deprecated, use model_config.primary.tier ultrafast. Ignored when
-       * model_config is set.
-       */
-      model_ultrafast?: boolean | null;
-
-      /**
-       * @deprecated The speech-to-speech model to use
-       */
-      s2s_model?:
-        | 'gpt-realtime-2.1'
-        | 'gpt-realtime-2.1-mini'
-        | 'gpt-realtime-2'
-        | 'gpt-realtime-1.5'
-        | 'gpt-realtime'
-        | 'gpt-realtime-mini'
-        | 'grok-voice-3.0'
-        | null;
-
-      /**
        * The speaker who starts the conversation. Required. Must be either 'user' or
        * 'agent'.
        */
@@ -19342,80 +18423,6 @@ export namespace CallRegisterPhoneCallParams {
     }
 
     export namespace RetellLlm {
-      /**
-       * Backup models are supported only for call agents. Response engines with a backup
-       * model cannot be used by chat agents.
-       */
-      export interface BackupModelChoice {
-        /**
-         * The LLM model to use
-         */
-        model:
-          | 'gpt-4.1'
-          | 'gpt-4.1-mini'
-          | 'gpt-5'
-          | 'gpt-5-mini'
-          | 'gpt-5-nano'
-          | 'gpt-5.1'
-          | 'gpt-5.2'
-          | 'gpt-5.4'
-          | 'gpt-5.4-mini'
-          | 'gpt-5.4-nano'
-          | 'gpt-5.5'
-          | 'gpt-5.6-terra'
-          | 'gpt-5.6-luna'
-          | 'gpt-6.2-astra'
-          | 'gpt-6.2-sol'
-          | 'gpt-6-astra'
-          | 'gpt-6-sol'
-          | 'gpt-6.1-sol'
-          | 'gpt-6.1-terra'
-          | 'gpt-6-luna'
-          | 'tell-1'
-          | 'claude-4.6-sonnet'
-          | 'claude-5-opus'
-          | 'claude-5.5-opus'
-          | 'claude-5-sonnet'
-          | 'claude-5.5-sonnet'
-          | 'claude-5.5-haiku'
-          | 'claude-4.5-haiku'
-          | 'gemini-3.0-flash'
-          | 'gemini-3.1-flash-lite'
-          | 'gemini-3.5-flash'
-          | 'gemini-3.5-flash-lite'
-          | 'gemini-3.6-flash'
-          | 'gemini-3.7-flash'
-          | 'gemini-3.8-flash'
-          | 'gemini-4-neon'
-          | 'gemini-4-hydrogen'
-          | 'gemini-4-carbon'
-          | 'gemini-4-argon';
-
-        /**
-         * Type of model choice
-         */
-        type: 'cascading';
-
-        /**
-         * Duration in milliseconds to prefer primary model output while both models run
-         * concurrently. Must be between 300 and 60000 milliseconds, inclusive. Defaults to
-         * 1500 when omitted.
-         */
-        backup_kick_in_timeout?: number;
-
-        /**
-         * Whether to use high priority pool with more dedicated resource, default false
-         */
-        high_priority?: boolean;
-
-        /**
-         * Whether to use the ultrafast tier for much faster response generation, default
-         * false. Only supported by gpt-6.1-sol on voice agents; ignored otherwise. Takes
-         * precedence over high_priority.
-         */
-        ultrafast?: boolean;
-      }
-
       /**
        * Knowledge base configuration for RAG retrieval.
        */
