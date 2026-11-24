@@ -2205,6 +2205,12 @@ export namespace ConversationFlowComponentResponse {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -2243,6 +2249,30 @@ export namespace ConversationFlowComponentResponse {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
@@ -5548,6 +5578,12 @@ export namespace ConversationFlowComponentResponse {
 
     edge: EscalateChatNode.Edge;
 
+    /**
+     * The last message the AI agent sends to the end user after a successful
+     * escalation.
+     */
+    handoff_message: EscalateChatNode.NodeInstructionPrompt | EscalateChatNode.NodeInstructionStaticText;
+
     type: 'escalate_chat';
 
     /**
@@ -5674,6 +5710,30 @@ export namespace ConversationFlowComponentResponse {
 
         type: 'prompt';
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
 
     /**
@@ -15243,6 +15303,12 @@ export namespace ConversationFlowComponentCreateParams {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -15281,6 +15347,30 @@ export namespace ConversationFlowComponentCreateParams {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
@@ -18586,6 +18676,12 @@ export namespace ConversationFlowComponentCreateParams {
 
     edge: EscalateChatNode.Edge;
 
+    /**
+     * The last message the AI agent sends to the end user after a successful
+     * escalation.
+     */
+    handoff_message: EscalateChatNode.NodeInstructionPrompt | EscalateChatNode.NodeInstructionStaticText;
+
     type: 'escalate_chat';
 
     /**
@@ -18712,6 +18808,30 @@ export namespace ConversationFlowComponentCreateParams {
 
         type: 'prompt';
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
 
     /**
@@ -28302,6 +28422,12 @@ export namespace ConversationFlowComponentUpdateParams {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -28340,6 +28466,30 @@ export namespace ConversationFlowComponentUpdateParams {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
@@ -31645,6 +31795,12 @@ export namespace ConversationFlowComponentUpdateParams {
 
     edge: EscalateChatNode.Edge;
 
+    /**
+     * The last message the AI agent sends to the end user after a successful
+     * escalation.
+     */
+    handoff_message: EscalateChatNode.NodeInstructionPrompt | EscalateChatNode.NodeInstructionStaticText;
+
     type: 'escalate_chat';
 
     /**
@@ -31771,6 +31927,30 @@ export namespace ConversationFlowComponentUpdateParams {
 
         type: 'prompt';
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
 
     /**
