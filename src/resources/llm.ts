@@ -388,6 +388,12 @@ export namespace LlmResponse {
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
+    /**
+     * What the agent says once the destination webhook returns a 2xx response, right
+     * before the human takes over.
+     */
+    handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
     name: string;
 
     type: 'escalate_chat';
@@ -426,6 +432,30 @@ export namespace LlmResponse {
 
         timeout_ms?: number;
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
   }
 
@@ -2266,6 +2296,12 @@ export namespace LlmResponse {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -2304,6 +2340,30 @@ export namespace LlmResponse {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
@@ -3953,6 +4013,12 @@ export namespace LlmCreateParams {
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
+    /**
+     * What the agent says once the destination webhook returns a 2xx response, right
+     * before the human takes over.
+     */
+    handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
     name: string;
 
     type: 'escalate_chat';
@@ -3991,6 +4057,30 @@ export namespace LlmCreateParams {
 
         timeout_ms?: number;
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
   }
 
@@ -5831,6 +5921,12 @@ export namespace LlmCreateParams {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -5869,6 +5965,30 @@ export namespace LlmCreateParams {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
@@ -7519,6 +7639,12 @@ export namespace LlmUpdateParams {
   export interface EscalateChatTool {
     destination: EscalateChatTool.Destination;
 
+    /**
+     * What the agent says once the destination webhook returns a 2xx response, right
+     * before the human takes over.
+     */
+    handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
     name: string;
 
     type: 'escalate_chat';
@@ -7557,6 +7683,30 @@ export namespace LlmUpdateParams {
 
         timeout_ms?: number;
       }
+    }
+
+    export interface NodeInstructionPrompt {
+      /**
+       * The prompt text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'prompt';
+    }
+
+    export interface NodeInstructionStaticText {
+      /**
+       * The static text for the instruction
+       */
+      text: string;
+
+      /**
+       * Type of instruction
+       */
+      type: 'static_text';
     }
   }
 
@@ -9397,6 +9547,12 @@ export namespace LlmUpdateParams {
     export interface EscalateChatTool {
       destination: EscalateChatTool.Destination;
 
+      /**
+       * What the agent says once the destination webhook returns a 2xx response, right
+       * before the human takes over.
+       */
+      handoff_message: EscalateChatTool.NodeInstructionPrompt | EscalateChatTool.NodeInstructionStaticText;
+
       name: string;
 
       type: 'escalate_chat';
@@ -9435,6 +9591,30 @@ export namespace LlmUpdateParams {
 
           timeout_ms?: number;
         }
+      }
+
+      export interface NodeInstructionPrompt {
+        /**
+         * The prompt text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'prompt';
+      }
+
+      export interface NodeInstructionStaticText {
+        /**
+         * The static text for the instruction
+         */
+        text: string;
+
+        /**
+         * Type of instruction
+         */
+        type: 'static_text';
       }
     }
 
