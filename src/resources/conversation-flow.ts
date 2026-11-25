@@ -2212,20 +2212,55 @@ export namespace ConversationFlowResponse {
              */
             url: string;
 
-            /**
-             * Customer-defined fields nested in args on chat_transfer_requested events. String
-             * values support dynamic variables such as {{customer_id}}, including inside
-             * nested objects and arrays. Field names and non-string values are preserved.
-             */
-            body?: { [key: string]: unknown };
-
             headers?: { [key: string]: string };
 
             max_retry?: number;
 
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            parameters?: Destination.Parameters;
+
             query_params?: { [key: string]: string };
 
             timeout_ms?: number;
+          }
+
+          export namespace Destination {
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            export interface Parameters {
+              /**
+               * The value of properties is an object, where each key is the name of a property
+               * and each value is a schema used to validate that property.
+               */
+              properties: unknown;
+
+              /**
+               * Type must be "object" for a JSON Schema object.
+               */
+              type: 'object';
+
+              /**
+               * On an integration function's response schema, false means the output fields are
+               * fixed to properties and no others can be added.
+               */
+              additionalProperties?: boolean;
+
+              /**
+               * List of names of required property when generating this parameter. LLM will do
+               * its best to generate the required properties in its function arguments. Property
+               * must exist in properties.
+               */
+              required?: Array<string>;
+            }
           }
         }
 
@@ -5376,20 +5411,55 @@ export namespace ConversationFlowResponse {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -14484,20 +14554,55 @@ export namespace ConversationFlowResponse {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -17645,20 +17750,55 @@ export namespace ConversationFlowResponse {
          */
         url: string;
 
-        /**
-         * Customer-defined fields nested in args on chat_transfer_requested events. String
-         * values support dynamic variables such as {{customer_id}}, including inside
-         * nested objects and arrays. Field names and non-string values are preserved.
-         */
-        body?: { [key: string]: unknown };
-
         headers?: { [key: string]: string };
 
         max_retry?: number;
 
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        parameters?: Destination.Parameters;
+
         query_params?: { [key: string]: string };
 
         timeout_ms?: number;
+      }
+
+      export namespace Destination {
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        export interface Parameters {
+          /**
+           * The value of properties is an object, where each key is the name of a property
+           * and each value is a schema used to validate that property.
+           */
+          properties: unknown;
+
+          /**
+           * Type must be "object" for a JSON Schema object.
+           */
+          type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
+           * List of names of required property when generating this parameter. LLM will do
+           * its best to generate the required properties in its function arguments. Property
+           * must exist in properties.
+           */
+          required?: Array<string>;
+        }
       }
     }
 
@@ -26474,20 +26614,55 @@ export namespace ConversationFlowCreateParams {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -29635,20 +29810,55 @@ export namespace ConversationFlowCreateParams {
          */
         url: string;
 
-        /**
-         * Customer-defined fields nested in args on chat_transfer_requested events. String
-         * values support dynamic variables such as {{customer_id}}, including inside
-         * nested objects and arrays. Field names and non-string values are preserved.
-         */
-        body?: { [key: string]: unknown };
-
         headers?: { [key: string]: string };
 
         max_retry?: number;
 
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        parameters?: Destination.Parameters;
+
         query_params?: { [key: string]: string };
 
         timeout_ms?: number;
+      }
+
+      export namespace Destination {
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        export interface Parameters {
+          /**
+           * The value of properties is an object, where each key is the name of a property
+           * and each value is a schema used to validate that property.
+           */
+          properties: unknown;
+
+          /**
+           * Type must be "object" for a JSON Schema object.
+           */
+          type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
+           * List of names of required property when generating this parameter. LLM will do
+           * its best to generate the required properties in its function arguments. Property
+           * must exist in properties.
+           */
+          required?: Array<string>;
+        }
       }
     }
 
@@ -38022,20 +38232,55 @@ export namespace ConversationFlowCreateParams {
              */
             url: string;
 
-            /**
-             * Customer-defined fields nested in args on chat_transfer_requested events. String
-             * values support dynamic variables such as {{customer_id}}, including inside
-             * nested objects and arrays. Field names and non-string values are preserved.
-             */
-            body?: { [key: string]: unknown };
-
             headers?: { [key: string]: string };
 
             max_retry?: number;
 
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            parameters?: Destination.Parameters;
+
             query_params?: { [key: string]: string };
 
             timeout_ms?: number;
+          }
+
+          export namespace Destination {
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            export interface Parameters {
+              /**
+               * The value of properties is an object, where each key is the name of a property
+               * and each value is a schema used to validate that property.
+               */
+              properties: unknown;
+
+              /**
+               * Type must be "object" for a JSON Schema object.
+               */
+              type: 'object';
+
+              /**
+               * On an integration function's response schema, false means the output fields are
+               * fixed to properties and no others can be added.
+               */
+              additionalProperties?: boolean;
+
+              /**
+               * List of names of required property when generating this parameter. LLM will do
+               * its best to generate the required properties in its function arguments. Property
+               * must exist in properties.
+               */
+              required?: Array<string>;
+            }
           }
         }
 
@@ -41186,20 +41431,55 @@ export namespace ConversationFlowCreateParams {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -50875,20 +51155,55 @@ export namespace ConversationFlowUpdateParams {
              */
             url: string;
 
-            /**
-             * Customer-defined fields nested in args on chat_transfer_requested events. String
-             * values support dynamic variables such as {{customer_id}}, including inside
-             * nested objects and arrays. Field names and non-string values are preserved.
-             */
-            body?: { [key: string]: unknown };
-
             headers?: { [key: string]: string };
 
             max_retry?: number;
 
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            parameters?: Destination.Parameters;
+
             query_params?: { [key: string]: string };
 
             timeout_ms?: number;
+          }
+
+          export namespace Destination {
+            /**
+             * Customer-defined fields nested in args on chat_transfer_requested events, in the
+             * same format as custom function parameters. A property with const is sent as that
+             * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+             * property is inferred by the LLM from its description.
+             */
+            export interface Parameters {
+              /**
+               * The value of properties is an object, where each key is the name of a property
+               * and each value is a schema used to validate that property.
+               */
+              properties: unknown;
+
+              /**
+               * Type must be "object" for a JSON Schema object.
+               */
+              type: 'object';
+
+              /**
+               * On an integration function's response schema, false means the output fields are
+               * fixed to properties and no others can be added.
+               */
+              additionalProperties?: boolean;
+
+              /**
+               * List of names of required property when generating this parameter. LLM will do
+               * its best to generate the required properties in its function arguments. Property
+               * must exist in properties.
+               */
+              required?: Array<string>;
+            }
           }
         }
 
@@ -54039,20 +54354,55 @@ export namespace ConversationFlowUpdateParams {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -63147,20 +63497,55 @@ export namespace ConversationFlowUpdateParams {
            */
           url: string;
 
-          /**
-           * Customer-defined fields nested in args on chat_transfer_requested events. String
-           * values support dynamic variables such as {{customer_id}}, including inside
-           * nested objects and arrays. Field names and non-string values are preserved.
-           */
-          body?: { [key: string]: unknown };
-
           headers?: { [key: string]: string };
 
           max_retry?: number;
 
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          parameters?: Destination.Parameters;
+
           query_params?: { [key: string]: string };
 
           timeout_ms?: number;
+        }
+
+        export namespace Destination {
+          /**
+           * Customer-defined fields nested in args on chat_transfer_requested events, in the
+           * same format as custom function parameters. A property with const is sent as that
+           * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+           * property is inferred by the LLM from its description.
+           */
+          export interface Parameters {
+            /**
+             * The value of properties is an object, where each key is the name of a property
+             * and each value is a schema used to validate that property.
+             */
+            properties: unknown;
+
+            /**
+             * Type must be "object" for a JSON Schema object.
+             */
+            type: 'object';
+
+            /**
+             * On an integration function's response schema, false means the output fields are
+             * fixed to properties and no others can be added.
+             */
+            additionalProperties?: boolean;
+
+            /**
+             * List of names of required property when generating this parameter. LLM will do
+             * its best to generate the required properties in its function arguments. Property
+             * must exist in properties.
+             */
+            required?: Array<string>;
+          }
         }
       }
 
@@ -66308,20 +66693,55 @@ export namespace ConversationFlowUpdateParams {
          */
         url: string;
 
-        /**
-         * Customer-defined fields nested in args on chat_transfer_requested events. String
-         * values support dynamic variables such as {{customer_id}}, including inside
-         * nested objects and arrays. Field names and non-string values are preserved.
-         */
-        body?: { [key: string]: unknown };
-
         headers?: { [key: string]: string };
 
         max_retry?: number;
 
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        parameters?: Destination.Parameters;
+
         query_params?: { [key: string]: string };
 
         timeout_ms?: number;
+      }
+
+      export namespace Destination {
+        /**
+         * Customer-defined fields nested in args on chat_transfer_requested events, in the
+         * same format as custom function parameters. A property with const is sent as that
+         * fixed value, with dynamic variables such as {{customer_id}} resolved. Any other
+         * property is inferred by the LLM from its description.
+         */
+        export interface Parameters {
+          /**
+           * The value of properties is an object, where each key is the name of a property
+           * and each value is a schema used to validate that property.
+           */
+          properties: unknown;
+
+          /**
+           * Type must be "object" for a JSON Schema object.
+           */
+          type: 'object';
+
+          /**
+           * On an integration function's response schema, false means the output fields are
+           * fixed to properties and no others can be added.
+           */
+          additionalProperties?: boolean;
+
+          /**
+           * List of names of required property when generating this parameter. LLM will do
+           * its best to generate the required properties in its function arguments. Property
+           * must exist in properties.
+           */
+          required?: Array<string>;
+        }
       }
     }
 
