@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.2.24](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.23...v6.2.24) (2026-11-25)
+
+### Highlights
+
+* Add agent root get and update methods with ETag concurrency.
+* Require handoff_message for chat escalation nodes and tools.
+* Add customer-defined parameters to chat transfer escalation destinations.
+* Add gpt-live-1.1 duplex model option.
+* Deprecate legacy model settings; remove them from create and update requests.
+
 ## [6.2.23](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.22...v6.2.23) (2026-11-22)
 
 ### Highlights
