@@ -3034,7 +3034,7 @@ export namespace BatchCallCreateBatchCallParams {
           }
 
           export interface Primary {
-            model: 'gpt-live-1';
+            model: 'gpt-live-1.1' | 'gpt-live-1';
           }
         }
       }
@@ -3434,7 +3434,7 @@ export namespace BatchCallCreateBatchCallParams {
           }
 
           export interface Primary {
-            model: 'gpt-live-1';
+            model: 'gpt-live-1.1' | 'gpt-live-1';
           }
         }
       }

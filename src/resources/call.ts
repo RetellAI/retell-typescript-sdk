@@ -11776,7 +11776,7 @@ export namespace CallCreatePhoneCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
@@ -12173,7 +12173,7 @@ export namespace CallCreatePhoneCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
@@ -15073,7 +15073,7 @@ export namespace CallCreateWebCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
@@ -15470,7 +15470,7 @@ export namespace CallCreateWebCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
@@ -18368,7 +18368,7 @@ export namespace CallRegisterPhoneCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
@@ -18765,7 +18765,7 @@ export namespace CallRegisterPhoneCallParams {
         }
 
         export interface Primary {
-          model: 'gpt-live-1';
+          model: 'gpt-live-1.1' | 'gpt-live-1';
         }
       }
     }
