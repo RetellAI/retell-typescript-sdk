@@ -2,25 +2,13 @@
 
 ## [6.2.24](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.23...v6.2.24) (2026-11-25)
 
+### Highlights
 
-### Bug Fixes
-
-* **api:** Add an optional If-Match header to update-root that returns 412 and changes nothing if the agent changed since the ETag was issued. ([9ecf3a4](https://github.com/RetellAI/retell-typescript-sdk/commit/9ecf3a4f22645d85b66a41508bf7ba2a06d711a4))
-* **api:** Add busy-street, subway, car-interior, crowded-bar, construction, airport, crackling-static, wind, and tv-in-restaurant as simulated caller background sound options. ([c27276c](https://github.com/RetellAI/retell-typescript-sdk/commit/c27276c62c7d316e192b489baf70625d54d1288d))
-* **api:** Add get-root (GET /get-agent-root/{agent_id}) and update-root (PATCH /update-agent-root/{agent_id}) agent methods for environment tags. ([9ecf3a4](https://github.com/RetellAI/retell-typescript-sdk/commit/9ecf3a4f22645d85b66a41508bf7ba2a06d711a4))
-* **api:** Add gpt-live-1.1 as a value for the duplex model reference model field. ([fe34cce](https://github.com/RetellAI/retell-typescript-sdk/commit/fe34cce9907c51ff73ef915f037814d3185690e3))
-* **api:** Add parameters to chat_transfer_requested event args, using the custom function parameter format. ([3c69d6b](https://github.com/RetellAI/retell-typescript-sdk/commit/3c69d6b7b92cd08856fbe64e29995e8a9e224bdc))
-* **api:** Add required handoff_message to chat escalation tools and nodes, which the agent says after a successful escalation. ([4fbe7e8](https://github.com/RetellAI/retell-typescript-sdk/commit/4fbe7e8a4937caa6214bf0300cbf638496bc577f))
-* **api:** Change the 429 response of the refreshKnowledgeBase operation to the generic too-many-requests error. ([d815e84](https://github.com/RetellAI/retell-typescript-sdk/commit/d815e845d7059fcab195ffb41bc89d39e32834e4))
-* **api:** Remove backup_model from agent override requests, conversation flows, and Retell LLM requests. ([5ee27c0](https://github.com/RetellAI/retell-typescript-sdk/commit/5ee27c0e4a2c31e417be9008950abd5be94c11f7))
-* **api:** Remove body from chat_transfer_requested event args. ([3c69d6b](https://github.com/RetellAI/retell-typescript-sdk/commit/3c69d6b7b92cd08856fbe64e29995e8a9e224bdc))
-* **api:** Remove coffee-shop, convention-hall, summer-outdoor, mountain-outdoor, static-noise, and call-center as simulated caller background sound options. ([c27276c](https://github.com/RetellAI/retell-typescript-sdk/commit/c27276c62c7d316e192b489baf70625d54d1288d))
-* **api:** Remove deprecated model, s2s_model, model_temperature, model_high_priority, model_ultrafast, and node model_choice fields; use model_config instead. ([5ee27c0](https://github.com/RetellAI/retell-typescript-sdk/commit/5ee27c0e4a2c31e417be9008950abd5be94c11f7))
-
-
-### Documentation
-
-* add agent root API reference pages ([eded870](https://github.com/RetellAI/retell-typescript-sdk/commit/eded870c4834e848e97a1d07b15cb21c67bc50b5))
+* Add agent root get and update methods with ETag concurrency.
+* Require handoff_message for chat escalation nodes and tools.
+* Add customer-defined parameters to chat transfer escalation destinations.
+* Add gpt-live-1.1 duplex model option.
+* Deprecate legacy model settings; remove them from create and update requests.
 
 ## [6.2.23](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.22...v6.2.23) (2026-11-22)
 
