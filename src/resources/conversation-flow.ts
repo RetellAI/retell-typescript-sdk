@@ -12653,7 +12653,7 @@ export namespace ConversationFlowResponse {
     }
 
     export interface Primary {
-      model: 'gpt-live-1';
+      model: 'gpt-live-1.1' | 'gpt-live-1';
     }
   }
 
@@ -48673,7 +48673,7 @@ export namespace ConversationFlowCreateParams {
     }
 
     export interface Primary {
-      model: 'gpt-live-1';
+      model: 'gpt-live-1.1' | 'gpt-live-1';
     }
   }
 
@@ -61596,7 +61596,7 @@ export namespace ConversationFlowUpdateParams {
     }
 
     export interface Primary {
-      model: 'gpt-live-1';
+      model: 'gpt-live-1.1' | 'gpt-live-1';
     }
   }
 
