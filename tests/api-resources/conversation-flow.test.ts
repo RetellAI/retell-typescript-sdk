@@ -44,7 +44,11 @@ describe('resource conversationFlow', () => {
             destination_node_id: 'destination_node_id',
           },
           boosted_keywords: ['string'],
-          custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+          custom_stt_config: {
+            endpointing_ms: 0,
+            provider: 'azure',
+            model: 'nova-3',
+          },
           display_position: { x: 0, y: 0 },
           edges: [
             {
@@ -118,7 +122,11 @@ describe('resource conversationFlow', () => {
                 destination_node_id: 'destination_node_id',
               },
               boosted_keywords: ['string'],
-              custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+              custom_stt_config: {
+                endpointing_ms: 0,
+                provider: 'azure',
+                model: 'nova-3',
+              },
               display_position: { x: 0, y: 0 },
               edges: [
                 {
