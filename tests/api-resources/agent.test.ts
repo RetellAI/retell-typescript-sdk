@@ -46,7 +46,11 @@ describe('resource agent', () => {
         call_purpose: 'confirming your appointment for tomorrow',
       },
       contact_memory_config: { enable_read: true, enable_update: true },
-      custom_stt_config: { endpointing_ms: 0, provider: 'azure' },
+      custom_stt_config: {
+        endpointing_ms: 0,
+        provider: 'azure',
+        model: 'nova-3',
+      },
       data_storage_retention_days: 30,
       data_storage_setting: 'everything',
       denoising_enhancement_level: 0.8,
