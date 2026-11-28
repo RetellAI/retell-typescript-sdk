@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.2.25](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.24...v6.2.25) (2026-11-28)
+
+
+### Bug Fixes
+
+* **api:** Add optional model to custom_stt_config for agents and conversation flow nodes, with values such as nova-3, stt-rt-v6, universal-3-6-pro, and azure-speech. ([3f92e14](https://github.com/RetellAI/retell-typescript-sdk/commit/3f92e140494a70145680f0e447f41a2afd8a97e2))
+* **api:** Remove opt_out_contact_sync from CRM config responses and CRM config update requests. ([1dbee93](https://github.com/RetellAI/retell-typescript-sdk/commit/1dbee938a1181fa3da92101088942ca1c598e0ee))
+
 ## [6.2.24](https://github.com/RetellAI/retell-typescript-sdk/compare/v6.2.23...v6.2.24) (2026-11-25)
 
 ### Highlights
